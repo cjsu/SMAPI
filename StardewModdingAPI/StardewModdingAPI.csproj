@@ -149,7 +149,6 @@
     <Compile Include="Inheritance\Menus\SGameMenu.cs" />
     <Compile Include="Inheritance\Menus\SInventoryPage.cs" />
     <Compile Include="Inheritance\Minigames\SMinigameBase.cs" />
-    <Compile Include="Inheritance\SGameLocation.cs" />
     <Compile Include="Inheritance\SObject.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Manifest.cs" />
@@ -158,6 +157,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Inheritance\SGame.cs" />
+    <Compile Include="Version.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

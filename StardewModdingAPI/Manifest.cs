@@ -17,7 +17,7 @@ namespace StardewModdingAPI
         /// <summary>
         /// The version of the mod.
         /// </summary>
-        public virtual string Version { get; set; }
+        public virtual Version Version { get; set; }
 
         /// <summary>
         /// A description of the mod.
@@ -39,11 +39,11 @@ namespace StardewModdingAPI
         /// </summary>
         public virtual string EntryDll { get; set; }
 
-        protected override T GenerateBaseConfig<T>()
+        public override T GenerateDefaultConfig<T>()
         {
             Name = "";
             Authour = "";
-            Version = "";
+            Version = new Version(0, 0, 0, "");
             Description = "";
             UniqueID = Guid.NewGuid().ToString();
             PerSaveConfigs = false;

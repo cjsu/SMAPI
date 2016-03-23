@@ -36,7 +36,7 @@ namespace StardewModdingAPI
         /// <summary>
         /// Title for the API console
         /// </summary>
-        public static string ConsoleTitle => string.Format("Stardew Modding API Console - Version {0} - Mods Loaded: {1}", VersionString, ModsLoaded);
+        public static string ConsoleTitle => $"Stardew Modding API Console - Version {Version.VersionString} - Mods Loaded: {ModsLoaded}";
 
         /// <summary>
         /// Path for log files to be output to.
@@ -44,15 +44,7 @@ namespace StardewModdingAPI
         /// </summary>
         public static string LogPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "StardewValley", "ErrorLogs");
 
-        public const int MajorVersion = 0;
-
-        public const int MinorVersion = 38;
-
-        public const int PatchVersion = 8;
-
-        public const string Build = "Alpha";
-
-        public static string VersionString => string.Format("{0}.{1}.{2} {3}", MajorVersion, MinorVersion, PatchVersion, Build);
+        public static readonly Version Version = new Version(0, 39, 1, "Alpha");
 
         /// <summary>
         /// Not quite "constant", but it makes more sense for it to be here, at least for now

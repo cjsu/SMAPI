@@ -6,34 +6,6 @@ namespace StardewModdingAPI
     public class Mod
     {
         /// <summary>
-        /// The name of your mod.
-        /// NOTE: THIS IS DEPRECATED AND WILL BE REMOVED IN THE NEXT VERSION OF SMAPI
-        /// </summary>
-        [Obsolete]
-        public virtual string Name { get; set; }
-
-        /// <summary>
-        /// The name of the mod's authour.
-        /// NOTE: THIS IS DEPRECATED AND WILL BE REMOVED IN THE NEXT VERSION OF SMAPI
-        /// </summary>
-        [Obsolete]
-        public virtual string Authour { get; set; }
-
-        /// <summary>
-        /// The version of the mod.
-        /// NOTE: THIS IS DEPRECATED AND WILL BE REMOVED IN THE NEXT VERSION OF SMAPI
-        /// </summary>
-        [Obsolete]
-        public virtual string Version { get; set; }
-
-        /// <summary>
-        /// A description of the mod.
-        /// NOTE: THIS IS DEPRECATED AND WILL BE REMOVED IN THE NEXT VERSION OF SMAPI
-        /// </summary>
-        [Obsolete]
-        public virtual string Description { get; set; }
-
-        /// <summary>
         /// The mod's manifest
         /// </summary>
         public Manifest Manifest { get; internal set; }

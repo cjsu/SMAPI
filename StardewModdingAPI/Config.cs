@@ -11,7 +11,7 @@ using Newtonsoft.Json.Linq;
 
 namespace StardewModdingAPI
 {
-    public partial class Config
+    public class Config
     {
         [JsonIgnore]
         public virtual string ConfigLocation { get; protected internal set; }
@@ -34,7 +34,7 @@ namespace StardewModdingAPI
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        internal virtual T LoadConfig<T>() where T : Config
+        public virtual T LoadConfig<T>() where T : Config
         {
             if (string.IsNullOrEmpty(ConfigLocation))
             {
@@ -47,7 +47,7 @@ namespace StardewModdingAPI
             if (!File.Exists(ConfigLocation))
             {
                 //no config exists, generate default values
-                var c = this.GenerateBaseConfig<T>();
+                var c = this.GenerateDefaultConfig<T>();
                 c.ConfigLocation = ConfigLocation;
                 ret = c;
             }
@@ -67,8 +67,8 @@ namespace StardewModdingAPI
                 }
                 catch (Exception ex)
                 {
-                    Log.Error("Invalid JSON Config: {0} \n{1}", ConfigLocation, ex);
-                    return GenerateBaseConfig<T>();
+                    Log.Error("Invalid JSON ({0}): {1} \n{2}", GetType().Name, ConfigLocation, ex);
+                    return GenerateDefaultConfig<T>();
                 }
             }
 
@@ -79,7 +79,7 @@ namespace StardewModdingAPI
         /// <summary>
         /// MUST be implemented in inheriting class!
         /// </summary>
-        protected virtual T GenerateBaseConfig<T>() where T : Config
+        public virtual T GenerateDefaultConfig<T>() where T : Config
         {
             return null;
         }
@@ -89,12 +89,12 @@ namespace StardewModdingAPI
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        internal virtual T UpdateConfig<T>() where T : Config
+        public virtual T UpdateConfig<T>() where T : Config
         {
             try
             {
                 //default config
-                var b = JObject.FromObject(Instance<T>().GenerateBaseConfig<T>());
+                var b = JObject.FromObject(Instance<T>().GenerateDefaultConfig<T>());
 
                 //user config
                 var u = JObject.FromObject(this);
@@ -124,7 +124,12 @@ namespace StardewModdingAPI
         /// Initializes an instance of any class that inherits from Config.
         /// This method performs the loading, saving, and merging of the config on the disk and in memory at a default state.
         /// This method should not be used to re-load or to re-save a config.
+        /// NOTE: You MUST set your config EQUAL to the return of this method!
         /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="baseConfig"></param>
+        /// <param name="configLocation"></param>
+        /// <returns></returns>
         public static T InitializeConfig<T>(this T baseConfig, string configLocation) where T : Config
         {
             if (baseConfig == null)
@@ -174,124 +179,6 @@ namespace StardewModdingAPI
         public static T ReloadConfig<T>(this T baseConfig) where T : Config
         {
             return baseConfig.UpdateConfig<T>();
-        }
-
-        [Obsolete]
-        public static void WriteConfig(this Config baseConfig)
-        {
-            Log.Error("A config has been written through an obsolete way.\n\tThis method of writing configs will not be supported in future versions.");
-            WriteConfig<Config>(baseConfig);
-        }
-
-        [Obsolete]
-        public static Config ReloadConfig(this Config baseConfig)
-        {
-            Log.Error("A config has been reloaded through an obsolete way.\n\tThis method of loading configs will not be supported in future versions.");
-            return baseConfig.ReloadConfig<Config>();
-        }
-    }
-
-    [Obsolete]
-    public partial class Config
-    {
-        [Obsolete] public static int invalids = 0;
-
-        [JsonIgnore]
-        [Obsolete]
-        public virtual JObject JObject { get; protected set; }
-
-        [Obsolete]
-        public static Config InitializeConfig(string configLocation, Config baseConfig)
-        {
-            invalids++;
-
-            if (string.IsNullOrEmpty(configLocation))
-            {
-                Log.Verbose("The location to save the config to must not be empty.");
-                return null;
-            }
-
-            if (baseConfig == null)
-            {
-                Log.Verbose("A config must be instantiated before being passed to Initialize.\n\t" + configLocation);
-                return null;
-            }
-
-            baseConfig.ConfigLocation = configLocation;
-            return baseConfig.LoadConfig(baseConfig);
-        }
-
-        [Obsolete]
-        public virtual Config GenerateBaseConfig(Config baseConfig)
-        {
-            //Must be implemented in sub-class
-            return null;
-        }
-
-        [Obsolete]
-        public virtual Config LoadConfig(Config baseConfig)
-        {
-            if (!File.Exists(baseConfig.ConfigLocation))
-            {
-                var v = (Config) baseConfig.GetType().GetMethod("GenerateBaseConfig", BindingFlags.Public | BindingFlags.Instance).Invoke(baseConfig, new object[] {baseConfig});
-                v.WriteConfig();
-            }
-            else
-            {
-                var p = baseConfig.ConfigLocation;
-
-                try
-                {
-                    var j = JObject.Parse(File.ReadAllText(baseConfig.ConfigLocation));
-                    baseConfig = (Config) j.ToObject(baseConfig.GetType());
-                    baseConfig.ConfigLocation = p;
-                    baseConfig.JObject = j;
-
-                    baseConfig = UpdateConfig(baseConfig);
-                    baseConfig.ConfigLocation = p;
-                    baseConfig.JObject = j;
-
-                    baseConfig.WriteConfig();
-                }
-                catch
-                {
-                    Log.Verbose("Invalid JSON: " + p);
-                }
-            }
-
-            return baseConfig;
-        }
-
-        [Obsolete]
-        public virtual Config UpdateConfig(Config baseConfig)
-        {
-            try
-            {
-                //default config with all standard values
-                var b = JObject.FromObject(baseConfig.GetType().GetMethod("GenerateBaseConfig", BindingFlags.Public | BindingFlags.Instance).Invoke(baseConfig, new object[] {baseConfig}));
-                //user config with their values
-                var u = baseConfig.JObject;
-
-                b.Merge(u, new JsonMergeSettings {MergeArrayHandling = MergeArrayHandling.Replace});
-
-                return (Config) b.ToObject(baseConfig.GetType());
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex.ToString());
-            }
-            return baseConfig;
-        }
-
-        /// <summary>
-        /// NOTICE: THIS IS OBSOLETE AND WILL BE REMOVED IN THE FUTURE. 'BaseConfigPath' IS NOW A PROPERTY IN A MOD
-        /// </summary>
-        /// <param name="theMod"></param>
-        /// <returns></returns>
-        [Obsolete]
-        public static string GetBasePath(Mod theMod)
-        {
-            return theMod.BaseConfigPath;
         }
     }
 }

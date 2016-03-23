@@ -1,7 +1,6 @@
 ﻿{
   "Name": "Trainer Mod",
   "Authour": "Zoryn",
-  "Version": "1.0",
   "Description": "Registers several commands to use. Most commands are trainer-like in that they offer forms of cheating.",
   "EntryDll":  "TrainerMod.dll"
 }
