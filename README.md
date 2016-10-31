@@ -1,83 +1,63 @@
-<html>
-<body>
-<img align="center" src="https://raw.githubusercontent.com/Gormogon/SMAPI/master/docs/imgs/SMAPI.png"/>
-<table>
-  <tr align="center">
-    <td width="222px"><a href="https://github.com/ClxS/SMAPI/releases">Version: 0.40.0 Alpha</a></td>
-    <td width="222px"><a href="https://github.com/ClxS/SMAPI/blob/master/CHANGELOG.md">Changelog</a></td>
-    <td width="222px"><a href="https://github.com/ClxS/SMAPI/blob/master/LICENSE">License</a></td>
-    <td width="222px"><a href="https://github.com/ClxS/SMAPI/wiki">Wiki</a></td>
-  </tr>
-</table>
-</br>
-<table>
-  <tr>
-    <td align="center" width="888px"><b>HELP + SUPPORT</b></td>
-  </tr>
-  <tr>
-    <td>
-      This repository is archived and issues are not actively read. For support with issues, please check the Stardew Valley official forums: http://community.playstarbound.com/threads/stardew-modding-api-0-40-1-1.108375/
-    </td>
-  </tr>
-</table>
-<table>
-  <tr>
-    <td align="center" width="888px"><b>ABOUT</b></td>
-  </tr>
-  <tr>
-    <td>
-      SMAPI (Stardew Modding Application Programming Interface) is a tool to help modders make changes to Stardew. It is a standalone executable which goes alongside your Stardew.exe.
-    </td>
-  </tr>
-</table>
-<table>
-  <tr>
-    <td align="center" width="888px"><b>REQUIREMENTS</b></td>
-  </tr>
-  <tr>
-    <td>
-      <a href="https://www.microsoft.com/en-gb/download/details.aspx?id=30653">Microsoft .NET Framework 4.5</a>
-    </td>
-  </tr>
-</table>
-<table>
-  <tr>
-    <td align="center" width="888px"><b>INSTALLATION</b></td>
-  </tr>
-  <tr>
-    <td>
-      <ol>
-        <li>Make sure all requirements are installed.</li>
-        <li>Extract the SMAPI zip archive alongside your Stardew.exe. For example, if using Steam this would be somewhere like ‘C:/ProgramFiles/Steam/steamapps/common/StardewValley’.</li>
-        <li>To start SMAPI, launch StardewModdingAPI.exe.</li>
-      </ol>
-      NOTE!: If you are using Steam and still wish to have the Steam overlay while playing, you will need to add a launch option to the game. For example, this launch option will tell Steam to use SMAPI by default: "C:\Program Files (x86)\Steam\steamapps\common\Stardew Valley\StardewModdingAPI.exe %command%
-    </td>
-  </tr>
-</table>
-<table>
-  <tr>
-    <td align="center" width="888px"><b>MOD DEVELOPERS</b></td>
-  </tr>
-  <tr>
-    <td>
-      Mod developers would work off the release branch. The master branch will contain mid-version updates which could make your mods incompatable with both the current release and the upcoming releases. You should also take a look at the <a href="https://github.com/ClxS/SMAPI/wiki">Wiki</a> for some quick modding tutorials.
-    </td>
-  </tr>
-</table>
-<table>
-  <tr>
-    <td align="center" width="888px"><b>FUTURE PLANS</b></td>
-  </tr>
-  <tr>
-    <td>
-      <ul>
-        <li>Content only mods.</li>
-        <li>Support for a wide range of events.</li>
-        <li>Enable the addition of new custom content such as locations, NPCs, and items.</li>
-      </ul>
-    </td>
-  </tr>
-</table>
-</body>
-</html>
+![](https://raw.githubusercontent.com/Gormogon/SMAPI/master/docs/imgs/SMAPI.png)
+
+**SMAPI** is an [open-source](LICENSE) modding API for [Stardew Valley](http://stardewvalley.net/).
+It takes care of loading mods into the game context, and exposes events they can use to interact
+with the game. It's safely installed alongside the game's executable, and doesn't change any of
+your game files.
+
+## For players
+
+* [How to install SMAPI & use mods](http://canimod.com/guides/using-mods#installing-smapi)
+* [Support forums](http://community.playstarbound.com/threads/stardew-modding-api-0-40-1-1.108375/)
+* [Stardew Valley Discord](https://discord.gg/KCJHWhX) (chat with players and developers)
+
+## For mod developers
+
+* [How to develop mods](http://canimod.com/guides/creating-a-smapi-mod)
+* [SMAPI change log](CHANGELOG.md)
+* [SMAPI/Farmhand Discord](https://discordapp.com/invite/0t3fh2xhHVc6Vdyx) (chat with SMAPI developers)
+
+## For SMAPI developers
+
+### Compiling from source
+Using one of the SMAPI releases is recommended for most users.
+
+If you'd like to compile SMAPI from source, you can do that on any platform. SMAPI uses build
+configuration derived from the [crosswiki mod config](https://github.com/Pathoschild/Stardew.ModBuildConfig#readme)
+to detect your current OS automatically and load the correct references.
+
+### Preparing a release
+
+1. Open the project in [Visual Studio](https://www.visualstudio.com/vs/community/) or [MonoDevelop](http://www.monodevelop.com/).
+2. Switch to _Release_ build mode.
+3. Update the version number in `AssemblyInfo.cs`.
+4. Update the version number in `Constants::Version`. Add the minimum game version and target
+   platform at the end of the version number (like `0.41.0 1.1 for Windows`).
+5. Build the solution.
+6. Copy the files for the target platform into the archive structure below.
+7. Repeat for each platform.
+
+The release should consist of three files like this:
+
+```
+SMAPI-1.0-Linux.tar.gz
+   Mods/*
+   Newtonsoft.Json.dll
+   StardewModdingAPI
+   StardewModdingAPI.exe
+   StardewModdingAPI.mdb
+   System.Numerics.dll
+
+SMAPI-1.0-Mac.tar.gz
+   Mods/*
+   Newtonsoft.Json.dll
+   StardewModdingAPI
+   StardewModdingAPI.exe
+   StardewModdingAPI.mdb
+   System.Numerics.dll
+
+SMAPI-1.0-Windows.zip
+   Mods/*
+   StardewModdingAPI.exe
+   StardewModdingAPI.pdb
+```
