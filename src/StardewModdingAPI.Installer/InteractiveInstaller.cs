@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Microsoft.Win32;
 using StardewModdingApi.Installer.Enums;
 
 namespace StardewModdingApi.Installer
@@ -317,6 +318,41 @@ namespace StardewModdingApi.Installer
             {
                 if (Directory.Exists(defaultPath))
                     return new DirectoryInfo(defaultPath);
+            }
+
+            if (platform == Platform.Windows)
+            { 
+            // Needed to get 64Keys
+            RegistryKey localKey = Environment.Is64BitOperatingSystem ? RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64) : Registry.LocalMachine;
+                
+            string stardewValleyPath;
+            var registry = localKey.OpenSubKey(@"SOFTWARE\WOW6432Node\GOG.com\Games\1453375253");
+            if (registry != null)
+            {
+                stardewValleyPath = (string)registry.GetValue("PATH");
+                if (!string.IsNullOrEmpty(stardewValleyPath))
+                {
+                        registry.Close();
+                        if (Directory.Exists(stardewValleyPath))
+                    {
+                        return new DirectoryInfo(stardewValleyPath);
+                    }
+                }
+            }
+
+            registry = localKey.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 413150");
+                if (registry != null)
+                {
+                    stardewValleyPath = (string)registry.GetValue("InstallLocation");
+                    if (!string.IsNullOrEmpty(stardewValleyPath))
+                    {
+                        registry.Close();
+                        if (Directory.Exists(stardewValleyPath))
+                        {
+                            return new DirectoryInfo(stardewValleyPath);
+                        }         
+                    }
+                }
             }
 
             // ask user
