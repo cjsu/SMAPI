@@ -80,6 +80,10 @@ namespace StardewModdingAPI
             {
                 return null;
             }
+            catch (DirectoryNotFoundException)
+            {
+                return null;
+            }
 
             // deserialise model
             TModel model = JsonConvert.DeserializeObject<TModel>(json);
