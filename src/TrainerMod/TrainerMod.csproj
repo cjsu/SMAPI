@@ -37,54 +37,6 @@
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
-  <PropertyGroup>
-    <!-- Linux paths -->
-    <GamePath Condition="!Exists('$(GamePath)')">$(HOME)/GOG Games/Stardew Valley/game</GamePath>
-    <GamePath Condition="!Exists('$(GamePath)')">$(HOME)/.local/share/Steam/steamapps/common/Stardew Valley</GamePath>
-    <!-- Mac paths -->
-    <GamePath Condition="!Exists('$(GamePath)')">$(HOME)/Library/Application Support/Steam/steamapps/common/Stardew Valley/Contents/MacOS</GamePath>
-    <!-- Windows paths -->
-    <GamePath Condition="!Exists('$(GamePath)')">C:\Program Files (x86)\GalaxyClient\Games\Stardew Valley</GamePath>
-    <GamePath Condition="!Exists('$(GamePath)')">C:\Program Files (x86)\Steam\steamapps\common\Stardew Valley</GamePath>
-  </PropertyGroup>
-  <Choose>
-    <When Condition="$(OS) == 'Windows_NT'">
-      <ItemGroup>
-        <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="Stardew Valley">
-          <HintPath>$(GamePath)\Stardew Valley.exe</HintPath>
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="xTile, Version=2.0.4.0, Culture=neutral, processorArchitecture=x86">
-          <HintPath>$(GamePath)\xTile.dll</HintPath>
-          <Private>False</Private>
-          <SpecificVersion>False</SpecificVersion>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <Otherwise>
-      <ItemGroup>
-        <Reference Include="MonoGame.Framework">
-          <HintPath>$(GamePath)\MonoGame.Framework.dll</HintPath>
-          <Private>False</Private>
-          <SpecificVersion>False</SpecificVersion>
-        </Reference>
-        <Reference Include="StardewValley">
-          <HintPath>$(GamePath)\StardewValley.exe</HintPath>
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="xTile">
-          <HintPath>$(GamePath)\xTile.dll</HintPath>
-          <Private>False</Private>
-        </Reference>
-      </ItemGroup>
-    </Otherwise>
-  </Choose>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -129,10 +81,6 @@
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
-  <Target Name="BeforeBuild">
-    <!-- if game path is invalid, show one user-friendly error instead of a slew of reference errors -->
-    <Error Condition="!Exists('$(GamePath)')" Text="Failed to find the game install path automatically; edit the *.csproj file and manually add a &lt;GamePath&gt; setting with the full directory path containing the Stardew Valley executable." />
-  </Target>
   <Target Name="AfterBuild" Condition="$(Configuration) == 'Debug'">
     <Copy SourceFiles="$(TargetDir)\$(TargetName).dll" DestinationFolder="$(GamePath)\Mods\TrainerMod" />
     <Copy SourceFiles="$(TargetDir)\$(TargetName).dll.mdb" DestinationFolder="$(GamePath)\Mods\TrainerMod" Condition="$(OS) != 'Windows_NT'" />

@@ -18,6 +18,7 @@ For mod developers:
 For SMAPI developers:
   * Added support for specifying a lower bound in mod incompatibility data.
   * Added support for custom incompatible-mod-version error text.
+  * Fixed issue where `TrainerMod` used older logic to detect the game path.
 
 ## 1.5
 See [log](https://github.com/Pathoschild/SMAPI/compare/1.4...1.5).
