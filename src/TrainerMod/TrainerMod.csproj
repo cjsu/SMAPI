@@ -123,6 +123,7 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
+  <Import Project="$(SolutionDir)\crossplatform.targets" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
