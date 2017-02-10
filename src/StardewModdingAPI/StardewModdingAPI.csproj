@@ -241,12 +241,14 @@
   <Target Name="BeforeBuild">
     <Error Condition="!Exists('$(GamePath)')" Text="Failed to find the game install path automatically; edit the *.csproj file and manually add a &lt;GamePath&gt; setting with the full directory path containing the Stardew Valley executable." />
   </Target>
-  <!-- copy files into game directory and enable debugging (only in debug mode, and only in Windows because I haven't tried it with Linux/Mac) -->
-  <PropertyGroup Condition="$(Configuration) == 'Debug' AND $(OS) == 'Windows_NT'">
+  <!-- copy files into game directory and enable debugging (only in debug mode) -->
+  <PropertyGroup Condition="$(Configuration) == 'Debug'">
     <StartAction>Program</StartAction>
     <StartProgram>$(GamePath)\StardewModdingAPI.exe</StartProgram>
     <StartWorkingDirectory>$(GamePath)</StartWorkingDirectory>
   </PropertyGroup>
+  <!-- Fix for Mac and Linux(?) -->
+  <PropertyGroup Condition="'$(RunConfiguration)' == 'Default'" />
   <Target Name="AfterBuild" Condition="$(Configuration) == 'Debug'">
     <Copy SourceFiles="$(TargetDir)\$(TargetName).exe" DestinationFolder="$(GamePath)" />
     <Copy SourceFiles="$(TargetDir)\$(TargetName).config.json" DestinationFolder="$(GamePath)" />
