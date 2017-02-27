@@ -181,7 +181,7 @@ namespace TrainerMod
                         this.LogValueNotSpecified();
                     break;
 
-                case "playet_setstamina":
+                case "player_setstamina":
                     if (args.Any())
                     {
                         string amountStr = args[0];
