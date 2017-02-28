@@ -201,7 +201,7 @@ namespace TrainerMod
                         }
                     }
                     else
-                        this.LogValueNotSpecified();
+                        this.Monitor.Log($"{Game1.player.Name}'s stamina is {Game1.player.Stamina}", LogLevel.Info);
                     break;
 
                 case "player_setmaxstamina":
@@ -217,7 +217,7 @@ namespace TrainerMod
                             this.LogValueNotInt32();
                     }
                     else
-                        this.LogValueNotSpecified();
+                        this.Monitor.Log($"{Game1.player.Name}'s maxstamina is {Game1.player.MaxStamina}", LogLevel.Info);
                     break;
 
                 case "player_setlevel":
@@ -476,7 +476,7 @@ namespace TrainerMod
                         }
                     }
                     else
-                        this.LogValueNotSpecified();
+                        this.Monitor.Log($"Health is: {Game1.player.health}", LogLevel.Info);
                     break;
 
                 case "player_setmaxhealth":
@@ -489,7 +489,7 @@ namespace TrainerMod
                             this.LogValueNotInt32();
                     }
                     else
-                        this.LogValueNotSpecified();
+                        this.Monitor.Log($"MaxHealth is: {Game1.player.maxHealth}", LogLevel.Info);
                     break;
 
                 case "player_setimmunity":
@@ -502,7 +502,7 @@ namespace TrainerMod
                             this.LogValueNotInt32();
                     }
                     else
-                        this.LogValueNotSpecified();
+                        this.Monitor.Log($"Immunity is: {Game1.player.immunity}", LogLevel.Info);
                     break;
 
                 case "player_additem":
