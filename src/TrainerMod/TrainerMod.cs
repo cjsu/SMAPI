@@ -104,7 +104,7 @@ namespace TrainerMod
                 .Add("list_items", "Lists and searches items in the game data.\n\nUsage: list_items [search]\n- search (optional): an arbitrary search string to filter by.", this.HandleCommand)
 
                 .Add("world_settime", "Sets the time to the specified value.\n\nUsage: world_settime <value>\n- value: the target time in military time (like 0600 for 6am and 1800 for 6pm)", this.HandleCommand)
-                .Add("world_freezetime", "Freezes or resumes time.\n\nUsage: world_freezetime <value>\n- value: one of 0 (resume) or 1 (freeze).", this.HandleCommand)
+                .Add("world_freezetime", "Freezes or resumes time.\n\nUsage: world_freezetime [value]\n- value: one of 0 (resume), 1 (freeze) or blank (toggle).", this.HandleCommand)
                 .Add("world_setday", "Sets the day to the specified value.\n\nUsage: world_setday <value>.\n- value: the target day (a number from 1 to 28).", this.HandleCommand)
                 .Add("world_setseason", "Sets the season to the specified value.\n\nUsage: world_setseason <season>\n- value: the target season (one of 'spring', 'summer', 'fall', 'winter').", this.HandleCommand)
                 .Add("world_downminelevel", "Goes down one mine level?", this.HandleCommand)
@@ -381,13 +381,24 @@ namespace TrainerMod
                                 this.Monitor.Log("Time is now " + (this.FreezeTime ? "frozen" : "thawed"), LogLevel.Info);
                             }
                             else
-                                this.Monitor.Log("<value> should be 0 or 1", LogLevel.Error);
+                                this.Monitor.Log("<value> should be 0, 1, or empty", LogLevel.Error);
                         }
                         else
                             this.LogValueNotInt32();
                     }
                     else
-                        this.LogValueNotSpecified();
+                        int valu = 1;
+                        if (this.FreezeTime == false)
+                        {
+                            valu = 1;
+                        }
+                        else
+                        {
+                            valu = 0;
+                        }
+                        this.FreezeTime = valu == 1;
+                        this.FrozenTime = this.FreezeTime ? Game1.timeOfDay : 0;
+                        this.Monitor.Log("Time is now " + (this.FreezeTime ? "frozen" : "thawed"), LogLevel.Info);
                     break;
 
                 case "world_settime":
