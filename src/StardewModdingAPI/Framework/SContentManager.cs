@@ -88,7 +88,12 @@ namespace StardewModdingAPI.Framework
                 return base.Load<T>(assetName);
 
             // intercept load
-            T data = base.Load<T>(assetName);
+            T data = default(T);
+            try {
+                data = base.Load<T>(assetName);
+            } catch (Exception) {
+                // Looks like the asset doesn't exist in the game's Content directory!
+            }
             string cacheLocale = this.GetCacheLocale(assetName, this.Cache);
             IContentEventHelper helper = new ContentEventHelper(cacheLocale, assetName, data, this.NormaliseAssetName);
             ContentEvents.InvokeAssetLoading(this.Monitor, helper);
