@@ -21,7 +21,7 @@ namespace StardewModdingAPI.Framework.Models
         public string Author { get; set; }
 
         /// <summary>The mod version.</summary>
-        [JsonConverter(typeof(SemanticVersionConverter))]
+        [JsonConverter(typeof(ManifestFieldConverter))]
         public ISemanticVersion Version { get; set; }
 
         /// <summary>The minimum SMAPI version required by this mod, if any.</summary>
@@ -29,6 +29,10 @@ namespace StardewModdingAPI.Framework.Models
 
         /// <summary>The name of the DLL in the directory that has the <see cref="Mod.Entry"/> method.</summary>
         public string EntryDll { get; set; }
+
+        /// <summary>The other mods that must be loaded before this mod.</summary>
+        [JsonConverter(typeof(ManifestFieldConverter))]
+        public IManifestDependency[] Dependencies { get; set; }
 
         /// <summary>The unique mod ID.</summary>
         public string UniqueID { get; set; }

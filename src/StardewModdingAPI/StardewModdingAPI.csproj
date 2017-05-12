@@ -156,6 +156,7 @@
     <Compile Include="Framework\Logging\ConsoleInterceptionManager.cs" />
     <Compile Include="Framework\Logging\InterceptingTextWriter.cs" />
     <Compile Include="Framework\CommandHelper.cs" />
+    <Compile Include="Framework\Models\ManifestDependency.cs" />
     <Compile Include="Framework\Models\ModCompatibilityType.cs" />
     <Compile Include="Framework\Models\SConfig.cs" />
     <Compile Include="Framework\ModLoading\ModMetadata.cs" />
@@ -164,13 +165,14 @@
     <Compile Include="Framework\SContentManager.cs" />
     <Compile Include="Framework\Serialisation\JsonHelper.cs" />
     <Compile Include="Framework\Serialisation\SelectiveStringEnumConverter.cs" />
-    <Compile Include="Framework\Serialisation\SemanticVersionConverter.cs" />
+    <Compile Include="Framework\Serialisation\ManifestFieldConverter.cs" />
     <Compile Include="ICommandHelper.cs" />
     <Compile Include="IContentEventData.cs" />
     <Compile Include="IContentEventHelper.cs" />
     <Compile Include="IContentEventHelperForDictionary.cs" />
     <Compile Include="IContentEventHelperForImage.cs" />
     <Compile Include="IContentHelper.cs" />
+    <Compile Include="IManifestDependency.cs" />
     <Compile Include="IModRegistry.cs" />
     <Compile Include="Events\LocationEvents.cs" />
     <Compile Include="Events\MenuEvents.cs" />
