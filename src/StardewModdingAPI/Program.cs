@@ -317,6 +317,7 @@ namespace StardewModdingAPI
                 JsonHelper jsonHelper = new JsonHelper();
                 IList<Action> deprecationWarnings = new List<Action>();
                 ModMetadata[] mods = this.FindMods(Constants.ModPath, new JsonHelper(), deprecationWarnings);
+                mods = SortByDependencies(mods);
                 modsLoaded = this.LoadMods(mods, jsonHelper, (SContentManager)Game1.content, deprecationWarnings);
 
                 // log deprecation warnings together
@@ -335,6 +336,88 @@ namespace StardewModdingAPI
 
             // start SMAPI console
             new Thread(this.RunConsoleLoop).Start();
+        }
+
+        private ModMetadata[] SortByDependencies(ModMetadata[] mods)
+        {
+            var unsortedMods = mods.ToList();
+            var sortedMods = new Stack<ModMetadata>();
+            var visitedMods = new bool[unsortedMods.Count];
+            var currentChain = new List<ModMetadata>();
+            bool success = true;
+
+            for (int modIndex = 0; modIndex < unsortedMods.Count; modIndex++)
+            {
+                if (visitedMods[modIndex] == false)
+                {
+                    success = SortByDependencies(modIndex, visitedMods, sortedMods, currentChain, unsortedMods);
+                }
+                if (!success) break;
+            }
+
+            if (!success)
+            {
+                // Failed to sort list, return no mods.
+                this.Monitor.Log("No mods will be loaded.", LogLevel.Error);
+                return new ModMetadata[0];
+            }
+
+            return sortedMods.Reverse().ToArray();
+        }
+
+        private bool SortByDependencies(int modIndex, bool[] visitedMods, Stack<ModMetadata> sortedMods, List<ModMetadata> currentChain, List<ModMetadata> unsortedMods)
+        {
+            visitedMods[modIndex] = true;
+            var mod = unsortedMods[modIndex];
+
+            string missingMods = string.Empty;
+            foreach (var m in mod.Manifest.Dependencies)
+            {
+                if (!unsortedMods.Any(x => x.Manifest.UniqueID.Equals(m.UniqueID)))
+                {
+                    missingMods += $",{m.UniqueID}";
+                }
+            }
+            if (!string.IsNullOrEmpty(missingMods))
+            {
+                this.Monitor.Log($"Mod {mod.Manifest.UniqueID} is missing dependencies; {missingMods.TrimStart(',')}", LogLevel.Error);
+                return false;
+            }
+
+            var modsToLoadFirst = unsortedMods.Where(x =>
+                mod.Manifest.Dependencies.Any(y => y.UniqueID == x.Manifest.UniqueID)
+            ).ToList();
+
+            var circularReferenceMod = currentChain.FirstOrDefault(x => modsToLoadFirst.Contains(x));
+            if (circularReferenceMod != null)
+            {
+                this.Monitor.Log($"Circular reference found when loading Mod dependencies.", LogLevel.Error);
+                string chain = $"{mod.Manifest.UniqueID} -> {circularReferenceMod.Manifest.UniqueID}";
+                for (int i = currentChain.Count - 1; i >= 0; i--)
+                {
+                    chain = $"{currentChain[i].Manifest.UniqueID} -> " + chain;
+                    if (currentChain[i].Manifest.UniqueID.Equals(mod.Manifest.UniqueID)) break;
+                }
+                this.Monitor.Log(chain, LogLevel.Error);
+                return false;
+            }
+
+            currentChain.Add(mod);
+
+            bool success = true;
+            foreach (var requiredMod in modsToLoadFirst)
+            {
+                int index = unsortedMods.IndexOf(requiredMod);
+                if (!visitedMods[index])
+                {
+                    success = SortByDependencies(index, visitedMods, sortedMods, currentChain, unsortedMods);
+                }
+                if (!success) break;
+            }
+
+            sortedMods.Push(mod);
+            currentChain.Remove(mod);
+            return success;
         }
 
         /// <summary>Run a loop handling console input.</summary>
