@@ -6,6 +6,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using StardewValley;
+using xTile;
+using xTile.Format;
+using xTile.Tiles;
 
 namespace StardewModdingAPI.Framework
 {
@@ -74,6 +77,23 @@ namespace StardewModdingAPI.Framework
                             case ".xnb":
                                 return this.ContentManager.Load<T>(assetPath);
 
+                            case ".tbin":
+                                // validate
+                                if (typeof(T) != typeof(Map))
+                                    throw new ContentLoadException($"Can't read file with extension '{file.Extension}' as type '{typeof(T)}'; must be type '{typeof(Map)}'.");
+                                
+                                // try cache
+                                if (this.ContentManager.IsLoaded(assetPath))
+                                    return this.ContentManager.Load<T>(assetPath);
+
+                                // fetch & cache
+                                FormatManager formatManager = FormatManager.Instance;
+                                Map map = formatManager.LoadMap(file.FullName);
+                                foreach (TileSheet t in map.TileSheets)
+                                    t.ImageSource = t.ImageSource.Replace(".png", "");
+                                this.ContentManager.Inject(assetPath, map);
+                                return (T)(object)map;
+                            
                             case ".png":
                                 // validate
                                 if (typeof(T) != typeof(Texture2D))
@@ -91,6 +111,10 @@ namespace StardewModdingAPI.Framework
                                     this.ContentManager.Inject(assetPath, texture);
                                     return (T)(object)texture;
                                 }
+                                
+
+                            
+
 
                             default:
                                 throw new ContentLoadException($"Unknown file extension '{file.Extension}'; must be '.xnb' or '.png'.");
