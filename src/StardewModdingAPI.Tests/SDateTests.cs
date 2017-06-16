@@ -83,6 +83,47 @@ namespace StardewModdingAPI.Tests
             return this.ParseDate(dateStr).AddDays(addDays).ToString();
         }
 
+        [Test(Description = "Assert that the equality operators work as expected")]
+        public void EqualityOperators()
+        {
+            SDate s1 = new SDate(1, "spring", 2);
+            SDate s2 = new SDate(1, "spring", 2);
+            SDate s3 = new SDate(1, "spring", 3);
+            SDate s4 = new SDate(12, "spring", 2);
+            SDate s5 = new SDate(1, "summer", 2);
+
+            Assert.AreEqual(true, s1 == s2);
+            Assert.AreNotEqual(true, s1 == s3);
+            Assert.AreNotEqual(true, s1 == s4);
+            Assert.AreNotEqual(true, s1 == s5);
+        }
+
+        [Test(Description = "Assert that the comparison operators work as expected")]
+        public void ComparisonOperators()
+        {
+            SDate s1 = new SDate(1, "spring", 2);
+            SDate s2 = new SDate(1, "spring", 2);
+            SDate s3 = new SDate(1, "spring", 3);
+            SDate s4 = new SDate(12, "spring", 2);
+            SDate s5 = new SDate(1, "summer", 2);
+            SDate s6 = new SDate(1, "winter", 1);
+            SDate s7 = new SDate(13, "fall", 1);
+
+            Assert.AreEqual(true, s1 <= s2);
+            Assert.AreEqual(true, s1 >= s2);
+            Assert.AreEqual(true, s1 < s4);
+            Assert.AreEqual(true, s1 <= s4);
+            Assert.AreEqual(true, s4 > s1);
+            Assert.AreEqual(true, s4 >= s1);
+            Assert.AreEqual(true, s5 > s7);
+            Assert.AreEqual(true, s5 >= s7);
+            Assert.AreEqual(true, s6 < s5);
+            Assert.AreEqual(true, s6 <= s5);
+            Assert.AreEqual(true, s1 < s5);
+            Assert.AreEqual(true, s1 <= s5);
+            Assert.AreEqual(true, s5 > s1);
+            Assert.AreEqual(true, s5 >= s1);
+        }
 
         /*********
         ** Private methods

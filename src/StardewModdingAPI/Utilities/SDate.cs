@@ -113,6 +113,156 @@ namespace StardewModdingAPI.Utilities
             return new SDate(Game1.dayOfMonth, Game1.currentSeason, Game1.year);
         }
 
+        /*********
+        ** Operator methods
+        *********/
+
+        /// <summary>
+        /// Equality operator. Tests the date being equal to each other
+        /// </summary>
+        /// <param name="s1">The first date being compared</param>
+        /// <param name="s2">The second date being compared</param>
+        /// <returns>The equality of the dates</returns>
+        public static bool operator ==(SDate s1, SDate s2)
+        {
+            if (s1.Day == s2.Day && s1.Year == s2.Year && s1.Season == s2.Season)
+                return true;
+            else
+                return false;
+        }
+
+        /// <summary>
+        /// Inequality operator. Tests the date being not equal to each other
+        /// </summary>
+        /// <param name="s1">The first date being compared</param>
+        /// <param name="s2">The second date being compared</param>
+        /// <returns>The inequality of the dates</returns>
+        public static bool operator !=(SDate s1, SDate s2)
+        {
+            if (s1.Day == s2.Day && s1.Year == s2.Year && s1.Season == s2.Season)
+                return false;
+            else
+                return true;
+        }
+
+        /// <summary>
+        /// Less than operator. Tests the date being less than to each other
+        /// </summary>
+        /// <param name="s1">The first date being compared</param>
+        /// <param name="s2">The second date being compared</param>
+        /// <returns>If the dates are less than</returns>
+        public static bool operator >(SDate s1, SDate s2)
+        {
+            if (s1.Year > s2.Year)
+                return true;
+            else if (s1.Year == s2.Year)
+            {
+                if (s1.Season == "winter" && s2.Season != "winter")
+                    return true;
+                else if (s1.Season == s2.Season && s1.Day > s2.Day)
+                    return true;
+                if (s1.Season == "fall" && (s2.Season == "summer" || s2.Season == "spring"))
+                    return true;
+                if (s1.Season == "summer" && s2.Season == "spring")
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Less or equal than operator. Tests the date being less than or equal to each other
+        /// </summary>
+        /// <param name="s1">The first date being compared</param>
+        /// <param name="s2">The second date being compared</param>
+        /// <returns>If the dates are less than or equal than</returns>
+        public static bool operator >=(SDate s1, SDate s2)
+        {
+            if (s1.Year > s2.Year)
+                return true;
+            else if (s1.Year == s2.Year)
+            {
+                if (s1.Season == "winter" && s2.Season != "winter")
+                    return true;
+                else if (s1.Season == s2.Season && s1.Day >= s2.Day)
+                    return true;
+                if (s1.Season == "fall" && (s2.Season == "summer" || s2.Season == "spring"))
+                    return true;
+                if (s1.Season == "summer" && s2.Season == "spring")
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Greater or equal than operator. Tests the date being greater than or equal to each other
+        /// </summary>
+        /// <param name="s1">The first date being compared</param>
+        /// <param name="s2">The second date being compared</param>
+        /// <returns>If the dates are greater than or equal than</returns>
+        public static bool operator <=(SDate s1, SDate s2)
+        {
+            if (s1.Year < s2.Year)
+                return true;
+            else if (s1.Year == s2.Year)
+            {
+                if (s1.Season == s2.Season && s1.Day <= s2.Day)
+                    return true;
+                else if (s1.Season == "spring" && s2.Season != "spring")
+                    return true;
+                if (s1.Season == "summer" && (s2.Season == "fall" || s2.Season == "winter"))
+                    return true;
+                if (s1.Season == "fall" && s2.Season == "winter")
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Greater than operator. Tests the date being greater than to each other
+        /// </summary>
+        /// <param name="s1">The first date being compared</param>
+        /// <param name="s2">The second date being compared</param>
+        /// <returns>If the dates are greater than</returns>
+        public static bool operator <(SDate s1, SDate s2)
+        {
+            if (s1.Year < s2.Year)
+                return true;
+            else if (s1.Year == s2.Year)
+            {
+                if (s1.Season == s2.Season && s1.Day < s2.Day)
+                    return true;
+                else if (s1.Season == "spring" && s2.Season != "spring")
+                    return true;
+                if (s1.Season == "summer" && (s2.Season == "fall" || s2.Season == "winter"))
+                    return true;
+                if (s1.Season == "fall" && s2.Season == "winter")
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Overrides the equals function.
+        /// </summary>
+        /// <param name="obj">Object being compared.</param>
+        /// <returns>The equalaity of the object.</returns>
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        /// <summary>
+        /// This returns the hashcode of the object
+        /// </summary>
+        /// <returns>The hashcode of the object.</returns>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
 
         /*********
         ** Private methods
