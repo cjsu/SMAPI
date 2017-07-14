@@ -32,9 +32,19 @@ This file contains advanced configuration for SMAPI. You generally shouldn't cha
    */
   "DisabledMods": [
     {
+      "Name": "Animal Mood Fix",
+      "ID": [ "GPeters-AnimalMoodFix" ],
+      "ReasonPhrase": "the animal mood bugs were fixed in Stardew Valley 1.2."
+    },
+    {
       "Name": "Modder Serialization Utility",
       "ID": [ "SerializerUtils-0-1" ],
-      "ReasonPhrase": "it's no longer used by any mods, and is no longer maintained."
+      "ReasonPhrase": "it's no longer maintained or used."
+    },
+    {
+      "Name": "No Debug Mode",
+      "ID": [ "NoDebugMode" ],
+      "ReasonPhrase": "debug mode was removed in SMAPI 1.0."
     },
     {
       "Name": "StarDustCore",
