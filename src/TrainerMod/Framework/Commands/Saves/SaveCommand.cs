@@ -1,4 +1,5 @@
-﻿using StardewModdingAPI;
+﻿#if SMAPI_1_x
+using StardewModdingAPI;
 using StardewValley;
 
 namespace TrainerMod.Framework.Commands.Saves
@@ -25,3 +26,4 @@ namespace TrainerMod.Framework.Commands.Saves
         }
     }
 }
+#endif
