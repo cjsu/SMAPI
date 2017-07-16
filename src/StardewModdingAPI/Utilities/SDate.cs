@@ -194,6 +194,7 @@ namespace StardewModdingAPI.Utilities
             return date?.GetHashCode() < other?.GetHashCode();
         }
 
+		
         /*********
         ** Private methods
         *********/
