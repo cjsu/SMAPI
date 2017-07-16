@@ -194,26 +194,6 @@ namespace StardewModdingAPI.Utilities
             return date?.GetHashCode() < other?.GetHashCode();
         }
 
-
-        /// <summary>
-        /// Overrides the equals function.
-        /// </summary>
-        /// <param name="obj">Object being compared.</param>
-        /// <returns>The equalaity of the object.</returns>
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-
-        /// <summary>
-        /// This returns the hashcode of the object
-        /// </summary>
-        /// <returns>The hashcode of the object.</returns>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
         /*********
         ** Private methods
         *********/
