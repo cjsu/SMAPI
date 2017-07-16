@@ -4,6 +4,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.ExceptionServices;
+using System.Security;
 using System.Threading;
 #if SMAPI_FOR_WINDOWS
 using System.Management;
@@ -15,6 +17,7 @@ using StardewModdingAPI.Events;
 using StardewModdingAPI.Framework;
 using StardewModdingAPI.Framework.Logging;
 using StardewModdingAPI.Framework.Models;
+using StardewModdingAPI.Framework.ModHelpers;
 using StardewModdingAPI.Framework.ModLoading;
 using StardewModdingAPI.Framework.Reflection;
 using StardewModdingAPI.Framework.Serialisation;
@@ -43,7 +46,7 @@ namespace StardewModdingAPI
         private readonly CancellationTokenSource CancellationTokenSource = new CancellationTokenSource();
 
         /// <summary>Simplifies access to private game code.</summary>
-        private readonly IReflectionHelper Reflection = new ReflectionHelper();
+        private readonly Reflector Reflection = new Reflector();
 
         /// <summary>The underlying game instance.</summary>
         private SGame GameInstance;
@@ -115,6 +118,7 @@ namespace StardewModdingAPI
         }
 
         /// <summary>Launch SMAPI.</summary>
+        [HandleProcessCorruptedStateExceptions, SecurityCritical] // let try..catch handle corrupted state exceptions
         public void RunInteractively()
         {
             // initialise SMAPI
@@ -123,7 +127,9 @@ namespace StardewModdingAPI
                 // init logging
                 this.Monitor.Log($"SMAPI {Constants.ApiVersion} with Stardew Valley {Constants.GetGameDisplayVersion(Constants.GameVersion)} on {this.GetFriendlyPlatformName()}", LogLevel.Info);
                 this.Monitor.Log($"Mods go here: {Constants.ModPath}");
+#if SMAPI_1_x
                 this.Monitor.Log("Preparing SMAPI...");
+#endif
 
                 // validate paths
                 this.VerifyPath(Constants.ModPath);
@@ -207,7 +213,11 @@ namespace StardewModdingAPI
             }
 
             // start game
+#if SMAPI_1_x
             this.Monitor.Log("Starting game...");
+#else
+            this.Monitor.Log("Starting game...", LogLevel.Trace);
+#endif
             try
             {
                 this.IsGameRunning = true;
@@ -224,6 +234,7 @@ namespace StardewModdingAPI
             }
         }
 
+#if SMAPI_1_x
         /// <summary>Get a monitor for legacy code which doesn't have one passed in.</summary>
         [Obsolete("This method should only be used when needed for backwards compatibility.")]
         internal IMonitor GetLegacyMonitorForMod()
@@ -231,6 +242,7 @@ namespace StardewModdingAPI
             string modName = this.ModRegistry.GetModFromStack() ?? "unknown";
             return this.GetSecondaryMonitor(modName);
         }
+#endif
 
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
         public void Dispose()
@@ -321,17 +333,18 @@ namespace StardewModdingAPI
             this.DeprecationManager = new DeprecationManager(this.Monitor, this.ModRegistry);
             this.CommandManager = new CommandManager();
 
+#if SMAPI_1_x
             // inject compatibility shims
 #pragma warning disable 618
             Command.Shim(this.CommandManager, this.DeprecationManager, this.ModRegistry);
             Config.Shim(this.DeprecationManager);
             Log.Shim(this.DeprecationManager, this.GetSecondaryMonitor("legacy mod"), this.ModRegistry);
             Mod.Shim(this.DeprecationManager);
-            ContentEvents.Shim(this.ModRegistry, this.Monitor);
             GameEvents.Shim(this.DeprecationManager);
             PlayerEvents.Shim(this.DeprecationManager);
             TimeEvents.Shim(this.DeprecationManager);
 #pragma warning restore 618
+#endif
 
             // redirect direct console output
             {
@@ -344,6 +357,9 @@ namespace StardewModdingAPI
             if (this.Settings.DeveloperMode)
             {
                 this.Monitor.ShowTraceInConsole = true;
+#if !SMAPI_1_x
+                this.Monitor.ShowFullStampInConsole = true;
+#endif
                 this.Monitor.Log($"You configured SMAPI to run in developer mode. The console may be much more verbose. You can disable developer mode by installing the non-developer version of SMAPI, or by editing {Constants.ApiConfigPath}.", LogLevel.Info);
             }
             if (!this.Settings.CheckForUpdates)
@@ -355,12 +371,15 @@ namespace StardewModdingAPI
 
             // validate XNB integrity
             if (!this.ValidateContentIntegrity())
-                this.Monitor.Log("SMAPI found problems in the game's XNB files which may cause errors or crashes while you're playing. Consider uninstalling XNB mods or reinstalling the game.", LogLevel.Warn);
+                this.Monitor.Log("SMAPI found problems in your game's content files which are likely to cause errors or crashes. Consider uninstalling XNB mods or reinstalling the game.", LogLevel.Error);
 
             // load mods
-            int modsLoaded;
             {
+#if SMAPI_1_x
                 this.Monitor.Log("Loading mod metadata...");
+#else
+                this.Monitor.Log("Loading mod metadata...", LogLevel.Trace);
+#endif
                 ModResolver resolver = new ModResolver();
 
                 // load manifests
@@ -368,6 +387,7 @@ namespace StardewModdingAPI
                 resolver.ValidateManifests(mods, Constants.ApiVersion);
 
                 // check for deprecated metadata
+#if SMAPI_1_x
                 IList<Action> deprecationWarnings = new List<Action>();
                 foreach (IModMetadata mod in mods.Where(m => m.Status != ModMetadataStatus.Failed))
                 {
@@ -389,7 +409,7 @@ namespace StardewModdingAPI
                     // per-save directories
                     if ((mod.Manifest as Manifest)?.PerSaveConfigs == true)
                     {
-                        deprecationWarnings.Add(() => this.DeprecationManager.Warn(mod.DisplayName, $"{nameof(Manifest)}.{nameof(Manifest.PerSaveConfigs)}", "1.0", DeprecationLevel.Info));
+                        deprecationWarnings.Add(() => this.DeprecationManager.Warn(mod.DisplayName, $"{nameof(Manifest)}.{nameof(Manifest.PerSaveConfigs)}", "1.0", DeprecationLevel.PendingRemoval));
                         try
                         {
                             string psDir = Path.Combine(mod.DirectoryPath, "psconfigs");
@@ -403,14 +423,19 @@ namespace StardewModdingAPI
                         }
                     }
                 }
+#endif
 
                 // process dependencies
                 mods = resolver.ProcessDependencies(mods).ToArray();
 
                 // load mods
-                modsLoaded = this.LoadMods(mods, new JsonHelper(), this.ContentManager, deprecationWarnings);
+#if SMAPI_1_x
+                this.LoadMods(mods, new JsonHelper(), this.ContentManager, deprecationWarnings);
                 foreach (Action warning in deprecationWarnings)
                     warning();
+#else
+                this.LoadMods(mods, new JsonHelper(), this.ContentManager);
+#endif
             }
             if (this.Monitor.IsExiting)
             {
@@ -419,6 +444,7 @@ namespace StardewModdingAPI
             }
 
             // update window titles
+            int modsLoaded = this.ModRegistry.GetMods().Count();
             this.GameInstance.Window.Title = $"Stardew Valley {Constants.GetGameDisplayVersion(Constants.GameVersion)} - running SMAPI {Constants.ApiVersion} with {modsLoaded} mods";
             Console.Title = $"SMAPI {Constants.ApiVersion} - running Stardew Valley {Constants.GetGameDisplayVersion(Constants.GameVersion)} with {modsLoaded} mods";
 
@@ -443,7 +469,9 @@ namespace StardewModdingAPI
         private void RunConsoleLoop()
         {
             // prepare console
+#if SMAPI_1_x
             this.Monitor.Log("Starting console...");
+#endif
             this.Monitor.Log("Type 'help' for help, or 'help <cmd>' for a command's usage", LogLevel.Info);
             this.CommandManager.Add("SMAPI", "help", "Lists command documentation.\n\nUsage: help\nLists all available commands.\n\nUsage: help <cmd>\n- cmd: The name of a command whose documentation to display.", this.HandleCommand);
             this.CommandManager.Add("SMAPI", "reload_i18n", "Reloads translation files for all mods.\n\nUsage: reload_i18n", this.HandleCommand);
@@ -483,20 +511,21 @@ namespace StardewModdingAPI
         /// <returns>Returns whether all integrity checks passed.</returns>
         private bool ValidateContentIntegrity()
         {
-            this.Monitor.Log("Detecting common issues...");
+            this.Monitor.Log("Detecting common issues...", LogLevel.Trace);
             bool issuesFound = false;
-
 
             // object format (commonly broken by outdated files)
             {
-                void LogIssue(int id, string issue) => this.Monitor.Log($"Detected issue: item #{id} in Content\\Data\\ObjectInformation is invalid ({issue}).", LogLevel.Warn);
+                // detect issues
+                bool hasObjectIssues = false;
+                void LogIssue(int id, string issue) => this.Monitor.Log($@"Detected issue: item #{id} in Content\Data\ObjectInformation.xnb is invalid ({issue}).", LogLevel.Trace);
                 foreach (KeyValuePair<int, string> entry in Game1.objectInformation)
                 {
                     // must not be empty
                     if (string.IsNullOrWhiteSpace(entry.Value))
                     {
                         LogIssue(entry.Key, "entry is empty");
-                        issuesFound = true;
+                        hasObjectIssues = true;
                         continue;
                     }
 
@@ -505,7 +534,7 @@ namespace StardewModdingAPI
                     if (fields.Length < SObject.objectInfoDescriptionIndex + 1)
                     {
                         LogIssue(entry.Key, "too few fields for an object");
-                        issuesFound = true;
+                        hasObjectIssues = true;
                         continue;
                     }
 
@@ -516,10 +545,17 @@ namespace StardewModdingAPI
                             if (fields.Length < SObject.objectInfoBuffDurationIndex + 1)
                             {
                                 LogIssue(entry.Key, "too few fields for a cooking item");
-                                issuesFound = true;
+                                hasObjectIssues = true;
                             }
                             break;
                     }
+                }
+
+                // log error
+                if (hasObjectIssues)
+                {
+                    issuesFound = true;
+                    this.Monitor.Log(@"Your Content\Data\ObjectInformation.xnb file seems to be broken or outdated.", LogLevel.Warn);
                 }
             }
 
@@ -567,125 +603,221 @@ namespace StardewModdingAPI
         /// <param name="mods">The mods to load.</param>
         /// <param name="jsonHelper">The JSON helper with which to read mods' JSON files.</param>
         /// <param name="contentManager">The content manager to use for mod content.</param>
+#if SMAPI_1_x
         /// <param name="deprecationWarnings">A list to populate with any deprecation warnings.</param>
-        /// <returns>Returns the number of mods successfully loaded.</returns>
-        private int LoadMods(IModMetadata[] mods, JsonHelper jsonHelper, SContentManager contentManager, IList<Action> deprecationWarnings)
+        private void LoadMods(IModMetadata[] mods, JsonHelper jsonHelper, SContentManager contentManager, IList<Action> deprecationWarnings)
+#else
+        private void LoadMods(IModMetadata[] mods, JsonHelper jsonHelper, SContentManager contentManager)
+#endif
         {
+#if SMAPI_1_x
             this.Monitor.Log("Loading mods...");
-            void LogSkip(IModMetadata mod, string reasonPhrase, LogLevel level = LogLevel.Error) => this.Monitor.Log($"Skipped {mod.DisplayName} because {reasonPhrase}", level);
-
+#else
+            this.Monitor.Log("Loading mods...", LogLevel.Trace);
+#endif
             // load mod assemblies
-            int modsLoaded = 0;
-            AssemblyLoader modAssemblyLoader = new AssemblyLoader(Constants.TargetPlatform, this.Monitor);
-            AppDomain.CurrentDomain.AssemblyResolve += (sender, e) => modAssemblyLoader.ResolveAssembly(e.Name);
-            foreach (IModMetadata metadata in mods)
+            IDictionary<IModMetadata, string> skippedMods = new Dictionary<IModMetadata, string>();
             {
-                // validate status
-                if (metadata.Status == ModMetadataStatus.Failed)
-                {
-                    LogSkip(metadata, metadata.Error);
-                    continue;
-                }
+                void TrackSkip(IModMetadata mod, string reasonPhrase) => skippedMods[mod] = reasonPhrase;
 
-                // get basic info
-                IManifest manifest = metadata.Manifest;
-                string assemblyPath = Path.Combine(metadata.DirectoryPath, metadata.Manifest.EntryDll);
+                AssemblyLoader modAssemblyLoader = new AssemblyLoader(Constants.TargetPlatform, this.Monitor);
+                AppDomain.CurrentDomain.AssemblyResolve += (sender, e) => modAssemblyLoader.ResolveAssembly(e.Name);
+                foreach (IModMetadata metadata in mods)
+                {
+                    // get basic info
+                    IManifest manifest = metadata.Manifest;
+                    string assemblyPath = metadata.Manifest?.EntryDll != null
+                        ? Path.Combine(metadata.DirectoryPath, metadata.Manifest.EntryDll)
+                        : null;
+                    this.Monitor.Log(assemblyPath != null
+                        ? $"Loading {metadata.DisplayName} from {assemblyPath.Replace(Constants.ModPath, "").TrimStart(Path.DirectorySeparatorChar)}..."
+                        : $"Loading {metadata.DisplayName}...", LogLevel.Trace);
 
-                // preprocess & load mod assembly
-                Assembly modAssembly;
-                try
-                {
-                    modAssembly = modAssemblyLoader.Load(assemblyPath, assumeCompatible: metadata.Compatibility?.Compatibility == ModCompatibilityType.AssumeCompatible);
-                }
-                catch (IncompatibleInstructionException ex)
-                {
-                    LogSkip(metadata, $"it's not compatible with the latest version of the game (detected {ex.NounPhrase}). Please check for a newer version of the mod (you have v{manifest.Version}).");
-                    continue;
-                }
-                catch (Exception ex)
-                {
-                    LogSkip(metadata, $"its DLL '{manifest.EntryDll}' couldn't be loaded:\n{ex.GetLogSummary()}");
-                    continue;
-                }
-
-                // validate assembly
-                try
-                {
-                    int modEntries = modAssembly.DefinedTypes.Count(type => typeof(Mod).IsAssignableFrom(type) && !type.IsAbstract);
-                    if (modEntries == 0)
+                    // validate status
+                    if (metadata.Status == ModMetadataStatus.Failed)
                     {
-                        LogSkip(metadata, $"its DLL has no '{nameof(Mod)}' subclass.");
-                        continue;
-                    }
-                    if (modEntries > 1)
-                    {
-                        LogSkip(metadata, $"its DLL contains multiple '{nameof(Mod)}' subclasses.");
-                        continue;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    LogSkip(metadata, $"its DLL couldn't be loaded:\n{ex.GetLogSummary()}");
-                    continue;
-                }
-
-                // initialise mod
-                try
-                {
-                    // get implementation
-                    TypeInfo modEntryType = modAssembly.DefinedTypes.First(type => typeof(Mod).IsAssignableFrom(type) && !type.IsAbstract);
-                    Mod mod = (Mod)modAssembly.CreateInstance(modEntryType.ToString());
-                    if (mod == null)
-                    {
-                        LogSkip(metadata, "its entry class couldn't be instantiated.");
+                        this.Monitor.Log($"   Failed: {metadata.Error}", LogLevel.Trace);
+                        TrackSkip(metadata, metadata.Error);
                         continue;
                     }
 
-                    // inject data
-                    mod.ModManifest = manifest;
-                    mod.Helper = new ModHelper(metadata.DisplayName, metadata.DirectoryPath, jsonHelper, this.ModRegistry, this.CommandManager, contentManager, this.Reflection);
-                    mod.Monitor = this.GetSecondaryMonitor(metadata.DisplayName);
-                    mod.PathOnDisk = metadata.DirectoryPath;
+                    // preprocess & load mod assembly
+                    Assembly modAssembly;
+                    try
+                    {
+                        modAssembly = modAssemblyLoader.Load(assemblyPath, assumeCompatible: metadata.Compatibility?.Compatibility == ModCompatibilityType.AssumeCompatible);
+                    }
+                    catch (IncompatibleInstructionException ex)
+                    {
+                        TrackSkip(metadata, $"it's not compatible with the latest version of the game or SMAPI (detected {ex.NounPhrase}). Please check for a newer version of the mod.");
+                        continue;
+                    }
+                    catch (Exception ex)
+                    {
+                        TrackSkip(metadata, $"its DLL '{manifest.EntryDll}' couldn't be loaded:\n{ex.GetLogSummary()}");
+                        continue;
+                    }
 
-                    // track mod
-                    metadata.SetMod(mod);
-                    this.ModRegistry.Add(metadata);
-                    modsLoaded++;
-                    this.Monitor.Log($"Loaded {metadata.DisplayName} by {manifest.Author}, v{manifest.Version} | {manifest.Description}", LogLevel.Info);
-                }
-                catch (Exception ex)
-                {
-                    LogSkip(metadata, $"initialisation failed:\n{ex.GetLogSummary()}");
+                    // validate assembly
+                    try
+                    {
+                        int modEntries = modAssembly.DefinedTypes.Count(type => typeof(Mod).IsAssignableFrom(type) && !type.IsAbstract);
+                        if (modEntries == 0)
+                        {
+                            TrackSkip(metadata, $"its DLL has no '{nameof(Mod)}' subclass.");
+                            continue;
+                        }
+                        if (modEntries > 1)
+                        {
+                            TrackSkip(metadata, $"its DLL contains multiple '{nameof(Mod)}' subclasses.");
+                            continue;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        TrackSkip(metadata, $"its DLL couldn't be loaded:\n{ex.GetLogSummary()}");
+                        continue;
+                    }
+
+                    // initialise mod
+                    try
+                    {
+                        // get implementation
+                        TypeInfo modEntryType = modAssembly.DefinedTypes.First(type => typeof(Mod).IsAssignableFrom(type) && !type.IsAbstract);
+                        Mod mod = (Mod)modAssembly.CreateInstance(modEntryType.ToString());
+                        if (mod == null)
+                        {
+                            TrackSkip(metadata, "its entry class couldn't be instantiated.");
+                            continue;
+                        }
+
+#if SMAPI_1_x
+                        // prevent mods from using SMAPI 2.0 content interception before release
+                        // ReSharper disable SuspiciousTypeConversion.Global
+                        if (mod is IAssetEditor || mod is IAssetLoader)
+                        {
+                            TrackSkip(metadata, $"its entry class implements {nameof(IAssetEditor)} or {nameof(IAssetLoader)}. These are part of a prototype API that isn't available for mods to use yet.");
+                        }
+                        // ReSharper restore SuspiciousTypeConversion.Global
+#endif
+
+                        // inject data
+                        {
+                            ICommandHelper commandHelper = new CommandHelper(manifest.UniqueID, metadata.DisplayName, this.CommandManager);
+                            IContentHelper contentHelper = new ContentHelper(contentManager, metadata.DirectoryPath, manifest.UniqueID, metadata.DisplayName);
+                            IReflectionHelper reflectionHelper = new ReflectionHelper(manifest.UniqueID, this.Reflection);
+                            IModRegistry modRegistryHelper = new ModRegistryHelper(manifest.UniqueID, this.ModRegistry);
+                            ITranslationHelper translationHelper = new TranslationHelper(manifest.UniqueID, manifest.Name, contentManager.GetLocale(), contentManager.GetCurrentLanguage());
+
+                            mod.ModManifest = manifest;
+                            mod.Helper = new ModHelper(manifest.UniqueID, metadata.DirectoryPath, jsonHelper, contentHelper, commandHelper, modRegistryHelper, reflectionHelper, translationHelper);
+                            mod.Monitor = this.GetSecondaryMonitor(metadata.DisplayName);
+#if SMAPI_1_x
+                            mod.PathOnDisk = metadata.DirectoryPath;
+#endif
+                        }
+
+                        // track mod
+                        metadata.SetMod(mod);
+                        this.ModRegistry.Add(metadata);
+                    }
+                    catch (Exception ex)
+                    {
+                        TrackSkip(metadata, $"initialisation failed:\n{ex.GetLogSummary()}");
+                    }
                 }
             }
+            IModMetadata[] loadedMods = this.ModRegistry.GetMods().ToArray();
+
+            // log skipped mods
+#if !SMAPI_1_x
+            this.Monitor.Newline();
+#endif
+            if (skippedMods.Any())
+            {
+                this.Monitor.Log($"Skipped {skippedMods.Count} mods:", LogLevel.Error);
+                foreach (var pair in skippedMods.OrderBy(p => p.Key.DisplayName))
+                {
+                    IModMetadata mod = pair.Key;
+                    string reason = pair.Value;
+
+                    if (mod.Manifest?.Version != null)
+                        this.Monitor.Log($"   {mod.DisplayName} {mod.Manifest.Version} because {reason}", LogLevel.Error);
+                    else
+                        this.Monitor.Log($"   {mod.DisplayName} because {reason}", LogLevel.Error);
+                }
+#if !SMAPI_1_x
+                this.Monitor.Newline();
+#endif
+            }
+
+            // log loaded mods
+            this.Monitor.Log($"Loaded {loadedMods.Length} mods" + (loadedMods.Length > 0 ? ":" : "."), LogLevel.Info);
+            foreach (IModMetadata metadata in loadedMods.OrderBy(p => p.DisplayName))
+            {
+                IManifest manifest = metadata.Manifest;
+                this.Monitor.Log(
+                    $"   {metadata.DisplayName} {manifest.Version}"
+                        + (!string.IsNullOrWhiteSpace(manifest.Author) ? $" by {manifest.Author}" : "")
+                        + (!string.IsNullOrWhiteSpace(manifest.Description) ? $" | {manifest.Description}" : ""),
+                    LogLevel.Info
+                );
+            }
+#if !SMAPI_1_x
+            this.Monitor.Newline();
+#endif
 
             // initialise translations
             this.ReloadTranslations();
 
             // initialise loaded mods
-            foreach (IModMetadata metadata in this.ModRegistry.GetMods())
+            foreach (IModMetadata metadata in loadedMods)
             {
+                // add interceptors
+                if (metadata.Mod.Helper.Content is ContentHelper helper)
+                {
+                    this.ContentManager.Editors[metadata] = helper.ObservableAssetEditors;
+                    this.ContentManager.Loaders[metadata] = helper.ObservableAssetLoaders;
+                }
+
+                // call entry method
                 try
                 {
                     IMod mod = metadata.Mod;
-
-                    // call entry methods
-                    (mod as Mod)?.Entry(); // deprecated since 1.0
                     mod.Entry(mod.Helper);
+#if SMAPI_1_x
+                    (mod as Mod)?.Entry(); // deprecated since 1.0
 
                     // raise deprecation warning for old Entry() methods
                     if (this.DeprecationManager.IsVirtualMethodImplemented(mod.GetType(), typeof(Mod), nameof(Mod.Entry), new[] { typeof(object[]) }))
-                        deprecationWarnings.Add(() => this.DeprecationManager.Warn(metadata.DisplayName, $"{nameof(Mod)}.{nameof(Mod.Entry)}(object[]) instead of {nameof(Mod)}.{nameof(Mod.Entry)}({nameof(IModHelper)})", "1.0", DeprecationLevel.Info));
+                        deprecationWarnings.Add(() => this.DeprecationManager.Warn(metadata.DisplayName, $"{nameof(Mod)}.{nameof(Mod.Entry)}(object[]) instead of {nameof(Mod)}.{nameof(Mod.Entry)}({nameof(IModHelper)})", "1.0", DeprecationLevel.PendingRemoval));
+#endif
                 }
                 catch (Exception ex)
                 {
-                    this.Monitor.Log($"The {metadata.DisplayName} mod failed on entry initialisation. It will still be loaded, but may not function correctly.\n{ex.GetLogSummary()}", LogLevel.Warn);
+                    this.Monitor.Log($"{metadata.DisplayName} failed on entry and might not work correctly. Technical details:\n{ex.GetLogSummary()}", LogLevel.Error);
                 }
             }
 
-            // print result
-            this.Monitor.Log($"Loaded {modsLoaded} mods.");
-            return modsLoaded;
+            // reset cache when needed
+            // only register listeners after Entry to avoid repeatedly reloading assets during load
+            foreach (IModMetadata metadata in loadedMods)
+            {
+                if (metadata.Mod.Helper.Content is ContentHelper helper)
+                {
+                    helper.ObservableAssetEditors.CollectionChanged += (sender, e) =>
+                    {
+                        if (e.NewItems.Count > 0)
+                            this.ContentManager.Reset();
+                    };
+                    helper.ObservableAssetLoaders.CollectionChanged += (sender, e) =>
+                    {
+                        if (e.NewItems.Count > 0)
+                            this.ContentManager.Reset();
+                    };
+                }
+            }
+            this.ContentManager.Reset();
         }
 
         /// <summary>Reload translations for all mods.</summary>
@@ -737,8 +869,22 @@ namespace StardewModdingAPI
                     }
                     else
                     {
+#if SMAPI_1_x
                         this.Monitor.Log("The following commands are registered: " + string.Join(", ", this.CommandManager.GetAll().Select(p => p.Name)) + ".", LogLevel.Info);
                         this.Monitor.Log("For more information about a command, type 'help command_name'.", LogLevel.Info);
+#else
+                        string message = "The following commands are registered:\n";
+                        IGrouping<string, string>[] groups = (from command in this.CommandManager.GetAll() orderby command.ModName, command.Name group command.Name by command.ModName).ToArray();
+                        foreach (var group in groups)
+                        {
+                            string modName = group.Key;
+                            string[] commandNames = group.ToArray();
+                            message += $"{modName}:\n  {string.Join("\n  ", commandNames)}\n\n";
+                        }
+                        message += "For more information about a command, type 'help command_name'.";
+
+                        this.Monitor.Log(message, LogLevel.Info);
+#endif
                     }
                     break;
 
@@ -783,7 +929,14 @@ namespace StardewModdingAPI
         /// <param name="name">The name of the module which will log messages with this instance.</param>
         private Monitor GetSecondaryMonitor(string name)
         {
-            return new Monitor(name, this.ConsoleManager, this.LogFile, this.CancellationTokenSource) { WriteToConsole = this.Monitor.WriteToConsole, ShowTraceInConsole = this.Settings.DeveloperMode };
+            return new Monitor(name, this.ConsoleManager, this.LogFile, this.CancellationTokenSource)
+            {
+                WriteToConsole = this.Monitor.WriteToConsole,
+                ShowTraceInConsole = this.Settings.DeveloperMode,
+#if !SMAPI_1_x
+                ShowFullStampInConsole = this.Settings.DeveloperMode
+#endif
+            };
         }
 
         /// <summary>Get a human-readable name for the current platform.</summary>

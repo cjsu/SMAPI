@@ -71,13 +71,15 @@ namespace StardewModdingAPI.Framework.ModLoading
             }
 
             // rewrite & load assemblies in leaf-to-root order
+            bool oneAssembly = assemblies.Length == 1;
             Assembly lastAssembly = null;
             foreach (AssemblyParseResult assembly in assemblies)
             {
-                bool changed = this.RewriteAssembly(assembly.Definition, assumeCompatible);
+                bool changed = this.RewriteAssembly(assembly.Definition, assumeCompatible, logPrefix: "   ");
                 if (changed)
                 {
-                    this.Monitor.Log($"Loading {assembly.File.Name} (rewritten in memory)...", LogLevel.Trace);
+                    if (!oneAssembly)
+                        this.Monitor.Log($"   Loading {assembly.File.Name}.dll (rewritten in memory)...", LogLevel.Trace);
                     using (MemoryStream outStream = new MemoryStream())
                     {
                         assembly.Definition.Write(outStream);
@@ -87,7 +89,8 @@ namespace StardewModdingAPI.Framework.ModLoading
                 }
                 else
                 {
-                    this.Monitor.Log($"Loading {assembly.File.Name}...", LogLevel.Trace);
+                    if (!oneAssembly)
+                        this.Monitor.Log($"   Loading {assembly.File.Name}.dll...", LogLevel.Trace);
                     lastAssembly = Assembly.UnsafeLoadFrom(assembly.File.FullName);
                 }
             }
@@ -161,12 +164,14 @@ namespace StardewModdingAPI.Framework.ModLoading
         /// <summary>Rewrite the types referenced by an assembly.</summary>
         /// <param name="assembly">The assembly to rewrite.</param>
         /// <param name="assumeCompatible">Assume the mod is compatible, even if incompatible code is detected.</param>
+        /// <param name="logPrefix">A string to prefix to log messages.</param>
         /// <returns>Returns whether the assembly was modified.</returns>
         /// <exception cref="IncompatibleInstructionException">An incompatible CIL instruction was found while rewriting the assembly.</exception>
-        private bool RewriteAssembly(AssemblyDefinition assembly, bool assumeCompatible)
+        private bool RewriteAssembly(AssemblyDefinition assembly, bool assumeCompatible, string logPrefix)
         {
             ModuleDefinition module = assembly.MainModule;
             HashSet<string> loggedMessages = new HashSet<string>();
+            string filename = $"{assembly.Name.Name}.dll";
 
             // swap assembly references if needed (e.g. XNA => MonoGame)
             bool platformChanged = false;
@@ -175,7 +180,7 @@ namespace StardewModdingAPI.Framework.ModLoading
                 // remove old assembly reference
                 if (this.AssemblyMap.RemoveNames.Any(name => module.AssemblyReferences[i].Name == name))
                 {
-                    this.LogOnce(this.Monitor, loggedMessages, $"Rewriting {assembly.Name.Name} for OS...");
+                    this.LogOnce(this.Monitor, loggedMessages, $"{logPrefix}Rewriting {filename} for OS...");
                     platformChanged = true;
                     module.AssemblyReferences.RemoveAt(i);
                     i--;
@@ -205,15 +210,15 @@ namespace StardewModdingAPI.Framework.ModLoading
                     {
                         if (rewriter.Rewrite(module, method, this.AssemblyMap, platformChanged))
                         {
-                            this.LogOnce(this.Monitor, loggedMessages, $"Rewrote {assembly.Name.Name} to fix {rewriter.NounPhrase}...");
+                            this.LogOnce(this.Monitor, loggedMessages, $"{logPrefix}Rewrote {filename} to fix {rewriter.NounPhrase}...");
                             anyRewritten = true;
                         }
                     }
                     catch (IncompatibleInstructionException)
                     {
                         if (!assumeCompatible)
-                            throw new IncompatibleInstructionException(rewriter.NounPhrase, $"Found an incompatible CIL instruction ({rewriter.NounPhrase}) while loading assembly {assembly.Name.Name}.");
-                        this.LogOnce(this.Monitor, loggedMessages, $"Found an incompatible CIL instruction ({rewriter.NounPhrase}) while loading assembly {assembly.Name.Name}, but SMAPI is configured to allow it anyway. The mod may crash or behave unexpectedly.", LogLevel.Warn);
+                            throw new IncompatibleInstructionException(rewriter.NounPhrase, $"Found an incompatible CIL instruction ({rewriter.NounPhrase}) while loading assembly {filename}.");
+                        this.LogOnce(this.Monitor, loggedMessages, $"{logPrefix}Found an incompatible CIL instruction ({rewriter.NounPhrase}) while loading assembly {filename}, but SMAPI is configured to allow it anyway. The mod may crash or behave unexpectedly.", LogLevel.Warn);
                     }
                 }
 
@@ -227,15 +232,15 @@ namespace StardewModdingAPI.Framework.ModLoading
                         {
                             if (rewriter.Rewrite(module, cil, instruction, this.AssemblyMap, platformChanged))
                             {
-                                this.LogOnce(this.Monitor, loggedMessages, $"Rewrote {assembly.Name.Name} to fix {rewriter.NounPhrase}...");
+                                this.LogOnce(this.Monitor, loggedMessages, $"{logPrefix}Rewrote {filename} to fix {rewriter.NounPhrase}...");
                                 anyRewritten = true;
                             }
                         }
                         catch (IncompatibleInstructionException)
                         {
                             if (!assumeCompatible)
-                                throw new IncompatibleInstructionException(rewriter.NounPhrase, $"Found an incompatible CIL instruction ({rewriter.NounPhrase}) while loading assembly {assembly.Name.Name}.");
-                            this.LogOnce(this.Monitor, loggedMessages, $"Found an incompatible CIL instruction ({rewriter.NounPhrase}) while loading assembly {assembly.Name.Name}, but SMAPI is configured to allow it anyway. The mod may crash or behave unexpectedly.", LogLevel.Warn);
+                                throw new IncompatibleInstructionException(rewriter.NounPhrase, $"Found an incompatible CIL instruction ({rewriter.NounPhrase}) while loading assembly {filename}.");
+                            this.LogOnce(this.Monitor, loggedMessages, $"{logPrefix}Found an incompatible CIL instruction ({rewriter.NounPhrase}) while loading assembly {filename}, but SMAPI is configured to allow it anyway. The mod may crash or behave unexpectedly.", LogLevel.Warn);
                         }
                     }
                 }

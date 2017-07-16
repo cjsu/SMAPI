@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework.Input;
 using Newtonsoft.Json;
+using StardewModdingAPI.Utilities;
 
 namespace StardewModdingAPI.Framework.Serialisation
 {
@@ -19,7 +20,7 @@ namespace StardewModdingAPI.Framework.Serialisation
             ObjectCreationHandling = ObjectCreationHandling.Replace, // avoid issue where default ICollection<T> values are duplicated each time the config is loaded
             Converters = new List<JsonConverter>
             {
-                new SelectiveStringEnumConverter(typeof(Buttons), typeof(Keys))
+                new SelectiveStringEnumConverter(typeof(Buttons), typeof(Keys), typeof(SButton))
             }
         };
 
@@ -51,7 +52,21 @@ namespace StardewModdingAPI.Framework.Serialisation
             }
 
             // deserialise model
-            return JsonConvert.DeserializeObject<TModel>(json, this.JsonSettings);
+            try
+            {
+                return JsonConvert.DeserializeObject<TModel>(json, this.JsonSettings);
+            }
+            catch (JsonReaderException ex)
+            {
+                string message = $"The file at {fullPath} doesn't seem to be valid JSON.";
+
+                string text = File.ReadAllText(fullPath);
+                if (text.Contains("“") || text.Contains("”"))
+                    message += " Found curly quotes in the text; note that only straight quotes are allowed in JSON.";
+
+                message += $"\nTechnical details: {ex.Message}";
+                throw new JsonReaderException(message);
+            }
         }
 
         /// <summary>Save to a JSON file.</summary>

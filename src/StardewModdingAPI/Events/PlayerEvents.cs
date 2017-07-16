@@ -15,6 +15,7 @@ namespace StardewModdingAPI.Events
         /*********
         ** Properties
         *********/
+#if SMAPI_1_x
         /// <summary>Manages deprecation warnings.</summary>
         private static DeprecationManager DeprecationManager;
 
@@ -25,18 +26,20 @@ namespace StardewModdingAPI.Events
         /// <summary>The backing field for <see cref="FarmerChanged"/>.</summary>
         [SuppressMessage("ReSharper", "InconsistentNaming")]
         private static event EventHandler<EventArgsFarmerChanged> _FarmerChanged;
+#endif
 
 
         /*********
         ** Events
         *********/
+#if SMAPI_1_x
         /// <summary>Raised after the player loads a saved game.</summary>
         [Obsolete("Use " + nameof(SaveEvents) + "." + nameof(SaveEvents.AfterLoad) + " instead")]
         public static event EventHandler<EventArgsLoadedGameChanged> LoadedGame
         {
             add
             {
-                PlayerEvents.DeprecationManager.Warn($"{nameof(PlayerEvents)}.{nameof(PlayerEvents.LoadedGame)}", "1.6", DeprecationLevel.Info);
+                PlayerEvents.DeprecationManager.Warn($"{nameof(PlayerEvents)}.{nameof(PlayerEvents.LoadedGame)}", "1.6", DeprecationLevel.PendingRemoval);
                 PlayerEvents._LoadedGame += value;
             }
             remove => PlayerEvents._LoadedGame -= value;
@@ -48,11 +51,12 @@ namespace StardewModdingAPI.Events
         {
             add
             {
-                PlayerEvents.DeprecationManager.Warn($"{nameof(PlayerEvents)}.{nameof(PlayerEvents.FarmerChanged)}", "1.6", DeprecationLevel.Info);
+                PlayerEvents.DeprecationManager.Warn($"{nameof(PlayerEvents)}.{nameof(PlayerEvents.FarmerChanged)}", "1.6", DeprecationLevel.PendingRemoval);
                 PlayerEvents._FarmerChanged += value;
             }
             remove => PlayerEvents._FarmerChanged -= value;
         }
+#endif
 
         /// <summary>Raised after the player's inventory changes in any way (added or removed item, sorted, etc).</summary>
         public static event EventHandler<EventArgsInventoryChanged> InventoryChanged;
@@ -64,6 +68,7 @@ namespace StardewModdingAPI.Events
         /*********
         ** Internal methods
         *********/
+#if SMAPI_1_x
         /// <summary>Injects types required for backwards compatibility.</summary>
         /// <param name="deprecationManager">Manages deprecation warnings.</param>
         internal static void Shim(DeprecationManager deprecationManager)
@@ -87,6 +92,7 @@ namespace StardewModdingAPI.Events
         {
             monitor.SafelyRaiseGenericEvent($"{nameof(PlayerEvents)}.{nameof(PlayerEvents.FarmerChanged)}", PlayerEvents._FarmerChanged?.GetInvocationList(), null, new EventArgsFarmerChanged(priorFarmer, newFarmer));
         }
+#endif
 
         /// <summary>Raise an <see cref="InventoryChanged"/> event.</summary>
         /// <param name="monitor">Encapsulates monitoring and logging.</param>

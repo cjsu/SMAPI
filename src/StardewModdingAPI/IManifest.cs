@@ -21,7 +21,7 @@ namespace StardewModdingAPI
         ISemanticVersion Version { get; }
 
         /// <summary>The minimum SMAPI version required by this mod, if any.</summary>
-        string MinimumApiVersion { get; }
+        ISemanticVersion MinimumApiVersion { get; }
 
         /// <summary>The unique mod ID.</summary>
         string UniqueID { get; }

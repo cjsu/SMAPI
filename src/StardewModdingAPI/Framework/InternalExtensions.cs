@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Microsoft.Xna.Framework.Graphics;
+using StardewModdingAPI.Framework.Reflection;
 using StardewValley;
 
 namespace StardewModdingAPI.Framework
@@ -99,7 +100,7 @@ namespace StardewModdingAPI.Framework
         /// <summary>Get whether the sprite batch is between a begin and end pair.</summary>
         /// <param name="spriteBatch">The sprite batch to check.</param>
         /// <param name="reflection">The reflection helper with which to access private fields.</param>
-        public static bool IsOpen(this SpriteBatch spriteBatch, IReflectionHelper reflection)
+        public static bool IsOpen(this SpriteBatch spriteBatch, Reflector reflection)
         {
             // get field name
             const string fieldName =
@@ -110,7 +111,7 @@ namespace StardewModdingAPI.Framework
 #endif
 
             // get result
-            return reflection.GetPrivateValue<bool>(Game1.spriteBatch, fieldName);
+            return reflection.GetPrivateField<bool>(Game1.spriteBatch, fieldName).GetValue();
         }
     }
 }

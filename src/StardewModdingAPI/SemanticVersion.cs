@@ -10,8 +10,14 @@ namespace StardewModdingAPI
         ** Properties
         *********/
         /// <summary>A regular expression matching a semantic version string.</summary>
-        /// <remarks>Derived from https://github.com/maxhauser/semver.</remarks>
-        private static readonly Regex Regex = new Regex(@"^(?<major>\d+)(\.(?<minor>\d+))?(\.(?<patch>\d+))?(?<build>.*)$", RegexOptions.CultureInvariant | RegexOptions.ExplicitCapture);
+        /// <remarks>
+        /// This pattern is derived from the BNF documentation in the <a href="https://github.com/mojombo/semver">semver repo</a>,
+        /// with three important deviations intended to support Stardew Valley mod conventions:
+        /// - allows short-form "x.y" versions;
+        /// - allows hyphens in prerelease tags as synonyms for dots (like "-unofficial-update.3");
+        /// - doesn't allow '+build' suffixes.
+        /// </remarks>
+        private static readonly Regex Regex = new Regex(@"^(?<major>0|[1-9]\d*)\.(?<minor>0|[1-9]\d*)(\.(?<patch>0|[1-9]\d*))?(?:-(?<prerelease>([a-z0-9]+[\-\.]?)+))?$", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.ExplicitCapture);
 
 
         /*********
@@ -48,17 +54,22 @@ namespace StardewModdingAPI
 
         /// <summary>Construct an instance.</summary>
         /// <param name="version">The semantic version string.</param>
+        /// <exception cref="ArgumentNullException">The <paramref name="version"/> is null.</exception>
         /// <exception cref="FormatException">The <paramref name="version"/> is not a valid semantic version.</exception>
         public SemanticVersion(string version)
         {
-            var match = SemanticVersion.Regex.Match(version);
+            // parse
+            if (version == null)
+                throw new ArgumentNullException(nameof(version), "The input version string can't be null.");
+            var match = SemanticVersion.Regex.Match(version.Trim());
             if (!match.Success)
-                throw new FormatException($"The input '{version}' is not a valid semantic version.");
+                throw new FormatException($"The input '{version}' isn't a valid semantic version.");
 
+            // initialise
             this.MajorVersion = int.Parse(match.Groups["major"].Value);
             this.MinorVersion = match.Groups["minor"].Success ? int.Parse(match.Groups["minor"].Value) : 0;
             this.PatchVersion = match.Groups["patch"].Success ? int.Parse(match.Groups["patch"].Value) : 0;
-            this.Build = match.Groups["build"].Success ? this.GetNormalisedTag(match.Groups["build"].Value) : null;
+            this.Build = match.Groups["prerelease"].Success ? this.GetNormalisedTag(match.Groups["prerelease"].Value) : null;
         }
 
         /// <summary>Get an integer indicating whether this version precedes (less than 0), supercedes (more than 0), or is equivalent to (0) the specified version.</summary>
@@ -93,8 +104,8 @@ namespace StardewModdingAPI
                 return curOlder;
 
             // compare two pre-release tag values
-            string[] curParts = this.Build.Split('.');
-            string[] otherParts = other.Build.Split('.');
+            string[] curParts = this.Build.Split('.', '-');
+            string[] otherParts = other.Build.Split('.', '-');
             for (int i = 0; i < curParts.Length; i++)
             {
                 // longer prerelease tag supercedes if otherwise equal
@@ -200,6 +211,7 @@ namespace StardewModdingAPI
             }
         }
 
+
         /*********
         ** Private methods
         *********/
@@ -207,11 +219,9 @@ namespace StardewModdingAPI
         /// <param name="tag">The tag to normalise.</param>
         private string GetNormalisedTag(string tag)
         {
-            tag = tag?.Trim().Trim('-', '.');
-            if (string.IsNullOrWhiteSpace(tag))
+            tag = tag?.Trim();
+            if (string.IsNullOrWhiteSpace(tag) || tag == "0") // '0' from incorrect examples in old SMAPI documentation
                 return null;
-            if (tag == "0")
-                return null; // from incorrect examples in old SMAPI documentation
             return tag;
         }
     }

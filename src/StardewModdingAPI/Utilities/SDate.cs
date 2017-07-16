@@ -5,13 +5,16 @@ using StardewValley;
 namespace StardewModdingAPI.Utilities
 {
     /// <summary>Represents a Stardew Valley date.</summary>
-    public class SDate
+    public class SDate : IEquatable<SDate>
     {
         /*********
         ** Properties
         *********/
         /// <summary>The internal season names in order.</summary>
         private readonly string[] Seasons = { "spring", "summer", "fall", "winter" };
+
+        /// <summary>The number of seasons in a year.</summary>
+        private int SeasonsInYear => this.Seasons.Length;
 
         /// <summary>The number of days in a season.</summary>
         private readonly int DaysInSeason = 28;
@@ -63,6 +66,12 @@ namespace StardewModdingAPI.Utilities
             this.Year = year;
         }
 
+        /// <summary>Get the current in-game date.</summary>
+        public static SDate Now()
+        {
+            return new SDate(Game1.dayOfMonth, Game1.currentSeason, Game1.year);
+        }
+
         /// <summary>Get a new date with the given number of days added.</summary>
         /// <param name="offset">The number of days to add.</param>
         /// <returns>Returns the resulting date.</returns>
@@ -77,10 +86,8 @@ namespace StardewModdingAPI.Utilities
             // handle season transition
             if (day > this.DaysInSeason || day < 1)
             {
-                // get current season index
-                int curSeasonIndex = Array.IndexOf(this.Seasons, this.Season);
-                if (curSeasonIndex == -1)
-                    throw new InvalidOperationException($"The current season '{this.Season}' wasn't recognised.");
+                // get season index
+                int curSeasonIndex = this.GetSeasonIndex();
 
                 // get season offset
                 int seasonOffset = day / this.DaysInSeason;
@@ -94,7 +101,7 @@ namespace StardewModdingAPI.Utilities
             }
 
             // validate
-            if(year < 1)
+            if (year < 1)
                 throw new ArithmeticException($"Adding {offset} days to {this} would result in invalid date {day:00} {season} {year}.");
 
             // return new date
@@ -107,10 +114,84 @@ namespace StardewModdingAPI.Utilities
             return $"{this.Day:00} {this.Season} Y{this.Year}";
         }
 
-        /// <summary>Get the current in-game date.</summary>
-        public static SDate Now()
+        /****
+        ** IEquatable
+        ****/
+        /// <summary>Get whether this instance is equal to another.</summary>
+        /// <param name="other">The other value to compare.</param>
+        public bool Equals(SDate other)
         {
-            return new SDate(Game1.dayOfMonth, Game1.currentSeason, Game1.year);
+            return this == other;
+        }
+
+        /// <summary>Get whether this instance is equal to another.</summary>
+        /// <param name="obj">The other value to compare.</param>
+        public override bool Equals(object obj)
+        {
+            return obj is SDate other && this == other;
+        }
+
+        /// <summary>Get a hash code which uniquely identifies a date.</summary>
+        public override int GetHashCode()
+        {
+            // return the number of days since 01 spring Y1
+            int yearIndex = this.Year - 1;
+            return
+                yearIndex * this.DaysInSeason * this.SeasonsInYear
+                + this.GetSeasonIndex() * this.DaysInSeason
+                + this.Day;
+        }
+
+        /****
+        ** Operators
+        ****/
+        /// <summary>Get whether one date is equal to another.</summary>
+        /// <param name="date">The base date to compare.</param>
+        /// <param name="other">The other date to compare.</param>
+        /// <returns>The equality of the dates</returns>
+        public static bool operator ==(SDate date, SDate other)
+        {
+            return date?.GetHashCode() == other?.GetHashCode();
+        }
+
+        /// <summary>Get whether one date is not equal to another.</summary>
+        /// <param name="date">The base date to compare.</param>
+        /// <param name="other">The other date to compare.</param>
+        public static bool operator !=(SDate date, SDate other)
+        {
+            return date?.GetHashCode() != other?.GetHashCode();
+        }
+
+        /// <summary>Get whether one date is more than another.</summary>
+        /// <param name="date">The base date to compare.</param>
+        /// <param name="other">The other date to compare.</param>
+        public static bool operator >(SDate date, SDate other)
+        {
+            return date?.GetHashCode() > other?.GetHashCode();
+        }
+
+        /// <summary>Get whether one date is more than or equal to another.</summary>
+        /// <param name="date">The base date to compare.</param>
+        /// <param name="other">The other date to compare.</param>
+        public static bool operator >=(SDate date, SDate other)
+        {
+            return date?.GetHashCode() >= other?.GetHashCode();
+        }
+
+        /// <summary>Get whether one date is less than or equal to another.</summary>
+        /// <param name="date">The base date to compare.</param>
+        /// <param name="other">The other date to compare.</param>
+        public static bool operator <=(SDate date, SDate other)
+        {
+            return date?.GetHashCode() <= other?.GetHashCode();
+        }
+
+        /// <summary>Get whether one date is less than another.</summary>
+        /// <param name="date">The base date to compare.</param>
+        /// <param name="other">The other date to compare.</param>
+        public static bool operator <(SDate date, SDate other)
+        {
+            return date?.GetHashCode() < other?.GetHashCode();
         }
 
         /*********
@@ -267,6 +348,16 @@ namespace StardewModdingAPI.Utilities
         /*********
         ** Private methods
         *********/
+        /// <summary>Get the current season index.</summary>
+        /// <exception cref="InvalidOperationException">The current season wasn't recognised.</exception>
+        private int GetSeasonIndex()
+        {
+            int index = Array.IndexOf(this.Seasons, this.Season);
+            if (index == -1)
+                throw new InvalidOperationException($"The current season '{this.Season}' wasn't recognised.");
+            return index;
+        }
+
         /// <summary>Get the real index in an array which should be treated as a two-way loop.</summary>
         /// <param name="index">The index in the looped array.</param>
         /// <param name="length">The number of elements in the array.</param>

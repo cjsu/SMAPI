@@ -82,6 +82,7 @@ namespace StardewModdingApi.Installer
             yield return GetInstallPath("StardewModdingAPI.config.json");
             yield return GetInstallPath("StardewModdingAPI.data.json");
             yield return GetInstallPath("StardewModdingAPI.AssemblyRewriters.dll");
+            yield return GetInstallPath("System.ValueTuple.dll");
             yield return GetInstallPath("steam_appid.txt");
 
             // Linux/Mac only

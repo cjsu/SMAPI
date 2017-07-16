@@ -3,7 +3,7 @@
 namespace StardewModdingAPI
 {
     /// <summary>Provides an API for managing console commands.</summary>
-    public interface ICommandHelper
+    public interface ICommandHelper : IModLinked
     {
         /*********
         ** Public methods

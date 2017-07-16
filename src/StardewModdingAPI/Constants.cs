@@ -33,7 +33,12 @@ namespace StardewModdingAPI
         ** Public
         ****/
         /// <summary>SMAPI's current semantic version.</summary>
-        public static ISemanticVersion ApiVersion { get; } = new SemanticVersion(1, 14, 1); // alpha-{DateTime.UtcNow:yyyyMMddHHmm}
+        public static ISemanticVersion ApiVersion { get; } =
+#if SMAPI_1_x
+            new SemanticVersion(1, 15, 1); // alpha-{DateTime.UtcNow:yyyyMMddHHmm}
+#else
+            new SemanticVersion(2, 0, 0, $"alpha-{DateTime.UtcNow:yyyyMMddHHmm}");
+#endif
 
         /// <summary>The minimum supported version of Stardew Valley.</summary>
         public static ISemanticVersion MinimumGameVersion { get; } = new SemanticVersion("1.2.30");
@@ -168,6 +173,32 @@ namespace StardewModdingAPI
                 new EventFinder("StardewModdingAPI.Events.GraphicsEvents", "OnPostRenderGuiEventNoCheck"),
                 new EventFinder("StardewModdingAPI.Events.GraphicsEvents", "OnPreRenderHudEventNoCheck"),
                 new EventFinder("StardewModdingAPI.Events.GraphicsEvents", "OnPreRenderGuiEventNoCheck"),
+
+                // APIs removed in SMAPI 2.0
+#if !SMAPI_1_x
+                new TypeFinder("StardewModdingAPI.Command"),
+                new TypeFinder("StardewModdingAPI.Config"),
+                new TypeFinder("StardewModdingAPI.Log"),
+                new TypeFinder("StardewModdingAPI.Events.EventArgsCommand"),
+                new TypeFinder("StardewModdingAPI.Events.EventArgsFarmerChanged"),
+                new TypeFinder("StardewModdingAPI.Events.EventArgsLoadedGameChanged"),
+                new TypeFinder("StardewModdingAPI.Events.EventArgsNewDay"),
+                new TypeFinder("StardewModdingAPI.Events.EventArgsStringChanged"),
+                new PropertyFinder("StardewModdingAPI.Mod", "PathOnDisk"),
+                new PropertyFinder("StardewModdingAPI.Mod", "BaseConfigPath"),
+                new PropertyFinder("StardewModdingAPI.Mod", "PerSaveConfigFolder"),
+                new PropertyFinder("StardewModdingAPI.Mod", "PerSaveConfigPath"),
+                new EventFinder("StardewModdingAPI.Events.GameEvents", "Initialize"),
+                new EventFinder("StardewModdingAPI.Events.GameEvents", "LoadContent"),
+                new EventFinder("StardewModdingAPI.Events.GameEvents", "GameLoaded"),
+                new EventFinder("StardewModdingAPI.Events.GameEvents", "FirstUpdateTick"),
+                new EventFinder("StardewModdingAPI.Events.PlayerEvents", "LoadedGame"),
+                new EventFinder("StardewModdingAPI.Events.PlayerEvents", "FarmerChanged"),
+                new EventFinder("StardewModdingAPI.Events.TimeEvents", "DayOfMonthChanged"),
+                new EventFinder("StardewModdingAPI.Events.TimeEvents", "YearOfGameChanged"),
+                new EventFinder("StardewModdingAPI.Events.TimeEvents", "SeasonOfYearChanged"),
+                new EventFinder("StardewModdingAPI.Events.TimeEvents", "OnNewDay"),
+#endif
 
                 /****
                 ** Rewriters change CIL as needed to fix incompatible code

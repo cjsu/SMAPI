@@ -7,7 +7,7 @@ using System.Reflection;
 namespace StardewModdingAPI.Framework
 {
     /// <summary>Tracks the installed mods.</summary>
-    internal class ModRegistry : IModRegistry
+    internal class ModRegistry
     {
         /*********
         ** Properties
@@ -23,7 +23,7 @@ namespace StardewModdingAPI.Framework
         ** Public methods
         *********/
         /****
-        ** IModRegistry
+        ** Basic metadata
         ****/
         /// <summary>Get metadata for all loaded mods.</summary>
         public IEnumerable<IManifest> GetAll()
@@ -36,18 +36,28 @@ namespace StardewModdingAPI.Framework
         /// <returns>Returns the matching mod's metadata, or <c>null</c> if not found.</returns>
         public IManifest Get(string uniqueID)
         {
-            return this.GetAll().FirstOrDefault(p => p.UniqueID == uniqueID);
+            // normalise search ID
+            if (string.IsNullOrWhiteSpace(uniqueID))
+                return null;
+            uniqueID = uniqueID.Trim();
+
+            // find match
+            return this.GetAll().FirstOrDefault(p =>
+#if SMAPI_1_x
+            p.UniqueID != null &&
+#endif
+            p.UniqueID.Trim().Equals(uniqueID, StringComparison.InvariantCultureIgnoreCase));
         }
 
         /// <summary>Get whether a mod has been loaded.</summary>
         /// <param name="uniqueID">The mod's unique ID.</param>
         public bool IsLoaded(string uniqueID)
         {
-            return this.GetAll().Any(p => p.UniqueID == uniqueID);
+            return this.Get(uniqueID) != null;
         }
 
         /****
-        ** Internal methods
+        ** Mod data
         ****/
         /// <summary>Register a mod as a possible source of deprecation warnings.</summary>
         /// <param name="metadata">The mod metadata.</param>

@@ -49,6 +49,7 @@
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Finders\EventFinder.cs" />
+    <Compile Include="Finders\PropertyFinder.cs" />
     <Compile Include="Finders\FieldFinder.cs" />
     <Compile Include="Finders\MethodFinder.cs" />
     <Compile Include="Finders\TypeFinder.cs" />

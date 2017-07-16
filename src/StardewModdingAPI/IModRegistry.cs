@@ -2,8 +2,8 @@
 
 namespace StardewModdingAPI
 {
-    /// <summary>Provides metadata about loaded mods.</summary>
-    public interface IModRegistry
+    /// <summary>Provides an API for fetching metadata about loaded mods.</summary>
+    public interface IModRegistry : IModLinked
     {
         /// <summary>Get metadata for all loaded mods.</summary>
         IEnumerable<IManifest> GetAll();

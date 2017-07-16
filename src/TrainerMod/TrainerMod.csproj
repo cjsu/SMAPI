@@ -38,7 +38,7 @@
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -51,11 +51,38 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ItemData\ISearchItem.cs" />
-    <Compile Include="ItemData\ItemType.cs" />
-    <Compile Include="ItemData\SearchableObject.cs" />
-    <Compile Include="ItemData\SearchableRing.cs" />
-    <Compile Include="ItemData\SearchableWeapon.cs" />
+    <Compile Include="Framework\Commands\ArgumentParser.cs" />
+    <Compile Include="Framework\Commands\Other\ShowDataFilesCommand.cs" />
+    <Compile Include="Framework\Commands\Other\ShowGameFilesCommand.cs" />
+    <Compile Include="Framework\Commands\Other\DebugCommand.cs" />
+    <Compile Include="Framework\Commands\Player\ListItemTypesCommand.cs" />
+    <Compile Include="Framework\Commands\Player\ListItemsCommand.cs" />
+    <Compile Include="Framework\Commands\Player\AddCommand.cs" />
+    <Compile Include="Framework\Commands\Player\SetStyleCommand.cs" />
+    <Compile Include="Framework\Commands\Player\SetColorCommand.cs" />
+    <Compile Include="Framework\Commands\Player\SetSpeedCommand.cs" />
+    <Compile Include="Framework\Commands\Player\SetLevelCommand.cs" />
+    <Compile Include="Framework\Commands\Player\SetMaxHealthCommand.cs" />
+    <Compile Include="Framework\Commands\Player\SetMaxStaminaCommand.cs" />
+    <Compile Include="Framework\Commands\Player\SetHealthCommand.cs" />
+    <Compile Include="Framework\Commands\Player\SetImmunityCommand.cs" />
+    <Compile Include="Framework\Commands\Player\SetStaminaCommand.cs" />
+    <Compile Include="Framework\Commands\Player\SetNameCommand.cs" />
+    <Compile Include="Framework\Commands\Player\SetMoneyCommand.cs" />
+    <Compile Include="Framework\Commands\Saves\LoadCommand.cs" />
+    <Compile Include="Framework\Commands\Saves\SaveCommand.cs" />
+    <Compile Include="Framework\Commands\TrainerCommand.cs" />
+    <Compile Include="Framework\Commands\World\SetMineLevelCommand.cs" />
+    <Compile Include="Framework\Commands\World\DownMineLevelCommand.cs" />
+    <Compile Include="Framework\Commands\World\SetYearCommand.cs" />
+    <Compile Include="Framework\Commands\World\SetSeasonCommand.cs" />
+    <Compile Include="Framework\Commands\World\SetDayCommand.cs" />
+    <Compile Include="Framework\Commands\World\SetTimeCommand.cs" />
+    <Compile Include="Framework\Commands\World\FreezeTimeCommand.cs" />
+    <Compile Include="Framework\ItemData\ItemType.cs" />
+    <Compile Include="Framework\Commands\ITrainerCommand.cs" />
+    <Compile Include="Framework\ItemData\SearchableItem.cs" />
+    <Compile Include="Framework\ItemRepository.cs" />
     <Compile Include="TrainerMod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

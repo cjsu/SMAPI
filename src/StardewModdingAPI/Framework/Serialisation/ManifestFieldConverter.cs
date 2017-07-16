@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using StardewModdingAPI.Framework.Exceptions;
 using StardewModdingAPI.Framework.Models;
 
 namespace StardewModdingAPI.Framework.Serialisation
@@ -36,12 +37,32 @@ namespace StardewModdingAPI.Framework.Serialisation
             // semantic version
             if (objectType == typeof(ISemanticVersion))
             {
-                JObject obj = JObject.Load(reader);
-                int major = obj.Value<int>(nameof(ISemanticVersion.MajorVersion));
-                int minor = obj.Value<int>(nameof(ISemanticVersion.MinorVersion));
-                int patch = obj.Value<int>(nameof(ISemanticVersion.PatchVersion));
-                string build = obj.Value<string>(nameof(ISemanticVersion.Build));
-                return new SemanticVersion(major, minor, patch, build);
+                JToken token = JToken.Load(reader);
+                switch (token.Type)
+                {
+                    case JTokenType.Object:
+                        {
+                            JObject obj = (JObject)token;
+                            int major = obj.Value<int>(nameof(ISemanticVersion.MajorVersion));
+                            int minor = obj.Value<int>(nameof(ISemanticVersion.MinorVersion));
+                            int patch = obj.Value<int>(nameof(ISemanticVersion.PatchVersion));
+                            string build = obj.Value<string>(nameof(ISemanticVersion.Build));
+                            return new SemanticVersion(major, minor, patch, build);
+                        }
+
+                    case JTokenType.String:
+                        {
+                            string str = token.Value<string>();
+                            if (string.IsNullOrWhiteSpace(str))
+                                return null;
+                            if (!SemanticVersion.TryParse(str, out ISemanticVersion version))
+                                throw new SParseException($"Can't parse semantic version from invalid value '{str}', should be formatted like 1.2, 1.2.30, or 1.2.30-beta.");
+                            return version;
+                        }
+
+                    default:
+                        throw new SParseException($"Can't parse semantic version from {token.Type}, must be an object or string.");
+                }
             }
 
             // manifest dependency
@@ -51,7 +72,13 @@ namespace StardewModdingAPI.Framework.Serialisation
                 foreach (JObject obj in JArray.Load(reader).Children<JObject>())
                 {
                     string uniqueID = obj.Value<string>(nameof(IManifestDependency.UniqueID));
-                    result.Add(new ManifestDependency(uniqueID));
+                    string minVersion = obj.Value<string>(nameof(IManifestDependency.MinimumVersion));
+#if SMAPI_1_x
+                    result.Add(new ManifestDependency(uniqueID, minVersion));
+#else
+                    bool required = obj.Value<bool?>(nameof(IManifestDependency.IsRequired)) ?? true;
+                    result.Add(new ManifestDependency(uniqueID, minVersion, required));
+#endif
                 }
                 return result.ToArray();
             }

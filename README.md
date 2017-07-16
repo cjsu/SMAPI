@@ -41,14 +41,14 @@ doesn't change any of your game files. It serves five main purposes:
    otherwise show a generic 'program has stopped working' type of message._
 
 ## For players
-* [How to install SMAPI & use mods](http://canimod.com/guides/using-mods#installing-smapi)
+* [Intro & FAQs](http://stardewvalleywiki.com/Modding:Player_FAQs)
+* [Installing SMAPI](http://stardewvalleywiki.com/Modding:Installing_SMAPI)
 * [Release notes](release-notes.md#release-notes)
 * Need help? Come [chat on Discord](https://discord.gg/KCJHWhX) or [post in the support forums](http://community.playstarbound.com/threads/smapi-stardew-modding-api.108375/).  
   _Please don't submit issues on GitHub for support questions._
 
 ## For mod developers
-* [How to develop mods](http://canimod.com/guides/creating-a-smapi-mod)
-* [How to update mods](http://canimod.com/guides/updating-a-smapi-mod)
+* [Modding documentation](http://stardewvalleywiki.com/Modding:Index)
 * [Release notes](release-notes.md#release-notes)
 * [Chat on Discord](https://discord.gg/KCJHWhX) with SMAPI developers and other modders
 
@@ -118,6 +118,7 @@ on the wiki for the first-time setup.
                steam_appid.txt
                System.Numerics.dll
                System.Runtime.Caching.dll
+               System.ValueTuple.dll
             Windows/
                Mods/*
                Mono.Cecil.dll
@@ -127,6 +128,7 @@ on the wiki for the first-time setup.
                StardewModdingAPI.exe
                StardewModdingAPI.pdb
                StardewModdingAPI.xml
+               System.ValueTuple.dll
                steam_appid.txt
       ```
    4. Open a terminal in the `SMAPI <version>` folder and run `chmod 755 internal/Mono/StardewModdingAPI`.
@@ -144,7 +146,7 @@ game folder. It contains these fields:
 
 field | purpose
 ----- | -------
-`DeveloperMode` | Default `false` (except in _SMAPI for developers_ releases). Whether to enable features intended for mod developers. Currently this only makes `TRACE`-level messages appear in the console.
+`DeveloperMode` | Default `false` (except in _SMAPI for developers_ releases). Whether to enable features intended for mod developers (mainly more detailed console logging).
 `CheckForUpdates` | Default `true`. Whether SMAPI should check for a newer version when you load the game. If a new version is available, a small message will appear in the console. This doesn't affect the load time even if your connection is offline or slow, because it happens in the background.
 `ModCompatibility` | A list of mod versions SMAPI should consider compatible or broken regardless of whether it detects incompatible code. Each record can be set to `AssumeCompatible` or `AssumeBroken`. Changing this field is not recommended and may destabilise your game.
 `VerboseLogging` | Whether SMAPI should log more information about the game context.
@@ -164,6 +166,5 @@ SMAPI uses a small number of conditional compilation constants, which you can se
 
 flag | purpose
 ---- | -------
-`EXPERIMENTAL` | Enables preview features that aren't officially released yet.
 `SMAPI_FOR_WINDOWS` | Indicates that SMAPI is being compiled on Windows for players on Windows. Set automatically in `crossplatform.targets`.
-
+`SMAPI_1_x` | Sets legacy SMAPI 1._x_ mode, disables SMAPI 2.0 features, and enables deprecated code. This will be removed when SMAPI 2.0 is released.

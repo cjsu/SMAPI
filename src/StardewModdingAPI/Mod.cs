@@ -11,11 +11,14 @@ namespace StardewModdingAPI
         /*********
         ** Properties
         *********/
+#if SMAPI_1_x
         /// <summary>Manages deprecation warnings.</summary>
         private static DeprecationManager DeprecationManager;
 
+
         /// <summary>The backing field for <see cref="Mod.PathOnDisk"/>.</summary>
         private string _pathOnDisk;
+#endif
 
 
         /*********
@@ -30,13 +33,14 @@ namespace StardewModdingAPI
         /// <summary>The mod's manifest.</summary>
         public IManifest ModManifest { get; internal set; }
 
+#if SMAPI_1_x
         /// <summary>The full path to the mod's directory on the disk.</summary>
         [Obsolete("Use " + nameof(Mod.Helper) + "." + nameof(IModHelper.DirectoryPath) + " instead")]
         public string PathOnDisk
         {
             get
             {
-                Mod.DeprecationManager.Warn($"{nameof(Mod)}.{nameof(Mod.PathOnDisk)}", "1.0", DeprecationLevel.Info);
+                Mod.DeprecationManager.Warn($"{nameof(Mod)}.{nameof(Mod.PathOnDisk)}", "1.0", DeprecationLevel.PendingRemoval);
                 return this._pathOnDisk;
             }
             internal set { this._pathOnDisk = value; }
@@ -48,7 +52,7 @@ namespace StardewModdingAPI
         {
             get
             {
-                Mod.DeprecationManager.Warn($"{nameof(Mod)}.{nameof(Mod.BaseConfigPath)}", "1.0", DeprecationLevel.Info);
+                Mod.DeprecationManager.Warn($"{nameof(Mod)}.{nameof(Mod.BaseConfigPath)}", "1.0", DeprecationLevel.PendingRemoval);
                 Mod.DeprecationManager.MarkWarned($"{nameof(Mod)}.{nameof(Mod.PathOnDisk)}", "1.0"); // avoid redundant warnings
                 return Path.Combine(this.PathOnDisk, "config.json");
             }
@@ -64,16 +68,18 @@ namespace StardewModdingAPI
         {
             get
             {
-                Mod.DeprecationManager.Warn($"{nameof(Mod)}.{nameof(Mod.PerSaveConfigPath)}", "1.0", DeprecationLevel.Info);
+                Mod.DeprecationManager.Warn($"{nameof(Mod)}.{nameof(Mod.PerSaveConfigPath)}", "1.0", DeprecationLevel.PendingRemoval);
                 Mod.DeprecationManager.MarkWarned($"{nameof(Mod)}.{nameof(Mod.PerSaveConfigFolder)}", "1.0"); // avoid redundant warnings
                 return Context.IsSaveLoaded ? Path.Combine(this.PerSaveConfigFolder, $"{Constants.SaveFolderName}.json") : "";
             }
         }
+#endif
 
 
         /*********
         ** Public methods
         *********/
+#if SMAPI_1_x
         /// <summary>Injects types required for backwards compatibility.</summary>
         /// <param name="deprecationManager">Manages deprecation warnings.</param>
         internal static void Shim(DeprecationManager deprecationManager)
@@ -84,6 +90,7 @@ namespace StardewModdingAPI
         /// <summary>The mod entry point, called after the mod is first loaded.</summary>
         [Obsolete("This overload is obsolete since SMAPI 1.0.")]
         public virtual void Entry(params object[] objects) { }
+#endif
 
         /// <summary>The mod entry point, called after the mod is first loaded.</summary>
         /// <param name="helper">Provides simplified APIs for writing mods.</param>
@@ -101,11 +108,12 @@ namespace StardewModdingAPI
         /*********
         ** Private methods
         *********/
+#if SMAPI_1_x
         /// <summary>Get the full path to the per-save configuration file for the current save (if <see cref="Manifest.PerSaveConfigs"/> is <c>true</c>).</summary>
         [Obsolete]
         private string GetPerSaveConfigFolder()
         {
-            Mod.DeprecationManager.Warn($"{nameof(Mod)}.{nameof(Mod.PerSaveConfigFolder)}", "1.0", DeprecationLevel.Info);
+            Mod.DeprecationManager.Warn($"{nameof(Mod)}.{nameof(Mod.PerSaveConfigFolder)}", "1.0", DeprecationLevel.PendingRemoval);
             Mod.DeprecationManager.MarkWarned($"{nameof(Mod)}.{nameof(Mod.PathOnDisk)}", "1.0"); // avoid redundant warnings
 
             if (!((Manifest)this.ModManifest).PerSaveConfigs)
@@ -115,6 +123,7 @@ namespace StardewModdingAPI
             }
             return Path.Combine(this.PathOnDisk, "psconfigs");
         }
+#endif
 
         /// <summary>Release or reset unmanaged resources when the game exits. There's no guarantee this will be called on every exit.</summary>
         /// <param name="disposing">Whether the instance is being disposed explicitly rather than finalised. If this is false, the instance shouldn't dispose other objects since they may already be finalised.</param>

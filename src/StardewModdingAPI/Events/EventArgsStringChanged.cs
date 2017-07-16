@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if SMAPI_1_x
+using System;
 
 namespace StardewModdingAPI.Events
 {
@@ -27,3 +28,4 @@ namespace StardewModdingAPI.Events
         }
     }
 }
+#endif
