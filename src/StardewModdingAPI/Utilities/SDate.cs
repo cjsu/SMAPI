@@ -192,33 +192,8 @@ namespace StardewModdingAPI.Utilities
         public static bool operator <(SDate date, SDate other)
         {
             return date?.GetHashCode() < other?.GetHashCode();
-
         }
 
-        /// <summary>
-        /// Greater than operator. Tests the date being greater than to each other
-        /// </summary>
-        /// <param name="s1">The first date being compared</param>
-        /// <param name="s2">The second date being compared</param>
-        /// <returns>If the dates are greater than</returns>
-        public static bool operator <(SDate s1, SDate s2)
-        {
-            if (s1.Year < s2.Year)
-                return true;
-            else if (s1.Year == s2.Year)
-            {
-                if (s1.Season == s2.Season && s1.Day < s2.Day)
-                    return true;
-                else if (s1.Season == "spring" && s2.Season != "spring")
-                    return true;
-                if (s1.Season == "summer" && (s2.Season == "fall" || s2.Season == "winter"))
-                    return true;
-                if (s1.Season == "fall" && s2.Season == "winter")
-                    return true;
-            }
-
-            return false;
-        }
 
         /// <summary>
         /// Overrides the equals function.
