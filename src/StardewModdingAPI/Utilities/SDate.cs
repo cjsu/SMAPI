@@ -55,8 +55,8 @@ namespace StardewModdingAPI.Utilities
                 throw new ArgumentNullException(nameof(season));
             if (!this.Seasons.Contains(season))
                 throw new ArgumentException($"Unknown season '{season}', must be one of [{string.Join(", ", this.Seasons)}].");
-            if (day < 1 || day > this.DaysInSeason)
-                throw new ArgumentException($"Invalid day '{day}', must be a value from 1 to {this.DaysInSeason}.");
+            if (day < 0 || day > this.DaysInSeason)
+                throw new ArgumentException($"Invalid day '{day}', must be a value from 0 to {this.DaysInSeason}.");
             if (year < 1)
                 throw new ArgumentException($"Invalid year '{year}', must be at least 1.");
 
@@ -194,7 +194,7 @@ namespace StardewModdingAPI.Utilities
             return date?.GetHashCode() < other?.GetHashCode();
         }
 
-
+		
         /*********
         ** Private methods
         *********/
