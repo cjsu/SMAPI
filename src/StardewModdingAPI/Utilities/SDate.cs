@@ -58,7 +58,7 @@ namespace StardewModdingAPI.Utilities
             if (day < 0 || day > this.DaysInSeason)
                 throw new ArgumentException($"Invalid day '{day}', must be a value from 0 to {this.DaysInSeason}.");
             if (year < 1)
-                throw new ArgumentException($"Invalid year '{year}', must be at least 0.");
+                throw new ArgumentException($"Invalid year '{year}', must be at least 1.");
 
             // initialise
             this.Day = day;
