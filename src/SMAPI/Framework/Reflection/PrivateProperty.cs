@@ -51,8 +51,10 @@ namespace StardewModdingAPI.Framework.Reflection
             this.Parent = obj;
             this.PropertyInfo = property ?? throw new ArgumentNullException(nameof(property));
 
-            this.GetterDelegate = (Func<object, TValue>)Delegate.CreateDelegate(typeof(Func<object, TValue>), this.PropertyInfo.GetMethod);
-            this.SetterDelegate = (Action<object, TValue>)Delegate.CreateDelegate(typeof(Action<object, TValue>), this.PropertyInfo.SetMethod);
+            Type[] types = new Type[] { this.PropertyInfo.DeclaringType, typeof(TValue)};
+
+            this.GetterDelegate = (Func<object, TValue>)Delegate.CreateDelegate(typeof(Func<,>).MakeGenericType(types), this.PropertyInfo.GetMethod);
+            this.SetterDelegate = (Action<object, TValue>)Delegate.CreateDelegate(typeof(Action<,>).MakeGenericType(types), this.PropertyInfo.SetMethod);
         }
 
         /// <summary>Get the property value.</summary>
