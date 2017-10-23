@@ -19,8 +19,8 @@ namespace StardewModdingAPI.Framework.Reflection
         /// <summary>The display name shown in error messages.</summary>
         private string DisplayName => $"{this.ParentType.FullName}::{this.PropertyInfo.Name}";
 
-        private readonly Func<object, TValue> GetterDelegate;
-        private readonly Action<object, TValue> SetterDelegate;
+        private readonly Func<TValue> GetterDelegate;
+        private readonly Action<TValue> SetterDelegate;
 
 
         /*********
@@ -53,8 +53,8 @@ namespace StardewModdingAPI.Framework.Reflection
 
             Type[] types = new Type[] { this.PropertyInfo.DeclaringType, typeof(TValue)};
 
-            this.GetterDelegate = (Func<object, TValue>)Delegate.CreateDelegate(typeof(Func<,>).MakeGenericType(types), this.PropertyInfo.GetMethod);
-            this.SetterDelegate = (Action<object, TValue>)Delegate.CreateDelegate(typeof(Action<,>).MakeGenericType(types), this.PropertyInfo.SetMethod);
+            this.GetterDelegate = (Func<TValue>)Delegate.CreateDelegate(typeof(Func<TValue>), obj, this.PropertyInfo.GetMethod);
+            this.SetterDelegate = (Action<TValue>)Delegate.CreateDelegate(typeof(Action<TValue>), obj, this.PropertyInfo.SetMethod);
         }
 
         /// <summary>Get the property value.</summary>
@@ -62,7 +62,7 @@ namespace StardewModdingAPI.Framework.Reflection
         {
             try
             {
-                return this.GetterDelegate(this.Parent);
+                return this.GetterDelegate();
                 // Old version: Commented out in case of issues with new version
                 //return (TValue)this.PropertyInfo.GetValue(this.Parent);
             }
@@ -82,7 +82,7 @@ namespace StardewModdingAPI.Framework.Reflection
         {
             try
             {
-                this.SetterDelegate(this.Parent, value);
+                this.SetterDelegate(value);
                 // Old version: Commented out in case of issues with new version
                 //this.PropertyInfo.SetValue(this.Parent, value);
             }
