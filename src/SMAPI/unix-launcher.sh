@@ -62,7 +62,8 @@ else
     fi
 
     # open SMAPI in terminal
-    if $COMMAND x-terminal-emulator 2>/dev/null; then
+    # some terms (like terminator) have broken -e: https://bugs.launchpad.net/terminator/+bug/1458137 ignore it
+    if $COMMAND x-terminal-emulator 2>/dev/null &&  x-terminal-emulator -v |grep -q -v 'terminator'; then
         x-terminal-emulator -e "$LAUNCHER"
     elif $COMMAND xfce4-terminal 2>/dev/null; then
         xfce4-terminal -e "$LAUNCHER"
