@@ -62,7 +62,10 @@ else
     fi
 
     # open SMAPI in terminal
-    if $COMMAND x-terminal-emulator 2>/dev/null; then
+	# special patch for terminator since it behaves odd with x-terminal-emulator "-e"
+	if $COMMAND terminator 2>/dev/null; then
+        terminator -e "$LAUNCHER"
+    elif $COMMAND x-terminal-emulator 2>/dev/null; then
         x-terminal-emulator -e "$LAUNCHER"
     elif $COMMAND xfce4-terminal 2>/dev/null; then
         xfce4-terminal -e "$LAUNCHER"
