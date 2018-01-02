@@ -61,9 +61,12 @@ else
         COMMAND="type"
     fi
 
-    # open SMAPI in terminal
-    if $COMMAND x-terminal-emulator 2>/dev/null; then
+	# open SMAPI in terminal
+	# special patch for terminator since it behaves odd with x-terminal-emulator -e and speechmarks.
+    if $COMMAND x-terminal-emulator 2>/dev/null && x-terminal-emulator -v | grep -q -v 'terminator'; then
         x-terminal-emulator -e "$LAUNCHER"
+	elif $COMMAND terminator 2>/dev/null; then
+		terminator -e "$LAUNCHER"
     elif $COMMAND xfce4-terminal 2>/dev/null; then
         xfce4-terminal -e "$LAUNCHER"
     elif $COMMAND gnome-terminal 2>/dev/null; then
