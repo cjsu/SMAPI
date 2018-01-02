@@ -63,7 +63,7 @@ else
 
     # open SMAPI in terminal
     if $COMMAND x-terminal-emulator 2>/dev/null; then
-        x-terminal-emulator -e "$LAUNCHER"
+        x-terminal-emulator -e $LAUNCHER # remove speechmarks so terminator works
     elif $COMMAND xfce4-terminal 2>/dev/null; then
         xfce4-terminal -e "$LAUNCHER"
     elif $COMMAND gnome-terminal 2>/dev/null; then
