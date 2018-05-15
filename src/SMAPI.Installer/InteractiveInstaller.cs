@@ -66,9 +66,22 @@ namespace StardewModdingApi.Installer
                             if (!string.IsNullOrWhiteSpace(path))
                                 yield return path;
                         }
+
+                        //Trying to find a path via Steam installation path
+                        string steampath = this.GetCurrentUserRegistryValue(@"Software\Valve\Steam", "SteamPath");
+                        if (steampath != null)
+                        {
+                            yield return Path.Combine(steampath.Replace('/','\\'), @"steamapps\common\Stardew Valley");
+                        }
+
+                        //Getting latest path it it was set by user on the previous run
+                        string userpath = this.GetCurrentUserRegistryValue(@"Software\SMAPI", "UserPath");
+                        if (userpath != null)
+                        {
+                            yield return userpath;
+                        }
                     }
                     break;
-
                 default:
                     throw new InvalidOperationException($"Unknown platform '{platform}'.");
             }
@@ -133,11 +146,11 @@ namespace StardewModdingApi.Installer
         /// Initialisation flow:
         ///     1. Collect information (mainly OS and install path) and validate it.
         ///     2. Ask the user whether to install or uninstall.
-        /// 
+        ///
         /// Uninstall logic:
         ///     1. On Linux/Mac: if a backup of the launcher exists, delete the launcher and restore the backup.
         ///     2. Delete all files and folders in the game directory matching one of the values returned by <see cref="GetUninstallPaths"/>.
-        /// 
+        ///
         /// Install flow:
         ///     1. Run the uninstall flow.
         ///     2. Copy the SMAPI files from package/Windows or package/Mono into the game directory.
@@ -407,7 +420,7 @@ namespace StardewModdingApi.Installer
         /*********
         ** Private methods
         *********/
-        /// <summary>Get the value of a key in the Windows registry.</summary>
+        /// <summary>Get the value of a key in the Windows HKLM registry.</summary>
         /// <param name="key">The full path of the registry key relative to HKLM.</param>
         /// <param name="name">The name of the value.</param>
         private string GetLocalMachineRegistryValue(string key, string name)
@@ -418,6 +431,37 @@ namespace StardewModdingApi.Installer
                 return null;
             using (openKey)
                 return (string)openKey.GetValue(name);
+        }
+        /// <summary>Get the value of a key in the Windows HKCU registry.</summary>
+        /// <param name="key">The full path of the registry key relative to HKCU.</param>
+        /// <param name="name">The name of the value.</param>
+        private string GetCurrentUserRegistryValue(string key, string name)
+        {
+            RegistryKey currentuser = Environment.Is64BitOperatingSystem ? RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64) : Registry.CurrentUser;
+            RegistryKey openKey = currentuser.OpenSubKey(key);
+            if (openKey == null)
+                return null;
+            using (openKey)
+                return (string)openKey.GetValue(name);
+        }
+
+        /// <summary>Get the value of a key in the Windows HKCU registry.</summary>
+        /// <param name="key">The full path of the registry key relative to HKCU.</param>
+        /// <param name="name">The name of the value.</param>
+        /// <param name="value">The value to be set.</param>
+        private void SetCurrentUserRegistryValue(string key, string name, string value)
+        {
+            RegistryKey currentuser = Environment.Is64BitOperatingSystem ? RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64) : Registry.CurrentUser;
+            RegistryKey openKey = currentuser.OpenSubKey(key);
+            if (openKey == null)
+            {
+                openKey = currentuser;
+                var keys = key.Split('\\');
+                openKey = keys.Aggregate(openKey, (current, k) => current.CreateSubKey(k));
+            }
+            using (openKey)
+                openKey.SetValue(name, value);
+
         }
 
         /// <summary>Print a debug message.</summary>
@@ -570,14 +614,16 @@ namespace StardewModdingApi.Installer
             }
 
             // get installed paths
-            DirectoryInfo[] defaultPaths =
-                (
-                    from path in this.GetDefaultInstallPaths(platform).Distinct(StringComparer.InvariantCultureIgnoreCase)
-                    let dir = new DirectoryInfo(path)
-                    where dir.Exists && dir.EnumerateFiles(executableFilename).Any()
-                    select dir
-                )
+            DirectoryInfo[] defaultPaths = (
+                                               from path in this.GetDefaultInstallPaths(platform).Distinct(StringComparer.InvariantCultureIgnoreCase)
+                                               let dir = new DirectoryInfo(path)
+                                               where dir.Exists && dir.EnumerateFiles(executableFilename).Any()
+                                               select dir
+                                           )
+                .GroupBy(x => x.FullName) //adding duplicate paths check
+                .Select(y => y.First())
                 .ToArray();
+                ;
 
             // choose where to install
             if (defaultPaths.Any())
@@ -638,6 +684,12 @@ namespace StardewModdingApi.Installer
                 {
                     this.PrintInfo("   That directory doesn't contain a Stardew Valley executable.");
                     continue;
+                }
+
+                //saving into registry
+                if (platform == Platform.Windows)
+                {
+                    this.SetCurrentUserRegistryValue(@"Software\SMAPI", "UserPath", directory.FullName);
                 }
 
                 // looks OK
