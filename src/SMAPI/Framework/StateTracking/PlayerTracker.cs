@@ -59,12 +59,12 @@ namespace StardewModdingAPI.Framework.StateTracking
             this.MineLevelWatcher = WatcherFactory.ForEquatable(() => this.LastValidLocation is MineShaft mine ? mine.mineLevel : 0);
             this.SkillWatchers = new Dictionary<EventArgsLevelUp.LevelType, IValueWatcher<int>>
             {
-                [EventArgsLevelUp.LevelType.Combat] = WatcherFactory.ForEquatable(() => player.combatLevel),
-                [EventArgsLevelUp.LevelType.Farming] = WatcherFactory.ForEquatable(() => player.farmingLevel),
-                [EventArgsLevelUp.LevelType.Fishing] = WatcherFactory.ForEquatable(() => player.fishingLevel),
-                [EventArgsLevelUp.LevelType.Foraging] = WatcherFactory.ForEquatable(() => player.foragingLevel),
-                [EventArgsLevelUp.LevelType.Luck] = WatcherFactory.ForEquatable(() => player.luckLevel),
-                [EventArgsLevelUp.LevelType.Mining] = WatcherFactory.ForEquatable(() => player.miningLevel)
+                [EventArgsLevelUp.LevelType.Combat] = WatcherFactory.ForEquatable(() => player.combatLevel.Value),
+                [EventArgsLevelUp.LevelType.Farming] = WatcherFactory.ForEquatable(() => player.farmingLevel.Value),
+                [EventArgsLevelUp.LevelType.Fishing] = WatcherFactory.ForEquatable(() => player.fishingLevel.Value),
+                [EventArgsLevelUp.LevelType.Foraging] = WatcherFactory.ForEquatable(() => player.foragingLevel.Value),
+                [EventArgsLevelUp.LevelType.Luck] = WatcherFactory.ForEquatable(() => player.luckLevel.Value),
+                [EventArgsLevelUp.LevelType.Mining] = WatcherFactory.ForEquatable(() => player.miningLevel.Value)
             };
 
             // track watchers for convenience
