@@ -75,10 +75,16 @@ namespace StardewModdingApi.Installer
                         }
 
                         //Getting latest path it it was set by user on the previous run
-                        string userpath = this.GetCurrentUserRegistryValue(@"Software\SMAPI", "UserPath");
+                        string userpath = this.GetCurrentUserRegistryValue(@"Software\SMAPI", "InstallPaths");
                         if (userpath != null)
                         {
-                            yield return userpath;
+                            if(!userpath.Contains(";"))
+                                yield return userpath;
+                            else
+                            {
+                                foreach (var path in userpath.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
+                                    yield return path;
+                            }
                         }
                     }
                     break;
@@ -588,6 +594,40 @@ namespace StardewModdingApi.Installer
             }
         }
 
+        /// <summary>
+        /// Another take on interactive choosing.
+        /// </summary>
+        /// <param name="question">The question that will be asked.</param>
+        /// <param name="options">The IEnumerable of options in the form of tuples (string key, string text).</param>
+        /// <param name="message">The message before the list of options.</param>
+        /// <returns>The key that is associated with the selected text option.</returns>
+        private string InteractivelyChoose(string message, IEnumerable<Tuple<string, string>> options, string question)
+        {
+            this.PrintInfo(message);
+            Console.WriteLine();
+            var array = options.ToArray();
+            for (int i = 0; i < array.Count(); i++)
+            {
+                this.PrintInfo($"[{i+1}] {array[i].Item2}");
+            }
+            Console.WriteLine();
+            this.PrintInfo(question);
+
+            while (true)
+            {
+                this.PrintInfo("Please type a value that corresponds to your choice and then hit Enter");
+                string input = Console.ReadLine()?.Trim().ToLowerInvariant();
+                var result = 0;
+                var got = int.TryParse(input, out result);
+                if (!got || result<1 || result > array.Length)
+                {
+                    this.PrintInfo("That's not a valid option.");
+                    continue;
+                }
+                return array[result-1].Item1;
+            }
+        }
+
         /// <summary>Interactively locate the game install path to update.</summary>
         /// <param name="platform">The current platform.</param>
         /// <param name="specifiedPath">The path specified as a command-line argument (if any), which should override automatic path detection.</param>
@@ -628,25 +668,33 @@ namespace StardewModdingApi.Installer
             // choose where to install
             if (defaultPaths.Any())
             {
-                // only one path
-                if (defaultPaths.Length == 1)
-                    return defaultPaths.First();
 
-                // let user choose path
-                Console.WriteLine();
-                this.PrintInfo("Found multiple copies of the game:");
-                for (int i = 0; i < defaultPaths.Length; i++)
-                    this.PrintInfo($"[{i + 1}] {defaultPaths[i].FullName}");
-                Console.WriteLine();
+                var lst = new List<Tuple<string, string>>();
+                foreach (var path in defaultPaths)
+                {
+                    lst.Add(new Tuple<string, string>(path.FullName, path.FullName));
+                }
+                lst.Add(new Tuple<string, string>(null,"[I will choose a path myself]"));
 
-                string[] validOptions = Enumerable.Range(1, defaultPaths.Length).Select(p => p.ToString(CultureInfo.InvariantCulture)).ToArray();
-                string choice = this.InteractivelyChoose("Where do you want to add/remove SMAPI? Type the number next to your choice, then press enter.", validOptions);
-                int index = int.Parse(choice, CultureInfo.InvariantCulture) - 1;
-                return defaultPaths[index];
+                var result = InteractivelyChoose("There are the following options:", lst, "Where do you want to install/uninstall SMAPI?");
+
+                if (result != null)
+                {
+                    return new DirectoryInfo(result);
+                }
+                else
+                {
+                    return InteractivelySelectPath(platform, executableFilename);
+                }
             }
 
             // ask user
             this.PrintInfo("Oops, couldn't find the game automatically.");
+            return this.InteractivelySelectPath(platform, executableFilename);
+        }
+
+        private DirectoryInfo InteractivelySelectPath(Platform platform, string executableFilename)
+        {
             while (true)
             {
                 // get path from user
@@ -680,6 +728,7 @@ namespace StardewModdingApi.Installer
                     this.PrintInfo("   That directory doesn't seem to exist.");
                     continue;
                 }
+
                 if (!directory.EnumerateFiles(executableFilename).Any())
                 {
                     this.PrintInfo("   That directory doesn't contain a Stardew Valley executable.");
@@ -689,7 +738,14 @@ namespace StardewModdingApi.Installer
                 //saving into registry
                 if (platform == Platform.Windows)
                 {
-                    this.SetCurrentUserRegistryValue(@"Software\SMAPI", "UserPath", directory.FullName);
+                    var paths = this.GetCurrentUserRegistryValue(@"Software\SMAPI", "InstallPaths");
+                    if (paths != null)
+                        paths += ";" + directory.FullName;
+                    else
+                    {
+                        paths = directory.FullName;
+                    }
+                    this.SetCurrentUserRegistryValue(@"Software\SMAPI", "InstallPaths", paths);
                 }
 
                 // looks OK
