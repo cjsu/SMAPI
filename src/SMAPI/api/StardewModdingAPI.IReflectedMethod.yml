@@ -1,0 +1,214 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.IReflectedMethod
+  commentId: T:StardewModdingAPI.IReflectedMethod
+  id: IReflectedMethod
+  parent: StardewModdingAPI
+  children:
+  - StardewModdingAPI.IReflectedMethod.Invoke(System.Object[])
+  - StardewModdingAPI.IReflectedMethod.Invoke``1(System.Object[])
+  - StardewModdingAPI.IReflectedMethod.MethodInfo
+  langs:
+  - csharp
+  - vb
+  name: IReflectedMethod
+  nameWithType: IReflectedMethod
+  fullName: StardewModdingAPI.IReflectedMethod
+  type: Interface
+  source:
+    remote:
+      path: src/SMAPI/IReflectedMethod.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: IReflectedMethod
+    path: IReflectedMethod.cs
+    startLine: 5
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: A method obtained through reflection.
+  example: []
+  syntax:
+    content: public interface IReflectedMethod
+    content.vb: Public Interface IReflectedMethod
+  modifiers.csharp:
+  - public
+  - interface
+  modifiers.vb:
+  - Public
+  - Interface
+- uid: StardewModdingAPI.IReflectedMethod.MethodInfo
+  commentId: P:StardewModdingAPI.IReflectedMethod.MethodInfo
+  id: MethodInfo
+  parent: StardewModdingAPI.IReflectedMethod
+  langs:
+  - csharp
+  - vb
+  name: MethodInfo
+  nameWithType: IReflectedMethod.MethodInfo
+  fullName: StardewModdingAPI.IReflectedMethod.MethodInfo
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IReflectedMethod.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: MethodInfo
+    path: IReflectedMethod.cs
+    startLine: 11
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The reflection metadata.
+  example: []
+  syntax:
+    content: MethodInfo MethodInfo { get; }
+    parameters: []
+    return:
+      type: System.Reflection.MethodInfo
+    content.vb: ReadOnly Property MethodInfo As MethodInfo
+  overload: StardewModdingAPI.IReflectedMethod.MethodInfo*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+- uid: StardewModdingAPI.IReflectedMethod.Invoke``1(System.Object[])
+  commentId: M:StardewModdingAPI.IReflectedMethod.Invoke``1(System.Object[])
+  id: Invoke``1(System.Object[])
+  parent: StardewModdingAPI.IReflectedMethod
+  langs:
+  - csharp
+  - vb
+  name: Invoke<TValue>(Object[])
+  nameWithType: IReflectedMethod.Invoke<TValue>(Object[])
+  fullName: StardewModdingAPI.IReflectedMethod.Invoke<TValue>(System.Object[])
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IReflectedMethod.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Invoke
+    path: IReflectedMethod.cs
+    startLine: 20
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Invoke the method.
+  example: []
+  syntax:
+    content: TValue Invoke<TValue>(params object[] arguments)
+    parameters:
+    - id: arguments
+      type: System.Object[]
+      description: The method arguments to pass in.
+    typeParameters:
+    - id: TValue
+      description: The return type.
+    return:
+      type: '{TValue}'
+    content.vb: Function Invoke(Of TValue)(ParamArray arguments As Object()) As TValue
+  overload: StardewModdingAPI.IReflectedMethod.Invoke*
+  nameWithType.vb: IReflectedMethod.Invoke(Of TValue)(Object())
+  fullName.vb: StardewModdingAPI.IReflectedMethod.Invoke(Of TValue)(System.Object())
+  name.vb: Invoke(Of TValue)(Object())
+- uid: StardewModdingAPI.IReflectedMethod.Invoke(System.Object[])
+  commentId: M:StardewModdingAPI.IReflectedMethod.Invoke(System.Object[])
+  id: Invoke(System.Object[])
+  parent: StardewModdingAPI.IReflectedMethod
+  langs:
+  - csharp
+  - vb
+  name: Invoke(Object[])
+  nameWithType: IReflectedMethod.Invoke(Object[])
+  fullName: StardewModdingAPI.IReflectedMethod.Invoke(System.Object[])
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IReflectedMethod.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Invoke
+    path: IReflectedMethod.cs
+    startLine: 24
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Invoke the method.
+  example: []
+  syntax:
+    content: void Invoke(params object[] arguments)
+    parameters:
+    - id: arguments
+      type: System.Object[]
+      description: The method arguments to pass in.
+    content.vb: Sub Invoke(ParamArray arguments As Object())
+  overload: StardewModdingAPI.IReflectedMethod.Invoke*
+  nameWithType.vb: IReflectedMethod.Invoke(Object())
+  fullName.vb: StardewModdingAPI.IReflectedMethod.Invoke(System.Object())
+  name.vb: Invoke(Object())
+references:
+- uid: StardewModdingAPI
+  commentId: N:StardewModdingAPI
+  name: StardewModdingAPI
+  nameWithType: StardewModdingAPI
+  fullName: StardewModdingAPI
+- uid: StardewModdingAPI.IReflectedMethod.MethodInfo*
+  commentId: Overload:StardewModdingAPI.IReflectedMethod.MethodInfo
+  name: MethodInfo
+  nameWithType: IReflectedMethod.MethodInfo
+  fullName: StardewModdingAPI.IReflectedMethod.MethodInfo
+- uid: System.Reflection.MethodInfo
+  commentId: T:System.Reflection.MethodInfo
+  parent: System.Reflection
+  isExternal: true
+  name: MethodInfo
+  nameWithType: MethodInfo
+  fullName: System.Reflection.MethodInfo
+- uid: System.Reflection
+  commentId: N:System.Reflection
+  isExternal: true
+  name: System.Reflection
+  nameWithType: System.Reflection
+  fullName: System.Reflection
+- uid: StardewModdingAPI.IReflectedMethod.Invoke*
+  commentId: Overload:StardewModdingAPI.IReflectedMethod.Invoke
+  name: Invoke
+  nameWithType: IReflectedMethod.Invoke
+  fullName: StardewModdingAPI.IReflectedMethod.Invoke
+- uid: System.Object[]
+  isExternal: true
+  name: Object[]
+  nameWithType: Object[]
+  fullName: System.Object[]
+  nameWithType.vb: Object()
+  fullName.vb: System.Object()
+  name.vb: Object()
+  spec.csharp:
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: '[]'
+    nameWithType: '[]'
+    fullName: '[]'
+  spec.vb:
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ()
+    nameWithType: ()
+    fullName: ()
+- uid: '{TValue}'
+  commentId: '!:TValue'
+  definition: TValue
+  name: TValue
+  nameWithType: TValue
+  fullName: TValue
+- uid: TValue
+  name: TValue
+  nameWithType: TValue
+  fullName: TValue

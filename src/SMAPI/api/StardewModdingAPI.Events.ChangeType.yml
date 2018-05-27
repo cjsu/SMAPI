@@ -1,0 +1,153 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.Events.ChangeType
+  commentId: T:StardewModdingAPI.Events.ChangeType
+  id: ChangeType
+  parent: StardewModdingAPI.Events
+  children:
+  - StardewModdingAPI.Events.ChangeType.Added
+  - StardewModdingAPI.Events.ChangeType.Removed
+  - StardewModdingAPI.Events.ChangeType.StackChange
+  langs:
+  - csharp
+  - vb
+  name: ChangeType
+  nameWithType: ChangeType
+  fullName: StardewModdingAPI.Events.ChangeType
+  type: Enum
+  source:
+    remote:
+      path: src/SMAPI/Events/ChangeType.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ChangeType
+    path: Events/ChangeType.cs
+    startLine: 3
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Indicates how an inventory item changed.
+  example: []
+  syntax:
+    content: public enum ChangeType
+    content.vb: Public Enum ChangeType
+  modifiers.csharp:
+  - public
+  - enum
+  modifiers.vb:
+  - Public
+  - Enum
+- uid: StardewModdingAPI.Events.ChangeType.Removed
+  commentId: F:StardewModdingAPI.Events.ChangeType.Removed
+  id: Removed
+  parent: StardewModdingAPI.Events.ChangeType
+  langs:
+  - csharp
+  - vb
+  name: Removed
+  nameWithType: ChangeType.Removed
+  fullName: StardewModdingAPI.Events.ChangeType.Removed
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/Events/ChangeType.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Removed
+    path: Events/ChangeType.cs
+    startLine: 6
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: The entire stack was removed.
+  example: []
+  syntax:
+    content: Removed = 0
+    return:
+      type: StardewModdingAPI.Events.ChangeType
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.Events.ChangeType.Added
+  commentId: F:StardewModdingAPI.Events.ChangeType.Added
+  id: Added
+  parent: StardewModdingAPI.Events.ChangeType
+  langs:
+  - csharp
+  - vb
+  name: Added
+  nameWithType: ChangeType.Added
+  fullName: StardewModdingAPI.Events.ChangeType.Added
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/Events/ChangeType.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Added
+    path: Events/ChangeType.cs
+    startLine: 9
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: The entire stack was added.
+  example: []
+  syntax:
+    content: Added = 1
+    return:
+      type: StardewModdingAPI.Events.ChangeType
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.Events.ChangeType.StackChange
+  commentId: F:StardewModdingAPI.Events.ChangeType.StackChange
+  id: StackChange
+  parent: StardewModdingAPI.Events.ChangeType
+  langs:
+  - csharp
+  - vb
+  name: StackChange
+  nameWithType: ChangeType.StackChange
+  fullName: StardewModdingAPI.Events.ChangeType.StackChange
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/Events/ChangeType.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: StackChange
+    path: Events/ChangeType.cs
+    startLine: 12
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: The stack size changed.
+  example: []
+  syntax:
+    content: StackChange = 2
+    return:
+      type: StardewModdingAPI.Events.ChangeType
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+references:
+- uid: StardewModdingAPI.Events
+  commentId: N:StardewModdingAPI.Events
+  name: StardewModdingAPI.Events
+  nameWithType: StardewModdingAPI.Events
+  fullName: StardewModdingAPI.Events
+- uid: StardewModdingAPI.Events.ChangeType
+  commentId: T:StardewModdingAPI.Events.ChangeType
+  parent: StardewModdingAPI.Events
+  name: ChangeType
+  nameWithType: ChangeType
+  fullName: StardewModdingAPI.Events.ChangeType

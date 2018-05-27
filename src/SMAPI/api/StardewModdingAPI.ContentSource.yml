@@ -1,0 +1,118 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.ContentSource
+  commentId: T:StardewModdingAPI.ContentSource
+  id: ContentSource
+  parent: StardewModdingAPI
+  children:
+  - StardewModdingAPI.ContentSource.GameContent
+  - StardewModdingAPI.ContentSource.ModFolder
+  langs:
+  - csharp
+  - vb
+  name: ContentSource
+  nameWithType: ContentSource
+  fullName: StardewModdingAPI.ContentSource
+  type: Enum
+  source:
+    remote:
+      path: src/SMAPI/ContentSource.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ContentSource
+    path: ContentSource.cs
+    startLine: 3
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Specifies a source containing content that can be loaded.
+  example: []
+  syntax:
+    content: public enum ContentSource
+    content.vb: Public Enum ContentSource
+  modifiers.csharp:
+  - public
+  - enum
+  modifiers.vb:
+  - Public
+  - Enum
+- uid: StardewModdingAPI.ContentSource.GameContent
+  commentId: F:StardewModdingAPI.ContentSource.GameContent
+  id: GameContent
+  parent: StardewModdingAPI.ContentSource
+  langs:
+  - csharp
+  - vb
+  name: GameContent
+  nameWithType: ContentSource.GameContent
+  fullName: StardewModdingAPI.ContentSource.GameContent
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/ContentSource.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: GameContent
+    path: ContentSource.cs
+    startLine: 6
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Assets in the game&apos;s content manager (i.e. XNBs in the game&apos;s content folder).
+  example: []
+  syntax:
+    content: GameContent = 0
+    return:
+      type: StardewModdingAPI.ContentSource
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.ContentSource.ModFolder
+  commentId: F:StardewModdingAPI.ContentSource.ModFolder
+  id: ModFolder
+  parent: StardewModdingAPI.ContentSource
+  langs:
+  - csharp
+  - vb
+  name: ModFolder
+  nameWithType: ContentSource.ModFolder
+  fullName: StardewModdingAPI.ContentSource.ModFolder
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/ContentSource.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ModFolder
+    path: ContentSource.cs
+    startLine: 9
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: XNB files in the current mod&apos;s folder.
+  example: []
+  syntax:
+    content: ModFolder = 1
+    return:
+      type: StardewModdingAPI.ContentSource
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+references:
+- uid: StardewModdingAPI
+  commentId: N:StardewModdingAPI
+  name: StardewModdingAPI
+  nameWithType: StardewModdingAPI
+  fullName: StardewModdingAPI
+- uid: StardewModdingAPI.ContentSource
+  commentId: T:StardewModdingAPI.ContentSource
+  parent: StardewModdingAPI
+  name: ContentSource
+  nameWithType: ContentSource
+  fullName: StardewModdingAPI.ContentSource

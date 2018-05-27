@@ -1,0 +1,331 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.IContentPack
+  commentId: T:StardewModdingAPI.IContentPack
+  id: IContentPack
+  parent: StardewModdingAPI
+  children:
+  - StardewModdingAPI.IContentPack.DirectoryPath
+  - StardewModdingAPI.IContentPack.GetActualAssetKey(System.String)
+  - StardewModdingAPI.IContentPack.LoadAsset``1(System.String)
+  - StardewModdingAPI.IContentPack.Manifest
+  - StardewModdingAPI.IContentPack.ReadJsonFile``1(System.String)
+  langs:
+  - csharp
+  - vb
+  name: IContentPack
+  nameWithType: IContentPack
+  fullName: StardewModdingAPI.IContentPack
+  type: Interface
+  source:
+    remote:
+      path: src/SMAPI/IContentPack.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: IContentPack
+    path: IContentPack.cs
+    startLine: 8
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: An API that provides access to a content pack.
+  example: []
+  syntax:
+    content: public interface IContentPack
+    content.vb: Public Interface IContentPack
+  modifiers.csharp:
+  - public
+  - interface
+  modifiers.vb:
+  - Public
+  - Interface
+- uid: StardewModdingAPI.IContentPack.DirectoryPath
+  commentId: P:StardewModdingAPI.IContentPack.DirectoryPath
+  id: DirectoryPath
+  parent: StardewModdingAPI.IContentPack
+  langs:
+  - csharp
+  - vb
+  name: DirectoryPath
+  nameWithType: IContentPack.DirectoryPath
+  fullName: StardewModdingAPI.IContentPack.DirectoryPath
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IContentPack.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: DirectoryPath
+    path: IContentPack.cs
+    startLine: 14
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The full path to the content pack&apos;s folder.
+  example: []
+  syntax:
+    content: string DirectoryPath { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: ReadOnly Property DirectoryPath As String
+  overload: StardewModdingAPI.IContentPack.DirectoryPath*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+- uid: StardewModdingAPI.IContentPack.Manifest
+  commentId: P:StardewModdingAPI.IContentPack.Manifest
+  id: Manifest
+  parent: StardewModdingAPI.IContentPack
+  langs:
+  - csharp
+  - vb
+  name: Manifest
+  nameWithType: IContentPack.Manifest
+  fullName: StardewModdingAPI.IContentPack.Manifest
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IContentPack.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Manifest
+    path: IContentPack.cs
+    startLine: 17
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The content pack&apos;s manifest.
+  example: []
+  syntax:
+    content: IManifest Manifest { get; }
+    parameters: []
+    return:
+      type: StardewModdingAPI.IManifest
+    content.vb: ReadOnly Property Manifest As IManifest
+  overload: StardewModdingAPI.IContentPack.Manifest*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+- uid: StardewModdingAPI.IContentPack.ReadJsonFile``1(System.String)
+  commentId: M:StardewModdingAPI.IContentPack.ReadJsonFile``1(System.String)
+  id: ReadJsonFile``1(System.String)
+  parent: StardewModdingAPI.IContentPack
+  langs:
+  - csharp
+  - vb
+  name: ReadJsonFile<TModel>(String)
+  nameWithType: IContentPack.ReadJsonFile<TModel>(String)
+  fullName: StardewModdingAPI.IContentPack.ReadJsonFile<TModel>(System.String)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IContentPack.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ReadJsonFile
+    path: IContentPack.cs
+    startLine: 27
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Read a JSON file from the content pack folder.
+  example: []
+  syntax:
+    content: >-
+      TModel ReadJsonFile<TModel>(string path)
+          where TModel : class
+    parameters:
+    - id: path
+      type: System.String
+      description: The file path relative to the content pack directory.
+    typeParameters:
+    - id: TModel
+      description: The model type.
+    return:
+      type: '{TModel}'
+      description: Returns the deserialised model, or <code>null</code> if the file doesn&apos;t exist or is empty.
+    content.vb: Function ReadJsonFile(Of TModel As Class)(path As String) As TModel
+  overload: StardewModdingAPI.IContentPack.ReadJsonFile*
+  nameWithType.vb: IContentPack.ReadJsonFile(Of TModel)(String)
+  fullName.vb: StardewModdingAPI.IContentPack.ReadJsonFile(Of TModel)(System.String)
+  name.vb: ReadJsonFile(Of TModel)(String)
+- uid: StardewModdingAPI.IContentPack.LoadAsset``1(System.String)
+  commentId: M:StardewModdingAPI.IContentPack.LoadAsset``1(System.String)
+  id: LoadAsset``1(System.String)
+  parent: StardewModdingAPI.IContentPack
+  langs:
+  - csharp
+  - vb
+  name: LoadAsset<T>(String)
+  nameWithType: IContentPack.LoadAsset<T>(String)
+  fullName: StardewModdingAPI.IContentPack.LoadAsset<T>(System.String)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IContentPack.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: LoadAsset
+    path: IContentPack.cs
+    startLine: 34
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Load content from the content pack folder (if not already cached), and return it. When loading a <code>.png</code> file, this must be called outside the game&apos;s draw loop.
+  example: []
+  syntax:
+    content: T LoadAsset<T>(string key)
+    parameters:
+    - id: key
+      type: System.String
+      description: The local path to a content file relative to the content pack folder.
+    typeParameters:
+    - id: T
+      description: The expected data type. The main supported types are <xref href="xTile.Map" data-throw-if-not-resolved="false"></xref>, <xref href="Microsoft.Xna.Framework.Graphics.Texture2D" data-throw-if-not-resolved="false"></xref>, and dictionaries; other types may be supported by the game&apos;s content pipeline.
+    return:
+      type: '{T}'
+    content.vb: Function LoadAsset(Of T)(key As String) As T
+  overload: StardewModdingAPI.IContentPack.LoadAsset*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: The <code data-dev-comment-type="paramref" class="paramref">key</code> is empty or contains invalid characters.
+  - type: Microsoft.Xna.Framework.Content.ContentLoadException
+    commentId: T:Microsoft.Xna.Framework.Content.ContentLoadException
+    description: The content asset couldn&apos;t be loaded (e.g. because it doesn&apos;t exist).
+  nameWithType.vb: IContentPack.LoadAsset(Of T)(String)
+  fullName.vb: StardewModdingAPI.IContentPack.LoadAsset(Of T)(System.String)
+  name.vb: LoadAsset(Of T)(String)
+- uid: StardewModdingAPI.IContentPack.GetActualAssetKey(System.String)
+  commentId: M:StardewModdingAPI.IContentPack.GetActualAssetKey(System.String)
+  id: GetActualAssetKey(System.String)
+  parent: StardewModdingAPI.IContentPack
+  langs:
+  - csharp
+  - vb
+  name: GetActualAssetKey(String)
+  nameWithType: IContentPack.GetActualAssetKey(String)
+  fullName: StardewModdingAPI.IContentPack.GetActualAssetKey(System.String)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IContentPack.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: GetActualAssetKey
+    path: IContentPack.cs
+    startLine: 39
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Get the underlying key in the game&apos;s content cache for an asset. This can be used to load custom map tilesheets, but should be avoided when you can use the content API instead. This does not validate whether the asset exists.
+  example: []
+  syntax:
+    content: string GetActualAssetKey(string key)
+    parameters:
+    - id: key
+      type: System.String
+      description: The the local path to a content file relative to the content pack folder.
+    return:
+      type: System.String
+    content.vb: Function GetActualAssetKey(key As String) As String
+  overload: StardewModdingAPI.IContentPack.GetActualAssetKey*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: The <code data-dev-comment-type="paramref" class="paramref">key</code> is empty or contains invalid characters.
+references:
+- uid: StardewModdingAPI
+  commentId: N:StardewModdingAPI
+  name: StardewModdingAPI
+  nameWithType: StardewModdingAPI
+  fullName: StardewModdingAPI
+- uid: StardewModdingAPI.IContentPack.DirectoryPath*
+  commentId: Overload:StardewModdingAPI.IContentPack.DirectoryPath
+  name: DirectoryPath
+  nameWithType: IContentPack.DirectoryPath
+  fullName: StardewModdingAPI.IContentPack.DirectoryPath
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: StardewModdingAPI.IContentPack.Manifest*
+  commentId: Overload:StardewModdingAPI.IContentPack.Manifest
+  name: Manifest
+  nameWithType: IContentPack.Manifest
+  fullName: StardewModdingAPI.IContentPack.Manifest
+- uid: StardewModdingAPI.IManifest
+  commentId: T:StardewModdingAPI.IManifest
+  parent: StardewModdingAPI
+  name: IManifest
+  nameWithType: IManifest
+  fullName: StardewModdingAPI.IManifest
+- uid: StardewModdingAPI.IContentPack.ReadJsonFile*
+  commentId: Overload:StardewModdingAPI.IContentPack.ReadJsonFile
+  name: ReadJsonFile
+  nameWithType: IContentPack.ReadJsonFile
+  fullName: StardewModdingAPI.IContentPack.ReadJsonFile
+- uid: '{TModel}'
+  commentId: '!:TModel'
+  definition: TModel
+  name: TModel
+  nameWithType: TModel
+  fullName: TModel
+- uid: TModel
+  name: TModel
+  nameWithType: TModel
+  fullName: TModel
+- uid: xTile.Map
+  commentId: T:xTile.Map
+  isExternal: true
+- uid: Microsoft.Xna.Framework.Graphics.Texture2D
+  commentId: T:Microsoft.Xna.Framework.Graphics.Texture2D
+  parent: Microsoft.Xna.Framework.Graphics
+  isExternal: true
+  name: Texture2D
+  nameWithType: Texture2D
+  fullName: Microsoft.Xna.Framework.Graphics.Texture2D
+- uid: System.ArgumentException
+  commentId: T:System.ArgumentException
+  isExternal: true
+- uid: Microsoft.Xna.Framework.Content.ContentLoadException
+  commentId: T:Microsoft.Xna.Framework.Content.ContentLoadException
+  isExternal: true
+- uid: StardewModdingAPI.IContentPack.LoadAsset*
+  commentId: Overload:StardewModdingAPI.IContentPack.LoadAsset
+  name: LoadAsset
+  nameWithType: IContentPack.LoadAsset
+  fullName: StardewModdingAPI.IContentPack.LoadAsset
+- uid: '{T}'
+  commentId: '!:T'
+  definition: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: Microsoft.Xna.Framework.Graphics
+  commentId: N:Microsoft.Xna.Framework.Graphics
+  isExternal: true
+  name: Microsoft.Xna.Framework.Graphics
+  nameWithType: Microsoft.Xna.Framework.Graphics
+  fullName: Microsoft.Xna.Framework.Graphics
+- uid: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: StardewModdingAPI.IContentPack.GetActualAssetKey*
+  commentId: Overload:StardewModdingAPI.IContentPack.GetActualAssetKey
+  name: GetActualAssetKey
+  nameWithType: IContentPack.GetActualAssetKey
+  fullName: StardewModdingAPI.IContentPack.GetActualAssetKey

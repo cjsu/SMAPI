@@ -1,0 +1,637 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface IContentHelper
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface IContentHelper
+   ">
+    <meta name="generator" content="docfx 2.36.1.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="StardewModdingAPI.IContentHelper">
+  
+  
+  <h1 id="StardewModdingAPI_IContentHelper" data-uid="StardewModdingAPI.IContentHelper" class="text-break">Interface IContentHelper
+  </h1>
+  <div class="markdown level0 summary"><p>Provides an API for loading content assets.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="StardewModdingAPI.IModLinked.html#StardewModdingAPI_IModLinked_ModID">IModLinked.ModID</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="StardewModdingAPI.html">StardewModdingAPI</a></h6>
+  <h6><strong>Assembly</strong>: StardewModdingAPI.dll</h6>
+  <h5 id="StardewModdingAPI_IContentHelper_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IContentHelper : IModLinked</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pathoschild/SMAPI/new/develop/apiSpec/new?filename=StardewModdingAPI_IContentHelper_AssetEditors.md&amp;value=---%0Auid%3A%20StardewModdingAPI.IContentHelper.AssetEditors%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pathoschild/SMAPI/blob/develop/src/SMAPI/IContentHelper.cs/#L21">View Source</a>
+  </span>
+  <a id="StardewModdingAPI_IContentHelper_AssetEditors_" data-uid="StardewModdingAPI.IContentHelper.AssetEditors*"></a>
+  <h4 id="StardewModdingAPI_IContentHelper_AssetEditors" data-uid="StardewModdingAPI.IContentHelper.AssetEditors">AssetEditors</h4>
+  <div class="markdown level1 summary"><p>Interceptors which edit matching content assets after they&apos;re loaded.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IList&lt;IAssetEditor&gt; AssetEditors { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IList</span>&lt;<a class="xref" href="StardewModdingAPI.IAssetEditor.html">IAssetEditor</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pathoschild/SMAPI/new/develop/apiSpec/new?filename=StardewModdingAPI_IContentHelper_AssetLoaders.md&amp;value=---%0Auid%3A%20StardewModdingAPI.IContentHelper.AssetLoaders%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pathoschild/SMAPI/blob/develop/src/SMAPI/IContentHelper.cs/#L18">View Source</a>
+  </span>
+  <a id="StardewModdingAPI_IContentHelper_AssetLoaders_" data-uid="StardewModdingAPI.IContentHelper.AssetLoaders*"></a>
+  <h4 id="StardewModdingAPI_IContentHelper_AssetLoaders" data-uid="StardewModdingAPI.IContentHelper.AssetLoaders">AssetLoaders</h4>
+  <div class="markdown level1 summary"><p>Interceptors which provide the initial versions of matching content assets.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IList&lt;IAssetLoader&gt; AssetLoaders { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IList</span>&lt;<a class="xref" href="StardewModdingAPI.IAssetLoader.html">IAssetLoader</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pathoschild/SMAPI/new/develop/apiSpec/new?filename=StardewModdingAPI_IContentHelper_CurrentLocale.md&amp;value=---%0Auid%3A%20StardewModdingAPI.IContentHelper.CurrentLocale%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pathoschild/SMAPI/blob/develop/src/SMAPI/IContentHelper.cs/#L24">View Source</a>
+  </span>
+  <a id="StardewModdingAPI_IContentHelper_CurrentLocale_" data-uid="StardewModdingAPI.IContentHelper.CurrentLocale*"></a>
+  <h4 id="StardewModdingAPI_IContentHelper_CurrentLocale" data-uid="StardewModdingAPI.IContentHelper.CurrentLocale">CurrentLocale</h4>
+  <div class="markdown level1 summary"><p>The game&apos;s current locale code (like <code>pt-BR</code>).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string CurrentLocale { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pathoschild/SMAPI/new/develop/apiSpec/new?filename=StardewModdingAPI_IContentHelper_CurrentLocaleConstant.md&amp;value=---%0Auid%3A%20StardewModdingAPI.IContentHelper.CurrentLocaleConstant%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pathoschild/SMAPI/blob/develop/src/SMAPI/IContentHelper.cs/#L27">View Source</a>
+  </span>
+  <a id="StardewModdingAPI_IContentHelper_CurrentLocaleConstant_" data-uid="StardewModdingAPI.IContentHelper.CurrentLocaleConstant*"></a>
+  <h4 id="StardewModdingAPI_IContentHelper_CurrentLocaleConstant" data-uid="StardewModdingAPI.IContentHelper.CurrentLocaleConstant">CurrentLocaleConstant</h4>
+  <div class="markdown level1 summary"><p>The game&apos;s current locale as an enum value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">LocalizedContentManager.LanguageCode CurrentLocaleConstant { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">StardewValley.LocalizedContentManager.LanguageCode</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pathoschild/SMAPI/new/develop/apiSpec/new?filename=StardewModdingAPI_IContentHelper_GetActualAssetKey_System_String_StardewModdingAPI_ContentSource_.md&amp;value=---%0Auid%3A%20StardewModdingAPI.IContentHelper.GetActualAssetKey(System.String%2CStardewModdingAPI.ContentSource)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pathoschild/SMAPI/blob/develop/src/SMAPI/IContentHelper.cs/#L50">View Source</a>
+  </span>
+  <a id="StardewModdingAPI_IContentHelper_GetActualAssetKey_" data-uid="StardewModdingAPI.IContentHelper.GetActualAssetKey*"></a>
+  <h4 id="StardewModdingAPI_IContentHelper_GetActualAssetKey_System_String_StardewModdingAPI_ContentSource_" data-uid="StardewModdingAPI.IContentHelper.GetActualAssetKey(System.String,StardewModdingAPI.ContentSource)">GetActualAssetKey(String, ContentSource)</h4>
+  <div class="markdown level1 summary"><p>Get the underlying key in the game&apos;s content cache for an asset. This can be used to load custom map tilesheets, but should be avoided when you can use the content API instead. This does not validate whether the asset exists.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string GetActualAssetKey(string key, ContentSource source = ContentSource.ModFolder)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">key</span></td>
+        <td><p>The asset key to fetch (if the <code data-dev-comment-type="paramref" class="paramref">source</code> is <a class="xref" href="StardewModdingAPI.ContentSource.html#StardewModdingAPI_ContentSource_GameContent">GameContent</a>), or the local path to a content file relative to the mod folder.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="StardewModdingAPI.ContentSource.html">ContentSource</a></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>Where to search for a matching content asset.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentException</span></td>
+        <td><p>The <code data-dev-comment-type="paramref" class="paramref">key</code> is empty or contains invalid characters.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pathoschild/SMAPI/new/develop/apiSpec/new?filename=StardewModdingAPI_IContentHelper_InvalidateCache_System_Func_StardewModdingAPI_IAssetInfo_System_Boolean__.md&amp;value=---%0Auid%3A%20StardewModdingAPI.IContentHelper.InvalidateCache(System.Func%7BStardewModdingAPI.IAssetInfo%2CSystem.Boolean%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pathoschild/SMAPI/blob/develop/src/SMAPI/IContentHelper.cs/#L66">View Source</a>
+  </span>
+  <a id="StardewModdingAPI_IContentHelper_InvalidateCache_" data-uid="StardewModdingAPI.IContentHelper.InvalidateCache*"></a>
+  <h4 id="StardewModdingAPI_IContentHelper_InvalidateCache_System_Func_StardewModdingAPI_IAssetInfo_System_Boolean__" data-uid="StardewModdingAPI.IContentHelper.InvalidateCache(System.Func{StardewModdingAPI.IAssetInfo,System.Boolean})">InvalidateCache(Func&lt;IAssetInfo, Boolean&gt;)</h4>
+  <div class="markdown level1 summary"><p>Remove matching assets from the content cache so they&apos;re reloaded on the next request. This will reload core game assets if needed, but references to the former asset will still show the previous content.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool InvalidateCache(Func&lt;IAssetInfo, bool&gt; predicate)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;<a class="xref" href="StardewModdingAPI.IAssetInfo.html">IAssetInfo</a>, <span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="parametername">predicate</span></td>
+        <td><p>A predicate matching the assets to invalidate.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>Returns whether any cache entries were invalidated.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pathoschild/SMAPI/new/develop/apiSpec/new?filename=StardewModdingAPI_IContentHelper_InvalidateCache_System_String_.md&amp;value=---%0Auid%3A%20StardewModdingAPI.IContentHelper.InvalidateCache(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pathoschild/SMAPI/blob/develop/src/SMAPI/IContentHelper.cs/#L56">View Source</a>
+  </span>
+  <a id="StardewModdingAPI_IContentHelper_InvalidateCache_" data-uid="StardewModdingAPI.IContentHelper.InvalidateCache*"></a>
+  <h4 id="StardewModdingAPI_IContentHelper_InvalidateCache_System_String_" data-uid="StardewModdingAPI.IContentHelper.InvalidateCache(System.String)">InvalidateCache(String)</h4>
+  <div class="markdown level1 summary"><p>Remove an asset from the content cache so it&apos;s reloaded on the next request. This will reload core game assets if needed, but references to the former asset will still show the previous content.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool InvalidateCache(string key)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">key</span></td>
+        <td><p>The asset key to invalidate in the content folder.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>Returns whether the given asset key was cached.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentException</span></td>
+        <td><p>The <code data-dev-comment-type="paramref" class="paramref">key</code> is empty or contains invalid characters.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pathoschild/SMAPI/new/develop/apiSpec/new?filename=StardewModdingAPI_IContentHelper_InvalidateCache__1.md&amp;value=---%0Auid%3A%20StardewModdingAPI.IContentHelper.InvalidateCache%60%601%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pathoschild/SMAPI/blob/develop/src/SMAPI/IContentHelper.cs/#L61">View Source</a>
+  </span>
+  <a id="StardewModdingAPI_IContentHelper_InvalidateCache_" data-uid="StardewModdingAPI.IContentHelper.InvalidateCache*"></a>
+  <h4 id="StardewModdingAPI_IContentHelper_InvalidateCache__1" data-uid="StardewModdingAPI.IContentHelper.InvalidateCache``1">InvalidateCache&lt;T&gt;()</h4>
+  <div class="markdown level1 summary"><p>Remove all assets of the given type from the cache so they&apos;re reloaded on the next request. <strong>This can be a very expensive operation and should only be used in very specific cases.</strong> This will reload core game assets if needed, but references to the former assets will still show the previous content.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool InvalidateCache&lt;T&gt;()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>Returns whether any assets were invalidated.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The asset type to remove from the cache.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pathoschild/SMAPI/new/develop/apiSpec/new?filename=StardewModdingAPI_IContentHelper_Load__1_System_String_StardewModdingAPI_ContentSource_.md&amp;value=---%0Auid%3A%20StardewModdingAPI.IContentHelper.Load%60%601(System.String%2CStardewModdingAPI.ContentSource)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pathoschild/SMAPI/blob/develop/src/SMAPI/IContentHelper.cs/#L39">View Source</a>
+  </span>
+  <a id="StardewModdingAPI_IContentHelper_Load_" data-uid="StardewModdingAPI.IContentHelper.Load*"></a>
+  <h4 id="StardewModdingAPI_IContentHelper_Load__1_System_String_StardewModdingAPI_ContentSource_" data-uid="StardewModdingAPI.IContentHelper.Load``1(System.String,StardewModdingAPI.ContentSource)">Load&lt;T&gt;(String, ContentSource)</h4>
+  <div class="markdown level1 summary"><p>Load content from the game folder or mod folder (if not already cached), and return it. When loading a <code>.png</code> file, this must be called outside the game&apos;s draw loop.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">T Load&lt;T&gt;(string key, ContentSource source = ContentSource.ModFolder)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">key</span></td>
+        <td><p>The asset key to fetch (if the <code data-dev-comment-type="paramref" class="paramref">source</code> is <a class="xref" href="StardewModdingAPI.ContentSource.html#StardewModdingAPI_ContentSource_GameContent">GameContent</a>), or the local path to a content file relative to the mod folder.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="StardewModdingAPI.ContentSource.html">ContentSource</a></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>Where to search for a matching content asset.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The expected data type. The main supported types are <span class="xref">xTile.Map</span>, <span class="xref">Microsoft.Xna.Framework.Graphics.Texture2D</span>, and dictionaries; other types may be supported by the game&apos;s content pipeline.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentException</span></td>
+        <td><p>The <code data-dev-comment-type="paramref" class="paramref">key</code> is empty or contains invalid characters.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Microsoft.Xna.Framework.Content.ContentLoadException</span></td>
+        <td><p>The content asset couldn&apos;t be loaded (e.g. because it doesn&apos;t exist).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pathoschild/SMAPI/new/develop/apiSpec/new?filename=StardewModdingAPI_IContentHelper_NormaliseAssetName_System_String_.md&amp;value=---%0Auid%3A%20StardewModdingAPI.IContentHelper.NormaliseAssetName(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pathoschild/SMAPI/blob/develop/src/SMAPI/IContentHelper.cs/#L43">View Source</a>
+  </span>
+  <a id="StardewModdingAPI_IContentHelper_NormaliseAssetName_" data-uid="StardewModdingAPI.IContentHelper.NormaliseAssetName*"></a>
+  <h4 id="StardewModdingAPI_IContentHelper_NormaliseAssetName_System_String_" data-uid="StardewModdingAPI.IContentHelper.NormaliseAssetName(System.String)">NormaliseAssetName(String)</h4>
+  <div class="markdown level1 summary"><p>Normalise an asset name so it&apos;s consistent with those generated by the game. This is mainly useful for string comparisons like <span class="xref">System.String.StartsWith(System.String)</span> on generated asset names, and isn&apos;t necessary when passing asset names into other content helper methods.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Pure]
+string NormaliseAssetName(string assetName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">assetName</span></td>
+        <td><p>The asset key.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Pathoschild/SMAPI/new/develop/apiSpec/new?filename=StardewModdingAPI_IContentHelper.md&amp;value=---%0Auid%3A%20StardewModdingAPI.IContentHelper%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/Pathoschild/SMAPI/blob/develop/src/SMAPI/IContentHelper.cs/#L12" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

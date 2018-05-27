@@ -1,0 +1,755 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.Events.EventArgsInventoryChanged
+  commentId: T:StardewModdingAPI.Events.EventArgsInventoryChanged
+  id: EventArgsInventoryChanged
+  parent: StardewModdingAPI.Events
+  children:
+  - StardewModdingAPI.Events.EventArgsInventoryChanged.#ctor(System.Collections.Generic.IList{StardewValley.Item},System.Collections.Generic.List{StardewModdingAPI.Events.ItemStackChange})
+  - StardewModdingAPI.Events.EventArgsInventoryChanged.Added
+  - StardewModdingAPI.Events.EventArgsInventoryChanged.Inventory
+  - StardewModdingAPI.Events.EventArgsInventoryChanged.QuantityChanged
+  - StardewModdingAPI.Events.EventArgsInventoryChanged.Removed
+  langs:
+  - csharp
+  - vb
+  name: EventArgsInventoryChanged
+  nameWithType: EventArgsInventoryChanged
+  fullName: StardewModdingAPI.Events.EventArgsInventoryChanged
+  type: Class
+  source:
+    remote:
+      path: src/SMAPI/Events/EventArgsInventoryChanged.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: EventArgsInventoryChanged
+    path: Events/EventArgsInventoryChanged.cs
+    startLine: 8
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Event arguments for a <xref href="StardewModdingAPI.Events.PlayerEvents.InventoryChanged" data-throw-if-not-resolved="false"></xref> event.
+  example: []
+  syntax:
+    content: 'public class EventArgsInventoryChanged : EventArgs'
+    content.vb: >-
+      Public Class EventArgsInventoryChanged
+          Inherits EventArgs
+  inheritance:
+  - System.Object
+  - System.EventArgs
+  inheritedMembers:
+  - System.EventArgs.Empty
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  modifiers.csharp:
+  - public
+  - class
+  modifiers.vb:
+  - Public
+  - Class
+- uid: StardewModdingAPI.Events.EventArgsInventoryChanged.Inventory
+  commentId: P:StardewModdingAPI.Events.EventArgsInventoryChanged.Inventory
+  id: Inventory
+  parent: StardewModdingAPI.Events.EventArgsInventoryChanged
+  langs:
+  - csharp
+  - vb
+  name: Inventory
+  nameWithType: EventArgsInventoryChanged.Inventory
+  fullName: StardewModdingAPI.Events.EventArgsInventoryChanged.Inventory
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/Events/EventArgsInventoryChanged.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Inventory
+    path: Events/EventArgsInventoryChanged.cs
+    startLine: 14
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: The player&apos;s inventory.
+  example: []
+  syntax:
+    content: public IList<Item> Inventory { get; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IList{StardewValley.Item}
+    content.vb: Public ReadOnly Property Inventory As IList(Of Item)
+  overload: StardewModdingAPI.Events.EventArgsInventoryChanged.Inventory*
+  modifiers.csharp:
+  - public
+  - get
+  modifiers.vb:
+  - Public
+  - ReadOnly
+- uid: StardewModdingAPI.Events.EventArgsInventoryChanged.Added
+  commentId: P:StardewModdingAPI.Events.EventArgsInventoryChanged.Added
+  id: Added
+  parent: StardewModdingAPI.Events.EventArgsInventoryChanged
+  langs:
+  - csharp
+  - vb
+  name: Added
+  nameWithType: EventArgsInventoryChanged.Added
+  fullName: StardewModdingAPI.Events.EventArgsInventoryChanged.Added
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/Events/EventArgsInventoryChanged.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Added
+    path: Events/EventArgsInventoryChanged.cs
+    startLine: 17
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: The added items.
+  example: []
+  syntax:
+    content: public List<ItemStackChange> Added { get; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.List{StardewModdingAPI.Events.ItemStackChange}
+    content.vb: Public ReadOnly Property Added As List(Of ItemStackChange)
+  overload: StardewModdingAPI.Events.EventArgsInventoryChanged.Added*
+  modifiers.csharp:
+  - public
+  - get
+  modifiers.vb:
+  - Public
+  - ReadOnly
+- uid: StardewModdingAPI.Events.EventArgsInventoryChanged.Removed
+  commentId: P:StardewModdingAPI.Events.EventArgsInventoryChanged.Removed
+  id: Removed
+  parent: StardewModdingAPI.Events.EventArgsInventoryChanged
+  langs:
+  - csharp
+  - vb
+  name: Removed
+  nameWithType: EventArgsInventoryChanged.Removed
+  fullName: StardewModdingAPI.Events.EventArgsInventoryChanged.Removed
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/Events/EventArgsInventoryChanged.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Removed
+    path: Events/EventArgsInventoryChanged.cs
+    startLine: 20
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: The removed items.
+  example: []
+  syntax:
+    content: public List<ItemStackChange> Removed { get; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.List{StardewModdingAPI.Events.ItemStackChange}
+    content.vb: Public ReadOnly Property Removed As List(Of ItemStackChange)
+  overload: StardewModdingAPI.Events.EventArgsInventoryChanged.Removed*
+  modifiers.csharp:
+  - public
+  - get
+  modifiers.vb:
+  - Public
+  - ReadOnly
+- uid: StardewModdingAPI.Events.EventArgsInventoryChanged.QuantityChanged
+  commentId: P:StardewModdingAPI.Events.EventArgsInventoryChanged.QuantityChanged
+  id: QuantityChanged
+  parent: StardewModdingAPI.Events.EventArgsInventoryChanged
+  langs:
+  - csharp
+  - vb
+  name: QuantityChanged
+  nameWithType: EventArgsInventoryChanged.QuantityChanged
+  fullName: StardewModdingAPI.Events.EventArgsInventoryChanged.QuantityChanged
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/Events/EventArgsInventoryChanged.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: QuantityChanged
+    path: Events/EventArgsInventoryChanged.cs
+    startLine: 23
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: The items whose stack sizes changed.
+  example: []
+  syntax:
+    content: public List<ItemStackChange> QuantityChanged { get; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.List{StardewModdingAPI.Events.ItemStackChange}
+    content.vb: Public ReadOnly Property QuantityChanged As List(Of ItemStackChange)
+  overload: StardewModdingAPI.Events.EventArgsInventoryChanged.QuantityChanged*
+  modifiers.csharp:
+  - public
+  - get
+  modifiers.vb:
+  - Public
+  - ReadOnly
+- uid: StardewModdingAPI.Events.EventArgsInventoryChanged.#ctor(System.Collections.Generic.IList{StardewValley.Item},System.Collections.Generic.List{StardewModdingAPI.Events.ItemStackChange})
+  commentId: M:StardewModdingAPI.Events.EventArgsInventoryChanged.#ctor(System.Collections.Generic.IList{StardewValley.Item},System.Collections.Generic.List{StardewModdingAPI.Events.ItemStackChange})
+  id: '#ctor(System.Collections.Generic.IList{StardewValley.Item},System.Collections.Generic.List{StardewModdingAPI.Events.ItemStackChange})'
+  parent: StardewModdingAPI.Events.EventArgsInventoryChanged
+  langs:
+  - csharp
+  - vb
+  name: EventArgsInventoryChanged(IList<Item>, List<ItemStackChange>)
+  nameWithType: EventArgsInventoryChanged.EventArgsInventoryChanged(IList<Item>, List<ItemStackChange>)
+  fullName: StardewModdingAPI.Events.EventArgsInventoryChanged.EventArgsInventoryChanged(System.Collections.Generic.IList<StardewValley.Item>, System.Collections.Generic.List<StardewModdingAPI.Events.ItemStackChange>)
+  type: Constructor
+  source:
+    remote:
+      path: src/SMAPI/Events/EventArgsInventoryChanged.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: .ctor
+    path: Events/EventArgsInventoryChanged.cs
+    startLine: 32
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Construct an instance.
+  example: []
+  syntax:
+    content: public EventArgsInventoryChanged(IList<Item> inventory, List<ItemStackChange> changedItems)
+    parameters:
+    - id: inventory
+      type: System.Collections.Generic.IList{StardewValley.Item}
+      description: The player&apos;s inventory.
+    - id: changedItems
+      type: System.Collections.Generic.List{StardewModdingAPI.Events.ItemStackChange}
+      description: The inventory changes.
+    content.vb: Public Sub New(inventory As IList(Of Item), changedItems As List(Of ItemStackChange))
+  overload: StardewModdingAPI.Events.EventArgsInventoryChanged.#ctor*
+  nameWithType.vb: EventArgsInventoryChanged.EventArgsInventoryChanged(IList(Of Item), List(Of ItemStackChange))
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+  fullName.vb: StardewModdingAPI.Events.EventArgsInventoryChanged.EventArgsInventoryChanged(System.Collections.Generic.IList(Of StardewValley.Item), System.Collections.Generic.List(Of StardewModdingAPI.Events.ItemStackChange))
+  name.vb: EventArgsInventoryChanged(IList(Of Item), List(Of ItemStackChange))
+references:
+- uid: StardewModdingAPI.Events.PlayerEvents.InventoryChanged
+  commentId: E:StardewModdingAPI.Events.PlayerEvents.InventoryChanged
+  isExternal: true
+- uid: StardewModdingAPI.Events
+  commentId: N:StardewModdingAPI.Events
+  name: StardewModdingAPI.Events
+  nameWithType: StardewModdingAPI.Events
+  fullName: StardewModdingAPI.Events
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.EventArgs
+  commentId: T:System.EventArgs
+  parent: System
+  isExternal: true
+  name: EventArgs
+  nameWithType: EventArgs
+  fullName: System.EventArgs
+- uid: System.EventArgs.Empty
+  commentId: F:System.EventArgs.Empty
+  parent: System.EventArgs
+  isExternal: true
+  name: Empty
+  nameWithType: EventArgs.Empty
+  fullName: System.EventArgs.Empty
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: System.Object.Equals(System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: System.Object.Equals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: System.Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: System.Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: System.Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: System.Object.ReferenceEquals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: System.Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: StardewModdingAPI.Events.EventArgsInventoryChanged.Inventory*
+  commentId: Overload:StardewModdingAPI.Events.EventArgsInventoryChanged.Inventory
+  name: Inventory
+  nameWithType: EventArgsInventoryChanged.Inventory
+  fullName: StardewModdingAPI.Events.EventArgsInventoryChanged.Inventory
+- uid: System.Collections.Generic.IList{StardewValley.Item}
+  commentId: T:System.Collections.Generic.IList{StardewValley.Item}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IList`1
+  name: IList<Item>
+  nameWithType: IList<Item>
+  fullName: System.Collections.Generic.IList<StardewValley.Item>
+  nameWithType.vb: IList(Of Item)
+  fullName.vb: System.Collections.Generic.IList(Of StardewValley.Item)
+  name.vb: IList(Of Item)
+  spec.csharp:
+  - uid: System.Collections.Generic.IList`1
+    name: IList
+    nameWithType: IList
+    fullName: System.Collections.Generic.IList
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: StardewValley.Item
+    name: Item
+    nameWithType: Item
+    fullName: StardewValley.Item
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IList`1
+    name: IList
+    nameWithType: IList
+    fullName: System.Collections.Generic.IList
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: StardewValley.Item
+    name: Item
+    nameWithType: Item
+    fullName: StardewValley.Item
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Collections.Generic.IList`1
+  commentId: T:System.Collections.Generic.IList`1
+  isExternal: true
+  name: IList<T>
+  nameWithType: IList<T>
+  fullName: System.Collections.Generic.IList<T>
+  nameWithType.vb: IList(Of T)
+  fullName.vb: System.Collections.Generic.IList(Of T)
+  name.vb: IList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IList`1
+    name: IList
+    nameWithType: IList
+    fullName: System.Collections.Generic.IList
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IList`1
+    name: IList
+    nameWithType: IList
+    fullName: System.Collections.Generic.IList
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+- uid: StardewModdingAPI.Events.EventArgsInventoryChanged.Added*
+  commentId: Overload:StardewModdingAPI.Events.EventArgsInventoryChanged.Added
+  name: Added
+  nameWithType: EventArgsInventoryChanged.Added
+  fullName: StardewModdingAPI.Events.EventArgsInventoryChanged.Added
+- uid: System.Collections.Generic.List{StardewModdingAPI.Events.ItemStackChange}
+  commentId: T:System.Collections.Generic.List{StardewModdingAPI.Events.ItemStackChange}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<ItemStackChange>
+  nameWithType: List<ItemStackChange>
+  fullName: System.Collections.Generic.List<StardewModdingAPI.Events.ItemStackChange>
+  nameWithType.vb: List(Of ItemStackChange)
+  fullName.vb: System.Collections.Generic.List(Of StardewModdingAPI.Events.ItemStackChange)
+  name.vb: List(Of ItemStackChange)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    nameWithType: List
+    fullName: System.Collections.Generic.List
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: StardewModdingAPI.Events.ItemStackChange
+    name: ItemStackChange
+    nameWithType: ItemStackChange
+    fullName: StardewModdingAPI.Events.ItemStackChange
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    nameWithType: List
+    fullName: System.Collections.Generic.List
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: StardewModdingAPI.Events.ItemStackChange
+    name: ItemStackChange
+    nameWithType: ItemStackChange
+    fullName: StardewModdingAPI.Events.ItemStackChange
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    nameWithType: List
+    fullName: System.Collections.Generic.List
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    nameWithType: List
+    fullName: System.Collections.Generic.List
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.Events.EventArgsInventoryChanged.Removed*
+  commentId: Overload:StardewModdingAPI.Events.EventArgsInventoryChanged.Removed
+  name: Removed
+  nameWithType: EventArgsInventoryChanged.Removed
+  fullName: StardewModdingAPI.Events.EventArgsInventoryChanged.Removed
+- uid: StardewModdingAPI.Events.EventArgsInventoryChanged.QuantityChanged*
+  commentId: Overload:StardewModdingAPI.Events.EventArgsInventoryChanged.QuantityChanged
+  name: QuantityChanged
+  nameWithType: EventArgsInventoryChanged.QuantityChanged
+  fullName: StardewModdingAPI.Events.EventArgsInventoryChanged.QuantityChanged
+- uid: StardewModdingAPI.Events.EventArgsInventoryChanged.#ctor*
+  commentId: Overload:StardewModdingAPI.Events.EventArgsInventoryChanged.#ctor
+  name: EventArgsInventoryChanged
+  nameWithType: EventArgsInventoryChanged.EventArgsInventoryChanged
+  fullName: StardewModdingAPI.Events.EventArgsInventoryChanged.EventArgsInventoryChanged

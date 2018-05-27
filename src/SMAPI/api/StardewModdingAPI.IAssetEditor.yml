@@ -1,0 +1,155 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.IAssetEditor
+  commentId: T:StardewModdingAPI.IAssetEditor
+  id: IAssetEditor
+  parent: StardewModdingAPI
+  children:
+  - StardewModdingAPI.IAssetEditor.CanEdit``1(StardewModdingAPI.IAssetInfo)
+  - StardewModdingAPI.IAssetEditor.Edit``1(StardewModdingAPI.IAssetData)
+  langs:
+  - csharp
+  - vb
+  name: IAssetEditor
+  nameWithType: IAssetEditor
+  fullName: StardewModdingAPI.IAssetEditor
+  type: Interface
+  source:
+    remote:
+      path: src/SMAPI/IAssetEditor.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: IAssetEditor
+    path: IAssetEditor.cs
+    startLine: 3
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Edits matching content assets.
+  example: []
+  syntax:
+    content: public interface IAssetEditor
+    content.vb: Public Interface IAssetEditor
+  modifiers.csharp:
+  - public
+  - interface
+  modifiers.vb:
+  - Public
+  - Interface
+- uid: StardewModdingAPI.IAssetEditor.CanEdit``1(StardewModdingAPI.IAssetInfo)
+  commentId: M:StardewModdingAPI.IAssetEditor.CanEdit``1(StardewModdingAPI.IAssetInfo)
+  id: CanEdit``1(StardewModdingAPI.IAssetInfo)
+  parent: StardewModdingAPI.IAssetEditor
+  langs:
+  - csharp
+  - vb
+  name: CanEdit<T>(IAssetInfo)
+  nameWithType: IAssetEditor.CanEdit<T>(IAssetInfo)
+  fullName: StardewModdingAPI.IAssetEditor.CanEdit<T>(StardewModdingAPI.IAssetInfo)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IAssetEditor.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: CanEdit
+    path: IAssetEditor.cs
+    startLine: 10
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Get whether this instance can edit the given asset.
+  example: []
+  syntax:
+    content: bool CanEdit<T>(IAssetInfo asset)
+    parameters:
+    - id: asset
+      type: StardewModdingAPI.IAssetInfo
+      description: Basic metadata about the asset being loaded.
+    typeParameters:
+    - id: T
+    return:
+      type: System.Boolean
+    content.vb: Function CanEdit(Of T)(asset As IAssetInfo) As Boolean
+  overload: StardewModdingAPI.IAssetEditor.CanEdit*
+  nameWithType.vb: IAssetEditor.CanEdit(Of T)(IAssetInfo)
+  fullName.vb: StardewModdingAPI.IAssetEditor.CanEdit(Of T)(StardewModdingAPI.IAssetInfo)
+  name.vb: CanEdit(Of T)(IAssetInfo)
+- uid: StardewModdingAPI.IAssetEditor.Edit``1(StardewModdingAPI.IAssetData)
+  commentId: M:StardewModdingAPI.IAssetEditor.Edit``1(StardewModdingAPI.IAssetData)
+  id: Edit``1(StardewModdingAPI.IAssetData)
+  parent: StardewModdingAPI.IAssetEditor
+  langs:
+  - csharp
+  - vb
+  name: Edit<T>(IAssetData)
+  nameWithType: IAssetEditor.Edit<T>(IAssetData)
+  fullName: StardewModdingAPI.IAssetEditor.Edit<T>(StardewModdingAPI.IAssetData)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IAssetEditor.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Edit
+    path: IAssetEditor.cs
+    startLine: 14
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Edit a matched asset.
+  example: []
+  syntax:
+    content: void Edit<T>(IAssetData asset)
+    parameters:
+    - id: asset
+      type: StardewModdingAPI.IAssetData
+      description: A helper which encapsulates metadata about an asset and enables changes to it.
+    typeParameters:
+    - id: T
+    content.vb: Sub Edit(Of T)(asset As IAssetData)
+  overload: StardewModdingAPI.IAssetEditor.Edit*
+  nameWithType.vb: IAssetEditor.Edit(Of T)(IAssetData)
+  fullName.vb: StardewModdingAPI.IAssetEditor.Edit(Of T)(StardewModdingAPI.IAssetData)
+  name.vb: Edit(Of T)(IAssetData)
+references:
+- uid: StardewModdingAPI
+  commentId: N:StardewModdingAPI
+  name: StardewModdingAPI
+  nameWithType: StardewModdingAPI
+  fullName: StardewModdingAPI
+- uid: StardewModdingAPI.IAssetEditor.CanEdit*
+  commentId: Overload:StardewModdingAPI.IAssetEditor.CanEdit
+  name: CanEdit
+  nameWithType: IAssetEditor.CanEdit
+  fullName: StardewModdingAPI.IAssetEditor.CanEdit
+- uid: StardewModdingAPI.IAssetInfo
+  commentId: T:StardewModdingAPI.IAssetInfo
+  parent: StardewModdingAPI
+  name: IAssetInfo
+  nameWithType: IAssetInfo
+  fullName: StardewModdingAPI.IAssetInfo
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: StardewModdingAPI.IAssetEditor.Edit*
+  commentId: Overload:StardewModdingAPI.IAssetEditor.Edit
+  name: Edit
+  nameWithType: IAssetEditor.Edit
+  fullName: StardewModdingAPI.IAssetEditor.Edit
+- uid: StardewModdingAPI.IAssetData
+  commentId: T:StardewModdingAPI.IAssetData
+  parent: StardewModdingAPI
+  name: IAssetData
+  nameWithType: IAssetData
+  fullName: StardewModdingAPI.IAssetData

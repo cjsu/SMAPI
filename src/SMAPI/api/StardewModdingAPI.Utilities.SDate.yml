@@ -1,0 +1,1416 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.Utilities.SDate
+  commentId: T:StardewModdingAPI.Utilities.SDate
+  id: SDate
+  parent: StardewModdingAPI.Utilities
+  children:
+  - StardewModdingAPI.Utilities.SDate.#ctor(System.Int32,System.String)
+  - StardewModdingAPI.Utilities.SDate.#ctor(System.Int32,System.String,System.Int32)
+  - StardewModdingAPI.Utilities.SDate.AddDays(System.Int32)
+  - StardewModdingAPI.Utilities.SDate.Day
+  - StardewModdingAPI.Utilities.SDate.DayOfWeek
+  - StardewModdingAPI.Utilities.SDate.DaysSinceStart
+  - StardewModdingAPI.Utilities.SDate.Equals(StardewModdingAPI.Utilities.SDate)
+  - StardewModdingAPI.Utilities.SDate.Equals(System.Object)
+  - StardewModdingAPI.Utilities.SDate.GetHashCode
+  - StardewModdingAPI.Utilities.SDate.Now
+  - StardewModdingAPI.Utilities.SDate.op_Equality(StardewModdingAPI.Utilities.SDate,StardewModdingAPI.Utilities.SDate)
+  - StardewModdingAPI.Utilities.SDate.op_GreaterThan(StardewModdingAPI.Utilities.SDate,StardewModdingAPI.Utilities.SDate)
+  - StardewModdingAPI.Utilities.SDate.op_GreaterThanOrEqual(StardewModdingAPI.Utilities.SDate,StardewModdingAPI.Utilities.SDate)
+  - StardewModdingAPI.Utilities.SDate.op_Inequality(StardewModdingAPI.Utilities.SDate,StardewModdingAPI.Utilities.SDate)
+  - StardewModdingAPI.Utilities.SDate.op_LessThan(StardewModdingAPI.Utilities.SDate,StardewModdingAPI.Utilities.SDate)
+  - StardewModdingAPI.Utilities.SDate.op_LessThanOrEqual(StardewModdingAPI.Utilities.SDate,StardewModdingAPI.Utilities.SDate)
+  - StardewModdingAPI.Utilities.SDate.Season
+  - StardewModdingAPI.Utilities.SDate.ToString
+  - StardewModdingAPI.Utilities.SDate.Year
+  langs:
+  - csharp
+  - vb
+  name: SDate
+  nameWithType: SDate
+  fullName: StardewModdingAPI.Utilities.SDate
+  type: Class
+  source:
+    remote:
+      path: src/SMAPI/Utilities/SDate.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: SDate
+    path: Utilities/SDate.cs
+    startLine: 7
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Utilities
+  summary: Represents a Stardew Valley date.
+  example: []
+  syntax:
+    content: 'public class SDate : IEquatable<SDate>'
+    content.vb: >-
+      Public Class SDate
+          Implements IEquatable(Of SDate)
+  inheritance:
+  - System.Object
+  implements:
+  - System.IEquatable{StardewModdingAPI.Utilities.SDate}
+  inheritedMembers:
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  modifiers.csharp:
+  - public
+  - class
+  modifiers.vb:
+  - Public
+  - Class
+- uid: StardewModdingAPI.Utilities.SDate.Day
+  commentId: P:StardewModdingAPI.Utilities.SDate.Day
+  id: Day
+  parent: StardewModdingAPI.Utilities.SDate
+  langs:
+  - csharp
+  - vb
+  name: Day
+  nameWithType: SDate.Day
+  fullName: StardewModdingAPI.Utilities.SDate.Day
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/Utilities/SDate.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Day
+    path: Utilities/SDate.cs
+    startLine: 26
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Utilities
+  summary: The day of month.
+  example: []
+  syntax:
+    content: public int Day { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property Day As Integer
+  overload: StardewModdingAPI.Utilities.SDate.Day*
+  modifiers.csharp:
+  - public
+  - get
+  modifiers.vb:
+  - Public
+  - ReadOnly
+- uid: StardewModdingAPI.Utilities.SDate.Season
+  commentId: P:StardewModdingAPI.Utilities.SDate.Season
+  id: Season
+  parent: StardewModdingAPI.Utilities.SDate
+  langs:
+  - csharp
+  - vb
+  name: Season
+  nameWithType: SDate.Season
+  fullName: StardewModdingAPI.Utilities.SDate.Season
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/Utilities/SDate.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Season
+    path: Utilities/SDate.cs
+    startLine: 29
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Utilities
+  summary: The season name.
+  example: []
+  syntax:
+    content: public string Season { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property Season As String
+  overload: StardewModdingAPI.Utilities.SDate.Season*
+  modifiers.csharp:
+  - public
+  - get
+  modifiers.vb:
+  - Public
+  - ReadOnly
+- uid: StardewModdingAPI.Utilities.SDate.Year
+  commentId: P:StardewModdingAPI.Utilities.SDate.Year
+  id: Year
+  parent: StardewModdingAPI.Utilities.SDate
+  langs:
+  - csharp
+  - vb
+  name: Year
+  nameWithType: SDate.Year
+  fullName: StardewModdingAPI.Utilities.SDate.Year
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/Utilities/SDate.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Year
+    path: Utilities/SDate.cs
+    startLine: 32
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Utilities
+  summary: The year.
+  example: []
+  syntax:
+    content: public int Year { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property Year As Integer
+  overload: StardewModdingAPI.Utilities.SDate.Year*
+  modifiers.csharp:
+  - public
+  - get
+  modifiers.vb:
+  - Public
+  - ReadOnly
+- uid: StardewModdingAPI.Utilities.SDate.DayOfWeek
+  commentId: P:StardewModdingAPI.Utilities.SDate.DayOfWeek
+  id: DayOfWeek
+  parent: StardewModdingAPI.Utilities.SDate
+  langs:
+  - csharp
+  - vb
+  name: DayOfWeek
+  nameWithType: SDate.DayOfWeek
+  fullName: StardewModdingAPI.Utilities.SDate.DayOfWeek
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/Utilities/SDate.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: DayOfWeek
+    path: Utilities/SDate.cs
+    startLine: 35
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Utilities
+  summary: The day of week.
+  example: []
+  syntax:
+    content: public DayOfWeek DayOfWeek { get; }
+    parameters: []
+    return:
+      type: System.DayOfWeek
+    content.vb: Public ReadOnly Property DayOfWeek As DayOfWeek
+  overload: StardewModdingAPI.Utilities.SDate.DayOfWeek*
+  modifiers.csharp:
+  - public
+  - get
+  modifiers.vb:
+  - Public
+  - ReadOnly
+- uid: StardewModdingAPI.Utilities.SDate.DaysSinceStart
+  commentId: P:StardewModdingAPI.Utilities.SDate.DaysSinceStart
+  id: DaysSinceStart
+  parent: StardewModdingAPI.Utilities.SDate
+  langs:
+  - csharp
+  - vb
+  name: DaysSinceStart
+  nameWithType: SDate.DaysSinceStart
+  fullName: StardewModdingAPI.Utilities.SDate.DaysSinceStart
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/Utilities/SDate.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: DaysSinceStart
+    path: Utilities/SDate.cs
+    startLine: 38
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Utilities
+  summary: The number of days since the game began (starting at 1 for the first day of spring in Y1).
+  example: []
+  syntax:
+    content: public int DaysSinceStart { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property DaysSinceStart As Integer
+  overload: StardewModdingAPI.Utilities.SDate.DaysSinceStart*
+  modifiers.csharp:
+  - public
+  - get
+  modifiers.vb:
+  - Public
+  - ReadOnly
+- uid: StardewModdingAPI.Utilities.SDate.#ctor(System.Int32,System.String)
+  commentId: M:StardewModdingAPI.Utilities.SDate.#ctor(System.Int32,System.String)
+  id: '#ctor(System.Int32,System.String)'
+  parent: StardewModdingAPI.Utilities.SDate
+  langs:
+  - csharp
+  - vb
+  name: SDate(Int32, String)
+  nameWithType: SDate.SDate(Int32, String)
+  fullName: StardewModdingAPI.Utilities.SDate.SDate(System.Int32, System.String)
+  type: Constructor
+  source:
+    remote:
+      path: src/SMAPI/Utilities/SDate.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: .ctor
+    path: Utilities/SDate.cs
+    startLine: 48
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Utilities
+  summary: Construct an instance.
+  example: []
+  syntax:
+    content: public SDate(int day, string season)
+    parameters:
+    - id: day
+      type: System.Int32
+      description: The day of month.
+    - id: season
+      type: System.String
+      description: The season name.
+    content.vb: Public Sub New(day As Integer, season As String)
+  overload: StardewModdingAPI.Utilities.SDate.#ctor*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: One of the arguments has an invalid value (like day 35).
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: StardewModdingAPI.Utilities.SDate.#ctor(System.Int32,System.String,System.Int32)
+  commentId: M:StardewModdingAPI.Utilities.SDate.#ctor(System.Int32,System.String,System.Int32)
+  id: '#ctor(System.Int32,System.String,System.Int32)'
+  parent: StardewModdingAPI.Utilities.SDate
+  langs:
+  - csharp
+  - vb
+  name: SDate(Int32, String, Int32)
+  nameWithType: SDate.SDate(Int32, String, Int32)
+  fullName: StardewModdingAPI.Utilities.SDate.SDate(System.Int32, System.String, System.Int32)
+  type: Constructor
+  source:
+    remote:
+      path: src/SMAPI/Utilities/SDate.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: .ctor
+    path: Utilities/SDate.cs
+    startLine: 56
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Utilities
+  summary: Construct an instance.
+  example: []
+  syntax:
+    content: public SDate(int day, string season, int year)
+    parameters:
+    - id: day
+      type: System.Int32
+      description: The day of month.
+    - id: season
+      type: System.String
+      description: The season name.
+    - id: year
+      type: System.Int32
+      description: The year.
+    content.vb: Public Sub New(day As Integer, season As String, year As Integer)
+  overload: StardewModdingAPI.Utilities.SDate.#ctor*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: One of the arguments has an invalid value (like day 35).
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: StardewModdingAPI.Utilities.SDate.Now
+  commentId: M:StardewModdingAPI.Utilities.SDate.Now
+  id: Now
+  parent: StardewModdingAPI.Utilities.SDate
+  langs:
+  - csharp
+  - vb
+  name: Now()
+  nameWithType: SDate.Now()
+  fullName: StardewModdingAPI.Utilities.SDate.Now()
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/Utilities/SDate.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Now
+    path: Utilities/SDate.cs
+    startLine: 60
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Utilities
+  summary: Get the current in-game date.
+  example: []
+  syntax:
+    content: public static SDate Now()
+    return:
+      type: StardewModdingAPI.Utilities.SDate
+    content.vb: Public Shared Function Now As SDate
+  overload: StardewModdingAPI.Utilities.SDate.Now*
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+- uid: StardewModdingAPI.Utilities.SDate.AddDays(System.Int32)
+  commentId: M:StardewModdingAPI.Utilities.SDate.AddDays(System.Int32)
+  id: AddDays(System.Int32)
+  parent: StardewModdingAPI.Utilities.SDate
+  langs:
+  - csharp
+  - vb
+  name: AddDays(Int32)
+  nameWithType: SDate.AddDays(Int32)
+  fullName: StardewModdingAPI.Utilities.SDate.AddDays(System.Int32)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/Utilities/SDate.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: AddDays
+    path: Utilities/SDate.cs
+    startLine: 69
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Utilities
+  summary: Get a new date with the given number of days added.
+  example: []
+  syntax:
+    content: public SDate AddDays(int offset)
+    parameters:
+    - id: offset
+      type: System.Int32
+      description: The number of days to add.
+    return:
+      type: StardewModdingAPI.Utilities.SDate
+      description: Returns the resulting date.
+    content.vb: Public Function AddDays(offset As Integer) As SDate
+  overload: StardewModdingAPI.Utilities.SDate.AddDays*
+  exceptions:
+  - type: System.ArithmeticException
+    commentId: T:System.ArithmeticException
+    description: The offset would result in an invalid date (like year 0).
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: StardewModdingAPI.Utilities.SDate.ToString
+  commentId: M:StardewModdingAPI.Utilities.SDate.ToString
+  id: ToString
+  parent: StardewModdingAPI.Utilities.SDate
+  langs:
+  - csharp
+  - vb
+  name: ToString()
+  nameWithType: SDate.ToString()
+  fullName: StardewModdingAPI.Utilities.SDate.ToString()
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/Utilities/SDate.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ToString
+    path: Utilities/SDate.cs
+    startLine: 95
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Utilities
+  summary: Get a string representation of the date. This is mainly intended for debugging or console messages.
+  example: []
+  syntax:
+    content: public override string ToString()
+    return:
+      type: System.String
+    content.vb: Public Overrides Function ToString As String
+  overridden: System.Object.ToString
+  overload: StardewModdingAPI.Utilities.SDate.ToString*
+  modifiers.csharp:
+  - public
+  - override
+  modifiers.vb:
+  - Public
+  - Overrides
+- uid: StardewModdingAPI.Utilities.SDate.Equals(StardewModdingAPI.Utilities.SDate)
+  commentId: M:StardewModdingAPI.Utilities.SDate.Equals(StardewModdingAPI.Utilities.SDate)
+  id: Equals(StardewModdingAPI.Utilities.SDate)
+  parent: StardewModdingAPI.Utilities.SDate
+  langs:
+  - csharp
+  - vb
+  name: Equals(SDate)
+  nameWithType: SDate.Equals(SDate)
+  fullName: StardewModdingAPI.Utilities.SDate.Equals(StardewModdingAPI.Utilities.SDate)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/Utilities/SDate.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Equals
+    path: Utilities/SDate.cs
+    startLine: 105
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Utilities
+  summary: Get whether this instance is equal to another.
+  example: []
+  syntax:
+    content: public bool Equals(SDate other)
+    parameters:
+    - id: other
+      type: StardewModdingAPI.Utilities.SDate
+      description: The other value to compare.
+    return:
+      type: System.Boolean
+    content.vb: Public Function Equals(other As SDate) As Boolean
+  overload: StardewModdingAPI.Utilities.SDate.Equals*
+  implements:
+  - System.IEquatable{StardewModdingAPI.Utilities.SDate}.Equals(StardewModdingAPI.Utilities.SDate)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: StardewModdingAPI.Utilities.SDate.Equals(System.Object)
+  commentId: M:StardewModdingAPI.Utilities.SDate.Equals(System.Object)
+  id: Equals(System.Object)
+  parent: StardewModdingAPI.Utilities.SDate
+  langs:
+  - csharp
+  - vb
+  name: Equals(Object)
+  nameWithType: SDate.Equals(Object)
+  fullName: StardewModdingAPI.Utilities.SDate.Equals(System.Object)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/Utilities/SDate.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Equals
+    path: Utilities/SDate.cs
+    startLine: 112
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Utilities
+  summary: Get whether this instance is equal to another.
+  example: []
+  syntax:
+    content: public override bool Equals(object obj)
+    parameters:
+    - id: obj
+      type: System.Object
+      description: The other value to compare.
+    return:
+      type: System.Boolean
+    content.vb: Public Overrides Function Equals(obj As Object) As Boolean
+  overridden: System.Object.Equals(System.Object)
+  overload: StardewModdingAPI.Utilities.SDate.Equals*
+  modifiers.csharp:
+  - public
+  - override
+  modifiers.vb:
+  - Public
+  - Overrides
+- uid: StardewModdingAPI.Utilities.SDate.GetHashCode
+  commentId: M:StardewModdingAPI.Utilities.SDate.GetHashCode
+  id: GetHashCode
+  parent: StardewModdingAPI.Utilities.SDate
+  langs:
+  - csharp
+  - vb
+  name: GetHashCode()
+  nameWithType: SDate.GetHashCode()
+  fullName: StardewModdingAPI.Utilities.SDate.GetHashCode()
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/Utilities/SDate.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: GetHashCode
+    path: Utilities/SDate.cs
+    startLine: 118
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Utilities
+  summary: Get a hash code which uniquely identifies a date.
+  example: []
+  syntax:
+    content: public override int GetHashCode()
+    return:
+      type: System.Int32
+    content.vb: Public Overrides Function GetHashCode As Integer
+  overridden: System.Object.GetHashCode
+  overload: StardewModdingAPI.Utilities.SDate.GetHashCode*
+  modifiers.csharp:
+  - public
+  - override
+  modifiers.vb:
+  - Public
+  - Overrides
+- uid: StardewModdingAPI.Utilities.SDate.op_Equality(StardewModdingAPI.Utilities.SDate,StardewModdingAPI.Utilities.SDate)
+  commentId: M:StardewModdingAPI.Utilities.SDate.op_Equality(StardewModdingAPI.Utilities.SDate,StardewModdingAPI.Utilities.SDate)
+  id: op_Equality(StardewModdingAPI.Utilities.SDate,StardewModdingAPI.Utilities.SDate)
+  parent: StardewModdingAPI.Utilities.SDate
+  langs:
+  - csharp
+  - vb
+  name: Equality(SDate, SDate)
+  nameWithType: SDate.Equality(SDate, SDate)
+  fullName: StardewModdingAPI.Utilities.SDate.Equality(StardewModdingAPI.Utilities.SDate, StardewModdingAPI.Utilities.SDate)
+  type: Operator
+  source:
+    remote:
+      path: src/SMAPI/Utilities/SDate.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: op_Equality
+    path: Utilities/SDate.cs
+    startLine: 130
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Utilities
+  summary: Get whether one date is equal to another.
+  example: []
+  syntax:
+    content: public static bool operator ==(SDate date, SDate other)
+    parameters:
+    - id: date
+      type: StardewModdingAPI.Utilities.SDate
+      description: The base date to compare.
+    - id: other
+      type: StardewModdingAPI.Utilities.SDate
+      description: The other date to compare.
+    return:
+      type: System.Boolean
+      description: The equality of the dates
+    content.vb: Public Shared Operator =(date As SDate, other As SDate) As Boolean
+  overload: StardewModdingAPI.Utilities.SDate.op_Equality*
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+- uid: StardewModdingAPI.Utilities.SDate.op_Inequality(StardewModdingAPI.Utilities.SDate,StardewModdingAPI.Utilities.SDate)
+  commentId: M:StardewModdingAPI.Utilities.SDate.op_Inequality(StardewModdingAPI.Utilities.SDate,StardewModdingAPI.Utilities.SDate)
+  id: op_Inequality(StardewModdingAPI.Utilities.SDate,StardewModdingAPI.Utilities.SDate)
+  parent: StardewModdingAPI.Utilities.SDate
+  langs:
+  - csharp
+  - vb
+  name: Inequality(SDate, SDate)
+  nameWithType: SDate.Inequality(SDate, SDate)
+  fullName: StardewModdingAPI.Utilities.SDate.Inequality(StardewModdingAPI.Utilities.SDate, StardewModdingAPI.Utilities.SDate)
+  type: Operator
+  source:
+    remote:
+      path: src/SMAPI/Utilities/SDate.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: op_Inequality
+    path: Utilities/SDate.cs
+    startLine: 138
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Utilities
+  summary: Get whether one date is not equal to another.
+  example: []
+  syntax:
+    content: public static bool operator !=(SDate date, SDate other)
+    parameters:
+    - id: date
+      type: StardewModdingAPI.Utilities.SDate
+      description: The base date to compare.
+    - id: other
+      type: StardewModdingAPI.Utilities.SDate
+      description: The other date to compare.
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Operator <>(date As SDate, other As SDate) As Boolean
+  overload: StardewModdingAPI.Utilities.SDate.op_Inequality*
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+- uid: StardewModdingAPI.Utilities.SDate.op_GreaterThan(StardewModdingAPI.Utilities.SDate,StardewModdingAPI.Utilities.SDate)
+  commentId: M:StardewModdingAPI.Utilities.SDate.op_GreaterThan(StardewModdingAPI.Utilities.SDate,StardewModdingAPI.Utilities.SDate)
+  id: op_GreaterThan(StardewModdingAPI.Utilities.SDate,StardewModdingAPI.Utilities.SDate)
+  parent: StardewModdingAPI.Utilities.SDate
+  langs:
+  - csharp
+  - vb
+  name: GreaterThan(SDate, SDate)
+  nameWithType: SDate.GreaterThan(SDate, SDate)
+  fullName: StardewModdingAPI.Utilities.SDate.GreaterThan(StardewModdingAPI.Utilities.SDate, StardewModdingAPI.Utilities.SDate)
+  type: Operator
+  source:
+    remote:
+      path: src/SMAPI/Utilities/SDate.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: op_GreaterThan
+    path: Utilities/SDate.cs
+    startLine: 146
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Utilities
+  summary: Get whether one date is more than another.
+  example: []
+  syntax:
+    content: public static bool operator>(SDate date, SDate other)
+    parameters:
+    - id: date
+      type: StardewModdingAPI.Utilities.SDate
+      description: The base date to compare.
+    - id: other
+      type: StardewModdingAPI.Utilities.SDate
+      description: The other date to compare.
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Operator>(date As SDate, other As SDate) As Boolean
+  overload: StardewModdingAPI.Utilities.SDate.op_GreaterThan*
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+- uid: StardewModdingAPI.Utilities.SDate.op_GreaterThanOrEqual(StardewModdingAPI.Utilities.SDate,StardewModdingAPI.Utilities.SDate)
+  commentId: M:StardewModdingAPI.Utilities.SDate.op_GreaterThanOrEqual(StardewModdingAPI.Utilities.SDate,StardewModdingAPI.Utilities.SDate)
+  id: op_GreaterThanOrEqual(StardewModdingAPI.Utilities.SDate,StardewModdingAPI.Utilities.SDate)
+  parent: StardewModdingAPI.Utilities.SDate
+  langs:
+  - csharp
+  - vb
+  name: GreaterThanOrEqual(SDate, SDate)
+  nameWithType: SDate.GreaterThanOrEqual(SDate, SDate)
+  fullName: StardewModdingAPI.Utilities.SDate.GreaterThanOrEqual(StardewModdingAPI.Utilities.SDate, StardewModdingAPI.Utilities.SDate)
+  type: Operator
+  source:
+    remote:
+      path: src/SMAPI/Utilities/SDate.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: op_GreaterThanOrEqual
+    path: Utilities/SDate.cs
+    startLine: 154
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Utilities
+  summary: Get whether one date is more than or equal to another.
+  example: []
+  syntax:
+    content: public static bool operator >=(SDate date, SDate other)
+    parameters:
+    - id: date
+      type: StardewModdingAPI.Utilities.SDate
+      description: The base date to compare.
+    - id: other
+      type: StardewModdingAPI.Utilities.SDate
+      description: The other date to compare.
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Operator >=(date As SDate, other As SDate) As Boolean
+  overload: StardewModdingAPI.Utilities.SDate.op_GreaterThanOrEqual*
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+- uid: StardewModdingAPI.Utilities.SDate.op_LessThanOrEqual(StardewModdingAPI.Utilities.SDate,StardewModdingAPI.Utilities.SDate)
+  commentId: M:StardewModdingAPI.Utilities.SDate.op_LessThanOrEqual(StardewModdingAPI.Utilities.SDate,StardewModdingAPI.Utilities.SDate)
+  id: op_LessThanOrEqual(StardewModdingAPI.Utilities.SDate,StardewModdingAPI.Utilities.SDate)
+  parent: StardewModdingAPI.Utilities.SDate
+  langs:
+  - csharp
+  - vb
+  name: LessThanOrEqual(SDate, SDate)
+  nameWithType: SDate.LessThanOrEqual(SDate, SDate)
+  fullName: StardewModdingAPI.Utilities.SDate.LessThanOrEqual(StardewModdingAPI.Utilities.SDate, StardewModdingAPI.Utilities.SDate)
+  type: Operator
+  source:
+    remote:
+      path: src/SMAPI/Utilities/SDate.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: op_LessThanOrEqual
+    path: Utilities/SDate.cs
+    startLine: 162
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Utilities
+  summary: Get whether one date is less than or equal to another.
+  example: []
+  syntax:
+    content: public static bool operator <=(SDate date, SDate other)
+    parameters:
+    - id: date
+      type: StardewModdingAPI.Utilities.SDate
+      description: The base date to compare.
+    - id: other
+      type: StardewModdingAPI.Utilities.SDate
+      description: The other date to compare.
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Operator <=(date As SDate, other As SDate) As Boolean
+  overload: StardewModdingAPI.Utilities.SDate.op_LessThanOrEqual*
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+- uid: StardewModdingAPI.Utilities.SDate.op_LessThan(StardewModdingAPI.Utilities.SDate,StardewModdingAPI.Utilities.SDate)
+  commentId: M:StardewModdingAPI.Utilities.SDate.op_LessThan(StardewModdingAPI.Utilities.SDate,StardewModdingAPI.Utilities.SDate)
+  id: op_LessThan(StardewModdingAPI.Utilities.SDate,StardewModdingAPI.Utilities.SDate)
+  parent: StardewModdingAPI.Utilities.SDate
+  langs:
+  - csharp
+  - vb
+  name: LessThan(SDate, SDate)
+  nameWithType: SDate.LessThan(SDate, SDate)
+  fullName: StardewModdingAPI.Utilities.SDate.LessThan(StardewModdingAPI.Utilities.SDate, StardewModdingAPI.Utilities.SDate)
+  type: Operator
+  source:
+    remote:
+      path: src/SMAPI/Utilities/SDate.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: op_LessThan
+    path: Utilities/SDate.cs
+    startLine: 170
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Utilities
+  summary: Get whether one date is less than another.
+  example: []
+  syntax:
+    content: public static bool operator <(SDate date, SDate other)
+    parameters:
+    - id: date
+      type: StardewModdingAPI.Utilities.SDate
+      description: The base date to compare.
+    - id: other
+      type: StardewModdingAPI.Utilities.SDate
+      description: The other date to compare.
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Operator <(date As SDate, other As SDate) As Boolean
+  overload: StardewModdingAPI.Utilities.SDate.op_LessThan*
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+references:
+- uid: StardewModdingAPI.Utilities
+  commentId: N:StardewModdingAPI.Utilities
+  name: StardewModdingAPI.Utilities
+  nameWithType: StardewModdingAPI.Utilities
+  fullName: StardewModdingAPI.Utilities
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.IEquatable{StardewModdingAPI.Utilities.SDate}
+  commentId: T:System.IEquatable{StardewModdingAPI.Utilities.SDate}
+  parent: System
+  definition: System.IEquatable`1
+  name: IEquatable<SDate>
+  nameWithType: IEquatable<SDate>
+  fullName: System.IEquatable<StardewModdingAPI.Utilities.SDate>
+  nameWithType.vb: IEquatable(Of SDate)
+  fullName.vb: System.IEquatable(Of StardewModdingAPI.Utilities.SDate)
+  name.vb: IEquatable(Of SDate)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    nameWithType: IEquatable
+    fullName: System.IEquatable
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: StardewModdingAPI.Utilities.SDate
+    name: SDate
+    nameWithType: SDate
+    fullName: StardewModdingAPI.Utilities.SDate
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    nameWithType: IEquatable
+    fullName: System.IEquatable
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: StardewModdingAPI.Utilities.SDate
+    name: SDate
+    nameWithType: SDate
+    fullName: StardewModdingAPI.Utilities.SDate
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: System.Object.Equals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: System.Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: System.Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: System.Object.ReferenceEquals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    nameWithType: IEquatable
+    fullName: System.IEquatable
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    nameWithType: IEquatable
+    fullName: System.IEquatable
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.Utilities.SDate.Day*
+  commentId: Overload:StardewModdingAPI.Utilities.SDate.Day
+  name: Day
+  nameWithType: SDate.Day
+  fullName: StardewModdingAPI.Utilities.SDate.Day
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: Int32
+  nameWithType: Int32
+  fullName: System.Int32
+- uid: StardewModdingAPI.Utilities.SDate.Season*
+  commentId: Overload:StardewModdingAPI.Utilities.SDate.Season
+  name: Season
+  nameWithType: SDate.Season
+  fullName: StardewModdingAPI.Utilities.SDate.Season
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: StardewModdingAPI.Utilities.SDate.Year*
+  commentId: Overload:StardewModdingAPI.Utilities.SDate.Year
+  name: Year
+  nameWithType: SDate.Year
+  fullName: StardewModdingAPI.Utilities.SDate.Year
+- uid: StardewModdingAPI.Utilities.SDate.DayOfWeek*
+  commentId: Overload:StardewModdingAPI.Utilities.SDate.DayOfWeek
+  name: DayOfWeek
+  nameWithType: SDate.DayOfWeek
+  fullName: StardewModdingAPI.Utilities.SDate.DayOfWeek
+- uid: System.DayOfWeek
+  commentId: T:System.DayOfWeek
+  parent: System
+  isExternal: true
+  name: DayOfWeek
+  nameWithType: DayOfWeek
+  fullName: System.DayOfWeek
+- uid: StardewModdingAPI.Utilities.SDate.DaysSinceStart*
+  commentId: Overload:StardewModdingAPI.Utilities.SDate.DaysSinceStart
+  name: DaysSinceStart
+  nameWithType: SDate.DaysSinceStart
+  fullName: StardewModdingAPI.Utilities.SDate.DaysSinceStart
+- uid: System.ArgumentException
+  commentId: T:System.ArgumentException
+  isExternal: true
+- uid: StardewModdingAPI.Utilities.SDate.#ctor*
+  commentId: Overload:StardewModdingAPI.Utilities.SDate.#ctor
+  name: SDate
+  nameWithType: SDate.SDate
+  fullName: StardewModdingAPI.Utilities.SDate.SDate
+- uid: StardewModdingAPI.Utilities.SDate.Now*
+  commentId: Overload:StardewModdingAPI.Utilities.SDate.Now
+  name: Now
+  nameWithType: SDate.Now
+  fullName: StardewModdingAPI.Utilities.SDate.Now
+- uid: StardewModdingAPI.Utilities.SDate
+  commentId: T:StardewModdingAPI.Utilities.SDate
+  parent: StardewModdingAPI.Utilities
+  name: SDate
+  nameWithType: SDate
+  fullName: StardewModdingAPI.Utilities.SDate
+- uid: System.ArithmeticException
+  commentId: T:System.ArithmeticException
+  isExternal: true
+- uid: StardewModdingAPI.Utilities.SDate.AddDays*
+  commentId: Overload:StardewModdingAPI.Utilities.SDate.AddDays
+  name: AddDays
+  nameWithType: SDate.AddDays
+  fullName: StardewModdingAPI.Utilities.SDate.AddDays
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: System.Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.Utilities.SDate.ToString*
+  commentId: Overload:StardewModdingAPI.Utilities.SDate.ToString
+  name: ToString
+  nameWithType: SDate.ToString
+  fullName: StardewModdingAPI.Utilities.SDate.ToString
+- uid: StardewModdingAPI.Utilities.SDate.Equals*
+  commentId: Overload:StardewModdingAPI.Utilities.SDate.Equals
+  name: Equals
+  nameWithType: SDate.Equals
+  fullName: StardewModdingAPI.Utilities.SDate.Equals
+- uid: System.IEquatable{StardewModdingAPI.Utilities.SDate}.Equals(StardewModdingAPI.Utilities.SDate)
+  commentId: M:System.IEquatable{StardewModdingAPI.Utilities.SDate}.Equals(StardewModdingAPI.Utilities.SDate)
+  parent: System.IEquatable{StardewModdingAPI.Utilities.SDate}
+  definition: System.IEquatable`1.Equals(`0)
+  name: Equals(SDate)
+  nameWithType: IEquatable<SDate>.Equals(SDate)
+  fullName: System.IEquatable<StardewModdingAPI.Utilities.SDate>.Equals(StardewModdingAPI.Utilities.SDate)
+  nameWithType.vb: IEquatable(Of SDate).Equals(SDate)
+  fullName.vb: System.IEquatable(Of StardewModdingAPI.Utilities.SDate).Equals(StardewModdingAPI.Utilities.SDate)
+  spec.csharp:
+  - uid: System.IEquatable`1.Equals(`0)
+    name: Equals
+    nameWithType: IEquatable<SDate>.Equals
+    fullName: System.IEquatable<StardewModdingAPI.Utilities.SDate>.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: StardewModdingAPI.Utilities.SDate
+    name: SDate
+    nameWithType: SDate
+    fullName: StardewModdingAPI.Utilities.SDate
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.IEquatable`1.Equals(`0)
+    name: Equals
+    nameWithType: IEquatable(Of SDate).Equals
+    fullName: System.IEquatable(Of StardewModdingAPI.Utilities.SDate).Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: StardewModdingAPI.Utilities.SDate
+    name: SDate
+    nameWithType: SDate
+    fullName: StardewModdingAPI.Utilities.SDate
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.IEquatable`1.Equals(`0)
+  commentId: M:System.IEquatable`1.Equals(`0)
+  isExternal: true
+  name: Equals(T)
+  nameWithType: IEquatable<T>.Equals(T)
+  fullName: System.IEquatable<T>.Equals(T)
+  nameWithType.vb: IEquatable(Of T).Equals(T)
+  fullName.vb: System.IEquatable(Of T).Equals(T)
+  spec.csharp:
+  - uid: System.IEquatable`1.Equals(`0)
+    name: Equals
+    nameWithType: IEquatable<T>.Equals
+    fullName: System.IEquatable<T>.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.IEquatable`1.Equals(`0)
+    name: Equals
+    nameWithType: IEquatable(Of T).Equals
+    fullName: System.IEquatable(Of T).Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: System.Object.Equals(System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: System.Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.Utilities.SDate.GetHashCode*
+  commentId: Overload:StardewModdingAPI.Utilities.SDate.GetHashCode
+  name: GetHashCode
+  nameWithType: SDate.GetHashCode
+  fullName: StardewModdingAPI.Utilities.SDate.GetHashCode
+- uid: StardewModdingAPI.Utilities.SDate.op_Equality*
+  commentId: Overload:StardewModdingAPI.Utilities.SDate.op_Equality
+  name: Equality
+  nameWithType: SDate.Equality
+  fullName: StardewModdingAPI.Utilities.SDate.Equality
+- uid: StardewModdingAPI.Utilities.SDate.op_Inequality*
+  commentId: Overload:StardewModdingAPI.Utilities.SDate.op_Inequality
+  name: Inequality
+  nameWithType: SDate.Inequality
+  fullName: StardewModdingAPI.Utilities.SDate.Inequality
+- uid: StardewModdingAPI.Utilities.SDate.op_GreaterThan*
+  commentId: Overload:StardewModdingAPI.Utilities.SDate.op_GreaterThan
+  name: GreaterThan
+  nameWithType: SDate.GreaterThan
+  fullName: StardewModdingAPI.Utilities.SDate.GreaterThan
+- uid: StardewModdingAPI.Utilities.SDate.op_GreaterThanOrEqual*
+  commentId: Overload:StardewModdingAPI.Utilities.SDate.op_GreaterThanOrEqual
+  name: GreaterThanOrEqual
+  nameWithType: SDate.GreaterThanOrEqual
+  fullName: StardewModdingAPI.Utilities.SDate.GreaterThanOrEqual
+- uid: StardewModdingAPI.Utilities.SDate.op_LessThanOrEqual*
+  commentId: Overload:StardewModdingAPI.Utilities.SDate.op_LessThanOrEqual
+  name: LessThanOrEqual
+  nameWithType: SDate.LessThanOrEqual
+  fullName: StardewModdingAPI.Utilities.SDate.LessThanOrEqual
+- uid: StardewModdingAPI.Utilities.SDate.op_LessThan*
+  commentId: Overload:StardewModdingAPI.Utilities.SDate.op_LessThan
+  name: LessThan
+  nameWithType: SDate.LessThan
+  fullName: StardewModdingAPI.Utilities.SDate.LessThan

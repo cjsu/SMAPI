@@ -1,0 +1,143 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.IManifestContentPackFor
+  commentId: T:StardewModdingAPI.IManifestContentPackFor
+  id: IManifestContentPackFor
+  parent: StardewModdingAPI
+  children:
+  - StardewModdingAPI.IManifestContentPackFor.MinimumVersion
+  - StardewModdingAPI.IManifestContentPackFor.UniqueID
+  langs:
+  - csharp
+  - vb
+  name: IManifestContentPackFor
+  nameWithType: IManifestContentPackFor
+  fullName: StardewModdingAPI.IManifestContentPackFor
+  type: Interface
+  source:
+    remote:
+      path: src/SMAPI/IManifestContentPackFor.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: IManifestContentPackFor
+    path: IManifestContentPackFor.cs
+    startLine: 3
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Indicates which mod can read the content pack represented by the containing manifest.
+  example: []
+  syntax:
+    content: public interface IManifestContentPackFor
+    content.vb: Public Interface IManifestContentPackFor
+  modifiers.csharp:
+  - public
+  - interface
+  modifiers.vb:
+  - Public
+  - Interface
+- uid: StardewModdingAPI.IManifestContentPackFor.UniqueID
+  commentId: P:StardewModdingAPI.IManifestContentPackFor.UniqueID
+  id: UniqueID
+  parent: StardewModdingAPI.IManifestContentPackFor
+  langs:
+  - csharp
+  - vb
+  name: UniqueID
+  nameWithType: IManifestContentPackFor.UniqueID
+  fullName: StardewModdingAPI.IManifestContentPackFor.UniqueID
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IManifestContentPackFor.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: UniqueID
+    path: IManifestContentPackFor.cs
+    startLine: 6
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The unique ID of the mod which can read this content pack.
+  example: []
+  syntax:
+    content: string UniqueID { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: ReadOnly Property UniqueID As String
+  overload: StardewModdingAPI.IManifestContentPackFor.UniqueID*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+- uid: StardewModdingAPI.IManifestContentPackFor.MinimumVersion
+  commentId: P:StardewModdingAPI.IManifestContentPackFor.MinimumVersion
+  id: MinimumVersion
+  parent: StardewModdingAPI.IManifestContentPackFor
+  langs:
+  - csharp
+  - vb
+  name: MinimumVersion
+  nameWithType: IManifestContentPackFor.MinimumVersion
+  fullName: StardewModdingAPI.IManifestContentPackFor.MinimumVersion
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IManifestContentPackFor.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: MinimumVersion
+    path: IManifestContentPackFor.cs
+    startLine: 9
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The minimum required version (if any).
+  example: []
+  syntax:
+    content: ISemanticVersion MinimumVersion { get; }
+    parameters: []
+    return:
+      type: StardewModdingAPI.ISemanticVersion
+    content.vb: ReadOnly Property MinimumVersion As ISemanticVersion
+  overload: StardewModdingAPI.IManifestContentPackFor.MinimumVersion*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+references:
+- uid: StardewModdingAPI
+  commentId: N:StardewModdingAPI
+  name: StardewModdingAPI
+  nameWithType: StardewModdingAPI
+  fullName: StardewModdingAPI
+- uid: StardewModdingAPI.IManifestContentPackFor.UniqueID*
+  commentId: Overload:StardewModdingAPI.IManifestContentPackFor.UniqueID
+  name: UniqueID
+  nameWithType: IManifestContentPackFor.UniqueID
+  fullName: StardewModdingAPI.IManifestContentPackFor.UniqueID
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: StardewModdingAPI.IManifestContentPackFor.MinimumVersion*
+  commentId: Overload:StardewModdingAPI.IManifestContentPackFor.MinimumVersion
+  name: MinimumVersion
+  nameWithType: IManifestContentPackFor.MinimumVersion
+  fullName: StardewModdingAPI.IManifestContentPackFor.MinimumVersion
+- uid: StardewModdingAPI.ISemanticVersion
+  commentId: T:StardewModdingAPI.ISemanticVersion
+  parent: StardewModdingAPI
+  name: ISemanticVersion
+  nameWithType: ISemanticVersion
+  fullName: StardewModdingAPI.ISemanticVersion

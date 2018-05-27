@@ -1,0 +1,188 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.IMonitor
+  commentId: T:StardewModdingAPI.IMonitor
+  id: IMonitor
+  parent: StardewModdingAPI
+  children:
+  - StardewModdingAPI.IMonitor.ExitGameImmediately(System.String)
+  - StardewModdingAPI.IMonitor.IsExiting
+  - StardewModdingAPI.IMonitor.Log(System.String,StardewModdingAPI.LogLevel)
+  langs:
+  - csharp
+  - vb
+  name: IMonitor
+  nameWithType: IMonitor
+  fullName: StardewModdingAPI.IMonitor
+  type: Interface
+  source:
+    remote:
+      path: src/SMAPI/IMonitor.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: IMonitor
+    path: IMonitor.cs
+    startLine: 3
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Encapsulates monitoring and logging for a given module.
+  example: []
+  syntax:
+    content: public interface IMonitor
+    content.vb: Public Interface IMonitor
+  modifiers.csharp:
+  - public
+  - interface
+  modifiers.vb:
+  - Public
+  - Interface
+- uid: StardewModdingAPI.IMonitor.IsExiting
+  commentId: P:StardewModdingAPI.IMonitor.IsExiting
+  id: IsExiting
+  parent: StardewModdingAPI.IMonitor
+  langs:
+  - csharp
+  - vb
+  name: IsExiting
+  nameWithType: IMonitor.IsExiting
+  fullName: StardewModdingAPI.IMonitor.IsExiting
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IMonitor.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: IsExiting
+    path: IMonitor.cs
+    startLine: 9
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Whether SMAPI is aborting. Mods don&apos;t need to worry about this unless they have background tasks.
+  example: []
+  syntax:
+    content: bool IsExiting { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: ReadOnly Property IsExiting As Boolean
+  overload: StardewModdingAPI.IMonitor.IsExiting*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+- uid: StardewModdingAPI.IMonitor.Log(System.String,StardewModdingAPI.LogLevel)
+  commentId: M:StardewModdingAPI.IMonitor.Log(System.String,StardewModdingAPI.LogLevel)
+  id: Log(System.String,StardewModdingAPI.LogLevel)
+  parent: StardewModdingAPI.IMonitor
+  langs:
+  - csharp
+  - vb
+  name: Log(String, LogLevel)
+  nameWithType: IMonitor.Log(String, LogLevel)
+  fullName: StardewModdingAPI.IMonitor.Log(System.String, StardewModdingAPI.LogLevel)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IMonitor.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Log
+    path: IMonitor.cs
+    startLine: 18
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Log a message for the player or developer.
+  example: []
+  syntax:
+    content: void Log(string message, LogLevel level = LogLevel.Debug)
+    parameters:
+    - id: message
+      type: System.String
+      description: The message to log.
+    - id: level
+      type: StardewModdingAPI.LogLevel
+      description: The log severity level.
+    content.vb: Sub Log(message As String, level As LogLevel = LogLevel.Debug)
+  overload: StardewModdingAPI.IMonitor.Log*
+- uid: StardewModdingAPI.IMonitor.ExitGameImmediately(System.String)
+  commentId: M:StardewModdingAPI.IMonitor.ExitGameImmediately(System.String)
+  id: ExitGameImmediately(System.String)
+  parent: StardewModdingAPI.IMonitor
+  langs:
+  - csharp
+  - vb
+  name: ExitGameImmediately(String)
+  nameWithType: IMonitor.ExitGameImmediately(String)
+  fullName: StardewModdingAPI.IMonitor.ExitGameImmediately(System.String)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IMonitor.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ExitGameImmediately
+    path: IMonitor.cs
+    startLine: 22
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Immediately exit the game without saving. This should only be invoked when an irrecoverable fatal error happens that risks save corruption or game-breaking bugs.
+  example: []
+  syntax:
+    content: void ExitGameImmediately(string reason)
+    parameters:
+    - id: reason
+      type: System.String
+      description: The reason for the shutdown.
+    content.vb: Sub ExitGameImmediately(reason As String)
+  overload: StardewModdingAPI.IMonitor.ExitGameImmediately*
+references:
+- uid: StardewModdingAPI
+  commentId: N:StardewModdingAPI
+  name: StardewModdingAPI
+  nameWithType: StardewModdingAPI
+  fullName: StardewModdingAPI
+- uid: StardewModdingAPI.IMonitor.IsExiting*
+  commentId: Overload:StardewModdingAPI.IMonitor.IsExiting
+  name: IsExiting
+  nameWithType: IMonitor.IsExiting
+  fullName: StardewModdingAPI.IMonitor.IsExiting
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: StardewModdingAPI.IMonitor.Log*
+  commentId: Overload:StardewModdingAPI.IMonitor.Log
+  name: Log
+  nameWithType: IMonitor.Log
+  fullName: StardewModdingAPI.IMonitor.Log
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: StardewModdingAPI.LogLevel
+  commentId: T:StardewModdingAPI.LogLevel
+  parent: StardewModdingAPI
+  name: LogLevel
+  nameWithType: LogLevel
+  fullName: StardewModdingAPI.LogLevel
+- uid: StardewModdingAPI.IMonitor.ExitGameImmediately*
+  commentId: Overload:StardewModdingAPI.IMonitor.ExitGameImmediately
+  name: ExitGameImmediately
+  nameWithType: IMonitor.ExitGameImmediately
+  fullName: StardewModdingAPI.IMonitor.ExitGameImmediately

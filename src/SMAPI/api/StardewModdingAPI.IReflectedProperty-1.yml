@@ -1,0 +1,197 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.IReflectedProperty`1
+  commentId: T:StardewModdingAPI.IReflectedProperty`1
+  id: IReflectedProperty`1
+  parent: StardewModdingAPI
+  children:
+  - StardewModdingAPI.IReflectedProperty`1.GetValue
+  - StardewModdingAPI.IReflectedProperty`1.PropertyInfo
+  - StardewModdingAPI.IReflectedProperty`1.SetValue(`0)
+  langs:
+  - csharp
+  - vb
+  name: IReflectedProperty<TValue>
+  nameWithType: IReflectedProperty<TValue>
+  fullName: StardewModdingAPI.IReflectedProperty<TValue>
+  type: Interface
+  source:
+    remote:
+      path: src/SMAPI/IReflectedProperty.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: IReflectedProperty
+    path: IReflectedProperty.cs
+    startLine: 6
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: A property obtained through reflection.
+  example: []
+  syntax:
+    content: public interface IReflectedProperty<TValue>
+    typeParameters:
+    - id: TValue
+      description: The property value type.
+    content.vb: Public Interface IReflectedProperty(Of TValue)
+  nameWithType.vb: IReflectedProperty(Of TValue)
+  modifiers.csharp:
+  - public
+  - interface
+  modifiers.vb:
+  - Public
+  - Interface
+  fullName.vb: StardewModdingAPI.IReflectedProperty(Of TValue)
+  name.vb: IReflectedProperty(Of TValue)
+- uid: StardewModdingAPI.IReflectedProperty`1.PropertyInfo
+  commentId: P:StardewModdingAPI.IReflectedProperty`1.PropertyInfo
+  id: PropertyInfo
+  parent: StardewModdingAPI.IReflectedProperty`1
+  langs:
+  - csharp
+  - vb
+  name: PropertyInfo
+  nameWithType: IReflectedProperty<TValue>.PropertyInfo
+  fullName: StardewModdingAPI.IReflectedProperty<TValue>.PropertyInfo
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IReflectedProperty.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: PropertyInfo
+    path: IReflectedProperty.cs
+    startLine: 12
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The reflection metadata.
+  example: []
+  syntax:
+    content: PropertyInfo PropertyInfo { get; }
+    parameters: []
+    return:
+      type: System.Reflection.PropertyInfo
+    content.vb: ReadOnly Property PropertyInfo As PropertyInfo
+  overload: StardewModdingAPI.IReflectedProperty`1.PropertyInfo*
+  nameWithType.vb: IReflectedProperty(Of TValue).PropertyInfo
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+  fullName.vb: StardewModdingAPI.IReflectedProperty(Of TValue).PropertyInfo
+- uid: StardewModdingAPI.IReflectedProperty`1.GetValue
+  commentId: M:StardewModdingAPI.IReflectedProperty`1.GetValue
+  id: GetValue
+  parent: StardewModdingAPI.IReflectedProperty`1
+  langs:
+  - csharp
+  - vb
+  name: GetValue()
+  nameWithType: IReflectedProperty<TValue>.GetValue()
+  fullName: StardewModdingAPI.IReflectedProperty<TValue>.GetValue()
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IReflectedProperty.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: GetValue
+    path: IReflectedProperty.cs
+    startLine: 19
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Get the property value.
+  example: []
+  syntax:
+    content: TValue GetValue()
+    return:
+      type: '{TValue}'
+    content.vb: Function GetValue As TValue
+  overload: StardewModdingAPI.IReflectedProperty`1.GetValue*
+  nameWithType.vb: IReflectedProperty(Of TValue).GetValue()
+  fullName.vb: StardewModdingAPI.IReflectedProperty(Of TValue).GetValue()
+- uid: StardewModdingAPI.IReflectedProperty`1.SetValue(`0)
+  commentId: M:StardewModdingAPI.IReflectedProperty`1.SetValue(`0)
+  id: SetValue(`0)
+  parent: StardewModdingAPI.IReflectedProperty`1
+  langs:
+  - csharp
+  - vb
+  name: SetValue(TValue)
+  nameWithType: IReflectedProperty<TValue>.SetValue(TValue)
+  fullName: StardewModdingAPI.IReflectedProperty<TValue>.SetValue(TValue)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IReflectedProperty.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: SetValue
+    path: IReflectedProperty.cs
+    startLine: 23
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Set the property value.
+  example: []
+  syntax:
+    content: void SetValue(TValue value)
+    parameters:
+    - id: value
+      type: '{TValue}'
+    content.vb: Sub SetValue(value As TValue)
+  overload: StardewModdingAPI.IReflectedProperty`1.SetValue*
+  nameWithType.vb: IReflectedProperty(Of TValue).SetValue(TValue)
+  fullName.vb: StardewModdingAPI.IReflectedProperty(Of TValue).SetValue(TValue)
+references:
+- uid: StardewModdingAPI
+  commentId: N:StardewModdingAPI
+  name: StardewModdingAPI
+  nameWithType: StardewModdingAPI
+  fullName: StardewModdingAPI
+- uid: StardewModdingAPI.IReflectedProperty`1.PropertyInfo*
+  commentId: Overload:StardewModdingAPI.IReflectedProperty`1.PropertyInfo
+  name: PropertyInfo
+  nameWithType: IReflectedProperty<TValue>.PropertyInfo
+  fullName: StardewModdingAPI.IReflectedProperty<TValue>.PropertyInfo
+  nameWithType.vb: IReflectedProperty(Of TValue).PropertyInfo
+  fullName.vb: StardewModdingAPI.IReflectedProperty(Of TValue).PropertyInfo
+- uid: System.Reflection.PropertyInfo
+  commentId: T:System.Reflection.PropertyInfo
+  parent: System.Reflection
+  isExternal: true
+  name: PropertyInfo
+  nameWithType: PropertyInfo
+  fullName: System.Reflection.PropertyInfo
+- uid: System.Reflection
+  commentId: N:System.Reflection
+  isExternal: true
+  name: System.Reflection
+  nameWithType: System.Reflection
+  fullName: System.Reflection
+- uid: StardewModdingAPI.IReflectedProperty`1.GetValue*
+  commentId: Overload:StardewModdingAPI.IReflectedProperty`1.GetValue
+  name: GetValue
+  nameWithType: IReflectedProperty<TValue>.GetValue
+  fullName: StardewModdingAPI.IReflectedProperty<TValue>.GetValue
+  nameWithType.vb: IReflectedProperty(Of TValue).GetValue
+  fullName.vb: StardewModdingAPI.IReflectedProperty(Of TValue).GetValue
+- uid: '{TValue}'
+  commentId: '!:TValue'
+  definition: TValue
+  name: TValue
+  nameWithType: TValue
+  fullName: TValue
+- uid: TValue
+  name: TValue
+  nameWithType: TValue
+  fullName: TValue
+- uid: StardewModdingAPI.IReflectedProperty`1.SetValue*
+  commentId: Overload:StardewModdingAPI.IReflectedProperty`1.SetValue
+  name: SetValue
+  nameWithType: IReflectedProperty<TValue>.SetValue
+  fullName: StardewModdingAPI.IReflectedProperty<TValue>.SetValue
+  nameWithType.vb: IReflectedProperty(Of TValue).SetValue
+  fullName.vb: StardewModdingAPI.IReflectedProperty(Of TValue).SetValue

@@ -1,0 +1,1834 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.SemanticVersion
+  commentId: T:StardewModdingAPI.SemanticVersion
+  id: SemanticVersion
+  parent: StardewModdingAPI
+  children:
+  - StardewModdingAPI.SemanticVersion.#ctor(System.Int32,System.Int32,System.Int32,System.String)
+  - StardewModdingAPI.SemanticVersion.#ctor(System.String)
+  - StardewModdingAPI.SemanticVersion.#ctor(System.Version)
+  - StardewModdingAPI.SemanticVersion.Build
+  - StardewModdingAPI.SemanticVersion.CompareTo(StardewModdingAPI.ISemanticVersion)
+  - StardewModdingAPI.SemanticVersion.Equals(StardewModdingAPI.ISemanticVersion)
+  - StardewModdingAPI.SemanticVersion.IsBetween(StardewModdingAPI.ISemanticVersion,StardewModdingAPI.ISemanticVersion)
+  - StardewModdingAPI.SemanticVersion.IsBetween(System.String,System.String)
+  - StardewModdingAPI.SemanticVersion.IsNewerThan(StardewModdingAPI.ISemanticVersion)
+  - StardewModdingAPI.SemanticVersion.IsNewerThan(System.String)
+  - StardewModdingAPI.SemanticVersion.IsOlderThan(StardewModdingAPI.ISemanticVersion)
+  - StardewModdingAPI.SemanticVersion.IsOlderThan(System.String)
+  - StardewModdingAPI.SemanticVersion.IsPrerelease
+  - StardewModdingAPI.SemanticVersion.MajorVersion
+  - StardewModdingAPI.SemanticVersion.MinorVersion
+  - StardewModdingAPI.SemanticVersion.PatchVersion
+  - StardewModdingAPI.SemanticVersion.ToString
+  langs:
+  - csharp
+  - vb
+  name: SemanticVersion
+  nameWithType: SemanticVersion
+  fullName: StardewModdingAPI.SemanticVersion
+  type: Class
+  source:
+    remote:
+      path: src/SMAPI/SemanticVersion.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: SemanticVersion
+    path: SemanticVersion.cs
+    startLine: 7
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: A semantic version with an optional release tag.
+  example: []
+  syntax:
+    content: 'public class SemanticVersion : ISemanticVersion, IComparable<ISemanticVersion>, IEquatable<ISemanticVersion>'
+    content.vb: >-
+      Public Class SemanticVersion
+          Implements ISemanticVersion, IComparable(Of ISemanticVersion), IEquatable(Of ISemanticVersion)
+  inheritance:
+  - System.Object
+  implements:
+  - StardewModdingAPI.ISemanticVersion
+  - System.IComparable{StardewModdingAPI.ISemanticVersion}
+  - System.IEquatable{StardewModdingAPI.ISemanticVersion}
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  modifiers.csharp:
+  - public
+  - class
+  modifiers.vb:
+  - Public
+  - Class
+- uid: StardewModdingAPI.SemanticVersion.MajorVersion
+  commentId: P:StardewModdingAPI.SemanticVersion.MajorVersion
+  id: MajorVersion
+  parent: StardewModdingAPI.SemanticVersion
+  langs:
+  - csharp
+  - vb
+  name: MajorVersion
+  nameWithType: SemanticVersion.MajorVersion
+  fullName: StardewModdingAPI.SemanticVersion.MajorVersion
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/SemanticVersion.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: MajorVersion
+    path: SemanticVersion.cs
+    startLine: 20
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The major version incremented for major API changes.
+  example: []
+  syntax:
+    content: public int MajorVersion { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property MajorVersion As Integer
+  overload: StardewModdingAPI.SemanticVersion.MajorVersion*
+  implements:
+  - StardewModdingAPI.ISemanticVersion.MajorVersion
+  modifiers.csharp:
+  - public
+  - get
+  modifiers.vb:
+  - Public
+  - ReadOnly
+- uid: StardewModdingAPI.SemanticVersion.MinorVersion
+  commentId: P:StardewModdingAPI.SemanticVersion.MinorVersion
+  id: MinorVersion
+  parent: StardewModdingAPI.SemanticVersion
+  langs:
+  - csharp
+  - vb
+  name: MinorVersion
+  nameWithType: SemanticVersion.MinorVersion
+  fullName: StardewModdingAPI.SemanticVersion.MinorVersion
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/SemanticVersion.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: MinorVersion
+    path: SemanticVersion.cs
+    startLine: 23
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The minor version incremented for backwards-compatible changes.
+  example: []
+  syntax:
+    content: public int MinorVersion { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property MinorVersion As Integer
+  overload: StardewModdingAPI.SemanticVersion.MinorVersion*
+  implements:
+  - StardewModdingAPI.ISemanticVersion.MinorVersion
+  modifiers.csharp:
+  - public
+  - get
+  modifiers.vb:
+  - Public
+  - ReadOnly
+- uid: StardewModdingAPI.SemanticVersion.PatchVersion
+  commentId: P:StardewModdingAPI.SemanticVersion.PatchVersion
+  id: PatchVersion
+  parent: StardewModdingAPI.SemanticVersion
+  langs:
+  - csharp
+  - vb
+  name: PatchVersion
+  nameWithType: SemanticVersion.PatchVersion
+  fullName: StardewModdingAPI.SemanticVersion.PatchVersion
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/SemanticVersion.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: PatchVersion
+    path: SemanticVersion.cs
+    startLine: 26
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The patch version for backwards-compatible bug fixes.
+  example: []
+  syntax:
+    content: public int PatchVersion { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property PatchVersion As Integer
+  overload: StardewModdingAPI.SemanticVersion.PatchVersion*
+  implements:
+  - StardewModdingAPI.ISemanticVersion.PatchVersion
+  modifiers.csharp:
+  - public
+  - get
+  modifiers.vb:
+  - Public
+  - ReadOnly
+- uid: StardewModdingAPI.SemanticVersion.Build
+  commentId: P:StardewModdingAPI.SemanticVersion.Build
+  id: Build
+  parent: StardewModdingAPI.SemanticVersion
+  langs:
+  - csharp
+  - vb
+  name: Build
+  nameWithType: SemanticVersion.Build
+  fullName: StardewModdingAPI.SemanticVersion.Build
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/SemanticVersion.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Build
+    path: SemanticVersion.cs
+    startLine: 29
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: An optional build tag.
+  example: []
+  syntax:
+    content: public string Build { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property Build As String
+  overload: StardewModdingAPI.SemanticVersion.Build*
+  implements:
+  - StardewModdingAPI.ISemanticVersion.Build
+  modifiers.csharp:
+  - public
+  - get
+  modifiers.vb:
+  - Public
+  - ReadOnly
+- uid: StardewModdingAPI.SemanticVersion.#ctor(System.Int32,System.Int32,System.Int32,System.String)
+  commentId: M:StardewModdingAPI.SemanticVersion.#ctor(System.Int32,System.Int32,System.Int32,System.String)
+  id: '#ctor(System.Int32,System.Int32,System.Int32,System.String)'
+  parent: StardewModdingAPI.SemanticVersion
+  langs:
+  - csharp
+  - vb
+  name: SemanticVersion(Int32, Int32, Int32, String)
+  nameWithType: SemanticVersion.SemanticVersion(Int32, Int32, Int32, String)
+  fullName: StardewModdingAPI.SemanticVersion.SemanticVersion(System.Int32, System.Int32, System.Int32, System.String)
+  type: Constructor
+  source:
+    remote:
+      path: src/SMAPI/SemanticVersion.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: .ctor
+    path: SemanticVersion.cs
+    startLine: 40
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Construct an instance.
+  example: []
+  syntax:
+    content: >-
+      [JsonConstructor]
+
+      public SemanticVersion(int majorVersion, int minorVersion, int patchVersion, string build = null)
+    parameters:
+    - id: majorVersion
+      type: System.Int32
+      description: The major version incremented for major API changes.
+    - id: minorVersion
+      type: System.Int32
+      description: The minor version incremented for backwards-compatible changes.
+    - id: patchVersion
+      type: System.Int32
+      description: The patch version for backwards-compatible bug fixes.
+    - id: build
+      type: System.String
+      description: An optional build tag.
+    content.vb: >-
+      <JsonConstructor>
+
+      Public Sub New(majorVersion As Integer, minorVersion As Integer, patchVersion As Integer, build As String = Nothing)
+  overload: StardewModdingAPI.SemanticVersion.#ctor*
+  attributes:
+  - type: Newtonsoft.Json.JsonConstructorAttribute
+    ctor: Newtonsoft.Json.JsonConstructorAttribute.#ctor
+    arguments: []
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: StardewModdingAPI.SemanticVersion.#ctor(System.String)
+  commentId: M:StardewModdingAPI.SemanticVersion.#ctor(System.String)
+  id: '#ctor(System.String)'
+  parent: StardewModdingAPI.SemanticVersion
+  langs:
+  - csharp
+  - vb
+  name: SemanticVersion(String)
+  nameWithType: SemanticVersion.SemanticVersion(String)
+  fullName: StardewModdingAPI.SemanticVersion.SemanticVersion(System.String)
+  type: Constructor
+  source:
+    remote:
+      path: src/SMAPI/SemanticVersion.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: .ctor
+    path: SemanticVersion.cs
+    startLine: 48
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Construct an instance.
+  example: []
+  syntax:
+    content: public SemanticVersion(string version)
+    parameters:
+    - id: version
+      type: System.String
+      description: The semantic version string.
+    content.vb: Public Sub New(version As String)
+  overload: StardewModdingAPI.SemanticVersion.#ctor*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: The <code data-dev-comment-type="paramref" class="paramref">version</code> is null.
+  - type: System.FormatException
+    commentId: T:System.FormatException
+    description: The <code data-dev-comment-type="paramref" class="paramref">version</code> is not a valid semantic version.
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: StardewModdingAPI.SemanticVersion.#ctor(System.Version)
+  commentId: M:StardewModdingAPI.SemanticVersion.#ctor(System.Version)
+  id: '#ctor(System.Version)'
+  parent: StardewModdingAPI.SemanticVersion
+  langs:
+  - csharp
+  - vb
+  name: SemanticVersion(Version)
+  nameWithType: SemanticVersion.SemanticVersion(Version)
+  fullName: StardewModdingAPI.SemanticVersion.SemanticVersion(System.Version)
+  type: Constructor
+  source:
+    remote:
+      path: src/SMAPI/SemanticVersion.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: .ctor
+    path: SemanticVersion.cs
+    startLine: 54
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Construct an instance.
+  example: []
+  syntax:
+    content: public SemanticVersion(Version version)
+    parameters:
+    - id: version
+      type: System.Version
+      description: The assembly version.
+    content.vb: Public Sub New(version As Version)
+  overload: StardewModdingAPI.SemanticVersion.#ctor*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: The <code data-dev-comment-type="paramref" class="paramref">version</code> is null.
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: StardewModdingAPI.SemanticVersion.IsPrerelease
+  commentId: M:StardewModdingAPI.SemanticVersion.IsPrerelease
+  id: IsPrerelease
+  parent: StardewModdingAPI.SemanticVersion
+  langs:
+  - csharp
+  - vb
+  name: IsPrerelease()
+  nameWithType: SemanticVersion.IsPrerelease()
+  fullName: StardewModdingAPI.SemanticVersion.IsPrerelease()
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/SemanticVersion.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: IsPrerelease
+    path: SemanticVersion.cs
+    startLine: 58
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Whether this is a pre-release version.
+  example: []
+  syntax:
+    content: public bool IsPrerelease()
+    return:
+      type: System.Boolean
+    content.vb: Public Function IsPrerelease As Boolean
+  overload: StardewModdingAPI.SemanticVersion.IsPrerelease*
+  implements:
+  - StardewModdingAPI.ISemanticVersion.IsPrerelease
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: StardewModdingAPI.SemanticVersion.CompareTo(StardewModdingAPI.ISemanticVersion)
+  commentId: M:StardewModdingAPI.SemanticVersion.CompareTo(StardewModdingAPI.ISemanticVersion)
+  id: CompareTo(StardewModdingAPI.ISemanticVersion)
+  parent: StardewModdingAPI.SemanticVersion
+  langs:
+  - csharp
+  - vb
+  name: CompareTo(ISemanticVersion)
+  nameWithType: SemanticVersion.CompareTo(ISemanticVersion)
+  fullName: StardewModdingAPI.SemanticVersion.CompareTo(StardewModdingAPI.ISemanticVersion)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/SemanticVersion.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: CompareTo
+    path: SemanticVersion.cs
+    startLine: 67
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Get an integer indicating whether this version precedes (less than 0), supercedes (more than 0), or is equivalent to (0) the specified version.
+  remarks: The implementation is defined by Semantic Version 2.0 (http://semver.org/).
+  example: []
+  syntax:
+    content: public int CompareTo(ISemanticVersion other)
+    parameters:
+    - id: other
+      type: StardewModdingAPI.ISemanticVersion
+      description: The version to compare with this instance.
+    return:
+      type: System.Int32
+    content.vb: Public Function CompareTo(other As ISemanticVersion) As Integer
+  overload: StardewModdingAPI.SemanticVersion.CompareTo*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: The <code data-dev-comment-type="paramref" class="paramref">other</code> value is null.
+  implements:
+  - System.IComparable{StardewModdingAPI.ISemanticVersion}.CompareTo(StardewModdingAPI.ISemanticVersion)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: StardewModdingAPI.SemanticVersion.IsOlderThan(StardewModdingAPI.ISemanticVersion)
+  commentId: M:StardewModdingAPI.SemanticVersion.IsOlderThan(StardewModdingAPI.ISemanticVersion)
+  id: IsOlderThan(StardewModdingAPI.ISemanticVersion)
+  parent: StardewModdingAPI.SemanticVersion
+  langs:
+  - csharp
+  - vb
+  name: IsOlderThan(ISemanticVersion)
+  nameWithType: SemanticVersion.IsOlderThan(ISemanticVersion)
+  fullName: StardewModdingAPI.SemanticVersion.IsOlderThan(StardewModdingAPI.ISemanticVersion)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/SemanticVersion.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: IsOlderThan
+    path: SemanticVersion.cs
+    startLine: 74
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Get whether this version is older than the specified version.
+  example: []
+  syntax:
+    content: public bool IsOlderThan(ISemanticVersion other)
+    parameters:
+    - id: other
+      type: StardewModdingAPI.ISemanticVersion
+      description: The version to compare with this instance.
+    return:
+      type: System.Boolean
+    content.vb: Public Function IsOlderThan(other As ISemanticVersion) As Boolean
+  overload: StardewModdingAPI.SemanticVersion.IsOlderThan*
+  implements:
+  - StardewModdingAPI.ISemanticVersion.IsOlderThan(StardewModdingAPI.ISemanticVersion)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: StardewModdingAPI.SemanticVersion.IsOlderThan(System.String)
+  commentId: M:StardewModdingAPI.SemanticVersion.IsOlderThan(System.String)
+  id: IsOlderThan(System.String)
+  parent: StardewModdingAPI.SemanticVersion
+  langs:
+  - csharp
+  - vb
+  name: IsOlderThan(String)
+  nameWithType: SemanticVersion.IsOlderThan(String)
+  fullName: StardewModdingAPI.SemanticVersion.IsOlderThan(System.String)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/SemanticVersion.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: IsOlderThan
+    path: SemanticVersion.cs
+    startLine: 82
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Get whether this version is older than the specified version.
+  example: []
+  syntax:
+    content: public bool IsOlderThan(string other)
+    parameters:
+    - id: other
+      type: System.String
+      description: The version to compare with this instance.
+    return:
+      type: System.Boolean
+    content.vb: Public Function IsOlderThan(other As String) As Boolean
+  overload: StardewModdingAPI.SemanticVersion.IsOlderThan*
+  exceptions:
+  - type: System.FormatException
+    commentId: T:System.FormatException
+    description: The specified version is not a valid semantic version.
+  implements:
+  - StardewModdingAPI.ISemanticVersion.IsOlderThan(System.String)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: StardewModdingAPI.SemanticVersion.IsNewerThan(StardewModdingAPI.ISemanticVersion)
+  commentId: M:StardewModdingAPI.SemanticVersion.IsNewerThan(StardewModdingAPI.ISemanticVersion)
+  id: IsNewerThan(StardewModdingAPI.ISemanticVersion)
+  parent: StardewModdingAPI.SemanticVersion
+  langs:
+  - csharp
+  - vb
+  name: IsNewerThan(ISemanticVersion)
+  nameWithType: SemanticVersion.IsNewerThan(ISemanticVersion)
+  fullName: StardewModdingAPI.SemanticVersion.IsNewerThan(StardewModdingAPI.ISemanticVersion)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/SemanticVersion.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: IsNewerThan
+    path: SemanticVersion.cs
+    startLine: 89
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Get whether this version is newer than the specified version.
+  example: []
+  syntax:
+    content: public bool IsNewerThan(ISemanticVersion other)
+    parameters:
+    - id: other
+      type: StardewModdingAPI.ISemanticVersion
+      description: The version to compare with this instance.
+    return:
+      type: System.Boolean
+    content.vb: Public Function IsNewerThan(other As ISemanticVersion) As Boolean
+  overload: StardewModdingAPI.SemanticVersion.IsNewerThan*
+  implements:
+  - StardewModdingAPI.ISemanticVersion.IsNewerThan(StardewModdingAPI.ISemanticVersion)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: StardewModdingAPI.SemanticVersion.IsNewerThan(System.String)
+  commentId: M:StardewModdingAPI.SemanticVersion.IsNewerThan(System.String)
+  id: IsNewerThan(System.String)
+  parent: StardewModdingAPI.SemanticVersion
+  langs:
+  - csharp
+  - vb
+  name: IsNewerThan(String)
+  nameWithType: SemanticVersion.IsNewerThan(String)
+  fullName: StardewModdingAPI.SemanticVersion.IsNewerThan(System.String)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/SemanticVersion.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: IsNewerThan
+    path: SemanticVersion.cs
+    startLine: 97
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Get whether this version is newer than the specified version.
+  example: []
+  syntax:
+    content: public bool IsNewerThan(string other)
+    parameters:
+    - id: other
+      type: System.String
+      description: The version to compare with this instance.
+    return:
+      type: System.Boolean
+    content.vb: Public Function IsNewerThan(other As String) As Boolean
+  overload: StardewModdingAPI.SemanticVersion.IsNewerThan*
+  exceptions:
+  - type: System.FormatException
+    commentId: T:System.FormatException
+    description: The specified version is not a valid semantic version.
+  implements:
+  - StardewModdingAPI.ISemanticVersion.IsNewerThan(System.String)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: StardewModdingAPI.SemanticVersion.IsBetween(StardewModdingAPI.ISemanticVersion,StardewModdingAPI.ISemanticVersion)
+  commentId: M:StardewModdingAPI.SemanticVersion.IsBetween(StardewModdingAPI.ISemanticVersion,StardewModdingAPI.ISemanticVersion)
+  id: IsBetween(StardewModdingAPI.ISemanticVersion,StardewModdingAPI.ISemanticVersion)
+  parent: StardewModdingAPI.SemanticVersion
+  langs:
+  - csharp
+  - vb
+  name: IsBetween(ISemanticVersion, ISemanticVersion)
+  nameWithType: SemanticVersion.IsBetween(ISemanticVersion, ISemanticVersion)
+  fullName: StardewModdingAPI.SemanticVersion.IsBetween(StardewModdingAPI.ISemanticVersion, StardewModdingAPI.ISemanticVersion)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/SemanticVersion.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: IsBetween
+    path: SemanticVersion.cs
+    startLine: 105
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Get whether this version is between two specified versions (inclusively).
+  example: []
+  syntax:
+    content: public bool IsBetween(ISemanticVersion min, ISemanticVersion max)
+    parameters:
+    - id: min
+      type: StardewModdingAPI.ISemanticVersion
+      description: The minimum version.
+    - id: max
+      type: StardewModdingAPI.ISemanticVersion
+      description: The maximum version.
+    return:
+      type: System.Boolean
+    content.vb: Public Function IsBetween(min As ISemanticVersion, max As ISemanticVersion) As Boolean
+  overload: StardewModdingAPI.SemanticVersion.IsBetween*
+  implements:
+  - StardewModdingAPI.ISemanticVersion.IsBetween(StardewModdingAPI.ISemanticVersion,StardewModdingAPI.ISemanticVersion)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: StardewModdingAPI.SemanticVersion.IsBetween(System.String,System.String)
+  commentId: M:StardewModdingAPI.SemanticVersion.IsBetween(System.String,System.String)
+  id: IsBetween(System.String,System.String)
+  parent: StardewModdingAPI.SemanticVersion
+  langs:
+  - csharp
+  - vb
+  name: IsBetween(String, String)
+  nameWithType: SemanticVersion.IsBetween(String, String)
+  fullName: StardewModdingAPI.SemanticVersion.IsBetween(System.String, System.String)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/SemanticVersion.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: IsBetween
+    path: SemanticVersion.cs
+    startLine: 114
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Get whether this version is between two specified versions (inclusively).
+  example: []
+  syntax:
+    content: public bool IsBetween(string min, string max)
+    parameters:
+    - id: min
+      type: System.String
+      description: The minimum version.
+    - id: max
+      type: System.String
+      description: The maximum version.
+    return:
+      type: System.Boolean
+    content.vb: Public Function IsBetween(min As String, max As String) As Boolean
+  overload: StardewModdingAPI.SemanticVersion.IsBetween*
+  exceptions:
+  - type: System.FormatException
+    commentId: T:System.FormatException
+    description: One of the specified versions is not a valid semantic version.
+  implements:
+  - StardewModdingAPI.ISemanticVersion.IsBetween(System.String,System.String)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: StardewModdingAPI.SemanticVersion.Equals(StardewModdingAPI.ISemanticVersion)
+  commentId: M:StardewModdingAPI.SemanticVersion.Equals(StardewModdingAPI.ISemanticVersion)
+  id: Equals(StardewModdingAPI.ISemanticVersion)
+  parent: StardewModdingAPI.SemanticVersion
+  langs:
+  - csharp
+  - vb
+  name: Equals(ISemanticVersion)
+  nameWithType: SemanticVersion.Equals(ISemanticVersion)
+  fullName: StardewModdingAPI.SemanticVersion.Equals(StardewModdingAPI.ISemanticVersion)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/SemanticVersion.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Equals
+    path: SemanticVersion.cs
+    startLine: 122
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Indicates whether the current object is equal to another object of the same type.
+  example: []
+  syntax:
+    content: public bool Equals(ISemanticVersion other)
+    parameters:
+    - id: other
+      type: StardewModdingAPI.ISemanticVersion
+      description: An object to compare with this object.
+    return:
+      type: System.Boolean
+      description: true if the current object is equal to the <code data-dev-comment-type="paramref" class="paramref">other</code> parameter; otherwise, false.
+    content.vb: Public Function Equals(other As ISemanticVersion) As Boolean
+  overload: StardewModdingAPI.SemanticVersion.Equals*
+  implements:
+  - System.IEquatable{StardewModdingAPI.ISemanticVersion}.Equals(StardewModdingAPI.ISemanticVersion)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: StardewModdingAPI.SemanticVersion.ToString
+  commentId: M:StardewModdingAPI.SemanticVersion.ToString
+  id: ToString
+  parent: StardewModdingAPI.SemanticVersion
+  langs:
+  - csharp
+  - vb
+  name: ToString()
+  nameWithType: SemanticVersion.ToString()
+  fullName: StardewModdingAPI.SemanticVersion.ToString()
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/SemanticVersion.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ToString
+    path: SemanticVersion.cs
+    startLine: 128
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Get a string representation of the version.
+  example: []
+  syntax:
+    content: public override string ToString()
+    return:
+      type: System.String
+    content.vb: Public Overrides Function ToString As String
+  overridden: System.Object.ToString
+  overload: StardewModdingAPI.SemanticVersion.ToString*
+  implements:
+  - StardewModdingAPI.ISemanticVersion.ToString
+  modifiers.csharp:
+  - public
+  - override
+  modifiers.vb:
+  - Public
+  - Overrides
+references:
+- uid: StardewModdingAPI
+  commentId: N:StardewModdingAPI
+  name: StardewModdingAPI
+  nameWithType: StardewModdingAPI
+  fullName: StardewModdingAPI
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: StardewModdingAPI.ISemanticVersion
+  commentId: T:StardewModdingAPI.ISemanticVersion
+  parent: StardewModdingAPI
+  name: ISemanticVersion
+  nameWithType: ISemanticVersion
+  fullName: StardewModdingAPI.ISemanticVersion
+- uid: System.IComparable{StardewModdingAPI.ISemanticVersion}
+  commentId: T:System.IComparable{StardewModdingAPI.ISemanticVersion}
+  parent: System
+  definition: System.IComparable`1
+  name: IComparable<ISemanticVersion>
+  nameWithType: IComparable<ISemanticVersion>
+  fullName: System.IComparable<StardewModdingAPI.ISemanticVersion>
+  nameWithType.vb: IComparable(Of ISemanticVersion)
+  fullName.vb: System.IComparable(Of StardewModdingAPI.ISemanticVersion)
+  name.vb: IComparable(Of ISemanticVersion)
+  spec.csharp:
+  - uid: System.IComparable`1
+    name: IComparable
+    nameWithType: IComparable
+    fullName: System.IComparable
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: StardewModdingAPI.ISemanticVersion
+    name: ISemanticVersion
+    nameWithType: ISemanticVersion
+    fullName: StardewModdingAPI.ISemanticVersion
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.IComparable`1
+    name: IComparable
+    nameWithType: IComparable
+    fullName: System.IComparable
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: StardewModdingAPI.ISemanticVersion
+    name: ISemanticVersion
+    nameWithType: ISemanticVersion
+    fullName: StardewModdingAPI.ISemanticVersion
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.IEquatable{StardewModdingAPI.ISemanticVersion}
+  commentId: T:System.IEquatable{StardewModdingAPI.ISemanticVersion}
+  parent: System
+  definition: System.IEquatable`1
+  name: IEquatable<ISemanticVersion>
+  nameWithType: IEquatable<ISemanticVersion>
+  fullName: System.IEquatable<StardewModdingAPI.ISemanticVersion>
+  nameWithType.vb: IEquatable(Of ISemanticVersion)
+  fullName.vb: System.IEquatable(Of StardewModdingAPI.ISemanticVersion)
+  name.vb: IEquatable(Of ISemanticVersion)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    nameWithType: IEquatable
+    fullName: System.IEquatable
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: StardewModdingAPI.ISemanticVersion
+    name: ISemanticVersion
+    nameWithType: ISemanticVersion
+    fullName: StardewModdingAPI.ISemanticVersion
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    nameWithType: IEquatable
+    fullName: System.IEquatable
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: StardewModdingAPI.ISemanticVersion
+    name: ISemanticVersion
+    nameWithType: ISemanticVersion
+    fullName: StardewModdingAPI.ISemanticVersion
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: System.Object.Equals(System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: System.Object.Equals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: System.Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: System.Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: System.Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: System.Object.ReferenceEquals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.IComparable`1
+  commentId: T:System.IComparable`1
+  isExternal: true
+  name: IComparable<T>
+  nameWithType: IComparable<T>
+  fullName: System.IComparable<T>
+  nameWithType.vb: IComparable(Of T)
+  fullName.vb: System.IComparable(Of T)
+  name.vb: IComparable(Of T)
+  spec.csharp:
+  - uid: System.IComparable`1
+    name: IComparable
+    nameWithType: IComparable
+    fullName: System.IComparable
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.IComparable`1
+    name: IComparable
+    nameWithType: IComparable
+    fullName: System.IComparable
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    nameWithType: IEquatable
+    fullName: System.IEquatable
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    nameWithType: IEquatable
+    fullName: System.IEquatable
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.SemanticVersion.MajorVersion*
+  commentId: Overload:StardewModdingAPI.SemanticVersion.MajorVersion
+  name: MajorVersion
+  nameWithType: SemanticVersion.MajorVersion
+  fullName: StardewModdingAPI.SemanticVersion.MajorVersion
+- uid: StardewModdingAPI.ISemanticVersion.MajorVersion
+  commentId: P:StardewModdingAPI.ISemanticVersion.MajorVersion
+  parent: StardewModdingAPI.ISemanticVersion
+  name: MajorVersion
+  nameWithType: ISemanticVersion.MajorVersion
+  fullName: StardewModdingAPI.ISemanticVersion.MajorVersion
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: Int32
+  nameWithType: Int32
+  fullName: System.Int32
+- uid: StardewModdingAPI.SemanticVersion.MinorVersion*
+  commentId: Overload:StardewModdingAPI.SemanticVersion.MinorVersion
+  name: MinorVersion
+  nameWithType: SemanticVersion.MinorVersion
+  fullName: StardewModdingAPI.SemanticVersion.MinorVersion
+- uid: StardewModdingAPI.ISemanticVersion.MinorVersion
+  commentId: P:StardewModdingAPI.ISemanticVersion.MinorVersion
+  parent: StardewModdingAPI.ISemanticVersion
+  name: MinorVersion
+  nameWithType: ISemanticVersion.MinorVersion
+  fullName: StardewModdingAPI.ISemanticVersion.MinorVersion
+- uid: StardewModdingAPI.SemanticVersion.PatchVersion*
+  commentId: Overload:StardewModdingAPI.SemanticVersion.PatchVersion
+  name: PatchVersion
+  nameWithType: SemanticVersion.PatchVersion
+  fullName: StardewModdingAPI.SemanticVersion.PatchVersion
+- uid: StardewModdingAPI.ISemanticVersion.PatchVersion
+  commentId: P:StardewModdingAPI.ISemanticVersion.PatchVersion
+  parent: StardewModdingAPI.ISemanticVersion
+  name: PatchVersion
+  nameWithType: ISemanticVersion.PatchVersion
+  fullName: StardewModdingAPI.ISemanticVersion.PatchVersion
+- uid: StardewModdingAPI.SemanticVersion.Build*
+  commentId: Overload:StardewModdingAPI.SemanticVersion.Build
+  name: Build
+  nameWithType: SemanticVersion.Build
+  fullName: StardewModdingAPI.SemanticVersion.Build
+- uid: StardewModdingAPI.ISemanticVersion.Build
+  commentId: P:StardewModdingAPI.ISemanticVersion.Build
+  parent: StardewModdingAPI.ISemanticVersion
+  name: Build
+  nameWithType: ISemanticVersion.Build
+  fullName: StardewModdingAPI.ISemanticVersion.Build
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: StardewModdingAPI.SemanticVersion.#ctor*
+  commentId: Overload:StardewModdingAPI.SemanticVersion.#ctor
+  name: SemanticVersion
+  nameWithType: SemanticVersion.SemanticVersion
+  fullName: StardewModdingAPI.SemanticVersion.SemanticVersion
+- uid: System.ArgumentNullException
+  commentId: T:System.ArgumentNullException
+  isExternal: true
+- uid: System.FormatException
+  commentId: T:System.FormatException
+  isExternal: true
+- uid: System.Version
+  commentId: T:System.Version
+  parent: System
+  isExternal: true
+  name: Version
+  nameWithType: Version
+  fullName: System.Version
+- uid: StardewModdingAPI.SemanticVersion.IsPrerelease*
+  commentId: Overload:StardewModdingAPI.SemanticVersion.IsPrerelease
+  name: IsPrerelease
+  nameWithType: SemanticVersion.IsPrerelease
+  fullName: StardewModdingAPI.SemanticVersion.IsPrerelease
+- uid: StardewModdingAPI.ISemanticVersion.IsPrerelease
+  commentId: M:StardewModdingAPI.ISemanticVersion.IsPrerelease
+  parent: StardewModdingAPI.ISemanticVersion
+  name: IsPrerelease()
+  nameWithType: ISemanticVersion.IsPrerelease()
+  fullName: StardewModdingAPI.ISemanticVersion.IsPrerelease()
+  spec.csharp:
+  - uid: StardewModdingAPI.ISemanticVersion.IsPrerelease
+    name: IsPrerelease
+    nameWithType: ISemanticVersion.IsPrerelease
+    fullName: StardewModdingAPI.ISemanticVersion.IsPrerelease
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: StardewModdingAPI.ISemanticVersion.IsPrerelease
+    name: IsPrerelease
+    nameWithType: ISemanticVersion.IsPrerelease
+    fullName: StardewModdingAPI.ISemanticVersion.IsPrerelease
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: StardewModdingAPI.SemanticVersion.CompareTo*
+  commentId: Overload:StardewModdingAPI.SemanticVersion.CompareTo
+  name: CompareTo
+  nameWithType: SemanticVersion.CompareTo
+  fullName: StardewModdingAPI.SemanticVersion.CompareTo
+- uid: System.IComparable{StardewModdingAPI.ISemanticVersion}.CompareTo(StardewModdingAPI.ISemanticVersion)
+  commentId: M:System.IComparable{StardewModdingAPI.ISemanticVersion}.CompareTo(StardewModdingAPI.ISemanticVersion)
+  parent: System.IComparable{StardewModdingAPI.ISemanticVersion}
+  definition: System.IComparable`1.CompareTo(`0)
+  name: CompareTo(ISemanticVersion)
+  nameWithType: IComparable<ISemanticVersion>.CompareTo(ISemanticVersion)
+  fullName: System.IComparable<StardewModdingAPI.ISemanticVersion>.CompareTo(StardewModdingAPI.ISemanticVersion)
+  nameWithType.vb: IComparable(Of ISemanticVersion).CompareTo(ISemanticVersion)
+  fullName.vb: System.IComparable(Of StardewModdingAPI.ISemanticVersion).CompareTo(StardewModdingAPI.ISemanticVersion)
+  spec.csharp:
+  - uid: System.IComparable`1.CompareTo(`0)
+    name: CompareTo
+    nameWithType: IComparable<ISemanticVersion>.CompareTo
+    fullName: System.IComparable<StardewModdingAPI.ISemanticVersion>.CompareTo
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: StardewModdingAPI.ISemanticVersion
+    name: ISemanticVersion
+    nameWithType: ISemanticVersion
+    fullName: StardewModdingAPI.ISemanticVersion
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.IComparable`1.CompareTo(`0)
+    name: CompareTo
+    nameWithType: IComparable(Of ISemanticVersion).CompareTo
+    fullName: System.IComparable(Of StardewModdingAPI.ISemanticVersion).CompareTo
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: StardewModdingAPI.ISemanticVersion
+    name: ISemanticVersion
+    nameWithType: ISemanticVersion
+    fullName: StardewModdingAPI.ISemanticVersion
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.IComparable`1.CompareTo(`0)
+  commentId: M:System.IComparable`1.CompareTo(`0)
+  isExternal: true
+  name: CompareTo(T)
+  nameWithType: IComparable<T>.CompareTo(T)
+  fullName: System.IComparable<T>.CompareTo(T)
+  nameWithType.vb: IComparable(Of T).CompareTo(T)
+  fullName.vb: System.IComparable(Of T).CompareTo(T)
+  spec.csharp:
+  - uid: System.IComparable`1.CompareTo(`0)
+    name: CompareTo
+    nameWithType: IComparable<T>.CompareTo
+    fullName: System.IComparable<T>.CompareTo
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.IComparable`1.CompareTo(`0)
+    name: CompareTo
+    nameWithType: IComparable(Of T).CompareTo
+    fullName: System.IComparable(Of T).CompareTo
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.SemanticVersion.IsOlderThan*
+  commentId: Overload:StardewModdingAPI.SemanticVersion.IsOlderThan
+  name: IsOlderThan
+  nameWithType: SemanticVersion.IsOlderThan
+  fullName: StardewModdingAPI.SemanticVersion.IsOlderThan
+- uid: StardewModdingAPI.ISemanticVersion.IsOlderThan(StardewModdingAPI.ISemanticVersion)
+  commentId: M:StardewModdingAPI.ISemanticVersion.IsOlderThan(StardewModdingAPI.ISemanticVersion)
+  parent: StardewModdingAPI.ISemanticVersion
+  name: IsOlderThan(ISemanticVersion)
+  nameWithType: ISemanticVersion.IsOlderThan(ISemanticVersion)
+  fullName: StardewModdingAPI.ISemanticVersion.IsOlderThan(StardewModdingAPI.ISemanticVersion)
+  spec.csharp:
+  - uid: StardewModdingAPI.ISemanticVersion.IsOlderThan(StardewModdingAPI.ISemanticVersion)
+    name: IsOlderThan
+    nameWithType: ISemanticVersion.IsOlderThan
+    fullName: StardewModdingAPI.ISemanticVersion.IsOlderThan
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: StardewModdingAPI.ISemanticVersion
+    name: ISemanticVersion
+    nameWithType: ISemanticVersion
+    fullName: StardewModdingAPI.ISemanticVersion
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: StardewModdingAPI.ISemanticVersion.IsOlderThan(StardewModdingAPI.ISemanticVersion)
+    name: IsOlderThan
+    nameWithType: ISemanticVersion.IsOlderThan
+    fullName: StardewModdingAPI.ISemanticVersion.IsOlderThan
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: StardewModdingAPI.ISemanticVersion
+    name: ISemanticVersion
+    nameWithType: ISemanticVersion
+    fullName: StardewModdingAPI.ISemanticVersion
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.ISemanticVersion.IsOlderThan(System.String)
+  commentId: M:StardewModdingAPI.ISemanticVersion.IsOlderThan(System.String)
+  parent: StardewModdingAPI.ISemanticVersion
+  isExternal: true
+  name: IsOlderThan(String)
+  nameWithType: ISemanticVersion.IsOlderThan(String)
+  fullName: StardewModdingAPI.ISemanticVersion.IsOlderThan(System.String)
+  spec.csharp:
+  - uid: StardewModdingAPI.ISemanticVersion.IsOlderThan(System.String)
+    name: IsOlderThan
+    nameWithType: ISemanticVersion.IsOlderThan
+    fullName: StardewModdingAPI.ISemanticVersion.IsOlderThan
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: StardewModdingAPI.ISemanticVersion.IsOlderThan(System.String)
+    name: IsOlderThan
+    nameWithType: ISemanticVersion.IsOlderThan
+    fullName: StardewModdingAPI.ISemanticVersion.IsOlderThan
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.SemanticVersion.IsNewerThan*
+  commentId: Overload:StardewModdingAPI.SemanticVersion.IsNewerThan
+  name: IsNewerThan
+  nameWithType: SemanticVersion.IsNewerThan
+  fullName: StardewModdingAPI.SemanticVersion.IsNewerThan
+- uid: StardewModdingAPI.ISemanticVersion.IsNewerThan(StardewModdingAPI.ISemanticVersion)
+  commentId: M:StardewModdingAPI.ISemanticVersion.IsNewerThan(StardewModdingAPI.ISemanticVersion)
+  parent: StardewModdingAPI.ISemanticVersion
+  name: IsNewerThan(ISemanticVersion)
+  nameWithType: ISemanticVersion.IsNewerThan(ISemanticVersion)
+  fullName: StardewModdingAPI.ISemanticVersion.IsNewerThan(StardewModdingAPI.ISemanticVersion)
+  spec.csharp:
+  - uid: StardewModdingAPI.ISemanticVersion.IsNewerThan(StardewModdingAPI.ISemanticVersion)
+    name: IsNewerThan
+    nameWithType: ISemanticVersion.IsNewerThan
+    fullName: StardewModdingAPI.ISemanticVersion.IsNewerThan
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: StardewModdingAPI.ISemanticVersion
+    name: ISemanticVersion
+    nameWithType: ISemanticVersion
+    fullName: StardewModdingAPI.ISemanticVersion
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: StardewModdingAPI.ISemanticVersion.IsNewerThan(StardewModdingAPI.ISemanticVersion)
+    name: IsNewerThan
+    nameWithType: ISemanticVersion.IsNewerThan
+    fullName: StardewModdingAPI.ISemanticVersion.IsNewerThan
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: StardewModdingAPI.ISemanticVersion
+    name: ISemanticVersion
+    nameWithType: ISemanticVersion
+    fullName: StardewModdingAPI.ISemanticVersion
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.ISemanticVersion.IsNewerThan(System.String)
+  commentId: M:StardewModdingAPI.ISemanticVersion.IsNewerThan(System.String)
+  parent: StardewModdingAPI.ISemanticVersion
+  isExternal: true
+  name: IsNewerThan(String)
+  nameWithType: ISemanticVersion.IsNewerThan(String)
+  fullName: StardewModdingAPI.ISemanticVersion.IsNewerThan(System.String)
+  spec.csharp:
+  - uid: StardewModdingAPI.ISemanticVersion.IsNewerThan(System.String)
+    name: IsNewerThan
+    nameWithType: ISemanticVersion.IsNewerThan
+    fullName: StardewModdingAPI.ISemanticVersion.IsNewerThan
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: StardewModdingAPI.ISemanticVersion.IsNewerThan(System.String)
+    name: IsNewerThan
+    nameWithType: ISemanticVersion.IsNewerThan
+    fullName: StardewModdingAPI.ISemanticVersion.IsNewerThan
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.SemanticVersion.IsBetween*
+  commentId: Overload:StardewModdingAPI.SemanticVersion.IsBetween
+  name: IsBetween
+  nameWithType: SemanticVersion.IsBetween
+  fullName: StardewModdingAPI.SemanticVersion.IsBetween
+- uid: StardewModdingAPI.ISemanticVersion.IsBetween(StardewModdingAPI.ISemanticVersion,StardewModdingAPI.ISemanticVersion)
+  commentId: M:StardewModdingAPI.ISemanticVersion.IsBetween(StardewModdingAPI.ISemanticVersion,StardewModdingAPI.ISemanticVersion)
+  parent: StardewModdingAPI.ISemanticVersion
+  name: IsBetween(ISemanticVersion, ISemanticVersion)
+  nameWithType: ISemanticVersion.IsBetween(ISemanticVersion, ISemanticVersion)
+  fullName: StardewModdingAPI.ISemanticVersion.IsBetween(StardewModdingAPI.ISemanticVersion, StardewModdingAPI.ISemanticVersion)
+  spec.csharp:
+  - uid: StardewModdingAPI.ISemanticVersion.IsBetween(StardewModdingAPI.ISemanticVersion,StardewModdingAPI.ISemanticVersion)
+    name: IsBetween
+    nameWithType: ISemanticVersion.IsBetween
+    fullName: StardewModdingAPI.ISemanticVersion.IsBetween
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: StardewModdingAPI.ISemanticVersion
+    name: ISemanticVersion
+    nameWithType: ISemanticVersion
+    fullName: StardewModdingAPI.ISemanticVersion
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: StardewModdingAPI.ISemanticVersion
+    name: ISemanticVersion
+    nameWithType: ISemanticVersion
+    fullName: StardewModdingAPI.ISemanticVersion
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: StardewModdingAPI.ISemanticVersion.IsBetween(StardewModdingAPI.ISemanticVersion,StardewModdingAPI.ISemanticVersion)
+    name: IsBetween
+    nameWithType: ISemanticVersion.IsBetween
+    fullName: StardewModdingAPI.ISemanticVersion.IsBetween
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: StardewModdingAPI.ISemanticVersion
+    name: ISemanticVersion
+    nameWithType: ISemanticVersion
+    fullName: StardewModdingAPI.ISemanticVersion
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: StardewModdingAPI.ISemanticVersion
+    name: ISemanticVersion
+    nameWithType: ISemanticVersion
+    fullName: StardewModdingAPI.ISemanticVersion
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.ISemanticVersion.IsBetween(System.String,System.String)
+  commentId: M:StardewModdingAPI.ISemanticVersion.IsBetween(System.String,System.String)
+  parent: StardewModdingAPI.ISemanticVersion
+  isExternal: true
+  name: IsBetween(String, String)
+  nameWithType: ISemanticVersion.IsBetween(String, String)
+  fullName: StardewModdingAPI.ISemanticVersion.IsBetween(System.String, System.String)
+  spec.csharp:
+  - uid: StardewModdingAPI.ISemanticVersion.IsBetween(System.String,System.String)
+    name: IsBetween
+    nameWithType: ISemanticVersion.IsBetween
+    fullName: StardewModdingAPI.ISemanticVersion.IsBetween
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: StardewModdingAPI.ISemanticVersion.IsBetween(System.String,System.String)
+    name: IsBetween
+    nameWithType: ISemanticVersion.IsBetween
+    fullName: StardewModdingAPI.ISemanticVersion.IsBetween
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.SemanticVersion.Equals*
+  commentId: Overload:StardewModdingAPI.SemanticVersion.Equals
+  name: Equals
+  nameWithType: SemanticVersion.Equals
+  fullName: StardewModdingAPI.SemanticVersion.Equals
+- uid: System.IEquatable{StardewModdingAPI.ISemanticVersion}.Equals(StardewModdingAPI.ISemanticVersion)
+  commentId: M:System.IEquatable{StardewModdingAPI.ISemanticVersion}.Equals(StardewModdingAPI.ISemanticVersion)
+  parent: System.IEquatable{StardewModdingAPI.ISemanticVersion}
+  definition: System.IEquatable`1.Equals(`0)
+  name: Equals(ISemanticVersion)
+  nameWithType: IEquatable<ISemanticVersion>.Equals(ISemanticVersion)
+  fullName: System.IEquatable<StardewModdingAPI.ISemanticVersion>.Equals(StardewModdingAPI.ISemanticVersion)
+  nameWithType.vb: IEquatable(Of ISemanticVersion).Equals(ISemanticVersion)
+  fullName.vb: System.IEquatable(Of StardewModdingAPI.ISemanticVersion).Equals(StardewModdingAPI.ISemanticVersion)
+  spec.csharp:
+  - uid: System.IEquatable`1.Equals(`0)
+    name: Equals
+    nameWithType: IEquatable<ISemanticVersion>.Equals
+    fullName: System.IEquatable<StardewModdingAPI.ISemanticVersion>.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: StardewModdingAPI.ISemanticVersion
+    name: ISemanticVersion
+    nameWithType: ISemanticVersion
+    fullName: StardewModdingAPI.ISemanticVersion
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.IEquatable`1.Equals(`0)
+    name: Equals
+    nameWithType: IEquatable(Of ISemanticVersion).Equals
+    fullName: System.IEquatable(Of StardewModdingAPI.ISemanticVersion).Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: StardewModdingAPI.ISemanticVersion
+    name: ISemanticVersion
+    nameWithType: ISemanticVersion
+    fullName: StardewModdingAPI.ISemanticVersion
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.IEquatable`1.Equals(`0)
+  commentId: M:System.IEquatable`1.Equals(`0)
+  isExternal: true
+  name: Equals(T)
+  nameWithType: IEquatable<T>.Equals(T)
+  fullName: System.IEquatable<T>.Equals(T)
+  nameWithType.vb: IEquatable(Of T).Equals(T)
+  fullName.vb: System.IEquatable(Of T).Equals(T)
+  spec.csharp:
+  - uid: System.IEquatable`1.Equals(`0)
+    name: Equals
+    nameWithType: IEquatable<T>.Equals
+    fullName: System.IEquatable<T>.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.IEquatable`1.Equals(`0)
+    name: Equals
+    nameWithType: IEquatable(Of T).Equals
+    fullName: System.IEquatable(Of T).Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: System.Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.SemanticVersion.ToString*
+  commentId: Overload:StardewModdingAPI.SemanticVersion.ToString
+  name: ToString
+  nameWithType: SemanticVersion.ToString
+  fullName: StardewModdingAPI.SemanticVersion.ToString
+- uid: StardewModdingAPI.ISemanticVersion.ToString
+  commentId: M:StardewModdingAPI.ISemanticVersion.ToString
+  parent: StardewModdingAPI.ISemanticVersion
+  name: ToString()
+  nameWithType: ISemanticVersion.ToString()
+  fullName: StardewModdingAPI.ISemanticVersion.ToString()
+  spec.csharp:
+  - uid: StardewModdingAPI.ISemanticVersion.ToString
+    name: ToString
+    nameWithType: ISemanticVersion.ToString
+    fullName: StardewModdingAPI.ISemanticVersion.ToString
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: StardewModdingAPI.ISemanticVersion.ToString
+    name: ToString
+    nameWithType: ISemanticVersion.ToString
+    fullName: StardewModdingAPI.ISemanticVersion.ToString
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )

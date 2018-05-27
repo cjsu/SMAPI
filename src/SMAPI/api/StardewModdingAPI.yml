@@ -1,0 +1,405 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI
+  commentId: N:StardewModdingAPI
+  id: StardewModdingAPI
+  children:
+  - StardewModdingAPI.Constants
+  - StardewModdingAPI.ContentSource
+  - StardewModdingAPI.Context
+  - StardewModdingAPI.GamePlatform
+  - StardewModdingAPI.IAssetData
+  - StardewModdingAPI.IAssetData`1
+  - StardewModdingAPI.IAssetDataForDictionary`2
+  - StardewModdingAPI.IAssetDataForImage
+  - StardewModdingAPI.IAssetEditor
+  - StardewModdingAPI.IAssetInfo
+  - StardewModdingAPI.IAssetLoader
+  - StardewModdingAPI.ICommandHelper
+  - StardewModdingAPI.IContentHelper
+  - StardewModdingAPI.IContentPack
+  - StardewModdingAPI.ICursorPosition
+  - StardewModdingAPI.IManifest
+  - StardewModdingAPI.IManifestContentPackFor
+  - StardewModdingAPI.IManifestDependency
+  - StardewModdingAPI.IMod
+  - StardewModdingAPI.IModHelper
+  - StardewModdingAPI.IModLinked
+  - StardewModdingAPI.IModRegistry
+  - StardewModdingAPI.IMonitor
+  - StardewModdingAPI.IMultiplayerHelper
+  - StardewModdingAPI.IReflectedField`1
+  - StardewModdingAPI.IReflectedMethod
+  - StardewModdingAPI.IReflectedProperty`1
+  - StardewModdingAPI.IReflectionHelper
+  - StardewModdingAPI.ISemanticVersion
+  - StardewModdingAPI.ITranslationHelper
+  - StardewModdingAPI.LogLevel
+  - StardewModdingAPI.Mod
+  - StardewModdingAPI.PatchMode
+  - StardewModdingAPI.SButton
+  - StardewModdingAPI.SButtonExtensions
+  - StardewModdingAPI.SemanticVersion
+  - StardewModdingAPI.Translation
+  langs:
+  - csharp
+  - vb
+  name: StardewModdingAPI
+  nameWithType: StardewModdingAPI
+  fullName: StardewModdingAPI
+  type: Namespace
+  assemblies:
+  - StardewModdingAPI
+references:
+- uid: StardewModdingAPI.IContentPack
+  commentId: T:StardewModdingAPI.IContentPack
+  parent: StardewModdingAPI
+  name: IContentPack
+  nameWithType: IContentPack
+  fullName: StardewModdingAPI.IContentPack
+- uid: StardewModdingAPI.IManifestContentPackFor
+  commentId: T:StardewModdingAPI.IManifestContentPackFor
+  parent: StardewModdingAPI
+  name: IManifestContentPackFor
+  nameWithType: IManifestContentPackFor
+  fullName: StardewModdingAPI.IManifestContentPackFor
+- uid: StardewModdingAPI.IMultiplayerHelper
+  commentId: T:StardewModdingAPI.IMultiplayerHelper
+  parent: StardewModdingAPI
+  name: IMultiplayerHelper
+  nameWithType: IMultiplayerHelper
+  fullName: StardewModdingAPI.IMultiplayerHelper
+- uid: StardewModdingAPI.IReflectedField`1
+  commentId: T:StardewModdingAPI.IReflectedField`1
+  name: IReflectedField<TValue>
+  nameWithType: IReflectedField<TValue>
+  fullName: StardewModdingAPI.IReflectedField<TValue>
+  nameWithType.vb: IReflectedField(Of TValue)
+  fullName.vb: StardewModdingAPI.IReflectedField(Of TValue)
+  name.vb: IReflectedField(Of TValue)
+  spec.csharp:
+  - uid: StardewModdingAPI.IReflectedField`1
+    name: IReflectedField
+    nameWithType: IReflectedField
+    fullName: StardewModdingAPI.IReflectedField
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TValue
+    nameWithType: TValue
+    fullName: TValue
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: StardewModdingAPI.IReflectedField`1
+    name: IReflectedField
+    nameWithType: IReflectedField
+    fullName: StardewModdingAPI.IReflectedField
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TValue
+    nameWithType: TValue
+    fullName: TValue
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.IReflectedMethod
+  commentId: T:StardewModdingAPI.IReflectedMethod
+  parent: StardewModdingAPI
+  name: IReflectedMethod
+  nameWithType: IReflectedMethod
+  fullName: StardewModdingAPI.IReflectedMethod
+- uid: StardewModdingAPI.IReflectedProperty`1
+  commentId: T:StardewModdingAPI.IReflectedProperty`1
+  name: IReflectedProperty<TValue>
+  nameWithType: IReflectedProperty<TValue>
+  fullName: StardewModdingAPI.IReflectedProperty<TValue>
+  nameWithType.vb: IReflectedProperty(Of TValue)
+  fullName.vb: StardewModdingAPI.IReflectedProperty(Of TValue)
+  name.vb: IReflectedProperty(Of TValue)
+  spec.csharp:
+  - uid: StardewModdingAPI.IReflectedProperty`1
+    name: IReflectedProperty
+    nameWithType: IReflectedProperty
+    fullName: StardewModdingAPI.IReflectedProperty
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TValue
+    nameWithType: TValue
+    fullName: TValue
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: StardewModdingAPI.IReflectedProperty`1
+    name: IReflectedProperty
+    nameWithType: IReflectedProperty
+    fullName: StardewModdingAPI.IReflectedProperty
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TValue
+    nameWithType: TValue
+    fullName: TValue
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.ContentSource
+  commentId: T:StardewModdingAPI.ContentSource
+  parent: StardewModdingAPI
+  name: ContentSource
+  nameWithType: ContentSource
+  fullName: StardewModdingAPI.ContentSource
+- uid: StardewModdingAPI.Constants
+  commentId: T:StardewModdingAPI.Constants
+  name: Constants
+  nameWithType: Constants
+  fullName: StardewModdingAPI.Constants
+- uid: StardewModdingAPI.Context
+  commentId: T:StardewModdingAPI.Context
+  name: Context
+  nameWithType: Context
+  fullName: StardewModdingAPI.Context
+- uid: StardewModdingAPI.IAssetEditor
+  commentId: T:StardewModdingAPI.IAssetEditor
+  name: IAssetEditor
+  nameWithType: IAssetEditor
+  fullName: StardewModdingAPI.IAssetEditor
+- uid: StardewModdingAPI.IAssetInfo
+  commentId: T:StardewModdingAPI.IAssetInfo
+  parent: StardewModdingAPI
+  name: IAssetInfo
+  nameWithType: IAssetInfo
+  fullName: StardewModdingAPI.IAssetInfo
+- uid: StardewModdingAPI.IAssetLoader
+  commentId: T:StardewModdingAPI.IAssetLoader
+  name: IAssetLoader
+  nameWithType: IAssetLoader
+  fullName: StardewModdingAPI.IAssetLoader
+- uid: StardewModdingAPI.ICommandHelper
+  commentId: T:StardewModdingAPI.ICommandHelper
+  parent: StardewModdingAPI
+  name: ICommandHelper
+  nameWithType: ICommandHelper
+  fullName: StardewModdingAPI.ICommandHelper
+- uid: StardewModdingAPI.IAssetData`1
+  commentId: T:StardewModdingAPI.IAssetData`1
+  name: IAssetData<TValue>
+  nameWithType: IAssetData<TValue>
+  fullName: StardewModdingAPI.IAssetData<TValue>
+  nameWithType.vb: IAssetData(Of TValue)
+  fullName.vb: StardewModdingAPI.IAssetData(Of TValue)
+  name.vb: IAssetData(Of TValue)
+  spec.csharp:
+  - uid: StardewModdingAPI.IAssetData`1
+    name: IAssetData
+    nameWithType: IAssetData
+    fullName: StardewModdingAPI.IAssetData
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TValue
+    nameWithType: TValue
+    fullName: TValue
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: StardewModdingAPI.IAssetData`1
+    name: IAssetData
+    nameWithType: IAssetData
+    fullName: StardewModdingAPI.IAssetData
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TValue
+    nameWithType: TValue
+    fullName: TValue
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.IAssetData
+  commentId: T:StardewModdingAPI.IAssetData
+  parent: StardewModdingAPI
+  name: IAssetData
+  nameWithType: IAssetData
+  fullName: StardewModdingAPI.IAssetData
+- uid: StardewModdingAPI.IAssetDataForDictionary`2
+  commentId: T:StardewModdingAPI.IAssetDataForDictionary`2
+  name: IAssetDataForDictionary<TKey, TValue>
+  nameWithType: IAssetDataForDictionary<TKey, TValue>
+  fullName: StardewModdingAPI.IAssetDataForDictionary<TKey, TValue>
+  nameWithType.vb: IAssetDataForDictionary(Of TKey, TValue)
+  fullName.vb: StardewModdingAPI.IAssetDataForDictionary(Of TKey, TValue)
+  name.vb: IAssetDataForDictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: StardewModdingAPI.IAssetDataForDictionary`2
+    name: IAssetDataForDictionary
+    nameWithType: IAssetDataForDictionary
+    fullName: StardewModdingAPI.IAssetDataForDictionary
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TKey
+    nameWithType: TKey
+    fullName: TKey
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TValue
+    nameWithType: TValue
+    fullName: TValue
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: StardewModdingAPI.IAssetDataForDictionary`2
+    name: IAssetDataForDictionary
+    nameWithType: IAssetDataForDictionary
+    fullName: StardewModdingAPI.IAssetDataForDictionary
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TKey
+    nameWithType: TKey
+    fullName: TKey
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TValue
+    nameWithType: TValue
+    fullName: TValue
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.IAssetDataForImage
+  commentId: T:StardewModdingAPI.IAssetDataForImage
+  parent: StardewModdingAPI
+  name: IAssetDataForImage
+  nameWithType: IAssetDataForImage
+  fullName: StardewModdingAPI.IAssetDataForImage
+- uid: StardewModdingAPI.IContentHelper
+  commentId: T:StardewModdingAPI.IContentHelper
+  parent: StardewModdingAPI
+  name: IContentHelper
+  nameWithType: IContentHelper
+  fullName: StardewModdingAPI.IContentHelper
+- uid: StardewModdingAPI.IManifestDependency
+  commentId: T:StardewModdingAPI.IManifestDependency
+  name: IManifestDependency
+  nameWithType: IManifestDependency
+  fullName: StardewModdingAPI.IManifestDependency
+- uid: StardewModdingAPI.IModRegistry
+  commentId: T:StardewModdingAPI.IModRegistry
+  parent: StardewModdingAPI
+  name: IModRegistry
+  nameWithType: IModRegistry
+  fullName: StardewModdingAPI.IModRegistry
+- uid: StardewModdingAPI.IManifest
+  commentId: T:StardewModdingAPI.IManifest
+  parent: StardewModdingAPI
+  name: IManifest
+  nameWithType: IManifest
+  fullName: StardewModdingAPI.IManifest
+- uid: StardewModdingAPI.IMod
+  commentId: T:StardewModdingAPI.IMod
+  parent: StardewModdingAPI
+  name: IMod
+  nameWithType: IMod
+  fullName: StardewModdingAPI.IMod
+- uid: StardewModdingAPI.IModHelper
+  commentId: T:StardewModdingAPI.IModHelper
+  parent: StardewModdingAPI
+  name: IModHelper
+  nameWithType: IModHelper
+  fullName: StardewModdingAPI.IModHelper
+- uid: StardewModdingAPI.IModLinked
+  commentId: T:StardewModdingAPI.IModLinked
+  parent: StardewModdingAPI
+  name: IModLinked
+  nameWithType: IModLinked
+  fullName: StardewModdingAPI.IModLinked
+- uid: StardewModdingAPI.ISemanticVersion
+  commentId: T:StardewModdingAPI.ISemanticVersion
+  parent: StardewModdingAPI
+  name: ISemanticVersion
+  nameWithType: ISemanticVersion
+  fullName: StardewModdingAPI.ISemanticVersion
+- uid: StardewModdingAPI.ITranslationHelper
+  commentId: T:StardewModdingAPI.ITranslationHelper
+  parent: StardewModdingAPI
+  name: ITranslationHelper
+  nameWithType: ITranslationHelper
+  fullName: StardewModdingAPI.ITranslationHelper
+- uid: StardewModdingAPI.LogLevel
+  commentId: T:StardewModdingAPI.LogLevel
+  parent: StardewModdingAPI
+  name: LogLevel
+  nameWithType: LogLevel
+  fullName: StardewModdingAPI.LogLevel
+- uid: StardewModdingAPI.IMonitor
+  commentId: T:StardewModdingAPI.IMonitor
+  parent: StardewModdingAPI
+  name: IMonitor
+  nameWithType: IMonitor
+  fullName: StardewModdingAPI.IMonitor
+- uid: StardewModdingAPI.Mod
+  commentId: T:StardewModdingAPI.Mod
+  name: Mod
+  nameWithType: Mod
+  fullName: StardewModdingAPI.Mod
+- uid: StardewModdingAPI.PatchMode
+  commentId: T:StardewModdingAPI.PatchMode
+  parent: StardewModdingAPI
+  name: PatchMode
+  nameWithType: PatchMode
+  fullName: StardewModdingAPI.PatchMode
+- uid: StardewModdingAPI.GamePlatform
+  commentId: T:StardewModdingAPI.GamePlatform
+  parent: StardewModdingAPI
+  name: GamePlatform
+  nameWithType: GamePlatform
+  fullName: StardewModdingAPI.GamePlatform
+- uid: StardewModdingAPI.IReflectionHelper
+  commentId: T:StardewModdingAPI.IReflectionHelper
+  parent: StardewModdingAPI
+  name: IReflectionHelper
+  nameWithType: IReflectionHelper
+  fullName: StardewModdingAPI.IReflectionHelper
+- uid: StardewModdingAPI.SemanticVersion
+  commentId: T:StardewModdingAPI.SemanticVersion
+  name: SemanticVersion
+  nameWithType: SemanticVersion
+  fullName: StardewModdingAPI.SemanticVersion
+- uid: StardewModdingAPI.Translation
+  commentId: T:StardewModdingAPI.Translation
+  parent: StardewModdingAPI
+  name: Translation
+  nameWithType: Translation
+  fullName: StardewModdingAPI.Translation
+- uid: StardewModdingAPI.ICursorPosition
+  commentId: T:StardewModdingAPI.ICursorPosition
+  parent: StardewModdingAPI
+  name: ICursorPosition
+  nameWithType: ICursorPosition
+  fullName: StardewModdingAPI.ICursorPosition
+- uid: StardewModdingAPI.SButton
+  commentId: T:StardewModdingAPI.SButton
+  parent: StardewModdingAPI
+  name: SButton
+  nameWithType: SButton
+  fullName: StardewModdingAPI.SButton
+- uid: StardewModdingAPI.SButtonExtensions
+  commentId: T:StardewModdingAPI.SButtonExtensions
+  parent: StardewModdingAPI
+  name: SButtonExtensions
+  nameWithType: SButtonExtensions
+  fullName: StardewModdingAPI.SButtonExtensions
+- uid: StardewModdingAPI
+  commentId: N:StardewModdingAPI
+  name: StardewModdingAPI
+  nameWithType: StardewModdingAPI
+  fullName: StardewModdingAPI

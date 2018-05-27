@@ -1,0 +1,847 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.Mod
+  commentId: T:StardewModdingAPI.Mod
+  id: Mod
+  parent: StardewModdingAPI
+  children:
+  - StardewModdingAPI.Mod.Dispose
+  - StardewModdingAPI.Mod.Dispose(System.Boolean)
+  - StardewModdingAPI.Mod.Entry(StardewModdingAPI.IModHelper)
+  - StardewModdingAPI.Mod.Finalize
+  - StardewModdingAPI.Mod.GetApi
+  - StardewModdingAPI.Mod.Helper
+  - StardewModdingAPI.Mod.ModManifest
+  - StardewModdingAPI.Mod.Monitor
+  langs:
+  - csharp
+  - vb
+  name: Mod
+  nameWithType: Mod
+  fullName: StardewModdingAPI.Mod
+  type: Class
+  source:
+    remote:
+      path: src/SMAPI/Mod.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Mod
+    path: Mod.cs
+    startLine: 5
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The base class for a mod.
+  example: []
+  syntax:
+    content: 'public abstract class Mod : IMod, IDisposable'
+    content.vb: >-
+      Public MustInherit Class Mod
+          Implements IMod, IDisposable
+  inheritance:
+  - System.Object
+  implements:
+  - StardewModdingAPI.IMod
+  - System.IDisposable
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  modifiers.csharp:
+  - public
+  - abstract
+  - class
+  modifiers.vb:
+  - Public
+  - MustInherit
+  - Class
+- uid: StardewModdingAPI.Mod.Helper
+  commentId: P:StardewModdingAPI.Mod.Helper
+  id: Helper
+  parent: StardewModdingAPI.Mod
+  langs:
+  - csharp
+  - vb
+  name: Helper
+  nameWithType: Mod.Helper
+  fullName: StardewModdingAPI.Mod.Helper
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/Mod.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Helper
+    path: Mod.cs
+    startLine: 11
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Provides simplified APIs for writing mods.
+  example: []
+  syntax:
+    content: public IModHelper Helper { get; }
+    parameters: []
+    return:
+      type: StardewModdingAPI.IModHelper
+    content.vb: Public ReadOnly Property Helper As IModHelper
+  overload: StardewModdingAPI.Mod.Helper*
+  implements:
+  - StardewModdingAPI.IMod.Helper
+  modifiers.csharp:
+  - public
+  - get
+  modifiers.vb:
+  - Public
+  - ReadOnly
+- uid: StardewModdingAPI.Mod.Monitor
+  commentId: P:StardewModdingAPI.Mod.Monitor
+  id: Monitor
+  parent: StardewModdingAPI.Mod
+  langs:
+  - csharp
+  - vb
+  name: Monitor
+  nameWithType: Mod.Monitor
+  fullName: StardewModdingAPI.Mod.Monitor
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/Mod.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Monitor
+    path: Mod.cs
+    startLine: 14
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Writes messages to the console and log file.
+  example: []
+  syntax:
+    content: public IMonitor Monitor { get; }
+    parameters: []
+    return:
+      type: StardewModdingAPI.IMonitor
+    content.vb: Public ReadOnly Property Monitor As IMonitor
+  overload: StardewModdingAPI.Mod.Monitor*
+  implements:
+  - StardewModdingAPI.IMod.Monitor
+  modifiers.csharp:
+  - public
+  - get
+  modifiers.vb:
+  - Public
+  - ReadOnly
+- uid: StardewModdingAPI.Mod.ModManifest
+  commentId: P:StardewModdingAPI.Mod.ModManifest
+  id: ModManifest
+  parent: StardewModdingAPI.Mod
+  langs:
+  - csharp
+  - vb
+  name: ModManifest
+  nameWithType: Mod.ModManifest
+  fullName: StardewModdingAPI.Mod.ModManifest
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/Mod.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ModManifest
+    path: Mod.cs
+    startLine: 17
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The mod&apos;s manifest.
+  example: []
+  syntax:
+    content: public IManifest ModManifest { get; }
+    parameters: []
+    return:
+      type: StardewModdingAPI.IManifest
+    content.vb: Public ReadOnly Property ModManifest As IManifest
+  overload: StardewModdingAPI.Mod.ModManifest*
+  implements:
+  - StardewModdingAPI.IMod.ModManifest
+  modifiers.csharp:
+  - public
+  - get
+  modifiers.vb:
+  - Public
+  - ReadOnly
+- uid: StardewModdingAPI.Mod.Entry(StardewModdingAPI.IModHelper)
+  commentId: M:StardewModdingAPI.Mod.Entry(StardewModdingAPI.IModHelper)
+  id: Entry(StardewModdingAPI.IModHelper)
+  parent: StardewModdingAPI.Mod
+  langs:
+  - csharp
+  - vb
+  name: Entry(IModHelper)
+  nameWithType: Mod.Entry(IModHelper)
+  fullName: StardewModdingAPI.Mod.Entry(StardewModdingAPI.IModHelper)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/Mod.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Entry
+    path: Mod.cs
+    startLine: 25
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The mod entry point, called after the mod is first loaded.
+  example: []
+  syntax:
+    content: public abstract void Entry(IModHelper helper)
+    parameters:
+    - id: helper
+      type: StardewModdingAPI.IModHelper
+      description: Provides simplified APIs for writing mods.
+    content.vb: Public MustOverride Sub Entry(helper As IModHelper)
+  overload: StardewModdingAPI.Mod.Entry*
+  implements:
+  - StardewModdingAPI.IMod.Entry(StardewModdingAPI.IModHelper)
+  modifiers.csharp:
+  - public
+  - abstract
+  modifiers.vb:
+  - Public
+  - MustOverride
+- uid: StardewModdingAPI.Mod.GetApi
+  commentId: M:StardewModdingAPI.Mod.GetApi
+  id: GetApi
+  parent: StardewModdingAPI.Mod
+  langs:
+  - csharp
+  - vb
+  name: GetApi()
+  nameWithType: Mod.GetApi()
+  fullName: StardewModdingAPI.Mod.GetApi()
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/Mod.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: GetApi
+    path: Mod.cs
+    startLine: 28
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Get an API that other mods can access. This is always called after <xref href="StardewModdingAPI.Mod.Entry(StardewModdingAPI.IModHelper)" data-throw-if-not-resolved="false"></xref>.
+  example: []
+  syntax:
+    content: public virtual object GetApi()
+    return:
+      type: System.Object
+    content.vb: Public Overridable Function GetApi As Object
+  overload: StardewModdingAPI.Mod.GetApi*
+  implements:
+  - StardewModdingAPI.IMod.GetApi
+  modifiers.csharp:
+  - public
+  - virtual
+  modifiers.vb:
+  - Public
+  - Overridable
+- uid: StardewModdingAPI.Mod.Dispose
+  commentId: M:StardewModdingAPI.Mod.Dispose
+  id: Dispose
+  parent: StardewModdingAPI.Mod
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: Mod.Dispose()
+  fullName: StardewModdingAPI.Mod.Dispose()
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/Mod.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Dispose
+    path: Mod.cs
+    startLine: 31
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Release or reset unmanaged resources.
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose
+  overload: StardewModdingAPI.Mod.Dispose*
+  implements:
+  - System.IDisposable.Dispose
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: StardewModdingAPI.Mod.Dispose(System.Boolean)
+  commentId: M:StardewModdingAPI.Mod.Dispose(System.Boolean)
+  id: Dispose(System.Boolean)
+  parent: StardewModdingAPI.Mod
+  langs:
+  - csharp
+  - vb
+  name: Dispose(Boolean)
+  nameWithType: Mod.Dispose(Boolean)
+  fullName: StardewModdingAPI.Mod.Dispose(System.Boolean)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/Mod.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Dispose
+    path: Mod.cs
+    startLine: 44
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Release or reset unmanaged resources when the game exits. There&apos;s no guarantee this will be called on every exit.
+  example: []
+  syntax:
+    content: protected virtual void Dispose(bool disposing)
+    parameters:
+    - id: disposing
+      type: System.Boolean
+      description: Whether the instance is being disposed explicitly rather than finalised. If this is false, the instance shouldn&apos;t dispose other objects since they may already be finalised.
+    content.vb: Protected Overridable Sub Dispose(disposing As Boolean)
+  overload: StardewModdingAPI.Mod.Dispose*
+  modifiers.csharp:
+  - protected
+  - virtual
+  modifiers.vb:
+  - Protected
+  - Overridable
+- uid: StardewModdingAPI.Mod.Finalize
+  commentId: M:StardewModdingAPI.Mod.Finalize
+  id: Finalize
+  parent: StardewModdingAPI.Mod
+  langs:
+  - csharp
+  - vb
+  name: Finalize()
+  nameWithType: Mod.Finalize()
+  fullName: StardewModdingAPI.Mod.Finalize()
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/Mod.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Finalize
+    path: Mod.cs
+    startLine: 47
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Destruct the instance.
+  example: []
+  syntax:
+    content: protected void Finalize()
+    content.vb: Protected Sub Finalize
+  overload: StardewModdingAPI.Mod.Finalize*
+  modifiers.csharp:
+  - protected
+  modifiers.vb:
+  - Protected
+references:
+- uid: StardewModdingAPI
+  commentId: N:StardewModdingAPI
+  name: StardewModdingAPI
+  nameWithType: StardewModdingAPI
+  fullName: StardewModdingAPI
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: StardewModdingAPI.IMod
+  commentId: T:StardewModdingAPI.IMod
+  parent: StardewModdingAPI
+  name: IMod
+  nameWithType: IMod
+  fullName: StardewModdingAPI.IMod
+- uid: System.IDisposable
+  commentId: T:System.IDisposable
+  parent: System
+  isExternal: true
+  name: IDisposable
+  nameWithType: IDisposable
+  fullName: System.IDisposable
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: System.Object.Equals(System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: System.Object.Equals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: System.Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: System.Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: System.Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: System.Object.ReferenceEquals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: System.Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: StardewModdingAPI.Mod.Helper*
+  commentId: Overload:StardewModdingAPI.Mod.Helper
+  name: Helper
+  nameWithType: Mod.Helper
+  fullName: StardewModdingAPI.Mod.Helper
+- uid: StardewModdingAPI.IMod.Helper
+  commentId: P:StardewModdingAPI.IMod.Helper
+  parent: StardewModdingAPI.IMod
+  name: Helper
+  nameWithType: IMod.Helper
+  fullName: StardewModdingAPI.IMod.Helper
+- uid: StardewModdingAPI.IModHelper
+  commentId: T:StardewModdingAPI.IModHelper
+  parent: StardewModdingAPI
+  name: IModHelper
+  nameWithType: IModHelper
+  fullName: StardewModdingAPI.IModHelper
+- uid: StardewModdingAPI.Mod.Monitor*
+  commentId: Overload:StardewModdingAPI.Mod.Monitor
+  name: Monitor
+  nameWithType: Mod.Monitor
+  fullName: StardewModdingAPI.Mod.Monitor
+- uid: StardewModdingAPI.IMod.Monitor
+  commentId: P:StardewModdingAPI.IMod.Monitor
+  parent: StardewModdingAPI.IMod
+  name: Monitor
+  nameWithType: IMod.Monitor
+  fullName: StardewModdingAPI.IMod.Monitor
+- uid: StardewModdingAPI.IMonitor
+  commentId: T:StardewModdingAPI.IMonitor
+  parent: StardewModdingAPI
+  name: IMonitor
+  nameWithType: IMonitor
+  fullName: StardewModdingAPI.IMonitor
+- uid: StardewModdingAPI.Mod.ModManifest*
+  commentId: Overload:StardewModdingAPI.Mod.ModManifest
+  name: ModManifest
+  nameWithType: Mod.ModManifest
+  fullName: StardewModdingAPI.Mod.ModManifest
+- uid: StardewModdingAPI.IMod.ModManifest
+  commentId: P:StardewModdingAPI.IMod.ModManifest
+  parent: StardewModdingAPI.IMod
+  name: ModManifest
+  nameWithType: IMod.ModManifest
+  fullName: StardewModdingAPI.IMod.ModManifest
+- uid: StardewModdingAPI.IManifest
+  commentId: T:StardewModdingAPI.IManifest
+  parent: StardewModdingAPI
+  name: IManifest
+  nameWithType: IManifest
+  fullName: StardewModdingAPI.IManifest
+- uid: StardewModdingAPI.Mod.Entry*
+  commentId: Overload:StardewModdingAPI.Mod.Entry
+  name: Entry
+  nameWithType: Mod.Entry
+  fullName: StardewModdingAPI.Mod.Entry
+- uid: StardewModdingAPI.IMod.Entry(StardewModdingAPI.IModHelper)
+  commentId: M:StardewModdingAPI.IMod.Entry(StardewModdingAPI.IModHelper)
+  parent: StardewModdingAPI.IMod
+  name: Entry(IModHelper)
+  nameWithType: IMod.Entry(IModHelper)
+  fullName: StardewModdingAPI.IMod.Entry(StardewModdingAPI.IModHelper)
+  spec.csharp:
+  - uid: StardewModdingAPI.IMod.Entry(StardewModdingAPI.IModHelper)
+    name: Entry
+    nameWithType: IMod.Entry
+    fullName: StardewModdingAPI.IMod.Entry
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: StardewModdingAPI.IModHelper
+    name: IModHelper
+    nameWithType: IModHelper
+    fullName: StardewModdingAPI.IModHelper
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: StardewModdingAPI.IMod.Entry(StardewModdingAPI.IModHelper)
+    name: Entry
+    nameWithType: IMod.Entry
+    fullName: StardewModdingAPI.IMod.Entry
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: StardewModdingAPI.IModHelper
+    name: IModHelper
+    nameWithType: IModHelper
+    fullName: StardewModdingAPI.IModHelper
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.Mod.Entry(StardewModdingAPI.IModHelper)
+  commentId: M:StardewModdingAPI.Mod.Entry(StardewModdingAPI.IModHelper)
+  isExternal: true
+- uid: StardewModdingAPI.Mod.GetApi*
+  commentId: Overload:StardewModdingAPI.Mod.GetApi
+  name: GetApi
+  nameWithType: Mod.GetApi
+  fullName: StardewModdingAPI.Mod.GetApi
+- uid: StardewModdingAPI.IMod.GetApi
+  commentId: M:StardewModdingAPI.IMod.GetApi
+  parent: StardewModdingAPI.IMod
+  name: GetApi()
+  nameWithType: IMod.GetApi()
+  fullName: StardewModdingAPI.IMod.GetApi()
+  spec.csharp:
+  - uid: StardewModdingAPI.IMod.GetApi
+    name: GetApi
+    nameWithType: IMod.GetApi
+    fullName: StardewModdingAPI.IMod.GetApi
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: StardewModdingAPI.IMod.GetApi
+    name: GetApi
+    nameWithType: IMod.GetApi
+    fullName: StardewModdingAPI.IMod.GetApi
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.Mod.Dispose*
+  commentId: Overload:StardewModdingAPI.Mod.Dispose
+  name: Dispose
+  nameWithType: Mod.Dispose
+  fullName: StardewModdingAPI.Mod.Dispose
+- uid: System.IDisposable.Dispose
+  commentId: M:System.IDisposable.Dispose
+  parent: System.IDisposable
+  isExternal: true
+  name: Dispose()
+  nameWithType: IDisposable.Dispose()
+  fullName: System.IDisposable.Dispose()
+  spec.csharp:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    nameWithType: IDisposable.Dispose
+    fullName: System.IDisposable.Dispose
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    nameWithType: IDisposable.Dispose
+    fullName: System.IDisposable.Dispose
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: StardewModdingAPI.Mod.Finalize*
+  commentId: Overload:StardewModdingAPI.Mod.Finalize
+  name: Finalize
+  nameWithType: Mod.Finalize
+  fullName: StardewModdingAPI.Mod.Finalize

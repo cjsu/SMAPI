@@ -1,0 +1,397 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class ControlEvents
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class ControlEvents
+   ">
+    <meta name="generator" content="docfx 2.36.1.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="StardewModdingAPI.Events.ControlEvents">
+  
+  
+  <h1 id="StardewModdingAPI_Events_ControlEvents" data-uid="StardewModdingAPI.Events.ControlEvents" class="text-break">Class ControlEvents
+  </h1>
+  <div class="markdown level0 summary"><p>Events raised when the player uses a controller, keyboard, or mouse.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">ControlEvents</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ToString()</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="StardewModdingAPI.Events.html">StardewModdingAPI.Events</a></h6>
+  <h6><strong>Assembly</strong>: StardewModdingAPI.dll</h6>
+  <h5 id="StardewModdingAPI_Events_ControlEvents_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class ControlEvents</code></pre>
+  </div>
+  <h3 id="events">Events
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pathoschild/SMAPI/new/develop/apiSpec/new?filename=StardewModdingAPI_Events_ControlEvents_ControllerButtonPressed.md&amp;value=---%0Auid%3A%20StardewModdingAPI.Events.ControlEvents.ControllerButtonPressed%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pathoschild/SMAPI/blob/develop/src/SMAPI/Events/ControlEvents.cs/#L49">View Source</a>
+  </span>
+  <h4 id="StardewModdingAPI_Events_ControlEvents_ControllerButtonPressed" data-uid="StardewModdingAPI.Events.ControlEvents.ControllerButtonPressed">ControllerButtonPressed</h4>
+  <div class="markdown level1 summary"><p>The player pressed a controller button. This event isn&apos;t raised for trigger buttons.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static event EventHandler&lt;EventArgsControllerButtonPressed&gt; ControllerButtonPressed</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.EventHandler</span>&lt;<a class="xref" href="StardewModdingAPI.Events.EventArgsControllerButtonPressed.html">EventArgsControllerButtonPressed</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pathoschild/SMAPI/new/develop/apiSpec/new?filename=StardewModdingAPI_Events_ControlEvents_ControllerButtonReleased.md&amp;value=---%0Auid%3A%20StardewModdingAPI.Events.ControlEvents.ControllerButtonReleased%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pathoschild/SMAPI/blob/develop/src/SMAPI/Events/ControlEvents.cs/#L56">View Source</a>
+  </span>
+  <h4 id="StardewModdingAPI_Events_ControlEvents_ControllerButtonReleased" data-uid="StardewModdingAPI.Events.ControlEvents.ControllerButtonReleased">ControllerButtonReleased</h4>
+  <div class="markdown level1 summary"><p>The player released a controller button. This event isn&apos;t raised for trigger buttons.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static event EventHandler&lt;EventArgsControllerButtonReleased&gt; ControllerButtonReleased</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.EventHandler</span>&lt;<a class="xref" href="StardewModdingAPI.Events.EventArgsControllerButtonReleased.html">EventArgsControllerButtonReleased</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pathoschild/SMAPI/new/develop/apiSpec/new?filename=StardewModdingAPI_Events_ControlEvents_ControllerTriggerPressed.md&amp;value=---%0Auid%3A%20StardewModdingAPI.Events.ControlEvents.ControllerTriggerPressed%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pathoschild/SMAPI/blob/develop/src/SMAPI/Events/ControlEvents.cs/#L63">View Source</a>
+  </span>
+  <h4 id="StardewModdingAPI_Events_ControlEvents_ControllerTriggerPressed" data-uid="StardewModdingAPI.Events.ControlEvents.ControllerTriggerPressed">ControllerTriggerPressed</h4>
+  <div class="markdown level1 summary"><p>The player pressed a controller trigger button.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static event EventHandler&lt;EventArgsControllerTriggerPressed&gt; ControllerTriggerPressed</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.EventHandler</span>&lt;<a class="xref" href="StardewModdingAPI.Events.EventArgsControllerTriggerPressed.html">EventArgsControllerTriggerPressed</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pathoschild/SMAPI/new/develop/apiSpec/new?filename=StardewModdingAPI_Events_ControlEvents_ControllerTriggerReleased.md&amp;value=---%0Auid%3A%20StardewModdingAPI.Events.ControlEvents.ControllerTriggerReleased%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pathoschild/SMAPI/blob/develop/src/SMAPI/Events/ControlEvents.cs/#L70">View Source</a>
+  </span>
+  <h4 id="StardewModdingAPI_Events_ControlEvents_ControllerTriggerReleased" data-uid="StardewModdingAPI.Events.ControlEvents.ControllerTriggerReleased">ControllerTriggerReleased</h4>
+  <div class="markdown level1 summary"><p>The player released a controller trigger button.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static event EventHandler&lt;EventArgsControllerTriggerReleased&gt; ControllerTriggerReleased</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.EventHandler</span>&lt;<a class="xref" href="StardewModdingAPI.Events.EventArgsControllerTriggerReleased.html">EventArgsControllerTriggerReleased</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pathoschild/SMAPI/new/develop/apiSpec/new?filename=StardewModdingAPI_Events_ControlEvents_KeyboardChanged.md&amp;value=---%0Auid%3A%20StardewModdingAPI.Events.ControlEvents.KeyboardChanged%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pathoschild/SMAPI/blob/develop/src/SMAPI/Events/ControlEvents.cs/#L21">View Source</a>
+  </span>
+  <h4 id="StardewModdingAPI_Events_ControlEvents_KeyboardChanged" data-uid="StardewModdingAPI.Events.ControlEvents.KeyboardChanged">KeyboardChanged</h4>
+  <div class="markdown level1 summary"><p>Raised when the <span class="xref">Microsoft.Xna.Framework.Input.KeyboardState</span> changes. That happens when the player presses or releases a key.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static event EventHandler&lt;EventArgsKeyboardStateChanged&gt; KeyboardChanged</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.EventHandler</span>&lt;<a class="xref" href="StardewModdingAPI.Events.EventArgsKeyboardStateChanged.html">EventArgsKeyboardStateChanged</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pathoschild/SMAPI/new/develop/apiSpec/new?filename=StardewModdingAPI_Events_ControlEvents_KeyPressed.md&amp;value=---%0Auid%3A%20StardewModdingAPI.Events.ControlEvents.KeyPressed%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pathoschild/SMAPI/blob/develop/src/SMAPI/Events/ControlEvents.cs/#L28">View Source</a>
+  </span>
+  <h4 id="StardewModdingAPI_Events_ControlEvents_KeyPressed" data-uid="StardewModdingAPI.Events.ControlEvents.KeyPressed">KeyPressed</h4>
+  <div class="markdown level1 summary"><p>Raised when the player presses a keyboard key.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static event EventHandler&lt;EventArgsKeyPressed&gt; KeyPressed</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.EventHandler</span>&lt;<a class="xref" href="StardewModdingAPI.Events.EventArgsKeyPressed.html">EventArgsKeyPressed</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pathoschild/SMAPI/new/develop/apiSpec/new?filename=StardewModdingAPI_Events_ControlEvents_KeyReleased.md&amp;value=---%0Auid%3A%20StardewModdingAPI.Events.ControlEvents.KeyReleased%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pathoschild/SMAPI/blob/develop/src/SMAPI/Events/ControlEvents.cs/#L35">View Source</a>
+  </span>
+  <h4 id="StardewModdingAPI_Events_ControlEvents_KeyReleased" data-uid="StardewModdingAPI.Events.ControlEvents.KeyReleased">KeyReleased</h4>
+  <div class="markdown level1 summary"><p>Raised when the player releases a keyboard key.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static event EventHandler&lt;EventArgsKeyPressed&gt; KeyReleased</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.EventHandler</span>&lt;<a class="xref" href="StardewModdingAPI.Events.EventArgsKeyPressed.html">EventArgsKeyPressed</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Pathoschild/SMAPI/new/develop/apiSpec/new?filename=StardewModdingAPI_Events_ControlEvents_MouseChanged.md&amp;value=---%0Auid%3A%20StardewModdingAPI.Events.ControlEvents.MouseChanged%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Pathoschild/SMAPI/blob/develop/src/SMAPI/Events/ControlEvents.cs/#L42">View Source</a>
+  </span>
+  <h4 id="StardewModdingAPI_Events_ControlEvents_MouseChanged" data-uid="StardewModdingAPI.Events.ControlEvents.MouseChanged">MouseChanged</h4>
+  <div class="markdown level1 summary"><p>Raised when the <span class="xref">Microsoft.Xna.Framework.Input.MouseState</span> changes. That happens when the player moves the mouse, scrolls the mouse wheel, or presses/releases a button.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static event EventHandler&lt;EventArgsMouseStateChanged&gt; MouseChanged</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.EventHandler</span>&lt;<a class="xref" href="StardewModdingAPI.Events.EventArgsMouseStateChanged.html">EventArgsMouseStateChanged</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Pathoschild/SMAPI/new/develop/apiSpec/new?filename=StardewModdingAPI_Events_ControlEvents.md&amp;value=---%0Auid%3A%20StardewModdingAPI.Events.ControlEvents%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/Pathoschild/SMAPI/blob/develop/src/SMAPI/Events/ControlEvents.cs/#L8" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

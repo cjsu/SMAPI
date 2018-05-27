@@ -1,0 +1,496 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.Events.MultiplayerEvents
+  commentId: T:StardewModdingAPI.Events.MultiplayerEvents
+  id: MultiplayerEvents
+  parent: StardewModdingAPI.Events
+  children:
+  - StardewModdingAPI.Events.MultiplayerEvents.AfterMainBroadcast
+  - StardewModdingAPI.Events.MultiplayerEvents.AfterMainSync
+  - StardewModdingAPI.Events.MultiplayerEvents.BeforeMainBroadcast
+  - StardewModdingAPI.Events.MultiplayerEvents.BeforeMainSync
+  langs:
+  - csharp
+  - vb
+  name: MultiplayerEvents
+  nameWithType: MultiplayerEvents
+  fullName: StardewModdingAPI.Events.MultiplayerEvents
+  type: Class
+  source:
+    remote:
+      path: src/SMAPI/Events/MultiplayerEvents.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: MultiplayerEvents
+    path: Events/MultiplayerEvents.cs
+    startLine: 6
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Events raised during the multiplayer sync process.
+  example: []
+  syntax:
+    content: public static class MultiplayerEvents
+    content.vb: Public Module MultiplayerEvents
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  modifiers.csharp:
+  - public
+  - static
+  - class
+  modifiers.vb:
+  - Public
+  - Module
+- uid: StardewModdingAPI.Events.MultiplayerEvents.BeforeMainSync
+  commentId: E:StardewModdingAPI.Events.MultiplayerEvents.BeforeMainSync
+  id: BeforeMainSync
+  parent: StardewModdingAPI.Events.MultiplayerEvents
+  langs:
+  - csharp
+  - vb
+  name: BeforeMainSync
+  nameWithType: MultiplayerEvents.BeforeMainSync
+  fullName: StardewModdingAPI.Events.MultiplayerEvents.BeforeMainSync
+  type: Event
+  source:
+    remote:
+      path: src/SMAPI/Events/MultiplayerEvents.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: BeforeMainSync
+    path: Events/MultiplayerEvents.cs
+    startLine: 19
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Raised before the game syncs changes from other players.
+  example: []
+  syntax:
+    content: public static event EventHandler BeforeMainSync
+    return:
+      type: System.EventHandler
+    content.vb: Public Shared Event BeforeMainSync As EventHandler
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+- uid: StardewModdingAPI.Events.MultiplayerEvents.AfterMainSync
+  commentId: E:StardewModdingAPI.Events.MultiplayerEvents.AfterMainSync
+  id: AfterMainSync
+  parent: StardewModdingAPI.Events.MultiplayerEvents
+  langs:
+  - csharp
+  - vb
+  name: AfterMainSync
+  nameWithType: MultiplayerEvents.AfterMainSync
+  fullName: StardewModdingAPI.Events.MultiplayerEvents.AfterMainSync
+  type: Event
+  source:
+    remote:
+      path: src/SMAPI/Events/MultiplayerEvents.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: AfterMainSync
+    path: Events/MultiplayerEvents.cs
+    startLine: 26
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Raised after the game syncs changes from other players.
+  example: []
+  syntax:
+    content: public static event EventHandler AfterMainSync
+    return:
+      type: System.EventHandler
+    content.vb: Public Shared Event AfterMainSync As EventHandler
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+- uid: StardewModdingAPI.Events.MultiplayerEvents.BeforeMainBroadcast
+  commentId: E:StardewModdingAPI.Events.MultiplayerEvents.BeforeMainBroadcast
+  id: BeforeMainBroadcast
+  parent: StardewModdingAPI.Events.MultiplayerEvents
+  langs:
+  - csharp
+  - vb
+  name: BeforeMainBroadcast
+  nameWithType: MultiplayerEvents.BeforeMainBroadcast
+  fullName: StardewModdingAPI.Events.MultiplayerEvents.BeforeMainBroadcast
+  type: Event
+  source:
+    remote:
+      path: src/SMAPI/Events/MultiplayerEvents.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: BeforeMainBroadcast
+    path: Events/MultiplayerEvents.cs
+    startLine: 33
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Raised before the game broadcasts changes to other players.
+  example: []
+  syntax:
+    content: public static event EventHandler BeforeMainBroadcast
+    return:
+      type: System.EventHandler
+    content.vb: Public Shared Event BeforeMainBroadcast As EventHandler
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+- uid: StardewModdingAPI.Events.MultiplayerEvents.AfterMainBroadcast
+  commentId: E:StardewModdingAPI.Events.MultiplayerEvents.AfterMainBroadcast
+  id: AfterMainBroadcast
+  parent: StardewModdingAPI.Events.MultiplayerEvents
+  langs:
+  - csharp
+  - vb
+  name: AfterMainBroadcast
+  nameWithType: MultiplayerEvents.AfterMainBroadcast
+  fullName: StardewModdingAPI.Events.MultiplayerEvents.AfterMainBroadcast
+  type: Event
+  source:
+    remote:
+      path: src/SMAPI/Events/MultiplayerEvents.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: AfterMainBroadcast
+    path: Events/MultiplayerEvents.cs
+    startLine: 40
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Raised after the game broadcasts changes to other players.
+  example: []
+  syntax:
+    content: public static event EventHandler AfterMainBroadcast
+    return:
+      type: System.EventHandler
+    content.vb: Public Shared Event AfterMainBroadcast As EventHandler
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+references:
+- uid: StardewModdingAPI.Events
+  commentId: N:StardewModdingAPI.Events
+  name: StardewModdingAPI.Events
+  nameWithType: StardewModdingAPI.Events
+  fullName: StardewModdingAPI.Events
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: System.Object.Equals(System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: System.Object.Equals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: System.Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: System.Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: System.Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: System.Object.ReferenceEquals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: System.Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.EventHandler
+  commentId: T:System.EventHandler
+  parent: System
+  isExternal: true
+  name: EventHandler
+  nameWithType: EventHandler
+  fullName: System.EventHandler

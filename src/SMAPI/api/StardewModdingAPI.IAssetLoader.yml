@@ -1,0 +1,166 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.IAssetLoader
+  commentId: T:StardewModdingAPI.IAssetLoader
+  id: IAssetLoader
+  parent: StardewModdingAPI
+  children:
+  - StardewModdingAPI.IAssetLoader.CanLoad``1(StardewModdingAPI.IAssetInfo)
+  - StardewModdingAPI.IAssetLoader.Load``1(StardewModdingAPI.IAssetInfo)
+  langs:
+  - csharp
+  - vb
+  name: IAssetLoader
+  nameWithType: IAssetLoader
+  fullName: StardewModdingAPI.IAssetLoader
+  type: Interface
+  source:
+    remote:
+      path: src/SMAPI/IAssetLoader.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: IAssetLoader
+    path: IAssetLoader.cs
+    startLine: 3
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Provides the initial version for matching assets loaded by the game. SMAPI will raise an error if two mods try to load the same asset; in most cases you should use <xref href="StardewModdingAPI.IAssetEditor" data-throw-if-not-resolved="false"></xref> instead.
+  example: []
+  syntax:
+    content: public interface IAssetLoader
+    content.vb: Public Interface IAssetLoader
+  modifiers.csharp:
+  - public
+  - interface
+  modifiers.vb:
+  - Public
+  - Interface
+- uid: StardewModdingAPI.IAssetLoader.CanLoad``1(StardewModdingAPI.IAssetInfo)
+  commentId: M:StardewModdingAPI.IAssetLoader.CanLoad``1(StardewModdingAPI.IAssetInfo)
+  id: CanLoad``1(StardewModdingAPI.IAssetInfo)
+  parent: StardewModdingAPI.IAssetLoader
+  langs:
+  - csharp
+  - vb
+  name: CanLoad<T>(IAssetInfo)
+  nameWithType: IAssetLoader.CanLoad<T>(IAssetInfo)
+  fullName: StardewModdingAPI.IAssetLoader.CanLoad<T>(StardewModdingAPI.IAssetInfo)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IAssetLoader.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: CanLoad
+    path: IAssetLoader.cs
+    startLine: 10
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Get whether this instance can load the initial version of the given asset.
+  example: []
+  syntax:
+    content: bool CanLoad<T>(IAssetInfo asset)
+    parameters:
+    - id: asset
+      type: StardewModdingAPI.IAssetInfo
+      description: Basic metadata about the asset being loaded.
+    typeParameters:
+    - id: T
+    return:
+      type: System.Boolean
+    content.vb: Function CanLoad(Of T)(asset As IAssetInfo) As Boolean
+  overload: StardewModdingAPI.IAssetLoader.CanLoad*
+  nameWithType.vb: IAssetLoader.CanLoad(Of T)(IAssetInfo)
+  fullName.vb: StardewModdingAPI.IAssetLoader.CanLoad(Of T)(StardewModdingAPI.IAssetInfo)
+  name.vb: CanLoad(Of T)(IAssetInfo)
+- uid: StardewModdingAPI.IAssetLoader.Load``1(StardewModdingAPI.IAssetInfo)
+  commentId: M:StardewModdingAPI.IAssetLoader.Load``1(StardewModdingAPI.IAssetInfo)
+  id: Load``1(StardewModdingAPI.IAssetInfo)
+  parent: StardewModdingAPI.IAssetLoader
+  langs:
+  - csharp
+  - vb
+  name: Load<T>(IAssetInfo)
+  nameWithType: IAssetLoader.Load<T>(IAssetInfo)
+  fullName: StardewModdingAPI.IAssetLoader.Load<T>(StardewModdingAPI.IAssetInfo)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IAssetLoader.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Load
+    path: IAssetLoader.cs
+    startLine: 14
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Load a matched asset.
+  example: []
+  syntax:
+    content: T Load<T>(IAssetInfo asset)
+    parameters:
+    - id: asset
+      type: StardewModdingAPI.IAssetInfo
+      description: Basic metadata about the asset being loaded.
+    typeParameters:
+    - id: T
+    return:
+      type: '{T}'
+    content.vb: Function Load(Of T)(asset As IAssetInfo) As T
+  overload: StardewModdingAPI.IAssetLoader.Load*
+  nameWithType.vb: IAssetLoader.Load(Of T)(IAssetInfo)
+  fullName.vb: StardewModdingAPI.IAssetLoader.Load(Of T)(StardewModdingAPI.IAssetInfo)
+  name.vb: Load(Of T)(IAssetInfo)
+references:
+- uid: StardewModdingAPI.IAssetEditor
+  commentId: T:StardewModdingAPI.IAssetEditor
+  name: IAssetEditor
+  nameWithType: IAssetEditor
+  fullName: StardewModdingAPI.IAssetEditor
+- uid: StardewModdingAPI
+  commentId: N:StardewModdingAPI
+  name: StardewModdingAPI
+  nameWithType: StardewModdingAPI
+  fullName: StardewModdingAPI
+- uid: StardewModdingAPI.IAssetLoader.CanLoad*
+  commentId: Overload:StardewModdingAPI.IAssetLoader.CanLoad
+  name: CanLoad
+  nameWithType: IAssetLoader.CanLoad
+  fullName: StardewModdingAPI.IAssetLoader.CanLoad
+- uid: StardewModdingAPI.IAssetInfo
+  commentId: T:StardewModdingAPI.IAssetInfo
+  parent: StardewModdingAPI
+  name: IAssetInfo
+  nameWithType: IAssetInfo
+  fullName: StardewModdingAPI.IAssetInfo
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: StardewModdingAPI.IAssetLoader.Load*
+  commentId: Overload:StardewModdingAPI.IAssetLoader.Load
+  name: Load
+  nameWithType: IAssetLoader.Load
+  fullName: StardewModdingAPI.IAssetLoader.Load
+- uid: '{T}'
+  commentId: '!:T'
+  definition: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: T
+  name: T
+  nameWithType: T
+  fullName: T

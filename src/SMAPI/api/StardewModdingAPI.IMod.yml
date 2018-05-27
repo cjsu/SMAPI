@@ -1,0 +1,312 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.IMod
+  commentId: T:StardewModdingAPI.IMod
+  id: IMod
+  parent: StardewModdingAPI
+  children:
+  - StardewModdingAPI.IMod.Entry(StardewModdingAPI.IModHelper)
+  - StardewModdingAPI.IMod.GetApi
+  - StardewModdingAPI.IMod.Helper
+  - StardewModdingAPI.IMod.ModManifest
+  - StardewModdingAPI.IMod.Monitor
+  langs:
+  - csharp
+  - vb
+  name: IMod
+  nameWithType: IMod
+  fullName: StardewModdingAPI.IMod
+  type: Interface
+  source:
+    remote:
+      path: src/SMAPI/IMod.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: IMod
+    path: IMod.cs
+    startLine: 3
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The implementation for a Stardew Valley mod.
+  example: []
+  syntax:
+    content: public interface IMod
+    content.vb: Public Interface IMod
+  modifiers.csharp:
+  - public
+  - interface
+  modifiers.vb:
+  - Public
+  - Interface
+- uid: StardewModdingAPI.IMod.Helper
+  commentId: P:StardewModdingAPI.IMod.Helper
+  id: Helper
+  parent: StardewModdingAPI.IMod
+  langs:
+  - csharp
+  - vb
+  name: Helper
+  nameWithType: IMod.Helper
+  fullName: StardewModdingAPI.IMod.Helper
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IMod.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Helper
+    path: IMod.cs
+    startLine: 9
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Provides simplified APIs for writing mods.
+  example: []
+  syntax:
+    content: IModHelper Helper { get; }
+    parameters: []
+    return:
+      type: StardewModdingAPI.IModHelper
+    content.vb: ReadOnly Property Helper As IModHelper
+  overload: StardewModdingAPI.IMod.Helper*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+- uid: StardewModdingAPI.IMod.Monitor
+  commentId: P:StardewModdingAPI.IMod.Monitor
+  id: Monitor
+  parent: StardewModdingAPI.IMod
+  langs:
+  - csharp
+  - vb
+  name: Monitor
+  nameWithType: IMod.Monitor
+  fullName: StardewModdingAPI.IMod.Monitor
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IMod.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Monitor
+    path: IMod.cs
+    startLine: 12
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Writes messages to the console and log file.
+  example: []
+  syntax:
+    content: IMonitor Monitor { get; }
+    parameters: []
+    return:
+      type: StardewModdingAPI.IMonitor
+    content.vb: ReadOnly Property Monitor As IMonitor
+  overload: StardewModdingAPI.IMod.Monitor*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+- uid: StardewModdingAPI.IMod.ModManifest
+  commentId: P:StardewModdingAPI.IMod.ModManifest
+  id: ModManifest
+  parent: StardewModdingAPI.IMod
+  langs:
+  - csharp
+  - vb
+  name: ModManifest
+  nameWithType: IMod.ModManifest
+  fullName: StardewModdingAPI.IMod.ModManifest
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IMod.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ModManifest
+    path: IMod.cs
+    startLine: 15
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The mod&apos;s manifest.
+  example: []
+  syntax:
+    content: IManifest ModManifest { get; }
+    parameters: []
+    return:
+      type: StardewModdingAPI.IManifest
+    content.vb: ReadOnly Property ModManifest As IManifest
+  overload: StardewModdingAPI.IMod.ModManifest*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+- uid: StardewModdingAPI.IMod.Entry(StardewModdingAPI.IModHelper)
+  commentId: M:StardewModdingAPI.IMod.Entry(StardewModdingAPI.IModHelper)
+  id: Entry(StardewModdingAPI.IModHelper)
+  parent: StardewModdingAPI.IMod
+  langs:
+  - csharp
+  - vb
+  name: Entry(IModHelper)
+  nameWithType: IMod.Entry(IModHelper)
+  fullName: StardewModdingAPI.IMod.Entry(StardewModdingAPI.IModHelper)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IMod.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Entry
+    path: IMod.cs
+    startLine: 23
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The mod entry point, called after the mod is first loaded.
+  example: []
+  syntax:
+    content: void Entry(IModHelper helper)
+    parameters:
+    - id: helper
+      type: StardewModdingAPI.IModHelper
+      description: Provides simplified APIs for writing mods.
+    content.vb: Sub Entry(helper As IModHelper)
+  overload: StardewModdingAPI.IMod.Entry*
+- uid: StardewModdingAPI.IMod.GetApi
+  commentId: M:StardewModdingAPI.IMod.GetApi
+  id: GetApi
+  parent: StardewModdingAPI.IMod
+  langs:
+  - csharp
+  - vb
+  name: GetApi()
+  nameWithType: IMod.GetApi()
+  fullName: StardewModdingAPI.IMod.GetApi()
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IMod.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: GetApi
+    path: IMod.cs
+    startLine: 26
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Get an API that other mods can access. This is always called after <xref href="StardewModdingAPI.IMod.Entry(StardewModdingAPI.IModHelper)" data-throw-if-not-resolved="false"></xref>.
+  example: []
+  syntax:
+    content: object GetApi()
+    return:
+      type: System.Object
+    content.vb: Function GetApi As Object
+  overload: StardewModdingAPI.IMod.GetApi*
+references:
+- uid: StardewModdingAPI
+  commentId: N:StardewModdingAPI
+  name: StardewModdingAPI
+  nameWithType: StardewModdingAPI
+  fullName: StardewModdingAPI
+- uid: StardewModdingAPI.IMod.Helper*
+  commentId: Overload:StardewModdingAPI.IMod.Helper
+  name: Helper
+  nameWithType: IMod.Helper
+  fullName: StardewModdingAPI.IMod.Helper
+- uid: StardewModdingAPI.IModHelper
+  commentId: T:StardewModdingAPI.IModHelper
+  parent: StardewModdingAPI
+  name: IModHelper
+  nameWithType: IModHelper
+  fullName: StardewModdingAPI.IModHelper
+- uid: StardewModdingAPI.IMod.Monitor*
+  commentId: Overload:StardewModdingAPI.IMod.Monitor
+  name: Monitor
+  nameWithType: IMod.Monitor
+  fullName: StardewModdingAPI.IMod.Monitor
+- uid: StardewModdingAPI.IMonitor
+  commentId: T:StardewModdingAPI.IMonitor
+  parent: StardewModdingAPI
+  name: IMonitor
+  nameWithType: IMonitor
+  fullName: StardewModdingAPI.IMonitor
+- uid: StardewModdingAPI.IMod.ModManifest*
+  commentId: Overload:StardewModdingAPI.IMod.ModManifest
+  name: ModManifest
+  nameWithType: IMod.ModManifest
+  fullName: StardewModdingAPI.IMod.ModManifest
+- uid: StardewModdingAPI.IManifest
+  commentId: T:StardewModdingAPI.IManifest
+  parent: StardewModdingAPI
+  name: IManifest
+  nameWithType: IManifest
+  fullName: StardewModdingAPI.IManifest
+- uid: StardewModdingAPI.IMod.Entry*
+  commentId: Overload:StardewModdingAPI.IMod.Entry
+  name: Entry
+  nameWithType: IMod.Entry
+  fullName: StardewModdingAPI.IMod.Entry
+- uid: StardewModdingAPI.IMod.Entry(StardewModdingAPI.IModHelper)
+  commentId: M:StardewModdingAPI.IMod.Entry(StardewModdingAPI.IModHelper)
+  parent: StardewModdingAPI.IMod
+  name: Entry(IModHelper)
+  nameWithType: IMod.Entry(IModHelper)
+  fullName: StardewModdingAPI.IMod.Entry(StardewModdingAPI.IModHelper)
+  spec.csharp:
+  - uid: StardewModdingAPI.IMod.Entry(StardewModdingAPI.IModHelper)
+    name: Entry
+    nameWithType: IMod.Entry
+    fullName: StardewModdingAPI.IMod.Entry
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: StardewModdingAPI.IModHelper
+    name: IModHelper
+    nameWithType: IModHelper
+    fullName: StardewModdingAPI.IModHelper
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: StardewModdingAPI.IMod.Entry(StardewModdingAPI.IModHelper)
+    name: Entry
+    nameWithType: IMod.Entry
+    fullName: StardewModdingAPI.IMod.Entry
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: StardewModdingAPI.IModHelper
+    name: IModHelper
+    nameWithType: IModHelper
+    fullName: StardewModdingAPI.IModHelper
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.IMod.GetApi*
+  commentId: Overload:StardewModdingAPI.IMod.GetApi
+  name: GetApi
+  nameWithType: IMod.GetApi
+  fullName: StardewModdingAPI.IMod.GetApi
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: StardewModdingAPI.IMod
+  commentId: T:StardewModdingAPI.IMod
+  parent: StardewModdingAPI
+  name: IMod
+  nameWithType: IMod
+  fullName: StardewModdingAPI.IMod
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System

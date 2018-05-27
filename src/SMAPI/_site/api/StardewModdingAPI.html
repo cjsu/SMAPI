@@ -1,0 +1,230 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Namespace StardewModdingAPI
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Namespace StardewModdingAPI
+   ">
+    <meta name="generator" content="docfx 2.36.1.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="StardewModdingAPI">
+  
+  <h1 id="StardewModdingAPI" data-uid="StardewModdingAPI" class="text-break">Namespace StardewModdingAPI
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="markdown level0 remarks"></div>
+    <h3 id="classes">Classes
+  </h3>
+      <h4><a class="xref" href="StardewModdingAPI.Constants.html">Constants</a></h4>
+      <section><p>Contains SMAPI&apos;s constants and assumptions.</p>
+</section>
+      <h4><a class="xref" href="StardewModdingAPI.Context.html">Context</a></h4>
+      <section><p>Provides information about the current game state.</p>
+</section>
+      <h4><a class="xref" href="StardewModdingAPI.Mod.html">Mod</a></h4>
+      <section><p>The base class for a mod.</p>
+</section>
+      <h4><a class="xref" href="StardewModdingAPI.SButtonExtensions.html">SButtonExtensions</a></h4>
+      <section><p>Provides extension methods for <a class="xref" href="StardewModdingAPI.SButton.html">SButton</a>.</p>
+</section>
+      <h4><a class="xref" href="StardewModdingAPI.SemanticVersion.html">SemanticVersion</a></h4>
+      <section><p>A semantic version with an optional release tag.</p>
+</section>
+      <h4><a class="xref" href="StardewModdingAPI.Translation.html">Translation</a></h4>
+      <section><p>A translation string with a fluent API to customise it.</p>
+</section>
+    <h3 id="interfaces">Interfaces
+  </h3>
+      <h4><a class="xref" href="StardewModdingAPI.IAssetData.html">IAssetData</a></h4>
+      <section><p>Generic metadata and methods for a content asset being loaded.</p>
+</section>
+      <h4><a class="xref" href="StardewModdingAPI.IAssetData-1.html">IAssetData&lt;TValue&gt;</a></h4>
+      <section><p>Generic metadata and methods for a content asset being loaded.</p>
+</section>
+      <h4><a class="xref" href="StardewModdingAPI.IAssetDataForDictionary-2.html">IAssetDataForDictionary&lt;TKey, TValue&gt;</a></h4>
+      <section><p>Encapsulates access and changes to dictionary content being read from a data file.</p>
+</section>
+      <h4><a class="xref" href="StardewModdingAPI.IAssetDataForImage.html">IAssetDataForImage</a></h4>
+      <section><p>Encapsulates access and changes to image content being read from a data file.</p>
+</section>
+      <h4><a class="xref" href="StardewModdingAPI.IAssetEditor.html">IAssetEditor</a></h4>
+      <section><p>Edits matching content assets.</p>
+</section>
+      <h4><a class="xref" href="StardewModdingAPI.IAssetInfo.html">IAssetInfo</a></h4>
+      <section><p>Basic metadata for a content asset.</p>
+</section>
+      <h4><a class="xref" href="StardewModdingAPI.IAssetLoader.html">IAssetLoader</a></h4>
+      <section><p>Provides the initial version for matching assets loaded by the game. SMAPI will raise an error if two mods try to load the same asset; in most cases you should use <a class="xref" href="StardewModdingAPI.IAssetEditor.html">IAssetEditor</a> instead.</p>
+</section>
+      <h4><a class="xref" href="StardewModdingAPI.ICommandHelper.html">ICommandHelper</a></h4>
+      <section><p>Provides an API for managing console commands.</p>
+</section>
+      <h4><a class="xref" href="StardewModdingAPI.IContentHelper.html">IContentHelper</a></h4>
+      <section><p>Provides an API for loading content assets.</p>
+</section>
+      <h4><a class="xref" href="StardewModdingAPI.IContentPack.html">IContentPack</a></h4>
+      <section><p>An API that provides access to a content pack.</p>
+</section>
+      <h4><a class="xref" href="StardewModdingAPI.ICursorPosition.html">ICursorPosition</a></h4>
+      <section><p>Represents a cursor position in the different coordinate systems.</p>
+</section>
+      <h4><a class="xref" href="StardewModdingAPI.IManifest.html">IManifest</a></h4>
+      <section><p>A manifest which describes a mod for SMAPI.</p>
+</section>
+      <h4><a class="xref" href="StardewModdingAPI.IManifestContentPackFor.html">IManifestContentPackFor</a></h4>
+      <section><p>Indicates which mod can read the content pack represented by the containing manifest.</p>
+</section>
+      <h4><a class="xref" href="StardewModdingAPI.IManifestDependency.html">IManifestDependency</a></h4>
+      <section><p>A mod dependency listed in a mod manifest.</p>
+</section>
+      <h4><a class="xref" href="StardewModdingAPI.IMod.html">IMod</a></h4>
+      <section><p>The implementation for a Stardew Valley mod.</p>
+</section>
+      <h4><a class="xref" href="StardewModdingAPI.IModHelper.html">IModHelper</a></h4>
+      <section><p>Provides simplified APIs for writing mods.</p>
+</section>
+      <h4><a class="xref" href="StardewModdingAPI.IModLinked.html">IModLinked</a></h4>
+      <section><p>An instance linked to a mod.</p>
+</section>
+      <h4><a class="xref" href="StardewModdingAPI.IModRegistry.html">IModRegistry</a></h4>
+      <section><p>Provides an API for fetching metadata about loaded mods.</p>
+</section>
+      <h4><a class="xref" href="StardewModdingAPI.IMonitor.html">IMonitor</a></h4>
+      <section><p>Encapsulates monitoring and logging for a given module.</p>
+</section>
+      <h4><a class="xref" href="StardewModdingAPI.IMultiplayerHelper.html">IMultiplayerHelper</a></h4>
+      <section><p>Provides multiplayer utilities.</p>
+</section>
+      <h4><a class="xref" href="StardewModdingAPI.IReflectedField-1.html">IReflectedField&lt;TValue&gt;</a></h4>
+      <section><p>A field obtained through reflection.</p>
+</section>
+      <h4><a class="xref" href="StardewModdingAPI.IReflectedMethod.html">IReflectedMethod</a></h4>
+      <section><p>A method obtained through reflection.</p>
+</section>
+      <h4><a class="xref" href="StardewModdingAPI.IReflectedProperty-1.html">IReflectedProperty&lt;TValue&gt;</a></h4>
+      <section><p>A property obtained through reflection.</p>
+</section>
+      <h4><a class="xref" href="StardewModdingAPI.IReflectionHelper.html">IReflectionHelper</a></h4>
+      <section><p>Provides an API for accessing inaccessible code.</p>
+</section>
+      <h4><a class="xref" href="StardewModdingAPI.ISemanticVersion.html">ISemanticVersion</a></h4>
+      <section><p>A semantic version with an optional release tag.</p>
+</section>
+      <h4><a class="xref" href="StardewModdingAPI.ITranslationHelper.html">ITranslationHelper</a></h4>
+      <section><p>Provides translations stored in the mod&apos;s <code>i18n</code> folder, with one file per locale (like <code>en.json</code>) containing a flat key =&gt; value structure. Translations are fetched with locale fallback, so missing translations are filled in from broader locales (like <code>pt-BR.json</code> &lt; <code>pt.json</code> &lt; <code>default.json</code>).</p>
+</section>
+    <h3 id="enums">Enums
+  </h3>
+      <h4><a class="xref" href="StardewModdingAPI.ContentSource.html">ContentSource</a></h4>
+      <section><p>Specifies a source containing content that can be loaded.</p>
+</section>
+      <h4><a class="xref" href="StardewModdingAPI.GamePlatform.html">GamePlatform</a></h4>
+      <section><p>The game&apos;s platform version.</p>
+</section>
+      <h4><a class="xref" href="StardewModdingAPI.LogLevel.html">LogLevel</a></h4>
+      <section><p>The log severity levels.</p>
+</section>
+      <h4><a class="xref" href="StardewModdingAPI.PatchMode.html">PatchMode</a></h4>
+      <section><p>Indicates how an image should be patched.</p>
+</section>
+      <h4><a class="xref" href="StardewModdingAPI.SButton.html">SButton</a></h4>
+      <section><p>A unified button constant which includes all controller, keyboard, and mouse buttons.</p>
+</section>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

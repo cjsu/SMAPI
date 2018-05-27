@@ -1,0 +1,197 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.IReflectedField`1
+  commentId: T:StardewModdingAPI.IReflectedField`1
+  id: IReflectedField`1
+  parent: StardewModdingAPI
+  children:
+  - StardewModdingAPI.IReflectedField`1.FieldInfo
+  - StardewModdingAPI.IReflectedField`1.GetValue
+  - StardewModdingAPI.IReflectedField`1.SetValue(`0)
+  langs:
+  - csharp
+  - vb
+  name: IReflectedField<TValue>
+  nameWithType: IReflectedField<TValue>
+  fullName: StardewModdingAPI.IReflectedField<TValue>
+  type: Interface
+  source:
+    remote:
+      path: src/SMAPI/IReflectedField.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: IReflectedField
+    path: IReflectedField.cs
+    startLine: 6
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: A field obtained through reflection.
+  example: []
+  syntax:
+    content: public interface IReflectedField<TValue>
+    typeParameters:
+    - id: TValue
+      description: The field value type.
+    content.vb: Public Interface IReflectedField(Of TValue)
+  nameWithType.vb: IReflectedField(Of TValue)
+  modifiers.csharp:
+  - public
+  - interface
+  modifiers.vb:
+  - Public
+  - Interface
+  fullName.vb: StardewModdingAPI.IReflectedField(Of TValue)
+  name.vb: IReflectedField(Of TValue)
+- uid: StardewModdingAPI.IReflectedField`1.FieldInfo
+  commentId: P:StardewModdingAPI.IReflectedField`1.FieldInfo
+  id: FieldInfo
+  parent: StardewModdingAPI.IReflectedField`1
+  langs:
+  - csharp
+  - vb
+  name: FieldInfo
+  nameWithType: IReflectedField<TValue>.FieldInfo
+  fullName: StardewModdingAPI.IReflectedField<TValue>.FieldInfo
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IReflectedField.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: FieldInfo
+    path: IReflectedField.cs
+    startLine: 12
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The reflection metadata.
+  example: []
+  syntax:
+    content: FieldInfo FieldInfo { get; }
+    parameters: []
+    return:
+      type: System.Reflection.FieldInfo
+    content.vb: ReadOnly Property FieldInfo As FieldInfo
+  overload: StardewModdingAPI.IReflectedField`1.FieldInfo*
+  nameWithType.vb: IReflectedField(Of TValue).FieldInfo
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+  fullName.vb: StardewModdingAPI.IReflectedField(Of TValue).FieldInfo
+- uid: StardewModdingAPI.IReflectedField`1.GetValue
+  commentId: M:StardewModdingAPI.IReflectedField`1.GetValue
+  id: GetValue
+  parent: StardewModdingAPI.IReflectedField`1
+  langs:
+  - csharp
+  - vb
+  name: GetValue()
+  nameWithType: IReflectedField<TValue>.GetValue()
+  fullName: StardewModdingAPI.IReflectedField<TValue>.GetValue()
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IReflectedField.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: GetValue
+    path: IReflectedField.cs
+    startLine: 19
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Get the field value.
+  example: []
+  syntax:
+    content: TValue GetValue()
+    return:
+      type: '{TValue}'
+    content.vb: Function GetValue As TValue
+  overload: StardewModdingAPI.IReflectedField`1.GetValue*
+  nameWithType.vb: IReflectedField(Of TValue).GetValue()
+  fullName.vb: StardewModdingAPI.IReflectedField(Of TValue).GetValue()
+- uid: StardewModdingAPI.IReflectedField`1.SetValue(`0)
+  commentId: M:StardewModdingAPI.IReflectedField`1.SetValue(`0)
+  id: SetValue(`0)
+  parent: StardewModdingAPI.IReflectedField`1
+  langs:
+  - csharp
+  - vb
+  name: SetValue(TValue)
+  nameWithType: IReflectedField<TValue>.SetValue(TValue)
+  fullName: StardewModdingAPI.IReflectedField<TValue>.SetValue(TValue)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IReflectedField.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: SetValue
+    path: IReflectedField.cs
+    startLine: 23
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Set the field value.
+  example: []
+  syntax:
+    content: void SetValue(TValue value)
+    parameters:
+    - id: value
+      type: '{TValue}'
+    content.vb: Sub SetValue(value As TValue)
+  overload: StardewModdingAPI.IReflectedField`1.SetValue*
+  nameWithType.vb: IReflectedField(Of TValue).SetValue(TValue)
+  fullName.vb: StardewModdingAPI.IReflectedField(Of TValue).SetValue(TValue)
+references:
+- uid: StardewModdingAPI
+  commentId: N:StardewModdingAPI
+  name: StardewModdingAPI
+  nameWithType: StardewModdingAPI
+  fullName: StardewModdingAPI
+- uid: StardewModdingAPI.IReflectedField`1.FieldInfo*
+  commentId: Overload:StardewModdingAPI.IReflectedField`1.FieldInfo
+  name: FieldInfo
+  nameWithType: IReflectedField<TValue>.FieldInfo
+  fullName: StardewModdingAPI.IReflectedField<TValue>.FieldInfo
+  nameWithType.vb: IReflectedField(Of TValue).FieldInfo
+  fullName.vb: StardewModdingAPI.IReflectedField(Of TValue).FieldInfo
+- uid: System.Reflection.FieldInfo
+  commentId: T:System.Reflection.FieldInfo
+  parent: System.Reflection
+  isExternal: true
+  name: FieldInfo
+  nameWithType: FieldInfo
+  fullName: System.Reflection.FieldInfo
+- uid: System.Reflection
+  commentId: N:System.Reflection
+  isExternal: true
+  name: System.Reflection
+  nameWithType: System.Reflection
+  fullName: System.Reflection
+- uid: StardewModdingAPI.IReflectedField`1.GetValue*
+  commentId: Overload:StardewModdingAPI.IReflectedField`1.GetValue
+  name: GetValue
+  nameWithType: IReflectedField<TValue>.GetValue
+  fullName: StardewModdingAPI.IReflectedField<TValue>.GetValue
+  nameWithType.vb: IReflectedField(Of TValue).GetValue
+  fullName.vb: StardewModdingAPI.IReflectedField(Of TValue).GetValue
+- uid: '{TValue}'
+  commentId: '!:TValue'
+  definition: TValue
+  name: TValue
+  nameWithType: TValue
+  fullName: TValue
+- uid: TValue
+  name: TValue
+  nameWithType: TValue
+  fullName: TValue
+- uid: StardewModdingAPI.IReflectedField`1.SetValue*
+  commentId: Overload:StardewModdingAPI.IReflectedField`1.SetValue
+  name: SetValue
+  nameWithType: IReflectedField<TValue>.SetValue
+  fullName: StardewModdingAPI.IReflectedField<TValue>.SetValue
+  nameWithType.vb: IReflectedField(Of TValue).SetValue
+  fullName.vb: StardewModdingAPI.IReflectedField(Of TValue).SetValue

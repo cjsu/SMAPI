@@ -1,0 +1,277 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.IAssetInfo
+  commentId: T:StardewModdingAPI.IAssetInfo
+  id: IAssetInfo
+  parent: StardewModdingAPI
+  children:
+  - StardewModdingAPI.IAssetInfo.AssetName
+  - StardewModdingAPI.IAssetInfo.AssetNameEquals(System.String)
+  - StardewModdingAPI.IAssetInfo.DataType
+  - StardewModdingAPI.IAssetInfo.Locale
+  langs:
+  - csharp
+  - vb
+  name: IAssetInfo
+  nameWithType: IAssetInfo
+  fullName: StardewModdingAPI.IAssetInfo
+  type: Interface
+  source:
+    remote:
+      path: src/SMAPI/IAssetInfo.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: IAssetInfo
+    path: IAssetInfo.cs
+    startLine: 5
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Basic metadata for a content asset.
+  example: []
+  syntax:
+    content: public interface IAssetInfo
+    content.vb: Public Interface IAssetInfo
+  modifiers.csharp:
+  - public
+  - interface
+  modifiers.vb:
+  - Public
+  - Interface
+- uid: StardewModdingAPI.IAssetInfo.Locale
+  commentId: P:StardewModdingAPI.IAssetInfo.Locale
+  id: Locale
+  parent: StardewModdingAPI.IAssetInfo
+  langs:
+  - csharp
+  - vb
+  name: Locale
+  nameWithType: IAssetInfo.Locale
+  fullName: StardewModdingAPI.IAssetInfo.Locale
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IAssetInfo.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Locale
+    path: IAssetInfo.cs
+    startLine: 11
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The content&apos;s locale code, if the content is localised.
+  example: []
+  syntax:
+    content: string Locale { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: ReadOnly Property Locale As String
+  overload: StardewModdingAPI.IAssetInfo.Locale*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+- uid: StardewModdingAPI.IAssetInfo.AssetName
+  commentId: P:StardewModdingAPI.IAssetInfo.AssetName
+  id: AssetName
+  parent: StardewModdingAPI.IAssetInfo
+  langs:
+  - csharp
+  - vb
+  name: AssetName
+  nameWithType: IAssetInfo.AssetName
+  fullName: StardewModdingAPI.IAssetInfo.AssetName
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IAssetInfo.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: AssetName
+    path: IAssetInfo.cs
+    startLine: 14
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The normalised asset name being read. The format may change between platforms; see <xref href="StardewModdingAPI.IAssetInfo.AssetNameEquals(System.String)" data-throw-if-not-resolved="false"></xref> to compare with a known path.
+  example: []
+  syntax:
+    content: string AssetName { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: ReadOnly Property AssetName As String
+  overload: StardewModdingAPI.IAssetInfo.AssetName*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+- uid: StardewModdingAPI.IAssetInfo.DataType
+  commentId: P:StardewModdingAPI.IAssetInfo.DataType
+  id: DataType
+  parent: StardewModdingAPI.IAssetInfo
+  langs:
+  - csharp
+  - vb
+  name: DataType
+  nameWithType: IAssetInfo.DataType
+  fullName: StardewModdingAPI.IAssetInfo.DataType
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IAssetInfo.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: DataType
+    path: IAssetInfo.cs
+    startLine: 17
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The content data type.
+  example: []
+  syntax:
+    content: Type DataType { get; }
+    parameters: []
+    return:
+      type: System.Type
+    content.vb: ReadOnly Property DataType As Type
+  overload: StardewModdingAPI.IAssetInfo.DataType*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+- uid: StardewModdingAPI.IAssetInfo.AssetNameEquals(System.String)
+  commentId: M:StardewModdingAPI.IAssetInfo.AssetNameEquals(System.String)
+  id: AssetNameEquals(System.String)
+  parent: StardewModdingAPI.IAssetInfo
+  langs:
+  - csharp
+  - vb
+  name: AssetNameEquals(String)
+  nameWithType: IAssetInfo.AssetNameEquals(String)
+  fullName: StardewModdingAPI.IAssetInfo.AssetNameEquals(System.String)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IAssetInfo.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: AssetNameEquals
+    path: IAssetInfo.cs
+    startLine: 25
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Get whether the asset name being loaded matches a given name after normalisation.
+  example: []
+  syntax:
+    content: bool AssetNameEquals(string path)
+    parameters:
+    - id: path
+      type: System.String
+      description: The expected asset path, relative to the game&apos;s content folder and without the .xnb extension or locale suffix (like &apos;Data\ObjectInformation&apos;).
+    return:
+      type: System.Boolean
+    content.vb: Function AssetNameEquals(path As String) As Boolean
+  overload: StardewModdingAPI.IAssetInfo.AssetNameEquals*
+references:
+- uid: StardewModdingAPI
+  commentId: N:StardewModdingAPI
+  name: StardewModdingAPI
+  nameWithType: StardewModdingAPI
+  fullName: StardewModdingAPI
+- uid: StardewModdingAPI.IAssetInfo.Locale*
+  commentId: Overload:StardewModdingAPI.IAssetInfo.Locale
+  name: Locale
+  nameWithType: IAssetInfo.Locale
+  fullName: StardewModdingAPI.IAssetInfo.Locale
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: StardewModdingAPI.IAssetInfo.AssetNameEquals(System.String)
+  commentId: M:StardewModdingAPI.IAssetInfo.AssetNameEquals(System.String)
+  parent: StardewModdingAPI.IAssetInfo
+  isExternal: true
+  name: AssetNameEquals(String)
+  nameWithType: IAssetInfo.AssetNameEquals(String)
+  fullName: StardewModdingAPI.IAssetInfo.AssetNameEquals(System.String)
+  spec.csharp:
+  - uid: StardewModdingAPI.IAssetInfo.AssetNameEquals(System.String)
+    name: AssetNameEquals
+    nameWithType: IAssetInfo.AssetNameEquals
+    fullName: StardewModdingAPI.IAssetInfo.AssetNameEquals
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: StardewModdingAPI.IAssetInfo.AssetNameEquals(System.String)
+    name: AssetNameEquals
+    nameWithType: IAssetInfo.AssetNameEquals
+    fullName: StardewModdingAPI.IAssetInfo.AssetNameEquals
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.IAssetInfo.AssetName*
+  commentId: Overload:StardewModdingAPI.IAssetInfo.AssetName
+  name: AssetName
+  nameWithType: IAssetInfo.AssetName
+  fullName: StardewModdingAPI.IAssetInfo.AssetName
+- uid: StardewModdingAPI.IAssetInfo
+  commentId: T:StardewModdingAPI.IAssetInfo
+  parent: StardewModdingAPI
+  name: IAssetInfo
+  nameWithType: IAssetInfo
+  fullName: StardewModdingAPI.IAssetInfo
+- uid: StardewModdingAPI.IAssetInfo.DataType*
+  commentId: Overload:StardewModdingAPI.IAssetInfo.DataType
+  name: DataType
+  nameWithType: IAssetInfo.DataType
+  fullName: StardewModdingAPI.IAssetInfo.DataType
+- uid: System.Type
+  commentId: T:System.Type
+  parent: System
+  isExternal: true
+  name: Type
+  nameWithType: Type
+  fullName: System.Type
+- uid: StardewModdingAPI.IAssetInfo.AssetNameEquals*
+  commentId: Overload:StardewModdingAPI.IAssetInfo.AssetNameEquals
+  name: AssetNameEquals
+  nameWithType: IAssetInfo.AssetNameEquals
+  fullName: StardewModdingAPI.IAssetInfo.AssetNameEquals
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean

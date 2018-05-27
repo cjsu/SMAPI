@@ -1,0 +1,531 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.IReflectionHelper
+  commentId: T:StardewModdingAPI.IReflectionHelper
+  id: IReflectionHelper
+  parent: StardewModdingAPI
+  children:
+  - StardewModdingAPI.IReflectionHelper.GetField``1(System.Object,System.String,System.Boolean)
+  - StardewModdingAPI.IReflectionHelper.GetField``1(System.Type,System.String,System.Boolean)
+  - StardewModdingAPI.IReflectionHelper.GetMethod(System.Object,System.String,System.Boolean)
+  - StardewModdingAPI.IReflectionHelper.GetMethod(System.Type,System.String,System.Boolean)
+  - StardewModdingAPI.IReflectionHelper.GetProperty``1(System.Object,System.String,System.Boolean)
+  - StardewModdingAPI.IReflectionHelper.GetProperty``1(System.Type,System.String,System.Boolean)
+  langs:
+  - csharp
+  - vb
+  name: IReflectionHelper
+  nameWithType: IReflectionHelper
+  fullName: StardewModdingAPI.IReflectionHelper
+  type: Interface
+  source:
+    remote:
+      path: src/SMAPI/IReflectionHelper.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: IReflectionHelper
+    path: IReflectionHelper.cs
+    startLine: 5
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Provides an API for accessing inaccessible code.
+  example: []
+  syntax:
+    content: 'public interface IReflectionHelper : IModLinked'
+    content.vb: >-
+      Public Interface IReflectionHelper
+          Inherits IModLinked
+  inheritedMembers:
+  - StardewModdingAPI.IModLinked.ModID
+  modifiers.csharp:
+  - public
+  - interface
+  modifiers.vb:
+  - Public
+  - Interface
+- uid: StardewModdingAPI.IReflectionHelper.GetField``1(System.Object,System.String,System.Boolean)
+  commentId: M:StardewModdingAPI.IReflectionHelper.GetField``1(System.Object,System.String,System.Boolean)
+  id: GetField``1(System.Object,System.String,System.Boolean)
+  parent: StardewModdingAPI.IReflectionHelper
+  langs:
+  - csharp
+  - vb
+  name: GetField<TValue>(Object, String, Boolean)
+  nameWithType: IReflectionHelper.GetField<TValue>(Object, String, Boolean)
+  fullName: StardewModdingAPI.IReflectionHelper.GetField<TValue>(System.Object, System.String, System.Boolean)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IReflectionHelper.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: GetField
+    path: IReflectionHelper.cs
+    startLine: 15
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Get an instance field.
+  example: []
+  syntax:
+    content: IReflectedField<TValue> GetField<TValue>(object obj, string name, bool required = true)
+    parameters:
+    - id: obj
+      type: System.Object
+      description: The object which has the field.
+    - id: name
+      type: System.String
+      description: The field name.
+    - id: required
+      type: System.Boolean
+      description: Whether to throw an exception if the field is not found.
+    typeParameters:
+    - id: TValue
+      description: The field type.
+    return:
+      type: StardewModdingAPI.IReflectedField{{TValue}}
+    content.vb: Function GetField(Of TValue)(obj As Object, name As String, required As Boolean = True) As IReflectedField(Of TValue)
+  overload: StardewModdingAPI.IReflectionHelper.GetField*
+  nameWithType.vb: IReflectionHelper.GetField(Of TValue)(Object, String, Boolean)
+  fullName.vb: StardewModdingAPI.IReflectionHelper.GetField(Of TValue)(System.Object, System.String, System.Boolean)
+  name.vb: GetField(Of TValue)(Object, String, Boolean)
+- uid: StardewModdingAPI.IReflectionHelper.GetField``1(System.Type,System.String,System.Boolean)
+  commentId: M:StardewModdingAPI.IReflectionHelper.GetField``1(System.Type,System.String,System.Boolean)
+  id: GetField``1(System.Type,System.String,System.Boolean)
+  parent: StardewModdingAPI.IReflectionHelper
+  langs:
+  - csharp
+  - vb
+  name: GetField<TValue>(Type, String, Boolean)
+  nameWithType: IReflectionHelper.GetField<TValue>(Type, String, Boolean)
+  fullName: StardewModdingAPI.IReflectionHelper.GetField<TValue>(System.Type, System.String, System.Boolean)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IReflectionHelper.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: GetField
+    path: IReflectionHelper.cs
+    startLine: 22
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Get a static field.
+  example: []
+  syntax:
+    content: IReflectedField<TValue> GetField<TValue>(Type type, string name, bool required = true)
+    parameters:
+    - id: type
+      type: System.Type
+      description: The type which has the field.
+    - id: name
+      type: System.String
+      description: The field name.
+    - id: required
+      type: System.Boolean
+      description: Whether to throw an exception if the field is not found.
+    typeParameters:
+    - id: TValue
+      description: The field type.
+    return:
+      type: StardewModdingAPI.IReflectedField{{TValue}}
+    content.vb: Function GetField(Of TValue)(type As Type, name As String, required As Boolean = True) As IReflectedField(Of TValue)
+  overload: StardewModdingAPI.IReflectionHelper.GetField*
+  nameWithType.vb: IReflectionHelper.GetField(Of TValue)(Type, String, Boolean)
+  fullName.vb: StardewModdingAPI.IReflectionHelper.GetField(Of TValue)(System.Type, System.String, System.Boolean)
+  name.vb: GetField(Of TValue)(Type, String, Boolean)
+- uid: StardewModdingAPI.IReflectionHelper.GetProperty``1(System.Object,System.String,System.Boolean)
+  commentId: M:StardewModdingAPI.IReflectionHelper.GetProperty``1(System.Object,System.String,System.Boolean)
+  id: GetProperty``1(System.Object,System.String,System.Boolean)
+  parent: StardewModdingAPI.IReflectionHelper
+  langs:
+  - csharp
+  - vb
+  name: GetProperty<TValue>(Object, String, Boolean)
+  nameWithType: IReflectionHelper.GetProperty<TValue>(Object, String, Boolean)
+  fullName: StardewModdingAPI.IReflectionHelper.GetProperty<TValue>(System.Object, System.String, System.Boolean)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IReflectionHelper.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: GetProperty
+    path: IReflectionHelper.cs
+    startLine: 29
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Get an instance property.
+  example: []
+  syntax:
+    content: IReflectedProperty<TValue> GetProperty<TValue>(object obj, string name, bool required = true)
+    parameters:
+    - id: obj
+      type: System.Object
+      description: The object which has the property.
+    - id: name
+      type: System.String
+      description: The property name.
+    - id: required
+      type: System.Boolean
+      description: Whether to throw an exception if the property is not found.
+    typeParameters:
+    - id: TValue
+      description: The property type.
+    return:
+      type: StardewModdingAPI.IReflectedProperty{{TValue}}
+    content.vb: Function GetProperty(Of TValue)(obj As Object, name As String, required As Boolean = True) As IReflectedProperty(Of TValue)
+  overload: StardewModdingAPI.IReflectionHelper.GetProperty*
+  nameWithType.vb: IReflectionHelper.GetProperty(Of TValue)(Object, String, Boolean)
+  fullName.vb: StardewModdingAPI.IReflectionHelper.GetProperty(Of TValue)(System.Object, System.String, System.Boolean)
+  name.vb: GetProperty(Of TValue)(Object, String, Boolean)
+- uid: StardewModdingAPI.IReflectionHelper.GetProperty``1(System.Type,System.String,System.Boolean)
+  commentId: M:StardewModdingAPI.IReflectionHelper.GetProperty``1(System.Type,System.String,System.Boolean)
+  id: GetProperty``1(System.Type,System.String,System.Boolean)
+  parent: StardewModdingAPI.IReflectionHelper
+  langs:
+  - csharp
+  - vb
+  name: GetProperty<TValue>(Type, String, Boolean)
+  nameWithType: IReflectionHelper.GetProperty<TValue>(Type, String, Boolean)
+  fullName: StardewModdingAPI.IReflectionHelper.GetProperty<TValue>(System.Type, System.String, System.Boolean)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IReflectionHelper.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: GetProperty
+    path: IReflectionHelper.cs
+    startLine: 36
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Get a static property.
+  example: []
+  syntax:
+    content: IReflectedProperty<TValue> GetProperty<TValue>(Type type, string name, bool required = true)
+    parameters:
+    - id: type
+      type: System.Type
+      description: The type which has the property.
+    - id: name
+      type: System.String
+      description: The property name.
+    - id: required
+      type: System.Boolean
+      description: Whether to throw an exception if the property is not found.
+    typeParameters:
+    - id: TValue
+      description: The property type.
+    return:
+      type: StardewModdingAPI.IReflectedProperty{{TValue}}
+    content.vb: Function GetProperty(Of TValue)(type As Type, name As String, required As Boolean = True) As IReflectedProperty(Of TValue)
+  overload: StardewModdingAPI.IReflectionHelper.GetProperty*
+  nameWithType.vb: IReflectionHelper.GetProperty(Of TValue)(Type, String, Boolean)
+  fullName.vb: StardewModdingAPI.IReflectionHelper.GetProperty(Of TValue)(System.Type, System.String, System.Boolean)
+  name.vb: GetProperty(Of TValue)(Type, String, Boolean)
+- uid: StardewModdingAPI.IReflectionHelper.GetMethod(System.Object,System.String,System.Boolean)
+  commentId: M:StardewModdingAPI.IReflectionHelper.GetMethod(System.Object,System.String,System.Boolean)
+  id: GetMethod(System.Object,System.String,System.Boolean)
+  parent: StardewModdingAPI.IReflectionHelper
+  langs:
+  - csharp
+  - vb
+  name: GetMethod(Object, String, Boolean)
+  nameWithType: IReflectionHelper.GetMethod(Object, String, Boolean)
+  fullName: StardewModdingAPI.IReflectionHelper.GetMethod(System.Object, System.String, System.Boolean)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IReflectionHelper.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: GetMethod
+    path: IReflectionHelper.cs
+    startLine: 42
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Get an instance method.
+  example: []
+  syntax:
+    content: IReflectedMethod GetMethod(object obj, string name, bool required = true)
+    parameters:
+    - id: obj
+      type: System.Object
+      description: The object which has the method.
+    - id: name
+      type: System.String
+      description: The field name.
+    - id: required
+      type: System.Boolean
+      description: Whether to throw an exception if the field is not found.
+    return:
+      type: StardewModdingAPI.IReflectedMethod
+    content.vb: Function GetMethod(obj As Object, name As String, required As Boolean = True) As IReflectedMethod
+  overload: StardewModdingAPI.IReflectionHelper.GetMethod*
+- uid: StardewModdingAPI.IReflectionHelper.GetMethod(System.Type,System.String,System.Boolean)
+  commentId: M:StardewModdingAPI.IReflectionHelper.GetMethod(System.Type,System.String,System.Boolean)
+  id: GetMethod(System.Type,System.String,System.Boolean)
+  parent: StardewModdingAPI.IReflectionHelper
+  langs:
+  - csharp
+  - vb
+  name: GetMethod(Type, String, Boolean)
+  nameWithType: IReflectionHelper.GetMethod(Type, String, Boolean)
+  fullName: StardewModdingAPI.IReflectionHelper.GetMethod(System.Type, System.String, System.Boolean)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IReflectionHelper.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: GetMethod
+    path: IReflectionHelper.cs
+    startLine: 48
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Get a static method.
+  example: []
+  syntax:
+    content: IReflectedMethod GetMethod(Type type, string name, bool required = true)
+    parameters:
+    - id: type
+      type: System.Type
+      description: The type which has the method.
+    - id: name
+      type: System.String
+      description: The field name.
+    - id: required
+      type: System.Boolean
+      description: Whether to throw an exception if the field is not found.
+    return:
+      type: StardewModdingAPI.IReflectedMethod
+    content.vb: Function GetMethod(type As Type, name As String, required As Boolean = True) As IReflectedMethod
+  overload: StardewModdingAPI.IReflectionHelper.GetMethod*
+references:
+- uid: StardewModdingAPI
+  commentId: N:StardewModdingAPI
+  name: StardewModdingAPI
+  nameWithType: StardewModdingAPI
+  fullName: StardewModdingAPI
+- uid: StardewModdingAPI.IModLinked.ModID
+  commentId: P:StardewModdingAPI.IModLinked.ModID
+  parent: StardewModdingAPI.IModLinked
+  name: ModID
+  nameWithType: IModLinked.ModID
+  fullName: StardewModdingAPI.IModLinked.ModID
+- uid: StardewModdingAPI.IModLinked
+  commentId: T:StardewModdingAPI.IModLinked
+  parent: StardewModdingAPI
+  name: IModLinked
+  nameWithType: IModLinked
+  fullName: StardewModdingAPI.IModLinked
+- uid: StardewModdingAPI.IReflectionHelper.GetField*
+  commentId: Overload:StardewModdingAPI.IReflectionHelper.GetField
+  name: GetField
+  nameWithType: IReflectionHelper.GetField
+  fullName: StardewModdingAPI.IReflectionHelper.GetField
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: StardewModdingAPI.IReflectedField{{TValue}}
+  commentId: T:StardewModdingAPI.IReflectedField{``0}
+  parent: StardewModdingAPI
+  definition: StardewModdingAPI.IReflectedField`1
+  name: IReflectedField<TValue>
+  nameWithType: IReflectedField<TValue>
+  fullName: StardewModdingAPI.IReflectedField<TValue>
+  nameWithType.vb: IReflectedField(Of TValue)
+  fullName.vb: StardewModdingAPI.IReflectedField(Of TValue)
+  name.vb: IReflectedField(Of TValue)
+  spec.csharp:
+  - uid: StardewModdingAPI.IReflectedField`1
+    name: IReflectedField
+    nameWithType: IReflectedField
+    fullName: StardewModdingAPI.IReflectedField
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TValue
+    nameWithType: TValue
+    fullName: TValue
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: StardewModdingAPI.IReflectedField`1
+    name: IReflectedField
+    nameWithType: IReflectedField
+    fullName: StardewModdingAPI.IReflectedField
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TValue
+    nameWithType: TValue
+    fullName: TValue
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: StardewModdingAPI.IReflectedField`1
+  commentId: T:StardewModdingAPI.IReflectedField`1
+  name: IReflectedField<TValue>
+  nameWithType: IReflectedField<TValue>
+  fullName: StardewModdingAPI.IReflectedField<TValue>
+  nameWithType.vb: IReflectedField(Of TValue)
+  fullName.vb: StardewModdingAPI.IReflectedField(Of TValue)
+  name.vb: IReflectedField(Of TValue)
+  spec.csharp:
+  - uid: StardewModdingAPI.IReflectedField`1
+    name: IReflectedField
+    nameWithType: IReflectedField
+    fullName: StardewModdingAPI.IReflectedField
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TValue
+    nameWithType: TValue
+    fullName: TValue
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: StardewModdingAPI.IReflectedField`1
+    name: IReflectedField
+    nameWithType: IReflectedField
+    fullName: StardewModdingAPI.IReflectedField
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TValue
+    nameWithType: TValue
+    fullName: TValue
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Type
+  commentId: T:System.Type
+  parent: System
+  isExternal: true
+  name: Type
+  nameWithType: Type
+  fullName: System.Type
+- uid: StardewModdingAPI.IReflectionHelper.GetProperty*
+  commentId: Overload:StardewModdingAPI.IReflectionHelper.GetProperty
+  name: GetProperty
+  nameWithType: IReflectionHelper.GetProperty
+  fullName: StardewModdingAPI.IReflectionHelper.GetProperty
+- uid: StardewModdingAPI.IReflectedProperty{{TValue}}
+  commentId: T:StardewModdingAPI.IReflectedProperty{``0}
+  parent: StardewModdingAPI
+  definition: StardewModdingAPI.IReflectedProperty`1
+  name: IReflectedProperty<TValue>
+  nameWithType: IReflectedProperty<TValue>
+  fullName: StardewModdingAPI.IReflectedProperty<TValue>
+  nameWithType.vb: IReflectedProperty(Of TValue)
+  fullName.vb: StardewModdingAPI.IReflectedProperty(Of TValue)
+  name.vb: IReflectedProperty(Of TValue)
+  spec.csharp:
+  - uid: StardewModdingAPI.IReflectedProperty`1
+    name: IReflectedProperty
+    nameWithType: IReflectedProperty
+    fullName: StardewModdingAPI.IReflectedProperty
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TValue
+    nameWithType: TValue
+    fullName: TValue
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: StardewModdingAPI.IReflectedProperty`1
+    name: IReflectedProperty
+    nameWithType: IReflectedProperty
+    fullName: StardewModdingAPI.IReflectedProperty
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TValue
+    nameWithType: TValue
+    fullName: TValue
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.IReflectedProperty`1
+  commentId: T:StardewModdingAPI.IReflectedProperty`1
+  name: IReflectedProperty<TValue>
+  nameWithType: IReflectedProperty<TValue>
+  fullName: StardewModdingAPI.IReflectedProperty<TValue>
+  nameWithType.vb: IReflectedProperty(Of TValue)
+  fullName.vb: StardewModdingAPI.IReflectedProperty(Of TValue)
+  name.vb: IReflectedProperty(Of TValue)
+  spec.csharp:
+  - uid: StardewModdingAPI.IReflectedProperty`1
+    name: IReflectedProperty
+    nameWithType: IReflectedProperty
+    fullName: StardewModdingAPI.IReflectedProperty
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TValue
+    nameWithType: TValue
+    fullName: TValue
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: StardewModdingAPI.IReflectedProperty`1
+    name: IReflectedProperty
+    nameWithType: IReflectedProperty
+    fullName: StardewModdingAPI.IReflectedProperty
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TValue
+    nameWithType: TValue
+    fullName: TValue
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.IReflectionHelper.GetMethod*
+  commentId: Overload:StardewModdingAPI.IReflectionHelper.GetMethod
+  name: GetMethod
+  nameWithType: IReflectionHelper.GetMethod
+  fullName: StardewModdingAPI.IReflectionHelper.GetMethod
+- uid: StardewModdingAPI.IReflectedMethod
+  commentId: T:StardewModdingAPI.IReflectedMethod
+  parent: StardewModdingAPI
+  name: IReflectedMethod
+  nameWithType: IReflectedMethod
+  fullName: StardewModdingAPI.IReflectedMethod

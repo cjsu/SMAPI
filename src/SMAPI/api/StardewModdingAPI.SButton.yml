@@ -1,0 +1,7132 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.SButton
+  commentId: T:StardewModdingAPI.SButton
+  id: SButton
+  parent: StardewModdingAPI
+  children:
+  - StardewModdingAPI.SButton.A
+  - StardewModdingAPI.SButton.Add
+  - StardewModdingAPI.SButton.Apps
+  - StardewModdingAPI.SButton.Attn
+  - StardewModdingAPI.SButton.B
+  - StardewModdingAPI.SButton.Back
+  - StardewModdingAPI.SButton.BigButton
+  - StardewModdingAPI.SButton.BrowserBack
+  - StardewModdingAPI.SButton.BrowserFavorites
+  - StardewModdingAPI.SButton.BrowserForward
+  - StardewModdingAPI.SButton.BrowserHome
+  - StardewModdingAPI.SButton.BrowserRefresh
+  - StardewModdingAPI.SButton.BrowserSearch
+  - StardewModdingAPI.SButton.BrowserStop
+  - StardewModdingAPI.SButton.C
+  - StardewModdingAPI.SButton.CapsLock
+  - StardewModdingAPI.SButton.ChatPadGreen
+  - StardewModdingAPI.SButton.ChatPadOrange
+  - StardewModdingAPI.SButton.ControllerA
+  - StardewModdingAPI.SButton.ControllerB
+  - StardewModdingAPI.SButton.ControllerBack
+  - StardewModdingAPI.SButton.ControllerStart
+  - StardewModdingAPI.SButton.ControllerX
+  - StardewModdingAPI.SButton.ControllerY
+  - StardewModdingAPI.SButton.Crsel
+  - StardewModdingAPI.SButton.D
+  - StardewModdingAPI.SButton.D0
+  - StardewModdingAPI.SButton.D1
+  - StardewModdingAPI.SButton.D2
+  - StardewModdingAPI.SButton.D3
+  - StardewModdingAPI.SButton.D4
+  - StardewModdingAPI.SButton.D5
+  - StardewModdingAPI.SButton.D6
+  - StardewModdingAPI.SButton.D7
+  - StardewModdingAPI.SButton.D8
+  - StardewModdingAPI.SButton.D9
+  - StardewModdingAPI.SButton.Decimal
+  - StardewModdingAPI.SButton.Delete
+  - StardewModdingAPI.SButton.Divide
+  - StardewModdingAPI.SButton.Down
+  - StardewModdingAPI.SButton.DPadDown
+  - StardewModdingAPI.SButton.DPadLeft
+  - StardewModdingAPI.SButton.DPadRight
+  - StardewModdingAPI.SButton.DPadUp
+  - StardewModdingAPI.SButton.E
+  - StardewModdingAPI.SButton.End
+  - StardewModdingAPI.SButton.Enter
+  - StardewModdingAPI.SButton.EraseEof
+  - StardewModdingAPI.SButton.Escape
+  - StardewModdingAPI.SButton.Execute
+  - StardewModdingAPI.SButton.Exsel
+  - StardewModdingAPI.SButton.F
+  - StardewModdingAPI.SButton.F1
+  - StardewModdingAPI.SButton.F10
+  - StardewModdingAPI.SButton.F11
+  - StardewModdingAPI.SButton.F12
+  - StardewModdingAPI.SButton.F13
+  - StardewModdingAPI.SButton.F14
+  - StardewModdingAPI.SButton.F15
+  - StardewModdingAPI.SButton.F16
+  - StardewModdingAPI.SButton.F17
+  - StardewModdingAPI.SButton.F18
+  - StardewModdingAPI.SButton.F19
+  - StardewModdingAPI.SButton.F2
+  - StardewModdingAPI.SButton.F20
+  - StardewModdingAPI.SButton.F21
+  - StardewModdingAPI.SButton.F22
+  - StardewModdingAPI.SButton.F23
+  - StardewModdingAPI.SButton.F24
+  - StardewModdingAPI.SButton.F3
+  - StardewModdingAPI.SButton.F4
+  - StardewModdingAPI.SButton.F5
+  - StardewModdingAPI.SButton.F6
+  - StardewModdingAPI.SButton.F7
+  - StardewModdingAPI.SButton.F8
+  - StardewModdingAPI.SButton.F9
+  - StardewModdingAPI.SButton.G
+  - StardewModdingAPI.SButton.H
+  - StardewModdingAPI.SButton.Help
+  - StardewModdingAPI.SButton.Home
+  - StardewModdingAPI.SButton.I
+  - StardewModdingAPI.SButton.ImeConvert
+  - StardewModdingAPI.SButton.ImeNoConvert
+  - StardewModdingAPI.SButton.Insert
+  - StardewModdingAPI.SButton.J
+  - StardewModdingAPI.SButton.K
+  - StardewModdingAPI.SButton.Kana
+  - StardewModdingAPI.SButton.Kanji
+  - StardewModdingAPI.SButton.L
+  - StardewModdingAPI.SButton.LaunchApplication1
+  - StardewModdingAPI.SButton.LaunchApplication2
+  - StardewModdingAPI.SButton.LaunchMail
+  - StardewModdingAPI.SButton.Left
+  - StardewModdingAPI.SButton.LeftAlt
+  - StardewModdingAPI.SButton.LeftControl
+  - StardewModdingAPI.SButton.LeftShift
+  - StardewModdingAPI.SButton.LeftShoulder
+  - StardewModdingAPI.SButton.LeftStick
+  - StardewModdingAPI.SButton.LeftThumbstickDown
+  - StardewModdingAPI.SButton.LeftThumbstickLeft
+  - StardewModdingAPI.SButton.LeftThumbstickRight
+  - StardewModdingAPI.SButton.LeftThumbstickUp
+  - StardewModdingAPI.SButton.LeftTrigger
+  - StardewModdingAPI.SButton.LeftWindows
+  - StardewModdingAPI.SButton.M
+  - StardewModdingAPI.SButton.MediaNextTrack
+  - StardewModdingAPI.SButton.MediaPlayPause
+  - StardewModdingAPI.SButton.MediaPreviousTrack
+  - StardewModdingAPI.SButton.MediaStop
+  - StardewModdingAPI.SButton.MouseLeft
+  - StardewModdingAPI.SButton.MouseMiddle
+  - StardewModdingAPI.SButton.MouseRight
+  - StardewModdingAPI.SButton.MouseX1
+  - StardewModdingAPI.SButton.MouseX2
+  - StardewModdingAPI.SButton.Multiply
+  - StardewModdingAPI.SButton.N
+  - StardewModdingAPI.SButton.None
+  - StardewModdingAPI.SButton.NumLock
+  - StardewModdingAPI.SButton.NumPad0
+  - StardewModdingAPI.SButton.NumPad1
+  - StardewModdingAPI.SButton.NumPad2
+  - StardewModdingAPI.SButton.NumPad3
+  - StardewModdingAPI.SButton.NumPad4
+  - StardewModdingAPI.SButton.NumPad5
+  - StardewModdingAPI.SButton.NumPad6
+  - StardewModdingAPI.SButton.NumPad7
+  - StardewModdingAPI.SButton.NumPad8
+  - StardewModdingAPI.SButton.NumPad9
+  - StardewModdingAPI.SButton.O
+  - StardewModdingAPI.SButton.Oem8
+  - StardewModdingAPI.SButton.OemAuto
+  - StardewModdingAPI.SButton.OemBackslash
+  - StardewModdingAPI.SButton.OemClear
+  - StardewModdingAPI.SButton.OemCloseBrackets
+  - StardewModdingAPI.SButton.OemComma
+  - StardewModdingAPI.SButton.OemCopy
+  - StardewModdingAPI.SButton.OemEnlW
+  - StardewModdingAPI.SButton.OemMinus
+  - StardewModdingAPI.SButton.OemOpenBrackets
+  - StardewModdingAPI.SButton.OemPeriod
+  - StardewModdingAPI.SButton.OemPipe
+  - StardewModdingAPI.SButton.OemPlus
+  - StardewModdingAPI.SButton.OemQuestion
+  - StardewModdingAPI.SButton.OemQuotes
+  - StardewModdingAPI.SButton.OemSemicolon
+  - StardewModdingAPI.SButton.OemTilde
+  - StardewModdingAPI.SButton.P
+  - StardewModdingAPI.SButton.Pa1
+  - StardewModdingAPI.SButton.PageDown
+  - StardewModdingAPI.SButton.PageUp
+  - StardewModdingAPI.SButton.Pause
+  - StardewModdingAPI.SButton.Play
+  - StardewModdingAPI.SButton.Print
+  - StardewModdingAPI.SButton.PrintScreen
+  - StardewModdingAPI.SButton.ProcessKey
+  - StardewModdingAPI.SButton.Q
+  - StardewModdingAPI.SButton.R
+  - StardewModdingAPI.SButton.Right
+  - StardewModdingAPI.SButton.RightAlt
+  - StardewModdingAPI.SButton.RightControl
+  - StardewModdingAPI.SButton.RightShift
+  - StardewModdingAPI.SButton.RightShoulder
+  - StardewModdingAPI.SButton.RightStick
+  - StardewModdingAPI.SButton.RightThumbstickDown
+  - StardewModdingAPI.SButton.RightThumbstickLeft
+  - StardewModdingAPI.SButton.RightThumbstickRight
+  - StardewModdingAPI.SButton.RightThumbstickUp
+  - StardewModdingAPI.SButton.RightTrigger
+  - StardewModdingAPI.SButton.RightWindows
+  - StardewModdingAPI.SButton.S
+  - StardewModdingAPI.SButton.Scroll
+  - StardewModdingAPI.SButton.Select
+  - StardewModdingAPI.SButton.SelectMedia
+  - StardewModdingAPI.SButton.Separator
+  - StardewModdingAPI.SButton.Sleep
+  - StardewModdingAPI.SButton.Space
+  - StardewModdingAPI.SButton.Subtract
+  - StardewModdingAPI.SButton.T
+  - StardewModdingAPI.SButton.Tab
+  - StardewModdingAPI.SButton.U
+  - StardewModdingAPI.SButton.Up
+  - StardewModdingAPI.SButton.V
+  - StardewModdingAPI.SButton.VolumeDown
+  - StardewModdingAPI.SButton.VolumeMute
+  - StardewModdingAPI.SButton.VolumeUp
+  - StardewModdingAPI.SButton.W
+  - StardewModdingAPI.SButton.X
+  - StardewModdingAPI.SButton.Y
+  - StardewModdingAPI.SButton.Z
+  - StardewModdingAPI.SButton.Zoom
+  langs:
+  - csharp
+  - vb
+  name: SButton
+  nameWithType: SButton
+  fullName: StardewModdingAPI.SButton
+  type: Enum
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: SButton
+    path: SButton.cs
+    startLine: 9
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: A unified button constant which includes all controller, keyboard, and mouse buttons.
+  remarks: Derived from <xref href="Microsoft.Xna.Framework.Input.Keys" data-throw-if-not-resolved="false"></xref>, <xref href="Microsoft.Xna.Framework.Input.Buttons" data-throw-if-not-resolved="false"></xref>, and <see cref="!:System.Windows.Forms.MouseButtons"></see>.
+  example: []
+  syntax:
+    content: public enum SButton
+    content.vb: Public Enum SButton
+  extensionMethods:
+  - StardewModdingAPI.SButton.StardewModdingAPI.SButtonExtensions.TryGetKeyboard(Microsoft.Xna.Framework.Input.Keys@)
+  - StardewModdingAPI.SButton.StardewModdingAPI.SButtonExtensions.TryGetController(Microsoft.Xna.Framework.Input.Buttons@)
+  - StardewModdingAPI.SButton.StardewModdingAPI.SButtonExtensions.TryGetStardewInput(StardewValley.InputButton@)
+  - StardewModdingAPI.SButton.StardewModdingAPI.SButtonExtensions.IsUseToolButton
+  - StardewModdingAPI.SButton.StardewModdingAPI.SButtonExtensions.IsActionButton
+  modifiers.csharp:
+  - public
+  - enum
+  modifiers.vb:
+  - Public
+  - Enum
+- uid: StardewModdingAPI.SButton.None
+  commentId: F:StardewModdingAPI.SButton.None
+  id: None
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: None
+  nameWithType: SButton.None
+  fullName: StardewModdingAPI.SButton.None
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: None
+    path: SButton.cs
+    startLine: 12
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: No valid key.
+  example: []
+  syntax:
+    content: None = 0
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.MouseLeft
+  commentId: F:StardewModdingAPI.SButton.MouseLeft
+  id: MouseLeft
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: MouseLeft
+  nameWithType: SButton.MouseLeft
+  fullName: StardewModdingAPI.SButton.MouseLeft
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: MouseLeft
+    path: SButton.cs
+    startLine: 18
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The left mouse button.
+  example: []
+  syntax:
+    content: MouseLeft = 1000
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.MouseRight
+  commentId: F:StardewModdingAPI.SButton.MouseRight
+  id: MouseRight
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: MouseRight
+  nameWithType: SButton.MouseRight
+  fullName: StardewModdingAPI.SButton.MouseRight
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: MouseRight
+    path: SButton.cs
+    startLine: 21
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The right mouse button.
+  example: []
+  syntax:
+    content: MouseRight = 1001
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.MouseMiddle
+  commentId: F:StardewModdingAPI.SButton.MouseMiddle
+  id: MouseMiddle
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: MouseMiddle
+  nameWithType: SButton.MouseMiddle
+  fullName: StardewModdingAPI.SButton.MouseMiddle
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: MouseMiddle
+    path: SButton.cs
+    startLine: 24
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The middle mouse button.
+  example: []
+  syntax:
+    content: MouseMiddle = 1002
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.MouseX1
+  commentId: F:StardewModdingAPI.SButton.MouseX1
+  id: MouseX1
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: MouseX1
+  nameWithType: SButton.MouseX1
+  fullName: StardewModdingAPI.SButton.MouseX1
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: MouseX1
+    path: SButton.cs
+    startLine: 27
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The first mouse XButton.
+  example: []
+  syntax:
+    content: MouseX1 = 1003
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.MouseX2
+  commentId: F:StardewModdingAPI.SButton.MouseX2
+  id: MouseX2
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: MouseX2
+  nameWithType: SButton.MouseX2
+  fullName: StardewModdingAPI.SButton.MouseX2
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: MouseX2
+    path: SButton.cs
+    startLine: 30
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The second mouse XButton.
+  example: []
+  syntax:
+    content: MouseX2 = 1004
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.ControllerA
+  commentId: F:StardewModdingAPI.SButton.ControllerA
+  id: ControllerA
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: ControllerA
+  nameWithType: SButton.ControllerA
+  fullName: StardewModdingAPI.SButton.ControllerA
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ControllerA
+    path: SButton.cs
+    startLine: 36
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The &apos;A&apos; button on a controller.
+  example: []
+  syntax:
+    content: ControllerA = 6096
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.ControllerB
+  commentId: F:StardewModdingAPI.SButton.ControllerB
+  id: ControllerB
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: ControllerB
+  nameWithType: SButton.ControllerB
+  fullName: StardewModdingAPI.SButton.ControllerB
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ControllerB
+    path: SButton.cs
+    startLine: 39
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The &apos;B&apos; button on a controller.
+  example: []
+  syntax:
+    content: ControllerB = 10192
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.ControllerX
+  commentId: F:StardewModdingAPI.SButton.ControllerX
+  id: ControllerX
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: ControllerX
+  nameWithType: SButton.ControllerX
+  fullName: StardewModdingAPI.SButton.ControllerX
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ControllerX
+    path: SButton.cs
+    startLine: 42
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The &apos;X&apos; button on a controller.
+  example: []
+  syntax:
+    content: ControllerX = 18384
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.ControllerY
+  commentId: F:StardewModdingAPI.SButton.ControllerY
+  id: ControllerY
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: ControllerY
+  nameWithType: SButton.ControllerY
+  fullName: StardewModdingAPI.SButton.ControllerY
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ControllerY
+    path: SButton.cs
+    startLine: 45
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The &apos;Y&apos; button on a controller.
+  example: []
+  syntax:
+    content: ControllerY = 34768
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.ControllerBack
+  commentId: F:StardewModdingAPI.SButton.ControllerBack
+  id: ControllerBack
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: ControllerBack
+  nameWithType: SButton.ControllerBack
+  fullName: StardewModdingAPI.SButton.ControllerBack
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ControllerBack
+    path: SButton.cs
+    startLine: 48
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The back button on a controller.
+  example: []
+  syntax:
+    content: ControllerBack = 2032
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.ControllerStart
+  commentId: F:StardewModdingAPI.SButton.ControllerStart
+  id: ControllerStart
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: ControllerStart
+  nameWithType: SButton.ControllerStart
+  fullName: StardewModdingAPI.SButton.ControllerStart
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ControllerStart
+    path: SButton.cs
+    startLine: 51
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The start button on a controller.
+  example: []
+  syntax:
+    content: ControllerStart = 2016
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.DPadUp
+  commentId: F:StardewModdingAPI.SButton.DPadUp
+  id: DPadUp
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: DPadUp
+  nameWithType: SButton.DPadUp
+  fullName: StardewModdingAPI.SButton.DPadUp
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: DPadUp
+    path: SButton.cs
+    startLine: 54
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The up button on the directional pad of a controller.
+  example: []
+  syntax:
+    content: DPadUp = 2001
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.DPadDown
+  commentId: F:StardewModdingAPI.SButton.DPadDown
+  id: DPadDown
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: DPadDown
+  nameWithType: SButton.DPadDown
+  fullName: StardewModdingAPI.SButton.DPadDown
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: DPadDown
+    path: SButton.cs
+    startLine: 57
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The down button on the directional pad of a controller.
+  example: []
+  syntax:
+    content: DPadDown = 2002
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.DPadLeft
+  commentId: F:StardewModdingAPI.SButton.DPadLeft
+  id: DPadLeft
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: DPadLeft
+  nameWithType: SButton.DPadLeft
+  fullName: StardewModdingAPI.SButton.DPadLeft
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: DPadLeft
+    path: SButton.cs
+    startLine: 60
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The left button on the directional pad of a controller.
+  example: []
+  syntax:
+    content: DPadLeft = 2004
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.DPadRight
+  commentId: F:StardewModdingAPI.SButton.DPadRight
+  id: DPadRight
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: DPadRight
+  nameWithType: SButton.DPadRight
+  fullName: StardewModdingAPI.SButton.DPadRight
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: DPadRight
+    path: SButton.cs
+    startLine: 63
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The right button on the directional pad of a controller.
+  example: []
+  syntax:
+    content: DPadRight = 2008
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.LeftShoulder
+  commentId: F:StardewModdingAPI.SButton.LeftShoulder
+  id: LeftShoulder
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: LeftShoulder
+  nameWithType: SButton.LeftShoulder
+  fullName: StardewModdingAPI.SButton.LeftShoulder
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: LeftShoulder
+    path: SButton.cs
+    startLine: 66
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The left bumper (shoulder) button on a controller.
+  example: []
+  syntax:
+    content: LeftShoulder = 2256
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.RightShoulder
+  commentId: F:StardewModdingAPI.SButton.RightShoulder
+  id: RightShoulder
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: RightShoulder
+  nameWithType: SButton.RightShoulder
+  fullName: StardewModdingAPI.SButton.RightShoulder
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: RightShoulder
+    path: SButton.cs
+    startLine: 69
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The right bumper (shoulder) button on a controller.
+  example: []
+  syntax:
+    content: RightShoulder = 2512
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.LeftTrigger
+  commentId: F:StardewModdingAPI.SButton.LeftTrigger
+  id: LeftTrigger
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: LeftTrigger
+  nameWithType: SButton.LeftTrigger
+  fullName: StardewModdingAPI.SButton.LeftTrigger
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: LeftTrigger
+    path: SButton.cs
+    startLine: 72
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The left trigger on a controller.
+  example: []
+  syntax:
+    content: LeftTrigger = 8390608
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.RightTrigger
+  commentId: F:StardewModdingAPI.SButton.RightTrigger
+  id: RightTrigger
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: RightTrigger
+  nameWithType: SButton.RightTrigger
+  fullName: StardewModdingAPI.SButton.RightTrigger
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: RightTrigger
+    path: SButton.cs
+    startLine: 75
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The right trigger on a controller.
+  example: []
+  syntax:
+    content: RightTrigger = 4196304
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.LeftStick
+  commentId: F:StardewModdingAPI.SButton.LeftStick
+  id: LeftStick
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: LeftStick
+  nameWithType: SButton.LeftStick
+  fullName: StardewModdingAPI.SButton.LeftStick
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: LeftStick
+    path: SButton.cs
+    startLine: 78
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The left analog stick on a controller (when pressed).
+  example: []
+  syntax:
+    content: LeftStick = 2064
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.RightStick
+  commentId: F:StardewModdingAPI.SButton.RightStick
+  id: RightStick
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: RightStick
+  nameWithType: SButton.RightStick
+  fullName: StardewModdingAPI.SButton.RightStick
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: RightStick
+    path: SButton.cs
+    startLine: 81
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The right analog stick on a controller (when pressed).
+  example: []
+  syntax:
+    content: RightStick = 2128
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.BigButton
+  commentId: F:StardewModdingAPI.SButton.BigButton
+  id: BigButton
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: BigButton
+  nameWithType: SButton.BigButton
+  fullName: StardewModdingAPI.SButton.BigButton
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: BigButton
+    path: SButton.cs
+    startLine: 84
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The &apos;big button&apos; on a controller.
+  example: []
+  syntax:
+    content: BigButton = 4048
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.LeftThumbstickLeft
+  commentId: F:StardewModdingAPI.SButton.LeftThumbstickLeft
+  id: LeftThumbstickLeft
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: LeftThumbstickLeft
+  nameWithType: SButton.LeftThumbstickLeft
+  fullName: StardewModdingAPI.SButton.LeftThumbstickLeft
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: LeftThumbstickLeft
+    path: SButton.cs
+    startLine: 87
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The left analog stick on a controller (when pushed left).
+  example: []
+  syntax:
+    content: LeftThumbstickLeft = 2099152
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.LeftThumbstickRight
+  commentId: F:StardewModdingAPI.SButton.LeftThumbstickRight
+  id: LeftThumbstickRight
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: LeftThumbstickRight
+  nameWithType: SButton.LeftThumbstickRight
+  fullName: StardewModdingAPI.SButton.LeftThumbstickRight
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: LeftThumbstickRight
+    path: SButton.cs
+    startLine: 90
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The left analog stick on a controller (when pushed right).
+  example: []
+  syntax:
+    content: LeftThumbstickRight = 1073743824
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.LeftThumbstickDown
+  commentId: F:StardewModdingAPI.SButton.LeftThumbstickDown
+  id: LeftThumbstickDown
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: LeftThumbstickDown
+  nameWithType: SButton.LeftThumbstickDown
+  fullName: StardewModdingAPI.SButton.LeftThumbstickDown
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: LeftThumbstickDown
+    path: SButton.cs
+    startLine: 93
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The left analog stick on a controller (when pushed down).
+  example: []
+  syntax:
+    content: LeftThumbstickDown = 536872912
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.LeftThumbstickUp
+  commentId: F:StardewModdingAPI.SButton.LeftThumbstickUp
+  id: LeftThumbstickUp
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: LeftThumbstickUp
+  nameWithType: SButton.LeftThumbstickUp
+  fullName: StardewModdingAPI.SButton.LeftThumbstickUp
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: LeftThumbstickUp
+    path: SButton.cs
+    startLine: 96
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The left analog stick on a controller (when pushed up).
+  example: []
+  syntax:
+    content: LeftThumbstickUp = 268437456
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.RightThumbstickLeft
+  commentId: F:StardewModdingAPI.SButton.RightThumbstickLeft
+  id: RightThumbstickLeft
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: RightThumbstickLeft
+  nameWithType: SButton.RightThumbstickLeft
+  fullName: StardewModdingAPI.SButton.RightThumbstickLeft
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: RightThumbstickLeft
+    path: SButton.cs
+    startLine: 99
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The right analog stick on a controller (when pushed left).
+  example: []
+  syntax:
+    content: RightThumbstickLeft = 134219728
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.RightThumbstickRight
+  commentId: F:StardewModdingAPI.SButton.RightThumbstickRight
+  id: RightThumbstickRight
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: RightThumbstickRight
+  nameWithType: SButton.RightThumbstickRight
+  fullName: StardewModdingAPI.SButton.RightThumbstickRight
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: RightThumbstickRight
+    path: SButton.cs
+    startLine: 102
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The right analog stick on a controller (when pushed right).
+  example: []
+  syntax:
+    content: RightThumbstickRight = 67110864
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.RightThumbstickDown
+  commentId: F:StardewModdingAPI.SButton.RightThumbstickDown
+  id: RightThumbstickDown
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: RightThumbstickDown
+  nameWithType: SButton.RightThumbstickDown
+  fullName: StardewModdingAPI.SButton.RightThumbstickDown
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: RightThumbstickDown
+    path: SButton.cs
+    startLine: 105
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The right analog stick on a controller (when pushed down).
+  example: []
+  syntax:
+    content: RightThumbstickDown = 33556432
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.RightThumbstickUp
+  commentId: F:StardewModdingAPI.SButton.RightThumbstickUp
+  id: RightThumbstickUp
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: RightThumbstickUp
+  nameWithType: SButton.RightThumbstickUp
+  fullName: StardewModdingAPI.SButton.RightThumbstickUp
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: RightThumbstickUp
+    path: SButton.cs
+    startLine: 108
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The right analog stick on a controller (when pushed up).
+  example: []
+  syntax:
+    content: RightThumbstickUp = 16779216
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.A
+  commentId: F:StardewModdingAPI.SButton.A
+  id: A
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: A
+  nameWithType: SButton.A
+  fullName: StardewModdingAPI.SButton.A
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: A
+    path: SButton.cs
+    startLine: 114
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The A button on a keyboard.
+  example: []
+  syntax:
+    content: A = 65
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.Add
+  commentId: F:StardewModdingAPI.SButton.Add
+  id: Add
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: Add
+  nameWithType: SButton.Add
+  fullName: StardewModdingAPI.SButton.Add
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Add
+    path: SButton.cs
+    startLine: 117
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Add button on a keyboard.
+  example: []
+  syntax:
+    content: Add = 107
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.Apps
+  commentId: F:StardewModdingAPI.SButton.Apps
+  id: Apps
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: Apps
+  nameWithType: SButton.Apps
+  fullName: StardewModdingAPI.SButton.Apps
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Apps
+    path: SButton.cs
+    startLine: 120
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Applications button on a keyboard.
+  example: []
+  syntax:
+    content: Apps = 93
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.Attn
+  commentId: F:StardewModdingAPI.SButton.Attn
+  id: Attn
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: Attn
+  nameWithType: SButton.Attn
+  fullName: StardewModdingAPI.SButton.Attn
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Attn
+    path: SButton.cs
+    startLine: 123
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Attn button on a keyboard.
+  example: []
+  syntax:
+    content: Attn = 246
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.B
+  commentId: F:StardewModdingAPI.SButton.B
+  id: B
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: B
+  nameWithType: SButton.B
+  fullName: StardewModdingAPI.SButton.B
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: B
+    path: SButton.cs
+    startLine: 126
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The B button on a keyboard.
+  example: []
+  syntax:
+    content: B = 66
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.Back
+  commentId: F:StardewModdingAPI.SButton.Back
+  id: Back
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: Back
+  nameWithType: SButton.Back
+  fullName: StardewModdingAPI.SButton.Back
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Back
+    path: SButton.cs
+    startLine: 129
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Backspace button on a keyboard.
+  example: []
+  syntax:
+    content: Back = 8
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.BrowserBack
+  commentId: F:StardewModdingAPI.SButton.BrowserBack
+  id: BrowserBack
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: BrowserBack
+  nameWithType: SButton.BrowserBack
+  fullName: StardewModdingAPI.SButton.BrowserBack
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: BrowserBack
+    path: SButton.cs
+    startLine: 132
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Browser Back button on a keyboard in Windows 2000/XP.
+  example: []
+  syntax:
+    content: BrowserBack = 166
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.BrowserFavorites
+  commentId: F:StardewModdingAPI.SButton.BrowserFavorites
+  id: BrowserFavorites
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: BrowserFavorites
+  nameWithType: SButton.BrowserFavorites
+  fullName: StardewModdingAPI.SButton.BrowserFavorites
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: BrowserFavorites
+    path: SButton.cs
+    startLine: 135
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Browser Favorites button on a keyboard in Windows 2000/XP.
+  example: []
+  syntax:
+    content: BrowserFavorites = 171
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.BrowserForward
+  commentId: F:StardewModdingAPI.SButton.BrowserForward
+  id: BrowserForward
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: BrowserForward
+  nameWithType: SButton.BrowserForward
+  fullName: StardewModdingAPI.SButton.BrowserForward
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: BrowserForward
+    path: SButton.cs
+    startLine: 138
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Browser Favorites button on a keyboard in Windows 2000/XP.
+  example: []
+  syntax:
+    content: BrowserForward = 167
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.BrowserHome
+  commentId: F:StardewModdingAPI.SButton.BrowserHome
+  id: BrowserHome
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: BrowserHome
+  nameWithType: SButton.BrowserHome
+  fullName: StardewModdingAPI.SButton.BrowserHome
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: BrowserHome
+    path: SButton.cs
+    startLine: 141
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Browser Home button on a keyboard in Windows 2000/XP.
+  example: []
+  syntax:
+    content: BrowserHome = 172
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.BrowserRefresh
+  commentId: F:StardewModdingAPI.SButton.BrowserRefresh
+  id: BrowserRefresh
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: BrowserRefresh
+  nameWithType: SButton.BrowserRefresh
+  fullName: StardewModdingAPI.SButton.BrowserRefresh
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: BrowserRefresh
+    path: SButton.cs
+    startLine: 144
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Browser Refresh button on a keyboard in Windows 2000/XP.
+  example: []
+  syntax:
+    content: BrowserRefresh = 168
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.BrowserSearch
+  commentId: F:StardewModdingAPI.SButton.BrowserSearch
+  id: BrowserSearch
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: BrowserSearch
+  nameWithType: SButton.BrowserSearch
+  fullName: StardewModdingAPI.SButton.BrowserSearch
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: BrowserSearch
+    path: SButton.cs
+    startLine: 147
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Browser Search button on a keyboard in Windows 2000/XP.
+  example: []
+  syntax:
+    content: BrowserSearch = 170
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.BrowserStop
+  commentId: F:StardewModdingAPI.SButton.BrowserStop
+  id: BrowserStop
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: BrowserStop
+  nameWithType: SButton.BrowserStop
+  fullName: StardewModdingAPI.SButton.BrowserStop
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: BrowserStop
+    path: SButton.cs
+    startLine: 150
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Browser Stop button on a keyboard in Windows 2000/XP.
+  example: []
+  syntax:
+    content: BrowserStop = 169
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.C
+  commentId: F:StardewModdingAPI.SButton.C
+  id: C
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: C
+  nameWithType: SButton.C
+  fullName: StardewModdingAPI.SButton.C
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: C
+    path: SButton.cs
+    startLine: 153
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The C button on a keyboard.
+  example: []
+  syntax:
+    content: C = 67
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.CapsLock
+  commentId: F:StardewModdingAPI.SButton.CapsLock
+  id: CapsLock
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: CapsLock
+  nameWithType: SButton.CapsLock
+  fullName: StardewModdingAPI.SButton.CapsLock
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: CapsLock
+    path: SButton.cs
+    startLine: 156
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Caps Lock button on a keyboard.
+  example: []
+  syntax:
+    content: CapsLock = 20
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.ChatPadGreen
+  commentId: F:StardewModdingAPI.SButton.ChatPadGreen
+  id: ChatPadGreen
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: ChatPadGreen
+  nameWithType: SButton.ChatPadGreen
+  fullName: StardewModdingAPI.SButton.ChatPadGreen
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ChatPadGreen
+    path: SButton.cs
+    startLine: 159
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Green ChatPad button on a keyboard.
+  example: []
+  syntax:
+    content: ChatPadGreen = 202
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.ChatPadOrange
+  commentId: F:StardewModdingAPI.SButton.ChatPadOrange
+  id: ChatPadOrange
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: ChatPadOrange
+  nameWithType: SButton.ChatPadOrange
+  fullName: StardewModdingAPI.SButton.ChatPadOrange
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ChatPadOrange
+    path: SButton.cs
+    startLine: 162
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Orange ChatPad button on a keyboard.
+  example: []
+  syntax:
+    content: ChatPadOrange = 203
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.Crsel
+  commentId: F:StardewModdingAPI.SButton.Crsel
+  id: Crsel
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: Crsel
+  nameWithType: SButton.Crsel
+  fullName: StardewModdingAPI.SButton.Crsel
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Crsel
+    path: SButton.cs
+    startLine: 165
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The CrSel button on a keyboard.
+  example: []
+  syntax:
+    content: Crsel = 247
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.D
+  commentId: F:StardewModdingAPI.SButton.D
+  id: D
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: D
+  nameWithType: SButton.D
+  fullName: StardewModdingAPI.SButton.D
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: D
+    path: SButton.cs
+    startLine: 168
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The D button on a keyboard.
+  example: []
+  syntax:
+    content: D = 68
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.D0
+  commentId: F:StardewModdingAPI.SButton.D0
+  id: D0
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: D0
+  nameWithType: SButton.D0
+  fullName: StardewModdingAPI.SButton.D0
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: D0
+    path: SButton.cs
+    startLine: 171
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: A miscellaneous button on a keyboard; can vary by keyboard.
+  example: []
+  syntax:
+    content: D0 = 48
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.D1
+  commentId: F:StardewModdingAPI.SButton.D1
+  id: D1
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: D1
+  nameWithType: SButton.D1
+  fullName: StardewModdingAPI.SButton.D1
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: D1
+    path: SButton.cs
+    startLine: 174
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: A miscellaneous button on a keyboard; can vary by keyboard.
+  example: []
+  syntax:
+    content: D1 = 49
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.D2
+  commentId: F:StardewModdingAPI.SButton.D2
+  id: D2
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: D2
+  nameWithType: SButton.D2
+  fullName: StardewModdingAPI.SButton.D2
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: D2
+    path: SButton.cs
+    startLine: 177
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: A miscellaneous button on a keyboard; can vary by keyboard.
+  example: []
+  syntax:
+    content: D2 = 50
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.D3
+  commentId: F:StardewModdingAPI.SButton.D3
+  id: D3
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: D3
+  nameWithType: SButton.D3
+  fullName: StardewModdingAPI.SButton.D3
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: D3
+    path: SButton.cs
+    startLine: 180
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: A miscellaneous button on a keyboard; can vary by keyboard.
+  example: []
+  syntax:
+    content: D3 = 51
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.D4
+  commentId: F:StardewModdingAPI.SButton.D4
+  id: D4
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: D4
+  nameWithType: SButton.D4
+  fullName: StardewModdingAPI.SButton.D4
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: D4
+    path: SButton.cs
+    startLine: 183
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: A miscellaneous button on a keyboard; can vary by keyboard.
+  example: []
+  syntax:
+    content: D4 = 52
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.D5
+  commentId: F:StardewModdingAPI.SButton.D5
+  id: D5
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: D5
+  nameWithType: SButton.D5
+  fullName: StardewModdingAPI.SButton.D5
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: D5
+    path: SButton.cs
+    startLine: 186
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: A miscellaneous button on a keyboard; can vary by keyboard.
+  example: []
+  syntax:
+    content: D5 = 53
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.D6
+  commentId: F:StardewModdingAPI.SButton.D6
+  id: D6
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: D6
+  nameWithType: SButton.D6
+  fullName: StardewModdingAPI.SButton.D6
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: D6
+    path: SButton.cs
+    startLine: 189
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: A miscellaneous button on a keyboard; can vary by keyboard.
+  example: []
+  syntax:
+    content: D6 = 54
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.D7
+  commentId: F:StardewModdingAPI.SButton.D7
+  id: D7
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: D7
+  nameWithType: SButton.D7
+  fullName: StardewModdingAPI.SButton.D7
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: D7
+    path: SButton.cs
+    startLine: 192
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: A miscellaneous button on a keyboard; can vary by keyboard.
+  example: []
+  syntax:
+    content: D7 = 55
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.D8
+  commentId: F:StardewModdingAPI.SButton.D8
+  id: D8
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: D8
+  nameWithType: SButton.D8
+  fullName: StardewModdingAPI.SButton.D8
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: D8
+    path: SButton.cs
+    startLine: 195
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: A miscellaneous button on a keyboard; can vary by keyboard.
+  example: []
+  syntax:
+    content: D8 = 56
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.D9
+  commentId: F:StardewModdingAPI.SButton.D9
+  id: D9
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: D9
+  nameWithType: SButton.D9
+  fullName: StardewModdingAPI.SButton.D9
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: D9
+    path: SButton.cs
+    startLine: 198
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: A miscellaneous button on a keyboard; can vary by keyboard.
+  example: []
+  syntax:
+    content: D9 = 57
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.Decimal
+  commentId: F:StardewModdingAPI.SButton.Decimal
+  id: Decimal
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: Decimal
+  nameWithType: SButton.Decimal
+  fullName: StardewModdingAPI.SButton.Decimal
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Decimal
+    path: SButton.cs
+    startLine: 201
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Decimal button on a keyboard.
+  example: []
+  syntax:
+    content: Decimal = 110
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.Delete
+  commentId: F:StardewModdingAPI.SButton.Delete
+  id: Delete
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: Delete
+  nameWithType: SButton.Delete
+  fullName: StardewModdingAPI.SButton.Delete
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Delete
+    path: SButton.cs
+    startLine: 204
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Delete button on a keyboard.
+  example: []
+  syntax:
+    content: Delete = 46
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.Divide
+  commentId: F:StardewModdingAPI.SButton.Divide
+  id: Divide
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: Divide
+  nameWithType: SButton.Divide
+  fullName: StardewModdingAPI.SButton.Divide
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Divide
+    path: SButton.cs
+    startLine: 207
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Divide button on a keyboard.
+  example: []
+  syntax:
+    content: Divide = 111
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.Down
+  commentId: F:StardewModdingAPI.SButton.Down
+  id: Down
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: Down
+  nameWithType: SButton.Down
+  fullName: StardewModdingAPI.SButton.Down
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Down
+    path: SButton.cs
+    startLine: 210
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Down arrow button on a keyboard.
+  example: []
+  syntax:
+    content: Down = 40
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.E
+  commentId: F:StardewModdingAPI.SButton.E
+  id: E
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: E
+  nameWithType: SButton.E
+  fullName: StardewModdingAPI.SButton.E
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: E
+    path: SButton.cs
+    startLine: 213
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The E button on a keyboard.
+  example: []
+  syntax:
+    content: E = 69
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.End
+  commentId: F:StardewModdingAPI.SButton.End
+  id: End
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: End
+  nameWithType: SButton.End
+  fullName: StardewModdingAPI.SButton.End
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: End
+    path: SButton.cs
+    startLine: 216
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The End button on a keyboard.
+  example: []
+  syntax:
+    content: End = 35
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.Enter
+  commentId: F:StardewModdingAPI.SButton.Enter
+  id: Enter
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: Enter
+  nameWithType: SButton.Enter
+  fullName: StardewModdingAPI.SButton.Enter
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Enter
+    path: SButton.cs
+    startLine: 219
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Enter button on a keyboard.
+  example: []
+  syntax:
+    content: Enter = 13
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.EraseEof
+  commentId: F:StardewModdingAPI.SButton.EraseEof
+  id: EraseEof
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: EraseEof
+  nameWithType: SButton.EraseEof
+  fullName: StardewModdingAPI.SButton.EraseEof
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: EraseEof
+    path: SButton.cs
+    startLine: 222
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Erase EOF button on a keyboard.
+  example: []
+  syntax:
+    content: EraseEof = 249
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.Escape
+  commentId: F:StardewModdingAPI.SButton.Escape
+  id: Escape
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: Escape
+  nameWithType: SButton.Escape
+  fullName: StardewModdingAPI.SButton.Escape
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Escape
+    path: SButton.cs
+    startLine: 225
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Escape button on a keyboard.
+  example: []
+  syntax:
+    content: Escape = 27
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.Execute
+  commentId: F:StardewModdingAPI.SButton.Execute
+  id: Execute
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: Execute
+  nameWithType: SButton.Execute
+  fullName: StardewModdingAPI.SButton.Execute
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Execute
+    path: SButton.cs
+    startLine: 228
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Execute button on a keyboard.
+  example: []
+  syntax:
+    content: Execute = 43
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.Exsel
+  commentId: F:StardewModdingAPI.SButton.Exsel
+  id: Exsel
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: Exsel
+  nameWithType: SButton.Exsel
+  fullName: StardewModdingAPI.SButton.Exsel
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Exsel
+    path: SButton.cs
+    startLine: 231
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The ExSel button on a keyboard.
+  example: []
+  syntax:
+    content: Exsel = 248
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.F
+  commentId: F:StardewModdingAPI.SButton.F
+  id: F
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: F
+  nameWithType: SButton.F
+  fullName: StardewModdingAPI.SButton.F
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: F
+    path: SButton.cs
+    startLine: 234
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The F button on a keyboard.
+  example: []
+  syntax:
+    content: F = 70
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.F1
+  commentId: F:StardewModdingAPI.SButton.F1
+  id: F1
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: F1
+  nameWithType: SButton.F1
+  fullName: StardewModdingAPI.SButton.F1
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: F1
+    path: SButton.cs
+    startLine: 237
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The F1 button on a keyboard.
+  example: []
+  syntax:
+    content: F1 = 112
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.F10
+  commentId: F:StardewModdingAPI.SButton.F10
+  id: F10
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: F10
+  nameWithType: SButton.F10
+  fullName: StardewModdingAPI.SButton.F10
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: F10
+    path: SButton.cs
+    startLine: 240
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The F10 button on a keyboard.
+  example: []
+  syntax:
+    content: F10 = 121
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.F11
+  commentId: F:StardewModdingAPI.SButton.F11
+  id: F11
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: F11
+  nameWithType: SButton.F11
+  fullName: StardewModdingAPI.SButton.F11
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: F11
+    path: SButton.cs
+    startLine: 243
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The F11 button on a keyboard.
+  example: []
+  syntax:
+    content: F11 = 122
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.F12
+  commentId: F:StardewModdingAPI.SButton.F12
+  id: F12
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: F12
+  nameWithType: SButton.F12
+  fullName: StardewModdingAPI.SButton.F12
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: F12
+    path: SButton.cs
+    startLine: 246
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The F12 button on a keyboard.
+  example: []
+  syntax:
+    content: F12 = 123
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.F13
+  commentId: F:StardewModdingAPI.SButton.F13
+  id: F13
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: F13
+  nameWithType: SButton.F13
+  fullName: StardewModdingAPI.SButton.F13
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: F13
+    path: SButton.cs
+    startLine: 249
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The F13 button on a keyboard.
+  example: []
+  syntax:
+    content: F13 = 124
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.F14
+  commentId: F:StardewModdingAPI.SButton.F14
+  id: F14
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: F14
+  nameWithType: SButton.F14
+  fullName: StardewModdingAPI.SButton.F14
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: F14
+    path: SButton.cs
+    startLine: 252
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The F14 button on a keyboard.
+  example: []
+  syntax:
+    content: F14 = 125
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.F15
+  commentId: F:StardewModdingAPI.SButton.F15
+  id: F15
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: F15
+  nameWithType: SButton.F15
+  fullName: StardewModdingAPI.SButton.F15
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: F15
+    path: SButton.cs
+    startLine: 255
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The F15 button on a keyboard.
+  example: []
+  syntax:
+    content: F15 = 126
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.F16
+  commentId: F:StardewModdingAPI.SButton.F16
+  id: F16
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: F16
+  nameWithType: SButton.F16
+  fullName: StardewModdingAPI.SButton.F16
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: F16
+    path: SButton.cs
+    startLine: 258
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The F16 button on a keyboard.
+  example: []
+  syntax:
+    content: F16 = 127
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.F17
+  commentId: F:StardewModdingAPI.SButton.F17
+  id: F17
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: F17
+  nameWithType: SButton.F17
+  fullName: StardewModdingAPI.SButton.F17
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: F17
+    path: SButton.cs
+    startLine: 261
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The F17 button on a keyboard.
+  example: []
+  syntax:
+    content: F17 = 128
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.F18
+  commentId: F:StardewModdingAPI.SButton.F18
+  id: F18
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: F18
+  nameWithType: SButton.F18
+  fullName: StardewModdingAPI.SButton.F18
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: F18
+    path: SButton.cs
+    startLine: 264
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The F18 button on a keyboard.
+  example: []
+  syntax:
+    content: F18 = 129
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.F19
+  commentId: F:StardewModdingAPI.SButton.F19
+  id: F19
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: F19
+  nameWithType: SButton.F19
+  fullName: StardewModdingAPI.SButton.F19
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: F19
+    path: SButton.cs
+    startLine: 267
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The F19 button on a keyboard.
+  example: []
+  syntax:
+    content: F19 = 130
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.F2
+  commentId: F:StardewModdingAPI.SButton.F2
+  id: F2
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: F2
+  nameWithType: SButton.F2
+  fullName: StardewModdingAPI.SButton.F2
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: F2
+    path: SButton.cs
+    startLine: 270
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The F2 button on a keyboard.
+  example: []
+  syntax:
+    content: F2 = 113
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.F20
+  commentId: F:StardewModdingAPI.SButton.F20
+  id: F20
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: F20
+  nameWithType: SButton.F20
+  fullName: StardewModdingAPI.SButton.F20
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: F20
+    path: SButton.cs
+    startLine: 273
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The F20 button on a keyboard.
+  example: []
+  syntax:
+    content: F20 = 131
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.F21
+  commentId: F:StardewModdingAPI.SButton.F21
+  id: F21
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: F21
+  nameWithType: SButton.F21
+  fullName: StardewModdingAPI.SButton.F21
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: F21
+    path: SButton.cs
+    startLine: 276
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The F21 button on a keyboard.
+  example: []
+  syntax:
+    content: F21 = 132
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.F22
+  commentId: F:StardewModdingAPI.SButton.F22
+  id: F22
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: F22
+  nameWithType: SButton.F22
+  fullName: StardewModdingAPI.SButton.F22
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: F22
+    path: SButton.cs
+    startLine: 279
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The F22 button on a keyboard.
+  example: []
+  syntax:
+    content: F22 = 133
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.F23
+  commentId: F:StardewModdingAPI.SButton.F23
+  id: F23
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: F23
+  nameWithType: SButton.F23
+  fullName: StardewModdingAPI.SButton.F23
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: F23
+    path: SButton.cs
+    startLine: 282
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The F23 button on a keyboard.
+  example: []
+  syntax:
+    content: F23 = 134
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.F24
+  commentId: F:StardewModdingAPI.SButton.F24
+  id: F24
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: F24
+  nameWithType: SButton.F24
+  fullName: StardewModdingAPI.SButton.F24
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: F24
+    path: SButton.cs
+    startLine: 285
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The F24 button on a keyboard.
+  example: []
+  syntax:
+    content: F24 = 135
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.F3
+  commentId: F:StardewModdingAPI.SButton.F3
+  id: F3
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: F3
+  nameWithType: SButton.F3
+  fullName: StardewModdingAPI.SButton.F3
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: F3
+    path: SButton.cs
+    startLine: 288
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The F3 button on a keyboard.
+  example: []
+  syntax:
+    content: F3 = 114
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.F4
+  commentId: F:StardewModdingAPI.SButton.F4
+  id: F4
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: F4
+  nameWithType: SButton.F4
+  fullName: StardewModdingAPI.SButton.F4
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: F4
+    path: SButton.cs
+    startLine: 291
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The F4 button on a keyboard.
+  example: []
+  syntax:
+    content: F4 = 115
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.F5
+  commentId: F:StardewModdingAPI.SButton.F5
+  id: F5
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: F5
+  nameWithType: SButton.F5
+  fullName: StardewModdingAPI.SButton.F5
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: F5
+    path: SButton.cs
+    startLine: 294
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The F5 button on a keyboard.
+  example: []
+  syntax:
+    content: F5 = 116
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.F6
+  commentId: F:StardewModdingAPI.SButton.F6
+  id: F6
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: F6
+  nameWithType: SButton.F6
+  fullName: StardewModdingAPI.SButton.F6
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: F6
+    path: SButton.cs
+    startLine: 297
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The F6 button on a keyboard.
+  example: []
+  syntax:
+    content: F6 = 117
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.F7
+  commentId: F:StardewModdingAPI.SButton.F7
+  id: F7
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: F7
+  nameWithType: SButton.F7
+  fullName: StardewModdingAPI.SButton.F7
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: F7
+    path: SButton.cs
+    startLine: 300
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The F7 button on a keyboard.
+  example: []
+  syntax:
+    content: F7 = 118
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.F8
+  commentId: F:StardewModdingAPI.SButton.F8
+  id: F8
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: F8
+  nameWithType: SButton.F8
+  fullName: StardewModdingAPI.SButton.F8
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: F8
+    path: SButton.cs
+    startLine: 303
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The F8 button on a keyboard.
+  example: []
+  syntax:
+    content: F8 = 119
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.F9
+  commentId: F:StardewModdingAPI.SButton.F9
+  id: F9
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: F9
+  nameWithType: SButton.F9
+  fullName: StardewModdingAPI.SButton.F9
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: F9
+    path: SButton.cs
+    startLine: 306
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The F9 button on a keyboard.
+  example: []
+  syntax:
+    content: F9 = 120
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.G
+  commentId: F:StardewModdingAPI.SButton.G
+  id: G
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: G
+  nameWithType: SButton.G
+  fullName: StardewModdingAPI.SButton.G
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: G
+    path: SButton.cs
+    startLine: 309
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The G button on a keyboard.
+  example: []
+  syntax:
+    content: G = 71
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.H
+  commentId: F:StardewModdingAPI.SButton.H
+  id: H
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: H
+  nameWithType: SButton.H
+  fullName: StardewModdingAPI.SButton.H
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: H
+    path: SButton.cs
+    startLine: 312
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The H button on a keyboard.
+  example: []
+  syntax:
+    content: H = 72
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.Help
+  commentId: F:StardewModdingAPI.SButton.Help
+  id: Help
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: Help
+  nameWithType: SButton.Help
+  fullName: StardewModdingAPI.SButton.Help
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Help
+    path: SButton.cs
+    startLine: 315
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Help button on a keyboard.
+  example: []
+  syntax:
+    content: Help = 47
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.Home
+  commentId: F:StardewModdingAPI.SButton.Home
+  id: Home
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: Home
+  nameWithType: SButton.Home
+  fullName: StardewModdingAPI.SButton.Home
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Home
+    path: SButton.cs
+    startLine: 318
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Home button on a keyboard.
+  example: []
+  syntax:
+    content: Home = 36
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.I
+  commentId: F:StardewModdingAPI.SButton.I
+  id: I
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: I
+  nameWithType: SButton.I
+  fullName: StardewModdingAPI.SButton.I
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: I
+    path: SButton.cs
+    startLine: 321
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The I button on a keyboard.
+  example: []
+  syntax:
+    content: I = 73
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.ImeConvert
+  commentId: F:StardewModdingAPI.SButton.ImeConvert
+  id: ImeConvert
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: ImeConvert
+  nameWithType: SButton.ImeConvert
+  fullName: StardewModdingAPI.SButton.ImeConvert
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ImeConvert
+    path: SButton.cs
+    startLine: 324
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The IME Convert button on a keyboard.
+  example: []
+  syntax:
+    content: ImeConvert = 28
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.ImeNoConvert
+  commentId: F:StardewModdingAPI.SButton.ImeNoConvert
+  id: ImeNoConvert
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: ImeNoConvert
+  nameWithType: SButton.ImeNoConvert
+  fullName: StardewModdingAPI.SButton.ImeNoConvert
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ImeNoConvert
+    path: SButton.cs
+    startLine: 327
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The IME NoConvert button on a keyboard.
+  example: []
+  syntax:
+    content: ImeNoConvert = 29
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.Insert
+  commentId: F:StardewModdingAPI.SButton.Insert
+  id: Insert
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: Insert
+  nameWithType: SButton.Insert
+  fullName: StardewModdingAPI.SButton.Insert
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Insert
+    path: SButton.cs
+    startLine: 330
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The INS button on a keyboard.
+  example: []
+  syntax:
+    content: Insert = 45
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.J
+  commentId: F:StardewModdingAPI.SButton.J
+  id: J
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: J
+  nameWithType: SButton.J
+  fullName: StardewModdingAPI.SButton.J
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: J
+    path: SButton.cs
+    startLine: 333
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The J button on a keyboard.
+  example: []
+  syntax:
+    content: J = 74
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.K
+  commentId: F:StardewModdingAPI.SButton.K
+  id: K
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: K
+  nameWithType: SButton.K
+  fullName: StardewModdingAPI.SButton.K
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: K
+    path: SButton.cs
+    startLine: 336
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The K button on a keyboard.
+  example: []
+  syntax:
+    content: K = 75
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.Kana
+  commentId: F:StardewModdingAPI.SButton.Kana
+  id: Kana
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: Kana
+  nameWithType: SButton.Kana
+  fullName: StardewModdingAPI.SButton.Kana
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Kana
+    path: SButton.cs
+    startLine: 339
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Kana button on a Japanese keyboard.
+  example: []
+  syntax:
+    content: Kana = 21
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.Kanji
+  commentId: F:StardewModdingAPI.SButton.Kanji
+  id: Kanji
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: Kanji
+  nameWithType: SButton.Kanji
+  fullName: StardewModdingAPI.SButton.Kanji
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Kanji
+    path: SButton.cs
+    startLine: 342
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Kanji button on a Japanese keyboard.
+  example: []
+  syntax:
+    content: Kanji = 25
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.L
+  commentId: F:StardewModdingAPI.SButton.L
+  id: L
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: L
+  nameWithType: SButton.L
+  fullName: StardewModdingAPI.SButton.L
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: L
+    path: SButton.cs
+    startLine: 345
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The L button on a keyboard.
+  example: []
+  syntax:
+    content: L = 76
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.LaunchApplication1
+  commentId: F:StardewModdingAPI.SButton.LaunchApplication1
+  id: LaunchApplication1
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: LaunchApplication1
+  nameWithType: SButton.LaunchApplication1
+  fullName: StardewModdingAPI.SButton.LaunchApplication1
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: LaunchApplication1
+    path: SButton.cs
+    startLine: 348
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Start Applications 1 button on a keyboard in Windows 2000/XP.
+  example: []
+  syntax:
+    content: LaunchApplication1 = 182
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.LaunchApplication2
+  commentId: F:StardewModdingAPI.SButton.LaunchApplication2
+  id: LaunchApplication2
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: LaunchApplication2
+  nameWithType: SButton.LaunchApplication2
+  fullName: StardewModdingAPI.SButton.LaunchApplication2
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: LaunchApplication2
+    path: SButton.cs
+    startLine: 351
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Start Applications 2 button on a keyboard in Windows 2000/XP.
+  example: []
+  syntax:
+    content: LaunchApplication2 = 183
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.LaunchMail
+  commentId: F:StardewModdingAPI.SButton.LaunchMail
+  id: LaunchMail
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: LaunchMail
+  nameWithType: SButton.LaunchMail
+  fullName: StardewModdingAPI.SButton.LaunchMail
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: LaunchMail
+    path: SButton.cs
+    startLine: 354
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Start Mail button on a keyboard in Windows 2000/XP.
+  example: []
+  syntax:
+    content: LaunchMail = 180
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.Left
+  commentId: F:StardewModdingAPI.SButton.Left
+  id: Left
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: Left
+  nameWithType: SButton.Left
+  fullName: StardewModdingAPI.SButton.Left
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Left
+    path: SButton.cs
+    startLine: 357
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Left arrow button on a keyboard.
+  example: []
+  syntax:
+    content: Left = 37
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.LeftAlt
+  commentId: F:StardewModdingAPI.SButton.LeftAlt
+  id: LeftAlt
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: LeftAlt
+  nameWithType: SButton.LeftAlt
+  fullName: StardewModdingAPI.SButton.LeftAlt
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: LeftAlt
+    path: SButton.cs
+    startLine: 360
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Left Alt button on a keyboard.
+  example: []
+  syntax:
+    content: LeftAlt = 164
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.LeftControl
+  commentId: F:StardewModdingAPI.SButton.LeftControl
+  id: LeftControl
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: LeftControl
+  nameWithType: SButton.LeftControl
+  fullName: StardewModdingAPI.SButton.LeftControl
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: LeftControl
+    path: SButton.cs
+    startLine: 363
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Left Control button on a keyboard.
+  example: []
+  syntax:
+    content: LeftControl = 162
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.LeftShift
+  commentId: F:StardewModdingAPI.SButton.LeftShift
+  id: LeftShift
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: LeftShift
+  nameWithType: SButton.LeftShift
+  fullName: StardewModdingAPI.SButton.LeftShift
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: LeftShift
+    path: SButton.cs
+    startLine: 366
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Left Shift button on a keyboard.
+  example: []
+  syntax:
+    content: LeftShift = 160
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.LeftWindows
+  commentId: F:StardewModdingAPI.SButton.LeftWindows
+  id: LeftWindows
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: LeftWindows
+  nameWithType: SButton.LeftWindows
+  fullName: StardewModdingAPI.SButton.LeftWindows
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: LeftWindows
+    path: SButton.cs
+    startLine: 369
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Left Windows button on a keyboard.
+  example: []
+  syntax:
+    content: LeftWindows = 91
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.M
+  commentId: F:StardewModdingAPI.SButton.M
+  id: M
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: M
+  nameWithType: SButton.M
+  fullName: StardewModdingAPI.SButton.M
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: M
+    path: SButton.cs
+    startLine: 372
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The M button on a keyboard.
+  example: []
+  syntax:
+    content: M = 77
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.MediaNextTrack
+  commentId: F:StardewModdingAPI.SButton.MediaNextTrack
+  id: MediaNextTrack
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: MediaNextTrack
+  nameWithType: SButton.MediaNextTrack
+  fullName: StardewModdingAPI.SButton.MediaNextTrack
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: MediaNextTrack
+    path: SButton.cs
+    startLine: 375
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The MediaNextTrack button on a keyboard in Windows 2000/XP.
+  example: []
+  syntax:
+    content: MediaNextTrack = 176
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.MediaPlayPause
+  commentId: F:StardewModdingAPI.SButton.MediaPlayPause
+  id: MediaPlayPause
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: MediaPlayPause
+  nameWithType: SButton.MediaPlayPause
+  fullName: StardewModdingAPI.SButton.MediaPlayPause
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: MediaPlayPause
+    path: SButton.cs
+    startLine: 378
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The MediaPlayPause button on a keyboard in Windows 2000/XP.
+  example: []
+  syntax:
+    content: MediaPlayPause = 179
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.MediaPreviousTrack
+  commentId: F:StardewModdingAPI.SButton.MediaPreviousTrack
+  id: MediaPreviousTrack
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: MediaPreviousTrack
+  nameWithType: SButton.MediaPreviousTrack
+  fullName: StardewModdingAPI.SButton.MediaPreviousTrack
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: MediaPreviousTrack
+    path: SButton.cs
+    startLine: 381
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The MediaPreviousTrack button on a keyboard in Windows 2000/XP.
+  example: []
+  syntax:
+    content: MediaPreviousTrack = 177
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.MediaStop
+  commentId: F:StardewModdingAPI.SButton.MediaStop
+  id: MediaStop
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: MediaStop
+  nameWithType: SButton.MediaStop
+  fullName: StardewModdingAPI.SButton.MediaStop
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: MediaStop
+    path: SButton.cs
+    startLine: 384
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The MediaStop button on a keyboard in Windows 2000/XP.
+  example: []
+  syntax:
+    content: MediaStop = 178
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.Multiply
+  commentId: F:StardewModdingAPI.SButton.Multiply
+  id: Multiply
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: Multiply
+  nameWithType: SButton.Multiply
+  fullName: StardewModdingAPI.SButton.Multiply
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Multiply
+    path: SButton.cs
+    startLine: 387
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Multiply button on a keyboard.
+  example: []
+  syntax:
+    content: Multiply = 106
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.N
+  commentId: F:StardewModdingAPI.SButton.N
+  id: N
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: N
+  nameWithType: SButton.N
+  fullName: StardewModdingAPI.SButton.N
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: N
+    path: SButton.cs
+    startLine: 390
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The N button on a keyboard.
+  example: []
+  syntax:
+    content: N = 78
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.NumLock
+  commentId: F:StardewModdingAPI.SButton.NumLock
+  id: NumLock
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: NumLock
+  nameWithType: SButton.NumLock
+  fullName: StardewModdingAPI.SButton.NumLock
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: NumLock
+    path: SButton.cs
+    startLine: 393
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Num Lock button on a keyboard.
+  example: []
+  syntax:
+    content: NumLock = 144
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.NumPad0
+  commentId: F:StardewModdingAPI.SButton.NumPad0
+  id: NumPad0
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: NumPad0
+  nameWithType: SButton.NumPad0
+  fullName: StardewModdingAPI.SButton.NumPad0
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: NumPad0
+    path: SButton.cs
+    startLine: 396
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Numeric keypad 0 button on a keyboard.
+  example: []
+  syntax:
+    content: NumPad0 = 96
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.NumPad1
+  commentId: F:StardewModdingAPI.SButton.NumPad1
+  id: NumPad1
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: NumPad1
+  nameWithType: SButton.NumPad1
+  fullName: StardewModdingAPI.SButton.NumPad1
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: NumPad1
+    path: SButton.cs
+    startLine: 399
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Numeric keypad 1 button on a keyboard.
+  example: []
+  syntax:
+    content: NumPad1 = 97
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.NumPad2
+  commentId: F:StardewModdingAPI.SButton.NumPad2
+  id: NumPad2
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: NumPad2
+  nameWithType: SButton.NumPad2
+  fullName: StardewModdingAPI.SButton.NumPad2
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: NumPad2
+    path: SButton.cs
+    startLine: 402
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Numeric keypad 2 button on a keyboard.
+  example: []
+  syntax:
+    content: NumPad2 = 98
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.NumPad3
+  commentId: F:StardewModdingAPI.SButton.NumPad3
+  id: NumPad3
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: NumPad3
+  nameWithType: SButton.NumPad3
+  fullName: StardewModdingAPI.SButton.NumPad3
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: NumPad3
+    path: SButton.cs
+    startLine: 405
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Numeric keypad 3 button on a keyboard.
+  example: []
+  syntax:
+    content: NumPad3 = 99
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.NumPad4
+  commentId: F:StardewModdingAPI.SButton.NumPad4
+  id: NumPad4
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: NumPad4
+  nameWithType: SButton.NumPad4
+  fullName: StardewModdingAPI.SButton.NumPad4
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: NumPad4
+    path: SButton.cs
+    startLine: 408
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Numeric keypad 4 button on a keyboard.
+  example: []
+  syntax:
+    content: NumPad4 = 100
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.NumPad5
+  commentId: F:StardewModdingAPI.SButton.NumPad5
+  id: NumPad5
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: NumPad5
+  nameWithType: SButton.NumPad5
+  fullName: StardewModdingAPI.SButton.NumPad5
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: NumPad5
+    path: SButton.cs
+    startLine: 411
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Numeric keypad 5 button on a keyboard.
+  example: []
+  syntax:
+    content: NumPad5 = 101
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.NumPad6
+  commentId: F:StardewModdingAPI.SButton.NumPad6
+  id: NumPad6
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: NumPad6
+  nameWithType: SButton.NumPad6
+  fullName: StardewModdingAPI.SButton.NumPad6
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: NumPad6
+    path: SButton.cs
+    startLine: 414
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Numeric keypad 6 button on a keyboard.
+  example: []
+  syntax:
+    content: NumPad6 = 102
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.NumPad7
+  commentId: F:StardewModdingAPI.SButton.NumPad7
+  id: NumPad7
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: NumPad7
+  nameWithType: SButton.NumPad7
+  fullName: StardewModdingAPI.SButton.NumPad7
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: NumPad7
+    path: SButton.cs
+    startLine: 417
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Numeric keypad 7 button on a keyboard.
+  example: []
+  syntax:
+    content: NumPad7 = 103
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.NumPad8
+  commentId: F:StardewModdingAPI.SButton.NumPad8
+  id: NumPad8
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: NumPad8
+  nameWithType: SButton.NumPad8
+  fullName: StardewModdingAPI.SButton.NumPad8
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: NumPad8
+    path: SButton.cs
+    startLine: 420
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Numeric keypad 8 button on a keyboard.
+  example: []
+  syntax:
+    content: NumPad8 = 104
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.NumPad9
+  commentId: F:StardewModdingAPI.SButton.NumPad9
+  id: NumPad9
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: NumPad9
+  nameWithType: SButton.NumPad9
+  fullName: StardewModdingAPI.SButton.NumPad9
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: NumPad9
+    path: SButton.cs
+    startLine: 423
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Numeric keypad 9 button on a keyboard.
+  example: []
+  syntax:
+    content: NumPad9 = 105
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.O
+  commentId: F:StardewModdingAPI.SButton.O
+  id: O
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: O
+  nameWithType: SButton.O
+  fullName: StardewModdingAPI.SButton.O
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: O
+    path: SButton.cs
+    startLine: 426
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The O button on a keyboard.
+  example: []
+  syntax:
+    content: O = 79
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.Oem8
+  commentId: F:StardewModdingAPI.SButton.Oem8
+  id: Oem8
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: Oem8
+  nameWithType: SButton.Oem8
+  fullName: StardewModdingAPI.SButton.Oem8
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Oem8
+    path: SButton.cs
+    startLine: 429
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: A miscellaneous button on a keyboard; can vary by keyboard.
+  example: []
+  syntax:
+    content: Oem8 = 223
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.OemAuto
+  commentId: F:StardewModdingAPI.SButton.OemAuto
+  id: OemAuto
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: OemAuto
+  nameWithType: SButton.OemAuto
+  fullName: StardewModdingAPI.SButton.OemAuto
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: OemAuto
+    path: SButton.cs
+    startLine: 432
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The OEM Auto button on a keyboard.
+  example: []
+  syntax:
+    content: OemAuto = 243
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.OemBackslash
+  commentId: F:StardewModdingAPI.SButton.OemBackslash
+  id: OemBackslash
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: OemBackslash
+  nameWithType: SButton.OemBackslash
+  fullName: StardewModdingAPI.SButton.OemBackslash
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: OemBackslash
+    path: SButton.cs
+    startLine: 435
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The OEM Angle Bracket or Backslash button on the RT 102 keyboard in Windows 2000/XP.
+  example: []
+  syntax:
+    content: OemBackslash = 226
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.OemClear
+  commentId: F:StardewModdingAPI.SButton.OemClear
+  id: OemClear
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: OemClear
+  nameWithType: SButton.OemClear
+  fullName: StardewModdingAPI.SButton.OemClear
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: OemClear
+    path: SButton.cs
+    startLine: 438
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Clear button on a keyboard.
+  example: []
+  syntax:
+    content: OemClear = 254
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.OemCloseBrackets
+  commentId: F:StardewModdingAPI.SButton.OemCloseBrackets
+  id: OemCloseBrackets
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: OemCloseBrackets
+  nameWithType: SButton.OemCloseBrackets
+  fullName: StardewModdingAPI.SButton.OemCloseBrackets
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: OemCloseBrackets
+    path: SButton.cs
+    startLine: 441
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The OEM Close Bracket button on a US standard keyboard in Windows 2000/XP.
+  example: []
+  syntax:
+    content: OemCloseBrackets = 221
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.OemComma
+  commentId: F:StardewModdingAPI.SButton.OemComma
+  id: OemComma
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: OemComma
+  nameWithType: SButton.OemComma
+  fullName: StardewModdingAPI.SButton.OemComma
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: OemComma
+    path: SButton.cs
+    startLine: 444
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The &apos;,&apos; button on a keyboard in any country/region in Windows 2000/XP.
+  example: []
+  syntax:
+    content: OemComma = 188
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.OemCopy
+  commentId: F:StardewModdingAPI.SButton.OemCopy
+  id: OemCopy
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: OemCopy
+  nameWithType: SButton.OemCopy
+  fullName: StardewModdingAPI.SButton.OemCopy
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: OemCopy
+    path: SButton.cs
+    startLine: 447
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The OEM Copy button on a keyboard.
+  example: []
+  syntax:
+    content: OemCopy = 242
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.OemEnlW
+  commentId: F:StardewModdingAPI.SButton.OemEnlW
+  id: OemEnlW
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: OemEnlW
+  nameWithType: SButton.OemEnlW
+  fullName: StardewModdingAPI.SButton.OemEnlW
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: OemEnlW
+    path: SButton.cs
+    startLine: 450
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The OEM Enlarge Window button on a keyboard.
+  example: []
+  syntax:
+    content: OemEnlW = 244
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.OemMinus
+  commentId: F:StardewModdingAPI.SButton.OemMinus
+  id: OemMinus
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: OemMinus
+  nameWithType: SButton.OemMinus
+  fullName: StardewModdingAPI.SButton.OemMinus
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: OemMinus
+    path: SButton.cs
+    startLine: 453
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The &apos;-&apos; button on a keyboard in any country/region in Windows 2000/XP.
+  example: []
+  syntax:
+    content: OemMinus = 189
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.OemOpenBrackets
+  commentId: F:StardewModdingAPI.SButton.OemOpenBrackets
+  id: OemOpenBrackets
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: OemOpenBrackets
+  nameWithType: SButton.OemOpenBrackets
+  fullName: StardewModdingAPI.SButton.OemOpenBrackets
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: OemOpenBrackets
+    path: SButton.cs
+    startLine: 456
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The OEM Open Bracket button on a US standard keyboard in Windows 2000/XP.
+  example: []
+  syntax:
+    content: OemOpenBrackets = 219
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.OemPeriod
+  commentId: F:StardewModdingAPI.SButton.OemPeriod
+  id: OemPeriod
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: OemPeriod
+  nameWithType: SButton.OemPeriod
+  fullName: StardewModdingAPI.SButton.OemPeriod
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: OemPeriod
+    path: SButton.cs
+    startLine: 459
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The &apos;.&apos; button on a keyboard in any country/region.
+  example: []
+  syntax:
+    content: OemPeriod = 190
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.OemPipe
+  commentId: F:StardewModdingAPI.SButton.OemPipe
+  id: OemPipe
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: OemPipe
+  nameWithType: SButton.OemPipe
+  fullName: StardewModdingAPI.SButton.OemPipe
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: OemPipe
+    path: SButton.cs
+    startLine: 462
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The OEM Pipe button on a US standard keyboard.
+  example: []
+  syntax:
+    content: OemPipe = 220
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.OemPlus
+  commentId: F:StardewModdingAPI.SButton.OemPlus
+  id: OemPlus
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: OemPlus
+  nameWithType: SButton.OemPlus
+  fullName: StardewModdingAPI.SButton.OemPlus
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: OemPlus
+    path: SButton.cs
+    startLine: 465
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The &apos;+&apos; button on a keyboard in Windows 2000/XP.
+  example: []
+  syntax:
+    content: OemPlus = 187
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.OemQuestion
+  commentId: F:StardewModdingAPI.SButton.OemQuestion
+  id: OemQuestion
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: OemQuestion
+  nameWithType: SButton.OemQuestion
+  fullName: StardewModdingAPI.SButton.OemQuestion
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: OemQuestion
+    path: SButton.cs
+    startLine: 468
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The OEM Question Mark button on a US standard keyboard.
+  example: []
+  syntax:
+    content: OemQuestion = 191
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.OemQuotes
+  commentId: F:StardewModdingAPI.SButton.OemQuotes
+  id: OemQuotes
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: OemQuotes
+  nameWithType: SButton.OemQuotes
+  fullName: StardewModdingAPI.SButton.OemQuotes
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: OemQuotes
+    path: SButton.cs
+    startLine: 471
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The OEM Single/Double Quote button on a US standard keyboard.
+  example: []
+  syntax:
+    content: OemQuotes = 222
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.OemSemicolon
+  commentId: F:StardewModdingAPI.SButton.OemSemicolon
+  id: OemSemicolon
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: OemSemicolon
+  nameWithType: SButton.OemSemicolon
+  fullName: StardewModdingAPI.SButton.OemSemicolon
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: OemSemicolon
+    path: SButton.cs
+    startLine: 474
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The OEM Semicolon button on a US standard keyboard.
+  example: []
+  syntax:
+    content: OemSemicolon = 186
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.OemTilde
+  commentId: F:StardewModdingAPI.SButton.OemTilde
+  id: OemTilde
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: OemTilde
+  nameWithType: SButton.OemTilde
+  fullName: StardewModdingAPI.SButton.OemTilde
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: OemTilde
+    path: SButton.cs
+    startLine: 477
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The OEM Tilde button on a US standard keyboard.
+  example: []
+  syntax:
+    content: OemTilde = 192
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.P
+  commentId: F:StardewModdingAPI.SButton.P
+  id: P
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: P
+  nameWithType: SButton.P
+  fullName: StardewModdingAPI.SButton.P
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: P
+    path: SButton.cs
+    startLine: 480
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The P button on a keyboard.
+  example: []
+  syntax:
+    content: P = 80
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.Pa1
+  commentId: F:StardewModdingAPI.SButton.Pa1
+  id: Pa1
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: Pa1
+  nameWithType: SButton.Pa1
+  fullName: StardewModdingAPI.SButton.Pa1
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Pa1
+    path: SButton.cs
+    startLine: 483
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The PA1 button on a keyboard.
+  example: []
+  syntax:
+    content: Pa1 = 253
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.PageDown
+  commentId: F:StardewModdingAPI.SButton.PageDown
+  id: PageDown
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: PageDown
+  nameWithType: SButton.PageDown
+  fullName: StardewModdingAPI.SButton.PageDown
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: PageDown
+    path: SButton.cs
+    startLine: 486
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Page Down button on a keyboard.
+  example: []
+  syntax:
+    content: PageDown = 34
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.PageUp
+  commentId: F:StardewModdingAPI.SButton.PageUp
+  id: PageUp
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: PageUp
+  nameWithType: SButton.PageUp
+  fullName: StardewModdingAPI.SButton.PageUp
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: PageUp
+    path: SButton.cs
+    startLine: 489
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Page Up button on a keyboard.
+  example: []
+  syntax:
+    content: PageUp = 33
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.Pause
+  commentId: F:StardewModdingAPI.SButton.Pause
+  id: Pause
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: Pause
+  nameWithType: SButton.Pause
+  fullName: StardewModdingAPI.SButton.Pause
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Pause
+    path: SButton.cs
+    startLine: 492
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Pause button on a keyboard.
+  example: []
+  syntax:
+    content: Pause = 19
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.Play
+  commentId: F:StardewModdingAPI.SButton.Play
+  id: Play
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: Play
+  nameWithType: SButton.Play
+  fullName: StardewModdingAPI.SButton.Play
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Play
+    path: SButton.cs
+    startLine: 495
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Play button on a keyboard.
+  example: []
+  syntax:
+    content: Play = 250
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.Print
+  commentId: F:StardewModdingAPI.SButton.Print
+  id: Print
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: Print
+  nameWithType: SButton.Print
+  fullName: StardewModdingAPI.SButton.Print
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Print
+    path: SButton.cs
+    startLine: 498
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Print button on a keyboard.
+  example: []
+  syntax:
+    content: Print = 42
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.PrintScreen
+  commentId: F:StardewModdingAPI.SButton.PrintScreen
+  id: PrintScreen
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: PrintScreen
+  nameWithType: SButton.PrintScreen
+  fullName: StardewModdingAPI.SButton.PrintScreen
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: PrintScreen
+    path: SButton.cs
+    startLine: 501
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Print Screen button on a keyboard.
+  example: []
+  syntax:
+    content: PrintScreen = 44
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.ProcessKey
+  commentId: F:StardewModdingAPI.SButton.ProcessKey
+  id: ProcessKey
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: ProcessKey
+  nameWithType: SButton.ProcessKey
+  fullName: StardewModdingAPI.SButton.ProcessKey
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ProcessKey
+    path: SButton.cs
+    startLine: 504
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The IME Process button on a keyboard in Windows 95/98/ME/NT 4.0/2000/XP.
+  example: []
+  syntax:
+    content: ProcessKey = 229
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.Q
+  commentId: F:StardewModdingAPI.SButton.Q
+  id: Q
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: Q
+  nameWithType: SButton.Q
+  fullName: StardewModdingAPI.SButton.Q
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Q
+    path: SButton.cs
+    startLine: 507
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Q button on a keyboard.
+  example: []
+  syntax:
+    content: Q = 81
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.R
+  commentId: F:StardewModdingAPI.SButton.R
+  id: R
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: R
+  nameWithType: SButton.R
+  fullName: StardewModdingAPI.SButton.R
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: R
+    path: SButton.cs
+    startLine: 510
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The R button on a keyboard.
+  example: []
+  syntax:
+    content: R = 82
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.Right
+  commentId: F:StardewModdingAPI.SButton.Right
+  id: Right
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: Right
+  nameWithType: SButton.Right
+  fullName: StardewModdingAPI.SButton.Right
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Right
+    path: SButton.cs
+    startLine: 513
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Right Arrow button on a keyboard.
+  example: []
+  syntax:
+    content: Right = 39
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.RightAlt
+  commentId: F:StardewModdingAPI.SButton.RightAlt
+  id: RightAlt
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: RightAlt
+  nameWithType: SButton.RightAlt
+  fullName: StardewModdingAPI.SButton.RightAlt
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: RightAlt
+    path: SButton.cs
+    startLine: 516
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Right Alt button on a keyboard.
+  example: []
+  syntax:
+    content: RightAlt = 165
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.RightControl
+  commentId: F:StardewModdingAPI.SButton.RightControl
+  id: RightControl
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: RightControl
+  nameWithType: SButton.RightControl
+  fullName: StardewModdingAPI.SButton.RightControl
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: RightControl
+    path: SButton.cs
+    startLine: 519
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Right Control button on a keyboard.
+  example: []
+  syntax:
+    content: RightControl = 163
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.RightShift
+  commentId: F:StardewModdingAPI.SButton.RightShift
+  id: RightShift
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: RightShift
+  nameWithType: SButton.RightShift
+  fullName: StardewModdingAPI.SButton.RightShift
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: RightShift
+    path: SButton.cs
+    startLine: 522
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Right Shift button on a keyboard.
+  example: []
+  syntax:
+    content: RightShift = 161
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.RightWindows
+  commentId: F:StardewModdingAPI.SButton.RightWindows
+  id: RightWindows
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: RightWindows
+  nameWithType: SButton.RightWindows
+  fullName: StardewModdingAPI.SButton.RightWindows
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: RightWindows
+    path: SButton.cs
+    startLine: 525
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Right Windows button on a keyboard.
+  example: []
+  syntax:
+    content: RightWindows = 92
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.S
+  commentId: F:StardewModdingAPI.SButton.S
+  id: S
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: S
+  nameWithType: SButton.S
+  fullName: StardewModdingAPI.SButton.S
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: S
+    path: SButton.cs
+    startLine: 528
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The S button on a keyboard.
+  example: []
+  syntax:
+    content: S = 83
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.Scroll
+  commentId: F:StardewModdingAPI.SButton.Scroll
+  id: Scroll
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: Scroll
+  nameWithType: SButton.Scroll
+  fullName: StardewModdingAPI.SButton.Scroll
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Scroll
+    path: SButton.cs
+    startLine: 531
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Scroll Lock button on a keyboard.
+  example: []
+  syntax:
+    content: Scroll = 145
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.Select
+  commentId: F:StardewModdingAPI.SButton.Select
+  id: Select
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: Select
+  nameWithType: SButton.Select
+  fullName: StardewModdingAPI.SButton.Select
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Select
+    path: SButton.cs
+    startLine: 534
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Select button on a keyboard.
+  example: []
+  syntax:
+    content: Select = 41
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.SelectMedia
+  commentId: F:StardewModdingAPI.SButton.SelectMedia
+  id: SelectMedia
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: SelectMedia
+  nameWithType: SButton.SelectMedia
+  fullName: StardewModdingAPI.SButton.SelectMedia
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: SelectMedia
+    path: SButton.cs
+    startLine: 537
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Select Media button on a keyboard in Windows 2000/XP.
+  example: []
+  syntax:
+    content: SelectMedia = 181
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.Separator
+  commentId: F:StardewModdingAPI.SButton.Separator
+  id: Separator
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: Separator
+  nameWithType: SButton.Separator
+  fullName: StardewModdingAPI.SButton.Separator
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Separator
+    path: SButton.cs
+    startLine: 540
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Separator button on a keyboard.
+  example: []
+  syntax:
+    content: Separator = 108
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.Sleep
+  commentId: F:StardewModdingAPI.SButton.Sleep
+  id: Sleep
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: Sleep
+  nameWithType: SButton.Sleep
+  fullName: StardewModdingAPI.SButton.Sleep
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Sleep
+    path: SButton.cs
+    startLine: 543
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Computer Sleep button on a keyboard.
+  example: []
+  syntax:
+    content: Sleep = 95
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.Space
+  commentId: F:StardewModdingAPI.SButton.Space
+  id: Space
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: Space
+  nameWithType: SButton.Space
+  fullName: StardewModdingAPI.SButton.Space
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Space
+    path: SButton.cs
+    startLine: 546
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Space bar on a keyboard.
+  example: []
+  syntax:
+    content: Space = 32
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.Subtract
+  commentId: F:StardewModdingAPI.SButton.Subtract
+  id: Subtract
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: Subtract
+  nameWithType: SButton.Subtract
+  fullName: StardewModdingAPI.SButton.Subtract
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Subtract
+    path: SButton.cs
+    startLine: 549
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Subtract button on a keyboard.
+  example: []
+  syntax:
+    content: Subtract = 109
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.T
+  commentId: F:StardewModdingAPI.SButton.T
+  id: T
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: T
+  nameWithType: SButton.T
+  fullName: StardewModdingAPI.SButton.T
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: T
+    path: SButton.cs
+    startLine: 552
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The T button on a keyboard.
+  example: []
+  syntax:
+    content: T = 84
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.Tab
+  commentId: F:StardewModdingAPI.SButton.Tab
+  id: Tab
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: Tab
+  nameWithType: SButton.Tab
+  fullName: StardewModdingAPI.SButton.Tab
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Tab
+    path: SButton.cs
+    startLine: 555
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Tab button on a keyboard.
+  example: []
+  syntax:
+    content: Tab = 9
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.U
+  commentId: F:StardewModdingAPI.SButton.U
+  id: U
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: U
+  nameWithType: SButton.U
+  fullName: StardewModdingAPI.SButton.U
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: U
+    path: SButton.cs
+    startLine: 558
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The U button on a keyboard.
+  example: []
+  syntax:
+    content: U = 85
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.Up
+  commentId: F:StardewModdingAPI.SButton.Up
+  id: Up
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: Up
+  nameWithType: SButton.Up
+  fullName: StardewModdingAPI.SButton.Up
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Up
+    path: SButton.cs
+    startLine: 561
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Up Arrow button on a keyboard.
+  example: []
+  syntax:
+    content: Up = 38
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.V
+  commentId: F:StardewModdingAPI.SButton.V
+  id: V
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: V
+  nameWithType: SButton.V
+  fullName: StardewModdingAPI.SButton.V
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: V
+    path: SButton.cs
+    startLine: 564
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The V button on a keyboard.
+  example: []
+  syntax:
+    content: V = 86
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.VolumeDown
+  commentId: F:StardewModdingAPI.SButton.VolumeDown
+  id: VolumeDown
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: VolumeDown
+  nameWithType: SButton.VolumeDown
+  fullName: StardewModdingAPI.SButton.VolumeDown
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: VolumeDown
+    path: SButton.cs
+    startLine: 567
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Volume Down button on a keyboard in Windows 2000/XP.
+  example: []
+  syntax:
+    content: VolumeDown = 174
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.VolumeMute
+  commentId: F:StardewModdingAPI.SButton.VolumeMute
+  id: VolumeMute
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: VolumeMute
+  nameWithType: SButton.VolumeMute
+  fullName: StardewModdingAPI.SButton.VolumeMute
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: VolumeMute
+    path: SButton.cs
+    startLine: 570
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Volume Mute button on a keyboard in Windows 2000/XP.
+  example: []
+  syntax:
+    content: VolumeMute = 173
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.VolumeUp
+  commentId: F:StardewModdingAPI.SButton.VolumeUp
+  id: VolumeUp
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: VolumeUp
+  nameWithType: SButton.VolumeUp
+  fullName: StardewModdingAPI.SButton.VolumeUp
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: VolumeUp
+    path: SButton.cs
+    startLine: 573
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Volume Up button on a keyboard in Windows 2000/XP.
+  example: []
+  syntax:
+    content: VolumeUp = 175
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.W
+  commentId: F:StardewModdingAPI.SButton.W
+  id: W
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: W
+  nameWithType: SButton.W
+  fullName: StardewModdingAPI.SButton.W
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: W
+    path: SButton.cs
+    startLine: 576
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The W button on a keyboard.
+  example: []
+  syntax:
+    content: W = 87
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.X
+  commentId: F:StardewModdingAPI.SButton.X
+  id: X
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: X
+  nameWithType: SButton.X
+  fullName: StardewModdingAPI.SButton.X
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: X
+    path: SButton.cs
+    startLine: 579
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The X button on a keyboard.
+  example: []
+  syntax:
+    content: X = 88
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.Y
+  commentId: F:StardewModdingAPI.SButton.Y
+  id: Y
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: Y
+  nameWithType: SButton.Y
+  fullName: StardewModdingAPI.SButton.Y
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Y
+    path: SButton.cs
+    startLine: 582
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Y button on a keyboard.
+  example: []
+  syntax:
+    content: Y = 89
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.Z
+  commentId: F:StardewModdingAPI.SButton.Z
+  id: Z
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: Z
+  nameWithType: SButton.Z
+  fullName: StardewModdingAPI.SButton.Z
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Z
+    path: SButton.cs
+    startLine: 585
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Z button on a keyboard.
+  example: []
+  syntax:
+    content: Z = 90
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.SButton.Zoom
+  commentId: F:StardewModdingAPI.SButton.Zoom
+  id: Zoom
+  parent: StardewModdingAPI.SButton
+  langs:
+  - csharp
+  - vb
+  name: Zoom
+  nameWithType: SButton.Zoom
+  fullName: StardewModdingAPI.SButton.Zoom
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Zoom
+    path: SButton.cs
+    startLine: 588
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Zoom button on a keyboard.
+  example: []
+  syntax:
+    content: Zoom = 251
+    return:
+      type: StardewModdingAPI.SButton
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+references:
+- uid: Microsoft.Xna.Framework.Input.Keys
+  commentId: T:Microsoft.Xna.Framework.Input.Keys
+  parent: Microsoft.Xna.Framework.Input
+  isExternal: true
+  name: Keys
+  nameWithType: Keys
+  fullName: Microsoft.Xna.Framework.Input.Keys
+- uid: Microsoft.Xna.Framework.Input.Buttons
+  commentId: T:Microsoft.Xna.Framework.Input.Buttons
+  parent: Microsoft.Xna.Framework.Input
+  isExternal: true
+  name: Buttons
+  nameWithType: Buttons
+  fullName: Microsoft.Xna.Framework.Input.Buttons
+- uid: StardewModdingAPI
+  commentId: N:StardewModdingAPI
+  name: StardewModdingAPI
+  nameWithType: StardewModdingAPI
+  fullName: StardewModdingAPI
+- uid: StardewModdingAPI.SButton.StardewModdingAPI.SButtonExtensions.TryGetKeyboard(Microsoft.Xna.Framework.Input.Keys@)
+  commentId: M:StardewModdingAPI.SButtonExtensions.TryGetKeyboard(StardewModdingAPI.SButton,Microsoft.Xna.Framework.Input.Keys@)
+  parent: StardewModdingAPI.SButtonExtensions
+  definition: StardewModdingAPI.SButtonExtensions.TryGetKeyboard(StardewModdingAPI.SButton,Microsoft.Xna.Framework.Input.Keys@)
+  name: TryGetKeyboard(Keys)
+  nameWithType: SButtonExtensions.TryGetKeyboard(Keys)
+  fullName: StardewModdingAPI.SButtonExtensions.TryGetKeyboard(Microsoft.Xna.Framework.Input.Keys)
+  spec.csharp:
+  - uid: StardewModdingAPI.SButtonExtensions.TryGetKeyboard(Microsoft.Xna.Framework.Input.Keys@)
+    name: TryGetKeyboard
+    nameWithType: SButtonExtensions.TryGetKeyboard
+    fullName: StardewModdingAPI.SButtonExtensions.TryGetKeyboard
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Microsoft.Xna.Framework.Input.Keys
+    name: Keys
+    nameWithType: Keys
+    fullName: Microsoft.Xna.Framework.Input.Keys
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: StardewModdingAPI.SButtonExtensions.TryGetKeyboard(Microsoft.Xna.Framework.Input.Keys@)
+    name: TryGetKeyboard
+    nameWithType: SButtonExtensions.TryGetKeyboard
+    fullName: StardewModdingAPI.SButtonExtensions.TryGetKeyboard
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Microsoft.Xna.Framework.Input.Keys
+    name: Keys
+    nameWithType: Keys
+    fullName: Microsoft.Xna.Framework.Input.Keys
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.SButton.StardewModdingAPI.SButtonExtensions.TryGetController(Microsoft.Xna.Framework.Input.Buttons@)
+  commentId: M:StardewModdingAPI.SButtonExtensions.TryGetController(StardewModdingAPI.SButton,Microsoft.Xna.Framework.Input.Buttons@)
+  parent: StardewModdingAPI.SButtonExtensions
+  definition: StardewModdingAPI.SButtonExtensions.TryGetController(StardewModdingAPI.SButton,Microsoft.Xna.Framework.Input.Buttons@)
+  name: TryGetController(Buttons)
+  nameWithType: SButtonExtensions.TryGetController(Buttons)
+  fullName: StardewModdingAPI.SButtonExtensions.TryGetController(Microsoft.Xna.Framework.Input.Buttons)
+  spec.csharp:
+  - uid: StardewModdingAPI.SButtonExtensions.TryGetController(Microsoft.Xna.Framework.Input.Buttons@)
+    name: TryGetController
+    nameWithType: SButtonExtensions.TryGetController
+    fullName: StardewModdingAPI.SButtonExtensions.TryGetController
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Microsoft.Xna.Framework.Input.Buttons
+    name: Buttons
+    nameWithType: Buttons
+    fullName: Microsoft.Xna.Framework.Input.Buttons
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: StardewModdingAPI.SButtonExtensions.TryGetController(Microsoft.Xna.Framework.Input.Buttons@)
+    name: TryGetController
+    nameWithType: SButtonExtensions.TryGetController
+    fullName: StardewModdingAPI.SButtonExtensions.TryGetController
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Microsoft.Xna.Framework.Input.Buttons
+    name: Buttons
+    nameWithType: Buttons
+    fullName: Microsoft.Xna.Framework.Input.Buttons
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.SButton.StardewModdingAPI.SButtonExtensions.TryGetStardewInput(StardewValley.InputButton@)
+  commentId: M:StardewModdingAPI.SButtonExtensions.TryGetStardewInput(StardewModdingAPI.SButton,StardewValley.InputButton@)
+  parent: StardewModdingAPI.SButtonExtensions
+  definition: StardewModdingAPI.SButtonExtensions.TryGetStardewInput(StardewModdingAPI.SButton,StardewValley.InputButton@)
+  name: TryGetStardewInput(InputButton)
+  nameWithType: SButtonExtensions.TryGetStardewInput(InputButton)
+  fullName: StardewModdingAPI.SButtonExtensions.TryGetStardewInput(StardewValley.InputButton)
+  spec.csharp:
+  - uid: StardewModdingAPI.SButtonExtensions.TryGetStardewInput(StardewValley.InputButton@)
+    name: TryGetStardewInput
+    nameWithType: SButtonExtensions.TryGetStardewInput
+    fullName: StardewModdingAPI.SButtonExtensions.TryGetStardewInput
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: StardewValley.InputButton
+    name: InputButton
+    nameWithType: InputButton
+    fullName: StardewValley.InputButton
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: StardewModdingAPI.SButtonExtensions.TryGetStardewInput(StardewValley.InputButton@)
+    name: TryGetStardewInput
+    nameWithType: SButtonExtensions.TryGetStardewInput
+    fullName: StardewModdingAPI.SButtonExtensions.TryGetStardewInput
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: StardewValley.InputButton
+    name: InputButton
+    nameWithType: InputButton
+    fullName: StardewValley.InputButton
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.SButton.StardewModdingAPI.SButtonExtensions.IsUseToolButton
+  commentId: M:StardewModdingAPI.SButtonExtensions.IsUseToolButton(StardewModdingAPI.SButton)
+  parent: StardewModdingAPI.SButtonExtensions
+  definition: StardewModdingAPI.SButtonExtensions.IsUseToolButton(StardewModdingAPI.SButton)
+  name: IsUseToolButton()
+  nameWithType: SButtonExtensions.IsUseToolButton()
+  fullName: StardewModdingAPI.SButtonExtensions.IsUseToolButton()
+  spec.csharp:
+  - uid: StardewModdingAPI.SButtonExtensions.IsUseToolButton
+    name: IsUseToolButton
+    nameWithType: SButtonExtensions.IsUseToolButton
+    fullName: StardewModdingAPI.SButtonExtensions.IsUseToolButton
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: StardewModdingAPI.SButtonExtensions.IsUseToolButton
+    name: IsUseToolButton
+    nameWithType: SButtonExtensions.IsUseToolButton
+    fullName: StardewModdingAPI.SButtonExtensions.IsUseToolButton
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.SButton.StardewModdingAPI.SButtonExtensions.IsActionButton
+  commentId: M:StardewModdingAPI.SButtonExtensions.IsActionButton(StardewModdingAPI.SButton)
+  parent: StardewModdingAPI.SButtonExtensions
+  definition: StardewModdingAPI.SButtonExtensions.IsActionButton(StardewModdingAPI.SButton)
+  name: IsActionButton()
+  nameWithType: SButtonExtensions.IsActionButton()
+  fullName: StardewModdingAPI.SButtonExtensions.IsActionButton()
+  spec.csharp:
+  - uid: StardewModdingAPI.SButtonExtensions.IsActionButton
+    name: IsActionButton
+    nameWithType: SButtonExtensions.IsActionButton
+    fullName: StardewModdingAPI.SButtonExtensions.IsActionButton
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: StardewModdingAPI.SButtonExtensions.IsActionButton
+    name: IsActionButton
+    nameWithType: SButtonExtensions.IsActionButton
+    fullName: StardewModdingAPI.SButtonExtensions.IsActionButton
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Microsoft.Xna.Framework.Input
+  commentId: N:Microsoft.Xna.Framework.Input
+  isExternal: true
+  name: Microsoft.Xna.Framework.Input
+  nameWithType: Microsoft.Xna.Framework.Input
+  fullName: Microsoft.Xna.Framework.Input
+- uid: StardewModdingAPI.SButtonExtensions.TryGetKeyboard(StardewModdingAPI.SButton,Microsoft.Xna.Framework.Input.Keys@)
+  commentId: M:StardewModdingAPI.SButtonExtensions.TryGetKeyboard(StardewModdingAPI.SButton,Microsoft.Xna.Framework.Input.Keys@)
+  isExternal: true
+  name: TryGetKeyboard(SButton, Keys)
+  nameWithType: SButtonExtensions.TryGetKeyboard(SButton, Keys)
+  fullName: StardewModdingAPI.SButtonExtensions.TryGetKeyboard(StardewModdingAPI.SButton, Microsoft.Xna.Framework.Input.Keys)
+  spec.csharp:
+  - uid: StardewModdingAPI.SButtonExtensions.TryGetKeyboard(StardewModdingAPI.SButton,Microsoft.Xna.Framework.Input.Keys@)
+    name: TryGetKeyboard
+    nameWithType: SButtonExtensions.TryGetKeyboard
+    fullName: StardewModdingAPI.SButtonExtensions.TryGetKeyboard
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: StardewModdingAPI.SButton
+    name: SButton
+    nameWithType: SButton
+    fullName: StardewModdingAPI.SButton
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Input.Keys
+    name: Keys
+    nameWithType: Keys
+    fullName: Microsoft.Xna.Framework.Input.Keys
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: StardewModdingAPI.SButtonExtensions.TryGetKeyboard(StardewModdingAPI.SButton,Microsoft.Xna.Framework.Input.Keys@)
+    name: TryGetKeyboard
+    nameWithType: SButtonExtensions.TryGetKeyboard
+    fullName: StardewModdingAPI.SButtonExtensions.TryGetKeyboard
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: StardewModdingAPI.SButton
+    name: SButton
+    nameWithType: SButton
+    fullName: StardewModdingAPI.SButton
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Input.Keys
+    name: Keys
+    nameWithType: Keys
+    fullName: Microsoft.Xna.Framework.Input.Keys
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.SButtonExtensions
+  commentId: T:StardewModdingAPI.SButtonExtensions
+  parent: StardewModdingAPI
+  name: SButtonExtensions
+  nameWithType: SButtonExtensions
+  fullName: StardewModdingAPI.SButtonExtensions
+- uid: StardewModdingAPI.SButtonExtensions.TryGetController(StardewModdingAPI.SButton,Microsoft.Xna.Framework.Input.Buttons@)
+  commentId: M:StardewModdingAPI.SButtonExtensions.TryGetController(StardewModdingAPI.SButton,Microsoft.Xna.Framework.Input.Buttons@)
+  isExternal: true
+  name: TryGetController(SButton, Buttons)
+  nameWithType: SButtonExtensions.TryGetController(SButton, Buttons)
+  fullName: StardewModdingAPI.SButtonExtensions.TryGetController(StardewModdingAPI.SButton, Microsoft.Xna.Framework.Input.Buttons)
+  spec.csharp:
+  - uid: StardewModdingAPI.SButtonExtensions.TryGetController(StardewModdingAPI.SButton,Microsoft.Xna.Framework.Input.Buttons@)
+    name: TryGetController
+    nameWithType: SButtonExtensions.TryGetController
+    fullName: StardewModdingAPI.SButtonExtensions.TryGetController
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: StardewModdingAPI.SButton
+    name: SButton
+    nameWithType: SButton
+    fullName: StardewModdingAPI.SButton
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Input.Buttons
+    name: Buttons
+    nameWithType: Buttons
+    fullName: Microsoft.Xna.Framework.Input.Buttons
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: StardewModdingAPI.SButtonExtensions.TryGetController(StardewModdingAPI.SButton,Microsoft.Xna.Framework.Input.Buttons@)
+    name: TryGetController
+    nameWithType: SButtonExtensions.TryGetController
+    fullName: StardewModdingAPI.SButtonExtensions.TryGetController
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: StardewModdingAPI.SButton
+    name: SButton
+    nameWithType: SButton
+    fullName: StardewModdingAPI.SButton
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Input.Buttons
+    name: Buttons
+    nameWithType: Buttons
+    fullName: Microsoft.Xna.Framework.Input.Buttons
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.SButtonExtensions.TryGetStardewInput(StardewModdingAPI.SButton,StardewValley.InputButton@)
+  commentId: M:StardewModdingAPI.SButtonExtensions.TryGetStardewInput(StardewModdingAPI.SButton,StardewValley.InputButton@)
+  isExternal: true
+  name: TryGetStardewInput(SButton, InputButton)
+  nameWithType: SButtonExtensions.TryGetStardewInput(SButton, InputButton)
+  fullName: StardewModdingAPI.SButtonExtensions.TryGetStardewInput(StardewModdingAPI.SButton, StardewValley.InputButton)
+  spec.csharp:
+  - uid: StardewModdingAPI.SButtonExtensions.TryGetStardewInput(StardewModdingAPI.SButton,StardewValley.InputButton@)
+    name: TryGetStardewInput
+    nameWithType: SButtonExtensions.TryGetStardewInput
+    fullName: StardewModdingAPI.SButtonExtensions.TryGetStardewInput
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: StardewModdingAPI.SButton
+    name: SButton
+    nameWithType: SButton
+    fullName: StardewModdingAPI.SButton
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: StardewValley.InputButton
+    name: InputButton
+    nameWithType: InputButton
+    fullName: StardewValley.InputButton
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: StardewModdingAPI.SButtonExtensions.TryGetStardewInput(StardewModdingAPI.SButton,StardewValley.InputButton@)
+    name: TryGetStardewInput
+    nameWithType: SButtonExtensions.TryGetStardewInput
+    fullName: StardewModdingAPI.SButtonExtensions.TryGetStardewInput
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: StardewModdingAPI.SButton
+    name: SButton
+    nameWithType: SButton
+    fullName: StardewModdingAPI.SButton
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: StardewValley.InputButton
+    name: InputButton
+    nameWithType: InputButton
+    fullName: StardewValley.InputButton
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.SButtonExtensions.IsUseToolButton(StardewModdingAPI.SButton)
+  commentId: M:StardewModdingAPI.SButtonExtensions.IsUseToolButton(StardewModdingAPI.SButton)
+  name: IsUseToolButton(SButton)
+  nameWithType: SButtonExtensions.IsUseToolButton(SButton)
+  fullName: StardewModdingAPI.SButtonExtensions.IsUseToolButton(StardewModdingAPI.SButton)
+  spec.csharp:
+  - uid: StardewModdingAPI.SButtonExtensions.IsUseToolButton(StardewModdingAPI.SButton)
+    name: IsUseToolButton
+    nameWithType: SButtonExtensions.IsUseToolButton
+    fullName: StardewModdingAPI.SButtonExtensions.IsUseToolButton
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: StardewModdingAPI.SButton
+    name: SButton
+    nameWithType: SButton
+    fullName: StardewModdingAPI.SButton
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: StardewModdingAPI.SButtonExtensions.IsUseToolButton(StardewModdingAPI.SButton)
+    name: IsUseToolButton
+    nameWithType: SButtonExtensions.IsUseToolButton
+    fullName: StardewModdingAPI.SButtonExtensions.IsUseToolButton
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: StardewModdingAPI.SButton
+    name: SButton
+    nameWithType: SButton
+    fullName: StardewModdingAPI.SButton
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.SButtonExtensions.IsActionButton(StardewModdingAPI.SButton)
+  commentId: M:StardewModdingAPI.SButtonExtensions.IsActionButton(StardewModdingAPI.SButton)
+  name: IsActionButton(SButton)
+  nameWithType: SButtonExtensions.IsActionButton(SButton)
+  fullName: StardewModdingAPI.SButtonExtensions.IsActionButton(StardewModdingAPI.SButton)
+  spec.csharp:
+  - uid: StardewModdingAPI.SButtonExtensions.IsActionButton(StardewModdingAPI.SButton)
+    name: IsActionButton
+    nameWithType: SButtonExtensions.IsActionButton
+    fullName: StardewModdingAPI.SButtonExtensions.IsActionButton
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: StardewModdingAPI.SButton
+    name: SButton
+    nameWithType: SButton
+    fullName: StardewModdingAPI.SButton
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: StardewModdingAPI.SButtonExtensions.IsActionButton(StardewModdingAPI.SButton)
+    name: IsActionButton
+    nameWithType: SButtonExtensions.IsActionButton
+    fullName: StardewModdingAPI.SButtonExtensions.IsActionButton
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: StardewModdingAPI.SButton
+    name: SButton
+    nameWithType: SButton
+    fullName: StardewModdingAPI.SButton
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.SButton
+  commentId: T:StardewModdingAPI.SButton
+  parent: StardewModdingAPI
+  name: SButton
+  nameWithType: SButton
+  fullName: StardewModdingAPI.SButton

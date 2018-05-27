@@ -1,0 +1,509 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.Events.EventArgsKeyboardStateChanged
+  commentId: T:StardewModdingAPI.Events.EventArgsKeyboardStateChanged
+  id: EventArgsKeyboardStateChanged
+  parent: StardewModdingAPI.Events
+  children:
+  - StardewModdingAPI.Events.EventArgsKeyboardStateChanged.#ctor(Microsoft.Xna.Framework.Input.KeyboardState,Microsoft.Xna.Framework.Input.KeyboardState)
+  - StardewModdingAPI.Events.EventArgsKeyboardStateChanged.NewState
+  - StardewModdingAPI.Events.EventArgsKeyboardStateChanged.PriorState
+  langs:
+  - csharp
+  - vb
+  name: EventArgsKeyboardStateChanged
+  nameWithType: EventArgsKeyboardStateChanged
+  fullName: StardewModdingAPI.Events.EventArgsKeyboardStateChanged
+  type: Class
+  source:
+    remote:
+      path: src/SMAPI/Events/EventArgsKeyboardStateChanged.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: EventArgsKeyboardStateChanged
+    path: Events/EventArgsKeyboardStateChanged.cs
+    startLine: 6
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Event arguments for a <xref href="StardewModdingAPI.Events.ControlEvents.KeyboardChanged" data-throw-if-not-resolved="false"></xref> event.
+  example: []
+  syntax:
+    content: 'public class EventArgsKeyboardStateChanged : EventArgs'
+    content.vb: >-
+      Public Class EventArgsKeyboardStateChanged
+          Inherits EventArgs
+  inheritance:
+  - System.Object
+  - System.EventArgs
+  inheritedMembers:
+  - System.EventArgs.Empty
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  modifiers.csharp:
+  - public
+  - class
+  modifiers.vb:
+  - Public
+  - Class
+- uid: StardewModdingAPI.Events.EventArgsKeyboardStateChanged.NewState
+  commentId: P:StardewModdingAPI.Events.EventArgsKeyboardStateChanged.NewState
+  id: NewState
+  parent: StardewModdingAPI.Events.EventArgsKeyboardStateChanged
+  langs:
+  - csharp
+  - vb
+  name: NewState
+  nameWithType: EventArgsKeyboardStateChanged.NewState
+  fullName: StardewModdingAPI.Events.EventArgsKeyboardStateChanged.NewState
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/Events/EventArgsKeyboardStateChanged.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: NewState
+    path: Events/EventArgsKeyboardStateChanged.cs
+    startLine: 12
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: The previous keyboard state.
+  example: []
+  syntax:
+    content: public KeyboardState NewState { get; }
+    parameters: []
+    return:
+      type: Microsoft.Xna.Framework.Input.KeyboardState
+    content.vb: Public ReadOnly Property NewState As KeyboardState
+  overload: StardewModdingAPI.Events.EventArgsKeyboardStateChanged.NewState*
+  modifiers.csharp:
+  - public
+  - get
+  modifiers.vb:
+  - Public
+  - ReadOnly
+- uid: StardewModdingAPI.Events.EventArgsKeyboardStateChanged.PriorState
+  commentId: P:StardewModdingAPI.Events.EventArgsKeyboardStateChanged.PriorState
+  id: PriorState
+  parent: StardewModdingAPI.Events.EventArgsKeyboardStateChanged
+  langs:
+  - csharp
+  - vb
+  name: PriorState
+  nameWithType: EventArgsKeyboardStateChanged.PriorState
+  fullName: StardewModdingAPI.Events.EventArgsKeyboardStateChanged.PriorState
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/Events/EventArgsKeyboardStateChanged.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: PriorState
+    path: Events/EventArgsKeyboardStateChanged.cs
+    startLine: 15
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: The current keyboard state.
+  example: []
+  syntax:
+    content: public KeyboardState PriorState { get; }
+    parameters: []
+    return:
+      type: Microsoft.Xna.Framework.Input.KeyboardState
+    content.vb: Public ReadOnly Property PriorState As KeyboardState
+  overload: StardewModdingAPI.Events.EventArgsKeyboardStateChanged.PriorState*
+  modifiers.csharp:
+  - public
+  - get
+  modifiers.vb:
+  - Public
+  - ReadOnly
+- uid: StardewModdingAPI.Events.EventArgsKeyboardStateChanged.#ctor(Microsoft.Xna.Framework.Input.KeyboardState,Microsoft.Xna.Framework.Input.KeyboardState)
+  commentId: M:StardewModdingAPI.Events.EventArgsKeyboardStateChanged.#ctor(Microsoft.Xna.Framework.Input.KeyboardState,Microsoft.Xna.Framework.Input.KeyboardState)
+  id: '#ctor(Microsoft.Xna.Framework.Input.KeyboardState,Microsoft.Xna.Framework.Input.KeyboardState)'
+  parent: StardewModdingAPI.Events.EventArgsKeyboardStateChanged
+  langs:
+  - csharp
+  - vb
+  name: EventArgsKeyboardStateChanged(KeyboardState, KeyboardState)
+  nameWithType: EventArgsKeyboardStateChanged.EventArgsKeyboardStateChanged(KeyboardState, KeyboardState)
+  fullName: StardewModdingAPI.Events.EventArgsKeyboardStateChanged.EventArgsKeyboardStateChanged(Microsoft.Xna.Framework.Input.KeyboardState, Microsoft.Xna.Framework.Input.KeyboardState)
+  type: Constructor
+  source:
+    remote:
+      path: src/SMAPI/Events/EventArgsKeyboardStateChanged.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: .ctor
+    path: Events/EventArgsKeyboardStateChanged.cs
+    startLine: 24
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Construct an instance.
+  example: []
+  syntax:
+    content: public EventArgsKeyboardStateChanged(KeyboardState priorState, KeyboardState newState)
+    parameters:
+    - id: priorState
+      type: Microsoft.Xna.Framework.Input.KeyboardState
+      description: The previous keyboard state.
+    - id: newState
+      type: Microsoft.Xna.Framework.Input.KeyboardState
+      description: The current keyboard state.
+    content.vb: Public Sub New(priorState As KeyboardState, newState As KeyboardState)
+  overload: StardewModdingAPI.Events.EventArgsKeyboardStateChanged.#ctor*
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+references:
+- uid: StardewModdingAPI.Events.ControlEvents.KeyboardChanged
+  commentId: E:StardewModdingAPI.Events.ControlEvents.KeyboardChanged
+  isExternal: true
+- uid: StardewModdingAPI.Events
+  commentId: N:StardewModdingAPI.Events
+  name: StardewModdingAPI.Events
+  nameWithType: StardewModdingAPI.Events
+  fullName: StardewModdingAPI.Events
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.EventArgs
+  commentId: T:System.EventArgs
+  parent: System
+  isExternal: true
+  name: EventArgs
+  nameWithType: EventArgs
+  fullName: System.EventArgs
+- uid: System.EventArgs.Empty
+  commentId: F:System.EventArgs.Empty
+  parent: System.EventArgs
+  isExternal: true
+  name: Empty
+  nameWithType: EventArgs.Empty
+  fullName: System.EventArgs.Empty
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: System.Object.Equals(System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: System.Object.Equals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: System.Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: System.Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: System.Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: System.Object.ReferenceEquals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: System.Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: StardewModdingAPI.Events.EventArgsKeyboardStateChanged.NewState*
+  commentId: Overload:StardewModdingAPI.Events.EventArgsKeyboardStateChanged.NewState
+  name: NewState
+  nameWithType: EventArgsKeyboardStateChanged.NewState
+  fullName: StardewModdingAPI.Events.EventArgsKeyboardStateChanged.NewState
+- uid: Microsoft.Xna.Framework.Input.KeyboardState
+  commentId: T:Microsoft.Xna.Framework.Input.KeyboardState
+  parent: Microsoft.Xna.Framework.Input
+  isExternal: true
+  name: KeyboardState
+  nameWithType: KeyboardState
+  fullName: Microsoft.Xna.Framework.Input.KeyboardState
+- uid: Microsoft.Xna.Framework.Input
+  commentId: N:Microsoft.Xna.Framework.Input
+  isExternal: true
+  name: Microsoft.Xna.Framework.Input
+  nameWithType: Microsoft.Xna.Framework.Input
+  fullName: Microsoft.Xna.Framework.Input
+- uid: StardewModdingAPI.Events.EventArgsKeyboardStateChanged.PriorState*
+  commentId: Overload:StardewModdingAPI.Events.EventArgsKeyboardStateChanged.PriorState
+  name: PriorState
+  nameWithType: EventArgsKeyboardStateChanged.PriorState
+  fullName: StardewModdingAPI.Events.EventArgsKeyboardStateChanged.PriorState
+- uid: StardewModdingAPI.Events.EventArgsKeyboardStateChanged.#ctor*
+  commentId: Overload:StardewModdingAPI.Events.EventArgsKeyboardStateChanged.#ctor
+  name: EventArgsKeyboardStateChanged
+  nameWithType: EventArgsKeyboardStateChanged.EventArgsKeyboardStateChanged
+  fullName: StardewModdingAPI.Events.EventArgsKeyboardStateChanged.EventArgsKeyboardStateChanged

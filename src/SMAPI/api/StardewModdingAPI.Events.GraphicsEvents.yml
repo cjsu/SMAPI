@@ -1,0 +1,604 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.Events.GraphicsEvents
+  commentId: T:StardewModdingAPI.Events.GraphicsEvents
+  id: GraphicsEvents
+  parent: StardewModdingAPI.Events
+  children:
+  - StardewModdingAPI.Events.GraphicsEvents.OnPostRenderEvent
+  - StardewModdingAPI.Events.GraphicsEvents.OnPostRenderGuiEvent
+  - StardewModdingAPI.Events.GraphicsEvents.OnPostRenderHudEvent
+  - StardewModdingAPI.Events.GraphicsEvents.OnPreRenderEvent
+  - StardewModdingAPI.Events.GraphicsEvents.OnPreRenderGuiEvent
+  - StardewModdingAPI.Events.GraphicsEvents.OnPreRenderHudEvent
+  - StardewModdingAPI.Events.GraphicsEvents.Resize
+  langs:
+  - csharp
+  - vb
+  name: GraphicsEvents
+  nameWithType: GraphicsEvents
+  fullName: StardewModdingAPI.Events.GraphicsEvents
+  type: Class
+  source:
+    remote:
+      path: src/SMAPI/Events/GraphicsEvents.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: GraphicsEvents
+    path: Events/GraphicsEvents.cs
+    startLine: 6
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Events raised during the game&apos;s draw loop, when the game is rendering content to the window.
+  example: []
+  syntax:
+    content: public static class GraphicsEvents
+    content.vb: Public Module GraphicsEvents
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  modifiers.csharp:
+  - public
+  - static
+  - class
+  modifiers.vb:
+  - Public
+  - Module
+- uid: StardewModdingAPI.Events.GraphicsEvents.Resize
+  commentId: E:StardewModdingAPI.Events.GraphicsEvents.Resize
+  id: Resize
+  parent: StardewModdingAPI.Events.GraphicsEvents
+  langs:
+  - csharp
+  - vb
+  name: Resize
+  nameWithType: GraphicsEvents.Resize
+  fullName: StardewModdingAPI.Events.GraphicsEvents.Resize
+  type: Event
+  source:
+    remote:
+      path: src/SMAPI/Events/GraphicsEvents.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Resize
+    path: Events/GraphicsEvents.cs
+    startLine: 19
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Raised after the game window is resized.
+  example: []
+  syntax:
+    content: public static event EventHandler Resize
+    return:
+      type: System.EventHandler
+    content.vb: Public Shared Event Resize As EventHandler
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+- uid: StardewModdingAPI.Events.GraphicsEvents.OnPreRenderEvent
+  commentId: E:StardewModdingAPI.Events.GraphicsEvents.OnPreRenderEvent
+  id: OnPreRenderEvent
+  parent: StardewModdingAPI.Events.GraphicsEvents
+  langs:
+  - csharp
+  - vb
+  name: OnPreRenderEvent
+  nameWithType: GraphicsEvents.OnPreRenderEvent
+  fullName: StardewModdingAPI.Events.GraphicsEvents.OnPreRenderEvent
+  type: Event
+  source:
+    remote:
+      path: src/SMAPI/Events/GraphicsEvents.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: OnPreRenderEvent
+    path: Events/GraphicsEvents.cs
+    startLine: 29
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Raised before drawing the world to the screen.
+  example: []
+  syntax:
+    content: public static event EventHandler OnPreRenderEvent
+    return:
+      type: System.EventHandler
+    content.vb: Public Shared Event OnPreRenderEvent As EventHandler
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+- uid: StardewModdingAPI.Events.GraphicsEvents.OnPostRenderEvent
+  commentId: E:StardewModdingAPI.Events.GraphicsEvents.OnPostRenderEvent
+  id: OnPostRenderEvent
+  parent: StardewModdingAPI.Events.GraphicsEvents
+  langs:
+  - csharp
+  - vb
+  name: OnPostRenderEvent
+  nameWithType: GraphicsEvents.OnPostRenderEvent
+  fullName: StardewModdingAPI.Events.GraphicsEvents.OnPostRenderEvent
+  type: Event
+  source:
+    remote:
+      path: src/SMAPI/Events/GraphicsEvents.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: OnPostRenderEvent
+    path: Events/GraphicsEvents.cs
+    startLine: 36
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Raised after drawing the world to the screen.
+  example: []
+  syntax:
+    content: public static event EventHandler OnPostRenderEvent
+    return:
+      type: System.EventHandler
+    content.vb: Public Shared Event OnPostRenderEvent As EventHandler
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+- uid: StardewModdingAPI.Events.GraphicsEvents.OnPreRenderHudEvent
+  commentId: E:StardewModdingAPI.Events.GraphicsEvents.OnPreRenderHudEvent
+  id: OnPreRenderHudEvent
+  parent: StardewModdingAPI.Events.GraphicsEvents
+  langs:
+  - csharp
+  - vb
+  name: OnPreRenderHudEvent
+  nameWithType: GraphicsEvents.OnPreRenderHudEvent
+  fullName: StardewModdingAPI.Events.GraphicsEvents.OnPreRenderHudEvent
+  type: Event
+  source:
+    remote:
+      path: src/SMAPI/Events/GraphicsEvents.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: OnPreRenderHudEvent
+    path: Events/GraphicsEvents.cs
+    startLine: 46
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Raised before drawing the HUD (item toolbar, clock, etc) to the screen. The HUD is available at this point, but not necessarily visible. (For example, the event is raised even if a menu is open.)
+  example: []
+  syntax:
+    content: public static event EventHandler OnPreRenderHudEvent
+    return:
+      type: System.EventHandler
+    content.vb: Public Shared Event OnPreRenderHudEvent As EventHandler
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+- uid: StardewModdingAPI.Events.GraphicsEvents.OnPostRenderHudEvent
+  commentId: E:StardewModdingAPI.Events.GraphicsEvents.OnPostRenderHudEvent
+  id: OnPostRenderHudEvent
+  parent: StardewModdingAPI.Events.GraphicsEvents
+  langs:
+  - csharp
+  - vb
+  name: OnPostRenderHudEvent
+  nameWithType: GraphicsEvents.OnPostRenderHudEvent
+  fullName: StardewModdingAPI.Events.GraphicsEvents.OnPostRenderHudEvent
+  type: Event
+  source:
+    remote:
+      path: src/SMAPI/Events/GraphicsEvents.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: OnPostRenderHudEvent
+    path: Events/GraphicsEvents.cs
+    startLine: 53
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Raised after drawing the HUD (item toolbar, clock, etc) to the screen. The HUD is available at this point, but not necessarily visible. (For example, the event is raised even if a menu is open.)
+  example: []
+  syntax:
+    content: public static event EventHandler OnPostRenderHudEvent
+    return:
+      type: System.EventHandler
+    content.vb: Public Shared Event OnPostRenderHudEvent As EventHandler
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+- uid: StardewModdingAPI.Events.GraphicsEvents.OnPreRenderGuiEvent
+  commentId: E:StardewModdingAPI.Events.GraphicsEvents.OnPreRenderGuiEvent
+  id: OnPreRenderGuiEvent
+  parent: StardewModdingAPI.Events.GraphicsEvents
+  langs:
+  - csharp
+  - vb
+  name: OnPreRenderGuiEvent
+  nameWithType: GraphicsEvents.OnPreRenderGuiEvent
+  fullName: StardewModdingAPI.Events.GraphicsEvents.OnPreRenderGuiEvent
+  type: Event
+  source:
+    remote:
+      path: src/SMAPI/Events/GraphicsEvents.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: OnPreRenderGuiEvent
+    path: Events/GraphicsEvents.cs
+    startLine: 63
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Raised before drawing a menu to the screen during a draw loop. This includes the game&apos;s internal menus like the title screen.
+  example: []
+  syntax:
+    content: public static event EventHandler OnPreRenderGuiEvent
+    return:
+      type: System.EventHandler
+    content.vb: Public Shared Event OnPreRenderGuiEvent As EventHandler
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+- uid: StardewModdingAPI.Events.GraphicsEvents.OnPostRenderGuiEvent
+  commentId: E:StardewModdingAPI.Events.GraphicsEvents.OnPostRenderGuiEvent
+  id: OnPostRenderGuiEvent
+  parent: StardewModdingAPI.Events.GraphicsEvents
+  langs:
+  - csharp
+  - vb
+  name: OnPostRenderGuiEvent
+  nameWithType: GraphicsEvents.OnPostRenderGuiEvent
+  fullName: StardewModdingAPI.Events.GraphicsEvents.OnPostRenderGuiEvent
+  type: Event
+  source:
+    remote:
+      path: src/SMAPI/Events/GraphicsEvents.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: OnPostRenderGuiEvent
+    path: Events/GraphicsEvents.cs
+    startLine: 70
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Raised after drawing a menu to the screen during a draw loop. This includes the game&apos;s internal menus like the title screen.
+  example: []
+  syntax:
+    content: public static event EventHandler OnPostRenderGuiEvent
+    return:
+      type: System.EventHandler
+    content.vb: Public Shared Event OnPostRenderGuiEvent As EventHandler
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+references:
+- uid: StardewModdingAPI.Events
+  commentId: N:StardewModdingAPI.Events
+  name: StardewModdingAPI.Events
+  nameWithType: StardewModdingAPI.Events
+  fullName: StardewModdingAPI.Events
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: System.Object.Equals(System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: System.Object.Equals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: System.Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: System.Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: System.Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: System.Object.ReferenceEquals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: System.Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.EventHandler
+  commentId: T:System.EventHandler
+  parent: System
+  isExternal: true
+  name: EventHandler
+  nameWithType: EventHandler
+  fullName: System.EventHandler

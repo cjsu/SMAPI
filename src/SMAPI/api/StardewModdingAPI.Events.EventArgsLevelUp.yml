@@ -1,0 +1,509 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.Events.EventArgsLevelUp
+  commentId: T:StardewModdingAPI.Events.EventArgsLevelUp
+  id: EventArgsLevelUp
+  parent: StardewModdingAPI.Events
+  children:
+  - StardewModdingAPI.Events.EventArgsLevelUp.#ctor(StardewModdingAPI.Events.EventArgsLevelUp.LevelType,System.Int32)
+  - StardewModdingAPI.Events.EventArgsLevelUp.NewLevel
+  - StardewModdingAPI.Events.EventArgsLevelUp.Type
+  langs:
+  - csharp
+  - vb
+  name: EventArgsLevelUp
+  nameWithType: EventArgsLevelUp
+  fullName: StardewModdingAPI.Events.EventArgsLevelUp
+  type: Class
+  source:
+    remote:
+      path: src/SMAPI/Events/EventArgsLevelUp.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: EventArgsLevelUp
+    path: Events/EventArgsLevelUp.cs
+    startLine: 5
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Event arguments for a <xref href="StardewModdingAPI.Events.PlayerEvents.LeveledUp" data-throw-if-not-resolved="false"></xref> event.
+  example: []
+  syntax:
+    content: 'public class EventArgsLevelUp : EventArgs'
+    content.vb: >-
+      Public Class EventArgsLevelUp
+          Inherits EventArgs
+  inheritance:
+  - System.Object
+  - System.EventArgs
+  inheritedMembers:
+  - System.EventArgs.Empty
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  modifiers.csharp:
+  - public
+  - class
+  modifiers.vb:
+  - Public
+  - Class
+- uid: StardewModdingAPI.Events.EventArgsLevelUp.Type
+  commentId: P:StardewModdingAPI.Events.EventArgsLevelUp.Type
+  id: Type
+  parent: StardewModdingAPI.Events.EventArgsLevelUp
+  langs:
+  - csharp
+  - vb
+  name: Type
+  nameWithType: EventArgsLevelUp.Type
+  fullName: StardewModdingAPI.Events.EventArgsLevelUp.Type
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/Events/EventArgsLevelUp.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Type
+    path: Events/EventArgsLevelUp.cs
+    startLine: 11
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: The player skill that leveled up.
+  example: []
+  syntax:
+    content: public EventArgsLevelUp.LevelType Type { get; }
+    parameters: []
+    return:
+      type: StardewModdingAPI.Events.EventArgsLevelUp.LevelType
+    content.vb: Public ReadOnly Property Type As EventArgsLevelUp.LevelType
+  overload: StardewModdingAPI.Events.EventArgsLevelUp.Type*
+  modifiers.csharp:
+  - public
+  - get
+  modifiers.vb:
+  - Public
+  - ReadOnly
+- uid: StardewModdingAPI.Events.EventArgsLevelUp.NewLevel
+  commentId: P:StardewModdingAPI.Events.EventArgsLevelUp.NewLevel
+  id: NewLevel
+  parent: StardewModdingAPI.Events.EventArgsLevelUp
+  langs:
+  - csharp
+  - vb
+  name: NewLevel
+  nameWithType: EventArgsLevelUp.NewLevel
+  fullName: StardewModdingAPI.Events.EventArgsLevelUp.NewLevel
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/Events/EventArgsLevelUp.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: NewLevel
+    path: Events/EventArgsLevelUp.cs
+    startLine: 14
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: The new skill level.
+  example: []
+  syntax:
+    content: public int NewLevel { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property NewLevel As Integer
+  overload: StardewModdingAPI.Events.EventArgsLevelUp.NewLevel*
+  modifiers.csharp:
+  - public
+  - get
+  modifiers.vb:
+  - Public
+  - ReadOnly
+- uid: StardewModdingAPI.Events.EventArgsLevelUp.#ctor(StardewModdingAPI.Events.EventArgsLevelUp.LevelType,System.Int32)
+  commentId: M:StardewModdingAPI.Events.EventArgsLevelUp.#ctor(StardewModdingAPI.Events.EventArgsLevelUp.LevelType,System.Int32)
+  id: '#ctor(StardewModdingAPI.Events.EventArgsLevelUp.LevelType,System.Int32)'
+  parent: StardewModdingAPI.Events.EventArgsLevelUp
+  langs:
+  - csharp
+  - vb
+  name: EventArgsLevelUp(EventArgsLevelUp.LevelType, Int32)
+  nameWithType: EventArgsLevelUp.EventArgsLevelUp(EventArgsLevelUp.LevelType, Int32)
+  fullName: StardewModdingAPI.Events.EventArgsLevelUp.EventArgsLevelUp(StardewModdingAPI.Events.EventArgsLevelUp.LevelType, System.Int32)
+  type: Constructor
+  source:
+    remote:
+      path: src/SMAPI/Events/EventArgsLevelUp.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: .ctor
+    path: Events/EventArgsLevelUp.cs
+    startLine: 45
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Construct an instance.
+  example: []
+  syntax:
+    content: public EventArgsLevelUp(EventArgsLevelUp.LevelType type, int newLevel)
+    parameters:
+    - id: type
+      type: StardewModdingAPI.Events.EventArgsLevelUp.LevelType
+      description: The player skill that leveled up.
+    - id: newLevel
+      type: System.Int32
+      description: The new skill level.
+    content.vb: Public Sub New(type As EventArgsLevelUp.LevelType, newLevel As Integer)
+  overload: StardewModdingAPI.Events.EventArgsLevelUp.#ctor*
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+references:
+- uid: StardewModdingAPI.Events.PlayerEvents.LeveledUp
+  commentId: E:StardewModdingAPI.Events.PlayerEvents.LeveledUp
+  isExternal: true
+- uid: StardewModdingAPI.Events
+  commentId: N:StardewModdingAPI.Events
+  name: StardewModdingAPI.Events
+  nameWithType: StardewModdingAPI.Events
+  fullName: StardewModdingAPI.Events
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.EventArgs
+  commentId: T:System.EventArgs
+  parent: System
+  isExternal: true
+  name: EventArgs
+  nameWithType: EventArgs
+  fullName: System.EventArgs
+- uid: System.EventArgs.Empty
+  commentId: F:System.EventArgs.Empty
+  parent: System.EventArgs
+  isExternal: true
+  name: Empty
+  nameWithType: EventArgs.Empty
+  fullName: System.EventArgs.Empty
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: System.Object.Equals(System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: System.Object.Equals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: System.Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: System.Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: System.Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: System.Object.ReferenceEquals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: System.Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: StardewModdingAPI.Events.EventArgsLevelUp.Type*
+  commentId: Overload:StardewModdingAPI.Events.EventArgsLevelUp.Type
+  name: Type
+  nameWithType: EventArgsLevelUp.Type
+  fullName: StardewModdingAPI.Events.EventArgsLevelUp.Type
+- uid: StardewModdingAPI.Events.EventArgsLevelUp.LevelType
+  commentId: T:StardewModdingAPI.Events.EventArgsLevelUp.LevelType
+  parent: StardewModdingAPI.Events
+  name: EventArgsLevelUp.LevelType
+  nameWithType: EventArgsLevelUp.LevelType
+  fullName: StardewModdingAPI.Events.EventArgsLevelUp.LevelType
+- uid: StardewModdingAPI.Events.EventArgsLevelUp.NewLevel*
+  commentId: Overload:StardewModdingAPI.Events.EventArgsLevelUp.NewLevel
+  name: NewLevel
+  nameWithType: EventArgsLevelUp.NewLevel
+  fullName: StardewModdingAPI.Events.EventArgsLevelUp.NewLevel
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: Int32
+  nameWithType: Int32
+  fullName: System.Int32
+- uid: StardewModdingAPI.Events.EventArgsLevelUp.#ctor*
+  commentId: Overload:StardewModdingAPI.Events.EventArgsLevelUp.#ctor
+  name: EventArgsLevelUp
+  nameWithType: EventArgsLevelUp.EventArgsLevelUp
+  fullName: StardewModdingAPI.Events.EventArgsLevelUp.EventArgsLevelUp

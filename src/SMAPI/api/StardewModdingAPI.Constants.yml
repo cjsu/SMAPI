@@ -1,0 +1,814 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.Constants
+  commentId: T:StardewModdingAPI.Constants
+  id: Constants
+  parent: StardewModdingAPI
+  children:
+  - StardewModdingAPI.Constants.ApiVersion
+  - StardewModdingAPI.Constants.CurrentSavePath
+  - StardewModdingAPI.Constants.DataPath
+  - StardewModdingAPI.Constants.ExecutionPath
+  - StardewModdingAPI.Constants.LogDir
+  - StardewModdingAPI.Constants.MaximumGameVersion
+  - StardewModdingAPI.Constants.MinimumGameVersion
+  - StardewModdingAPI.Constants.SaveFolderName
+  - StardewModdingAPI.Constants.SavesPath
+  - StardewModdingAPI.Constants.TargetPlatform
+  langs:
+  - csharp
+  - vb
+  name: Constants
+  nameWithType: Constants
+  fullName: StardewModdingAPI.Constants
+  type: Class
+  source:
+    remote:
+      path: src/SMAPI/Constants.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Constants
+    path: Constants.cs
+    startLine: 13
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Contains SMAPI&apos;s constants and assumptions.
+  example: []
+  syntax:
+    content: public static class Constants
+    content.vb: Public Module Constants
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  modifiers.csharp:
+  - public
+  - static
+  - class
+  modifiers.vb:
+  - Public
+  - Module
+- uid: StardewModdingAPI.Constants.ApiVersion
+  commentId: P:StardewModdingAPI.Constants.ApiVersion
+  id: ApiVersion
+  parent: StardewModdingAPI.Constants
+  langs:
+  - csharp
+  - vb
+  name: ApiVersion
+  nameWithType: Constants.ApiVersion
+  fullName: StardewModdingAPI.Constants.ApiVersion
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/Constants.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ApiVersion
+    path: Constants.cs
+    startLine: 40
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: SMAPI&apos;s current semantic version.
+  example: []
+  syntax:
+    content: public static ISemanticVersion ApiVersion { get; }
+    parameters: []
+    return:
+      type: StardewModdingAPI.ISemanticVersion
+    content.vb: Public Shared ReadOnly Property ApiVersion As ISemanticVersion
+  overload: StardewModdingAPI.Constants.ApiVersion*
+  modifiers.csharp:
+  - public
+  - static
+  - get
+  modifiers.vb:
+  - Public
+  - Shared
+  - ReadOnly
+- uid: StardewModdingAPI.Constants.MinimumGameVersion
+  commentId: P:StardewModdingAPI.Constants.MinimumGameVersion
+  id: MinimumGameVersion
+  parent: StardewModdingAPI.Constants
+  langs:
+  - csharp
+  - vb
+  name: MinimumGameVersion
+  nameWithType: Constants.MinimumGameVersion
+  fullName: StardewModdingAPI.Constants.MinimumGameVersion
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/Constants.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: MinimumGameVersion
+    path: Constants.cs
+    startLine: 43
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The minimum supported version of Stardew Valley.
+  example: []
+  syntax:
+    content: public static ISemanticVersion MinimumGameVersion { get; }
+    parameters: []
+    return:
+      type: StardewModdingAPI.ISemanticVersion
+    content.vb: Public Shared ReadOnly Property MinimumGameVersion As ISemanticVersion
+  overload: StardewModdingAPI.Constants.MinimumGameVersion*
+  modifiers.csharp:
+  - public
+  - static
+  - get
+  modifiers.vb:
+  - Public
+  - Shared
+  - ReadOnly
+- uid: StardewModdingAPI.Constants.MaximumGameVersion
+  commentId: P:StardewModdingAPI.Constants.MaximumGameVersion
+  id: MaximumGameVersion
+  parent: StardewModdingAPI.Constants
+  langs:
+  - csharp
+  - vb
+  name: MaximumGameVersion
+  nameWithType: Constants.MaximumGameVersion
+  fullName: StardewModdingAPI.Constants.MaximumGameVersion
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/Constants.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: MaximumGameVersion
+    path: Constants.cs
+    startLine: 46
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The maximum supported version of Stardew Valley.
+  example: []
+  syntax:
+    content: public static ISemanticVersion MaximumGameVersion { get; }
+    parameters: []
+    return:
+      type: StardewModdingAPI.ISemanticVersion
+    content.vb: Public Shared ReadOnly Property MaximumGameVersion As ISemanticVersion
+  overload: StardewModdingAPI.Constants.MaximumGameVersion*
+  modifiers.csharp:
+  - public
+  - static
+  - get
+  modifiers.vb:
+  - Public
+  - Shared
+  - ReadOnly
+- uid: StardewModdingAPI.Constants.TargetPlatform
+  commentId: P:StardewModdingAPI.Constants.TargetPlatform
+  id: TargetPlatform
+  parent: StardewModdingAPI.Constants
+  langs:
+  - csharp
+  - vb
+  name: TargetPlatform
+  nameWithType: Constants.TargetPlatform
+  fullName: StardewModdingAPI.Constants.TargetPlatform
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/Constants.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: TargetPlatform
+    path: Constants.cs
+    startLine: 49
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The target game platform.
+  example: []
+  syntax:
+    content: public static GamePlatform TargetPlatform { get; }
+    parameters: []
+    return:
+      type: StardewModdingAPI.GamePlatform
+    content.vb: Public Shared ReadOnly Property TargetPlatform As GamePlatform
+  overload: StardewModdingAPI.Constants.TargetPlatform*
+  modifiers.csharp:
+  - public
+  - static
+  - get
+  modifiers.vb:
+  - Public
+  - Shared
+  - ReadOnly
+- uid: StardewModdingAPI.Constants.ExecutionPath
+  commentId: P:StardewModdingAPI.Constants.ExecutionPath
+  id: ExecutionPath
+  parent: StardewModdingAPI.Constants
+  langs:
+  - csharp
+  - vb
+  name: ExecutionPath
+  nameWithType: Constants.ExecutionPath
+  fullName: StardewModdingAPI.Constants.ExecutionPath
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/Constants.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ExecutionPath
+    path: Constants.cs
+    startLine: 52
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The path to the game folder.
+  example: []
+  syntax:
+    content: public static string ExecutionPath { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Shared ReadOnly Property ExecutionPath As String
+  overload: StardewModdingAPI.Constants.ExecutionPath*
+  modifiers.csharp:
+  - public
+  - static
+  - get
+  modifiers.vb:
+  - Public
+  - Shared
+  - ReadOnly
+- uid: StardewModdingAPI.Constants.DataPath
+  commentId: P:StardewModdingAPI.Constants.DataPath
+  id: DataPath
+  parent: StardewModdingAPI.Constants
+  langs:
+  - csharp
+  - vb
+  name: DataPath
+  nameWithType: Constants.DataPath
+  fullName: StardewModdingAPI.Constants.DataPath
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/Constants.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: DataPath
+    path: Constants.cs
+    startLine: 55
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The directory path containing Stardew Valley&apos;s app data.
+  example: []
+  syntax:
+    content: public static string DataPath { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Shared ReadOnly Property DataPath As String
+  overload: StardewModdingAPI.Constants.DataPath*
+  modifiers.csharp:
+  - public
+  - static
+  - get
+  modifiers.vb:
+  - Public
+  - Shared
+  - ReadOnly
+- uid: StardewModdingAPI.Constants.LogDir
+  commentId: P:StardewModdingAPI.Constants.LogDir
+  id: LogDir
+  parent: StardewModdingAPI.Constants
+  langs:
+  - csharp
+  - vb
+  name: LogDir
+  nameWithType: Constants.LogDir
+  fullName: StardewModdingAPI.Constants.LogDir
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/Constants.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: LogDir
+    path: Constants.cs
+    startLine: 58
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The directory path in which error logs should be stored.
+  example: []
+  syntax:
+    content: public static string LogDir { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Shared ReadOnly Property LogDir As String
+  overload: StardewModdingAPI.Constants.LogDir*
+  modifiers.csharp:
+  - public
+  - static
+  - get
+  modifiers.vb:
+  - Public
+  - Shared
+  - ReadOnly
+- uid: StardewModdingAPI.Constants.SavesPath
+  commentId: P:StardewModdingAPI.Constants.SavesPath
+  id: SavesPath
+  parent: StardewModdingAPI.Constants
+  langs:
+  - csharp
+  - vb
+  name: SavesPath
+  nameWithType: Constants.SavesPath
+  fullName: StardewModdingAPI.Constants.SavesPath
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/Constants.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: SavesPath
+    path: Constants.cs
+    startLine: 61
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The directory path where all saves are stored.
+  example: []
+  syntax:
+    content: public static string SavesPath { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Shared ReadOnly Property SavesPath As String
+  overload: StardewModdingAPI.Constants.SavesPath*
+  modifiers.csharp:
+  - public
+  - static
+  - get
+  modifiers.vb:
+  - Public
+  - Shared
+  - ReadOnly
+- uid: StardewModdingAPI.Constants.SaveFolderName
+  commentId: P:StardewModdingAPI.Constants.SaveFolderName
+  id: SaveFolderName
+  parent: StardewModdingAPI.Constants
+  langs:
+  - csharp
+  - vb
+  name: SaveFolderName
+  nameWithType: Constants.SaveFolderName
+  fullName: StardewModdingAPI.Constants.SaveFolderName
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/Constants.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: SaveFolderName
+    path: Constants.cs
+    startLine: 64
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The directory name containing the current save&apos;s data (if a save is loaded and the directory exists).
+  example: []
+  syntax:
+    content: public static string SaveFolderName { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Shared ReadOnly Property SaveFolderName As String
+  overload: StardewModdingAPI.Constants.SaveFolderName*
+  modifiers.csharp:
+  - public
+  - static
+  - get
+  modifiers.vb:
+  - Public
+  - Shared
+  - ReadOnly
+- uid: StardewModdingAPI.Constants.CurrentSavePath
+  commentId: P:StardewModdingAPI.Constants.CurrentSavePath
+  id: CurrentSavePath
+  parent: StardewModdingAPI.Constants
+  langs:
+  - csharp
+  - vb
+  name: CurrentSavePath
+  nameWithType: Constants.CurrentSavePath
+  fullName: StardewModdingAPI.Constants.CurrentSavePath
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/Constants.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: CurrentSavePath
+    path: Constants.cs
+    startLine: 67
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The directory path containing the current save&apos;s data (if a save is loaded and the directory exists).
+  example: []
+  syntax:
+    content: public static string CurrentSavePath { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Shared ReadOnly Property CurrentSavePath As String
+  overload: StardewModdingAPI.Constants.CurrentSavePath*
+  modifiers.csharp:
+  - public
+  - static
+  - get
+  modifiers.vb:
+  - Public
+  - Shared
+  - ReadOnly
+references:
+- uid: StardewModdingAPI
+  commentId: N:StardewModdingAPI
+  name: StardewModdingAPI
+  nameWithType: StardewModdingAPI
+  fullName: StardewModdingAPI
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: System.Object.Equals(System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: System.Object.Equals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: System.Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: System.Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: System.Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: System.Object.ReferenceEquals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: System.Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: StardewModdingAPI.Constants.ApiVersion*
+  commentId: Overload:StardewModdingAPI.Constants.ApiVersion
+  name: ApiVersion
+  nameWithType: Constants.ApiVersion
+  fullName: StardewModdingAPI.Constants.ApiVersion
+- uid: StardewModdingAPI.ISemanticVersion
+  commentId: T:StardewModdingAPI.ISemanticVersion
+  parent: StardewModdingAPI
+  name: ISemanticVersion
+  nameWithType: ISemanticVersion
+  fullName: StardewModdingAPI.ISemanticVersion
+- uid: StardewModdingAPI.Constants.MinimumGameVersion*
+  commentId: Overload:StardewModdingAPI.Constants.MinimumGameVersion
+  name: MinimumGameVersion
+  nameWithType: Constants.MinimumGameVersion
+  fullName: StardewModdingAPI.Constants.MinimumGameVersion
+- uid: StardewModdingAPI.Constants.MaximumGameVersion*
+  commentId: Overload:StardewModdingAPI.Constants.MaximumGameVersion
+  name: MaximumGameVersion
+  nameWithType: Constants.MaximumGameVersion
+  fullName: StardewModdingAPI.Constants.MaximumGameVersion
+- uid: StardewModdingAPI.Constants.TargetPlatform*
+  commentId: Overload:StardewModdingAPI.Constants.TargetPlatform
+  name: TargetPlatform
+  nameWithType: Constants.TargetPlatform
+  fullName: StardewModdingAPI.Constants.TargetPlatform
+- uid: StardewModdingAPI.GamePlatform
+  commentId: T:StardewModdingAPI.GamePlatform
+  parent: StardewModdingAPI
+  name: GamePlatform
+  nameWithType: GamePlatform
+  fullName: StardewModdingAPI.GamePlatform
+- uid: StardewModdingAPI.Constants.ExecutionPath*
+  commentId: Overload:StardewModdingAPI.Constants.ExecutionPath
+  name: ExecutionPath
+  nameWithType: Constants.ExecutionPath
+  fullName: StardewModdingAPI.Constants.ExecutionPath
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: StardewModdingAPI.Constants.DataPath*
+  commentId: Overload:StardewModdingAPI.Constants.DataPath
+  name: DataPath
+  nameWithType: Constants.DataPath
+  fullName: StardewModdingAPI.Constants.DataPath
+- uid: StardewModdingAPI.Constants.LogDir*
+  commentId: Overload:StardewModdingAPI.Constants.LogDir
+  name: LogDir
+  nameWithType: Constants.LogDir
+  fullName: StardewModdingAPI.Constants.LogDir
+- uid: StardewModdingAPI.Constants.SavesPath*
+  commentId: Overload:StardewModdingAPI.Constants.SavesPath
+  name: SavesPath
+  nameWithType: Constants.SavesPath
+  fullName: StardewModdingAPI.Constants.SavesPath
+- uid: StardewModdingAPI.Constants.SaveFolderName*
+  commentId: Overload:StardewModdingAPI.Constants.SaveFolderName
+  name: SaveFolderName
+  nameWithType: Constants.SaveFolderName
+  fullName: StardewModdingAPI.Constants.SaveFolderName
+- uid: StardewModdingAPI.Constants.CurrentSavePath*
+  commentId: Overload:StardewModdingAPI.Constants.CurrentSavePath
+  name: CurrentSavePath
+  nameWithType: Constants.CurrentSavePath
+  fullName: StardewModdingAPI.Constants.CurrentSavePath

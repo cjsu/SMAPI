@@ -1,0 +1,96 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.IModLinked
+  commentId: T:StardewModdingAPI.IModLinked
+  id: IModLinked
+  parent: StardewModdingAPI
+  children:
+  - StardewModdingAPI.IModLinked.ModID
+  langs:
+  - csharp
+  - vb
+  name: IModLinked
+  nameWithType: IModLinked
+  fullName: StardewModdingAPI.IModLinked
+  type: Interface
+  source:
+    remote:
+      path: src/SMAPI/IModLinked.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: IModLinked
+    path: IModLinked.cs
+    startLine: 3
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: An instance linked to a mod.
+  example: []
+  syntax:
+    content: public interface IModLinked
+    content.vb: Public Interface IModLinked
+  modifiers.csharp:
+  - public
+  - interface
+  modifiers.vb:
+  - Public
+  - Interface
+- uid: StardewModdingAPI.IModLinked.ModID
+  commentId: P:StardewModdingAPI.IModLinked.ModID
+  id: ModID
+  parent: StardewModdingAPI.IModLinked
+  langs:
+  - csharp
+  - vb
+  name: ModID
+  nameWithType: IModLinked.ModID
+  fullName: StardewModdingAPI.IModLinked.ModID
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IModLinked.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ModID
+    path: IModLinked.cs
+    startLine: 9
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The unique ID of the mod for which the instance was created.
+  example: []
+  syntax:
+    content: string ModID { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: ReadOnly Property ModID As String
+  overload: StardewModdingAPI.IModLinked.ModID*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+references:
+- uid: StardewModdingAPI
+  commentId: N:StardewModdingAPI
+  name: StardewModdingAPI
+  nameWithType: StardewModdingAPI
+  fullName: StardewModdingAPI
+- uid: StardewModdingAPI.IModLinked.ModID*
+  commentId: Overload:StardewModdingAPI.IModLinked.ModID
+  name: ModID
+  nameWithType: IModLinked.ModID
+  fullName: StardewModdingAPI.IModLinked.ModID
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System

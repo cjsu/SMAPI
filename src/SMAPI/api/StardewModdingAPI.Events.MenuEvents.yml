@@ -1,0 +1,540 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.Events.MenuEvents
+  commentId: T:StardewModdingAPI.Events.MenuEvents
+  id: MenuEvents
+  parent: StardewModdingAPI.Events
+  children:
+  - StardewModdingAPI.Events.MenuEvents.MenuChanged
+  - StardewModdingAPI.Events.MenuEvents.MenuClosed
+  langs:
+  - csharp
+  - vb
+  name: MenuEvents
+  nameWithType: MenuEvents
+  fullName: StardewModdingAPI.Events.MenuEvents
+  type: Class
+  source:
+    remote:
+      path: src/SMAPI/Events/MenuEvents.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: MenuEvents
+    path: Events/MenuEvents.cs
+    startLine: 6
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Events raised when a game menu is opened or closed (including internal menus like the title screen).
+  example: []
+  syntax:
+    content: public static class MenuEvents
+    content.vb: Public Module MenuEvents
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  modifiers.csharp:
+  - public
+  - static
+  - class
+  modifiers.vb:
+  - Public
+  - Module
+- uid: StardewModdingAPI.Events.MenuEvents.MenuChanged
+  commentId: E:StardewModdingAPI.Events.MenuEvents.MenuChanged
+  id: MenuChanged
+  parent: StardewModdingAPI.Events.MenuEvents
+  langs:
+  - csharp
+  - vb
+  name: MenuChanged
+  nameWithType: MenuEvents.MenuChanged
+  fullName: StardewModdingAPI.Events.MenuEvents.MenuChanged
+  type: Event
+  source:
+    remote:
+      path: src/SMAPI/Events/MenuEvents.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: MenuChanged
+    path: Events/MenuEvents.cs
+    startLine: 19
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Raised after a game menu is opened or replaced with another menu. This event is not invoked when a menu is closed.
+  example: []
+  syntax:
+    content: public static event EventHandler<EventArgsClickableMenuChanged> MenuChanged
+    return:
+      type: System.EventHandler{StardewModdingAPI.Events.EventArgsClickableMenuChanged}
+    content.vb: Public Shared Event MenuChanged As EventHandler(Of EventArgsClickableMenuChanged)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+- uid: StardewModdingAPI.Events.MenuEvents.MenuClosed
+  commentId: E:StardewModdingAPI.Events.MenuEvents.MenuClosed
+  id: MenuClosed
+  parent: StardewModdingAPI.Events.MenuEvents
+  langs:
+  - csharp
+  - vb
+  name: MenuClosed
+  nameWithType: MenuEvents.MenuClosed
+  fullName: StardewModdingAPI.Events.MenuEvents.MenuClosed
+  type: Event
+  source:
+    remote:
+      path: src/SMAPI/Events/MenuEvents.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: MenuClosed
+    path: Events/MenuEvents.cs
+    startLine: 26
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Raised after a game menu is closed.
+  example: []
+  syntax:
+    content: public static event EventHandler<EventArgsClickableMenuClosed> MenuClosed
+    return:
+      type: System.EventHandler{StardewModdingAPI.Events.EventArgsClickableMenuClosed}
+    content.vb: Public Shared Event MenuClosed As EventHandler(Of EventArgsClickableMenuClosed)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+references:
+- uid: StardewModdingAPI.Events
+  commentId: N:StardewModdingAPI.Events
+  name: StardewModdingAPI.Events
+  nameWithType: StardewModdingAPI.Events
+  fullName: StardewModdingAPI.Events
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: System.Object.Equals(System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: System.Object.Equals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: System.Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: System.Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: System.Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: System.Object.ReferenceEquals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: System.Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.EventHandler{StardewModdingAPI.Events.EventArgsClickableMenuChanged}
+  commentId: T:System.EventHandler{StardewModdingAPI.Events.EventArgsClickableMenuChanged}
+  parent: System
+  definition: System.EventHandler`1
+  name: EventHandler<EventArgsClickableMenuChanged>
+  nameWithType: EventHandler<EventArgsClickableMenuChanged>
+  fullName: System.EventHandler<StardewModdingAPI.Events.EventArgsClickableMenuChanged>
+  nameWithType.vb: EventHandler(Of EventArgsClickableMenuChanged)
+  fullName.vb: System.EventHandler(Of StardewModdingAPI.Events.EventArgsClickableMenuChanged)
+  name.vb: EventHandler(Of EventArgsClickableMenuChanged)
+  spec.csharp:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    nameWithType: EventHandler
+    fullName: System.EventHandler
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: StardewModdingAPI.Events.EventArgsClickableMenuChanged
+    name: EventArgsClickableMenuChanged
+    nameWithType: EventArgsClickableMenuChanged
+    fullName: StardewModdingAPI.Events.EventArgsClickableMenuChanged
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    nameWithType: EventHandler
+    fullName: System.EventHandler
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: StardewModdingAPI.Events.EventArgsClickableMenuChanged
+    name: EventArgsClickableMenuChanged
+    nameWithType: EventArgsClickableMenuChanged
+    fullName: StardewModdingAPI.Events.EventArgsClickableMenuChanged
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.EventHandler`1
+  commentId: T:System.EventHandler`1
+  isExternal: true
+  name: EventHandler<TEventArgs>
+  nameWithType: EventHandler<TEventArgs>
+  fullName: System.EventHandler<TEventArgs>
+  nameWithType.vb: EventHandler(Of TEventArgs)
+  fullName.vb: System.EventHandler(Of TEventArgs)
+  name.vb: EventHandler(Of TEventArgs)
+  spec.csharp:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    nameWithType: EventHandler
+    fullName: System.EventHandler
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TEventArgs
+    nameWithType: TEventArgs
+    fullName: TEventArgs
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    nameWithType: EventHandler
+    fullName: System.EventHandler
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TEventArgs
+    nameWithType: TEventArgs
+    fullName: TEventArgs
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.EventHandler{StardewModdingAPI.Events.EventArgsClickableMenuClosed}
+  commentId: T:System.EventHandler{StardewModdingAPI.Events.EventArgsClickableMenuClosed}
+  parent: System
+  definition: System.EventHandler`1
+  name: EventHandler<EventArgsClickableMenuClosed>
+  nameWithType: EventHandler<EventArgsClickableMenuClosed>
+  fullName: System.EventHandler<StardewModdingAPI.Events.EventArgsClickableMenuClosed>
+  nameWithType.vb: EventHandler(Of EventArgsClickableMenuClosed)
+  fullName.vb: System.EventHandler(Of StardewModdingAPI.Events.EventArgsClickableMenuClosed)
+  name.vb: EventHandler(Of EventArgsClickableMenuClosed)
+  spec.csharp:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    nameWithType: EventHandler
+    fullName: System.EventHandler
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: StardewModdingAPI.Events.EventArgsClickableMenuClosed
+    name: EventArgsClickableMenuClosed
+    nameWithType: EventArgsClickableMenuClosed
+    fullName: StardewModdingAPI.Events.EventArgsClickableMenuClosed
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    nameWithType: EventHandler
+    fullName: System.EventHandler
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: StardewModdingAPI.Events.EventArgsClickableMenuClosed
+    name: EventArgsClickableMenuClosed
+    nameWithType: EventArgsClickableMenuClosed
+    fullName: StardewModdingAPI.Events.EventArgsClickableMenuClosed
+  - name: )
+    nameWithType: )
+    fullName: )

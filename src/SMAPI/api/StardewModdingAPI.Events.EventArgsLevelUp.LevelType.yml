@@ -1,0 +1,258 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.Events.EventArgsLevelUp.LevelType
+  commentId: T:StardewModdingAPI.Events.EventArgsLevelUp.LevelType
+  id: EventArgsLevelUp.LevelType
+  parent: StardewModdingAPI.Events
+  children:
+  - StardewModdingAPI.Events.EventArgsLevelUp.LevelType.Combat
+  - StardewModdingAPI.Events.EventArgsLevelUp.LevelType.Farming
+  - StardewModdingAPI.Events.EventArgsLevelUp.LevelType.Fishing
+  - StardewModdingAPI.Events.EventArgsLevelUp.LevelType.Foraging
+  - StardewModdingAPI.Events.EventArgsLevelUp.LevelType.Luck
+  - StardewModdingAPI.Events.EventArgsLevelUp.LevelType.Mining
+  langs:
+  - csharp
+  - vb
+  name: EventArgsLevelUp.LevelType
+  nameWithType: EventArgsLevelUp.LevelType
+  fullName: StardewModdingAPI.Events.EventArgsLevelUp.LevelType
+  type: Enum
+  source:
+    remote:
+      path: src/SMAPI/Events/EventArgsLevelUp.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: LevelType
+    path: Events/EventArgsLevelUp.cs
+    startLine: 17
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: The player skill types.
+  example: []
+  syntax:
+    content: public enum LevelType
+    content.vb: Public Enum LevelType
+  modifiers.csharp:
+  - public
+  - enum
+  modifiers.vb:
+  - Public
+  - Enum
+- uid: StardewModdingAPI.Events.EventArgsLevelUp.LevelType.Combat
+  commentId: F:StardewModdingAPI.Events.EventArgsLevelUp.LevelType.Combat
+  id: Combat
+  parent: StardewModdingAPI.Events.EventArgsLevelUp.LevelType
+  langs:
+  - csharp
+  - vb
+  name: Combat
+  nameWithType: EventArgsLevelUp.LevelType.Combat
+  fullName: StardewModdingAPI.Events.EventArgsLevelUp.LevelType.Combat
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/Events/EventArgsLevelUp.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Combat
+    path: Events/EventArgsLevelUp.cs
+    startLine: 20
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: The combat skill.
+  example: []
+  syntax:
+    content: Combat = 0
+    return:
+      type: StardewModdingAPI.Events.EventArgsLevelUp.LevelType
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.Events.EventArgsLevelUp.LevelType.Farming
+  commentId: F:StardewModdingAPI.Events.EventArgsLevelUp.LevelType.Farming
+  id: Farming
+  parent: StardewModdingAPI.Events.EventArgsLevelUp.LevelType
+  langs:
+  - csharp
+  - vb
+  name: Farming
+  nameWithType: EventArgsLevelUp.LevelType.Farming
+  fullName: StardewModdingAPI.Events.EventArgsLevelUp.LevelType.Farming
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/Events/EventArgsLevelUp.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Farming
+    path: Events/EventArgsLevelUp.cs
+    startLine: 23
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: The farming skill.
+  example: []
+  syntax:
+    content: Farming = 1
+    return:
+      type: StardewModdingAPI.Events.EventArgsLevelUp.LevelType
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.Events.EventArgsLevelUp.LevelType.Fishing
+  commentId: F:StardewModdingAPI.Events.EventArgsLevelUp.LevelType.Fishing
+  id: Fishing
+  parent: StardewModdingAPI.Events.EventArgsLevelUp.LevelType
+  langs:
+  - csharp
+  - vb
+  name: Fishing
+  nameWithType: EventArgsLevelUp.LevelType.Fishing
+  fullName: StardewModdingAPI.Events.EventArgsLevelUp.LevelType.Fishing
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/Events/EventArgsLevelUp.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Fishing
+    path: Events/EventArgsLevelUp.cs
+    startLine: 26
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: The fishing skill.
+  example: []
+  syntax:
+    content: Fishing = 2
+    return:
+      type: StardewModdingAPI.Events.EventArgsLevelUp.LevelType
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.Events.EventArgsLevelUp.LevelType.Foraging
+  commentId: F:StardewModdingAPI.Events.EventArgsLevelUp.LevelType.Foraging
+  id: Foraging
+  parent: StardewModdingAPI.Events.EventArgsLevelUp.LevelType
+  langs:
+  - csharp
+  - vb
+  name: Foraging
+  nameWithType: EventArgsLevelUp.LevelType.Foraging
+  fullName: StardewModdingAPI.Events.EventArgsLevelUp.LevelType.Foraging
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/Events/EventArgsLevelUp.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Foraging
+    path: Events/EventArgsLevelUp.cs
+    startLine: 29
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: The foraging skill.
+  example: []
+  syntax:
+    content: Foraging = 3
+    return:
+      type: StardewModdingAPI.Events.EventArgsLevelUp.LevelType
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.Events.EventArgsLevelUp.LevelType.Mining
+  commentId: F:StardewModdingAPI.Events.EventArgsLevelUp.LevelType.Mining
+  id: Mining
+  parent: StardewModdingAPI.Events.EventArgsLevelUp.LevelType
+  langs:
+  - csharp
+  - vb
+  name: Mining
+  nameWithType: EventArgsLevelUp.LevelType.Mining
+  fullName: StardewModdingAPI.Events.EventArgsLevelUp.LevelType.Mining
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/Events/EventArgsLevelUp.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Mining
+    path: Events/EventArgsLevelUp.cs
+    startLine: 32
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: The mining skill.
+  example: []
+  syntax:
+    content: Mining = 4
+    return:
+      type: StardewModdingAPI.Events.EventArgsLevelUp.LevelType
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.Events.EventArgsLevelUp.LevelType.Luck
+  commentId: F:StardewModdingAPI.Events.EventArgsLevelUp.LevelType.Luck
+  id: Luck
+  parent: StardewModdingAPI.Events.EventArgsLevelUp.LevelType
+  langs:
+  - csharp
+  - vb
+  name: Luck
+  nameWithType: EventArgsLevelUp.LevelType.Luck
+  fullName: StardewModdingAPI.Events.EventArgsLevelUp.LevelType.Luck
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/Events/EventArgsLevelUp.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Luck
+    path: Events/EventArgsLevelUp.cs
+    startLine: 35
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: The luck skill.
+  example: []
+  syntax:
+    content: Luck = 5
+    return:
+      type: StardewModdingAPI.Events.EventArgsLevelUp.LevelType
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+references:
+- uid: StardewModdingAPI.Events
+  commentId: N:StardewModdingAPI.Events
+  name: StardewModdingAPI.Events
+  nameWithType: StardewModdingAPI.Events
+  fullName: StardewModdingAPI.Events
+- uid: StardewModdingAPI.Events.EventArgsLevelUp.LevelType
+  commentId: T:StardewModdingAPI.Events.EventArgsLevelUp.LevelType
+  parent: StardewModdingAPI.Events
+  name: EventArgsLevelUp.LevelType
+  nameWithType: EventArgsLevelUp.LevelType
+  fullName: StardewModdingAPI.Events.EventArgsLevelUp.LevelType

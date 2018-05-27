@@ -1,0 +1,28 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.Utilities
+  commentId: N:StardewModdingAPI.Utilities
+  id: StardewModdingAPI.Utilities
+  children:
+  - StardewModdingAPI.Utilities.SDate
+  langs:
+  - csharp
+  - vb
+  name: StardewModdingAPI.Utilities
+  nameWithType: StardewModdingAPI.Utilities
+  fullName: StardewModdingAPI.Utilities
+  type: Namespace
+  assemblies:
+  - StardewModdingAPI
+references:
+- uid: StardewModdingAPI.Utilities.SDate
+  commentId: T:StardewModdingAPI.Utilities.SDate
+  parent: StardewModdingAPI.Utilities
+  name: SDate
+  nameWithType: SDate
+  fullName: StardewModdingAPI.Utilities.SDate
+- uid: StardewModdingAPI.Utilities
+  commentId: N:StardewModdingAPI.Utilities
+  name: StardewModdingAPI.Utilities
+  nameWithType: StardewModdingAPI.Utilities
+  fullName: StardewModdingAPI.Utilities

@@ -1,0 +1,461 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.IAssetDataForImage
+  commentId: T:StardewModdingAPI.IAssetDataForImage
+  id: IAssetDataForImage
+  parent: StardewModdingAPI
+  children:
+  - StardewModdingAPI.IAssetDataForImage.PatchImage(Microsoft.Xna.Framework.Graphics.Texture2D,System.Nullable{Microsoft.Xna.Framework.Rectangle},System.Nullable{Microsoft.Xna.Framework.Rectangle},StardewModdingAPI.PatchMode)
+  langs:
+  - csharp
+  - vb
+  name: IAssetDataForImage
+  nameWithType: IAssetDataForImage
+  fullName: StardewModdingAPI.IAssetDataForImage
+  type: Interface
+  source:
+    remote:
+      path: src/SMAPI/IAssetDataForImage.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: IAssetDataForImage
+    path: IAssetDataForImage.cs
+    startLine: 7
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Encapsulates access and changes to image content being read from a data file.
+  example: []
+  syntax:
+    content: 'public interface IAssetDataForImage : IAssetData<Texture2D>, IAssetInfo'
+    content.vb: >-
+      Public Interface IAssetDataForImage
+          Inherits IAssetData(Of Texture2D)
+  inheritedMembers:
+  - StardewModdingAPI.IAssetData{Microsoft.Xna.Framework.Graphics.Texture2D}.Data
+  - StardewModdingAPI.IAssetData{Microsoft.Xna.Framework.Graphics.Texture2D}.ReplaceWith(Microsoft.Xna.Framework.Graphics.Texture2D)
+  - StardewModdingAPI.IAssetInfo.Locale
+  - StardewModdingAPI.IAssetInfo.AssetName
+  - StardewModdingAPI.IAssetInfo.DataType
+  - StardewModdingAPI.IAssetInfo.AssetNameEquals(System.String)
+  modifiers.csharp:
+  - public
+  - interface
+  modifiers.vb:
+  - Public
+  - Interface
+- uid: StardewModdingAPI.IAssetDataForImage.PatchImage(Microsoft.Xna.Framework.Graphics.Texture2D,System.Nullable{Microsoft.Xna.Framework.Rectangle},System.Nullable{Microsoft.Xna.Framework.Rectangle},StardewModdingAPI.PatchMode)
+  commentId: M:StardewModdingAPI.IAssetDataForImage.PatchImage(Microsoft.Xna.Framework.Graphics.Texture2D,System.Nullable{Microsoft.Xna.Framework.Rectangle},System.Nullable{Microsoft.Xna.Framework.Rectangle},StardewModdingAPI.PatchMode)
+  id: PatchImage(Microsoft.Xna.Framework.Graphics.Texture2D,System.Nullable{Microsoft.Xna.Framework.Rectangle},System.Nullable{Microsoft.Xna.Framework.Rectangle},StardewModdingAPI.PatchMode)
+  parent: StardewModdingAPI.IAssetDataForImage
+  langs:
+  - csharp
+  - vb
+  name: PatchImage(Texture2D, Nullable<Rectangle>, Nullable<Rectangle>, PatchMode)
+  nameWithType: IAssetDataForImage.PatchImage(Texture2D, Nullable<Rectangle>, Nullable<Rectangle>, PatchMode)
+  fullName: StardewModdingAPI.IAssetDataForImage.PatchImage(Microsoft.Xna.Framework.Graphics.Texture2D, System.Nullable<Microsoft.Xna.Framework.Rectangle>, System.Nullable<Microsoft.Xna.Framework.Rectangle>, StardewModdingAPI.PatchMode)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IAssetDataForImage.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: PatchImage
+    path: IAssetDataForImage.cs
+    startLine: 20
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Overwrite part of the image.
+  example: []
+  syntax:
+    content: void PatchImage(Texture2D source, Rectangle? sourceArea = default(Rectangle? ), Rectangle? targetArea = default(Rectangle? ), PatchMode patchMode = PatchMode.Replace)
+    parameters:
+    - id: source
+      type: Microsoft.Xna.Framework.Graphics.Texture2D
+      description: The image to patch into the content.
+    - id: sourceArea
+      type: System.Nullable{Microsoft.Xna.Framework.Rectangle}
+      description: The part of the <code data-dev-comment-type="paramref" class="paramref">source</code> to copy (or <code>null</code> to take the whole texture). This must be within the bounds of the <code data-dev-comment-type="paramref" class="paramref">source</code> texture.
+    - id: targetArea
+      type: System.Nullable{Microsoft.Xna.Framework.Rectangle}
+      description: The part of the content to patch (or <code>null</code> to patch the whole texture). The original content within this area will be erased. This must be within the bounds of the existing spritesheet.
+    - id: patchMode
+      type: StardewModdingAPI.PatchMode
+      description: Indicates how an image should be patched.
+    content.vb: Sub PatchImage(source As Texture2D, sourceArea As Rectangle? = Nothing, targetArea As Rectangle? = Nothing, patchMode As PatchMode = PatchMode.Replace)
+  overload: StardewModdingAPI.IAssetDataForImage.PatchImage*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: One of the arguments is null.
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: The <code data-dev-comment-type="paramref" class="paramref">targetArea</code> is outside the bounds of the spritesheet.
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The content being read isn&apos;t an image.
+  nameWithType.vb: IAssetDataForImage.PatchImage(Texture2D, Nullable(Of Rectangle), Nullable(Of Rectangle), PatchMode)
+  fullName.vb: StardewModdingAPI.IAssetDataForImage.PatchImage(Microsoft.Xna.Framework.Graphics.Texture2D, System.Nullable(Of Microsoft.Xna.Framework.Rectangle), System.Nullable(Of Microsoft.Xna.Framework.Rectangle), StardewModdingAPI.PatchMode)
+  name.vb: PatchImage(Texture2D, Nullable(Of Rectangle), Nullable(Of Rectangle), PatchMode)
+references:
+- uid: StardewModdingAPI
+  commentId: N:StardewModdingAPI
+  name: StardewModdingAPI
+  nameWithType: StardewModdingAPI
+  fullName: StardewModdingAPI
+- uid: StardewModdingAPI.IAssetData{Microsoft.Xna.Framework.Graphics.Texture2D}.Data
+  commentId: P:StardewModdingAPI.IAssetData{Microsoft.Xna.Framework.Graphics.Texture2D}.Data
+  parent: StardewModdingAPI.IAssetData{Microsoft.Xna.Framework.Graphics.Texture2D}
+  definition: StardewModdingAPI.IAssetData`1.Data
+  name: Data
+  nameWithType: IAssetData<Texture2D>.Data
+  fullName: StardewModdingAPI.IAssetData<Microsoft.Xna.Framework.Graphics.Texture2D>.Data
+  nameWithType.vb: IAssetData(Of Texture2D).Data
+  fullName.vb: StardewModdingAPI.IAssetData(Of Microsoft.Xna.Framework.Graphics.Texture2D).Data
+- uid: StardewModdingAPI.IAssetData{Microsoft.Xna.Framework.Graphics.Texture2D}.ReplaceWith(Microsoft.Xna.Framework.Graphics.Texture2D)
+  commentId: M:StardewModdingAPI.IAssetData{Microsoft.Xna.Framework.Graphics.Texture2D}.ReplaceWith(Microsoft.Xna.Framework.Graphics.Texture2D)
+  parent: StardewModdingAPI.IAssetData{Microsoft.Xna.Framework.Graphics.Texture2D}
+  definition: StardewModdingAPI.IAssetData`1.ReplaceWith(`0)
+  name: ReplaceWith(Texture2D)
+  nameWithType: IAssetData<Texture2D>.ReplaceWith(Texture2D)
+  fullName: StardewModdingAPI.IAssetData<Microsoft.Xna.Framework.Graphics.Texture2D>.ReplaceWith(Microsoft.Xna.Framework.Graphics.Texture2D)
+  nameWithType.vb: IAssetData(Of Texture2D).ReplaceWith(Texture2D)
+  fullName.vb: StardewModdingAPI.IAssetData(Of Microsoft.Xna.Framework.Graphics.Texture2D).ReplaceWith(Microsoft.Xna.Framework.Graphics.Texture2D)
+  spec.csharp:
+  - uid: StardewModdingAPI.IAssetData`1.ReplaceWith(`0)
+    name: ReplaceWith
+    nameWithType: IAssetData<Texture2D>.ReplaceWith
+    fullName: StardewModdingAPI.IAssetData<Microsoft.Xna.Framework.Graphics.Texture2D>.ReplaceWith
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Microsoft.Xna.Framework.Graphics.Texture2D
+    name: Texture2D
+    nameWithType: Texture2D
+    fullName: Microsoft.Xna.Framework.Graphics.Texture2D
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: StardewModdingAPI.IAssetData`1.ReplaceWith(`0)
+    name: ReplaceWith
+    nameWithType: IAssetData(Of Texture2D).ReplaceWith
+    fullName: StardewModdingAPI.IAssetData(Of Microsoft.Xna.Framework.Graphics.Texture2D).ReplaceWith
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Microsoft.Xna.Framework.Graphics.Texture2D
+    name: Texture2D
+    nameWithType: Texture2D
+    fullName: Microsoft.Xna.Framework.Graphics.Texture2D
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.IAssetInfo.Locale
+  commentId: P:StardewModdingAPI.IAssetInfo.Locale
+  parent: StardewModdingAPI.IAssetInfo
+  name: Locale
+  nameWithType: IAssetInfo.Locale
+  fullName: StardewModdingAPI.IAssetInfo.Locale
+- uid: StardewModdingAPI.IAssetInfo.AssetName
+  commentId: P:StardewModdingAPI.IAssetInfo.AssetName
+  parent: StardewModdingAPI.IAssetInfo
+  name: AssetName
+  nameWithType: IAssetInfo.AssetName
+  fullName: StardewModdingAPI.IAssetInfo.AssetName
+- uid: StardewModdingAPI.IAssetInfo.DataType
+  commentId: P:StardewModdingAPI.IAssetInfo.DataType
+  parent: StardewModdingAPI.IAssetInfo
+  name: DataType
+  nameWithType: IAssetInfo.DataType
+  fullName: StardewModdingAPI.IAssetInfo.DataType
+- uid: StardewModdingAPI.IAssetInfo.AssetNameEquals(System.String)
+  commentId: M:StardewModdingAPI.IAssetInfo.AssetNameEquals(System.String)
+  parent: StardewModdingAPI.IAssetInfo
+  isExternal: true
+  name: AssetNameEquals(String)
+  nameWithType: IAssetInfo.AssetNameEquals(String)
+  fullName: StardewModdingAPI.IAssetInfo.AssetNameEquals(System.String)
+  spec.csharp:
+  - uid: StardewModdingAPI.IAssetInfo.AssetNameEquals(System.String)
+    name: AssetNameEquals
+    nameWithType: IAssetInfo.AssetNameEquals
+    fullName: StardewModdingAPI.IAssetInfo.AssetNameEquals
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: StardewModdingAPI.IAssetInfo.AssetNameEquals(System.String)
+    name: AssetNameEquals
+    nameWithType: IAssetInfo.AssetNameEquals
+    fullName: StardewModdingAPI.IAssetInfo.AssetNameEquals
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.IAssetData`1.Data
+  commentId: P:StardewModdingAPI.IAssetData`1.Data
+  name: Data
+  nameWithType: IAssetData<TValue>.Data
+  fullName: StardewModdingAPI.IAssetData<TValue>.Data
+  nameWithType.vb: IAssetData(Of TValue).Data
+  fullName.vb: StardewModdingAPI.IAssetData(Of TValue).Data
+- uid: StardewModdingAPI.IAssetData{Microsoft.Xna.Framework.Graphics.Texture2D}
+  commentId: T:StardewModdingAPI.IAssetData{Microsoft.Xna.Framework.Graphics.Texture2D}
+  parent: StardewModdingAPI
+  definition: StardewModdingAPI.IAssetData`1
+  name: IAssetData<Texture2D>
+  nameWithType: IAssetData<Texture2D>
+  fullName: StardewModdingAPI.IAssetData<Microsoft.Xna.Framework.Graphics.Texture2D>
+  nameWithType.vb: IAssetData(Of Texture2D)
+  fullName.vb: StardewModdingAPI.IAssetData(Of Microsoft.Xna.Framework.Graphics.Texture2D)
+  name.vb: IAssetData(Of Texture2D)
+  spec.csharp:
+  - uid: StardewModdingAPI.IAssetData`1
+    name: IAssetData
+    nameWithType: IAssetData
+    fullName: StardewModdingAPI.IAssetData
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Microsoft.Xna.Framework.Graphics.Texture2D
+    name: Texture2D
+    nameWithType: Texture2D
+    fullName: Microsoft.Xna.Framework.Graphics.Texture2D
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: StardewModdingAPI.IAssetData`1
+    name: IAssetData
+    nameWithType: IAssetData
+    fullName: StardewModdingAPI.IAssetData
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Microsoft.Xna.Framework.Graphics.Texture2D
+    name: Texture2D
+    nameWithType: Texture2D
+    fullName: Microsoft.Xna.Framework.Graphics.Texture2D
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.IAssetData`1.ReplaceWith(`0)
+  commentId: M:StardewModdingAPI.IAssetData`1.ReplaceWith(`0)
+  name: ReplaceWith(TValue)
+  nameWithType: IAssetData<TValue>.ReplaceWith(TValue)
+  fullName: StardewModdingAPI.IAssetData<TValue>.ReplaceWith(TValue)
+  nameWithType.vb: IAssetData(Of TValue).ReplaceWith(TValue)
+  fullName.vb: StardewModdingAPI.IAssetData(Of TValue).ReplaceWith(TValue)
+  spec.csharp:
+  - uid: StardewModdingAPI.IAssetData`1.ReplaceWith(`0)
+    name: ReplaceWith
+    nameWithType: IAssetData<TValue>.ReplaceWith
+    fullName: StardewModdingAPI.IAssetData<TValue>.ReplaceWith
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: TValue
+    nameWithType: TValue
+    fullName: TValue
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: StardewModdingAPI.IAssetData`1.ReplaceWith(`0)
+    name: ReplaceWith
+    nameWithType: IAssetData(Of TValue).ReplaceWith
+    fullName: StardewModdingAPI.IAssetData(Of TValue).ReplaceWith
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: TValue
+    nameWithType: TValue
+    fullName: TValue
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.IAssetInfo
+  commentId: T:StardewModdingAPI.IAssetInfo
+  parent: StardewModdingAPI
+  name: IAssetInfo
+  nameWithType: IAssetInfo
+  fullName: StardewModdingAPI.IAssetInfo
+- uid: StardewModdingAPI.IAssetData`1
+  commentId: T:StardewModdingAPI.IAssetData`1
+  name: IAssetData<TValue>
+  nameWithType: IAssetData<TValue>
+  fullName: StardewModdingAPI.IAssetData<TValue>
+  nameWithType.vb: IAssetData(Of TValue)
+  fullName.vb: StardewModdingAPI.IAssetData(Of TValue)
+  name.vb: IAssetData(Of TValue)
+  spec.csharp:
+  - uid: StardewModdingAPI.IAssetData`1
+    name: IAssetData
+    nameWithType: IAssetData
+    fullName: StardewModdingAPI.IAssetData
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TValue
+    nameWithType: TValue
+    fullName: TValue
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: StardewModdingAPI.IAssetData`1
+    name: IAssetData
+    nameWithType: IAssetData
+    fullName: StardewModdingAPI.IAssetData
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TValue
+    nameWithType: TValue
+    fullName: TValue
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.ArgumentNullException
+  commentId: T:System.ArgumentNullException
+  isExternal: true
+- uid: System.ArgumentOutOfRangeException
+  commentId: T:System.ArgumentOutOfRangeException
+  isExternal: true
+- uid: System.InvalidOperationException
+  commentId: T:System.InvalidOperationException
+  isExternal: true
+- uid: StardewModdingAPI.IAssetDataForImage.PatchImage*
+  commentId: Overload:StardewModdingAPI.IAssetDataForImage.PatchImage
+  name: PatchImage
+  nameWithType: IAssetDataForImage.PatchImage
+  fullName: StardewModdingAPI.IAssetDataForImage.PatchImage
+- uid: Microsoft.Xna.Framework.Graphics.Texture2D
+  commentId: T:Microsoft.Xna.Framework.Graphics.Texture2D
+  parent: Microsoft.Xna.Framework.Graphics
+  isExternal: true
+  name: Texture2D
+  nameWithType: Texture2D
+  fullName: Microsoft.Xna.Framework.Graphics.Texture2D
+- uid: System.Nullable{Microsoft.Xna.Framework.Rectangle}
+  commentId: T:System.Nullable{Microsoft.Xna.Framework.Rectangle}
+  parent: System
+  definition: System.Nullable`1
+  name: Nullable<Rectangle>
+  nameWithType: Nullable<Rectangle>
+  fullName: System.Nullable<Microsoft.Xna.Framework.Rectangle>
+  nameWithType.vb: Nullable(Of Rectangle)
+  fullName.vb: System.Nullable(Of Microsoft.Xna.Framework.Rectangle)
+  name.vb: Nullable(Of Rectangle)
+  spec.csharp:
+  - uid: System.Nullable`1
+    name: Nullable
+    nameWithType: Nullable
+    fullName: System.Nullable
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Microsoft.Xna.Framework.Rectangle
+    name: Rectangle
+    nameWithType: Rectangle
+    fullName: Microsoft.Xna.Framework.Rectangle
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Nullable`1
+    name: Nullable
+    nameWithType: Nullable
+    fullName: System.Nullable
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Microsoft.Xna.Framework.Rectangle
+    name: Rectangle
+    nameWithType: Rectangle
+    fullName: Microsoft.Xna.Framework.Rectangle
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.PatchMode
+  commentId: T:StardewModdingAPI.PatchMode
+  parent: StardewModdingAPI
+  name: PatchMode
+  nameWithType: PatchMode
+  fullName: StardewModdingAPI.PatchMode
+- uid: Microsoft.Xna.Framework.Graphics
+  commentId: N:Microsoft.Xna.Framework.Graphics
+  isExternal: true
+  name: Microsoft.Xna.Framework.Graphics
+  nameWithType: Microsoft.Xna.Framework.Graphics
+  fullName: Microsoft.Xna.Framework.Graphics
+- uid: System.Nullable`1
+  commentId: T:System.Nullable`1
+  isExternal: true
+  name: Nullable<T>
+  nameWithType: Nullable<T>
+  fullName: System.Nullable<T>
+  nameWithType.vb: Nullable(Of T)
+  fullName.vb: System.Nullable(Of T)
+  name.vb: Nullable(Of T)
+  spec.csharp:
+  - uid: System.Nullable`1
+    name: Nullable
+    nameWithType: Nullable
+    fullName: System.Nullable
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Nullable`1
+    name: Nullable
+    nameWithType: Nullable
+    fullName: System.Nullable
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System

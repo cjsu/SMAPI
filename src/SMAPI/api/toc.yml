@@ -1,0 +1,171 @@
+### YamlMime:TableOfContent
+- uid: StardewModdingAPI
+  name: StardewModdingAPI
+  items:
+  - uid: StardewModdingAPI.Constants
+    name: Constants
+  - uid: StardewModdingAPI.ContentSource
+    name: ContentSource
+  - uid: StardewModdingAPI.Context
+    name: Context
+  - uid: StardewModdingAPI.GamePlatform
+    name: GamePlatform
+  - uid: StardewModdingAPI.IAssetData
+    name: IAssetData
+  - uid: StardewModdingAPI.IAssetData`1
+    name: IAssetData<TValue>
+    name.vb: IAssetData(Of TValue)
+  - uid: StardewModdingAPI.IAssetDataForDictionary`2
+    name: IAssetDataForDictionary<TKey, TValue>
+    name.vb: IAssetDataForDictionary(Of TKey, TValue)
+  - uid: StardewModdingAPI.IAssetDataForImage
+    name: IAssetDataForImage
+  - uid: StardewModdingAPI.IAssetEditor
+    name: IAssetEditor
+  - uid: StardewModdingAPI.IAssetInfo
+    name: IAssetInfo
+  - uid: StardewModdingAPI.IAssetLoader
+    name: IAssetLoader
+  - uid: StardewModdingAPI.ICommandHelper
+    name: ICommandHelper
+  - uid: StardewModdingAPI.IContentHelper
+    name: IContentHelper
+  - uid: StardewModdingAPI.IContentPack
+    name: IContentPack
+  - uid: StardewModdingAPI.ICursorPosition
+    name: ICursorPosition
+  - uid: StardewModdingAPI.IManifest
+    name: IManifest
+  - uid: StardewModdingAPI.IManifestContentPackFor
+    name: IManifestContentPackFor
+  - uid: StardewModdingAPI.IManifestDependency
+    name: IManifestDependency
+  - uid: StardewModdingAPI.IMod
+    name: IMod
+  - uid: StardewModdingAPI.IModHelper
+    name: IModHelper
+  - uid: StardewModdingAPI.IModLinked
+    name: IModLinked
+  - uid: StardewModdingAPI.IModRegistry
+    name: IModRegistry
+  - uid: StardewModdingAPI.IMonitor
+    name: IMonitor
+  - uid: StardewModdingAPI.IMultiplayerHelper
+    name: IMultiplayerHelper
+  - uid: StardewModdingAPI.IReflectedField`1
+    name: IReflectedField<TValue>
+    name.vb: IReflectedField(Of TValue)
+  - uid: StardewModdingAPI.IReflectedMethod
+    name: IReflectedMethod
+  - uid: StardewModdingAPI.IReflectedProperty`1
+    name: IReflectedProperty<TValue>
+    name.vb: IReflectedProperty(Of TValue)
+  - uid: StardewModdingAPI.IReflectionHelper
+    name: IReflectionHelper
+  - uid: StardewModdingAPI.ISemanticVersion
+    name: ISemanticVersion
+  - uid: StardewModdingAPI.ITranslationHelper
+    name: ITranslationHelper
+  - uid: StardewModdingAPI.LogLevel
+    name: LogLevel
+  - uid: StardewModdingAPI.Mod
+    name: Mod
+  - uid: StardewModdingAPI.PatchMode
+    name: PatchMode
+  - uid: StardewModdingAPI.SButton
+    name: SButton
+  - uid: StardewModdingAPI.SButtonExtensions
+    name: SButtonExtensions
+  - uid: StardewModdingAPI.SemanticVersion
+    name: SemanticVersion
+  - uid: StardewModdingAPI.Translation
+    name: Translation
+- uid: StardewModdingAPI.Events
+  name: StardewModdingAPI.Events
+  items:
+  - uid: StardewModdingAPI.Events.ChangeType
+    name: ChangeType
+  - uid: StardewModdingAPI.Events.ContentEvents
+    name: ContentEvents
+  - uid: StardewModdingAPI.Events.ControlEvents
+    name: ControlEvents
+  - uid: StardewModdingAPI.Events.EventArgsClickableMenuChanged
+    name: EventArgsClickableMenuChanged
+  - uid: StardewModdingAPI.Events.EventArgsClickableMenuClosed
+    name: EventArgsClickableMenuClosed
+  - uid: StardewModdingAPI.Events.EventArgsControllerButtonPressed
+    name: EventArgsControllerButtonPressed
+  - uid: StardewModdingAPI.Events.EventArgsControllerButtonReleased
+    name: EventArgsControllerButtonReleased
+  - uid: StardewModdingAPI.Events.EventArgsControllerTriggerPressed
+    name: EventArgsControllerTriggerPressed
+  - uid: StardewModdingAPI.Events.EventArgsControllerTriggerReleased
+    name: EventArgsControllerTriggerReleased
+  - uid: StardewModdingAPI.Events.EventArgsInput
+    name: EventArgsInput
+  - uid: StardewModdingAPI.Events.EventArgsIntChanged
+    name: EventArgsIntChanged
+  - uid: StardewModdingAPI.Events.EventArgsInventoryChanged
+    name: EventArgsInventoryChanged
+  - uid: StardewModdingAPI.Events.EventArgsKeyboardStateChanged
+    name: EventArgsKeyboardStateChanged
+  - uid: StardewModdingAPI.Events.EventArgsKeyPressed
+    name: EventArgsKeyPressed
+  - uid: StardewModdingAPI.Events.EventArgsLevelUp
+    name: EventArgsLevelUp
+  - uid: StardewModdingAPI.Events.EventArgsLevelUp.LevelType
+    name: EventArgsLevelUp.LevelType
+  - uid: StardewModdingAPI.Events.EventArgsLocationBuildingsChanged
+    name: EventArgsLocationBuildingsChanged
+  - uid: StardewModdingAPI.Events.EventArgsLocationObjectsChanged
+    name: EventArgsLocationObjectsChanged
+  - uid: StardewModdingAPI.Events.EventArgsLocationsChanged
+    name: EventArgsLocationsChanged
+  - uid: StardewModdingAPI.Events.EventArgsMineLevelChanged
+    name: EventArgsMineLevelChanged
+  - uid: StardewModdingAPI.Events.EventArgsMouseStateChanged
+    name: EventArgsMouseStateChanged
+  - uid: StardewModdingAPI.Events.EventArgsPlayerWarped
+    name: EventArgsPlayerWarped
+  - uid: StardewModdingAPI.Events.EventArgsValueChanged`1
+    name: EventArgsValueChanged<T>
+    name.vb: EventArgsValueChanged(Of T)
+  - uid: StardewModdingAPI.Events.GameEvents
+    name: GameEvents
+  - uid: StardewModdingAPI.Events.GraphicsEvents
+    name: GraphicsEvents
+  - uid: StardewModdingAPI.Events.InputEvents
+    name: InputEvents
+  - uid: StardewModdingAPI.Events.ItemStackChange
+    name: ItemStackChange
+  - uid: StardewModdingAPI.Events.LocationEvents
+    name: LocationEvents
+  - uid: StardewModdingAPI.Events.MenuEvents
+    name: MenuEvents
+  - uid: StardewModdingAPI.Events.MineEvents
+    name: MineEvents
+  - uid: StardewModdingAPI.Events.MultiplayerEvents
+    name: MultiplayerEvents
+  - uid: StardewModdingAPI.Events.PlayerEvents
+    name: PlayerEvents
+  - uid: StardewModdingAPI.Events.SaveEvents
+    name: SaveEvents
+  - uid: StardewModdingAPI.Events.SpecialisedEvents
+    name: SpecialisedEvents
+  - uid: StardewModdingAPI.Events.TimeEvents
+    name: TimeEvents
+- uid: StardewModdingAPI.Framework.ModData
+  name: StardewModdingAPI.Framework.ModData
+  items:
+  - uid: StardewModdingAPI.Framework.ModData.ModDataFieldKey
+    name: ModDataFieldKey
+- uid: StardewModdingAPI.Framework.RewriteFacades
+  name: StardewModdingAPI.Framework.RewriteFacades
+  items:
+  - uid: StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods
+    name: SpriteBatchMethods
+- uid: StardewModdingAPI.Utilities
+  name: StardewModdingAPI.Utilities
+  items:
+  - uid: StardewModdingAPI.Utilities.SDate
+    name: SDate

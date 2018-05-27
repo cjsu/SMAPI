@@ -1,0 +1,730 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.Translation
+  commentId: T:StardewModdingAPI.Translation
+  id: Translation
+  parent: StardewModdingAPI
+  children:
+  - StardewModdingAPI.Translation.Assert
+  - StardewModdingAPI.Translation.Default(System.String)
+  - StardewModdingAPI.Translation.HasValue
+  - StardewModdingAPI.Translation.Key
+  - StardewModdingAPI.Translation.op_Implicit(StardewModdingAPI.Translation)~System.String
+  - StardewModdingAPI.Translation.Tokens(System.Object)
+  - StardewModdingAPI.Translation.ToString
+  - StardewModdingAPI.Translation.UsePlaceholder(System.Boolean)
+  langs:
+  - csharp
+  - vb
+  name: Translation
+  nameWithType: Translation
+  fullName: StardewModdingAPI.Translation
+  type: Class
+  source:
+    remote:
+      path: src/SMAPI/Translation.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Translation
+    path: Translation.cs
+    startLine: 9
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: A translation string with a fluent API to customise it.
+  example: []
+  syntax:
+    content: public class Translation
+    content.vb: Public Class Translation
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  modifiers.csharp:
+  - public
+  - class
+  modifiers.vb:
+  - Public
+  - Class
+- uid: StardewModdingAPI.Translation.Key
+  commentId: P:StardewModdingAPI.Translation.Key
+  id: Key
+  parent: StardewModdingAPI.Translation
+  langs:
+  - csharp
+  - vb
+  name: Key
+  nameWithType: Translation.Key
+  fullName: StardewModdingAPI.Translation.Key
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/Translation.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Key
+    path: Translation.cs
+    startLine: 34
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The original translation key.
+  example: []
+  syntax:
+    content: public string Key { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property Key As String
+  overload: StardewModdingAPI.Translation.Key*
+  modifiers.csharp:
+  - public
+  - get
+  modifiers.vb:
+  - Public
+  - ReadOnly
+- uid: StardewModdingAPI.Translation.Assert
+  commentId: M:StardewModdingAPI.Translation.Assert
+  id: Assert
+  parent: StardewModdingAPI.Translation
+  langs:
+  - csharp
+  - vb
+  name: Assert()
+  nameWithType: Translation.Assert()
+  fullName: StardewModdingAPI.Translation.Assert()
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/Translation.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Assert
+    path: Translation.cs
+    startLine: 65
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Throw an exception if the translation text is <code>null</code> or empty.
+  example: []
+  syntax:
+    content: public Translation Assert()
+    return:
+      type: StardewModdingAPI.Translation
+    content.vb: Public Function Assert As Translation
+  overload: StardewModdingAPI.Translation.Assert*
+  exceptions:
+  - type: System.Collections.Generic.KeyNotFoundException
+    commentId: T:System.Collections.Generic.KeyNotFoundException
+    description: There&apos;s no available translation matching the requested key and locale.
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: StardewModdingAPI.Translation.Default(System.String)
+  commentId: M:StardewModdingAPI.Translation.Default(System.String)
+  id: Default(System.String)
+  parent: StardewModdingAPI.Translation
+  langs:
+  - csharp
+  - vb
+  name: Default(String)
+  nameWithType: Translation.Default(String)
+  fullName: StardewModdingAPI.Translation.Default(System.String)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/Translation.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Default
+    path: Translation.cs
+    startLine: 74
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Replace the text if it&apos;s <code>null</code> or empty. If you set a <code>null</code> or empty value, the translation will show the fallback &quot;no translation&quot; placeholder (see <xref href="StardewModdingAPI.Translation.UsePlaceholder(System.Boolean)" data-throw-if-not-resolved="false"></xref> if you want to disable that). Returns a new instance if changed.
+  example: []
+  syntax:
+    content: public Translation Default(string default)
+    parameters:
+    - id: default
+      type: System.String
+      description: The default value.
+    return:
+      type: StardewModdingAPI.Translation
+    content.vb: Public Function Default(default As String) As Translation
+  overload: StardewModdingAPI.Translation.Default*
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: StardewModdingAPI.Translation.UsePlaceholder(System.Boolean)
+  commentId: M:StardewModdingAPI.Translation.UsePlaceholder(System.Boolean)
+  id: UsePlaceholder(System.Boolean)
+  parent: StardewModdingAPI.Translation
+  langs:
+  - csharp
+  - vb
+  name: UsePlaceholder(Boolean)
+  nameWithType: Translation.UsePlaceholder(Boolean)
+  fullName: StardewModdingAPI.Translation.UsePlaceholder(System.Boolean)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/Translation.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: UsePlaceholder
+    path: Translation.cs
+    startLine: 83
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Whether to return a &quot;no translation&quot; placeholder if the translation is <code>null</code> or empty. Returns a new instance.
+  example: []
+  syntax:
+    content: public Translation UsePlaceholder(bool use)
+    parameters:
+    - id: use
+      type: System.Boolean
+      description: Whether to return a placeholder.
+    return:
+      type: StardewModdingAPI.Translation
+    content.vb: Public Function UsePlaceholder(use As Boolean) As Translation
+  overload: StardewModdingAPI.Translation.UsePlaceholder*
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: StardewModdingAPI.Translation.Tokens(System.Object)
+  commentId: M:StardewModdingAPI.Translation.Tokens(System.Object)
+  id: Tokens(System.Object)
+  parent: StardewModdingAPI.Translation
+  langs:
+  - csharp
+  - vb
+  name: Tokens(Object)
+  nameWithType: Translation.Tokens(Object)
+  fullName: StardewModdingAPI.Translation.Tokens(System.Object)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/Translation.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Tokens
+    path: Translation.cs
+    startLine: 91
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Replace tokens in the text like <code>{{value}}</code> with the given values. Returns a new instance.
+  example: []
+  syntax:
+    content: public Translation Tokens(object tokens)
+    parameters:
+    - id: tokens
+      type: System.Object
+      description: An object containing token key/value pairs. This can be an anonymous object (like <code>new { value = 42, name = &quot;Cranberries&quot; }</code>), a dictionary, or a class instance.
+    return:
+      type: StardewModdingAPI.Translation
+    content.vb: Public Function Tokens(tokens As Object) As Translation
+  overload: StardewModdingAPI.Translation.Tokens*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: The <code data-dev-comment-type="paramref" class="paramref">tokens</code> argument is <code>null</code>.
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: StardewModdingAPI.Translation.HasValue
+  commentId: M:StardewModdingAPI.Translation.HasValue
+  id: HasValue
+  parent: StardewModdingAPI.Translation
+  langs:
+  - csharp
+  - vb
+  name: HasValue()
+  nameWithType: Translation.HasValue()
+  fullName: StardewModdingAPI.Translation.HasValue()
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/Translation.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: HasValue
+    path: Translation.cs
+    startLine: 133
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Get whether the translation has a defined value.
+  example: []
+  syntax:
+    content: public bool HasValue()
+    return:
+      type: System.Boolean
+    content.vb: Public Function HasValue As Boolean
+  overload: StardewModdingAPI.Translation.HasValue*
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: StardewModdingAPI.Translation.ToString
+  commentId: M:StardewModdingAPI.Translation.ToString
+  id: ToString
+  parent: StardewModdingAPI.Translation
+  langs:
+  - csharp
+  - vb
+  name: ToString()
+  nameWithType: Translation.ToString()
+  fullName: StardewModdingAPI.Translation.ToString()
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/Translation.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ToString
+    path: Translation.cs
+    startLine: 139
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Get the translation text. Calling this method isn&apos;t strictly necessary, since you can assign a <xref href="StardewModdingAPI.Translation" data-throw-if-not-resolved="false"></xref> value directly to a string.
+  example: []
+  syntax:
+    content: public override string ToString()
+    return:
+      type: System.String
+    content.vb: Public Overrides Function ToString As String
+  overridden: System.Object.ToString
+  overload: StardewModdingAPI.Translation.ToString*
+  modifiers.csharp:
+  - public
+  - override
+  modifiers.vb:
+  - Public
+  - Overrides
+- uid: StardewModdingAPI.Translation.op_Implicit(StardewModdingAPI.Translation)~System.String
+  commentId: M:StardewModdingAPI.Translation.op_Implicit(StardewModdingAPI.Translation)~System.String
+  id: op_Implicit(StardewModdingAPI.Translation)~System.String
+  parent: StardewModdingAPI.Translation
+  langs:
+  - csharp
+  - vb
+  name: Implicit(Translation to String)
+  nameWithType: Translation.Implicit(Translation to String)
+  fullName: StardewModdingAPI.Translation.Implicit(StardewModdingAPI.Translation to System.String)
+  type: Operator
+  source:
+    remote:
+      path: src/SMAPI/Translation.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: op_Implicit
+    path: Translation.cs
+    startLine: 148
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Get a string representation of the given translation.
+  example: []
+  syntax:
+    content: public static implicit operator string (Translation translation)
+    parameters:
+    - id: translation
+      type: StardewModdingAPI.Translation
+      description: The translation key.
+    return:
+      type: System.String
+    content.vb: Public Shared Widening Operator CType(translation As Translation) As String
+  overload: StardewModdingAPI.Translation.op_Implicit*
+  nameWithType.vb: Translation.Widening(Translation to String)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: StardewModdingAPI.Translation.Widening(StardewModdingAPI.Translation to System.String)
+  name.vb: Widening(Translation to String)
+references:
+- uid: StardewModdingAPI
+  commentId: N:StardewModdingAPI
+  name: StardewModdingAPI
+  nameWithType: StardewModdingAPI
+  fullName: StardewModdingAPI
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: System.Object.Equals(System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: System.Object.Equals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: System.Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: System.Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: System.Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: System.Object.ReferenceEquals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: StardewModdingAPI.Translation.Key*
+  commentId: Overload:StardewModdingAPI.Translation.Key
+  name: Key
+  nameWithType: Translation.Key
+  fullName: StardewModdingAPI.Translation.Key
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.Collections.Generic.KeyNotFoundException
+  commentId: T:System.Collections.Generic.KeyNotFoundException
+  isExternal: true
+- uid: StardewModdingAPI.Translation.Assert*
+  commentId: Overload:StardewModdingAPI.Translation.Assert
+  name: Assert
+  nameWithType: Translation.Assert
+  fullName: StardewModdingAPI.Translation.Assert
+- uid: StardewModdingAPI.Translation
+  commentId: T:StardewModdingAPI.Translation
+  parent: StardewModdingAPI
+  name: Translation
+  nameWithType: Translation
+  fullName: StardewModdingAPI.Translation
+- uid: StardewModdingAPI.Translation.UsePlaceholder(System.Boolean)
+  commentId: M:StardewModdingAPI.Translation.UsePlaceholder(System.Boolean)
+  isExternal: true
+- uid: StardewModdingAPI.Translation.Default*
+  commentId: Overload:StardewModdingAPI.Translation.Default
+  name: Default
+  nameWithType: Translation.Default
+  fullName: StardewModdingAPI.Translation.Default
+- uid: StardewModdingAPI.Translation.UsePlaceholder*
+  commentId: Overload:StardewModdingAPI.Translation.UsePlaceholder
+  name: UsePlaceholder
+  nameWithType: Translation.UsePlaceholder
+  fullName: StardewModdingAPI.Translation.UsePlaceholder
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.ArgumentNullException
+  commentId: T:System.ArgumentNullException
+  isExternal: true
+- uid: StardewModdingAPI.Translation.Tokens*
+  commentId: Overload:StardewModdingAPI.Translation.Tokens
+  name: Tokens
+  nameWithType: Translation.Tokens
+  fullName: StardewModdingAPI.Translation.Tokens
+- uid: StardewModdingAPI.Translation.HasValue*
+  commentId: Overload:StardewModdingAPI.Translation.HasValue
+  name: HasValue
+  nameWithType: Translation.HasValue
+  fullName: StardewModdingAPI.Translation.HasValue
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: System.Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.Translation.ToString*
+  commentId: Overload:StardewModdingAPI.Translation.ToString
+  name: ToString
+  nameWithType: Translation.ToString
+  fullName: StardewModdingAPI.Translation.ToString
+- uid: StardewModdingAPI.Translation.op_Implicit*
+  commentId: Overload:StardewModdingAPI.Translation.op_Implicit
+  name: Implicit
+  nameWithType: Translation.Implicit
+  fullName: StardewModdingAPI.Translation.Implicit
+  nameWithType.vb: Translation.Widening
+  fullName.vb: StardewModdingAPI.Translation.Widening
+  name.vb: Widening

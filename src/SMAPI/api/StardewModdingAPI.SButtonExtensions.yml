@@ -1,0 +1,668 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.SButtonExtensions
+  commentId: T:StardewModdingAPI.SButtonExtensions
+  id: SButtonExtensions
+  parent: StardewModdingAPI
+  children:
+  - StardewModdingAPI.SButtonExtensions.IsActionButton(StardewModdingAPI.SButton)
+  - StardewModdingAPI.SButtonExtensions.IsUseToolButton(StardewModdingAPI.SButton)
+  - StardewModdingAPI.SButtonExtensions.TryGetController(StardewModdingAPI.SButton,Microsoft.Xna.Framework.Input.Buttons@)
+  - StardewModdingAPI.SButtonExtensions.TryGetKeyboard(StardewModdingAPI.SButton,Microsoft.Xna.Framework.Input.Keys@)
+  - StardewModdingAPI.SButtonExtensions.TryGetStardewInput(StardewModdingAPI.SButton,StardewValley.InputButton@)
+  langs:
+  - csharp
+  - vb
+  name: SButtonExtensions
+  nameWithType: SButtonExtensions
+  fullName: StardewModdingAPI.SButtonExtensions
+  type: Class
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: SButtonExtensions
+    path: SButton.cs
+    startLine: 592
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Provides extension methods for <xref href="StardewModdingAPI.SButton" data-throw-if-not-resolved="false"></xref>.
+  example: []
+  syntax:
+    content: public static class SButtonExtensions
+    content.vb: Public Module SButtonExtensions
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  modifiers.csharp:
+  - public
+  - static
+  - class
+  modifiers.vb:
+  - Public
+  - Module
+- uid: StardewModdingAPI.SButtonExtensions.TryGetKeyboard(StardewModdingAPI.SButton,Microsoft.Xna.Framework.Input.Keys@)
+  commentId: M:StardewModdingAPI.SButtonExtensions.TryGetKeyboard(StardewModdingAPI.SButton,Microsoft.Xna.Framework.Input.Keys@)
+  id: TryGetKeyboard(StardewModdingAPI.SButton,Microsoft.Xna.Framework.Input.Keys@)
+  isExtensionMethod: true
+  parent: StardewModdingAPI.SButtonExtensions
+  langs:
+  - csharp
+  - vb
+  name: TryGetKeyboard(SButton, out Keys)
+  nameWithType: SButtonExtensions.TryGetKeyboard(SButton, out Keys)
+  fullName: StardewModdingAPI.SButtonExtensions.TryGetKeyboard(StardewModdingAPI.SButton, out Microsoft.Xna.Framework.Input.Keys)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: TryGetKeyboard
+    path: SButton.cs
+    startLine: 634
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Get the <xref href="Microsoft.Xna.Framework.Input.Keys" data-throw-if-not-resolved="false"></xref> equivalent for the given button.
+  example: []
+  syntax:
+    content: public static bool TryGetKeyboard(this SButton input, out Keys key)
+    parameters:
+    - id: input
+      type: StardewModdingAPI.SButton
+      description: The button to convert.
+    - id: key
+      type: Microsoft.Xna.Framework.Input.Keys
+      description: The keyboard equivalent.
+    return:
+      type: System.Boolean
+      description: Returns whether the value was converted successfully.
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function TryGetKeyboard(input As SButton, ByRef key As Keys) As Boolean
+  overload: StardewModdingAPI.SButtonExtensions.TryGetKeyboard*
+  nameWithType.vb: SButtonExtensions.TryGetKeyboard(SButton, ByRef Keys)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: StardewModdingAPI.SButtonExtensions.TryGetKeyboard(StardewModdingAPI.SButton, ByRef Microsoft.Xna.Framework.Input.Keys)
+  name.vb: TryGetKeyboard(SButton, ByRef Keys)
+- uid: StardewModdingAPI.SButtonExtensions.TryGetController(StardewModdingAPI.SButton,Microsoft.Xna.Framework.Input.Buttons@)
+  commentId: M:StardewModdingAPI.SButtonExtensions.TryGetController(StardewModdingAPI.SButton,Microsoft.Xna.Framework.Input.Buttons@)
+  id: TryGetController(StardewModdingAPI.SButton,Microsoft.Xna.Framework.Input.Buttons@)
+  isExtensionMethod: true
+  parent: StardewModdingAPI.SButtonExtensions
+  langs:
+  - csharp
+  - vb
+  name: TryGetController(SButton, out Buttons)
+  nameWithType: SButtonExtensions.TryGetController(SButton, out Buttons)
+  fullName: StardewModdingAPI.SButtonExtensions.TryGetController(StardewModdingAPI.SButton, out Microsoft.Xna.Framework.Input.Buttons)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: TryGetController
+    path: SButton.cs
+    startLine: 650
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Get the <xref href="Microsoft.Xna.Framework.Input.Buttons" data-throw-if-not-resolved="false"></xref> equivalent for the given button.
+  example: []
+  syntax:
+    content: public static bool TryGetController(this SButton input, out Buttons button)
+    parameters:
+    - id: input
+      type: StardewModdingAPI.SButton
+      description: The button to convert.
+    - id: button
+      type: Microsoft.Xna.Framework.Input.Buttons
+      description: The controller equivalent.
+    return:
+      type: System.Boolean
+      description: Returns whether the value was converted successfully.
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function TryGetController(input As SButton, ByRef button As Buttons) As Boolean
+  overload: StardewModdingAPI.SButtonExtensions.TryGetController*
+  nameWithType.vb: SButtonExtensions.TryGetController(SButton, ByRef Buttons)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: StardewModdingAPI.SButtonExtensions.TryGetController(StardewModdingAPI.SButton, ByRef Microsoft.Xna.Framework.Input.Buttons)
+  name.vb: TryGetController(SButton, ByRef Buttons)
+- uid: StardewModdingAPI.SButtonExtensions.TryGetStardewInput(StardewModdingAPI.SButton,StardewValley.InputButton@)
+  commentId: M:StardewModdingAPI.SButtonExtensions.TryGetStardewInput(StardewModdingAPI.SButton,StardewValley.InputButton@)
+  id: TryGetStardewInput(StardewModdingAPI.SButton,StardewValley.InputButton@)
+  isExtensionMethod: true
+  parent: StardewModdingAPI.SButtonExtensions
+  langs:
+  - csharp
+  - vb
+  name: TryGetStardewInput(SButton, out InputButton)
+  nameWithType: SButtonExtensions.TryGetStardewInput(SButton, out InputButton)
+  fullName: StardewModdingAPI.SButtonExtensions.TryGetStardewInput(StardewModdingAPI.SButton, out StardewValley.InputButton)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: TryGetStardewInput
+    path: SButton.cs
+    startLine: 666
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Get the <xref href="StardewValley.InputButton" data-throw-if-not-resolved="false"></xref> equivalent for the given button.
+  example: []
+  syntax:
+    content: public static bool TryGetStardewInput(this SButton input, out InputButton button)
+    parameters:
+    - id: input
+      type: StardewModdingAPI.SButton
+      description: The button to convert.
+    - id: button
+      type: StardewValley.InputButton
+      description: The Stardew Valley input button equivalent.
+    return:
+      type: System.Boolean
+      description: Returns whether the value was converted successfully.
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function TryGetStardewInput(input As SButton, ByRef button As InputButton) As Boolean
+  overload: StardewModdingAPI.SButtonExtensions.TryGetStardewInput*
+  nameWithType.vb: SButtonExtensions.TryGetStardewInput(SButton, ByRef InputButton)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: StardewModdingAPI.SButtonExtensions.TryGetStardewInput(StardewModdingAPI.SButton, ByRef StardewValley.InputButton)
+  name.vb: TryGetStardewInput(SButton, ByRef InputButton)
+- uid: StardewModdingAPI.SButtonExtensions.IsUseToolButton(StardewModdingAPI.SButton)
+  commentId: M:StardewModdingAPI.SButtonExtensions.IsUseToolButton(StardewModdingAPI.SButton)
+  id: IsUseToolButton(StardewModdingAPI.SButton)
+  isExtensionMethod: true
+  parent: StardewModdingAPI.SButtonExtensions
+  langs:
+  - csharp
+  - vb
+  name: IsUseToolButton(SButton)
+  nameWithType: SButtonExtensions.IsUseToolButton(SButton)
+  fullName: StardewModdingAPI.SButtonExtensions.IsUseToolButton(StardewModdingAPI.SButton)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: IsUseToolButton
+    path: SButton.cs
+    startLine: 689
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Get whether the given button is equivalent to <xref href="StardewValley.Options.useToolButton" data-throw-if-not-resolved="false"></xref>.
+  example: []
+  syntax:
+    content: public static bool IsUseToolButton(this SButton input)
+    parameters:
+    - id: input
+      type: StardewModdingAPI.SButton
+      description: The button.
+    return:
+      type: System.Boolean
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function IsUseToolButton(input As SButton) As Boolean
+  overload: StardewModdingAPI.SButtonExtensions.IsUseToolButton*
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+- uid: StardewModdingAPI.SButtonExtensions.IsActionButton(StardewModdingAPI.SButton)
+  commentId: M:StardewModdingAPI.SButtonExtensions.IsActionButton(StardewModdingAPI.SButton)
+  id: IsActionButton(StardewModdingAPI.SButton)
+  isExtensionMethod: true
+  parent: StardewModdingAPI.SButtonExtensions
+  langs:
+  - csharp
+  - vb
+  name: IsActionButton(SButton)
+  nameWithType: SButtonExtensions.IsActionButton(SButton)
+  fullName: StardewModdingAPI.SButtonExtensions.IsActionButton(StardewModdingAPI.SButton)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/SButton.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: IsActionButton
+    path: SButton.cs
+    startLine: 696
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Get whether the given button is equivalent to <xref href="StardewValley.Options.actionButton" data-throw-if-not-resolved="false"></xref>.
+  example: []
+  syntax:
+    content: public static bool IsActionButton(this SButton input)
+    parameters:
+    - id: input
+      type: StardewModdingAPI.SButton
+      description: The button.
+    return:
+      type: System.Boolean
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function IsActionButton(input As SButton) As Boolean
+  overload: StardewModdingAPI.SButtonExtensions.IsActionButton*
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+references:
+- uid: StardewModdingAPI.SButton
+  commentId: T:StardewModdingAPI.SButton
+  parent: StardewModdingAPI
+  name: SButton
+  nameWithType: SButton
+  fullName: StardewModdingAPI.SButton
+- uid: StardewModdingAPI
+  commentId: N:StardewModdingAPI
+  name: StardewModdingAPI
+  nameWithType: StardewModdingAPI
+  fullName: StardewModdingAPI
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: System.Object.Equals(System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: System.Object.Equals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: System.Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: System.Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: System.Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: System.Object.ReferenceEquals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: System.Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Microsoft.Xna.Framework.Input.Keys
+  commentId: T:Microsoft.Xna.Framework.Input.Keys
+  parent: Microsoft.Xna.Framework.Input
+  isExternal: true
+  name: Keys
+  nameWithType: Keys
+  fullName: Microsoft.Xna.Framework.Input.Keys
+- uid: StardewModdingAPI.SButtonExtensions.TryGetKeyboard*
+  commentId: Overload:StardewModdingAPI.SButtonExtensions.TryGetKeyboard
+  name: TryGetKeyboard
+  nameWithType: SButtonExtensions.TryGetKeyboard
+  fullName: StardewModdingAPI.SButtonExtensions.TryGetKeyboard
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: Microsoft.Xna.Framework.Input
+  commentId: N:Microsoft.Xna.Framework.Input
+  isExternal: true
+  name: Microsoft.Xna.Framework.Input
+  nameWithType: Microsoft.Xna.Framework.Input
+  fullName: Microsoft.Xna.Framework.Input
+- uid: Microsoft.Xna.Framework.Input.Buttons
+  commentId: T:Microsoft.Xna.Framework.Input.Buttons
+  parent: Microsoft.Xna.Framework.Input
+  isExternal: true
+  name: Buttons
+  nameWithType: Buttons
+  fullName: Microsoft.Xna.Framework.Input.Buttons
+- uid: StardewModdingAPI.SButtonExtensions.TryGetController*
+  commentId: Overload:StardewModdingAPI.SButtonExtensions.TryGetController
+  name: TryGetController
+  nameWithType: SButtonExtensions.TryGetController
+  fullName: StardewModdingAPI.SButtonExtensions.TryGetController
+- uid: StardewValley.InputButton
+  commentId: T:StardewValley.InputButton
+  parent: StardewValley
+  isExternal: true
+  name: InputButton
+  nameWithType: InputButton
+  fullName: StardewValley.InputButton
+- uid: StardewModdingAPI.SButtonExtensions.TryGetStardewInput*
+  commentId: Overload:StardewModdingAPI.SButtonExtensions.TryGetStardewInput
+  name: TryGetStardewInput
+  nameWithType: SButtonExtensions.TryGetStardewInput
+  fullName: StardewModdingAPI.SButtonExtensions.TryGetStardewInput
+- uid: StardewValley
+  commentId: N:StardewValley
+  isExternal: true
+  name: StardewValley
+  nameWithType: StardewValley
+  fullName: StardewValley
+- uid: StardewValley.Options.useToolButton
+  commentId: F:StardewValley.Options.useToolButton
+  isExternal: true
+- uid: StardewModdingAPI.SButtonExtensions.IsUseToolButton*
+  commentId: Overload:StardewModdingAPI.SButtonExtensions.IsUseToolButton
+  name: IsUseToolButton
+  nameWithType: SButtonExtensions.IsUseToolButton
+  fullName: StardewModdingAPI.SButtonExtensions.IsUseToolButton
+- uid: StardewValley.Options.actionButton
+  commentId: F:StardewValley.Options.actionButton
+  isExternal: true
+- uid: StardewModdingAPI.SButtonExtensions.IsActionButton*
+  commentId: Overload:StardewModdingAPI.SButtonExtensions.IsActionButton
+  name: IsActionButton
+  nameWithType: SButtonExtensions.IsActionButton
+  fullName: StardewModdingAPI.SButtonExtensions.IsActionButton

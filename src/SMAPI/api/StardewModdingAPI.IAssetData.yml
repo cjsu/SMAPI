@@ -1,0 +1,539 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.IAssetData
+  commentId: T:StardewModdingAPI.IAssetData
+  id: IAssetData
+  parent: StardewModdingAPI
+  children:
+  - StardewModdingAPI.IAssetData.AsDictionary``2
+  - StardewModdingAPI.IAssetData.AsImage
+  - StardewModdingAPI.IAssetData.GetData``1
+  langs:
+  - csharp
+  - vb
+  name: IAssetData
+  nameWithType: IAssetData
+  fullName: StardewModdingAPI.IAssetData
+  type: Interface
+  source:
+    remote:
+      path: src/SMAPI/IAssetData.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: IAssetData
+    path: IAssetData.cs
+    startLine: 26
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Generic metadata and methods for a content asset being loaded.
+  example: []
+  syntax:
+    content: 'public interface IAssetData : IAssetData<object>, IAssetInfo'
+    content.vb: >-
+      Public Interface IAssetData
+          Inherits IAssetData(Of Object)
+  inheritedMembers:
+  - StardewModdingAPI.IAssetData{System.Object}.Data
+  - StardewModdingAPI.IAssetData{System.Object}.ReplaceWith(System.Object)
+  - StardewModdingAPI.IAssetInfo.Locale
+  - StardewModdingAPI.IAssetInfo.AssetName
+  - StardewModdingAPI.IAssetInfo.DataType
+  - StardewModdingAPI.IAssetInfo.AssetNameEquals(System.String)
+  modifiers.csharp:
+  - public
+  - interface
+  modifiers.vb:
+  - Public
+  - Interface
+- uid: StardewModdingAPI.IAssetData.AsDictionary``2
+  commentId: M:StardewModdingAPI.IAssetData.AsDictionary``2
+  id: AsDictionary``2
+  parent: StardewModdingAPI.IAssetData
+  langs:
+  - csharp
+  - vb
+  name: AsDictionary<TKey, TValue>()
+  nameWithType: IAssetData.AsDictionary<TKey, TValue>()
+  fullName: StardewModdingAPI.IAssetData.AsDictionary<TKey, TValue>()
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IAssetData.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: AsDictionary
+    path: IAssetData.cs
+    startLine: 35
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Get a helper to manipulate the data as a dictionary.
+  example: []
+  syntax:
+    content: IAssetDataForDictionary<TKey, TValue> AsDictionary<TKey, TValue>()
+    typeParameters:
+    - id: TKey
+      description: The expected dictionary key.
+    - id: TValue
+      description: The expected dictionary value.
+    return:
+      type: StardewModdingAPI.IAssetDataForDictionary{{TKey},{TValue}}
+    content.vb: Function AsDictionary(Of TKey, TValue) As IAssetDataForDictionary(Of TKey, TValue)
+  overload: StardewModdingAPI.IAssetData.AsDictionary*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The content being read isn&apos;t a dictionary.
+  nameWithType.vb: IAssetData.AsDictionary(Of TKey, TValue)()
+  fullName.vb: StardewModdingAPI.IAssetData.AsDictionary(Of TKey, TValue)()
+  name.vb: AsDictionary(Of TKey, TValue)()
+- uid: StardewModdingAPI.IAssetData.AsImage
+  commentId: M:StardewModdingAPI.IAssetData.AsImage
+  id: AsImage
+  parent: StardewModdingAPI.IAssetData
+  langs:
+  - csharp
+  - vb
+  name: AsImage()
+  nameWithType: IAssetData.AsImage()
+  fullName: StardewModdingAPI.IAssetData.AsImage()
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IAssetData.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: AsImage
+    path: IAssetData.cs
+    startLine: 39
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Get a helper to manipulate the data as an image.
+  example: []
+  syntax:
+    content: IAssetDataForImage AsImage()
+    return:
+      type: StardewModdingAPI.IAssetDataForImage
+    content.vb: Function AsImage As IAssetDataForImage
+  overload: StardewModdingAPI.IAssetData.AsImage*
+  exceptions:
+  - type: System.InvalidOperationException
+    commentId: T:System.InvalidOperationException
+    description: The content being read isn&apos;t an image.
+- uid: StardewModdingAPI.IAssetData.GetData``1
+  commentId: M:StardewModdingAPI.IAssetData.GetData``1
+  id: GetData``1
+  parent: StardewModdingAPI.IAssetData
+  langs:
+  - csharp
+  - vb
+  name: GetData<TData>()
+  nameWithType: IAssetData.GetData<TData>()
+  fullName: StardewModdingAPI.IAssetData.GetData<TData>()
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IAssetData.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: GetData
+    path: IAssetData.cs
+    startLine: 44
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Get the data as a given type.
+  example: []
+  syntax:
+    content: TData GetData<TData>()
+    typeParameters:
+    - id: TData
+      description: The expected data type.
+    return:
+      type: '{TData}'
+    content.vb: Function GetData(Of TData) As TData
+  overload: StardewModdingAPI.IAssetData.GetData*
+  exceptions:
+  - type: System.InvalidCastException
+    commentId: T:System.InvalidCastException
+    description: The data can&apos;t be converted to <code data-dev-comment-type="typeparamref" class="typeparamref">TData</code>.
+  nameWithType.vb: IAssetData.GetData(Of TData)()
+  fullName.vb: StardewModdingAPI.IAssetData.GetData(Of TData)()
+  name.vb: GetData(Of TData)()
+references:
+- uid: StardewModdingAPI
+  commentId: N:StardewModdingAPI
+  name: StardewModdingAPI
+  nameWithType: StardewModdingAPI
+  fullName: StardewModdingAPI
+- uid: StardewModdingAPI.IAssetData{System.Object}.Data
+  commentId: P:StardewModdingAPI.IAssetData{System.Object}.Data
+  parent: StardewModdingAPI.IAssetData{System.Object}
+  definition: StardewModdingAPI.IAssetData`1.Data
+  name: Data
+  nameWithType: IAssetData<Object>.Data
+  fullName: StardewModdingAPI.IAssetData<System.Object>.Data
+  nameWithType.vb: IAssetData(Of Object).Data
+  fullName.vb: StardewModdingAPI.IAssetData(Of System.Object).Data
+- uid: StardewModdingAPI.IAssetData{System.Object}.ReplaceWith(System.Object)
+  commentId: M:StardewModdingAPI.IAssetData{System.Object}.ReplaceWith(System.Object)
+  parent: StardewModdingAPI.IAssetData{System.Object}
+  definition: StardewModdingAPI.IAssetData`1.ReplaceWith(`0)
+  name: ReplaceWith(Object)
+  nameWithType: IAssetData<Object>.ReplaceWith(Object)
+  fullName: StardewModdingAPI.IAssetData<System.Object>.ReplaceWith(System.Object)
+  nameWithType.vb: IAssetData(Of Object).ReplaceWith(Object)
+  fullName.vb: StardewModdingAPI.IAssetData(Of System.Object).ReplaceWith(System.Object)
+  spec.csharp:
+  - uid: StardewModdingAPI.IAssetData`1.ReplaceWith(`0)
+    name: ReplaceWith
+    nameWithType: IAssetData<Object>.ReplaceWith
+    fullName: StardewModdingAPI.IAssetData<System.Object>.ReplaceWith
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: StardewModdingAPI.IAssetData`1.ReplaceWith(`0)
+    name: ReplaceWith
+    nameWithType: IAssetData(Of Object).ReplaceWith
+    fullName: StardewModdingAPI.IAssetData(Of System.Object).ReplaceWith
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.IAssetInfo.Locale
+  commentId: P:StardewModdingAPI.IAssetInfo.Locale
+  parent: StardewModdingAPI.IAssetInfo
+  name: Locale
+  nameWithType: IAssetInfo.Locale
+  fullName: StardewModdingAPI.IAssetInfo.Locale
+- uid: StardewModdingAPI.IAssetInfo.AssetName
+  commentId: P:StardewModdingAPI.IAssetInfo.AssetName
+  parent: StardewModdingAPI.IAssetInfo
+  name: AssetName
+  nameWithType: IAssetInfo.AssetName
+  fullName: StardewModdingAPI.IAssetInfo.AssetName
+- uid: StardewModdingAPI.IAssetInfo.DataType
+  commentId: P:StardewModdingAPI.IAssetInfo.DataType
+  parent: StardewModdingAPI.IAssetInfo
+  name: DataType
+  nameWithType: IAssetInfo.DataType
+  fullName: StardewModdingAPI.IAssetInfo.DataType
+- uid: StardewModdingAPI.IAssetInfo.AssetNameEquals(System.String)
+  commentId: M:StardewModdingAPI.IAssetInfo.AssetNameEquals(System.String)
+  parent: StardewModdingAPI.IAssetInfo
+  isExternal: true
+  name: AssetNameEquals(String)
+  nameWithType: IAssetInfo.AssetNameEquals(String)
+  fullName: StardewModdingAPI.IAssetInfo.AssetNameEquals(System.String)
+  spec.csharp:
+  - uid: StardewModdingAPI.IAssetInfo.AssetNameEquals(System.String)
+    name: AssetNameEquals
+    nameWithType: IAssetInfo.AssetNameEquals
+    fullName: StardewModdingAPI.IAssetInfo.AssetNameEquals
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: StardewModdingAPI.IAssetInfo.AssetNameEquals(System.String)
+    name: AssetNameEquals
+    nameWithType: IAssetInfo.AssetNameEquals
+    fullName: StardewModdingAPI.IAssetInfo.AssetNameEquals
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.IAssetData`1.Data
+  commentId: P:StardewModdingAPI.IAssetData`1.Data
+  name: Data
+  nameWithType: IAssetData<TValue>.Data
+  fullName: StardewModdingAPI.IAssetData<TValue>.Data
+  nameWithType.vb: IAssetData(Of TValue).Data
+  fullName.vb: StardewModdingAPI.IAssetData(Of TValue).Data
+- uid: StardewModdingAPI.IAssetData{System.Object}
+  commentId: T:StardewModdingAPI.IAssetData{System.Object}
+  parent: StardewModdingAPI
+  definition: StardewModdingAPI.IAssetData`1
+  name: IAssetData<Object>
+  nameWithType: IAssetData<Object>
+  fullName: StardewModdingAPI.IAssetData<System.Object>
+  nameWithType.vb: IAssetData(Of Object)
+  fullName.vb: StardewModdingAPI.IAssetData(Of System.Object)
+  name.vb: IAssetData(Of Object)
+  spec.csharp:
+  - uid: StardewModdingAPI.IAssetData`1
+    name: IAssetData
+    nameWithType: IAssetData
+    fullName: StardewModdingAPI.IAssetData
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: StardewModdingAPI.IAssetData`1
+    name: IAssetData
+    nameWithType: IAssetData
+    fullName: StardewModdingAPI.IAssetData
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.IAssetData`1.ReplaceWith(`0)
+  commentId: M:StardewModdingAPI.IAssetData`1.ReplaceWith(`0)
+  name: ReplaceWith(TValue)
+  nameWithType: IAssetData<TValue>.ReplaceWith(TValue)
+  fullName: StardewModdingAPI.IAssetData<TValue>.ReplaceWith(TValue)
+  nameWithType.vb: IAssetData(Of TValue).ReplaceWith(TValue)
+  fullName.vb: StardewModdingAPI.IAssetData(Of TValue).ReplaceWith(TValue)
+  spec.csharp:
+  - uid: StardewModdingAPI.IAssetData`1.ReplaceWith(`0)
+    name: ReplaceWith
+    nameWithType: IAssetData<TValue>.ReplaceWith
+    fullName: StardewModdingAPI.IAssetData<TValue>.ReplaceWith
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: TValue
+    nameWithType: TValue
+    fullName: TValue
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: StardewModdingAPI.IAssetData`1.ReplaceWith(`0)
+    name: ReplaceWith
+    nameWithType: IAssetData(Of TValue).ReplaceWith
+    fullName: StardewModdingAPI.IAssetData(Of TValue).ReplaceWith
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: TValue
+    nameWithType: TValue
+    fullName: TValue
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.IAssetInfo
+  commentId: T:StardewModdingAPI.IAssetInfo
+  parent: StardewModdingAPI
+  name: IAssetInfo
+  nameWithType: IAssetInfo
+  fullName: StardewModdingAPI.IAssetInfo
+- uid: StardewModdingAPI.IAssetData`1
+  commentId: T:StardewModdingAPI.IAssetData`1
+  name: IAssetData<TValue>
+  nameWithType: IAssetData<TValue>
+  fullName: StardewModdingAPI.IAssetData<TValue>
+  nameWithType.vb: IAssetData(Of TValue)
+  fullName.vb: StardewModdingAPI.IAssetData(Of TValue)
+  name.vb: IAssetData(Of TValue)
+  spec.csharp:
+  - uid: StardewModdingAPI.IAssetData`1
+    name: IAssetData
+    nameWithType: IAssetData
+    fullName: StardewModdingAPI.IAssetData
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TValue
+    nameWithType: TValue
+    fullName: TValue
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: StardewModdingAPI.IAssetData`1
+    name: IAssetData
+    nameWithType: IAssetData
+    fullName: StardewModdingAPI.IAssetData
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TValue
+    nameWithType: TValue
+    fullName: TValue
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.InvalidOperationException
+  commentId: T:System.InvalidOperationException
+  isExternal: true
+- uid: StardewModdingAPI.IAssetData.AsDictionary*
+  commentId: Overload:StardewModdingAPI.IAssetData.AsDictionary
+  name: AsDictionary
+  nameWithType: IAssetData.AsDictionary
+  fullName: StardewModdingAPI.IAssetData.AsDictionary
+- uid: StardewModdingAPI.IAssetDataForDictionary{{TKey},{TValue}}
+  commentId: T:StardewModdingAPI.IAssetDataForDictionary{``0,``1}
+  parent: StardewModdingAPI
+  definition: StardewModdingAPI.IAssetDataForDictionary`2
+  name: IAssetDataForDictionary<TKey, TValue>
+  nameWithType: IAssetDataForDictionary<TKey, TValue>
+  fullName: StardewModdingAPI.IAssetDataForDictionary<TKey, TValue>
+  nameWithType.vb: IAssetDataForDictionary(Of TKey, TValue)
+  fullName.vb: StardewModdingAPI.IAssetDataForDictionary(Of TKey, TValue)
+  name.vb: IAssetDataForDictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: StardewModdingAPI.IAssetDataForDictionary`2
+    name: IAssetDataForDictionary
+    nameWithType: IAssetDataForDictionary
+    fullName: StardewModdingAPI.IAssetDataForDictionary
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TKey
+    nameWithType: TKey
+    fullName: TKey
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TValue
+    nameWithType: TValue
+    fullName: TValue
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: StardewModdingAPI.IAssetDataForDictionary`2
+    name: IAssetDataForDictionary
+    nameWithType: IAssetDataForDictionary
+    fullName: StardewModdingAPI.IAssetDataForDictionary
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TKey
+    nameWithType: TKey
+    fullName: TKey
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TValue
+    nameWithType: TValue
+    fullName: TValue
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.IAssetDataForDictionary`2
+  commentId: T:StardewModdingAPI.IAssetDataForDictionary`2
+  name: IAssetDataForDictionary<TKey, TValue>
+  nameWithType: IAssetDataForDictionary<TKey, TValue>
+  fullName: StardewModdingAPI.IAssetDataForDictionary<TKey, TValue>
+  nameWithType.vb: IAssetDataForDictionary(Of TKey, TValue)
+  fullName.vb: StardewModdingAPI.IAssetDataForDictionary(Of TKey, TValue)
+  name.vb: IAssetDataForDictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: StardewModdingAPI.IAssetDataForDictionary`2
+    name: IAssetDataForDictionary
+    nameWithType: IAssetDataForDictionary
+    fullName: StardewModdingAPI.IAssetDataForDictionary
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TKey
+    nameWithType: TKey
+    fullName: TKey
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TValue
+    nameWithType: TValue
+    fullName: TValue
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: StardewModdingAPI.IAssetDataForDictionary`2
+    name: IAssetDataForDictionary
+    nameWithType: IAssetDataForDictionary
+    fullName: StardewModdingAPI.IAssetDataForDictionary
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TKey
+    nameWithType: TKey
+    fullName: TKey
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TValue
+    nameWithType: TValue
+    fullName: TValue
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.IAssetData.AsImage*
+  commentId: Overload:StardewModdingAPI.IAssetData.AsImage
+  name: AsImage
+  nameWithType: IAssetData.AsImage
+  fullName: StardewModdingAPI.IAssetData.AsImage
+- uid: StardewModdingAPI.IAssetDataForImage
+  commentId: T:StardewModdingAPI.IAssetDataForImage
+  parent: StardewModdingAPI
+  name: IAssetDataForImage
+  nameWithType: IAssetDataForImage
+  fullName: StardewModdingAPI.IAssetDataForImage
+- uid: System.InvalidCastException
+  commentId: T:System.InvalidCastException
+  isExternal: true
+- uid: StardewModdingAPI.IAssetData.GetData*
+  commentId: Overload:StardewModdingAPI.IAssetData.GetData
+  name: GetData
+  nameWithType: IAssetData.GetData
+  fullName: StardewModdingAPI.IAssetData.GetData
+- uid: '{TData}'
+  commentId: '!:TData'
+  definition: TData
+  name: TData
+  nameWithType: TData
+  fullName: TData
+- uid: TData
+  commentId: '!:TData'
+  name: TData
+  nameWithType: TData
+  fullName: TData

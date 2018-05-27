@@ -1,0 +1,153 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.GamePlatform
+  commentId: T:StardewModdingAPI.GamePlatform
+  id: GamePlatform
+  parent: StardewModdingAPI
+  children:
+  - StardewModdingAPI.GamePlatform.Linux
+  - StardewModdingAPI.GamePlatform.Mac
+  - StardewModdingAPI.GamePlatform.Windows
+  langs:
+  - csharp
+  - vb
+  name: GamePlatform
+  nameWithType: GamePlatform
+  fullName: StardewModdingAPI.GamePlatform
+  type: Enum
+  source:
+    remote:
+      path: src/SMAPI/GamePlatform.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: GamePlatform
+    path: GamePlatform.cs
+    startLine: 5
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The game&apos;s platform version.
+  example: []
+  syntax:
+    content: public enum GamePlatform
+    content.vb: Public Enum GamePlatform
+  modifiers.csharp:
+  - public
+  - enum
+  modifiers.vb:
+  - Public
+  - Enum
+- uid: StardewModdingAPI.GamePlatform.Linux
+  commentId: F:StardewModdingAPI.GamePlatform.Linux
+  id: Linux
+  parent: StardewModdingAPI.GamePlatform
+  langs:
+  - csharp
+  - vb
+  name: Linux
+  nameWithType: GamePlatform.Linux
+  fullName: StardewModdingAPI.GamePlatform.Linux
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/GamePlatform.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Linux
+    path: GamePlatform.cs
+    startLine: 8
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Linux version of the game.
+  example: []
+  syntax:
+    content: Linux = 0
+    return:
+      type: StardewModdingAPI.GamePlatform
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.GamePlatform.Mac
+  commentId: F:StardewModdingAPI.GamePlatform.Mac
+  id: Mac
+  parent: StardewModdingAPI.GamePlatform
+  langs:
+  - csharp
+  - vb
+  name: Mac
+  nameWithType: GamePlatform.Mac
+  fullName: StardewModdingAPI.GamePlatform.Mac
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/GamePlatform.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Mac
+    path: GamePlatform.cs
+    startLine: 11
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Mac version of the game.
+  example: []
+  syntax:
+    content: Mac = 1
+    return:
+      type: StardewModdingAPI.GamePlatform
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.GamePlatform.Windows
+  commentId: F:StardewModdingAPI.GamePlatform.Windows
+  id: Windows
+  parent: StardewModdingAPI.GamePlatform
+  langs:
+  - csharp
+  - vb
+  name: Windows
+  nameWithType: GamePlatform.Windows
+  fullName: StardewModdingAPI.GamePlatform.Windows
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/GamePlatform.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Windows
+    path: GamePlatform.cs
+    startLine: 14
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The Windows version of the game.
+  example: []
+  syntax:
+    content: Windows = 2
+    return:
+      type: StardewModdingAPI.GamePlatform
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+references:
+- uid: StardewModdingAPI
+  commentId: N:StardewModdingAPI
+  name: StardewModdingAPI
+  nameWithType: StardewModdingAPI
+  fullName: StardewModdingAPI
+- uid: StardewModdingAPI.GamePlatform
+  commentId: T:StardewModdingAPI.GamePlatform
+  parent: StardewModdingAPI
+  name: GamePlatform
+  nameWithType: GamePlatform
+  fullName: StardewModdingAPI.GamePlatform

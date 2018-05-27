@@ -1,0 +1,647 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.Events.EventArgsLocationBuildingsChanged
+  commentId: T:StardewModdingAPI.Events.EventArgsLocationBuildingsChanged
+  id: EventArgsLocationBuildingsChanged
+  parent: StardewModdingAPI.Events
+  children:
+  - StardewModdingAPI.Events.EventArgsLocationBuildingsChanged.#ctor(StardewValley.GameLocation,System.Collections.Generic.IEnumerable{StardewValley.Buildings.Building},System.Collections.Generic.IEnumerable{StardewValley.Buildings.Building})
+  - StardewModdingAPI.Events.EventArgsLocationBuildingsChanged.Added
+  - StardewModdingAPI.Events.EventArgsLocationBuildingsChanged.Location
+  - StardewModdingAPI.Events.EventArgsLocationBuildingsChanged.Removed
+  langs:
+  - csharp
+  - vb
+  name: EventArgsLocationBuildingsChanged
+  nameWithType: EventArgsLocationBuildingsChanged
+  fullName: StardewModdingAPI.Events.EventArgsLocationBuildingsChanged
+  type: Class
+  source:
+    remote:
+      path: src/SMAPI/Events/EventArgsLocationBuildingsChanged.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: EventArgsLocationBuildingsChanged
+    path: Events/EventArgsLocationBuildingsChanged.cs
+    startLine: 9
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Event arguments for a <xref href="StardewModdingAPI.Events.LocationEvents.BuildingsChanged" data-throw-if-not-resolved="false"></xref> event.
+  example: []
+  syntax:
+    content: 'public class EventArgsLocationBuildingsChanged : EventArgs'
+    content.vb: >-
+      Public Class EventArgsLocationBuildingsChanged
+          Inherits EventArgs
+  inheritance:
+  - System.Object
+  - System.EventArgs
+  inheritedMembers:
+  - System.EventArgs.Empty
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  modifiers.csharp:
+  - public
+  - class
+  modifiers.vb:
+  - Public
+  - Class
+- uid: StardewModdingAPI.Events.EventArgsLocationBuildingsChanged.Location
+  commentId: P:StardewModdingAPI.Events.EventArgsLocationBuildingsChanged.Location
+  id: Location
+  parent: StardewModdingAPI.Events.EventArgsLocationBuildingsChanged
+  langs:
+  - csharp
+  - vb
+  name: Location
+  nameWithType: EventArgsLocationBuildingsChanged.Location
+  fullName: StardewModdingAPI.Events.EventArgsLocationBuildingsChanged.Location
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/Events/EventArgsLocationBuildingsChanged.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Location
+    path: Events/EventArgsLocationBuildingsChanged.cs
+    startLine: 15
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: The location which changed.
+  example: []
+  syntax:
+    content: public GameLocation Location { get; }
+    parameters: []
+    return:
+      type: StardewValley.GameLocation
+    content.vb: Public ReadOnly Property Location As GameLocation
+  overload: StardewModdingAPI.Events.EventArgsLocationBuildingsChanged.Location*
+  modifiers.csharp:
+  - public
+  - get
+  modifiers.vb:
+  - Public
+  - ReadOnly
+- uid: StardewModdingAPI.Events.EventArgsLocationBuildingsChanged.Added
+  commentId: P:StardewModdingAPI.Events.EventArgsLocationBuildingsChanged.Added
+  id: Added
+  parent: StardewModdingAPI.Events.EventArgsLocationBuildingsChanged
+  langs:
+  - csharp
+  - vb
+  name: Added
+  nameWithType: EventArgsLocationBuildingsChanged.Added
+  fullName: StardewModdingAPI.Events.EventArgsLocationBuildingsChanged.Added
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/Events/EventArgsLocationBuildingsChanged.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Added
+    path: Events/EventArgsLocationBuildingsChanged.cs
+    startLine: 18
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: The buildings added to the location.
+  example: []
+  syntax:
+    content: public IEnumerable<Building> Added { get; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IEnumerable{StardewValley.Buildings.Building}
+    content.vb: Public ReadOnly Property Added As IEnumerable(Of Building)
+  overload: StardewModdingAPI.Events.EventArgsLocationBuildingsChanged.Added*
+  modifiers.csharp:
+  - public
+  - get
+  modifiers.vb:
+  - Public
+  - ReadOnly
+- uid: StardewModdingAPI.Events.EventArgsLocationBuildingsChanged.Removed
+  commentId: P:StardewModdingAPI.Events.EventArgsLocationBuildingsChanged.Removed
+  id: Removed
+  parent: StardewModdingAPI.Events.EventArgsLocationBuildingsChanged
+  langs:
+  - csharp
+  - vb
+  name: Removed
+  nameWithType: EventArgsLocationBuildingsChanged.Removed
+  fullName: StardewModdingAPI.Events.EventArgsLocationBuildingsChanged.Removed
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/Events/EventArgsLocationBuildingsChanged.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Removed
+    path: Events/EventArgsLocationBuildingsChanged.cs
+    startLine: 21
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: The buildings removed from the location.
+  example: []
+  syntax:
+    content: public IEnumerable<Building> Removed { get; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IEnumerable{StardewValley.Buildings.Building}
+    content.vb: Public ReadOnly Property Removed As IEnumerable(Of Building)
+  overload: StardewModdingAPI.Events.EventArgsLocationBuildingsChanged.Removed*
+  modifiers.csharp:
+  - public
+  - get
+  modifiers.vb:
+  - Public
+  - ReadOnly
+- uid: StardewModdingAPI.Events.EventArgsLocationBuildingsChanged.#ctor(StardewValley.GameLocation,System.Collections.Generic.IEnumerable{StardewValley.Buildings.Building},System.Collections.Generic.IEnumerable{StardewValley.Buildings.Building})
+  commentId: M:StardewModdingAPI.Events.EventArgsLocationBuildingsChanged.#ctor(StardewValley.GameLocation,System.Collections.Generic.IEnumerable{StardewValley.Buildings.Building},System.Collections.Generic.IEnumerable{StardewValley.Buildings.Building})
+  id: '#ctor(StardewValley.GameLocation,System.Collections.Generic.IEnumerable{StardewValley.Buildings.Building},System.Collections.Generic.IEnumerable{StardewValley.Buildings.Building})'
+  parent: StardewModdingAPI.Events.EventArgsLocationBuildingsChanged
+  langs:
+  - csharp
+  - vb
+  name: EventArgsLocationBuildingsChanged(GameLocation, IEnumerable<Building>, IEnumerable<Building>)
+  nameWithType: EventArgsLocationBuildingsChanged.EventArgsLocationBuildingsChanged(GameLocation, IEnumerable<Building>, IEnumerable<Building>)
+  fullName: StardewModdingAPI.Events.EventArgsLocationBuildingsChanged.EventArgsLocationBuildingsChanged(StardewValley.GameLocation, System.Collections.Generic.IEnumerable<StardewValley.Buildings.Building>, System.Collections.Generic.IEnumerable<StardewValley.Buildings.Building>)
+  type: Constructor
+  source:
+    remote:
+      path: src/SMAPI/Events/EventArgsLocationBuildingsChanged.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: .ctor
+    path: Events/EventArgsLocationBuildingsChanged.cs
+    startLine: 31
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Construct an instance.
+  example: []
+  syntax:
+    content: public EventArgsLocationBuildingsChanged(GameLocation location, IEnumerable<Building> added, IEnumerable<Building> removed)
+    parameters:
+    - id: location
+      type: StardewValley.GameLocation
+      description: The location which changed.
+    - id: added
+      type: System.Collections.Generic.IEnumerable{StardewValley.Buildings.Building}
+      description: The buildings added to the location.
+    - id: removed
+      type: System.Collections.Generic.IEnumerable{StardewValley.Buildings.Building}
+      description: The buildings removed from the location.
+    content.vb: Public Sub New(location As GameLocation, added As IEnumerable(Of Building), removed As IEnumerable(Of Building))
+  overload: StardewModdingAPI.Events.EventArgsLocationBuildingsChanged.#ctor*
+  nameWithType.vb: EventArgsLocationBuildingsChanged.EventArgsLocationBuildingsChanged(GameLocation, IEnumerable(Of Building), IEnumerable(Of Building))
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+  fullName.vb: StardewModdingAPI.Events.EventArgsLocationBuildingsChanged.EventArgsLocationBuildingsChanged(StardewValley.GameLocation, System.Collections.Generic.IEnumerable(Of StardewValley.Buildings.Building), System.Collections.Generic.IEnumerable(Of StardewValley.Buildings.Building))
+  name.vb: EventArgsLocationBuildingsChanged(GameLocation, IEnumerable(Of Building), IEnumerable(Of Building))
+references:
+- uid: StardewModdingAPI.Events.LocationEvents.BuildingsChanged
+  commentId: E:StardewModdingAPI.Events.LocationEvents.BuildingsChanged
+  isExternal: true
+- uid: StardewModdingAPI.Events
+  commentId: N:StardewModdingAPI.Events
+  name: StardewModdingAPI.Events
+  nameWithType: StardewModdingAPI.Events
+  fullName: StardewModdingAPI.Events
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.EventArgs
+  commentId: T:System.EventArgs
+  parent: System
+  isExternal: true
+  name: EventArgs
+  nameWithType: EventArgs
+  fullName: System.EventArgs
+- uid: System.EventArgs.Empty
+  commentId: F:System.EventArgs.Empty
+  parent: System.EventArgs
+  isExternal: true
+  name: Empty
+  nameWithType: EventArgs.Empty
+  fullName: System.EventArgs.Empty
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: System.Object.Equals(System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: System.Object.Equals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: System.Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: System.Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: System.Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: System.Object.ReferenceEquals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: System.Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: StardewModdingAPI.Events.EventArgsLocationBuildingsChanged.Location*
+  commentId: Overload:StardewModdingAPI.Events.EventArgsLocationBuildingsChanged.Location
+  name: Location
+  nameWithType: EventArgsLocationBuildingsChanged.Location
+  fullName: StardewModdingAPI.Events.EventArgsLocationBuildingsChanged.Location
+- uid: StardewValley.GameLocation
+  commentId: T:StardewValley.GameLocation
+  parent: StardewValley
+  isExternal: true
+  name: GameLocation
+  nameWithType: GameLocation
+  fullName: StardewValley.GameLocation
+- uid: StardewValley
+  commentId: N:StardewValley
+  isExternal: true
+  name: StardewValley
+  nameWithType: StardewValley
+  fullName: StardewValley
+- uid: StardewModdingAPI.Events.EventArgsLocationBuildingsChanged.Added*
+  commentId: Overload:StardewModdingAPI.Events.EventArgsLocationBuildingsChanged.Added
+  name: Added
+  nameWithType: EventArgsLocationBuildingsChanged.Added
+  fullName: StardewModdingAPI.Events.EventArgsLocationBuildingsChanged.Added
+- uid: System.Collections.Generic.IEnumerable{StardewValley.Buildings.Building}
+  commentId: T:System.Collections.Generic.IEnumerable{StardewValley.Buildings.Building}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  name: IEnumerable<Building>
+  nameWithType: IEnumerable<Building>
+  fullName: System.Collections.Generic.IEnumerable<StardewValley.Buildings.Building>
+  nameWithType.vb: IEnumerable(Of Building)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of StardewValley.Buildings.Building)
+  name.vb: IEnumerable(Of Building)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    nameWithType: IEnumerable
+    fullName: System.Collections.Generic.IEnumerable
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: StardewValley.Buildings.Building
+    name: Building
+    nameWithType: Building
+    fullName: StardewValley.Buildings.Building
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    nameWithType: IEnumerable
+    fullName: System.Collections.Generic.IEnumerable
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: StardewValley.Buildings.Building
+    name: Building
+    nameWithType: Building
+    fullName: StardewValley.Buildings.Building
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    nameWithType: IEnumerable
+    fullName: System.Collections.Generic.IEnumerable
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    nameWithType: IEnumerable
+    fullName: System.Collections.Generic.IEnumerable
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+- uid: StardewModdingAPI.Events.EventArgsLocationBuildingsChanged.Removed*
+  commentId: Overload:StardewModdingAPI.Events.EventArgsLocationBuildingsChanged.Removed
+  name: Removed
+  nameWithType: EventArgsLocationBuildingsChanged.Removed
+  fullName: StardewModdingAPI.Events.EventArgsLocationBuildingsChanged.Removed
+- uid: StardewModdingAPI.Events.EventArgsLocationBuildingsChanged.#ctor*
+  commentId: Overload:StardewModdingAPI.Events.EventArgsLocationBuildingsChanged.#ctor
+  name: EventArgsLocationBuildingsChanged
+  nameWithType: EventArgsLocationBuildingsChanged.EventArgsLocationBuildingsChanged
+  fullName: StardewModdingAPI.Events.EventArgsLocationBuildingsChanged.EventArgsLocationBuildingsChanged

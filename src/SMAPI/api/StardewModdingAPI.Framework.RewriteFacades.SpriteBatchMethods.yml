@@ -1,0 +1,3124 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods
+  commentId: T:StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods
+  id: SpriteBatchMethods
+  parent: StardewModdingAPI.Framework.RewriteFacades
+  children:
+  - StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.#ctor(Microsoft.Xna.Framework.Graphics.GraphicsDevice)
+  - StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.Begin
+  - StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.Begin(Microsoft.Xna.Framework.Graphics.SpriteSortMode,Microsoft.Xna.Framework.Graphics.BlendState)
+  - StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.Begin(Microsoft.Xna.Framework.Graphics.SpriteSortMode,Microsoft.Xna.Framework.Graphics.BlendState,Microsoft.Xna.Framework.Graphics.SamplerState,Microsoft.Xna.Framework.Graphics.DepthStencilState,Microsoft.Xna.Framework.Graphics.RasterizerState)
+  - StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.Begin(Microsoft.Xna.Framework.Graphics.SpriteSortMode,Microsoft.Xna.Framework.Graphics.BlendState,Microsoft.Xna.Framework.Graphics.SamplerState,Microsoft.Xna.Framework.Graphics.DepthStencilState,Microsoft.Xna.Framework.Graphics.RasterizerState,Microsoft.Xna.Framework.Graphics.Effect)
+  - StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.Begin(Microsoft.Xna.Framework.Graphics.SpriteSortMode,Microsoft.Xna.Framework.Graphics.BlendState,Microsoft.Xna.Framework.Graphics.SamplerState,Microsoft.Xna.Framework.Graphics.DepthStencilState,Microsoft.Xna.Framework.Graphics.RasterizerState,Microsoft.Xna.Framework.Graphics.Effect,Microsoft.Xna.Framework.Matrix)
+  - StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.Begin(Microsoft.Xna.Framework.Graphics.SpriteSortMode,Microsoft.Xna.Framework.Graphics.BlendState,Microsoft.Xna.Framework.Graphics.SamplerState,Microsoft.Xna.Framework.Graphics.DepthStencilState,Microsoft.Xna.Framework.Graphics.RasterizerState,Microsoft.Xna.Framework.Graphics.Effect,System.Nullable{Microsoft.Xna.Framework.Matrix})
+  langs:
+  - csharp
+  - vb
+  name: SpriteBatchMethods
+  nameWithType: SpriteBatchMethods
+  fullName: StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods
+  type: Class
+  source:
+    remote:
+      path: src/SMAPI/Framework/RewriteFacades/SpriteBatchMethods.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: SpriteBatchMethods
+    path: Framework/RewriteFacades/SpriteBatchMethods.cs
+    startLine: 9
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Framework.RewriteFacades
+  summary: Provides <xref href="Microsoft.Xna.Framework.Graphics.SpriteBatch" data-throw-if-not-resolved="false"></xref> method signatures that can be injected into mod code for compatibility between Linux/Mac or Windows.
+  remarks: This is public to support SMAPI rewriting and should not be referenced directly by mods.
+  example: []
+  syntax:
+    content: 'public class SpriteBatchMethods : SpriteBatch, IDisposable'
+    content.vb: >-
+      Public Class SpriteBatchMethods
+          Inherits SpriteBatch
+          Implements IDisposable
+  inheritance:
+  - System.Object
+  - Microsoft.Xna.Framework.Graphics.GraphicsResource
+  - Microsoft.Xna.Framework.Graphics.SpriteBatch
+  implements:
+  - System.IDisposable
+  inheritedMembers:
+  - Microsoft.Xna.Framework.Graphics.SpriteBatch.End
+  - Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,System.Nullable{Microsoft.Xna.Framework.Vector2},System.Nullable{Microsoft.Xna.Framework.Rectangle},System.Nullable{Microsoft.Xna.Framework.Rectangle},System.Nullable{Microsoft.Xna.Framework.Vector2},System.Single,System.Nullable{Microsoft.Xna.Framework.Vector2},System.Nullable{Microsoft.Xna.Framework.Color},Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+  - Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Vector2,System.Nullable{Microsoft.Xna.Framework.Rectangle},Microsoft.Xna.Framework.Color,System.Single,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+  - Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Vector2,System.Nullable{Microsoft.Xna.Framework.Rectangle},Microsoft.Xna.Framework.Color,System.Single,Microsoft.Xna.Framework.Vector2,System.Single,Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+  - Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Rectangle,System.Nullable{Microsoft.Xna.Framework.Rectangle},Microsoft.Xna.Framework.Color,System.Single,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+  - Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Vector2,System.Nullable{Microsoft.Xna.Framework.Rectangle},Microsoft.Xna.Framework.Color)
+  - Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Rectangle,System.Nullable{Microsoft.Xna.Framework.Rectangle},Microsoft.Xna.Framework.Color)
+  - Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color)
+  - Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Rectangle,Microsoft.Xna.Framework.Color)
+  - Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont,System.String,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color)
+  - Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont,System.String,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color,System.Single,Microsoft.Xna.Framework.Vector2,System.Single,Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+  - Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont,System.String,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color,System.Single,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+  - Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont,System.Text.StringBuilder,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color)
+  - Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont,System.Text.StringBuilder,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color,System.Single,Microsoft.Xna.Framework.Vector2,System.Single,Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+  - Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont,System.Text.StringBuilder,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color,System.Single,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+  - Microsoft.Xna.Framework.Graphics.SpriteBatch.Dispose(System.Boolean)
+  - Microsoft.Xna.Framework.Graphics.GraphicsResource.GraphicsDeviceResetting
+  - Microsoft.Xna.Framework.Graphics.GraphicsResource.Dispose
+  - Microsoft.Xna.Framework.Graphics.GraphicsResource.ToString
+  - Microsoft.Xna.Framework.Graphics.GraphicsResource.GraphicsDevice
+  - Microsoft.Xna.Framework.Graphics.GraphicsResource.IsDisposed
+  - Microsoft.Xna.Framework.Graphics.GraphicsResource.Name
+  - Microsoft.Xna.Framework.Graphics.GraphicsResource.Tag
+  - Microsoft.Xna.Framework.Graphics.GraphicsResource.Disposing
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  modifiers.csharp:
+  - public
+  - class
+  modifiers.vb:
+  - Public
+  - Class
+- uid: StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.#ctor(Microsoft.Xna.Framework.Graphics.GraphicsDevice)
+  commentId: M:StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.#ctor(Microsoft.Xna.Framework.Graphics.GraphicsDevice)
+  id: '#ctor(Microsoft.Xna.Framework.Graphics.GraphicsDevice)'
+  parent: StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods
+  langs:
+  - csharp
+  - vb
+  name: SpriteBatchMethods(GraphicsDevice)
+  nameWithType: SpriteBatchMethods.SpriteBatchMethods(GraphicsDevice)
+  fullName: StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.SpriteBatchMethods(Microsoft.Xna.Framework.Graphics.GraphicsDevice)
+  type: Constructor
+  source:
+    remote:
+      path: src/SMAPI/Framework/RewriteFacades/SpriteBatchMethods.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: .ctor
+    path: Framework/RewriteFacades/SpriteBatchMethods.cs
+    startLine: 15
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Framework.RewriteFacades
+  summary: Construct an instance.
+  example: []
+  syntax:
+    content: public SpriteBatchMethods(GraphicsDevice graphicsDevice)
+    parameters:
+    - id: graphicsDevice
+      type: Microsoft.Xna.Framework.Graphics.GraphicsDevice
+    content.vb: Public Sub New(graphicsDevice As GraphicsDevice)
+  overload: StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.#ctor*
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.Begin(Microsoft.Xna.Framework.Graphics.SpriteSortMode,Microsoft.Xna.Framework.Graphics.BlendState,Microsoft.Xna.Framework.Graphics.SamplerState,Microsoft.Xna.Framework.Graphics.DepthStencilState,Microsoft.Xna.Framework.Graphics.RasterizerState,Microsoft.Xna.Framework.Graphics.Effect,System.Nullable{Microsoft.Xna.Framework.Matrix})
+  commentId: M:StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.Begin(Microsoft.Xna.Framework.Graphics.SpriteSortMode,Microsoft.Xna.Framework.Graphics.BlendState,Microsoft.Xna.Framework.Graphics.SamplerState,Microsoft.Xna.Framework.Graphics.DepthStencilState,Microsoft.Xna.Framework.Graphics.RasterizerState,Microsoft.Xna.Framework.Graphics.Effect,System.Nullable{Microsoft.Xna.Framework.Matrix})
+  id: Begin(Microsoft.Xna.Framework.Graphics.SpriteSortMode,Microsoft.Xna.Framework.Graphics.BlendState,Microsoft.Xna.Framework.Graphics.SamplerState,Microsoft.Xna.Framework.Graphics.DepthStencilState,Microsoft.Xna.Framework.Graphics.RasterizerState,Microsoft.Xna.Framework.Graphics.Effect,System.Nullable{Microsoft.Xna.Framework.Matrix})
+  parent: StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods
+  langs:
+  - csharp
+  - vb
+  name: Begin(SpriteSortMode, BlendState, SamplerState, DepthStencilState, RasterizerState, Effect, Nullable<Matrix>)
+  nameWithType: SpriteBatchMethods.Begin(SpriteSortMode, BlendState, SamplerState, DepthStencilState, RasterizerState, Effect, Nullable<Matrix>)
+  fullName: StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.Begin(Microsoft.Xna.Framework.Graphics.SpriteSortMode, Microsoft.Xna.Framework.Graphics.BlendState, Microsoft.Xna.Framework.Graphics.SamplerState, Microsoft.Xna.Framework.Graphics.DepthStencilState, Microsoft.Xna.Framework.Graphics.RasterizerState, Microsoft.Xna.Framework.Graphics.Effect, System.Nullable<Microsoft.Xna.Framework.Matrix>)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/Framework/RewriteFacades/SpriteBatchMethods.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Begin
+    path: Framework/RewriteFacades/SpriteBatchMethods.cs
+    startLine: 21
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Framework.RewriteFacades
+  syntax:
+    content: public void Begin(SpriteSortMode sortMode, BlendState blendState, SamplerState samplerState, DepthStencilState depthStencilState, RasterizerState rasterizerState, Effect effect, Matrix? matrix)
+    parameters:
+    - id: sortMode
+      type: Microsoft.Xna.Framework.Graphics.SpriteSortMode
+    - id: blendState
+      type: Microsoft.Xna.Framework.Graphics.BlendState
+    - id: samplerState
+      type: Microsoft.Xna.Framework.Graphics.SamplerState
+    - id: depthStencilState
+      type: Microsoft.Xna.Framework.Graphics.DepthStencilState
+    - id: rasterizerState
+      type: Microsoft.Xna.Framework.Graphics.RasterizerState
+    - id: effect
+      type: Microsoft.Xna.Framework.Graphics.Effect
+    - id: matrix
+      type: System.Nullable{Microsoft.Xna.Framework.Matrix}
+    content.vb: Public Sub Begin(sortMode As SpriteSortMode, blendState As BlendState, samplerState As SamplerState, depthStencilState As DepthStencilState, rasterizerState As RasterizerState, effect As Effect, matrix As Matrix?)
+  overload: StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.Begin*
+  nameWithType.vb: SpriteBatchMethods.Begin(SpriteSortMode, BlendState, SamplerState, DepthStencilState, RasterizerState, Effect, Nullable(Of Matrix))
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+  fullName.vb: StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.Begin(Microsoft.Xna.Framework.Graphics.SpriteSortMode, Microsoft.Xna.Framework.Graphics.BlendState, Microsoft.Xna.Framework.Graphics.SamplerState, Microsoft.Xna.Framework.Graphics.DepthStencilState, Microsoft.Xna.Framework.Graphics.RasterizerState, Microsoft.Xna.Framework.Graphics.Effect, System.Nullable(Of Microsoft.Xna.Framework.Matrix))
+  name.vb: Begin(SpriteSortMode, BlendState, SamplerState, DepthStencilState, RasterizerState, Effect, Nullable(Of Matrix))
+- uid: StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.Begin
+  commentId: M:StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.Begin
+  id: Begin
+  parent: StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods
+  langs:
+  - csharp
+  - vb
+  name: Begin()
+  nameWithType: SpriteBatchMethods.Begin()
+  fullName: StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.Begin()
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/Framework/RewriteFacades/SpriteBatchMethods.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Begin
+    path: Framework/RewriteFacades/SpriteBatchMethods.cs
+    startLine: 30
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Framework.RewriteFacades
+  syntax:
+    content: public void Begin()
+    content.vb: Public Sub Begin
+  overload: StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.Begin*
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.Begin(Microsoft.Xna.Framework.Graphics.SpriteSortMode,Microsoft.Xna.Framework.Graphics.BlendState)
+  commentId: M:StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.Begin(Microsoft.Xna.Framework.Graphics.SpriteSortMode,Microsoft.Xna.Framework.Graphics.BlendState)
+  id: Begin(Microsoft.Xna.Framework.Graphics.SpriteSortMode,Microsoft.Xna.Framework.Graphics.BlendState)
+  parent: StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods
+  langs:
+  - csharp
+  - vb
+  name: Begin(SpriteSortMode, BlendState)
+  nameWithType: SpriteBatchMethods.Begin(SpriteSortMode, BlendState)
+  fullName: StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.Begin(Microsoft.Xna.Framework.Graphics.SpriteSortMode, Microsoft.Xna.Framework.Graphics.BlendState)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/Framework/RewriteFacades/SpriteBatchMethods.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Begin
+    path: Framework/RewriteFacades/SpriteBatchMethods.cs
+    startLine: 36
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Framework.RewriteFacades
+  syntax:
+    content: public void Begin(SpriteSortMode sortMode, BlendState blendState)
+    parameters:
+    - id: sortMode
+      type: Microsoft.Xna.Framework.Graphics.SpriteSortMode
+    - id: blendState
+      type: Microsoft.Xna.Framework.Graphics.BlendState
+    content.vb: Public Sub Begin(sortMode As SpriteSortMode, blendState As BlendState)
+  overload: StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.Begin*
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.Begin(Microsoft.Xna.Framework.Graphics.SpriteSortMode,Microsoft.Xna.Framework.Graphics.BlendState,Microsoft.Xna.Framework.Graphics.SamplerState,Microsoft.Xna.Framework.Graphics.DepthStencilState,Microsoft.Xna.Framework.Graphics.RasterizerState)
+  commentId: M:StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.Begin(Microsoft.Xna.Framework.Graphics.SpriteSortMode,Microsoft.Xna.Framework.Graphics.BlendState,Microsoft.Xna.Framework.Graphics.SamplerState,Microsoft.Xna.Framework.Graphics.DepthStencilState,Microsoft.Xna.Framework.Graphics.RasterizerState)
+  id: Begin(Microsoft.Xna.Framework.Graphics.SpriteSortMode,Microsoft.Xna.Framework.Graphics.BlendState,Microsoft.Xna.Framework.Graphics.SamplerState,Microsoft.Xna.Framework.Graphics.DepthStencilState,Microsoft.Xna.Framework.Graphics.RasterizerState)
+  parent: StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods
+  langs:
+  - csharp
+  - vb
+  name: Begin(SpriteSortMode, BlendState, SamplerState, DepthStencilState, RasterizerState)
+  nameWithType: SpriteBatchMethods.Begin(SpriteSortMode, BlendState, SamplerState, DepthStencilState, RasterizerState)
+  fullName: StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.Begin(Microsoft.Xna.Framework.Graphics.SpriteSortMode, Microsoft.Xna.Framework.Graphics.BlendState, Microsoft.Xna.Framework.Graphics.SamplerState, Microsoft.Xna.Framework.Graphics.DepthStencilState, Microsoft.Xna.Framework.Graphics.RasterizerState)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/Framework/RewriteFacades/SpriteBatchMethods.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Begin
+    path: Framework/RewriteFacades/SpriteBatchMethods.cs
+    startLine: 42
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Framework.RewriteFacades
+  syntax:
+    content: public void Begin(SpriteSortMode sortMode, BlendState blendState, SamplerState samplerState, DepthStencilState depthStencilState, RasterizerState rasterizerState)
+    parameters:
+    - id: sortMode
+      type: Microsoft.Xna.Framework.Graphics.SpriteSortMode
+    - id: blendState
+      type: Microsoft.Xna.Framework.Graphics.BlendState
+    - id: samplerState
+      type: Microsoft.Xna.Framework.Graphics.SamplerState
+    - id: depthStencilState
+      type: Microsoft.Xna.Framework.Graphics.DepthStencilState
+    - id: rasterizerState
+      type: Microsoft.Xna.Framework.Graphics.RasterizerState
+    content.vb: Public Sub Begin(sortMode As SpriteSortMode, blendState As BlendState, samplerState As SamplerState, depthStencilState As DepthStencilState, rasterizerState As RasterizerState)
+  overload: StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.Begin*
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.Begin(Microsoft.Xna.Framework.Graphics.SpriteSortMode,Microsoft.Xna.Framework.Graphics.BlendState,Microsoft.Xna.Framework.Graphics.SamplerState,Microsoft.Xna.Framework.Graphics.DepthStencilState,Microsoft.Xna.Framework.Graphics.RasterizerState,Microsoft.Xna.Framework.Graphics.Effect)
+  commentId: M:StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.Begin(Microsoft.Xna.Framework.Graphics.SpriteSortMode,Microsoft.Xna.Framework.Graphics.BlendState,Microsoft.Xna.Framework.Graphics.SamplerState,Microsoft.Xna.Framework.Graphics.DepthStencilState,Microsoft.Xna.Framework.Graphics.RasterizerState,Microsoft.Xna.Framework.Graphics.Effect)
+  id: Begin(Microsoft.Xna.Framework.Graphics.SpriteSortMode,Microsoft.Xna.Framework.Graphics.BlendState,Microsoft.Xna.Framework.Graphics.SamplerState,Microsoft.Xna.Framework.Graphics.DepthStencilState,Microsoft.Xna.Framework.Graphics.RasterizerState,Microsoft.Xna.Framework.Graphics.Effect)
+  parent: StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods
+  langs:
+  - csharp
+  - vb
+  name: Begin(SpriteSortMode, BlendState, SamplerState, DepthStencilState, RasterizerState, Effect)
+  nameWithType: SpriteBatchMethods.Begin(SpriteSortMode, BlendState, SamplerState, DepthStencilState, RasterizerState, Effect)
+  fullName: StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.Begin(Microsoft.Xna.Framework.Graphics.SpriteSortMode, Microsoft.Xna.Framework.Graphics.BlendState, Microsoft.Xna.Framework.Graphics.SamplerState, Microsoft.Xna.Framework.Graphics.DepthStencilState, Microsoft.Xna.Framework.Graphics.RasterizerState, Microsoft.Xna.Framework.Graphics.Effect)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/Framework/RewriteFacades/SpriteBatchMethods.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Begin
+    path: Framework/RewriteFacades/SpriteBatchMethods.cs
+    startLine: 48
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Framework.RewriteFacades
+  syntax:
+    content: public void Begin(SpriteSortMode sortMode, BlendState blendState, SamplerState samplerState, DepthStencilState depthStencilState, RasterizerState rasterizerState, Effect effect)
+    parameters:
+    - id: sortMode
+      type: Microsoft.Xna.Framework.Graphics.SpriteSortMode
+    - id: blendState
+      type: Microsoft.Xna.Framework.Graphics.BlendState
+    - id: samplerState
+      type: Microsoft.Xna.Framework.Graphics.SamplerState
+    - id: depthStencilState
+      type: Microsoft.Xna.Framework.Graphics.DepthStencilState
+    - id: rasterizerState
+      type: Microsoft.Xna.Framework.Graphics.RasterizerState
+    - id: effect
+      type: Microsoft.Xna.Framework.Graphics.Effect
+    content.vb: Public Sub Begin(sortMode As SpriteSortMode, blendState As BlendState, samplerState As SamplerState, depthStencilState As DepthStencilState, rasterizerState As RasterizerState, effect As Effect)
+  overload: StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.Begin*
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.Begin(Microsoft.Xna.Framework.Graphics.SpriteSortMode,Microsoft.Xna.Framework.Graphics.BlendState,Microsoft.Xna.Framework.Graphics.SamplerState,Microsoft.Xna.Framework.Graphics.DepthStencilState,Microsoft.Xna.Framework.Graphics.RasterizerState,Microsoft.Xna.Framework.Graphics.Effect,Microsoft.Xna.Framework.Matrix)
+  commentId: M:StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.Begin(Microsoft.Xna.Framework.Graphics.SpriteSortMode,Microsoft.Xna.Framework.Graphics.BlendState,Microsoft.Xna.Framework.Graphics.SamplerState,Microsoft.Xna.Framework.Graphics.DepthStencilState,Microsoft.Xna.Framework.Graphics.RasterizerState,Microsoft.Xna.Framework.Graphics.Effect,Microsoft.Xna.Framework.Matrix)
+  id: Begin(Microsoft.Xna.Framework.Graphics.SpriteSortMode,Microsoft.Xna.Framework.Graphics.BlendState,Microsoft.Xna.Framework.Graphics.SamplerState,Microsoft.Xna.Framework.Graphics.DepthStencilState,Microsoft.Xna.Framework.Graphics.RasterizerState,Microsoft.Xna.Framework.Graphics.Effect,Microsoft.Xna.Framework.Matrix)
+  parent: StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods
+  langs:
+  - csharp
+  - vb
+  name: Begin(SpriteSortMode, BlendState, SamplerState, DepthStencilState, RasterizerState, Effect, Matrix)
+  nameWithType: SpriteBatchMethods.Begin(SpriteSortMode, BlendState, SamplerState, DepthStencilState, RasterizerState, Effect, Matrix)
+  fullName: StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.Begin(Microsoft.Xna.Framework.Graphics.SpriteSortMode, Microsoft.Xna.Framework.Graphics.BlendState, Microsoft.Xna.Framework.Graphics.SamplerState, Microsoft.Xna.Framework.Graphics.DepthStencilState, Microsoft.Xna.Framework.Graphics.RasterizerState, Microsoft.Xna.Framework.Graphics.Effect, Microsoft.Xna.Framework.Matrix)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/Framework/RewriteFacades/SpriteBatchMethods.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Begin
+    path: Framework/RewriteFacades/SpriteBatchMethods.cs
+    startLine: 54
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Framework.RewriteFacades
+  syntax:
+    content: public void Begin(SpriteSortMode sortMode, BlendState blendState, SamplerState samplerState, DepthStencilState depthStencilState, RasterizerState rasterizerState, Effect effect, Matrix transformMatrix)
+    parameters:
+    - id: sortMode
+      type: Microsoft.Xna.Framework.Graphics.SpriteSortMode
+    - id: blendState
+      type: Microsoft.Xna.Framework.Graphics.BlendState
+    - id: samplerState
+      type: Microsoft.Xna.Framework.Graphics.SamplerState
+    - id: depthStencilState
+      type: Microsoft.Xna.Framework.Graphics.DepthStencilState
+    - id: rasterizerState
+      type: Microsoft.Xna.Framework.Graphics.RasterizerState
+    - id: effect
+      type: Microsoft.Xna.Framework.Graphics.Effect
+    - id: transformMatrix
+      type: Microsoft.Xna.Framework.Matrix
+    content.vb: Public Sub Begin(sortMode As SpriteSortMode, blendState As BlendState, samplerState As SamplerState, depthStencilState As DepthStencilState, rasterizerState As RasterizerState, effect As Effect, transformMatrix As Matrix)
+  overload: StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.Begin*
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+references:
+- uid: Microsoft.Xna.Framework.Graphics.SpriteBatch
+  commentId: T:Microsoft.Xna.Framework.Graphics.SpriteBatch
+  parent: Microsoft.Xna.Framework.Graphics
+  isExternal: true
+  name: SpriteBatch
+  nameWithType: SpriteBatch
+  fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch
+- uid: StardewModdingAPI.Framework.RewriteFacades
+  commentId: N:StardewModdingAPI.Framework.RewriteFacades
+  name: StardewModdingAPI.Framework.RewriteFacades
+  nameWithType: StardewModdingAPI.Framework.RewriteFacades
+  fullName: StardewModdingAPI.Framework.RewriteFacades
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: Microsoft.Xna.Framework.Graphics.GraphicsResource
+  commentId: T:Microsoft.Xna.Framework.Graphics.GraphicsResource
+  parent: Microsoft.Xna.Framework.Graphics
+  isExternal: true
+  name: GraphicsResource
+  nameWithType: GraphicsResource
+  fullName: Microsoft.Xna.Framework.Graphics.GraphicsResource
+- uid: System.IDisposable
+  commentId: T:System.IDisposable
+  parent: System
+  isExternal: true
+  name: IDisposable
+  nameWithType: IDisposable
+  fullName: System.IDisposable
+- uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.End
+  commentId: M:Microsoft.Xna.Framework.Graphics.SpriteBatch.End
+  parent: Microsoft.Xna.Framework.Graphics.SpriteBatch
+  isExternal: true
+  name: End()
+  nameWithType: SpriteBatch.End()
+  fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.End()
+  spec.csharp:
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.End
+    name: End
+    nameWithType: SpriteBatch.End
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.End
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.End
+    name: End
+    nameWithType: SpriteBatch.End
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.End
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,System.Nullable{Microsoft.Xna.Framework.Vector2},System.Nullable{Microsoft.Xna.Framework.Rectangle},System.Nullable{Microsoft.Xna.Framework.Rectangle},System.Nullable{Microsoft.Xna.Framework.Vector2},System.Single,System.Nullable{Microsoft.Xna.Framework.Vector2},System.Nullable{Microsoft.Xna.Framework.Color},Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+  commentId: M:Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,System.Nullable{Microsoft.Xna.Framework.Vector2},System.Nullable{Microsoft.Xna.Framework.Rectangle},System.Nullable{Microsoft.Xna.Framework.Rectangle},System.Nullable{Microsoft.Xna.Framework.Vector2},System.Single,System.Nullable{Microsoft.Xna.Framework.Vector2},System.Nullable{Microsoft.Xna.Framework.Color},Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+  parent: Microsoft.Xna.Framework.Graphics.SpriteBatch
+  isExternal: true
+  name: Draw(Texture2D, Nullable<Vector2>, Nullable<Rectangle>, Nullable<Rectangle>, Nullable<Vector2>, Single, Nullable<Vector2>, Nullable<Color>, SpriteEffects, Single)
+  nameWithType: SpriteBatch.Draw(Texture2D, Nullable<Vector2>, Nullable<Rectangle>, Nullable<Rectangle>, Nullable<Vector2>, Single, Nullable<Vector2>, Nullable<Color>, SpriteEffects, Single)
+  fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D, System.Nullable<Microsoft.Xna.Framework.Vector2>, System.Nullable<Microsoft.Xna.Framework.Rectangle>, System.Nullable<Microsoft.Xna.Framework.Rectangle>, System.Nullable<Microsoft.Xna.Framework.Vector2>, System.Single, System.Nullable<Microsoft.Xna.Framework.Vector2>, System.Nullable<Microsoft.Xna.Framework.Color>, Microsoft.Xna.Framework.Graphics.SpriteEffects, System.Single)
+  nameWithType.vb: SpriteBatch.Draw(Texture2D, Nullable(Of Vector2), Nullable(Of Rectangle), Nullable(Of Rectangle), Nullable(Of Vector2), Single, Nullable(Of Vector2), Nullable(Of Color), SpriteEffects, Single)
+  fullName.vb: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D, System.Nullable(Of Microsoft.Xna.Framework.Vector2), System.Nullable(Of Microsoft.Xna.Framework.Rectangle), System.Nullable(Of Microsoft.Xna.Framework.Rectangle), System.Nullable(Of Microsoft.Xna.Framework.Vector2), System.Single, System.Nullable(Of Microsoft.Xna.Framework.Vector2), System.Nullable(Of Microsoft.Xna.Framework.Color), Microsoft.Xna.Framework.Graphics.SpriteEffects, System.Single)
+  name.vb: Draw(Texture2D, Nullable(Of Vector2), Nullable(Of Rectangle), Nullable(Of Rectangle), Nullable(Of Vector2), Single, Nullable(Of Vector2), Nullable(Of Color), SpriteEffects, Single)
+  spec.csharp:
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,System.Nullable{Microsoft.Xna.Framework.Vector2},System.Nullable{Microsoft.Xna.Framework.Rectangle},System.Nullable{Microsoft.Xna.Framework.Rectangle},System.Nullable{Microsoft.Xna.Framework.Vector2},System.Single,System.Nullable{Microsoft.Xna.Framework.Vector2},System.Nullable{Microsoft.Xna.Framework.Color},Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+    name: Draw
+    nameWithType: SpriteBatch.Draw
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Microsoft.Xna.Framework.Graphics.Texture2D
+    name: Texture2D
+    nameWithType: Texture2D
+    fullName: Microsoft.Xna.Framework.Graphics.Texture2D
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Nullable`1
+    name: Nullable
+    nameWithType: Nullable
+    fullName: System.Nullable
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Nullable`1
+    name: Nullable
+    nameWithType: Nullable
+    fullName: System.Nullable
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Microsoft.Xna.Framework.Rectangle
+    name: Rectangle
+    nameWithType: Rectangle
+    fullName: Microsoft.Xna.Framework.Rectangle
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Nullable`1
+    name: Nullable
+    nameWithType: Nullable
+    fullName: System.Nullable
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Microsoft.Xna.Framework.Rectangle
+    name: Rectangle
+    nameWithType: Rectangle
+    fullName: Microsoft.Xna.Framework.Rectangle
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Nullable`1
+    name: Nullable
+    nameWithType: Nullable
+    fullName: System.Nullable
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Nullable`1
+    name: Nullable
+    nameWithType: Nullable
+    fullName: System.Nullable
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Nullable`1
+    name: Nullable
+    nameWithType: Nullable
+    fullName: System.Nullable
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Microsoft.Xna.Framework.Color
+    name: Color
+    nameWithType: Color
+    fullName: Microsoft.Xna.Framework.Color
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteEffects
+    name: SpriteEffects
+    nameWithType: SpriteEffects
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteEffects
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,System.Nullable{Microsoft.Xna.Framework.Vector2},System.Nullable{Microsoft.Xna.Framework.Rectangle},System.Nullable{Microsoft.Xna.Framework.Rectangle},System.Nullable{Microsoft.Xna.Framework.Vector2},System.Single,System.Nullable{Microsoft.Xna.Framework.Vector2},System.Nullable{Microsoft.Xna.Framework.Color},Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+    name: Draw
+    nameWithType: SpriteBatch.Draw
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Microsoft.Xna.Framework.Graphics.Texture2D
+    name: Texture2D
+    nameWithType: Texture2D
+    fullName: Microsoft.Xna.Framework.Graphics.Texture2D
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Nullable`1
+    name: Nullable
+    nameWithType: Nullable
+    fullName: System.Nullable
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Nullable`1
+    name: Nullable
+    nameWithType: Nullable
+    fullName: System.Nullable
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Microsoft.Xna.Framework.Rectangle
+    name: Rectangle
+    nameWithType: Rectangle
+    fullName: Microsoft.Xna.Framework.Rectangle
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Nullable`1
+    name: Nullable
+    nameWithType: Nullable
+    fullName: System.Nullable
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Microsoft.Xna.Framework.Rectangle
+    name: Rectangle
+    nameWithType: Rectangle
+    fullName: Microsoft.Xna.Framework.Rectangle
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Nullable`1
+    name: Nullable
+    nameWithType: Nullable
+    fullName: System.Nullable
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Nullable`1
+    name: Nullable
+    nameWithType: Nullable
+    fullName: System.Nullable
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Nullable`1
+    name: Nullable
+    nameWithType: Nullable
+    fullName: System.Nullable
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Microsoft.Xna.Framework.Color
+    name: Color
+    nameWithType: Color
+    fullName: Microsoft.Xna.Framework.Color
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteEffects
+    name: SpriteEffects
+    nameWithType: SpriteEffects
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteEffects
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Vector2,System.Nullable{Microsoft.Xna.Framework.Rectangle},Microsoft.Xna.Framework.Color,System.Single,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+  commentId: M:Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Vector2,System.Nullable{Microsoft.Xna.Framework.Rectangle},Microsoft.Xna.Framework.Color,System.Single,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+  parent: Microsoft.Xna.Framework.Graphics.SpriteBatch
+  isExternal: true
+  name: Draw(Texture2D, Vector2, Nullable<Rectangle>, Color, Single, Vector2, Vector2, SpriteEffects, Single)
+  nameWithType: SpriteBatch.Draw(Texture2D, Vector2, Nullable<Rectangle>, Color, Single, Vector2, Vector2, SpriteEffects, Single)
+  fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D, Microsoft.Xna.Framework.Vector2, System.Nullable<Microsoft.Xna.Framework.Rectangle>, Microsoft.Xna.Framework.Color, System.Single, Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Graphics.SpriteEffects, System.Single)
+  nameWithType.vb: SpriteBatch.Draw(Texture2D, Vector2, Nullable(Of Rectangle), Color, Single, Vector2, Vector2, SpriteEffects, Single)
+  fullName.vb: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D, Microsoft.Xna.Framework.Vector2, System.Nullable(Of Microsoft.Xna.Framework.Rectangle), Microsoft.Xna.Framework.Color, System.Single, Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Graphics.SpriteEffects, System.Single)
+  name.vb: Draw(Texture2D, Vector2, Nullable(Of Rectangle), Color, Single, Vector2, Vector2, SpriteEffects, Single)
+  spec.csharp:
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Vector2,System.Nullable{Microsoft.Xna.Framework.Rectangle},Microsoft.Xna.Framework.Color,System.Single,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+    name: Draw
+    nameWithType: SpriteBatch.Draw
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Microsoft.Xna.Framework.Graphics.Texture2D
+    name: Texture2D
+    nameWithType: Texture2D
+    fullName: Microsoft.Xna.Framework.Graphics.Texture2D
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Nullable`1
+    name: Nullable
+    nameWithType: Nullable
+    fullName: System.Nullable
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Microsoft.Xna.Framework.Rectangle
+    name: Rectangle
+    nameWithType: Rectangle
+    fullName: Microsoft.Xna.Framework.Rectangle
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Color
+    name: Color
+    nameWithType: Color
+    fullName: Microsoft.Xna.Framework.Color
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteEffects
+    name: SpriteEffects
+    nameWithType: SpriteEffects
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteEffects
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Vector2,System.Nullable{Microsoft.Xna.Framework.Rectangle},Microsoft.Xna.Framework.Color,System.Single,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+    name: Draw
+    nameWithType: SpriteBatch.Draw
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Microsoft.Xna.Framework.Graphics.Texture2D
+    name: Texture2D
+    nameWithType: Texture2D
+    fullName: Microsoft.Xna.Framework.Graphics.Texture2D
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Nullable`1
+    name: Nullable
+    nameWithType: Nullable
+    fullName: System.Nullable
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Microsoft.Xna.Framework.Rectangle
+    name: Rectangle
+    nameWithType: Rectangle
+    fullName: Microsoft.Xna.Framework.Rectangle
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Color
+    name: Color
+    nameWithType: Color
+    fullName: Microsoft.Xna.Framework.Color
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteEffects
+    name: SpriteEffects
+    nameWithType: SpriteEffects
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteEffects
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Vector2,System.Nullable{Microsoft.Xna.Framework.Rectangle},Microsoft.Xna.Framework.Color,System.Single,Microsoft.Xna.Framework.Vector2,System.Single,Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+  commentId: M:Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Vector2,System.Nullable{Microsoft.Xna.Framework.Rectangle},Microsoft.Xna.Framework.Color,System.Single,Microsoft.Xna.Framework.Vector2,System.Single,Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+  parent: Microsoft.Xna.Framework.Graphics.SpriteBatch
+  isExternal: true
+  name: Draw(Texture2D, Vector2, Nullable<Rectangle>, Color, Single, Vector2, Single, SpriteEffects, Single)
+  nameWithType: SpriteBatch.Draw(Texture2D, Vector2, Nullable<Rectangle>, Color, Single, Vector2, Single, SpriteEffects, Single)
+  fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D, Microsoft.Xna.Framework.Vector2, System.Nullable<Microsoft.Xna.Framework.Rectangle>, Microsoft.Xna.Framework.Color, System.Single, Microsoft.Xna.Framework.Vector2, System.Single, Microsoft.Xna.Framework.Graphics.SpriteEffects, System.Single)
+  nameWithType.vb: SpriteBatch.Draw(Texture2D, Vector2, Nullable(Of Rectangle), Color, Single, Vector2, Single, SpriteEffects, Single)
+  fullName.vb: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D, Microsoft.Xna.Framework.Vector2, System.Nullable(Of Microsoft.Xna.Framework.Rectangle), Microsoft.Xna.Framework.Color, System.Single, Microsoft.Xna.Framework.Vector2, System.Single, Microsoft.Xna.Framework.Graphics.SpriteEffects, System.Single)
+  name.vb: Draw(Texture2D, Vector2, Nullable(Of Rectangle), Color, Single, Vector2, Single, SpriteEffects, Single)
+  spec.csharp:
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Vector2,System.Nullable{Microsoft.Xna.Framework.Rectangle},Microsoft.Xna.Framework.Color,System.Single,Microsoft.Xna.Framework.Vector2,System.Single,Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+    name: Draw
+    nameWithType: SpriteBatch.Draw
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Microsoft.Xna.Framework.Graphics.Texture2D
+    name: Texture2D
+    nameWithType: Texture2D
+    fullName: Microsoft.Xna.Framework.Graphics.Texture2D
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Nullable`1
+    name: Nullable
+    nameWithType: Nullable
+    fullName: System.Nullable
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Microsoft.Xna.Framework.Rectangle
+    name: Rectangle
+    nameWithType: Rectangle
+    fullName: Microsoft.Xna.Framework.Rectangle
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Color
+    name: Color
+    nameWithType: Color
+    fullName: Microsoft.Xna.Framework.Color
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteEffects
+    name: SpriteEffects
+    nameWithType: SpriteEffects
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteEffects
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Vector2,System.Nullable{Microsoft.Xna.Framework.Rectangle},Microsoft.Xna.Framework.Color,System.Single,Microsoft.Xna.Framework.Vector2,System.Single,Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+    name: Draw
+    nameWithType: SpriteBatch.Draw
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Microsoft.Xna.Framework.Graphics.Texture2D
+    name: Texture2D
+    nameWithType: Texture2D
+    fullName: Microsoft.Xna.Framework.Graphics.Texture2D
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Nullable`1
+    name: Nullable
+    nameWithType: Nullable
+    fullName: System.Nullable
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Microsoft.Xna.Framework.Rectangle
+    name: Rectangle
+    nameWithType: Rectangle
+    fullName: Microsoft.Xna.Framework.Rectangle
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Color
+    name: Color
+    nameWithType: Color
+    fullName: Microsoft.Xna.Framework.Color
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteEffects
+    name: SpriteEffects
+    nameWithType: SpriteEffects
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteEffects
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Rectangle,System.Nullable{Microsoft.Xna.Framework.Rectangle},Microsoft.Xna.Framework.Color,System.Single,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+  commentId: M:Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Rectangle,System.Nullable{Microsoft.Xna.Framework.Rectangle},Microsoft.Xna.Framework.Color,System.Single,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+  parent: Microsoft.Xna.Framework.Graphics.SpriteBatch
+  isExternal: true
+  name: Draw(Texture2D, Rectangle, Nullable<Rectangle>, Color, Single, Vector2, SpriteEffects, Single)
+  nameWithType: SpriteBatch.Draw(Texture2D, Rectangle, Nullable<Rectangle>, Color, Single, Vector2, SpriteEffects, Single)
+  fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D, Microsoft.Xna.Framework.Rectangle, System.Nullable<Microsoft.Xna.Framework.Rectangle>, Microsoft.Xna.Framework.Color, System.Single, Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Graphics.SpriteEffects, System.Single)
+  nameWithType.vb: SpriteBatch.Draw(Texture2D, Rectangle, Nullable(Of Rectangle), Color, Single, Vector2, SpriteEffects, Single)
+  fullName.vb: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D, Microsoft.Xna.Framework.Rectangle, System.Nullable(Of Microsoft.Xna.Framework.Rectangle), Microsoft.Xna.Framework.Color, System.Single, Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Graphics.SpriteEffects, System.Single)
+  name.vb: Draw(Texture2D, Rectangle, Nullable(Of Rectangle), Color, Single, Vector2, SpriteEffects, Single)
+  spec.csharp:
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Rectangle,System.Nullable{Microsoft.Xna.Framework.Rectangle},Microsoft.Xna.Framework.Color,System.Single,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+    name: Draw
+    nameWithType: SpriteBatch.Draw
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Microsoft.Xna.Framework.Graphics.Texture2D
+    name: Texture2D
+    nameWithType: Texture2D
+    fullName: Microsoft.Xna.Framework.Graphics.Texture2D
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Rectangle
+    name: Rectangle
+    nameWithType: Rectangle
+    fullName: Microsoft.Xna.Framework.Rectangle
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Nullable`1
+    name: Nullable
+    nameWithType: Nullable
+    fullName: System.Nullable
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Microsoft.Xna.Framework.Rectangle
+    name: Rectangle
+    nameWithType: Rectangle
+    fullName: Microsoft.Xna.Framework.Rectangle
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Color
+    name: Color
+    nameWithType: Color
+    fullName: Microsoft.Xna.Framework.Color
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteEffects
+    name: SpriteEffects
+    nameWithType: SpriteEffects
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteEffects
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Rectangle,System.Nullable{Microsoft.Xna.Framework.Rectangle},Microsoft.Xna.Framework.Color,System.Single,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+    name: Draw
+    nameWithType: SpriteBatch.Draw
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Microsoft.Xna.Framework.Graphics.Texture2D
+    name: Texture2D
+    nameWithType: Texture2D
+    fullName: Microsoft.Xna.Framework.Graphics.Texture2D
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Rectangle
+    name: Rectangle
+    nameWithType: Rectangle
+    fullName: Microsoft.Xna.Framework.Rectangle
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Nullable`1
+    name: Nullable
+    nameWithType: Nullable
+    fullName: System.Nullable
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Microsoft.Xna.Framework.Rectangle
+    name: Rectangle
+    nameWithType: Rectangle
+    fullName: Microsoft.Xna.Framework.Rectangle
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Color
+    name: Color
+    nameWithType: Color
+    fullName: Microsoft.Xna.Framework.Color
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteEffects
+    name: SpriteEffects
+    nameWithType: SpriteEffects
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteEffects
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Vector2,System.Nullable{Microsoft.Xna.Framework.Rectangle},Microsoft.Xna.Framework.Color)
+  commentId: M:Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Vector2,System.Nullable{Microsoft.Xna.Framework.Rectangle},Microsoft.Xna.Framework.Color)
+  parent: Microsoft.Xna.Framework.Graphics.SpriteBatch
+  isExternal: true
+  name: Draw(Texture2D, Vector2, Nullable<Rectangle>, Color)
+  nameWithType: SpriteBatch.Draw(Texture2D, Vector2, Nullable<Rectangle>, Color)
+  fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D, Microsoft.Xna.Framework.Vector2, System.Nullable<Microsoft.Xna.Framework.Rectangle>, Microsoft.Xna.Framework.Color)
+  nameWithType.vb: SpriteBatch.Draw(Texture2D, Vector2, Nullable(Of Rectangle), Color)
+  fullName.vb: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D, Microsoft.Xna.Framework.Vector2, System.Nullable(Of Microsoft.Xna.Framework.Rectangle), Microsoft.Xna.Framework.Color)
+  name.vb: Draw(Texture2D, Vector2, Nullable(Of Rectangle), Color)
+  spec.csharp:
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Vector2,System.Nullable{Microsoft.Xna.Framework.Rectangle},Microsoft.Xna.Framework.Color)
+    name: Draw
+    nameWithType: SpriteBatch.Draw
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Microsoft.Xna.Framework.Graphics.Texture2D
+    name: Texture2D
+    nameWithType: Texture2D
+    fullName: Microsoft.Xna.Framework.Graphics.Texture2D
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Nullable`1
+    name: Nullable
+    nameWithType: Nullable
+    fullName: System.Nullable
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Microsoft.Xna.Framework.Rectangle
+    name: Rectangle
+    nameWithType: Rectangle
+    fullName: Microsoft.Xna.Framework.Rectangle
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Color
+    name: Color
+    nameWithType: Color
+    fullName: Microsoft.Xna.Framework.Color
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Vector2,System.Nullable{Microsoft.Xna.Framework.Rectangle},Microsoft.Xna.Framework.Color)
+    name: Draw
+    nameWithType: SpriteBatch.Draw
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Microsoft.Xna.Framework.Graphics.Texture2D
+    name: Texture2D
+    nameWithType: Texture2D
+    fullName: Microsoft.Xna.Framework.Graphics.Texture2D
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Nullable`1
+    name: Nullable
+    nameWithType: Nullable
+    fullName: System.Nullable
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Microsoft.Xna.Framework.Rectangle
+    name: Rectangle
+    nameWithType: Rectangle
+    fullName: Microsoft.Xna.Framework.Rectangle
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Color
+    name: Color
+    nameWithType: Color
+    fullName: Microsoft.Xna.Framework.Color
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Rectangle,System.Nullable{Microsoft.Xna.Framework.Rectangle},Microsoft.Xna.Framework.Color)
+  commentId: M:Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Rectangle,System.Nullable{Microsoft.Xna.Framework.Rectangle},Microsoft.Xna.Framework.Color)
+  parent: Microsoft.Xna.Framework.Graphics.SpriteBatch
+  isExternal: true
+  name: Draw(Texture2D, Rectangle, Nullable<Rectangle>, Color)
+  nameWithType: SpriteBatch.Draw(Texture2D, Rectangle, Nullable<Rectangle>, Color)
+  fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D, Microsoft.Xna.Framework.Rectangle, System.Nullable<Microsoft.Xna.Framework.Rectangle>, Microsoft.Xna.Framework.Color)
+  nameWithType.vb: SpriteBatch.Draw(Texture2D, Rectangle, Nullable(Of Rectangle), Color)
+  fullName.vb: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D, Microsoft.Xna.Framework.Rectangle, System.Nullable(Of Microsoft.Xna.Framework.Rectangle), Microsoft.Xna.Framework.Color)
+  name.vb: Draw(Texture2D, Rectangle, Nullable(Of Rectangle), Color)
+  spec.csharp:
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Rectangle,System.Nullable{Microsoft.Xna.Framework.Rectangle},Microsoft.Xna.Framework.Color)
+    name: Draw
+    nameWithType: SpriteBatch.Draw
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Microsoft.Xna.Framework.Graphics.Texture2D
+    name: Texture2D
+    nameWithType: Texture2D
+    fullName: Microsoft.Xna.Framework.Graphics.Texture2D
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Rectangle
+    name: Rectangle
+    nameWithType: Rectangle
+    fullName: Microsoft.Xna.Framework.Rectangle
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Nullable`1
+    name: Nullable
+    nameWithType: Nullable
+    fullName: System.Nullable
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Microsoft.Xna.Framework.Rectangle
+    name: Rectangle
+    nameWithType: Rectangle
+    fullName: Microsoft.Xna.Framework.Rectangle
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Color
+    name: Color
+    nameWithType: Color
+    fullName: Microsoft.Xna.Framework.Color
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Rectangle,System.Nullable{Microsoft.Xna.Framework.Rectangle},Microsoft.Xna.Framework.Color)
+    name: Draw
+    nameWithType: SpriteBatch.Draw
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Microsoft.Xna.Framework.Graphics.Texture2D
+    name: Texture2D
+    nameWithType: Texture2D
+    fullName: Microsoft.Xna.Framework.Graphics.Texture2D
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Rectangle
+    name: Rectangle
+    nameWithType: Rectangle
+    fullName: Microsoft.Xna.Framework.Rectangle
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Nullable`1
+    name: Nullable
+    nameWithType: Nullable
+    fullName: System.Nullable
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Microsoft.Xna.Framework.Rectangle
+    name: Rectangle
+    nameWithType: Rectangle
+    fullName: Microsoft.Xna.Framework.Rectangle
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Color
+    name: Color
+    nameWithType: Color
+    fullName: Microsoft.Xna.Framework.Color
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color)
+  commentId: M:Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color)
+  parent: Microsoft.Xna.Framework.Graphics.SpriteBatch
+  isExternal: true
+  name: Draw(Texture2D, Vector2, Color)
+  nameWithType: SpriteBatch.Draw(Texture2D, Vector2, Color)
+  fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D, Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Color)
+  spec.csharp:
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color)
+    name: Draw
+    nameWithType: SpriteBatch.Draw
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Microsoft.Xna.Framework.Graphics.Texture2D
+    name: Texture2D
+    nameWithType: Texture2D
+    fullName: Microsoft.Xna.Framework.Graphics.Texture2D
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Color
+    name: Color
+    nameWithType: Color
+    fullName: Microsoft.Xna.Framework.Color
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color)
+    name: Draw
+    nameWithType: SpriteBatch.Draw
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Microsoft.Xna.Framework.Graphics.Texture2D
+    name: Texture2D
+    nameWithType: Texture2D
+    fullName: Microsoft.Xna.Framework.Graphics.Texture2D
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Color
+    name: Color
+    nameWithType: Color
+    fullName: Microsoft.Xna.Framework.Color
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Rectangle,Microsoft.Xna.Framework.Color)
+  commentId: M:Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Rectangle,Microsoft.Xna.Framework.Color)
+  parent: Microsoft.Xna.Framework.Graphics.SpriteBatch
+  isExternal: true
+  name: Draw(Texture2D, Rectangle, Color)
+  nameWithType: SpriteBatch.Draw(Texture2D, Rectangle, Color)
+  fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D, Microsoft.Xna.Framework.Rectangle, Microsoft.Xna.Framework.Color)
+  spec.csharp:
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Rectangle,Microsoft.Xna.Framework.Color)
+    name: Draw
+    nameWithType: SpriteBatch.Draw
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Microsoft.Xna.Framework.Graphics.Texture2D
+    name: Texture2D
+    nameWithType: Texture2D
+    fullName: Microsoft.Xna.Framework.Graphics.Texture2D
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Rectangle
+    name: Rectangle
+    nameWithType: Rectangle
+    fullName: Microsoft.Xna.Framework.Rectangle
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Color
+    name: Color
+    nameWithType: Color
+    fullName: Microsoft.Xna.Framework.Color
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Rectangle,Microsoft.Xna.Framework.Color)
+    name: Draw
+    nameWithType: SpriteBatch.Draw
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.Draw
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Microsoft.Xna.Framework.Graphics.Texture2D
+    name: Texture2D
+    nameWithType: Texture2D
+    fullName: Microsoft.Xna.Framework.Graphics.Texture2D
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Rectangle
+    name: Rectangle
+    nameWithType: Rectangle
+    fullName: Microsoft.Xna.Framework.Rectangle
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Color
+    name: Color
+    nameWithType: Color
+    fullName: Microsoft.Xna.Framework.Color
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont,System.String,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color)
+  commentId: M:Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont,System.String,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color)
+  parent: Microsoft.Xna.Framework.Graphics.SpriteBatch
+  isExternal: true
+  name: DrawString(SpriteFont, String, Vector2, Color)
+  nameWithType: SpriteBatch.DrawString(SpriteFont, String, Vector2, Color)
+  fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont, System.String, Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Color)
+  spec.csharp:
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont,System.String,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color)
+    name: DrawString
+    nameWithType: SpriteBatch.DrawString
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteFont
+    name: SpriteFont
+    nameWithType: SpriteFont
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteFont
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Color
+    name: Color
+    nameWithType: Color
+    fullName: Microsoft.Xna.Framework.Color
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont,System.String,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color)
+    name: DrawString
+    nameWithType: SpriteBatch.DrawString
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteFont
+    name: SpriteFont
+    nameWithType: SpriteFont
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteFont
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Color
+    name: Color
+    nameWithType: Color
+    fullName: Microsoft.Xna.Framework.Color
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont,System.String,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color,System.Single,Microsoft.Xna.Framework.Vector2,System.Single,Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+  commentId: M:Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont,System.String,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color,System.Single,Microsoft.Xna.Framework.Vector2,System.Single,Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+  parent: Microsoft.Xna.Framework.Graphics.SpriteBatch
+  isExternal: true
+  name: DrawString(SpriteFont, String, Vector2, Color, Single, Vector2, Single, SpriteEffects, Single)
+  nameWithType: SpriteBatch.DrawString(SpriteFont, String, Vector2, Color, Single, Vector2, Single, SpriteEffects, Single)
+  fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont, System.String, Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Color, System.Single, Microsoft.Xna.Framework.Vector2, System.Single, Microsoft.Xna.Framework.Graphics.SpriteEffects, System.Single)
+  spec.csharp:
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont,System.String,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color,System.Single,Microsoft.Xna.Framework.Vector2,System.Single,Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+    name: DrawString
+    nameWithType: SpriteBatch.DrawString
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteFont
+    name: SpriteFont
+    nameWithType: SpriteFont
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteFont
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Color
+    name: Color
+    nameWithType: Color
+    fullName: Microsoft.Xna.Framework.Color
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteEffects
+    name: SpriteEffects
+    nameWithType: SpriteEffects
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteEffects
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont,System.String,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color,System.Single,Microsoft.Xna.Framework.Vector2,System.Single,Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+    name: DrawString
+    nameWithType: SpriteBatch.DrawString
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteFont
+    name: SpriteFont
+    nameWithType: SpriteFont
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteFont
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Color
+    name: Color
+    nameWithType: Color
+    fullName: Microsoft.Xna.Framework.Color
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteEffects
+    name: SpriteEffects
+    nameWithType: SpriteEffects
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteEffects
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont,System.String,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color,System.Single,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+  commentId: M:Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont,System.String,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color,System.Single,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+  parent: Microsoft.Xna.Framework.Graphics.SpriteBatch
+  isExternal: true
+  name: DrawString(SpriteFont, String, Vector2, Color, Single, Vector2, Vector2, SpriteEffects, Single)
+  nameWithType: SpriteBatch.DrawString(SpriteFont, String, Vector2, Color, Single, Vector2, Vector2, SpriteEffects, Single)
+  fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont, System.String, Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Color, System.Single, Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Graphics.SpriteEffects, System.Single)
+  spec.csharp:
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont,System.String,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color,System.Single,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+    name: DrawString
+    nameWithType: SpriteBatch.DrawString
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteFont
+    name: SpriteFont
+    nameWithType: SpriteFont
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteFont
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Color
+    name: Color
+    nameWithType: Color
+    fullName: Microsoft.Xna.Framework.Color
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteEffects
+    name: SpriteEffects
+    nameWithType: SpriteEffects
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteEffects
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont,System.String,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color,System.Single,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+    name: DrawString
+    nameWithType: SpriteBatch.DrawString
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteFont
+    name: SpriteFont
+    nameWithType: SpriteFont
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteFont
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Color
+    name: Color
+    nameWithType: Color
+    fullName: Microsoft.Xna.Framework.Color
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteEffects
+    name: SpriteEffects
+    nameWithType: SpriteEffects
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteEffects
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont,System.Text.StringBuilder,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color)
+  commentId: M:Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont,System.Text.StringBuilder,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color)
+  parent: Microsoft.Xna.Framework.Graphics.SpriteBatch
+  isExternal: true
+  name: DrawString(SpriteFont, StringBuilder, Vector2, Color)
+  nameWithType: SpriteBatch.DrawString(SpriteFont, StringBuilder, Vector2, Color)
+  fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont, System.Text.StringBuilder, Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Color)
+  spec.csharp:
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont,System.Text.StringBuilder,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color)
+    name: DrawString
+    nameWithType: SpriteBatch.DrawString
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteFont
+    name: SpriteFont
+    nameWithType: SpriteFont
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteFont
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Text.StringBuilder
+    name: StringBuilder
+    nameWithType: StringBuilder
+    fullName: System.Text.StringBuilder
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Color
+    name: Color
+    nameWithType: Color
+    fullName: Microsoft.Xna.Framework.Color
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont,System.Text.StringBuilder,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color)
+    name: DrawString
+    nameWithType: SpriteBatch.DrawString
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteFont
+    name: SpriteFont
+    nameWithType: SpriteFont
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteFont
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Text.StringBuilder
+    name: StringBuilder
+    nameWithType: StringBuilder
+    fullName: System.Text.StringBuilder
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Color
+    name: Color
+    nameWithType: Color
+    fullName: Microsoft.Xna.Framework.Color
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont,System.Text.StringBuilder,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color,System.Single,Microsoft.Xna.Framework.Vector2,System.Single,Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+  commentId: M:Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont,System.Text.StringBuilder,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color,System.Single,Microsoft.Xna.Framework.Vector2,System.Single,Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+  parent: Microsoft.Xna.Framework.Graphics.SpriteBatch
+  isExternal: true
+  name: DrawString(SpriteFont, StringBuilder, Vector2, Color, Single, Vector2, Single, SpriteEffects, Single)
+  nameWithType: SpriteBatch.DrawString(SpriteFont, StringBuilder, Vector2, Color, Single, Vector2, Single, SpriteEffects, Single)
+  fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont, System.Text.StringBuilder, Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Color, System.Single, Microsoft.Xna.Framework.Vector2, System.Single, Microsoft.Xna.Framework.Graphics.SpriteEffects, System.Single)
+  spec.csharp:
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont,System.Text.StringBuilder,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color,System.Single,Microsoft.Xna.Framework.Vector2,System.Single,Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+    name: DrawString
+    nameWithType: SpriteBatch.DrawString
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteFont
+    name: SpriteFont
+    nameWithType: SpriteFont
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteFont
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Text.StringBuilder
+    name: StringBuilder
+    nameWithType: StringBuilder
+    fullName: System.Text.StringBuilder
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Color
+    name: Color
+    nameWithType: Color
+    fullName: Microsoft.Xna.Framework.Color
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteEffects
+    name: SpriteEffects
+    nameWithType: SpriteEffects
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteEffects
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont,System.Text.StringBuilder,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color,System.Single,Microsoft.Xna.Framework.Vector2,System.Single,Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+    name: DrawString
+    nameWithType: SpriteBatch.DrawString
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteFont
+    name: SpriteFont
+    nameWithType: SpriteFont
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteFont
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Text.StringBuilder
+    name: StringBuilder
+    nameWithType: StringBuilder
+    fullName: System.Text.StringBuilder
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Color
+    name: Color
+    nameWithType: Color
+    fullName: Microsoft.Xna.Framework.Color
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteEffects
+    name: SpriteEffects
+    nameWithType: SpriteEffects
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteEffects
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont,System.Text.StringBuilder,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color,System.Single,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+  commentId: M:Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont,System.Text.StringBuilder,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color,System.Single,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+  parent: Microsoft.Xna.Framework.Graphics.SpriteBatch
+  isExternal: true
+  name: DrawString(SpriteFont, StringBuilder, Vector2, Color, Single, Vector2, Vector2, SpriteEffects, Single)
+  nameWithType: SpriteBatch.DrawString(SpriteFont, StringBuilder, Vector2, Color, Single, Vector2, Vector2, SpriteEffects, Single)
+  fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont, System.Text.StringBuilder, Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Color, System.Single, Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Graphics.SpriteEffects, System.Single)
+  spec.csharp:
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont,System.Text.StringBuilder,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color,System.Single,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+    name: DrawString
+    nameWithType: SpriteBatch.DrawString
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteFont
+    name: SpriteFont
+    nameWithType: SpriteFont
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteFont
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Text.StringBuilder
+    name: StringBuilder
+    nameWithType: StringBuilder
+    fullName: System.Text.StringBuilder
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Color
+    name: Color
+    nameWithType: Color
+    fullName: Microsoft.Xna.Framework.Color
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteEffects
+    name: SpriteEffects
+    nameWithType: SpriteEffects
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteEffects
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString(Microsoft.Xna.Framework.Graphics.SpriteFont,System.Text.StringBuilder,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color,System.Single,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Graphics.SpriteEffects,System.Single)
+    name: DrawString
+    nameWithType: SpriteBatch.DrawString
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.DrawString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteFont
+    name: SpriteFont
+    nameWithType: SpriteFont
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteFont
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Text.StringBuilder
+    name: StringBuilder
+    nameWithType: StringBuilder
+    fullName: System.Text.StringBuilder
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Color
+    name: Color
+    nameWithType: Color
+    fullName: Microsoft.Xna.Framework.Color
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Vector2
+    name: Vector2
+    nameWithType: Vector2
+    fullName: Microsoft.Xna.Framework.Vector2
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteEffects
+    name: SpriteEffects
+    nameWithType: SpriteEffects
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteEffects
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Single
+    name: Single
+    nameWithType: Single
+    fullName: System.Single
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.Dispose(System.Boolean)
+  commentId: M:Microsoft.Xna.Framework.Graphics.SpriteBatch.Dispose(System.Boolean)
+  parent: Microsoft.Xna.Framework.Graphics.SpriteBatch
+  isExternal: true
+  name: Dispose(Boolean)
+  nameWithType: SpriteBatch.Dispose(Boolean)
+  fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.Dispose(System.Boolean)
+  spec.csharp:
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.Dispose(System.Boolean)
+    name: Dispose
+    nameWithType: SpriteBatch.Dispose
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.Dispose
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Boolean
+    name: Boolean
+    nameWithType: Boolean
+    fullName: System.Boolean
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteBatch.Dispose(System.Boolean)
+    name: Dispose
+    nameWithType: SpriteBatch.Dispose
+    fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch.Dispose
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Boolean
+    name: Boolean
+    nameWithType: Boolean
+    fullName: System.Boolean
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Microsoft.Xna.Framework.Graphics.GraphicsResource.GraphicsDeviceResetting
+  commentId: M:Microsoft.Xna.Framework.Graphics.GraphicsResource.GraphicsDeviceResetting
+  parent: Microsoft.Xna.Framework.Graphics.GraphicsResource
+  isExternal: true
+  name: GraphicsDeviceResetting()
+  nameWithType: GraphicsResource.GraphicsDeviceResetting()
+  fullName: Microsoft.Xna.Framework.Graphics.GraphicsResource.GraphicsDeviceResetting()
+  spec.csharp:
+  - uid: Microsoft.Xna.Framework.Graphics.GraphicsResource.GraphicsDeviceResetting
+    name: GraphicsDeviceResetting
+    nameWithType: GraphicsResource.GraphicsDeviceResetting
+    fullName: Microsoft.Xna.Framework.Graphics.GraphicsResource.GraphicsDeviceResetting
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Microsoft.Xna.Framework.Graphics.GraphicsResource.GraphicsDeviceResetting
+    name: GraphicsDeviceResetting
+    nameWithType: GraphicsResource.GraphicsDeviceResetting
+    fullName: Microsoft.Xna.Framework.Graphics.GraphicsResource.GraphicsDeviceResetting
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Microsoft.Xna.Framework.Graphics.GraphicsResource.Dispose
+  commentId: M:Microsoft.Xna.Framework.Graphics.GraphicsResource.Dispose
+  parent: Microsoft.Xna.Framework.Graphics.GraphicsResource
+  isExternal: true
+  name: Dispose()
+  nameWithType: GraphicsResource.Dispose()
+  fullName: Microsoft.Xna.Framework.Graphics.GraphicsResource.Dispose()
+  spec.csharp:
+  - uid: Microsoft.Xna.Framework.Graphics.GraphicsResource.Dispose
+    name: Dispose
+    nameWithType: GraphicsResource.Dispose
+    fullName: Microsoft.Xna.Framework.Graphics.GraphicsResource.Dispose
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Microsoft.Xna.Framework.Graphics.GraphicsResource.Dispose
+    name: Dispose
+    nameWithType: GraphicsResource.Dispose
+    fullName: Microsoft.Xna.Framework.Graphics.GraphicsResource.Dispose
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Microsoft.Xna.Framework.Graphics.GraphicsResource.ToString
+  commentId: M:Microsoft.Xna.Framework.Graphics.GraphicsResource.ToString
+  parent: Microsoft.Xna.Framework.Graphics.GraphicsResource
+  isExternal: true
+  name: ToString()
+  nameWithType: GraphicsResource.ToString()
+  fullName: Microsoft.Xna.Framework.Graphics.GraphicsResource.ToString()
+  spec.csharp:
+  - uid: Microsoft.Xna.Framework.Graphics.GraphicsResource.ToString
+    name: ToString
+    nameWithType: GraphicsResource.ToString
+    fullName: Microsoft.Xna.Framework.Graphics.GraphicsResource.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Microsoft.Xna.Framework.Graphics.GraphicsResource.ToString
+    name: ToString
+    nameWithType: GraphicsResource.ToString
+    fullName: Microsoft.Xna.Framework.Graphics.GraphicsResource.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Microsoft.Xna.Framework.Graphics.GraphicsResource.GraphicsDevice
+  commentId: P:Microsoft.Xna.Framework.Graphics.GraphicsResource.GraphicsDevice
+  parent: Microsoft.Xna.Framework.Graphics.GraphicsResource
+  isExternal: true
+  name: GraphicsDevice
+  nameWithType: GraphicsResource.GraphicsDevice
+  fullName: Microsoft.Xna.Framework.Graphics.GraphicsResource.GraphicsDevice
+- uid: Microsoft.Xna.Framework.Graphics.GraphicsResource.IsDisposed
+  commentId: P:Microsoft.Xna.Framework.Graphics.GraphicsResource.IsDisposed
+  parent: Microsoft.Xna.Framework.Graphics.GraphicsResource
+  isExternal: true
+  name: IsDisposed
+  nameWithType: GraphicsResource.IsDisposed
+  fullName: Microsoft.Xna.Framework.Graphics.GraphicsResource.IsDisposed
+- uid: Microsoft.Xna.Framework.Graphics.GraphicsResource.Name
+  commentId: P:Microsoft.Xna.Framework.Graphics.GraphicsResource.Name
+  parent: Microsoft.Xna.Framework.Graphics.GraphicsResource
+  isExternal: true
+  name: Name
+  nameWithType: GraphicsResource.Name
+  fullName: Microsoft.Xna.Framework.Graphics.GraphicsResource.Name
+- uid: Microsoft.Xna.Framework.Graphics.GraphicsResource.Tag
+  commentId: P:Microsoft.Xna.Framework.Graphics.GraphicsResource.Tag
+  parent: Microsoft.Xna.Framework.Graphics.GraphicsResource
+  isExternal: true
+  name: Tag
+  nameWithType: GraphicsResource.Tag
+  fullName: Microsoft.Xna.Framework.Graphics.GraphicsResource.Tag
+- uid: Microsoft.Xna.Framework.Graphics.GraphicsResource.Disposing
+  commentId: E:Microsoft.Xna.Framework.Graphics.GraphicsResource.Disposing
+  parent: Microsoft.Xna.Framework.Graphics.GraphicsResource
+  isExternal: true
+  name: Disposing
+  nameWithType: GraphicsResource.Disposing
+  fullName: Microsoft.Xna.Framework.Graphics.GraphicsResource.Disposing
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: System.Object.Equals(System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: System.Object.Equals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: System.Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: System.Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: System.Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: System.Object.ReferenceEquals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Microsoft.Xna.Framework.Graphics
+  commentId: N:Microsoft.Xna.Framework.Graphics
+  isExternal: true
+  name: Microsoft.Xna.Framework.Graphics
+  nameWithType: Microsoft.Xna.Framework.Graphics
+  fullName: Microsoft.Xna.Framework.Graphics
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.#ctor*
+  commentId: Overload:StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.#ctor
+  name: SpriteBatchMethods
+  nameWithType: SpriteBatchMethods.SpriteBatchMethods
+  fullName: StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.SpriteBatchMethods
+- uid: Microsoft.Xna.Framework.Graphics.GraphicsDevice
+  commentId: T:Microsoft.Xna.Framework.Graphics.GraphicsDevice
+  parent: Microsoft.Xna.Framework.Graphics
+  isExternal: true
+  name: GraphicsDevice
+  nameWithType: GraphicsDevice
+  fullName: Microsoft.Xna.Framework.Graphics.GraphicsDevice
+- uid: StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.Begin*
+  commentId: Overload:StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.Begin
+  name: Begin
+  nameWithType: SpriteBatchMethods.Begin
+  fullName: StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.Begin
+- uid: Microsoft.Xna.Framework.Graphics.SpriteSortMode
+  commentId: T:Microsoft.Xna.Framework.Graphics.SpriteSortMode
+  parent: Microsoft.Xna.Framework.Graphics
+  isExternal: true
+  name: SpriteSortMode
+  nameWithType: SpriteSortMode
+  fullName: Microsoft.Xna.Framework.Graphics.SpriteSortMode
+- uid: Microsoft.Xna.Framework.Graphics.BlendState
+  commentId: T:Microsoft.Xna.Framework.Graphics.BlendState
+  parent: Microsoft.Xna.Framework.Graphics
+  isExternal: true
+  name: BlendState
+  nameWithType: BlendState
+  fullName: Microsoft.Xna.Framework.Graphics.BlendState
+- uid: Microsoft.Xna.Framework.Graphics.SamplerState
+  commentId: T:Microsoft.Xna.Framework.Graphics.SamplerState
+  parent: Microsoft.Xna.Framework.Graphics
+  isExternal: true
+  name: SamplerState
+  nameWithType: SamplerState
+  fullName: Microsoft.Xna.Framework.Graphics.SamplerState
+- uid: Microsoft.Xna.Framework.Graphics.DepthStencilState
+  commentId: T:Microsoft.Xna.Framework.Graphics.DepthStencilState
+  parent: Microsoft.Xna.Framework.Graphics
+  isExternal: true
+  name: DepthStencilState
+  nameWithType: DepthStencilState
+  fullName: Microsoft.Xna.Framework.Graphics.DepthStencilState
+- uid: Microsoft.Xna.Framework.Graphics.RasterizerState
+  commentId: T:Microsoft.Xna.Framework.Graphics.RasterizerState
+  parent: Microsoft.Xna.Framework.Graphics
+  isExternal: true
+  name: RasterizerState
+  nameWithType: RasterizerState
+  fullName: Microsoft.Xna.Framework.Graphics.RasterizerState
+- uid: Microsoft.Xna.Framework.Graphics.Effect
+  commentId: T:Microsoft.Xna.Framework.Graphics.Effect
+  parent: Microsoft.Xna.Framework.Graphics
+  isExternal: true
+  name: Effect
+  nameWithType: Effect
+  fullName: Microsoft.Xna.Framework.Graphics.Effect
+- uid: System.Nullable{Microsoft.Xna.Framework.Matrix}
+  commentId: T:System.Nullable{Microsoft.Xna.Framework.Matrix}
+  parent: System
+  definition: System.Nullable`1
+  name: Nullable<Matrix>
+  nameWithType: Nullable<Matrix>
+  fullName: System.Nullable<Microsoft.Xna.Framework.Matrix>
+  nameWithType.vb: Nullable(Of Matrix)
+  fullName.vb: System.Nullable(Of Microsoft.Xna.Framework.Matrix)
+  name.vb: Nullable(Of Matrix)
+  spec.csharp:
+  - uid: System.Nullable`1
+    name: Nullable
+    nameWithType: Nullable
+    fullName: System.Nullable
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Microsoft.Xna.Framework.Matrix
+    name: Matrix
+    nameWithType: Matrix
+    fullName: Microsoft.Xna.Framework.Matrix
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Nullable`1
+    name: Nullable
+    nameWithType: Nullable
+    fullName: System.Nullable
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Microsoft.Xna.Framework.Matrix
+    name: Matrix
+    nameWithType: Matrix
+    fullName: Microsoft.Xna.Framework.Matrix
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Nullable`1
+  commentId: T:System.Nullable`1
+  isExternal: true
+  name: Nullable<T>
+  nameWithType: Nullable<T>
+  fullName: System.Nullable<T>
+  nameWithType.vb: Nullable(Of T)
+  fullName.vb: System.Nullable(Of T)
+  name.vb: Nullable(Of T)
+  spec.csharp:
+  - uid: System.Nullable`1
+    name: Nullable
+    nameWithType: Nullable
+    fullName: System.Nullable
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Nullable`1
+    name: Nullable
+    nameWithType: Nullable
+    fullName: System.Nullable
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Microsoft.Xna.Framework.Matrix
+  commentId: T:Microsoft.Xna.Framework.Matrix
+  parent: Microsoft.Xna.Framework
+  isExternal: true
+  name: Matrix
+  nameWithType: Matrix
+  fullName: Microsoft.Xna.Framework.Matrix
+- uid: Microsoft.Xna.Framework
+  commentId: N:Microsoft.Xna.Framework
+  isExternal: true
+  name: Microsoft.Xna.Framework
+  nameWithType: Microsoft.Xna.Framework
+  fullName: Microsoft.Xna.Framework

@@ -1,0 +1,729 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.IManifest
+  commentId: T:StardewModdingAPI.IManifest
+  id: IManifest
+  parent: StardewModdingAPI
+  children:
+  - StardewModdingAPI.IManifest.Author
+  - StardewModdingAPI.IManifest.ContentPackFor
+  - StardewModdingAPI.IManifest.Dependencies
+  - StardewModdingAPI.IManifest.Description
+  - StardewModdingAPI.IManifest.EntryDll
+  - StardewModdingAPI.IManifest.ExtraFields
+  - StardewModdingAPI.IManifest.MinimumApiVersion
+  - StardewModdingAPI.IManifest.Name
+  - StardewModdingAPI.IManifest.UniqueID
+  - StardewModdingAPI.IManifest.UpdateKeys
+  - StardewModdingAPI.IManifest.Version
+  langs:
+  - csharp
+  - vb
+  name: IManifest
+  nameWithType: IManifest
+  fullName: StardewModdingAPI.IManifest
+  type: Interface
+  source:
+    remote:
+      path: src/SMAPI/IManifest.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: IManifest
+    path: IManifest.cs
+    startLine: 5
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: A manifest which describes a mod for SMAPI.
+  example: []
+  syntax:
+    content: public interface IManifest
+    content.vb: Public Interface IManifest
+  modifiers.csharp:
+  - public
+  - interface
+  modifiers.vb:
+  - Public
+  - Interface
+- uid: StardewModdingAPI.IManifest.Name
+  commentId: P:StardewModdingAPI.IManifest.Name
+  id: Name
+  parent: StardewModdingAPI.IManifest
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: IManifest.Name
+  fullName: StardewModdingAPI.IManifest.Name
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IManifest.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Name
+    path: IManifest.cs
+    startLine: 11
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The mod name.
+  example: []
+  syntax:
+    content: string Name { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: ReadOnly Property Name As String
+  overload: StardewModdingAPI.IManifest.Name*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+- uid: StardewModdingAPI.IManifest.Description
+  commentId: P:StardewModdingAPI.IManifest.Description
+  id: Description
+  parent: StardewModdingAPI.IManifest
+  langs:
+  - csharp
+  - vb
+  name: Description
+  nameWithType: IManifest.Description
+  fullName: StardewModdingAPI.IManifest.Description
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IManifest.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Description
+    path: IManifest.cs
+    startLine: 14
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: A brief description of the mod.
+  example: []
+  syntax:
+    content: string Description { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: ReadOnly Property Description As String
+  overload: StardewModdingAPI.IManifest.Description*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+- uid: StardewModdingAPI.IManifest.Author
+  commentId: P:StardewModdingAPI.IManifest.Author
+  id: Author
+  parent: StardewModdingAPI.IManifest
+  langs:
+  - csharp
+  - vb
+  name: Author
+  nameWithType: IManifest.Author
+  fullName: StardewModdingAPI.IManifest.Author
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IManifest.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Author
+    path: IManifest.cs
+    startLine: 17
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The mod author&apos;s name.
+  example: []
+  syntax:
+    content: string Author { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: ReadOnly Property Author As String
+  overload: StardewModdingAPI.IManifest.Author*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+- uid: StardewModdingAPI.IManifest.Version
+  commentId: P:StardewModdingAPI.IManifest.Version
+  id: Version
+  parent: StardewModdingAPI.IManifest
+  langs:
+  - csharp
+  - vb
+  name: Version
+  nameWithType: IManifest.Version
+  fullName: StardewModdingAPI.IManifest.Version
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IManifest.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Version
+    path: IManifest.cs
+    startLine: 20
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The mod version.
+  example: []
+  syntax:
+    content: ISemanticVersion Version { get; }
+    parameters: []
+    return:
+      type: StardewModdingAPI.ISemanticVersion
+    content.vb: ReadOnly Property Version As ISemanticVersion
+  overload: StardewModdingAPI.IManifest.Version*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+- uid: StardewModdingAPI.IManifest.MinimumApiVersion
+  commentId: P:StardewModdingAPI.IManifest.MinimumApiVersion
+  id: MinimumApiVersion
+  parent: StardewModdingAPI.IManifest
+  langs:
+  - csharp
+  - vb
+  name: MinimumApiVersion
+  nameWithType: IManifest.MinimumApiVersion
+  fullName: StardewModdingAPI.IManifest.MinimumApiVersion
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IManifest.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: MinimumApiVersion
+    path: IManifest.cs
+    startLine: 23
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The minimum SMAPI version required by this mod, if any.
+  example: []
+  syntax:
+    content: ISemanticVersion MinimumApiVersion { get; }
+    parameters: []
+    return:
+      type: StardewModdingAPI.ISemanticVersion
+    content.vb: ReadOnly Property MinimumApiVersion As ISemanticVersion
+  overload: StardewModdingAPI.IManifest.MinimumApiVersion*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+- uid: StardewModdingAPI.IManifest.UniqueID
+  commentId: P:StardewModdingAPI.IManifest.UniqueID
+  id: UniqueID
+  parent: StardewModdingAPI.IManifest
+  langs:
+  - csharp
+  - vb
+  name: UniqueID
+  nameWithType: IManifest.UniqueID
+  fullName: StardewModdingAPI.IManifest.UniqueID
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IManifest.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: UniqueID
+    path: IManifest.cs
+    startLine: 26
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The unique mod ID.
+  example: []
+  syntax:
+    content: string UniqueID { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: ReadOnly Property UniqueID As String
+  overload: StardewModdingAPI.IManifest.UniqueID*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+- uid: StardewModdingAPI.IManifest.EntryDll
+  commentId: P:StardewModdingAPI.IManifest.EntryDll
+  id: EntryDll
+  parent: StardewModdingAPI.IManifest
+  langs:
+  - csharp
+  - vb
+  name: EntryDll
+  nameWithType: IManifest.EntryDll
+  fullName: StardewModdingAPI.IManifest.EntryDll
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IManifest.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: EntryDll
+    path: IManifest.cs
+    startLine: 29
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The name of the DLL in the directory that has the <xref href="StardewModdingAPI.IMod.Entry(StardewModdingAPI.IModHelper)" data-throw-if-not-resolved="false"></xref> method. Mutually exclusive with <xref href="StardewModdingAPI.IManifest.EntryDll" data-throw-if-not-resolved="false"></xref>.
+  example: []
+  syntax:
+    content: string EntryDll { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: ReadOnly Property EntryDll As String
+  overload: StardewModdingAPI.IManifest.EntryDll*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+- uid: StardewModdingAPI.IManifest.ContentPackFor
+  commentId: P:StardewModdingAPI.IManifest.ContentPackFor
+  id: ContentPackFor
+  parent: StardewModdingAPI.IManifest
+  langs:
+  - csharp
+  - vb
+  name: ContentPackFor
+  nameWithType: IManifest.ContentPackFor
+  fullName: StardewModdingAPI.IManifest.ContentPackFor
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IManifest.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ContentPackFor
+    path: IManifest.cs
+    startLine: 32
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The mod which will read this as a content pack. Mutually exclusive with <xref href="StardewModdingAPI.IManifest.EntryDll" data-throw-if-not-resolved="false"></xref>.
+  example: []
+  syntax:
+    content: IManifestContentPackFor ContentPackFor { get; }
+    parameters: []
+    return:
+      type: StardewModdingAPI.IManifestContentPackFor
+    content.vb: ReadOnly Property ContentPackFor As IManifestContentPackFor
+  overload: StardewModdingAPI.IManifest.ContentPackFor*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+- uid: StardewModdingAPI.IManifest.Dependencies
+  commentId: P:StardewModdingAPI.IManifest.Dependencies
+  id: Dependencies
+  parent: StardewModdingAPI.IManifest
+  langs:
+  - csharp
+  - vb
+  name: Dependencies
+  nameWithType: IManifest.Dependencies
+  fullName: StardewModdingAPI.IManifest.Dependencies
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IManifest.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Dependencies
+    path: IManifest.cs
+    startLine: 35
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The other mods that must be loaded before this mod.
+  example: []
+  syntax:
+    content: IManifestDependency[] Dependencies { get; }
+    parameters: []
+    return:
+      type: StardewModdingAPI.IManifestDependency[]
+    content.vb: ReadOnly Property Dependencies As IManifestDependency()
+  overload: StardewModdingAPI.IManifest.Dependencies*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+- uid: StardewModdingAPI.IManifest.UpdateKeys
+  commentId: P:StardewModdingAPI.IManifest.UpdateKeys
+  id: UpdateKeys
+  parent: StardewModdingAPI.IManifest
+  langs:
+  - csharp
+  - vb
+  name: UpdateKeys
+  nameWithType: IManifest.UpdateKeys
+  fullName: StardewModdingAPI.IManifest.UpdateKeys
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IManifest.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: UpdateKeys
+    path: IManifest.cs
+    startLine: 38
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The namespaced mod IDs to query for updates (like <code>Nexus:541</code>).
+  example: []
+  syntax:
+    content: string[] UpdateKeys { get; set; }
+    parameters: []
+    return:
+      type: System.String[]
+    content.vb: Property UpdateKeys As String()
+  overload: StardewModdingAPI.IManifest.UpdateKeys*
+  modifiers.csharp:
+  - get
+  - set
+- uid: StardewModdingAPI.IManifest.ExtraFields
+  commentId: P:StardewModdingAPI.IManifest.ExtraFields
+  id: ExtraFields
+  parent: StardewModdingAPI.IManifest
+  langs:
+  - csharp
+  - vb
+  name: ExtraFields
+  nameWithType: IManifest.ExtraFields
+  fullName: StardewModdingAPI.IManifest.ExtraFields
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IManifest.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ExtraFields
+    path: IManifest.cs
+    startLine: 41
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Any manifest fields which didn&apos;t match a valid field.
+  example: []
+  syntax:
+    content: IDictionary<string, object> ExtraFields { get; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IDictionary{System.String,System.Object}
+    content.vb: ReadOnly Property ExtraFields As IDictionary(Of String, Object)
+  overload: StardewModdingAPI.IManifest.ExtraFields*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+references:
+- uid: StardewModdingAPI
+  commentId: N:StardewModdingAPI
+  name: StardewModdingAPI
+  nameWithType: StardewModdingAPI
+  fullName: StardewModdingAPI
+- uid: StardewModdingAPI.IManifest.Name*
+  commentId: Overload:StardewModdingAPI.IManifest.Name
+  name: Name
+  nameWithType: IManifest.Name
+  fullName: StardewModdingAPI.IManifest.Name
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: StardewModdingAPI.IManifest.Description*
+  commentId: Overload:StardewModdingAPI.IManifest.Description
+  name: Description
+  nameWithType: IManifest.Description
+  fullName: StardewModdingAPI.IManifest.Description
+- uid: StardewModdingAPI.IManifest.Author*
+  commentId: Overload:StardewModdingAPI.IManifest.Author
+  name: Author
+  nameWithType: IManifest.Author
+  fullName: StardewModdingAPI.IManifest.Author
+- uid: StardewModdingAPI.IManifest.Version*
+  commentId: Overload:StardewModdingAPI.IManifest.Version
+  name: Version
+  nameWithType: IManifest.Version
+  fullName: StardewModdingAPI.IManifest.Version
+- uid: StardewModdingAPI.ISemanticVersion
+  commentId: T:StardewModdingAPI.ISemanticVersion
+  parent: StardewModdingAPI
+  name: ISemanticVersion
+  nameWithType: ISemanticVersion
+  fullName: StardewModdingAPI.ISemanticVersion
+- uid: StardewModdingAPI.IManifest.MinimumApiVersion*
+  commentId: Overload:StardewModdingAPI.IManifest.MinimumApiVersion
+  name: MinimumApiVersion
+  nameWithType: IManifest.MinimumApiVersion
+  fullName: StardewModdingAPI.IManifest.MinimumApiVersion
+- uid: StardewModdingAPI.IManifest.UniqueID*
+  commentId: Overload:StardewModdingAPI.IManifest.UniqueID
+  name: UniqueID
+  nameWithType: IManifest.UniqueID
+  fullName: StardewModdingAPI.IManifest.UniqueID
+- uid: StardewModdingAPI.IMod.Entry(StardewModdingAPI.IModHelper)
+  commentId: M:StardewModdingAPI.IMod.Entry(StardewModdingAPI.IModHelper)
+  parent: StardewModdingAPI.IMod
+  name: Entry(IModHelper)
+  nameWithType: IMod.Entry(IModHelper)
+  fullName: StardewModdingAPI.IMod.Entry(StardewModdingAPI.IModHelper)
+  spec.csharp:
+  - uid: StardewModdingAPI.IMod.Entry(StardewModdingAPI.IModHelper)
+    name: Entry
+    nameWithType: IMod.Entry
+    fullName: StardewModdingAPI.IMod.Entry
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: StardewModdingAPI.IModHelper
+    name: IModHelper
+    nameWithType: IModHelper
+    fullName: StardewModdingAPI.IModHelper
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: StardewModdingAPI.IMod.Entry(StardewModdingAPI.IModHelper)
+    name: Entry
+    nameWithType: IMod.Entry
+    fullName: StardewModdingAPI.IMod.Entry
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: StardewModdingAPI.IModHelper
+    name: IModHelper
+    nameWithType: IModHelper
+    fullName: StardewModdingAPI.IModHelper
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.IManifest.EntryDll
+  commentId: P:StardewModdingAPI.IManifest.EntryDll
+  isExternal: true
+- uid: StardewModdingAPI.IManifest.EntryDll*
+  commentId: Overload:StardewModdingAPI.IManifest.EntryDll
+  name: EntryDll
+  nameWithType: IManifest.EntryDll
+  fullName: StardewModdingAPI.IManifest.EntryDll
+- uid: StardewModdingAPI.IMod
+  commentId: T:StardewModdingAPI.IMod
+  parent: StardewModdingAPI
+  name: IMod
+  nameWithType: IMod
+  fullName: StardewModdingAPI.IMod
+- uid: StardewModdingAPI.IManifest.ContentPackFor*
+  commentId: Overload:StardewModdingAPI.IManifest.ContentPackFor
+  name: ContentPackFor
+  nameWithType: IManifest.ContentPackFor
+  fullName: StardewModdingAPI.IManifest.ContentPackFor
+- uid: StardewModdingAPI.IManifestContentPackFor
+  commentId: T:StardewModdingAPI.IManifestContentPackFor
+  parent: StardewModdingAPI
+  name: IManifestContentPackFor
+  nameWithType: IManifestContentPackFor
+  fullName: StardewModdingAPI.IManifestContentPackFor
+- uid: StardewModdingAPI.IManifest.Dependencies*
+  commentId: Overload:StardewModdingAPI.IManifest.Dependencies
+  name: Dependencies
+  nameWithType: IManifest.Dependencies
+  fullName: StardewModdingAPI.IManifest.Dependencies
+- uid: StardewModdingAPI.IManifestDependency[]
+  isExternal: true
+  name: IManifestDependency[]
+  nameWithType: IManifestDependency[]
+  fullName: StardewModdingAPI.IManifestDependency[]
+  nameWithType.vb: IManifestDependency()
+  fullName.vb: StardewModdingAPI.IManifestDependency()
+  name.vb: IManifestDependency()
+  spec.csharp:
+  - uid: StardewModdingAPI.IManifestDependency
+    name: IManifestDependency
+    nameWithType: IManifestDependency
+    fullName: StardewModdingAPI.IManifestDependency
+  - name: '[]'
+    nameWithType: '[]'
+    fullName: '[]'
+  spec.vb:
+  - uid: StardewModdingAPI.IManifestDependency
+    name: IManifestDependency
+    nameWithType: IManifestDependency
+    fullName: StardewModdingAPI.IManifestDependency
+  - name: ()
+    nameWithType: ()
+    fullName: ()
+- uid: StardewModdingAPI.IManifest.UpdateKeys*
+  commentId: Overload:StardewModdingAPI.IManifest.UpdateKeys
+  name: UpdateKeys
+  nameWithType: IManifest.UpdateKeys
+  fullName: StardewModdingAPI.IManifest.UpdateKeys
+- uid: System.String[]
+  isExternal: true
+  name: String[]
+  nameWithType: String[]
+  fullName: System.String[]
+  nameWithType.vb: String()
+  fullName.vb: System.String()
+  name.vb: String()
+  spec.csharp:
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: '[]'
+    nameWithType: '[]'
+    fullName: '[]'
+  spec.vb:
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: ()
+    nameWithType: ()
+    fullName: ()
+- uid: StardewModdingAPI.IManifest.ExtraFields*
+  commentId: Overload:StardewModdingAPI.IManifest.ExtraFields
+  name: ExtraFields
+  nameWithType: IManifest.ExtraFields
+  fullName: StardewModdingAPI.IManifest.ExtraFields
+- uid: System.Collections.Generic.IDictionary{System.String,System.Object}
+  commentId: T:System.Collections.Generic.IDictionary{System.String,System.Object}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IDictionary`2
+  name: IDictionary<String, Object>
+  nameWithType: IDictionary<String, Object>
+  fullName: System.Collections.Generic.IDictionary<System.String, System.Object>
+  nameWithType.vb: IDictionary(Of String, Object)
+  fullName.vb: System.Collections.Generic.IDictionary(Of System.String, System.Object)
+  name.vb: IDictionary(Of String, Object)
+  spec.csharp:
+  - uid: System.Collections.Generic.IDictionary`2
+    name: IDictionary
+    nameWithType: IDictionary
+    fullName: System.Collections.Generic.IDictionary
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IDictionary`2
+    name: IDictionary
+    nameWithType: IDictionary
+    fullName: System.Collections.Generic.IDictionary
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Collections.Generic.IDictionary`2
+  commentId: T:System.Collections.Generic.IDictionary`2
+  isExternal: true
+  name: IDictionary<TKey, TValue>
+  nameWithType: IDictionary<TKey, TValue>
+  fullName: System.Collections.Generic.IDictionary<TKey, TValue>
+  nameWithType.vb: IDictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.IDictionary(Of TKey, TValue)
+  name.vb: IDictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.IDictionary`2
+    name: IDictionary
+    nameWithType: IDictionary
+    fullName: System.Collections.Generic.IDictionary
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TKey
+    nameWithType: TKey
+    fullName: TKey
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TValue
+    nameWithType: TValue
+    fullName: TValue
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IDictionary`2
+    name: IDictionary
+    nameWithType: IDictionary
+    fullName: System.Collections.Generic.IDictionary
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TKey
+    nameWithType: TKey
+    fullName: TKey
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TValue
+    nameWithType: TValue
+    fullName: TValue
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic

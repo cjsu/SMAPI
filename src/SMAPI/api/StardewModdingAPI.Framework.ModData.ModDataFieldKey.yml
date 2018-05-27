@@ -1,0 +1,191 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.Framework.ModData.ModDataFieldKey
+  commentId: T:StardewModdingAPI.Framework.ModData.ModDataFieldKey
+  id: ModDataFieldKey
+  parent: StardewModdingAPI.Framework.ModData
+  children:
+  - StardewModdingAPI.Framework.ModData.ModDataFieldKey.AlternativeUrl
+  - StardewModdingAPI.Framework.ModData.ModDataFieldKey.Status
+  - StardewModdingAPI.Framework.ModData.ModDataFieldKey.StatusReasonPhrase
+  - StardewModdingAPI.Framework.ModData.ModDataFieldKey.UpdateKey
+  langs:
+  - csharp
+  - vb
+  name: ModDataFieldKey
+  nameWithType: ModDataFieldKey
+  fullName: StardewModdingAPI.Framework.ModData.ModDataFieldKey
+  type: Enum
+  source:
+    remote:
+      path: src/SMAPI/Framework/ModData/ModDataFieldKey.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ModDataFieldKey
+    path: Framework/ModData/ModDataFieldKey.cs
+    startLine: 3
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Framework.ModData
+  summary: The valid field keys.
+  example: []
+  syntax:
+    content: public enum ModDataFieldKey
+    content.vb: Public Enum ModDataFieldKey
+  modifiers.csharp:
+  - public
+  - enum
+  modifiers.vb:
+  - Public
+  - Enum
+- uid: StardewModdingAPI.Framework.ModData.ModDataFieldKey.UpdateKey
+  commentId: F:StardewModdingAPI.Framework.ModData.ModDataFieldKey.UpdateKey
+  id: UpdateKey
+  parent: StardewModdingAPI.Framework.ModData.ModDataFieldKey
+  langs:
+  - csharp
+  - vb
+  name: UpdateKey
+  nameWithType: ModDataFieldKey.UpdateKey
+  fullName: StardewModdingAPI.Framework.ModData.ModDataFieldKey.UpdateKey
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/Framework/ModData/ModDataFieldKey.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: UpdateKey
+    path: Framework/ModData/ModDataFieldKey.cs
+    startLine: 6
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Framework.ModData
+  summary: A manifest update key.
+  example: []
+  syntax:
+    content: UpdateKey = 0
+    return:
+      type: StardewModdingAPI.Framework.ModData.ModDataFieldKey
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.Framework.ModData.ModDataFieldKey.AlternativeUrl
+  commentId: F:StardewModdingAPI.Framework.ModData.ModDataFieldKey.AlternativeUrl
+  id: AlternativeUrl
+  parent: StardewModdingAPI.Framework.ModData.ModDataFieldKey
+  langs:
+  - csharp
+  - vb
+  name: AlternativeUrl
+  nameWithType: ModDataFieldKey.AlternativeUrl
+  fullName: StardewModdingAPI.Framework.ModData.ModDataFieldKey.AlternativeUrl
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/Framework/ModData/ModDataFieldKey.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: AlternativeUrl
+    path: Framework/ModData/ModDataFieldKey.cs
+    startLine: 9
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Framework.ModData
+  summary: An alternative URL the player can check for an updated version.
+  example: []
+  syntax:
+    content: AlternativeUrl = 1
+    return:
+      type: StardewModdingAPI.Framework.ModData.ModDataFieldKey
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.Framework.ModData.ModDataFieldKey.Status
+  commentId: F:StardewModdingAPI.Framework.ModData.ModDataFieldKey.Status
+  id: Status
+  parent: StardewModdingAPI.Framework.ModData.ModDataFieldKey
+  langs:
+  - csharp
+  - vb
+  name: Status
+  nameWithType: ModDataFieldKey.Status
+  fullName: StardewModdingAPI.Framework.ModData.ModDataFieldKey.Status
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/Framework/ModData/ModDataFieldKey.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Status
+    path: Framework/ModData/ModDataFieldKey.cs
+    startLine: 12
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Framework.ModData
+  summary: The mod&apos;s predefined compatibility status.
+  example: []
+  syntax:
+    content: Status = 2
+    return:
+      type: StardewModdingAPI.Framework.ModData.ModDataFieldKey
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.Framework.ModData.ModDataFieldKey.StatusReasonPhrase
+  commentId: F:StardewModdingAPI.Framework.ModData.ModDataFieldKey.StatusReasonPhrase
+  id: StatusReasonPhrase
+  parent: StardewModdingAPI.Framework.ModData.ModDataFieldKey
+  langs:
+  - csharp
+  - vb
+  name: StatusReasonPhrase
+  nameWithType: ModDataFieldKey.StatusReasonPhrase
+  fullName: StardewModdingAPI.Framework.ModData.ModDataFieldKey.StatusReasonPhrase
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/Framework/ModData/ModDataFieldKey.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: StatusReasonPhrase
+    path: Framework/ModData/ModDataFieldKey.cs
+    startLine: 15
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Framework.ModData
+  summary: A reason phrase for the <xref href="StardewModdingAPI.Framework.ModData.ModDataFieldKey.Status" data-throw-if-not-resolved="false"></xref>, or <code>null</code> to use the default reason.
+  example: []
+  syntax:
+    content: StatusReasonPhrase = 3
+    return:
+      type: StardewModdingAPI.Framework.ModData.ModDataFieldKey
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+references:
+- uid: StardewModdingAPI.Framework.ModData
+  commentId: N:StardewModdingAPI.Framework.ModData
+  name: StardewModdingAPI.Framework.ModData
+  nameWithType: StardewModdingAPI.Framework.ModData
+  fullName: StardewModdingAPI.Framework.ModData
+- uid: StardewModdingAPI.Framework.ModData.ModDataFieldKey
+  commentId: T:StardewModdingAPI.Framework.ModData.ModDataFieldKey
+  parent: StardewModdingAPI.Framework.ModData
+  name: ModDataFieldKey
+  nameWithType: ModDataFieldKey
+  fullName: StardewModdingAPI.Framework.ModData.ModDataFieldKey
+- uid: StardewModdingAPI.Framework.ModData.ModDataFieldKey.Status
+  commentId: F:StardewModdingAPI.Framework.ModData.ModDataFieldKey.Status
+  isExternal: true

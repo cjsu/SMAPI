@@ -1,0 +1,522 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.Events.EventArgsControllerButtonPressed
+  commentId: T:StardewModdingAPI.Events.EventArgsControllerButtonPressed
+  id: EventArgsControllerButtonPressed
+  parent: StardewModdingAPI.Events
+  children:
+  - StardewModdingAPI.Events.EventArgsControllerButtonPressed.#ctor(Microsoft.Xna.Framework.PlayerIndex,Microsoft.Xna.Framework.Input.Buttons)
+  - StardewModdingAPI.Events.EventArgsControllerButtonPressed.ButtonPressed
+  - StardewModdingAPI.Events.EventArgsControllerButtonPressed.PlayerIndex
+  langs:
+  - csharp
+  - vb
+  name: EventArgsControllerButtonPressed
+  nameWithType: EventArgsControllerButtonPressed
+  fullName: StardewModdingAPI.Events.EventArgsControllerButtonPressed
+  type: Class
+  source:
+    remote:
+      path: src/SMAPI/Events/EventArgsControllerButtonPressed.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: EventArgsControllerButtonPressed
+    path: Events/EventArgsControllerButtonPressed.cs
+    startLine: 7
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Event arguments for a <xref href="StardewModdingAPI.Events.ControlEvents.ControllerButtonPressed" data-throw-if-not-resolved="false"></xref> event.
+  example: []
+  syntax:
+    content: 'public class EventArgsControllerButtonPressed : EventArgs'
+    content.vb: >-
+      Public Class EventArgsControllerButtonPressed
+          Inherits EventArgs
+  inheritance:
+  - System.Object
+  - System.EventArgs
+  inheritedMembers:
+  - System.EventArgs.Empty
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  modifiers.csharp:
+  - public
+  - class
+  modifiers.vb:
+  - Public
+  - Class
+- uid: StardewModdingAPI.Events.EventArgsControllerButtonPressed.PlayerIndex
+  commentId: P:StardewModdingAPI.Events.EventArgsControllerButtonPressed.PlayerIndex
+  id: PlayerIndex
+  parent: StardewModdingAPI.Events.EventArgsControllerButtonPressed
+  langs:
+  - csharp
+  - vb
+  name: PlayerIndex
+  nameWithType: EventArgsControllerButtonPressed.PlayerIndex
+  fullName: StardewModdingAPI.Events.EventArgsControllerButtonPressed.PlayerIndex
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/Events/EventArgsControllerButtonPressed.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: PlayerIndex
+    path: Events/EventArgsControllerButtonPressed.cs
+    startLine: 13
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: The player who pressed the button.
+  example: []
+  syntax:
+    content: public PlayerIndex PlayerIndex { get; }
+    parameters: []
+    return:
+      type: Microsoft.Xna.Framework.PlayerIndex
+    content.vb: Public ReadOnly Property PlayerIndex As PlayerIndex
+  overload: StardewModdingAPI.Events.EventArgsControllerButtonPressed.PlayerIndex*
+  modifiers.csharp:
+  - public
+  - get
+  modifiers.vb:
+  - Public
+  - ReadOnly
+- uid: StardewModdingAPI.Events.EventArgsControllerButtonPressed.ButtonPressed
+  commentId: P:StardewModdingAPI.Events.EventArgsControllerButtonPressed.ButtonPressed
+  id: ButtonPressed
+  parent: StardewModdingAPI.Events.EventArgsControllerButtonPressed
+  langs:
+  - csharp
+  - vb
+  name: ButtonPressed
+  nameWithType: EventArgsControllerButtonPressed.ButtonPressed
+  fullName: StardewModdingAPI.Events.EventArgsControllerButtonPressed.ButtonPressed
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/Events/EventArgsControllerButtonPressed.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ButtonPressed
+    path: Events/EventArgsControllerButtonPressed.cs
+    startLine: 16
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: The controller button that was pressed.
+  example: []
+  syntax:
+    content: public Buttons ButtonPressed { get; }
+    parameters: []
+    return:
+      type: Microsoft.Xna.Framework.Input.Buttons
+    content.vb: Public ReadOnly Property ButtonPressed As Buttons
+  overload: StardewModdingAPI.Events.EventArgsControllerButtonPressed.ButtonPressed*
+  modifiers.csharp:
+  - public
+  - get
+  modifiers.vb:
+  - Public
+  - ReadOnly
+- uid: StardewModdingAPI.Events.EventArgsControllerButtonPressed.#ctor(Microsoft.Xna.Framework.PlayerIndex,Microsoft.Xna.Framework.Input.Buttons)
+  commentId: M:StardewModdingAPI.Events.EventArgsControllerButtonPressed.#ctor(Microsoft.Xna.Framework.PlayerIndex,Microsoft.Xna.Framework.Input.Buttons)
+  id: '#ctor(Microsoft.Xna.Framework.PlayerIndex,Microsoft.Xna.Framework.Input.Buttons)'
+  parent: StardewModdingAPI.Events.EventArgsControllerButtonPressed
+  langs:
+  - csharp
+  - vb
+  name: EventArgsControllerButtonPressed(PlayerIndex, Buttons)
+  nameWithType: EventArgsControllerButtonPressed.EventArgsControllerButtonPressed(PlayerIndex, Buttons)
+  fullName: StardewModdingAPI.Events.EventArgsControllerButtonPressed.EventArgsControllerButtonPressed(Microsoft.Xna.Framework.PlayerIndex, Microsoft.Xna.Framework.Input.Buttons)
+  type: Constructor
+  source:
+    remote:
+      path: src/SMAPI/Events/EventArgsControllerButtonPressed.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: .ctor
+    path: Events/EventArgsControllerButtonPressed.cs
+    startLine: 25
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Construct an instance.
+  example: []
+  syntax:
+    content: public EventArgsControllerButtonPressed(PlayerIndex playerIndex, Buttons button)
+    parameters:
+    - id: playerIndex
+      type: Microsoft.Xna.Framework.PlayerIndex
+      description: The player who pressed the button.
+    - id: button
+      type: Microsoft.Xna.Framework.Input.Buttons
+      description: The controller button that was pressed.
+    content.vb: Public Sub New(playerIndex As PlayerIndex, button As Buttons)
+  overload: StardewModdingAPI.Events.EventArgsControllerButtonPressed.#ctor*
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+references:
+- uid: StardewModdingAPI.Events.ControlEvents.ControllerButtonPressed
+  commentId: E:StardewModdingAPI.Events.ControlEvents.ControllerButtonPressed
+  isExternal: true
+- uid: StardewModdingAPI.Events
+  commentId: N:StardewModdingAPI.Events
+  name: StardewModdingAPI.Events
+  nameWithType: StardewModdingAPI.Events
+  fullName: StardewModdingAPI.Events
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.EventArgs
+  commentId: T:System.EventArgs
+  parent: System
+  isExternal: true
+  name: EventArgs
+  nameWithType: EventArgs
+  fullName: System.EventArgs
+- uid: System.EventArgs.Empty
+  commentId: F:System.EventArgs.Empty
+  parent: System.EventArgs
+  isExternal: true
+  name: Empty
+  nameWithType: EventArgs.Empty
+  fullName: System.EventArgs.Empty
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: System.Object.Equals(System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: System.Object.Equals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: System.Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: System.Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: System.Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: System.Object.ReferenceEquals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: System.Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: StardewModdingAPI.Events.EventArgsControllerButtonPressed.PlayerIndex*
+  commentId: Overload:StardewModdingAPI.Events.EventArgsControllerButtonPressed.PlayerIndex
+  name: PlayerIndex
+  nameWithType: EventArgsControllerButtonPressed.PlayerIndex
+  fullName: StardewModdingAPI.Events.EventArgsControllerButtonPressed.PlayerIndex
+- uid: Microsoft.Xna.Framework.PlayerIndex
+  commentId: T:Microsoft.Xna.Framework.PlayerIndex
+  parent: Microsoft.Xna.Framework
+  isExternal: true
+  name: PlayerIndex
+  nameWithType: PlayerIndex
+  fullName: Microsoft.Xna.Framework.PlayerIndex
+- uid: Microsoft.Xna.Framework
+  commentId: N:Microsoft.Xna.Framework
+  isExternal: true
+  name: Microsoft.Xna.Framework
+  nameWithType: Microsoft.Xna.Framework
+  fullName: Microsoft.Xna.Framework
+- uid: StardewModdingAPI.Events.EventArgsControllerButtonPressed.ButtonPressed*
+  commentId: Overload:StardewModdingAPI.Events.EventArgsControllerButtonPressed.ButtonPressed
+  name: ButtonPressed
+  nameWithType: EventArgsControllerButtonPressed.ButtonPressed
+  fullName: StardewModdingAPI.Events.EventArgsControllerButtonPressed.ButtonPressed
+- uid: Microsoft.Xna.Framework.Input.Buttons
+  commentId: T:Microsoft.Xna.Framework.Input.Buttons
+  parent: Microsoft.Xna.Framework.Input
+  isExternal: true
+  name: Buttons
+  nameWithType: Buttons
+  fullName: Microsoft.Xna.Framework.Input.Buttons
+- uid: Microsoft.Xna.Framework.Input
+  commentId: N:Microsoft.Xna.Framework.Input
+  isExternal: true
+  name: Microsoft.Xna.Framework.Input
+  nameWithType: Microsoft.Xna.Framework.Input
+  fullName: Microsoft.Xna.Framework.Input
+- uid: StardewModdingAPI.Events.EventArgsControllerButtonPressed.#ctor*
+  commentId: Overload:StardewModdingAPI.Events.EventArgsControllerButtonPressed.#ctor
+  name: EventArgsControllerButtonPressed
+  nameWithType: EventArgsControllerButtonPressed.EventArgsControllerButtonPressed
+  fullName: StardewModdingAPI.Events.EventArgsControllerButtonPressed.EventArgsControllerButtonPressed

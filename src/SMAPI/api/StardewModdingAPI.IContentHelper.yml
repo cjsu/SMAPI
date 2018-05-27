@@ -1,0 +1,812 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.IContentHelper
+  commentId: T:StardewModdingAPI.IContentHelper
+  id: IContentHelper
+  parent: StardewModdingAPI
+  children:
+  - StardewModdingAPI.IContentHelper.AssetEditors
+  - StardewModdingAPI.IContentHelper.AssetLoaders
+  - StardewModdingAPI.IContentHelper.CurrentLocale
+  - StardewModdingAPI.IContentHelper.CurrentLocaleConstant
+  - StardewModdingAPI.IContentHelper.GetActualAssetKey(System.String,StardewModdingAPI.ContentSource)
+  - StardewModdingAPI.IContentHelper.InvalidateCache(System.Func{StardewModdingAPI.IAssetInfo,System.Boolean})
+  - StardewModdingAPI.IContentHelper.InvalidateCache(System.String)
+  - StardewModdingAPI.IContentHelper.InvalidateCache``1
+  - StardewModdingAPI.IContentHelper.Load``1(System.String,StardewModdingAPI.ContentSource)
+  - StardewModdingAPI.IContentHelper.NormaliseAssetName(System.String)
+  langs:
+  - csharp
+  - vb
+  name: IContentHelper
+  nameWithType: IContentHelper
+  fullName: StardewModdingAPI.IContentHelper
+  type: Interface
+  source:
+    remote:
+      path: src/SMAPI/IContentHelper.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: IContentHelper
+    path: IContentHelper.cs
+    startLine: 11
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Provides an API for loading content assets.
+  example: []
+  syntax:
+    content: 'public interface IContentHelper : IModLinked'
+    content.vb: >-
+      Public Interface IContentHelper
+          Inherits IModLinked
+  inheritedMembers:
+  - StardewModdingAPI.IModLinked.ModID
+  modifiers.csharp:
+  - public
+  - interface
+  modifiers.vb:
+  - Public
+  - Interface
+- uid: StardewModdingAPI.IContentHelper.AssetLoaders
+  commentId: P:StardewModdingAPI.IContentHelper.AssetLoaders
+  id: AssetLoaders
+  parent: StardewModdingAPI.IContentHelper
+  langs:
+  - csharp
+  - vb
+  name: AssetLoaders
+  nameWithType: IContentHelper.AssetLoaders
+  fullName: StardewModdingAPI.IContentHelper.AssetLoaders
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IContentHelper.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: AssetLoaders
+    path: IContentHelper.cs
+    startLine: 17
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Interceptors which provide the initial versions of matching content assets.
+  example: []
+  syntax:
+    content: IList<IAssetLoader> AssetLoaders { get; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IList{StardewModdingAPI.IAssetLoader}
+    content.vb: ReadOnly Property AssetLoaders As IList(Of IAssetLoader)
+  overload: StardewModdingAPI.IContentHelper.AssetLoaders*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+- uid: StardewModdingAPI.IContentHelper.AssetEditors
+  commentId: P:StardewModdingAPI.IContentHelper.AssetEditors
+  id: AssetEditors
+  parent: StardewModdingAPI.IContentHelper
+  langs:
+  - csharp
+  - vb
+  name: AssetEditors
+  nameWithType: IContentHelper.AssetEditors
+  fullName: StardewModdingAPI.IContentHelper.AssetEditors
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IContentHelper.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: AssetEditors
+    path: IContentHelper.cs
+    startLine: 20
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Interceptors which edit matching content assets after they&apos;re loaded.
+  example: []
+  syntax:
+    content: IList<IAssetEditor> AssetEditors { get; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IList{StardewModdingAPI.IAssetEditor}
+    content.vb: ReadOnly Property AssetEditors As IList(Of IAssetEditor)
+  overload: StardewModdingAPI.IContentHelper.AssetEditors*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+- uid: StardewModdingAPI.IContentHelper.CurrentLocale
+  commentId: P:StardewModdingAPI.IContentHelper.CurrentLocale
+  id: CurrentLocale
+  parent: StardewModdingAPI.IContentHelper
+  langs:
+  - csharp
+  - vb
+  name: CurrentLocale
+  nameWithType: IContentHelper.CurrentLocale
+  fullName: StardewModdingAPI.IContentHelper.CurrentLocale
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IContentHelper.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: CurrentLocale
+    path: IContentHelper.cs
+    startLine: 23
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The game&apos;s current locale code (like <code>pt-BR</code>).
+  example: []
+  syntax:
+    content: string CurrentLocale { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: ReadOnly Property CurrentLocale As String
+  overload: StardewModdingAPI.IContentHelper.CurrentLocale*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+- uid: StardewModdingAPI.IContentHelper.CurrentLocaleConstant
+  commentId: P:StardewModdingAPI.IContentHelper.CurrentLocaleConstant
+  id: CurrentLocaleConstant
+  parent: StardewModdingAPI.IContentHelper
+  langs:
+  - csharp
+  - vb
+  name: CurrentLocaleConstant
+  nameWithType: IContentHelper.CurrentLocaleConstant
+  fullName: StardewModdingAPI.IContentHelper.CurrentLocaleConstant
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IContentHelper.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: CurrentLocaleConstant
+    path: IContentHelper.cs
+    startLine: 26
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The game&apos;s current locale as an enum value.
+  example: []
+  syntax:
+    content: LocalizedContentManager.LanguageCode CurrentLocaleConstant { get; }
+    parameters: []
+    return:
+      type: StardewValley.LocalizedContentManager.LanguageCode
+    content.vb: ReadOnly Property CurrentLocaleConstant As LocalizedContentManager.LanguageCode
+  overload: StardewModdingAPI.IContentHelper.CurrentLocaleConstant*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+- uid: StardewModdingAPI.IContentHelper.Load``1(System.String,StardewModdingAPI.ContentSource)
+  commentId: M:StardewModdingAPI.IContentHelper.Load``1(System.String,StardewModdingAPI.ContentSource)
+  id: Load``1(System.String,StardewModdingAPI.ContentSource)
+  parent: StardewModdingAPI.IContentHelper
+  langs:
+  - csharp
+  - vb
+  name: Load<T>(String, ContentSource)
+  nameWithType: IContentHelper.Load<T>(String, ContentSource)
+  fullName: StardewModdingAPI.IContentHelper.Load<T>(System.String, StardewModdingAPI.ContentSource)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IContentHelper.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Load
+    path: IContentHelper.cs
+    startLine: 38
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Load content from the game folder or mod folder (if not already cached), and return it. When loading a <code>.png</code> file, this must be called outside the game&apos;s draw loop.
+  example: []
+  syntax:
+    content: T Load<T>(string key, ContentSource source = ContentSource.ModFolder)
+    parameters:
+    - id: key
+      type: System.String
+      description: The asset key to fetch (if the <code data-dev-comment-type="paramref" class="paramref">source</code> is <xref href="StardewModdingAPI.ContentSource.GameContent" data-throw-if-not-resolved="false"></xref>), or the local path to a content file relative to the mod folder.
+    - id: source
+      type: StardewModdingAPI.ContentSource
+      description: Where to search for a matching content asset.
+    typeParameters:
+    - id: T
+      description: The expected data type. The main supported types are <xref href="xTile.Map" data-throw-if-not-resolved="false"></xref>, <xref href="Microsoft.Xna.Framework.Graphics.Texture2D" data-throw-if-not-resolved="false"></xref>, and dictionaries; other types may be supported by the game&apos;s content pipeline.
+    return:
+      type: '{T}'
+    content.vb: Function Load(Of T)(key As String, source As ContentSource = ContentSource.ModFolder) As T
+  overload: StardewModdingAPI.IContentHelper.Load*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: The <code data-dev-comment-type="paramref" class="paramref">key</code> is empty or contains invalid characters.
+  - type: Microsoft.Xna.Framework.Content.ContentLoadException
+    commentId: T:Microsoft.Xna.Framework.Content.ContentLoadException
+    description: The content asset couldn&apos;t be loaded (e.g. because it doesn&apos;t exist).
+  nameWithType.vb: IContentHelper.Load(Of T)(String, ContentSource)
+  fullName.vb: StardewModdingAPI.IContentHelper.Load(Of T)(System.String, StardewModdingAPI.ContentSource)
+  name.vb: Load(Of T)(String, ContentSource)
+- uid: StardewModdingAPI.IContentHelper.NormaliseAssetName(System.String)
+  commentId: M:StardewModdingAPI.IContentHelper.NormaliseAssetName(System.String)
+  id: NormaliseAssetName(System.String)
+  parent: StardewModdingAPI.IContentHelper
+  langs:
+  - csharp
+  - vb
+  name: NormaliseAssetName(String)
+  nameWithType: IContentHelper.NormaliseAssetName(String)
+  fullName: StardewModdingAPI.IContentHelper.NormaliseAssetName(System.String)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IContentHelper.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: NormaliseAssetName
+    path: IContentHelper.cs
+    startLine: 42
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Normalise an asset name so it&apos;s consistent with those generated by the game. This is mainly useful for string comparisons like <xref href="System.String.StartsWith(System.String)" data-throw-if-not-resolved="false"></xref> on generated asset names, and isn&apos;t necessary when passing asset names into other content helper methods.
+  example: []
+  syntax:
+    content: >-
+      [Pure]
+
+      string NormaliseAssetName(string assetName)
+    parameters:
+    - id: assetName
+      type: System.String
+      description: The asset key.
+    return:
+      type: System.String
+    content.vb: >-
+      <Pure>
+
+      Function NormaliseAssetName(assetName As String) As String
+  overload: StardewModdingAPI.IContentHelper.NormaliseAssetName*
+  attributes:
+  - type: System.Diagnostics.Contracts.PureAttribute
+    ctor: System.Diagnostics.Contracts.PureAttribute.#ctor
+    arguments: []
+- uid: StardewModdingAPI.IContentHelper.GetActualAssetKey(System.String,StardewModdingAPI.ContentSource)
+  commentId: M:StardewModdingAPI.IContentHelper.GetActualAssetKey(System.String,StardewModdingAPI.ContentSource)
+  id: GetActualAssetKey(System.String,StardewModdingAPI.ContentSource)
+  parent: StardewModdingAPI.IContentHelper
+  langs:
+  - csharp
+  - vb
+  name: GetActualAssetKey(String, ContentSource)
+  nameWithType: IContentHelper.GetActualAssetKey(String, ContentSource)
+  fullName: StardewModdingAPI.IContentHelper.GetActualAssetKey(System.String, StardewModdingAPI.ContentSource)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IContentHelper.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: GetActualAssetKey
+    path: IContentHelper.cs
+    startLine: 49
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Get the underlying key in the game&apos;s content cache for an asset. This can be used to load custom map tilesheets, but should be avoided when you can use the content API instead. This does not validate whether the asset exists.
+  example: []
+  syntax:
+    content: string GetActualAssetKey(string key, ContentSource source = ContentSource.ModFolder)
+    parameters:
+    - id: key
+      type: System.String
+      description: The asset key to fetch (if the <code data-dev-comment-type="paramref" class="paramref">source</code> is <xref href="StardewModdingAPI.ContentSource.GameContent" data-throw-if-not-resolved="false"></xref>), or the local path to a content file relative to the mod folder.
+    - id: source
+      type: StardewModdingAPI.ContentSource
+      description: Where to search for a matching content asset.
+    return:
+      type: System.String
+    content.vb: Function GetActualAssetKey(key As String, source As ContentSource = ContentSource.ModFolder) As String
+  overload: StardewModdingAPI.IContentHelper.GetActualAssetKey*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: The <code data-dev-comment-type="paramref" class="paramref">key</code> is empty or contains invalid characters.
+- uid: StardewModdingAPI.IContentHelper.InvalidateCache(System.String)
+  commentId: M:StardewModdingAPI.IContentHelper.InvalidateCache(System.String)
+  id: InvalidateCache(System.String)
+  parent: StardewModdingAPI.IContentHelper
+  langs:
+  - csharp
+  - vb
+  name: InvalidateCache(String)
+  nameWithType: IContentHelper.InvalidateCache(String)
+  fullName: StardewModdingAPI.IContentHelper.InvalidateCache(System.String)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IContentHelper.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: InvalidateCache
+    path: IContentHelper.cs
+    startLine: 55
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Remove an asset from the content cache so it&apos;s reloaded on the next request. This will reload core game assets if needed, but references to the former asset will still show the previous content.
+  example: []
+  syntax:
+    content: bool InvalidateCache(string key)
+    parameters:
+    - id: key
+      type: System.String
+      description: The asset key to invalidate in the content folder.
+    return:
+      type: System.Boolean
+      description: Returns whether the given asset key was cached.
+    content.vb: Function InvalidateCache(key As String) As Boolean
+  overload: StardewModdingAPI.IContentHelper.InvalidateCache*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: The <code data-dev-comment-type="paramref" class="paramref">key</code> is empty or contains invalid characters.
+- uid: StardewModdingAPI.IContentHelper.InvalidateCache``1
+  commentId: M:StardewModdingAPI.IContentHelper.InvalidateCache``1
+  id: InvalidateCache``1
+  parent: StardewModdingAPI.IContentHelper
+  langs:
+  - csharp
+  - vb
+  name: InvalidateCache<T>()
+  nameWithType: IContentHelper.InvalidateCache<T>()
+  fullName: StardewModdingAPI.IContentHelper.InvalidateCache<T>()
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IContentHelper.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: InvalidateCache
+    path: IContentHelper.cs
+    startLine: 60
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Remove all assets of the given type from the cache so they&apos;re reloaded on the next request. <strong>This can be a very expensive operation and should only be used in very specific cases.</strong> This will reload core game assets if needed, but references to the former assets will still show the previous content.
+  example: []
+  syntax:
+    content: bool InvalidateCache<T>()
+    typeParameters:
+    - id: T
+      description: The asset type to remove from the cache.
+    return:
+      type: System.Boolean
+      description: Returns whether any assets were invalidated.
+    content.vb: Function InvalidateCache(Of T) As Boolean
+  overload: StardewModdingAPI.IContentHelper.InvalidateCache*
+  nameWithType.vb: IContentHelper.InvalidateCache(Of T)()
+  fullName.vb: StardewModdingAPI.IContentHelper.InvalidateCache(Of T)()
+  name.vb: InvalidateCache(Of T)()
+- uid: StardewModdingAPI.IContentHelper.InvalidateCache(System.Func{StardewModdingAPI.IAssetInfo,System.Boolean})
+  commentId: M:StardewModdingAPI.IContentHelper.InvalidateCache(System.Func{StardewModdingAPI.IAssetInfo,System.Boolean})
+  id: InvalidateCache(System.Func{StardewModdingAPI.IAssetInfo,System.Boolean})
+  parent: StardewModdingAPI.IContentHelper
+  langs:
+  - csharp
+  - vb
+  name: InvalidateCache(Func<IAssetInfo, Boolean>)
+  nameWithType: IContentHelper.InvalidateCache(Func<IAssetInfo, Boolean>)
+  fullName: StardewModdingAPI.IContentHelper.InvalidateCache(System.Func<StardewModdingAPI.IAssetInfo, System.Boolean>)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IContentHelper.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: InvalidateCache
+    path: IContentHelper.cs
+    startLine: 65
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Remove matching assets from the content cache so they&apos;re reloaded on the next request. This will reload core game assets if needed, but references to the former asset will still show the previous content.
+  example: []
+  syntax:
+    content: bool InvalidateCache(Func<IAssetInfo, bool> predicate)
+    parameters:
+    - id: predicate
+      type: System.Func{StardewModdingAPI.IAssetInfo,System.Boolean}
+      description: A predicate matching the assets to invalidate.
+    return:
+      type: System.Boolean
+      description: Returns whether any cache entries were invalidated.
+    content.vb: Function InvalidateCache(predicate As Func(Of IAssetInfo, Boolean)) As Boolean
+  overload: StardewModdingAPI.IContentHelper.InvalidateCache*
+  nameWithType.vb: IContentHelper.InvalidateCache(Func(Of IAssetInfo, Boolean))
+  fullName.vb: StardewModdingAPI.IContentHelper.InvalidateCache(System.Func(Of StardewModdingAPI.IAssetInfo, System.Boolean))
+  name.vb: InvalidateCache(Func(Of IAssetInfo, Boolean))
+references:
+- uid: StardewModdingAPI
+  commentId: N:StardewModdingAPI
+  name: StardewModdingAPI
+  nameWithType: StardewModdingAPI
+  fullName: StardewModdingAPI
+- uid: StardewModdingAPI.IModLinked.ModID
+  commentId: P:StardewModdingAPI.IModLinked.ModID
+  parent: StardewModdingAPI.IModLinked
+  name: ModID
+  nameWithType: IModLinked.ModID
+  fullName: StardewModdingAPI.IModLinked.ModID
+- uid: StardewModdingAPI.IModLinked
+  commentId: T:StardewModdingAPI.IModLinked
+  parent: StardewModdingAPI
+  name: IModLinked
+  nameWithType: IModLinked
+  fullName: StardewModdingAPI.IModLinked
+- uid: StardewModdingAPI.IContentHelper.AssetLoaders*
+  commentId: Overload:StardewModdingAPI.IContentHelper.AssetLoaders
+  name: AssetLoaders
+  nameWithType: IContentHelper.AssetLoaders
+  fullName: StardewModdingAPI.IContentHelper.AssetLoaders
+- uid: System.Collections.Generic.IList{StardewModdingAPI.IAssetLoader}
+  commentId: T:System.Collections.Generic.IList{StardewModdingAPI.IAssetLoader}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IList`1
+  name: IList<IAssetLoader>
+  nameWithType: IList<IAssetLoader>
+  fullName: System.Collections.Generic.IList<StardewModdingAPI.IAssetLoader>
+  nameWithType.vb: IList(Of IAssetLoader)
+  fullName.vb: System.Collections.Generic.IList(Of StardewModdingAPI.IAssetLoader)
+  name.vb: IList(Of IAssetLoader)
+  spec.csharp:
+  - uid: System.Collections.Generic.IList`1
+    name: IList
+    nameWithType: IList
+    fullName: System.Collections.Generic.IList
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: StardewModdingAPI.IAssetLoader
+    name: IAssetLoader
+    nameWithType: IAssetLoader
+    fullName: StardewModdingAPI.IAssetLoader
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IList`1
+    name: IList
+    nameWithType: IList
+    fullName: System.Collections.Generic.IList
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: StardewModdingAPI.IAssetLoader
+    name: IAssetLoader
+    nameWithType: IAssetLoader
+    fullName: StardewModdingAPI.IAssetLoader
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Collections.Generic.IList`1
+  commentId: T:System.Collections.Generic.IList`1
+  isExternal: true
+  name: IList<T>
+  nameWithType: IList<T>
+  fullName: System.Collections.Generic.IList<T>
+  nameWithType.vb: IList(Of T)
+  fullName.vb: System.Collections.Generic.IList(Of T)
+  name.vb: IList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IList`1
+    name: IList
+    nameWithType: IList
+    fullName: System.Collections.Generic.IList
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IList`1
+    name: IList
+    nameWithType: IList
+    fullName: System.Collections.Generic.IList
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+- uid: StardewModdingAPI.IContentHelper.AssetEditors*
+  commentId: Overload:StardewModdingAPI.IContentHelper.AssetEditors
+  name: AssetEditors
+  nameWithType: IContentHelper.AssetEditors
+  fullName: StardewModdingAPI.IContentHelper.AssetEditors
+- uid: System.Collections.Generic.IList{StardewModdingAPI.IAssetEditor}
+  commentId: T:System.Collections.Generic.IList{StardewModdingAPI.IAssetEditor}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IList`1
+  name: IList<IAssetEditor>
+  nameWithType: IList<IAssetEditor>
+  fullName: System.Collections.Generic.IList<StardewModdingAPI.IAssetEditor>
+  nameWithType.vb: IList(Of IAssetEditor)
+  fullName.vb: System.Collections.Generic.IList(Of StardewModdingAPI.IAssetEditor)
+  name.vb: IList(Of IAssetEditor)
+  spec.csharp:
+  - uid: System.Collections.Generic.IList`1
+    name: IList
+    nameWithType: IList
+    fullName: System.Collections.Generic.IList
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: StardewModdingAPI.IAssetEditor
+    name: IAssetEditor
+    nameWithType: IAssetEditor
+    fullName: StardewModdingAPI.IAssetEditor
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IList`1
+    name: IList
+    nameWithType: IList
+    fullName: System.Collections.Generic.IList
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: StardewModdingAPI.IAssetEditor
+    name: IAssetEditor
+    nameWithType: IAssetEditor
+    fullName: StardewModdingAPI.IAssetEditor
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.IContentHelper.CurrentLocale*
+  commentId: Overload:StardewModdingAPI.IContentHelper.CurrentLocale
+  name: CurrentLocale
+  nameWithType: IContentHelper.CurrentLocale
+  fullName: StardewModdingAPI.IContentHelper.CurrentLocale
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: StardewModdingAPI.IContentHelper.CurrentLocaleConstant*
+  commentId: Overload:StardewModdingAPI.IContentHelper.CurrentLocaleConstant
+  name: CurrentLocaleConstant
+  nameWithType: IContentHelper.CurrentLocaleConstant
+  fullName: StardewModdingAPI.IContentHelper.CurrentLocaleConstant
+- uid: StardewValley.LocalizedContentManager.LanguageCode
+  commentId: T:StardewValley.LocalizedContentManager.LanguageCode
+  parent: StardewValley
+  isExternal: true
+  name: LocalizedContentManager.LanguageCode
+  nameWithType: LocalizedContentManager.LanguageCode
+  fullName: StardewValley.LocalizedContentManager.LanguageCode
+- uid: StardewValley
+  commentId: N:StardewValley
+  isExternal: true
+  name: StardewValley
+  nameWithType: StardewValley
+  fullName: StardewValley
+- uid: xTile.Map
+  commentId: T:xTile.Map
+  isExternal: true
+- uid: Microsoft.Xna.Framework.Graphics.Texture2D
+  commentId: T:Microsoft.Xna.Framework.Graphics.Texture2D
+  parent: Microsoft.Xna.Framework.Graphics
+  isExternal: true
+  name: Texture2D
+  nameWithType: Texture2D
+  fullName: Microsoft.Xna.Framework.Graphics.Texture2D
+- uid: StardewModdingAPI.ContentSource.GameContent
+  commentId: F:StardewModdingAPI.ContentSource.GameContent
+  isExternal: true
+- uid: System.ArgumentException
+  commentId: T:System.ArgumentException
+  isExternal: true
+- uid: Microsoft.Xna.Framework.Content.ContentLoadException
+  commentId: T:Microsoft.Xna.Framework.Content.ContentLoadException
+  isExternal: true
+- uid: StardewModdingAPI.IContentHelper.Load*
+  commentId: Overload:StardewModdingAPI.IContentHelper.Load
+  name: Load
+  nameWithType: IContentHelper.Load
+  fullName: StardewModdingAPI.IContentHelper.Load
+- uid: StardewModdingAPI.ContentSource
+  commentId: T:StardewModdingAPI.ContentSource
+  parent: StardewModdingAPI
+  name: ContentSource
+  nameWithType: ContentSource
+  fullName: StardewModdingAPI.ContentSource
+- uid: '{T}'
+  commentId: '!:T'
+  definition: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: Microsoft.Xna.Framework.Graphics
+  commentId: N:Microsoft.Xna.Framework.Graphics
+  isExternal: true
+  name: Microsoft.Xna.Framework.Graphics
+  nameWithType: Microsoft.Xna.Framework.Graphics
+  fullName: Microsoft.Xna.Framework.Graphics
+- uid: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: System.String.StartsWith(System.String)
+  commentId: M:System.String.StartsWith(System.String)
+  isExternal: true
+- uid: StardewModdingAPI.IContentHelper.NormaliseAssetName*
+  commentId: Overload:StardewModdingAPI.IContentHelper.NormaliseAssetName
+  name: NormaliseAssetName
+  nameWithType: IContentHelper.NormaliseAssetName
+  fullName: StardewModdingAPI.IContentHelper.NormaliseAssetName
+- uid: StardewModdingAPI.IContentHelper.GetActualAssetKey*
+  commentId: Overload:StardewModdingAPI.IContentHelper.GetActualAssetKey
+  name: GetActualAssetKey
+  nameWithType: IContentHelper.GetActualAssetKey
+  fullName: StardewModdingAPI.IContentHelper.GetActualAssetKey
+- uid: StardewModdingAPI.IContentHelper.InvalidateCache*
+  commentId: Overload:StardewModdingAPI.IContentHelper.InvalidateCache
+  name: InvalidateCache
+  nameWithType: IContentHelper.InvalidateCache
+  fullName: StardewModdingAPI.IContentHelper.InvalidateCache
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: System.Func{StardewModdingAPI.IAssetInfo,System.Boolean}
+  commentId: T:System.Func{StardewModdingAPI.IAssetInfo,System.Boolean}
+  parent: System
+  definition: System.Func`2
+  name: Func<IAssetInfo, Boolean>
+  nameWithType: Func<IAssetInfo, Boolean>
+  fullName: System.Func<StardewModdingAPI.IAssetInfo, System.Boolean>
+  nameWithType.vb: Func(Of IAssetInfo, Boolean)
+  fullName.vb: System.Func(Of StardewModdingAPI.IAssetInfo, System.Boolean)
+  name.vb: Func(Of IAssetInfo, Boolean)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: StardewModdingAPI.IAssetInfo
+    name: IAssetInfo
+    nameWithType: IAssetInfo
+    fullName: StardewModdingAPI.IAssetInfo
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Boolean
+    name: Boolean
+    nameWithType: Boolean
+    fullName: System.Boolean
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: StardewModdingAPI.IAssetInfo
+    name: IAssetInfo
+    nameWithType: IAssetInfo
+    fullName: StardewModdingAPI.IAssetInfo
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Boolean
+    name: Boolean
+    nameWithType: Boolean
+    fullName: System.Boolean
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func`2
+  commentId: T:System.Func`2
+  isExternal: true
+  name: Func<T, TResult>
+  nameWithType: Func<T, TResult>
+  fullName: System.Func<T, TResult>
+  nameWithType.vb: Func(Of T, TResult)
+  fullName.vb: System.Func(Of T, TResult)
+  name.vb: Func(Of T, TResult)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TResult
+    nameWithType: TResult
+    fullName: TResult
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TResult
+    nameWithType: TResult
+    fullName: TResult
+  - name: )
+    nameWithType: )
+    fullName: )

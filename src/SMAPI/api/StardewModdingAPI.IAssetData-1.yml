@@ -1,0 +1,228 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.IAssetData`1
+  commentId: T:StardewModdingAPI.IAssetData`1
+  id: IAssetData`1
+  parent: StardewModdingAPI
+  children:
+  - StardewModdingAPI.IAssetData`1.Data
+  - StardewModdingAPI.IAssetData`1.ReplaceWith(`0)
+  langs:
+  - csharp
+  - vb
+  name: IAssetData<TValue>
+  nameWithType: IAssetData<TValue>
+  fullName: StardewModdingAPI.IAssetData<TValue>
+  type: Interface
+  source:
+    remote:
+      path: src/SMAPI/IAssetData.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: IAssetData
+    path: IAssetData.cs
+    startLine: 6
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Generic metadata and methods for a content asset being loaded.
+  example: []
+  syntax:
+    content: 'public interface IAssetData<TValue> : IAssetInfo'
+    typeParameters:
+    - id: TValue
+      description: The expected data type.
+    content.vb: >-
+      Public Interface IAssetData(Of TValue)
+          Inherits IAssetInfo
+  inheritedMembers:
+  - StardewModdingAPI.IAssetInfo.Locale
+  - StardewModdingAPI.IAssetInfo.AssetName
+  - StardewModdingAPI.IAssetInfo.DataType
+  - StardewModdingAPI.IAssetInfo.AssetNameEquals(System.String)
+  nameWithType.vb: IAssetData(Of TValue)
+  modifiers.csharp:
+  - public
+  - interface
+  modifiers.vb:
+  - Public
+  - Interface
+  fullName.vb: StardewModdingAPI.IAssetData(Of TValue)
+  name.vb: IAssetData(Of TValue)
+- uid: StardewModdingAPI.IAssetData`1.Data
+  commentId: P:StardewModdingAPI.IAssetData`1.Data
+  id: Data
+  parent: StardewModdingAPI.IAssetData`1
+  langs:
+  - csharp
+  - vb
+  name: Data
+  nameWithType: IAssetData<TValue>.Data
+  fullName: StardewModdingAPI.IAssetData<TValue>.Data
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IAssetData.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Data
+    path: IAssetData.cs
+    startLine: 12
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The content data being read.
+  example: []
+  syntax:
+    content: TValue Data { get; }
+    parameters: []
+    return:
+      type: '{TValue}'
+    content.vb: ReadOnly Property Data As TValue
+  overload: StardewModdingAPI.IAssetData`1.Data*
+  nameWithType.vb: IAssetData(Of TValue).Data
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+  fullName.vb: StardewModdingAPI.IAssetData(Of TValue).Data
+- uid: StardewModdingAPI.IAssetData`1.ReplaceWith(`0)
+  commentId: M:StardewModdingAPI.IAssetData`1.ReplaceWith(`0)
+  id: ReplaceWith(`0)
+  parent: StardewModdingAPI.IAssetData`1
+  langs:
+  - csharp
+  - vb
+  name: ReplaceWith(TValue)
+  nameWithType: IAssetData<TValue>.ReplaceWith(TValue)
+  fullName: StardewModdingAPI.IAssetData<TValue>.ReplaceWith(TValue)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IAssetData.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ReplaceWith
+    path: IAssetData.cs
+    startLine: 22
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Replace the entire content value with the given value. This is generally not recommended, since it may break compatibility with other mods or different versions of the game.
+  example: []
+  syntax:
+    content: void ReplaceWith(TValue value)
+    parameters:
+    - id: value
+      type: '{TValue}'
+      description: The new content value.
+    content.vb: Sub ReplaceWith(value As TValue)
+  overload: StardewModdingAPI.IAssetData`1.ReplaceWith*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: The <code data-dev-comment-type="paramref" class="paramref">value</code> is null.
+  - type: System.InvalidCastException
+    commentId: T:System.InvalidCastException
+    description: The <code data-dev-comment-type="paramref" class="paramref">value</code>&apos;s type is not compatible with the loaded asset&apos;s type.
+  nameWithType.vb: IAssetData(Of TValue).ReplaceWith(TValue)
+  fullName.vb: StardewModdingAPI.IAssetData(Of TValue).ReplaceWith(TValue)
+references:
+- uid: StardewModdingAPI
+  commentId: N:StardewModdingAPI
+  name: StardewModdingAPI
+  nameWithType: StardewModdingAPI
+  fullName: StardewModdingAPI
+- uid: StardewModdingAPI.IAssetInfo.Locale
+  commentId: P:StardewModdingAPI.IAssetInfo.Locale
+  parent: StardewModdingAPI.IAssetInfo
+  name: Locale
+  nameWithType: IAssetInfo.Locale
+  fullName: StardewModdingAPI.IAssetInfo.Locale
+- uid: StardewModdingAPI.IAssetInfo.AssetName
+  commentId: P:StardewModdingAPI.IAssetInfo.AssetName
+  parent: StardewModdingAPI.IAssetInfo
+  name: AssetName
+  nameWithType: IAssetInfo.AssetName
+  fullName: StardewModdingAPI.IAssetInfo.AssetName
+- uid: StardewModdingAPI.IAssetInfo.DataType
+  commentId: P:StardewModdingAPI.IAssetInfo.DataType
+  parent: StardewModdingAPI.IAssetInfo
+  name: DataType
+  nameWithType: IAssetInfo.DataType
+  fullName: StardewModdingAPI.IAssetInfo.DataType
+- uid: StardewModdingAPI.IAssetInfo.AssetNameEquals(System.String)
+  commentId: M:StardewModdingAPI.IAssetInfo.AssetNameEquals(System.String)
+  parent: StardewModdingAPI.IAssetInfo
+  isExternal: true
+  name: AssetNameEquals(String)
+  nameWithType: IAssetInfo.AssetNameEquals(String)
+  fullName: StardewModdingAPI.IAssetInfo.AssetNameEquals(System.String)
+  spec.csharp:
+  - uid: StardewModdingAPI.IAssetInfo.AssetNameEquals(System.String)
+    name: AssetNameEquals
+    nameWithType: IAssetInfo.AssetNameEquals
+    fullName: StardewModdingAPI.IAssetInfo.AssetNameEquals
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: StardewModdingAPI.IAssetInfo.AssetNameEquals(System.String)
+    name: AssetNameEquals
+    nameWithType: IAssetInfo.AssetNameEquals
+    fullName: StardewModdingAPI.IAssetInfo.AssetNameEquals
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.IAssetInfo
+  commentId: T:StardewModdingAPI.IAssetInfo
+  parent: StardewModdingAPI
+  name: IAssetInfo
+  nameWithType: IAssetInfo
+  fullName: StardewModdingAPI.IAssetInfo
+- uid: StardewModdingAPI.IAssetData`1.Data*
+  commentId: Overload:StardewModdingAPI.IAssetData`1.Data
+  name: Data
+  nameWithType: IAssetData<TValue>.Data
+  fullName: StardewModdingAPI.IAssetData<TValue>.Data
+  nameWithType.vb: IAssetData(Of TValue).Data
+  fullName.vb: StardewModdingAPI.IAssetData(Of TValue).Data
+- uid: '{TValue}'
+  commentId: '!:TValue'
+  definition: TValue
+  name: TValue
+  nameWithType: TValue
+  fullName: TValue
+- uid: TValue
+  name: TValue
+  nameWithType: TValue
+  fullName: TValue
+- uid: System.ArgumentNullException
+  commentId: T:System.ArgumentNullException
+  isExternal: true
+- uid: System.InvalidCastException
+  commentId: T:System.InvalidCastException
+  isExternal: true
+- uid: StardewModdingAPI.IAssetData`1.ReplaceWith*
+  commentId: Overload:StardewModdingAPI.IAssetData`1.ReplaceWith
+  name: ReplaceWith
+  nameWithType: IAssetData<TValue>.ReplaceWith
+  fullName: StardewModdingAPI.IAssetData<TValue>.ReplaceWith
+  nameWithType.vb: IAssetData(Of TValue).ReplaceWith
+  fullName.vb: StardewModdingAPI.IAssetData(Of TValue).ReplaceWith

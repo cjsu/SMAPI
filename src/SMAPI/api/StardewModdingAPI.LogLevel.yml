@@ -1,0 +1,258 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.LogLevel
+  commentId: T:StardewModdingAPI.LogLevel
+  id: LogLevel
+  parent: StardewModdingAPI
+  children:
+  - StardewModdingAPI.LogLevel.Alert
+  - StardewModdingAPI.LogLevel.Debug
+  - StardewModdingAPI.LogLevel.Error
+  - StardewModdingAPI.LogLevel.Info
+  - StardewModdingAPI.LogLevel.Trace
+  - StardewModdingAPI.LogLevel.Warn
+  langs:
+  - csharp
+  - vb
+  name: LogLevel
+  nameWithType: LogLevel
+  fullName: StardewModdingAPI.LogLevel
+  type: Enum
+  source:
+    remote:
+      path: src/SMAPI/LogLevel.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: LogLevel
+    path: LogLevel.cs
+    startLine: 5
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The log severity levels.
+  example: []
+  syntax:
+    content: public enum LogLevel
+    content.vb: Public Enum LogLevel
+  modifiers.csharp:
+  - public
+  - enum
+  modifiers.vb:
+  - Public
+  - Enum
+- uid: StardewModdingAPI.LogLevel.Trace
+  commentId: F:StardewModdingAPI.LogLevel.Trace
+  id: Trace
+  parent: StardewModdingAPI.LogLevel
+  langs:
+  - csharp
+  - vb
+  name: Trace
+  nameWithType: LogLevel.Trace
+  fullName: StardewModdingAPI.LogLevel.Trace
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/LogLevel.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Trace
+    path: LogLevel.cs
+    startLine: 8
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Tracing info intended for developers.
+  example: []
+  syntax:
+    content: Trace = 0
+    return:
+      type: StardewModdingAPI.LogLevel
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.LogLevel.Debug
+  commentId: F:StardewModdingAPI.LogLevel.Debug
+  id: Debug
+  parent: StardewModdingAPI.LogLevel
+  langs:
+  - csharp
+  - vb
+  name: Debug
+  nameWithType: LogLevel.Debug
+  fullName: StardewModdingAPI.LogLevel.Debug
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/LogLevel.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Debug
+    path: LogLevel.cs
+    startLine: 11
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Troubleshooting info that may be relevant to the player.
+  example: []
+  syntax:
+    content: Debug = 1
+    return:
+      type: StardewModdingAPI.LogLevel
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.LogLevel.Info
+  commentId: F:StardewModdingAPI.LogLevel.Info
+  id: Info
+  parent: StardewModdingAPI.LogLevel
+  langs:
+  - csharp
+  - vb
+  name: Info
+  nameWithType: LogLevel.Info
+  fullName: StardewModdingAPI.LogLevel.Info
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/LogLevel.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Info
+    path: LogLevel.cs
+    startLine: 14
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Info relevant to the player. This should be used judiciously.
+  example: []
+  syntax:
+    content: Info = 2
+    return:
+      type: StardewModdingAPI.LogLevel
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.LogLevel.Warn
+  commentId: F:StardewModdingAPI.LogLevel.Warn
+  id: Warn
+  parent: StardewModdingAPI.LogLevel
+  langs:
+  - csharp
+  - vb
+  name: Warn
+  nameWithType: LogLevel.Warn
+  fullName: StardewModdingAPI.LogLevel.Warn
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/LogLevel.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Warn
+    path: LogLevel.cs
+    startLine: 17
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: An issue the player should be aware of. This should be used rarely.
+  example: []
+  syntax:
+    content: Warn = 3
+    return:
+      type: StardewModdingAPI.LogLevel
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.LogLevel.Error
+  commentId: F:StardewModdingAPI.LogLevel.Error
+  id: Error
+  parent: StardewModdingAPI.LogLevel
+  langs:
+  - csharp
+  - vb
+  name: Error
+  nameWithType: LogLevel.Error
+  fullName: StardewModdingAPI.LogLevel.Error
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/LogLevel.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Error
+    path: LogLevel.cs
+    startLine: 20
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: A message indicating something went wrong.
+  example: []
+  syntax:
+    content: Error = 4
+    return:
+      type: StardewModdingAPI.LogLevel
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.LogLevel.Alert
+  commentId: F:StardewModdingAPI.LogLevel.Alert
+  id: Alert
+  parent: StardewModdingAPI.LogLevel
+  langs:
+  - csharp
+  - vb
+  name: Alert
+  nameWithType: LogLevel.Alert
+  fullName: StardewModdingAPI.LogLevel.Alert
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/LogLevel.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Alert
+    path: LogLevel.cs
+    startLine: 23
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Important information to highlight for the player when player action is needed (e.g. new version available). This should be used rarely to avoid alert fatigue.
+  example: []
+  syntax:
+    content: Alert = 5
+    return:
+      type: StardewModdingAPI.LogLevel
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+references:
+- uid: StardewModdingAPI
+  commentId: N:StardewModdingAPI
+  name: StardewModdingAPI
+  nameWithType: StardewModdingAPI
+  fullName: StardewModdingAPI
+- uid: StardewModdingAPI.LogLevel
+  commentId: T:StardewModdingAPI.LogLevel
+  parent: StardewModdingAPI
+  name: LogLevel
+  nameWithType: LogLevel
+  fullName: StardewModdingAPI.LogLevel

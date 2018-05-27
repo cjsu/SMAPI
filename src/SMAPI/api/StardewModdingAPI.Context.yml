@@ -1,0 +1,631 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.Context
+  commentId: T:StardewModdingAPI.Context
+  id: Context
+  parent: StardewModdingAPI
+  children:
+  - StardewModdingAPI.Context.CanPlayerMove
+  - StardewModdingAPI.Context.IsInDrawLoop
+  - StardewModdingAPI.Context.IsMainPlayer
+  - StardewModdingAPI.Context.IsMultiplayer
+  - StardewModdingAPI.Context.IsPlayerFree
+  - StardewModdingAPI.Context.IsWorldReady
+  langs:
+  - csharp
+  - vb
+  name: Context
+  nameWithType: Context
+  fullName: StardewModdingAPI.Context
+  type: Class
+  source:
+    remote:
+      path: src/SMAPI/Context.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Context
+    path: Context.cs
+    startLine: 7
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Provides information about the current game state.
+  example: []
+  syntax:
+    content: public static class Context
+    content.vb: Public Module Context
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  modifiers.csharp:
+  - public
+  - static
+  - class
+  modifiers.vb:
+  - Public
+  - Module
+- uid: StardewModdingAPI.Context.IsWorldReady
+  commentId: P:StardewModdingAPI.Context.IsWorldReady
+  id: IsWorldReady
+  parent: StardewModdingAPI.Context
+  langs:
+  - csharp
+  - vb
+  name: IsWorldReady
+  nameWithType: Context.IsWorldReady
+  fullName: StardewModdingAPI.Context.IsWorldReady
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/Context.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: IsWorldReady
+    path: Context.cs
+    startLine: 16
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Whether the player has loaded a save and the world has finished initialising.
+  example: []
+  syntax:
+    content: public static bool IsWorldReady { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Shared ReadOnly Property IsWorldReady As Boolean
+  overload: StardewModdingAPI.Context.IsWorldReady*
+  modifiers.csharp:
+  - public
+  - static
+  - get
+  modifiers.vb:
+  - Public
+  - Shared
+  - ReadOnly
+- uid: StardewModdingAPI.Context.IsPlayerFree
+  commentId: P:StardewModdingAPI.Context.IsPlayerFree
+  id: IsPlayerFree
+  parent: StardewModdingAPI.Context
+  langs:
+  - csharp
+  - vb
+  name: IsPlayerFree
+  nameWithType: Context.IsPlayerFree
+  fullName: StardewModdingAPI.Context.IsPlayerFree
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/Context.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: IsPlayerFree
+    path: Context.cs
+    startLine: 19
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Whether <xref href="StardewModdingAPI.Context.IsWorldReady" data-throw-if-not-resolved="false"></xref> is true and the player is free to act in the world (no menu is displayed, no cutscene is in progress, etc).
+  example: []
+  syntax:
+    content: public static bool IsPlayerFree { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Shared ReadOnly Property IsPlayerFree As Boolean
+  overload: StardewModdingAPI.Context.IsPlayerFree*
+  modifiers.csharp:
+  - public
+  - static
+  - get
+  modifiers.vb:
+  - Public
+  - Shared
+  - ReadOnly
+- uid: StardewModdingAPI.Context.CanPlayerMove
+  commentId: P:StardewModdingAPI.Context.CanPlayerMove
+  id: CanPlayerMove
+  parent: StardewModdingAPI.Context
+  langs:
+  - csharp
+  - vb
+  name: CanPlayerMove
+  nameWithType: Context.CanPlayerMove
+  fullName: StardewModdingAPI.Context.CanPlayerMove
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/Context.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: CanPlayerMove
+    path: Context.cs
+    startLine: 22
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Whether <xref href="StardewModdingAPI.Context.IsPlayerFree" data-throw-if-not-resolved="false"></xref> is true and the player is free to move (e.g. not using a tool).
+  example: []
+  syntax:
+    content: public static bool CanPlayerMove { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Shared ReadOnly Property CanPlayerMove As Boolean
+  overload: StardewModdingAPI.Context.CanPlayerMove*
+  modifiers.csharp:
+  - public
+  - static
+  - get
+  modifiers.vb:
+  - Public
+  - Shared
+  - ReadOnly
+- uid: StardewModdingAPI.Context.IsInDrawLoop
+  commentId: P:StardewModdingAPI.Context.IsInDrawLoop
+  id: IsInDrawLoop
+  parent: StardewModdingAPI.Context
+  langs:
+  - csharp
+  - vb
+  name: IsInDrawLoop
+  nameWithType: Context.IsInDrawLoop
+  fullName: StardewModdingAPI.Context.IsInDrawLoop
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/Context.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: IsInDrawLoop
+    path: Context.cs
+    startLine: 25
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Whether the game is currently running the draw loop. This isn&apos;t relevant to most mods, since you should use <xref href="StardewModdingAPI.Events.GraphicsEvents.OnPostRenderEvent" data-throw-if-not-resolved="false"></xref> to draw to the screen.
+  example: []
+  syntax:
+    content: public static bool IsInDrawLoop { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Shared ReadOnly Property IsInDrawLoop As Boolean
+  overload: StardewModdingAPI.Context.IsInDrawLoop*
+  modifiers.csharp:
+  - public
+  - static
+  - get
+  modifiers.vb:
+  - Public
+  - Shared
+  - ReadOnly
+- uid: StardewModdingAPI.Context.IsMultiplayer
+  commentId: P:StardewModdingAPI.Context.IsMultiplayer
+  id: IsMultiplayer
+  parent: StardewModdingAPI.Context
+  langs:
+  - csharp
+  - vb
+  name: IsMultiplayer
+  nameWithType: Context.IsMultiplayer
+  fullName: StardewModdingAPI.Context.IsMultiplayer
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/Context.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: IsMultiplayer
+    path: Context.cs
+    startLine: 28
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Whether <xref href="StardewModdingAPI.Context.IsWorldReady" data-throw-if-not-resolved="false"></xref> and the player loaded the save in multiplayer mode (regardless of whether any other players are connected).
+  example: []
+  syntax:
+    content: public static bool IsMultiplayer { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Shared ReadOnly Property IsMultiplayer As Boolean
+  overload: StardewModdingAPI.Context.IsMultiplayer*
+  modifiers.csharp:
+  - public
+  - static
+  - get
+  modifiers.vb:
+  - Public
+  - Shared
+  - ReadOnly
+- uid: StardewModdingAPI.Context.IsMainPlayer
+  commentId: P:StardewModdingAPI.Context.IsMainPlayer
+  id: IsMainPlayer
+  parent: StardewModdingAPI.Context
+  langs:
+  - csharp
+  - vb
+  name: IsMainPlayer
+  nameWithType: Context.IsMainPlayer
+  fullName: StardewModdingAPI.Context.IsMainPlayer
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/Context.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: IsMainPlayer
+    path: Context.cs
+    startLine: 31
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Whether <xref href="StardewModdingAPI.Context.IsWorldReady" data-throw-if-not-resolved="false"></xref> and the current player is the main player. This is always true in single-player, and true when hosting in multiplayer.
+  example: []
+  syntax:
+    content: public static bool IsMainPlayer { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Shared ReadOnly Property IsMainPlayer As Boolean
+  overload: StardewModdingAPI.Context.IsMainPlayer*
+  modifiers.csharp:
+  - public
+  - static
+  - get
+  modifiers.vb:
+  - Public
+  - Shared
+  - ReadOnly
+references:
+- uid: StardewModdingAPI
+  commentId: N:StardewModdingAPI
+  name: StardewModdingAPI
+  nameWithType: StardewModdingAPI
+  fullName: StardewModdingAPI
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: System.Object.Equals(System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: System.Object.Equals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: System.Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: System.Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: System.Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: System.Object.ReferenceEquals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: System.Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: StardewModdingAPI.Context.IsWorldReady*
+  commentId: Overload:StardewModdingAPI.Context.IsWorldReady
+  name: IsWorldReady
+  nameWithType: Context.IsWorldReady
+  fullName: StardewModdingAPI.Context.IsWorldReady
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: StardewModdingAPI.Context.IsWorldReady
+  commentId: P:StardewModdingAPI.Context.IsWorldReady
+  isExternal: true
+- uid: StardewModdingAPI.Context.IsPlayerFree*
+  commentId: Overload:StardewModdingAPI.Context.IsPlayerFree
+  name: IsPlayerFree
+  nameWithType: Context.IsPlayerFree
+  fullName: StardewModdingAPI.Context.IsPlayerFree
+- uid: StardewModdingAPI.Context.IsPlayerFree
+  commentId: P:StardewModdingAPI.Context.IsPlayerFree
+  isExternal: true
+- uid: StardewModdingAPI.Context.CanPlayerMove*
+  commentId: Overload:StardewModdingAPI.Context.CanPlayerMove
+  name: CanPlayerMove
+  nameWithType: Context.CanPlayerMove
+  fullName: StardewModdingAPI.Context.CanPlayerMove
+- uid: StardewModdingAPI.Events.GraphicsEvents.OnPostRenderEvent
+  commentId: E:StardewModdingAPI.Events.GraphicsEvents.OnPostRenderEvent
+  isExternal: true
+- uid: StardewModdingAPI.Context.IsInDrawLoop*
+  commentId: Overload:StardewModdingAPI.Context.IsInDrawLoop
+  name: IsInDrawLoop
+  nameWithType: Context.IsInDrawLoop
+  fullName: StardewModdingAPI.Context.IsInDrawLoop
+- uid: StardewModdingAPI.Context.IsMultiplayer*
+  commentId: Overload:StardewModdingAPI.Context.IsMultiplayer
+  name: IsMultiplayer
+  nameWithType: Context.IsMultiplayer
+  fullName: StardewModdingAPI.Context.IsMultiplayer
+- uid: StardewModdingAPI.Context.IsMainPlayer*
+  commentId: Overload:StardewModdingAPI.Context.IsMainPlayer
+  name: IsMainPlayer
+  nameWithType: Context.IsMainPlayer
+  fullName: StardewModdingAPI.Context.IsMainPlayer

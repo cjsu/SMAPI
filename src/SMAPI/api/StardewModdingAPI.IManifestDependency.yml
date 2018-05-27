@@ -1,0 +1,191 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.IManifestDependency
+  commentId: T:StardewModdingAPI.IManifestDependency
+  id: IManifestDependency
+  parent: StardewModdingAPI
+  children:
+  - StardewModdingAPI.IManifestDependency.IsRequired
+  - StardewModdingAPI.IManifestDependency.MinimumVersion
+  - StardewModdingAPI.IManifestDependency.UniqueID
+  langs:
+  - csharp
+  - vb
+  name: IManifestDependency
+  nameWithType: IManifestDependency
+  fullName: StardewModdingAPI.IManifestDependency
+  type: Interface
+  source:
+    remote:
+      path: src/SMAPI/IManifestDependency.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: IManifestDependency
+    path: IManifestDependency.cs
+    startLine: 3
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: A mod dependency listed in a mod manifest.
+  example: []
+  syntax:
+    content: public interface IManifestDependency
+    content.vb: Public Interface IManifestDependency
+  modifiers.csharp:
+  - public
+  - interface
+  modifiers.vb:
+  - Public
+  - Interface
+- uid: StardewModdingAPI.IManifestDependency.UniqueID
+  commentId: P:StardewModdingAPI.IManifestDependency.UniqueID
+  id: UniqueID
+  parent: StardewModdingAPI.IManifestDependency
+  langs:
+  - csharp
+  - vb
+  name: UniqueID
+  nameWithType: IManifestDependency.UniqueID
+  fullName: StardewModdingAPI.IManifestDependency.UniqueID
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IManifestDependency.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: UniqueID
+    path: IManifestDependency.cs
+    startLine: 9
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The unique mod ID to require.
+  example: []
+  syntax:
+    content: string UniqueID { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: ReadOnly Property UniqueID As String
+  overload: StardewModdingAPI.IManifestDependency.UniqueID*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+- uid: StardewModdingAPI.IManifestDependency.MinimumVersion
+  commentId: P:StardewModdingAPI.IManifestDependency.MinimumVersion
+  id: MinimumVersion
+  parent: StardewModdingAPI.IManifestDependency
+  langs:
+  - csharp
+  - vb
+  name: MinimumVersion
+  nameWithType: IManifestDependency.MinimumVersion
+  fullName: StardewModdingAPI.IManifestDependency.MinimumVersion
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IManifestDependency.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: MinimumVersion
+    path: IManifestDependency.cs
+    startLine: 12
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The minimum required version (if any).
+  example: []
+  syntax:
+    content: ISemanticVersion MinimumVersion { get; }
+    parameters: []
+    return:
+      type: StardewModdingAPI.ISemanticVersion
+    content.vb: ReadOnly Property MinimumVersion As ISemanticVersion
+  overload: StardewModdingAPI.IManifestDependency.MinimumVersion*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+- uid: StardewModdingAPI.IManifestDependency.IsRequired
+  commentId: P:StardewModdingAPI.IManifestDependency.IsRequired
+  id: IsRequired
+  parent: StardewModdingAPI.IManifestDependency
+  langs:
+  - csharp
+  - vb
+  name: IsRequired
+  nameWithType: IManifestDependency.IsRequired
+  fullName: StardewModdingAPI.IManifestDependency.IsRequired
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IManifestDependency.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: IsRequired
+    path: IManifestDependency.cs
+    startLine: 15
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Whether the dependency must be installed to use the mod.
+  example: []
+  syntax:
+    content: bool IsRequired { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: ReadOnly Property IsRequired As Boolean
+  overload: StardewModdingAPI.IManifestDependency.IsRequired*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+references:
+- uid: StardewModdingAPI
+  commentId: N:StardewModdingAPI
+  name: StardewModdingAPI
+  nameWithType: StardewModdingAPI
+  fullName: StardewModdingAPI
+- uid: StardewModdingAPI.IManifestDependency.UniqueID*
+  commentId: Overload:StardewModdingAPI.IManifestDependency.UniqueID
+  name: UniqueID
+  nameWithType: IManifestDependency.UniqueID
+  fullName: StardewModdingAPI.IManifestDependency.UniqueID
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: StardewModdingAPI.IManifestDependency.MinimumVersion*
+  commentId: Overload:StardewModdingAPI.IManifestDependency.MinimumVersion
+  name: MinimumVersion
+  nameWithType: IManifestDependency.MinimumVersion
+  fullName: StardewModdingAPI.IManifestDependency.MinimumVersion
+- uid: StardewModdingAPI.ISemanticVersion
+  commentId: T:StardewModdingAPI.ISemanticVersion
+  parent: StardewModdingAPI
+  name: ISemanticVersion
+  nameWithType: ISemanticVersion
+  fullName: StardewModdingAPI.ISemanticVersion
+- uid: StardewModdingAPI.IManifestDependency.IsRequired*
+  commentId: Overload:StardewModdingAPI.IManifestDependency.IsRequired
+  name: IsRequired
+  nameWithType: IManifestDependency.IsRequired
+  fullName: StardewModdingAPI.IManifestDependency.IsRequired
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean

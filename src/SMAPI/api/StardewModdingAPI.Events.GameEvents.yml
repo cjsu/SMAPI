@@ -1,0 +1,687 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.Events.GameEvents
+  commentId: T:StardewModdingAPI.Events.GameEvents
+  id: GameEvents
+  parent: StardewModdingAPI.Events
+  children:
+  - StardewModdingAPI.Events.GameEvents.EighthUpdateTick
+  - StardewModdingAPI.Events.GameEvents.FirstUpdateTick
+  - StardewModdingAPI.Events.GameEvents.FourthUpdateTick
+  - StardewModdingAPI.Events.GameEvents.HalfSecondTick
+  - StardewModdingAPI.Events.GameEvents.OneSecondTick
+  - StardewModdingAPI.Events.GameEvents.QuarterSecondTick
+  - StardewModdingAPI.Events.GameEvents.SecondUpdateTick
+  - StardewModdingAPI.Events.GameEvents.UpdateTick
+  langs:
+  - csharp
+  - vb
+  name: GameEvents
+  nameWithType: GameEvents
+  fullName: StardewModdingAPI.Events.GameEvents
+  type: Class
+  source:
+    remote:
+      path: src/SMAPI/Events/GameEvents.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: GameEvents
+    path: Events/GameEvents.cs
+    startLine: 6
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Events raised when the game changes state.
+  example: []
+  syntax:
+    content: public static class GameEvents
+    content.vb: Public Module GameEvents
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  modifiers.csharp:
+  - public
+  - static
+  - class
+  modifiers.vb:
+  - Public
+  - Module
+- uid: StardewModdingAPI.Events.GameEvents.UpdateTick
+  commentId: E:StardewModdingAPI.Events.GameEvents.UpdateTick
+  id: UpdateTick
+  parent: StardewModdingAPI.Events.GameEvents
+  langs:
+  - csharp
+  - vb
+  name: UpdateTick
+  nameWithType: GameEvents.UpdateTick
+  fullName: StardewModdingAPI.Events.GameEvents.UpdateTick
+  type: Event
+  source:
+    remote:
+      path: src/SMAPI/Events/GameEvents.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: UpdateTick
+    path: Events/GameEvents.cs
+    startLine: 19
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Raised when the game updates its state (≈60 times per second).
+  example: []
+  syntax:
+    content: public static event EventHandler UpdateTick
+    return:
+      type: System.EventHandler
+    content.vb: Public Shared Event UpdateTick As EventHandler
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+- uid: StardewModdingAPI.Events.GameEvents.SecondUpdateTick
+  commentId: E:StardewModdingAPI.Events.GameEvents.SecondUpdateTick
+  id: SecondUpdateTick
+  parent: StardewModdingAPI.Events.GameEvents
+  langs:
+  - csharp
+  - vb
+  name: SecondUpdateTick
+  nameWithType: GameEvents.SecondUpdateTick
+  fullName: StardewModdingAPI.Events.GameEvents.SecondUpdateTick
+  type: Event
+  source:
+    remote:
+      path: src/SMAPI/Events/GameEvents.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: SecondUpdateTick
+    path: Events/GameEvents.cs
+    startLine: 26
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Raised every other tick (≈30 times per second).
+  example: []
+  syntax:
+    content: public static event EventHandler SecondUpdateTick
+    return:
+      type: System.EventHandler
+    content.vb: Public Shared Event SecondUpdateTick As EventHandler
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+- uid: StardewModdingAPI.Events.GameEvents.FourthUpdateTick
+  commentId: E:StardewModdingAPI.Events.GameEvents.FourthUpdateTick
+  id: FourthUpdateTick
+  parent: StardewModdingAPI.Events.GameEvents
+  langs:
+  - csharp
+  - vb
+  name: FourthUpdateTick
+  nameWithType: GameEvents.FourthUpdateTick
+  fullName: StardewModdingAPI.Events.GameEvents.FourthUpdateTick
+  type: Event
+  source:
+    remote:
+      path: src/SMAPI/Events/GameEvents.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: FourthUpdateTick
+    path: Events/GameEvents.cs
+    startLine: 33
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Raised every fourth tick (≈15 times per second).
+  example: []
+  syntax:
+    content: public static event EventHandler FourthUpdateTick
+    return:
+      type: System.EventHandler
+    content.vb: Public Shared Event FourthUpdateTick As EventHandler
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+- uid: StardewModdingAPI.Events.GameEvents.EighthUpdateTick
+  commentId: E:StardewModdingAPI.Events.GameEvents.EighthUpdateTick
+  id: EighthUpdateTick
+  parent: StardewModdingAPI.Events.GameEvents
+  langs:
+  - csharp
+  - vb
+  name: EighthUpdateTick
+  nameWithType: GameEvents.EighthUpdateTick
+  fullName: StardewModdingAPI.Events.GameEvents.EighthUpdateTick
+  type: Event
+  source:
+    remote:
+      path: src/SMAPI/Events/GameEvents.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: EighthUpdateTick
+    path: Events/GameEvents.cs
+    startLine: 40
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Raised every eighth tick (≈8 times per second).
+  example: []
+  syntax:
+    content: public static event EventHandler EighthUpdateTick
+    return:
+      type: System.EventHandler
+    content.vb: Public Shared Event EighthUpdateTick As EventHandler
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+- uid: StardewModdingAPI.Events.GameEvents.QuarterSecondTick
+  commentId: E:StardewModdingAPI.Events.GameEvents.QuarterSecondTick
+  id: QuarterSecondTick
+  parent: StardewModdingAPI.Events.GameEvents
+  langs:
+  - csharp
+  - vb
+  name: QuarterSecondTick
+  nameWithType: GameEvents.QuarterSecondTick
+  fullName: StardewModdingAPI.Events.GameEvents.QuarterSecondTick
+  type: Event
+  source:
+    remote:
+      path: src/SMAPI/Events/GameEvents.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: QuarterSecondTick
+    path: Events/GameEvents.cs
+    startLine: 47
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Raised every 15th tick (≈4 times per second).
+  example: []
+  syntax:
+    content: public static event EventHandler QuarterSecondTick
+    return:
+      type: System.EventHandler
+    content.vb: Public Shared Event QuarterSecondTick As EventHandler
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+- uid: StardewModdingAPI.Events.GameEvents.HalfSecondTick
+  commentId: E:StardewModdingAPI.Events.GameEvents.HalfSecondTick
+  id: HalfSecondTick
+  parent: StardewModdingAPI.Events.GameEvents
+  langs:
+  - csharp
+  - vb
+  name: HalfSecondTick
+  nameWithType: GameEvents.HalfSecondTick
+  fullName: StardewModdingAPI.Events.GameEvents.HalfSecondTick
+  type: Event
+  source:
+    remote:
+      path: src/SMAPI/Events/GameEvents.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: HalfSecondTick
+    path: Events/GameEvents.cs
+    startLine: 54
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Raised every 30th tick (≈twice per second).
+  example: []
+  syntax:
+    content: public static event EventHandler HalfSecondTick
+    return:
+      type: System.EventHandler
+    content.vb: Public Shared Event HalfSecondTick As EventHandler
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+- uid: StardewModdingAPI.Events.GameEvents.OneSecondTick
+  commentId: E:StardewModdingAPI.Events.GameEvents.OneSecondTick
+  id: OneSecondTick
+  parent: StardewModdingAPI.Events.GameEvents
+  langs:
+  - csharp
+  - vb
+  name: OneSecondTick
+  nameWithType: GameEvents.OneSecondTick
+  fullName: StardewModdingAPI.Events.GameEvents.OneSecondTick
+  type: Event
+  source:
+    remote:
+      path: src/SMAPI/Events/GameEvents.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: OneSecondTick
+    path: Events/GameEvents.cs
+    startLine: 61
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Raised every 60th tick (≈once per second).
+  example: []
+  syntax:
+    content: public static event EventHandler OneSecondTick
+    return:
+      type: System.EventHandler
+    content.vb: Public Shared Event OneSecondTick As EventHandler
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+- uid: StardewModdingAPI.Events.GameEvents.FirstUpdateTick
+  commentId: E:StardewModdingAPI.Events.GameEvents.FirstUpdateTick
+  id: FirstUpdateTick
+  parent: StardewModdingAPI.Events.GameEvents
+  langs:
+  - csharp
+  - vb
+  name: FirstUpdateTick
+  nameWithType: GameEvents.FirstUpdateTick
+  fullName: StardewModdingAPI.Events.GameEvents.FirstUpdateTick
+  type: Event
+  source:
+    remote:
+      path: src/SMAPI/Events/GameEvents.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: FirstUpdateTick
+    path: Events/GameEvents.cs
+    startLine: 68
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Raised once after the game initialises and all <xref href="StardewModdingAPI.IMod.Entry(StardewModdingAPI.IModHelper)" data-throw-if-not-resolved="false"></xref> methods have been called.
+  example: []
+  syntax:
+    content: public static event EventHandler FirstUpdateTick
+    return:
+      type: System.EventHandler
+    content.vb: Public Shared Event FirstUpdateTick As EventHandler
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+references:
+- uid: StardewModdingAPI.Events
+  commentId: N:StardewModdingAPI.Events
+  name: StardewModdingAPI.Events
+  nameWithType: StardewModdingAPI.Events
+  fullName: StardewModdingAPI.Events
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: System.Object.Equals(System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: System.Object.Equals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: System.Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: System.Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: System.Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: System.Object.ReferenceEquals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: System.Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.EventHandler
+  commentId: T:System.EventHandler
+  parent: System
+  isExternal: true
+  name: EventHandler
+  nameWithType: EventHandler
+  fullName: System.EventHandler
+- uid: StardewModdingAPI.IMod.Entry(StardewModdingAPI.IModHelper)
+  commentId: M:StardewModdingAPI.IMod.Entry(StardewModdingAPI.IModHelper)
+  parent: StardewModdingAPI.IMod
+  name: Entry(IModHelper)
+  nameWithType: IMod.Entry(IModHelper)
+  fullName: StardewModdingAPI.IMod.Entry(StardewModdingAPI.IModHelper)
+  spec.csharp:
+  - uid: StardewModdingAPI.IMod.Entry(StardewModdingAPI.IModHelper)
+    name: Entry
+    nameWithType: IMod.Entry
+    fullName: StardewModdingAPI.IMod.Entry
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: StardewModdingAPI.IModHelper
+    name: IModHelper
+    nameWithType: IModHelper
+    fullName: StardewModdingAPI.IModHelper
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: StardewModdingAPI.IMod.Entry(StardewModdingAPI.IModHelper)
+    name: Entry
+    nameWithType: IMod.Entry
+    fullName: StardewModdingAPI.IMod.Entry
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: StardewModdingAPI.IModHelper
+    name: IModHelper
+    nameWithType: IModHelper
+    fullName: StardewModdingAPI.IModHelper
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.IMod
+  commentId: T:StardewModdingAPI.IMod
+  parent: StardewModdingAPI
+  name: IMod
+  nameWithType: IMod
+  fullName: StardewModdingAPI.IMod
+- uid: StardewModdingAPI
+  commentId: N:StardewModdingAPI
+  name: StardewModdingAPI
+  nameWithType: StardewModdingAPI
+  fullName: StardewModdingAPI

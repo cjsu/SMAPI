@@ -1,0 +1,1012 @@
+{
+  "homepages": [],
+  "source_base_path": "/Users/tristenmiller/Desktop/development/SMAPI/src/SMAPI",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Constants.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Constants.html",
+          "hash": "vzoSTJOmRrxx9vznVjMwqA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.ContentSource.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.ContentSource.html",
+          "hash": "tQDWJA8jvy9hg9+GZbqxRg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Context.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Context.html",
+          "hash": "G5pY6nzdbQO2vkoJfWf3KQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Events.ChangeType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Events.ChangeType.html",
+          "hash": "04Uzj2qJStzwnA2lBsfv/g=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Events.ContentEvents.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Events.ContentEvents.html",
+          "hash": "hTfUZl2/8JPCHFG8mGMZVQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Events.ControlEvents.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Events.ControlEvents.html",
+          "hash": "0x8guRfxuGytMcfAqzX6JA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Events.EventArgsClickableMenuChanged.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Events.EventArgsClickableMenuChanged.html",
+          "hash": "iTCSJk8pMLK0wqqEcBXVHw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Events.EventArgsClickableMenuClosed.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Events.EventArgsClickableMenuClosed.html",
+          "hash": "/gb+W6dAP/1BWFzfdpEc0g=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Events.EventArgsControllerButtonPressed.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Events.EventArgsControllerButtonPressed.html",
+          "hash": "q8ITk6432LlmZ0IsyStdCQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Events.EventArgsControllerButtonReleased.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Events.EventArgsControllerButtonReleased.html",
+          "hash": "UE0CZFwW5XI/IxZHry7sbA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Events.EventArgsControllerTriggerPressed.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Events.EventArgsControllerTriggerPressed.html",
+          "hash": "gOWKJ65/mJa3CDg+EVyD8g=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Events.EventArgsControllerTriggerReleased.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Events.EventArgsControllerTriggerReleased.html",
+          "hash": "JfBfGDKs7ZnDebiGsNkBNw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Events.EventArgsInput.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Events.EventArgsInput.html",
+          "hash": "BgR2kwwcVUWal6EOLchQgA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Events.EventArgsIntChanged.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Events.EventArgsIntChanged.html",
+          "hash": "nnfr9t3GpNADN09ZH/eA7A=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Events.EventArgsInventoryChanged.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Events.EventArgsInventoryChanged.html",
+          "hash": "mvCGy/ZjMXpIXNNL59XJEA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Events.EventArgsKeyPressed.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Events.EventArgsKeyPressed.html",
+          "hash": "X1YUV/MWdwIfZfkYroiHzQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Events.EventArgsKeyboardStateChanged.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Events.EventArgsKeyboardStateChanged.html",
+          "hash": "+fYm+8po68nRbP3S/2BPMA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Events.EventArgsLevelUp.LevelType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Events.EventArgsLevelUp.LevelType.html",
+          "hash": "VKaBxKWPiCrw/WONus5euw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Events.EventArgsLevelUp.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Events.EventArgsLevelUp.html",
+          "hash": "g4PX2EJnKBC9tSwejILL8A=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Events.EventArgsLocationBuildingsChanged.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Events.EventArgsLocationBuildingsChanged.html",
+          "hash": "NlIgoYBnCxKkvO+ICotqnQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Events.EventArgsLocationObjectsChanged.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Events.EventArgsLocationObjectsChanged.html",
+          "hash": "9A/eZ7s3jjHjcW4TKndnOA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Events.EventArgsLocationsChanged.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Events.EventArgsLocationsChanged.html",
+          "hash": "9xUH3AA8dUPZiZ5Rs/KsYw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Events.EventArgsMineLevelChanged.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Events.EventArgsMineLevelChanged.html",
+          "hash": "ZFRQnk9fJAnYU6Mii1xnFQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Events.EventArgsMouseStateChanged.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Events.EventArgsMouseStateChanged.html",
+          "hash": "UyV7NYWA0dgOR2gvD5kVLw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Events.EventArgsPlayerWarped.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Events.EventArgsPlayerWarped.html",
+          "hash": "Thz+DCM9aW8yzSz+GNplgg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Events.EventArgsValueChanged-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Events.EventArgsValueChanged-1.html",
+          "hash": "eNtfiYsR46FqxsbIovvw4Q=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Events.GameEvents.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Events.GameEvents.html",
+          "hash": "kC04pQTeResLyZjjdWd98w=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Events.GraphicsEvents.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Events.GraphicsEvents.html",
+          "hash": "DPFH4gJWj7C6E75myUU9zQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Events.InputEvents.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Events.InputEvents.html",
+          "hash": "Db0GSQGEDUz7t8M90y620Q=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Events.ItemStackChange.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Events.ItemStackChange.html",
+          "hash": "RF9rZTN60rjuMe7hrXTf8g=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Events.LocationEvents.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Events.LocationEvents.html",
+          "hash": "jWA2qWkhW0XBfgUZ5nga1Q=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Events.MenuEvents.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Events.MenuEvents.html",
+          "hash": "fsK+fK0owDbqyAQlP2qqRw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Events.MineEvents.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Events.MineEvents.html",
+          "hash": "XSfrf7Bd1t0FIwVEsb7Nkw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Events.MultiplayerEvents.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Events.MultiplayerEvents.html",
+          "hash": "2QUVEq1TEiVhCcF8X8n+qg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Events.PlayerEvents.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Events.PlayerEvents.html",
+          "hash": "qBQ73gJ2CV10JFCmxeL2ug=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Events.SaveEvents.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Events.SaveEvents.html",
+          "hash": "Vep00G8BlwKfgCbMC8ik2g=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Events.SpecialisedEvents.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Events.SpecialisedEvents.html",
+          "hash": "WTv3qSNxAX3hFMHtEPrjXQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Events.TimeEvents.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Events.TimeEvents.html",
+          "hash": "S9JBA0ofVFGZPYvwVpwvAA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Events.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Events.html",
+          "hash": "TUpCNPV08qqNgpVF8cYvUQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Framework.ModData.ModDataFieldKey.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Framework.ModData.ModDataFieldKey.html",
+          "hash": "01lu7xyffOx+bX8EKGT30g=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Framework.ModData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Framework.ModData.html",
+          "hash": "Th2v2CSnahM+t5DQy2dkPg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods.html",
+          "hash": "jdNmCG9x+SR0RsQySZiHXg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Framework.RewriteFacades.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Framework.RewriteFacades.html",
+          "hash": "fLWUKRUXG7ZT2XVzRMLjUw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.GamePlatform.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.GamePlatform.html",
+          "hash": "GMil3D4ev5f7F/0xGIUNOQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.IAssetData-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.IAssetData-1.html",
+          "hash": "CAhiJg3KSKYkXoY0MjvB/Q=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.IAssetData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.IAssetData.html",
+          "hash": "4yDN6tMOCVGMYEvDOsSzVg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.IAssetDataForDictionary-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.IAssetDataForDictionary-2.html",
+          "hash": "9DsZFZ5Fc8JiI6Y4thau2Q=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.IAssetDataForImage.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.IAssetDataForImage.html",
+          "hash": "iz8MFbCnNDXft9m7HU8FYw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.IAssetEditor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.IAssetEditor.html",
+          "hash": "ofSSlD3ei+zwBC+COk0ktg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.IAssetInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.IAssetInfo.html",
+          "hash": "3QdKHfozFMUptyixubytVg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.IAssetLoader.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.IAssetLoader.html",
+          "hash": "g74Lau9tMR6dJ3jAOwDdSA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.ICommandHelper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.ICommandHelper.html",
+          "hash": "fMjna/y3J4iCmY/IU3OhmQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.IContentHelper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.IContentHelper.html",
+          "hash": "jELHi0StuqCuzBMuu5xHTw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.IContentPack.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.IContentPack.html",
+          "hash": "nUzHUSI+MYsCyD7HWN88FA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.ICursorPosition.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.ICursorPosition.html",
+          "hash": "Uub7eWrN6U09h27YtnUh7Q=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.IManifest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.IManifest.html",
+          "hash": "zZ7PLyjK/CFR/7mvaagEBg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.IManifestContentPackFor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.IManifestContentPackFor.html",
+          "hash": "0oVZNdFGaCJMqt55TdUc3g=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.IManifestDependency.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.IManifestDependency.html",
+          "hash": "kpOL7s9gW4SutuSHPAGttw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.IMod.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.IMod.html",
+          "hash": "qkMeFxXyPkMk1iGxMltClw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.IModHelper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.IModHelper.html",
+          "hash": "Pe4QRLOVQjW6Kd09YzaSzw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.IModLinked.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.IModLinked.html",
+          "hash": "MWe++ti8r0xxPJiwlsSr4Q=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.IModRegistry.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.IModRegistry.html",
+          "hash": "AwcGljUs/EVbadK40dvpiA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.IMonitor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.IMonitor.html",
+          "hash": "goABr6pZx/p/hj23iIqAlQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.IMultiplayerHelper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.IMultiplayerHelper.html",
+          "hash": "40d12cSVBKYA5b9Beehubw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.IReflectedField-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.IReflectedField-1.html",
+          "hash": "GRa9a5PPuHExGvi/VzPWig=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.IReflectedMethod.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.IReflectedMethod.html",
+          "hash": "O6umNFZYFVyvHFRx3USKTQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.IReflectedProperty-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.IReflectedProperty-1.html",
+          "hash": "k8dD5DHhTwjwh5rpwcvsYQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.IReflectionHelper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.IReflectionHelper.html",
+          "hash": "AFk3m/pJolZm4Vrq+FQ92w=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.ISemanticVersion.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.ISemanticVersion.html",
+          "hash": "7D1fnSBfqEVx/dkltiHJPQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.ITranslationHelper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.ITranslationHelper.html",
+          "hash": "Y/p0i2eS5M/R8LslqeOTXg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.LogLevel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.LogLevel.html",
+          "hash": "GJB/46GSnRI0ff9+TplQxQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Mod.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Mod.html",
+          "hash": "UPmdnKfKzbIapcuzcZYBUA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.PatchMode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.PatchMode.html",
+          "hash": "CMur5wMtO9Mdle80PCpj8g=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.SButton.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.SButton.html",
+          "hash": "54bhS7wAea4z8+UNkwnPKQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.SButtonExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.SButtonExtensions.html",
+          "hash": "btJi1PPTZbIUEwWca+DTBQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.SemanticVersion.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.SemanticVersion.html",
+          "hash": "OD4ad4kdvsesB9N4VPxgeQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Translation.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Translation.html",
+          "hash": "N22oH6y2y8VNipRuWBd6cA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Utilities.SDate.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Utilities.SDate.html",
+          "hash": "S0m/c2JT/gJMAXHUO5ZyAQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.Utilities.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.Utilities.html",
+          "hash": "pjb59WYhHuowhQs1DpvUcg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/StardewModdingAPI.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StardewModdingAPI.html",
+          "hash": "VKXpU66VLGURs5NFjjOeww=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "obj/api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html",
+          "hash": "91mi+CUykiMfNRwS5tAUTg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": true,
+        "incrementalPhase": "build"
+      },
+      "processors": {
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build"
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build"
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": true,
+        "details": "Can support incremental post processing.",
+        "incrementalPhase": "postProcessing"
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

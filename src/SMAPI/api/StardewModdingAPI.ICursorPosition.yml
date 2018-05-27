@@ -1,0 +1,181 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.ICursorPosition
+  commentId: T:StardewModdingAPI.ICursorPosition
+  id: ICursorPosition
+  parent: StardewModdingAPI
+  children:
+  - StardewModdingAPI.ICursorPosition.GrabTile
+  - StardewModdingAPI.ICursorPosition.ScreenPixels
+  - StardewModdingAPI.ICursorPosition.Tile
+  langs:
+  - csharp
+  - vb
+  name: ICursorPosition
+  nameWithType: ICursorPosition
+  fullName: StardewModdingAPI.ICursorPosition
+  type: Interface
+  source:
+    remote:
+      path: src/SMAPI/ICursorPosition.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ICursorPosition
+    path: ICursorPosition.cs
+    startLine: 5
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Represents a cursor position in the different coordinate systems.
+  example: []
+  syntax:
+    content: public interface ICursorPosition
+    content.vb: Public Interface ICursorPosition
+  modifiers.csharp:
+  - public
+  - interface
+  modifiers.vb:
+  - Public
+  - Interface
+- uid: StardewModdingAPI.ICursorPosition.ScreenPixels
+  commentId: P:StardewModdingAPI.ICursorPosition.ScreenPixels
+  id: ScreenPixels
+  parent: StardewModdingAPI.ICursorPosition
+  langs:
+  - csharp
+  - vb
+  name: ScreenPixels
+  nameWithType: ICursorPosition.ScreenPixels
+  fullName: StardewModdingAPI.ICursorPosition.ScreenPixels
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/ICursorPosition.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ScreenPixels
+    path: ICursorPosition.cs
+    startLine: 8
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The pixel position relative to the top-left corner of the visible screen.
+  example: []
+  syntax:
+    content: Vector2 ScreenPixels { get; }
+    parameters: []
+    return:
+      type: Microsoft.Xna.Framework.Vector2
+    content.vb: ReadOnly Property ScreenPixels As Vector2
+  overload: StardewModdingAPI.ICursorPosition.ScreenPixels*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+- uid: StardewModdingAPI.ICursorPosition.Tile
+  commentId: P:StardewModdingAPI.ICursorPosition.Tile
+  id: Tile
+  parent: StardewModdingAPI.ICursorPosition
+  langs:
+  - csharp
+  - vb
+  name: Tile
+  nameWithType: ICursorPosition.Tile
+  fullName: StardewModdingAPI.ICursorPosition.Tile
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/ICursorPosition.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Tile
+    path: ICursorPosition.cs
+    startLine: 11
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The tile position under the cursor relative to the top-left corner of the map.
+  example: []
+  syntax:
+    content: Vector2 Tile { get; }
+    parameters: []
+    return:
+      type: Microsoft.Xna.Framework.Vector2
+    content.vb: ReadOnly Property Tile As Vector2
+  overload: StardewModdingAPI.ICursorPosition.Tile*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+- uid: StardewModdingAPI.ICursorPosition.GrabTile
+  commentId: P:StardewModdingAPI.ICursorPosition.GrabTile
+  id: GrabTile
+  parent: StardewModdingAPI.ICursorPosition
+  langs:
+  - csharp
+  - vb
+  name: GrabTile
+  nameWithType: ICursorPosition.GrabTile
+  fullName: StardewModdingAPI.ICursorPosition.GrabTile
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/ICursorPosition.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: GrabTile
+    path: ICursorPosition.cs
+    startLine: 14
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The tile position that the game considers under the cursor for purposes of clicking actions. This may be different than <xref href="StardewModdingAPI.ICursorPosition.Tile" data-throw-if-not-resolved="false"></xref> if that&apos;s too far from the player.
+  example: []
+  syntax:
+    content: Vector2 GrabTile { get; }
+    parameters: []
+    return:
+      type: Microsoft.Xna.Framework.Vector2
+    content.vb: ReadOnly Property GrabTile As Vector2
+  overload: StardewModdingAPI.ICursorPosition.GrabTile*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+references:
+- uid: StardewModdingAPI
+  commentId: N:StardewModdingAPI
+  name: StardewModdingAPI
+  nameWithType: StardewModdingAPI
+  fullName: StardewModdingAPI
+- uid: StardewModdingAPI.ICursorPosition.ScreenPixels*
+  commentId: Overload:StardewModdingAPI.ICursorPosition.ScreenPixels
+  name: ScreenPixels
+  nameWithType: ICursorPosition.ScreenPixels
+  fullName: StardewModdingAPI.ICursorPosition.ScreenPixels
+- uid: Microsoft.Xna.Framework.Vector2
+  commentId: T:Microsoft.Xna.Framework.Vector2
+  parent: Microsoft.Xna.Framework
+  isExternal: true
+  name: Vector2
+  nameWithType: Vector2
+  fullName: Microsoft.Xna.Framework.Vector2
+- uid: Microsoft.Xna.Framework
+  commentId: N:Microsoft.Xna.Framework
+  isExternal: true
+  name: Microsoft.Xna.Framework
+  nameWithType: Microsoft.Xna.Framework
+  fullName: Microsoft.Xna.Framework
+- uid: StardewModdingAPI.ICursorPosition.Tile*
+  commentId: Overload:StardewModdingAPI.ICursorPosition.Tile
+  name: Tile
+  nameWithType: ICursorPosition.Tile
+  fullName: StardewModdingAPI.ICursorPosition.Tile
+- uid: StardewModdingAPI.ICursorPosition.Tile
+  commentId: P:StardewModdingAPI.ICursorPosition.Tile
+  isExternal: true
+- uid: StardewModdingAPI.ICursorPosition.GrabTile*
+  commentId: Overload:StardewModdingAPI.ICursorPosition.GrabTile
+  name: GrabTile
+  nameWithType: ICursorPosition.GrabTile
+  fullName: StardewModdingAPI.ICursorPosition.GrabTile

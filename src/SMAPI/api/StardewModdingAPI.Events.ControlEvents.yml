@@ -1,0 +1,986 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.Events.ControlEvents
+  commentId: T:StardewModdingAPI.Events.ControlEvents
+  id: ControlEvents
+  parent: StardewModdingAPI.Events
+  children:
+  - StardewModdingAPI.Events.ControlEvents.ControllerButtonPressed
+  - StardewModdingAPI.Events.ControlEvents.ControllerButtonReleased
+  - StardewModdingAPI.Events.ControlEvents.ControllerTriggerPressed
+  - StardewModdingAPI.Events.ControlEvents.ControllerTriggerReleased
+  - StardewModdingAPI.Events.ControlEvents.KeyboardChanged
+  - StardewModdingAPI.Events.ControlEvents.KeyPressed
+  - StardewModdingAPI.Events.ControlEvents.KeyReleased
+  - StardewModdingAPI.Events.ControlEvents.MouseChanged
+  langs:
+  - csharp
+  - vb
+  name: ControlEvents
+  nameWithType: ControlEvents
+  fullName: StardewModdingAPI.Events.ControlEvents
+  type: Class
+  source:
+    remote:
+      path: src/SMAPI/Events/ControlEvents.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ControlEvents
+    path: Events/ControlEvents.cs
+    startLine: 7
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Events raised when the player uses a controller, keyboard, or mouse.
+  example: []
+  syntax:
+    content: public static class ControlEvents
+    content.vb: Public Module ControlEvents
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  modifiers.csharp:
+  - public
+  - static
+  - class
+  modifiers.vb:
+  - Public
+  - Module
+- uid: StardewModdingAPI.Events.ControlEvents.KeyboardChanged
+  commentId: E:StardewModdingAPI.Events.ControlEvents.KeyboardChanged
+  id: KeyboardChanged
+  parent: StardewModdingAPI.Events.ControlEvents
+  langs:
+  - csharp
+  - vb
+  name: KeyboardChanged
+  nameWithType: ControlEvents.KeyboardChanged
+  fullName: StardewModdingAPI.Events.ControlEvents.KeyboardChanged
+  type: Event
+  source:
+    remote:
+      path: src/SMAPI/Events/ControlEvents.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: KeyboardChanged
+    path: Events/ControlEvents.cs
+    startLine: 20
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Raised when the <xref href="Microsoft.Xna.Framework.Input.KeyboardState" data-throw-if-not-resolved="false"></xref> changes. That happens when the player presses or releases a key.
+  example: []
+  syntax:
+    content: public static event EventHandler<EventArgsKeyboardStateChanged> KeyboardChanged
+    return:
+      type: System.EventHandler{StardewModdingAPI.Events.EventArgsKeyboardStateChanged}
+    content.vb: Public Shared Event KeyboardChanged As EventHandler(Of EventArgsKeyboardStateChanged)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+- uid: StardewModdingAPI.Events.ControlEvents.KeyPressed
+  commentId: E:StardewModdingAPI.Events.ControlEvents.KeyPressed
+  id: KeyPressed
+  parent: StardewModdingAPI.Events.ControlEvents
+  langs:
+  - csharp
+  - vb
+  name: KeyPressed
+  nameWithType: ControlEvents.KeyPressed
+  fullName: StardewModdingAPI.Events.ControlEvents.KeyPressed
+  type: Event
+  source:
+    remote:
+      path: src/SMAPI/Events/ControlEvents.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: KeyPressed
+    path: Events/ControlEvents.cs
+    startLine: 27
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Raised when the player presses a keyboard key.
+  example: []
+  syntax:
+    content: public static event EventHandler<EventArgsKeyPressed> KeyPressed
+    return:
+      type: System.EventHandler{StardewModdingAPI.Events.EventArgsKeyPressed}
+    content.vb: Public Shared Event KeyPressed As EventHandler(Of EventArgsKeyPressed)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+- uid: StardewModdingAPI.Events.ControlEvents.KeyReleased
+  commentId: E:StardewModdingAPI.Events.ControlEvents.KeyReleased
+  id: KeyReleased
+  parent: StardewModdingAPI.Events.ControlEvents
+  langs:
+  - csharp
+  - vb
+  name: KeyReleased
+  nameWithType: ControlEvents.KeyReleased
+  fullName: StardewModdingAPI.Events.ControlEvents.KeyReleased
+  type: Event
+  source:
+    remote:
+      path: src/SMAPI/Events/ControlEvents.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: KeyReleased
+    path: Events/ControlEvents.cs
+    startLine: 34
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Raised when the player releases a keyboard key.
+  example: []
+  syntax:
+    content: public static event EventHandler<EventArgsKeyPressed> KeyReleased
+    return:
+      type: System.EventHandler{StardewModdingAPI.Events.EventArgsKeyPressed}
+    content.vb: Public Shared Event KeyReleased As EventHandler(Of EventArgsKeyPressed)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+- uid: StardewModdingAPI.Events.ControlEvents.MouseChanged
+  commentId: E:StardewModdingAPI.Events.ControlEvents.MouseChanged
+  id: MouseChanged
+  parent: StardewModdingAPI.Events.ControlEvents
+  langs:
+  - csharp
+  - vb
+  name: MouseChanged
+  nameWithType: ControlEvents.MouseChanged
+  fullName: StardewModdingAPI.Events.ControlEvents.MouseChanged
+  type: Event
+  source:
+    remote:
+      path: src/SMAPI/Events/ControlEvents.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: MouseChanged
+    path: Events/ControlEvents.cs
+    startLine: 41
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: Raised when the <xref href="Microsoft.Xna.Framework.Input.MouseState" data-throw-if-not-resolved="false"></xref> changes. That happens when the player moves the mouse, scrolls the mouse wheel, or presses/releases a button.
+  example: []
+  syntax:
+    content: public static event EventHandler<EventArgsMouseStateChanged> MouseChanged
+    return:
+      type: System.EventHandler{StardewModdingAPI.Events.EventArgsMouseStateChanged}
+    content.vb: Public Shared Event MouseChanged As EventHandler(Of EventArgsMouseStateChanged)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+- uid: StardewModdingAPI.Events.ControlEvents.ControllerButtonPressed
+  commentId: E:StardewModdingAPI.Events.ControlEvents.ControllerButtonPressed
+  id: ControllerButtonPressed
+  parent: StardewModdingAPI.Events.ControlEvents
+  langs:
+  - csharp
+  - vb
+  name: ControllerButtonPressed
+  nameWithType: ControlEvents.ControllerButtonPressed
+  fullName: StardewModdingAPI.Events.ControlEvents.ControllerButtonPressed
+  type: Event
+  source:
+    remote:
+      path: src/SMAPI/Events/ControlEvents.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ControllerButtonPressed
+    path: Events/ControlEvents.cs
+    startLine: 48
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: The player pressed a controller button. This event isn&apos;t raised for trigger buttons.
+  example: []
+  syntax:
+    content: public static event EventHandler<EventArgsControllerButtonPressed> ControllerButtonPressed
+    return:
+      type: System.EventHandler{StardewModdingAPI.Events.EventArgsControllerButtonPressed}
+    content.vb: Public Shared Event ControllerButtonPressed As EventHandler(Of EventArgsControllerButtonPressed)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+- uid: StardewModdingAPI.Events.ControlEvents.ControllerButtonReleased
+  commentId: E:StardewModdingAPI.Events.ControlEvents.ControllerButtonReleased
+  id: ControllerButtonReleased
+  parent: StardewModdingAPI.Events.ControlEvents
+  langs:
+  - csharp
+  - vb
+  name: ControllerButtonReleased
+  nameWithType: ControlEvents.ControllerButtonReleased
+  fullName: StardewModdingAPI.Events.ControlEvents.ControllerButtonReleased
+  type: Event
+  source:
+    remote:
+      path: src/SMAPI/Events/ControlEvents.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ControllerButtonReleased
+    path: Events/ControlEvents.cs
+    startLine: 55
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: The player released a controller button. This event isn&apos;t raised for trigger buttons.
+  example: []
+  syntax:
+    content: public static event EventHandler<EventArgsControllerButtonReleased> ControllerButtonReleased
+    return:
+      type: System.EventHandler{StardewModdingAPI.Events.EventArgsControllerButtonReleased}
+    content.vb: Public Shared Event ControllerButtonReleased As EventHandler(Of EventArgsControllerButtonReleased)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+- uid: StardewModdingAPI.Events.ControlEvents.ControllerTriggerPressed
+  commentId: E:StardewModdingAPI.Events.ControlEvents.ControllerTriggerPressed
+  id: ControllerTriggerPressed
+  parent: StardewModdingAPI.Events.ControlEvents
+  langs:
+  - csharp
+  - vb
+  name: ControllerTriggerPressed
+  nameWithType: ControlEvents.ControllerTriggerPressed
+  fullName: StardewModdingAPI.Events.ControlEvents.ControllerTriggerPressed
+  type: Event
+  source:
+    remote:
+      path: src/SMAPI/Events/ControlEvents.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ControllerTriggerPressed
+    path: Events/ControlEvents.cs
+    startLine: 62
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: The player pressed a controller trigger button.
+  example: []
+  syntax:
+    content: public static event EventHandler<EventArgsControllerTriggerPressed> ControllerTriggerPressed
+    return:
+      type: System.EventHandler{StardewModdingAPI.Events.EventArgsControllerTriggerPressed}
+    content.vb: Public Shared Event ControllerTriggerPressed As EventHandler(Of EventArgsControllerTriggerPressed)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+- uid: StardewModdingAPI.Events.ControlEvents.ControllerTriggerReleased
+  commentId: E:StardewModdingAPI.Events.ControlEvents.ControllerTriggerReleased
+  id: ControllerTriggerReleased
+  parent: StardewModdingAPI.Events.ControlEvents
+  langs:
+  - csharp
+  - vb
+  name: ControllerTriggerReleased
+  nameWithType: ControlEvents.ControllerTriggerReleased
+  fullName: StardewModdingAPI.Events.ControlEvents.ControllerTriggerReleased
+  type: Event
+  source:
+    remote:
+      path: src/SMAPI/Events/ControlEvents.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ControllerTriggerReleased
+    path: Events/ControlEvents.cs
+    startLine: 69
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI.Events
+  summary: The player released a controller trigger button.
+  example: []
+  syntax:
+    content: public static event EventHandler<EventArgsControllerTriggerReleased> ControllerTriggerReleased
+    return:
+      type: System.EventHandler{StardewModdingAPI.Events.EventArgsControllerTriggerReleased}
+    content.vb: Public Shared Event ControllerTriggerReleased As EventHandler(Of EventArgsControllerTriggerReleased)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+references:
+- uid: StardewModdingAPI.Events
+  commentId: N:StardewModdingAPI.Events
+  name: StardewModdingAPI.Events
+  nameWithType: StardewModdingAPI.Events
+  fullName: StardewModdingAPI.Events
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: System.Object.Equals(System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: System.Object.Equals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: System.Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: System.Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: System.Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: System.Object.ReferenceEquals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: System.Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Microsoft.Xna.Framework.Input.KeyboardState
+  commentId: T:Microsoft.Xna.Framework.Input.KeyboardState
+  parent: Microsoft.Xna.Framework.Input
+  isExternal: true
+  name: KeyboardState
+  nameWithType: KeyboardState
+  fullName: Microsoft.Xna.Framework.Input.KeyboardState
+- uid: System.EventHandler{StardewModdingAPI.Events.EventArgsKeyboardStateChanged}
+  commentId: T:System.EventHandler{StardewModdingAPI.Events.EventArgsKeyboardStateChanged}
+  parent: System
+  definition: System.EventHandler`1
+  name: EventHandler<EventArgsKeyboardStateChanged>
+  nameWithType: EventHandler<EventArgsKeyboardStateChanged>
+  fullName: System.EventHandler<StardewModdingAPI.Events.EventArgsKeyboardStateChanged>
+  nameWithType.vb: EventHandler(Of EventArgsKeyboardStateChanged)
+  fullName.vb: System.EventHandler(Of StardewModdingAPI.Events.EventArgsKeyboardStateChanged)
+  name.vb: EventHandler(Of EventArgsKeyboardStateChanged)
+  spec.csharp:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    nameWithType: EventHandler
+    fullName: System.EventHandler
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: StardewModdingAPI.Events.EventArgsKeyboardStateChanged
+    name: EventArgsKeyboardStateChanged
+    nameWithType: EventArgsKeyboardStateChanged
+    fullName: StardewModdingAPI.Events.EventArgsKeyboardStateChanged
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    nameWithType: EventHandler
+    fullName: System.EventHandler
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: StardewModdingAPI.Events.EventArgsKeyboardStateChanged
+    name: EventArgsKeyboardStateChanged
+    nameWithType: EventArgsKeyboardStateChanged
+    fullName: StardewModdingAPI.Events.EventArgsKeyboardStateChanged
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Microsoft.Xna.Framework.Input
+  commentId: N:Microsoft.Xna.Framework.Input
+  isExternal: true
+  name: Microsoft.Xna.Framework.Input
+  nameWithType: Microsoft.Xna.Framework.Input
+  fullName: Microsoft.Xna.Framework.Input
+- uid: System.EventHandler`1
+  commentId: T:System.EventHandler`1
+  isExternal: true
+  name: EventHandler<TEventArgs>
+  nameWithType: EventHandler<TEventArgs>
+  fullName: System.EventHandler<TEventArgs>
+  nameWithType.vb: EventHandler(Of TEventArgs)
+  fullName.vb: System.EventHandler(Of TEventArgs)
+  name.vb: EventHandler(Of TEventArgs)
+  spec.csharp:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    nameWithType: EventHandler
+    fullName: System.EventHandler
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TEventArgs
+    nameWithType: TEventArgs
+    fullName: TEventArgs
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    nameWithType: EventHandler
+    fullName: System.EventHandler
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TEventArgs
+    nameWithType: TEventArgs
+    fullName: TEventArgs
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.EventHandler{StardewModdingAPI.Events.EventArgsKeyPressed}
+  commentId: T:System.EventHandler{StardewModdingAPI.Events.EventArgsKeyPressed}
+  parent: System
+  definition: System.EventHandler`1
+  name: EventHandler<EventArgsKeyPressed>
+  nameWithType: EventHandler<EventArgsKeyPressed>
+  fullName: System.EventHandler<StardewModdingAPI.Events.EventArgsKeyPressed>
+  nameWithType.vb: EventHandler(Of EventArgsKeyPressed)
+  fullName.vb: System.EventHandler(Of StardewModdingAPI.Events.EventArgsKeyPressed)
+  name.vb: EventHandler(Of EventArgsKeyPressed)
+  spec.csharp:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    nameWithType: EventHandler
+    fullName: System.EventHandler
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: StardewModdingAPI.Events.EventArgsKeyPressed
+    name: EventArgsKeyPressed
+    nameWithType: EventArgsKeyPressed
+    fullName: StardewModdingAPI.Events.EventArgsKeyPressed
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    nameWithType: EventHandler
+    fullName: System.EventHandler
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: StardewModdingAPI.Events.EventArgsKeyPressed
+    name: EventArgsKeyPressed
+    nameWithType: EventArgsKeyPressed
+    fullName: StardewModdingAPI.Events.EventArgsKeyPressed
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Microsoft.Xna.Framework.Input.MouseState
+  commentId: T:Microsoft.Xna.Framework.Input.MouseState
+  parent: Microsoft.Xna.Framework.Input
+  isExternal: true
+  name: MouseState
+  nameWithType: MouseState
+  fullName: Microsoft.Xna.Framework.Input.MouseState
+- uid: System.EventHandler{StardewModdingAPI.Events.EventArgsMouseStateChanged}
+  commentId: T:System.EventHandler{StardewModdingAPI.Events.EventArgsMouseStateChanged}
+  parent: System
+  definition: System.EventHandler`1
+  name: EventHandler<EventArgsMouseStateChanged>
+  nameWithType: EventHandler<EventArgsMouseStateChanged>
+  fullName: System.EventHandler<StardewModdingAPI.Events.EventArgsMouseStateChanged>
+  nameWithType.vb: EventHandler(Of EventArgsMouseStateChanged)
+  fullName.vb: System.EventHandler(Of StardewModdingAPI.Events.EventArgsMouseStateChanged)
+  name.vb: EventHandler(Of EventArgsMouseStateChanged)
+  spec.csharp:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    nameWithType: EventHandler
+    fullName: System.EventHandler
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: StardewModdingAPI.Events.EventArgsMouseStateChanged
+    name: EventArgsMouseStateChanged
+    nameWithType: EventArgsMouseStateChanged
+    fullName: StardewModdingAPI.Events.EventArgsMouseStateChanged
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    nameWithType: EventHandler
+    fullName: System.EventHandler
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: StardewModdingAPI.Events.EventArgsMouseStateChanged
+    name: EventArgsMouseStateChanged
+    nameWithType: EventArgsMouseStateChanged
+    fullName: StardewModdingAPI.Events.EventArgsMouseStateChanged
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.EventHandler{StardewModdingAPI.Events.EventArgsControllerButtonPressed}
+  commentId: T:System.EventHandler{StardewModdingAPI.Events.EventArgsControllerButtonPressed}
+  parent: System
+  definition: System.EventHandler`1
+  name: EventHandler<EventArgsControllerButtonPressed>
+  nameWithType: EventHandler<EventArgsControllerButtonPressed>
+  fullName: System.EventHandler<StardewModdingAPI.Events.EventArgsControllerButtonPressed>
+  nameWithType.vb: EventHandler(Of EventArgsControllerButtonPressed)
+  fullName.vb: System.EventHandler(Of StardewModdingAPI.Events.EventArgsControllerButtonPressed)
+  name.vb: EventHandler(Of EventArgsControllerButtonPressed)
+  spec.csharp:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    nameWithType: EventHandler
+    fullName: System.EventHandler
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: StardewModdingAPI.Events.EventArgsControllerButtonPressed
+    name: EventArgsControllerButtonPressed
+    nameWithType: EventArgsControllerButtonPressed
+    fullName: StardewModdingAPI.Events.EventArgsControllerButtonPressed
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    nameWithType: EventHandler
+    fullName: System.EventHandler
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: StardewModdingAPI.Events.EventArgsControllerButtonPressed
+    name: EventArgsControllerButtonPressed
+    nameWithType: EventArgsControllerButtonPressed
+    fullName: StardewModdingAPI.Events.EventArgsControllerButtonPressed
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.EventHandler{StardewModdingAPI.Events.EventArgsControllerButtonReleased}
+  commentId: T:System.EventHandler{StardewModdingAPI.Events.EventArgsControllerButtonReleased}
+  parent: System
+  definition: System.EventHandler`1
+  name: EventHandler<EventArgsControllerButtonReleased>
+  nameWithType: EventHandler<EventArgsControllerButtonReleased>
+  fullName: System.EventHandler<StardewModdingAPI.Events.EventArgsControllerButtonReleased>
+  nameWithType.vb: EventHandler(Of EventArgsControllerButtonReleased)
+  fullName.vb: System.EventHandler(Of StardewModdingAPI.Events.EventArgsControllerButtonReleased)
+  name.vb: EventHandler(Of EventArgsControllerButtonReleased)
+  spec.csharp:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    nameWithType: EventHandler
+    fullName: System.EventHandler
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: StardewModdingAPI.Events.EventArgsControllerButtonReleased
+    name: EventArgsControllerButtonReleased
+    nameWithType: EventArgsControllerButtonReleased
+    fullName: StardewModdingAPI.Events.EventArgsControllerButtonReleased
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    nameWithType: EventHandler
+    fullName: System.EventHandler
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: StardewModdingAPI.Events.EventArgsControllerButtonReleased
+    name: EventArgsControllerButtonReleased
+    nameWithType: EventArgsControllerButtonReleased
+    fullName: StardewModdingAPI.Events.EventArgsControllerButtonReleased
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.EventHandler{StardewModdingAPI.Events.EventArgsControllerTriggerPressed}
+  commentId: T:System.EventHandler{StardewModdingAPI.Events.EventArgsControllerTriggerPressed}
+  parent: System
+  definition: System.EventHandler`1
+  name: EventHandler<EventArgsControllerTriggerPressed>
+  nameWithType: EventHandler<EventArgsControllerTriggerPressed>
+  fullName: System.EventHandler<StardewModdingAPI.Events.EventArgsControllerTriggerPressed>
+  nameWithType.vb: EventHandler(Of EventArgsControllerTriggerPressed)
+  fullName.vb: System.EventHandler(Of StardewModdingAPI.Events.EventArgsControllerTriggerPressed)
+  name.vb: EventHandler(Of EventArgsControllerTriggerPressed)
+  spec.csharp:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    nameWithType: EventHandler
+    fullName: System.EventHandler
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: StardewModdingAPI.Events.EventArgsControllerTriggerPressed
+    name: EventArgsControllerTriggerPressed
+    nameWithType: EventArgsControllerTriggerPressed
+    fullName: StardewModdingAPI.Events.EventArgsControllerTriggerPressed
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    nameWithType: EventHandler
+    fullName: System.EventHandler
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: StardewModdingAPI.Events.EventArgsControllerTriggerPressed
+    name: EventArgsControllerTriggerPressed
+    nameWithType: EventArgsControllerTriggerPressed
+    fullName: StardewModdingAPI.Events.EventArgsControllerTriggerPressed
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.EventHandler{StardewModdingAPI.Events.EventArgsControllerTriggerReleased}
+  commentId: T:System.EventHandler{StardewModdingAPI.Events.EventArgsControllerTriggerReleased}
+  parent: System
+  definition: System.EventHandler`1
+  name: EventHandler<EventArgsControllerTriggerReleased>
+  nameWithType: EventHandler<EventArgsControllerTriggerReleased>
+  fullName: System.EventHandler<StardewModdingAPI.Events.EventArgsControllerTriggerReleased>
+  nameWithType.vb: EventHandler(Of EventArgsControllerTriggerReleased)
+  fullName.vb: System.EventHandler(Of StardewModdingAPI.Events.EventArgsControllerTriggerReleased)
+  name.vb: EventHandler(Of EventArgsControllerTriggerReleased)
+  spec.csharp:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    nameWithType: EventHandler
+    fullName: System.EventHandler
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: StardewModdingAPI.Events.EventArgsControllerTriggerReleased
+    name: EventArgsControllerTriggerReleased
+    nameWithType: EventArgsControllerTriggerReleased
+    fullName: StardewModdingAPI.Events.EventArgsControllerTriggerReleased
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    nameWithType: EventHandler
+    fullName: System.EventHandler
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: StardewModdingAPI.Events.EventArgsControllerTriggerReleased
+    name: EventArgsControllerTriggerReleased
+    nameWithType: EventArgsControllerTriggerReleased
+    fullName: StardewModdingAPI.Events.EventArgsControllerTriggerReleased
+  - name: )
+    nameWithType: )
+    fullName: )

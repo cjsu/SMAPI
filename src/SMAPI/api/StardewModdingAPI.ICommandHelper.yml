@@ -1,0 +1,342 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.ICommandHelper
+  commentId: T:StardewModdingAPI.ICommandHelper
+  id: ICommandHelper
+  parent: StardewModdingAPI
+  children:
+  - StardewModdingAPI.ICommandHelper.Add(System.String,System.String,System.Action{System.String,System.String[]})
+  - StardewModdingAPI.ICommandHelper.Trigger(System.String,System.String[])
+  langs:
+  - csharp
+  - vb
+  name: ICommandHelper
+  nameWithType: ICommandHelper
+  fullName: StardewModdingAPI.ICommandHelper
+  type: Interface
+  source:
+    remote:
+      path: src/SMAPI/ICommandHelper.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ICommandHelper
+    path: ICommandHelper.cs
+    startLine: 5
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Provides an API for managing console commands.
+  example: []
+  syntax:
+    content: 'public interface ICommandHelper : IModLinked'
+    content.vb: >-
+      Public Interface ICommandHelper
+          Inherits IModLinked
+  inheritedMembers:
+  - StardewModdingAPI.IModLinked.ModID
+  modifiers.csharp:
+  - public
+  - interface
+  modifiers.vb:
+  - Public
+  - Interface
+- uid: StardewModdingAPI.ICommandHelper.Add(System.String,System.String,System.Action{System.String,System.String[]})
+  commentId: M:StardewModdingAPI.ICommandHelper.Add(System.String,System.String,System.Action{System.String,System.String[]})
+  id: Add(System.String,System.String,System.Action{System.String,System.String[]})
+  parent: StardewModdingAPI.ICommandHelper
+  langs:
+  - csharp
+  - vb
+  name: Add(String, String, Action<String, String[]>)
+  nameWithType: ICommandHelper.Add(String, String, Action<String, String[]>)
+  fullName: StardewModdingAPI.ICommandHelper.Add(System.String, System.String, System.Action<System.String, System.String[]>)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/ICommandHelper.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Add
+    path: ICommandHelper.cs
+    startLine: 17
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Add a console command.
+  example: []
+  syntax:
+    content: ICommandHelper Add(string name, string documentation, Action<string, string[]> callback)
+    parameters:
+    - id: name
+      type: System.String
+      description: The command name, which the user must type to trigger it.
+    - id: documentation
+      type: System.String
+      description: The human-readable documentation shown when the player runs the built-in &apos;help&apos; command.
+    - id: callback
+      type: System.Action{System.String,System.String[]}
+      description: The method to invoke when the command is triggered. This method is passed the command name and arguments submitted by the user.
+    return:
+      type: StardewModdingAPI.ICommandHelper
+    content.vb: Function Add(name As String, documentation As String, callback As Action(Of String, String())) As ICommandHelper
+  overload: StardewModdingAPI.ICommandHelper.Add*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: The <code data-dev-comment-type="paramref" class="paramref">name</code> or <code data-dev-comment-type="paramref" class="paramref">callback</code> is null or empty.
+  - type: System.FormatException
+    commentId: T:System.FormatException
+    description: The <code data-dev-comment-type="paramref" class="paramref">name</code> is not a valid format.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: There&apos;s already a command with that name.
+  nameWithType.vb: ICommandHelper.Add(String, String, Action(Of String, String()))
+  fullName.vb: StardewModdingAPI.ICommandHelper.Add(System.String, System.String, System.Action(Of System.String, System.String()))
+  name.vb: Add(String, String, Action(Of String, String()))
+- uid: StardewModdingAPI.ICommandHelper.Trigger(System.String,System.String[])
+  commentId: M:StardewModdingAPI.ICommandHelper.Trigger(System.String,System.String[])
+  id: Trigger(System.String,System.String[])
+  parent: StardewModdingAPI.ICommandHelper
+  langs:
+  - csharp
+  - vb
+  name: Trigger(String, String[])
+  nameWithType: ICommandHelper.Trigger(String, String[])
+  fullName: StardewModdingAPI.ICommandHelper.Trigger(System.String, System.String[])
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/ICommandHelper.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Trigger
+    path: ICommandHelper.cs
+    startLine: 23
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Trigger a command.
+  example: []
+  syntax:
+    content: bool Trigger(string name, string[] arguments)
+    parameters:
+    - id: name
+      type: System.String
+      description: The command name.
+    - id: arguments
+      type: System.String[]
+      description: The command arguments.
+    return:
+      type: System.Boolean
+      description: Returns whether a matching command was triggered.
+    content.vb: Function Trigger(name As String, arguments As String()) As Boolean
+  overload: StardewModdingAPI.ICommandHelper.Trigger*
+  nameWithType.vb: ICommandHelper.Trigger(String, String())
+  fullName.vb: StardewModdingAPI.ICommandHelper.Trigger(System.String, System.String())
+  name.vb: Trigger(String, String())
+references:
+- uid: StardewModdingAPI
+  commentId: N:StardewModdingAPI
+  name: StardewModdingAPI
+  nameWithType: StardewModdingAPI
+  fullName: StardewModdingAPI
+- uid: StardewModdingAPI.IModLinked.ModID
+  commentId: P:StardewModdingAPI.IModLinked.ModID
+  parent: StardewModdingAPI.IModLinked
+  name: ModID
+  nameWithType: IModLinked.ModID
+  fullName: StardewModdingAPI.IModLinked.ModID
+- uid: StardewModdingAPI.IModLinked
+  commentId: T:StardewModdingAPI.IModLinked
+  parent: StardewModdingAPI
+  name: IModLinked
+  nameWithType: IModLinked
+  fullName: StardewModdingAPI.IModLinked
+- uid: System.ArgumentNullException
+  commentId: T:System.ArgumentNullException
+  isExternal: true
+- uid: System.FormatException
+  commentId: T:System.FormatException
+  isExternal: true
+- uid: System.ArgumentException
+  commentId: T:System.ArgumentException
+  isExternal: true
+- uid: StardewModdingAPI.ICommandHelper.Add*
+  commentId: Overload:StardewModdingAPI.ICommandHelper.Add
+  name: Add
+  nameWithType: ICommandHelper.Add
+  fullName: StardewModdingAPI.ICommandHelper.Add
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.Action{System.String,System.String[]}
+  commentId: T:System.Action{System.String,System.String[]}
+  parent: System
+  definition: System.Action`2
+  name: Action<String, String[]>
+  nameWithType: Action<String, String[]>
+  fullName: System.Action<System.String, System.String[]>
+  nameWithType.vb: Action(Of String, String())
+  fullName.vb: System.Action(Of System.String, System.String())
+  name.vb: Action(Of String, String())
+  spec.csharp:
+  - uid: System.Action`2
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: '[]'
+    nameWithType: '[]'
+    fullName: '[]'
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Action`2
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: ()
+    nameWithType: ()
+    fullName: ()
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.ICommandHelper
+  commentId: T:StardewModdingAPI.ICommandHelper
+  parent: StardewModdingAPI
+  name: ICommandHelper
+  nameWithType: ICommandHelper
+  fullName: StardewModdingAPI.ICommandHelper
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Action`2
+  commentId: T:System.Action`2
+  isExternal: true
+  name: Action<T1, T2>
+  nameWithType: Action<T1, T2>
+  fullName: System.Action<T1, T2>
+  nameWithType.vb: Action(Of T1, T2)
+  fullName.vb: System.Action(Of T1, T2)
+  name.vb: Action(Of T1, T2)
+  spec.csharp:
+  - uid: System.Action`2
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T1
+    nameWithType: T1
+    fullName: T1
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: T2
+    nameWithType: T2
+    fullName: T2
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Action`2
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T1
+    nameWithType: T1
+    fullName: T1
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: T2
+    nameWithType: T2
+    fullName: T2
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: StardewModdingAPI.ICommandHelper.Trigger*
+  commentId: Overload:StardewModdingAPI.ICommandHelper.Trigger
+  name: Trigger
+  nameWithType: ICommandHelper.Trigger
+  fullName: StardewModdingAPI.ICommandHelper.Trigger
+- uid: System.String[]
+  isExternal: true
+  name: String[]
+  nameWithType: String[]
+  fullName: System.String[]
+  nameWithType.vb: String()
+  fullName.vb: System.String()
+  name.vb: String()
+  spec.csharp:
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: '[]'
+    nameWithType: '[]'
+    fullName: '[]'
+  spec.vb:
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: ()
+    nameWithType: ()
+    fullName: ()
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean

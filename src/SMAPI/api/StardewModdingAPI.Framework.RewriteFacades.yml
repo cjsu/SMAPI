@@ -1,0 +1,22 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.Framework.RewriteFacades
+  commentId: N:StardewModdingAPI.Framework.RewriteFacades
+  id: StardewModdingAPI.Framework.RewriteFacades
+  children:
+  - StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods
+  langs:
+  - csharp
+  - vb
+  name: StardewModdingAPI.Framework.RewriteFacades
+  nameWithType: StardewModdingAPI.Framework.RewriteFacades
+  fullName: StardewModdingAPI.Framework.RewriteFacades
+  type: Namespace
+  assemblies:
+  - StardewModdingAPI
+references:
+- uid: StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods
+  commentId: T:StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods
+  name: SpriteBatchMethods
+  nameWithType: SpriteBatchMethods
+  fullName: StardewModdingAPI.Framework.RewriteFacades.SpriteBatchMethods

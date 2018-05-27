@@ -1,0 +1,118 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.PatchMode
+  commentId: T:StardewModdingAPI.PatchMode
+  id: PatchMode
+  parent: StardewModdingAPI
+  children:
+  - StardewModdingAPI.PatchMode.Overlay
+  - StardewModdingAPI.PatchMode.Replace
+  langs:
+  - csharp
+  - vb
+  name: PatchMode
+  nameWithType: PatchMode
+  fullName: StardewModdingAPI.PatchMode
+  type: Enum
+  source:
+    remote:
+      path: src/SMAPI/PatchMode.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: PatchMode
+    path: PatchMode.cs
+    startLine: 3
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Indicates how an image should be patched.
+  example: []
+  syntax:
+    content: public enum PatchMode
+    content.vb: Public Enum PatchMode
+  modifiers.csharp:
+  - public
+  - enum
+  modifiers.vb:
+  - Public
+  - Enum
+- uid: StardewModdingAPI.PatchMode.Replace
+  commentId: F:StardewModdingAPI.PatchMode.Replace
+  id: Replace
+  parent: StardewModdingAPI.PatchMode
+  langs:
+  - csharp
+  - vb
+  name: Replace
+  nameWithType: PatchMode.Replace
+  fullName: StardewModdingAPI.PatchMode.Replace
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/PatchMode.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Replace
+    path: PatchMode.cs
+    startLine: 6
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Erase the original content within the area before drawing the new content.
+  example: []
+  syntax:
+    content: Replace = 0
+    return:
+      type: StardewModdingAPI.PatchMode
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: StardewModdingAPI.PatchMode.Overlay
+  commentId: F:StardewModdingAPI.PatchMode.Overlay
+  id: Overlay
+  parent: StardewModdingAPI.PatchMode
+  langs:
+  - csharp
+  - vb
+  name: Overlay
+  nameWithType: PatchMode.Overlay
+  fullName: StardewModdingAPI.PatchMode.Overlay
+  type: Field
+  source:
+    remote:
+      path: src/SMAPI/PatchMode.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Overlay
+    path: PatchMode.cs
+    startLine: 9
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Draw the new content over the original content, so the original content shows through any transparent pixels.
+  example: []
+  syntax:
+    content: Overlay = 1
+    return:
+      type: StardewModdingAPI.PatchMode
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+references:
+- uid: StardewModdingAPI
+  commentId: N:StardewModdingAPI
+  name: StardewModdingAPI
+  nameWithType: StardewModdingAPI
+  fullName: StardewModdingAPI
+- uid: StardewModdingAPI.PatchMode
+  commentId: T:StardewModdingAPI.PatchMode
+  parent: StardewModdingAPI
+  name: PatchMode
+  nameWithType: PatchMode
+  fullName: StardewModdingAPI.PatchMode

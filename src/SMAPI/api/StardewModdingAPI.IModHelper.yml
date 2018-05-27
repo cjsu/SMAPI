@@ -1,0 +1,788 @@
+### YamlMime:ManagedReference
+items:
+- uid: StardewModdingAPI.IModHelper
+  commentId: T:StardewModdingAPI.IModHelper
+  id: IModHelper
+  parent: StardewModdingAPI
+  children:
+  - StardewModdingAPI.IModHelper.ConsoleCommands
+  - StardewModdingAPI.IModHelper.Content
+  - StardewModdingAPI.IModHelper.CreateTransitionalContentPack(System.String,System.String,System.String,System.String,System.String,StardewModdingAPI.ISemanticVersion)
+  - StardewModdingAPI.IModHelper.DirectoryPath
+  - StardewModdingAPI.IModHelper.GetContentPacks
+  - StardewModdingAPI.IModHelper.ModRegistry
+  - StardewModdingAPI.IModHelper.Multiplayer
+  - StardewModdingAPI.IModHelper.ReadConfig``1
+  - StardewModdingAPI.IModHelper.ReadJsonFile``1(System.String)
+  - StardewModdingAPI.IModHelper.Reflection
+  - StardewModdingAPI.IModHelper.Translation
+  - StardewModdingAPI.IModHelper.WriteConfig``1(``0)
+  - StardewModdingAPI.IModHelper.WriteJsonFile``1(System.String,``0)
+  langs:
+  - csharp
+  - vb
+  name: IModHelper
+  nameWithType: IModHelper
+  fullName: StardewModdingAPI.IModHelper
+  type: Interface
+  source:
+    remote:
+      path: src/SMAPI/IModHelper.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: IModHelper
+    path: IModHelper.cs
+    startLine: 6
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Provides simplified APIs for writing mods.
+  example: []
+  syntax:
+    content: public interface IModHelper
+    content.vb: Public Interface IModHelper
+  modifiers.csharp:
+  - public
+  - interface
+  modifiers.vb:
+  - Public
+  - Interface
+- uid: StardewModdingAPI.IModHelper.DirectoryPath
+  commentId: P:StardewModdingAPI.IModHelper.DirectoryPath
+  id: DirectoryPath
+  parent: StardewModdingAPI.IModHelper
+  langs:
+  - csharp
+  - vb
+  name: DirectoryPath
+  nameWithType: IModHelper.DirectoryPath
+  fullName: StardewModdingAPI.IModHelper.DirectoryPath
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IModHelper.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: DirectoryPath
+    path: IModHelper.cs
+    startLine: 12
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: The full path to the mod&apos;s folder.
+  example: []
+  syntax:
+    content: string DirectoryPath { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: ReadOnly Property DirectoryPath As String
+  overload: StardewModdingAPI.IModHelper.DirectoryPath*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+- uid: StardewModdingAPI.IModHelper.Content
+  commentId: P:StardewModdingAPI.IModHelper.Content
+  id: Content
+  parent: StardewModdingAPI.IModHelper
+  langs:
+  - csharp
+  - vb
+  name: Content
+  nameWithType: IModHelper.Content
+  fullName: StardewModdingAPI.IModHelper.Content
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IModHelper.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Content
+    path: IModHelper.cs
+    startLine: 15
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: An API for loading content assets.
+  example: []
+  syntax:
+    content: IContentHelper Content { get; }
+    parameters: []
+    return:
+      type: StardewModdingAPI.IContentHelper
+    content.vb: ReadOnly Property Content As IContentHelper
+  overload: StardewModdingAPI.IModHelper.Content*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+- uid: StardewModdingAPI.IModHelper.Reflection
+  commentId: P:StardewModdingAPI.IModHelper.Reflection
+  id: Reflection
+  parent: StardewModdingAPI.IModHelper
+  langs:
+  - csharp
+  - vb
+  name: Reflection
+  nameWithType: IModHelper.Reflection
+  fullName: StardewModdingAPI.IModHelper.Reflection
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IModHelper.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Reflection
+    path: IModHelper.cs
+    startLine: 18
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Simplifies access to private game code.
+  example: []
+  syntax:
+    content: IReflectionHelper Reflection { get; }
+    parameters: []
+    return:
+      type: StardewModdingAPI.IReflectionHelper
+    content.vb: ReadOnly Property Reflection As IReflectionHelper
+  overload: StardewModdingAPI.IModHelper.Reflection*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+- uid: StardewModdingAPI.IModHelper.ModRegistry
+  commentId: P:StardewModdingAPI.IModHelper.ModRegistry
+  id: ModRegistry
+  parent: StardewModdingAPI.IModHelper
+  langs:
+  - csharp
+  - vb
+  name: ModRegistry
+  nameWithType: IModHelper.ModRegistry
+  fullName: StardewModdingAPI.IModHelper.ModRegistry
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IModHelper.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ModRegistry
+    path: IModHelper.cs
+    startLine: 21
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Metadata about loaded mods.
+  example: []
+  syntax:
+    content: IModRegistry ModRegistry { get; }
+    parameters: []
+    return:
+      type: StardewModdingAPI.IModRegistry
+    content.vb: ReadOnly Property ModRegistry As IModRegistry
+  overload: StardewModdingAPI.IModHelper.ModRegistry*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+- uid: StardewModdingAPI.IModHelper.Multiplayer
+  commentId: P:StardewModdingAPI.IModHelper.Multiplayer
+  id: Multiplayer
+  parent: StardewModdingAPI.IModHelper
+  langs:
+  - csharp
+  - vb
+  name: Multiplayer
+  nameWithType: IModHelper.Multiplayer
+  fullName: StardewModdingAPI.IModHelper.Multiplayer
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IModHelper.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Multiplayer
+    path: IModHelper.cs
+    startLine: 24
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Provides multiplayer utilities.
+  example: []
+  syntax:
+    content: IMultiplayerHelper Multiplayer { get; }
+    parameters: []
+    return:
+      type: StardewModdingAPI.IMultiplayerHelper
+    content.vb: ReadOnly Property Multiplayer As IMultiplayerHelper
+  overload: StardewModdingAPI.IModHelper.Multiplayer*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+- uid: StardewModdingAPI.IModHelper.ConsoleCommands
+  commentId: P:StardewModdingAPI.IModHelper.ConsoleCommands
+  id: ConsoleCommands
+  parent: StardewModdingAPI.IModHelper
+  langs:
+  - csharp
+  - vb
+  name: ConsoleCommands
+  nameWithType: IModHelper.ConsoleCommands
+  fullName: StardewModdingAPI.IModHelper.ConsoleCommands
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IModHelper.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ConsoleCommands
+    path: IModHelper.cs
+    startLine: 27
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: An API for managing console commands.
+  example: []
+  syntax:
+    content: ICommandHelper ConsoleCommands { get; }
+    parameters: []
+    return:
+      type: StardewModdingAPI.ICommandHelper
+    content.vb: ReadOnly Property ConsoleCommands As ICommandHelper
+  overload: StardewModdingAPI.IModHelper.ConsoleCommands*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+- uid: StardewModdingAPI.IModHelper.Translation
+  commentId: P:StardewModdingAPI.IModHelper.Translation
+  id: Translation
+  parent: StardewModdingAPI.IModHelper
+  langs:
+  - csharp
+  - vb
+  name: Translation
+  nameWithType: IModHelper.Translation
+  fullName: StardewModdingAPI.IModHelper.Translation
+  type: Property
+  source:
+    remote:
+      path: src/SMAPI/IModHelper.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: Translation
+    path: IModHelper.cs
+    startLine: 30
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Provides translations stored in the mod&apos;s <code>i18n</code> folder, with one file per locale (like <code>en.json</code>) containing a flat key => value structure. Translations are fetched with locale fallback, so missing translations are filled in from broader locales (like <code>pt-BR.json</code> &lt; <code>pt.json</code> &lt; <code>default.json</code>).
+  example: []
+  syntax:
+    content: ITranslationHelper Translation { get; }
+    parameters: []
+    return:
+      type: StardewModdingAPI.ITranslationHelper
+    content.vb: ReadOnly Property Translation As ITranslationHelper
+  overload: StardewModdingAPI.IModHelper.Translation*
+  modifiers.csharp:
+  - get
+  modifiers.vb:
+  - ReadOnly
+- uid: StardewModdingAPI.IModHelper.ReadConfig``1
+  commentId: M:StardewModdingAPI.IModHelper.ReadConfig``1
+  id: ReadConfig``1
+  parent: StardewModdingAPI.IModHelper
+  langs:
+  - csharp
+  - vb
+  name: ReadConfig<TConfig>()
+  nameWithType: IModHelper.ReadConfig<TConfig>()
+  fullName: StardewModdingAPI.IModHelper.ReadConfig<TConfig>()
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IModHelper.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ReadConfig
+    path: IModHelper.cs
+    startLine: 41
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Read the mod&apos;s configuration file (and create it if needed).
+  example: []
+  syntax:
+    content: >-
+      TConfig ReadConfig<TConfig>()
+          where TConfig : class, new()
+    typeParameters:
+    - id: TConfig
+      description: The config class type. This should be a plain class that has public properties for the settings you want. These can be complex types.
+    return:
+      type: '{TConfig}'
+    content.vb: Function ReadConfig(Of TConfig As {Class, New}) As TConfig
+  overload: StardewModdingAPI.IModHelper.ReadConfig*
+  nameWithType.vb: IModHelper.ReadConfig(Of TConfig)()
+  fullName.vb: StardewModdingAPI.IModHelper.ReadConfig(Of TConfig)()
+  name.vb: ReadConfig(Of TConfig)()
+- uid: StardewModdingAPI.IModHelper.WriteConfig``1(``0)
+  commentId: M:StardewModdingAPI.IModHelper.WriteConfig``1(``0)
+  id: WriteConfig``1(``0)
+  parent: StardewModdingAPI.IModHelper
+  langs:
+  - csharp
+  - vb
+  name: WriteConfig<TConfig>(TConfig)
+  nameWithType: IModHelper.WriteConfig<TConfig>(TConfig)
+  fullName: StardewModdingAPI.IModHelper.WriteConfig<TConfig>(TConfig)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IModHelper.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: WriteConfig
+    path: IModHelper.cs
+    startLine: 46
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Save to the mod&apos;s configuration file.
+  example: []
+  syntax:
+    content: >-
+      void WriteConfig<TConfig>(TConfig config)
+          where TConfig : class, new()
+    parameters:
+    - id: config
+      type: '{TConfig}'
+      description: The config settings to save.
+    typeParameters:
+    - id: TConfig
+      description: The config class type.
+    content.vb: Sub WriteConfig(Of TConfig As {Class, New})(config As TConfig)
+  overload: StardewModdingAPI.IModHelper.WriteConfig*
+  nameWithType.vb: IModHelper.WriteConfig(Of TConfig)(TConfig)
+  fullName.vb: StardewModdingAPI.IModHelper.WriteConfig(Of TConfig)(TConfig)
+  name.vb: WriteConfig(Of TConfig)(TConfig)
+- uid: StardewModdingAPI.IModHelper.ReadJsonFile``1(System.String)
+  commentId: M:StardewModdingAPI.IModHelper.ReadJsonFile``1(System.String)
+  id: ReadJsonFile``1(System.String)
+  parent: StardewModdingAPI.IModHelper
+  langs:
+  - csharp
+  - vb
+  name: ReadJsonFile<TModel>(String)
+  nameWithType: IModHelper.ReadJsonFile<TModel>(String)
+  fullName: StardewModdingAPI.IModHelper.ReadJsonFile<TModel>(System.String)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IModHelper.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: ReadJsonFile
+    path: IModHelper.cs
+    startLine: 55
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Read a JSON file.
+  example: []
+  syntax:
+    content: >-
+      TModel ReadJsonFile<TModel>(string path)
+          where TModel : class
+    parameters:
+    - id: path
+      type: System.String
+      description: The file path relative to the mod directory.
+    typeParameters:
+    - id: TModel
+      description: The model type.
+    return:
+      type: '{TModel}'
+      description: Returns the deserialised model, or <code>null</code> if the file doesn&apos;t exist or is empty.
+    content.vb: Function ReadJsonFile(Of TModel As Class)(path As String) As TModel
+  overload: StardewModdingAPI.IModHelper.ReadJsonFile*
+  nameWithType.vb: IModHelper.ReadJsonFile(Of TModel)(String)
+  fullName.vb: StardewModdingAPI.IModHelper.ReadJsonFile(Of TModel)(System.String)
+  name.vb: ReadJsonFile(Of TModel)(String)
+- uid: StardewModdingAPI.IModHelper.WriteJsonFile``1(System.String,``0)
+  commentId: M:StardewModdingAPI.IModHelper.WriteJsonFile``1(System.String,``0)
+  id: WriteJsonFile``1(System.String,``0)
+  parent: StardewModdingAPI.IModHelper
+  langs:
+  - csharp
+  - vb
+  name: WriteJsonFile<TModel>(String, TModel)
+  nameWithType: IModHelper.WriteJsonFile<TModel>(String, TModel)
+  fullName: StardewModdingAPI.IModHelper.WriteJsonFile<TModel>(System.String, TModel)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IModHelper.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: WriteJsonFile
+    path: IModHelper.cs
+    startLine: 61
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Save to a JSON file.
+  example: []
+  syntax:
+    content: >-
+      void WriteJsonFile<TModel>(string path, TModel model)
+          where TModel : class
+    parameters:
+    - id: path
+      type: System.String
+      description: The file path relative to the mod directory.
+    - id: model
+      type: '{TModel}'
+      description: The model to save.
+    typeParameters:
+    - id: TModel
+      description: The model type.
+    content.vb: Sub WriteJsonFile(Of TModel As Class)(path As String, model As TModel)
+  overload: StardewModdingAPI.IModHelper.WriteJsonFile*
+  nameWithType.vb: IModHelper.WriteJsonFile(Of TModel)(String, TModel)
+  fullName.vb: StardewModdingAPI.IModHelper.WriteJsonFile(Of TModel)(System.String, TModel)
+  name.vb: WriteJsonFile(Of TModel)(String, TModel)
+- uid: StardewModdingAPI.IModHelper.CreateTransitionalContentPack(System.String,System.String,System.String,System.String,System.String,StardewModdingAPI.ISemanticVersion)
+  commentId: M:StardewModdingAPI.IModHelper.CreateTransitionalContentPack(System.String,System.String,System.String,System.String,System.String,StardewModdingAPI.ISemanticVersion)
+  id: CreateTransitionalContentPack(System.String,System.String,System.String,System.String,System.String,StardewModdingAPI.ISemanticVersion)
+  parent: StardewModdingAPI.IModHelper
+  langs:
+  - csharp
+  - vb
+  name: CreateTransitionalContentPack(String, String, String, String, String, ISemanticVersion)
+  nameWithType: IModHelper.CreateTransitionalContentPack(String, String, String, String, String, ISemanticVersion)
+  fullName: StardewModdingAPI.IModHelper.CreateTransitionalContentPack(System.String, System.String, System.String, System.String, System.String, StardewModdingAPI.ISemanticVersion)
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IModHelper.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: CreateTransitionalContentPack
+    path: IModHelper.cs
+    startLine: 73
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Manually create a transitional content pack to support pre-SMAPI content packs. This provides a way to access legacy content packs using the SMAPI content pack APIs, but the content pack will not be visible in the log or validated by SMAPI.
+  example: []
+  syntax:
+    content: >-
+      [Obsolete("This method supports mods which previously had their own content packs, and shouldn't be used by new mods. It will be removed in SMAPI 3.0.")]
+
+      IContentPack CreateTransitionalContentPack(string directoryPath, string id, string name, string description, string author, ISemanticVersion version)
+    parameters:
+    - id: directoryPath
+      type: System.String
+      description: The absolute directory path containing the content pack files.
+    - id: id
+      type: System.String
+      description: The content pack&apos;s unique ID.
+    - id: name
+      type: System.String
+      description: The content pack name.
+    - id: description
+      type: System.String
+      description: The content pack description.
+    - id: author
+      type: System.String
+      description: The content pack author&apos;s name.
+    - id: version
+      type: StardewModdingAPI.ISemanticVersion
+      description: The content pack version.
+    return:
+      type: StardewModdingAPI.IContentPack
+    content.vb: >-
+      <Obsolete("This method supports mods which previously had their own content packs, and shouldn't be used by new mods. It will be removed in SMAPI 3.0.")>
+
+      Function CreateTransitionalContentPack(directoryPath As String, id As String, name As String, description As String, author As String, version As ISemanticVersion) As IContentPack
+  overload: StardewModdingAPI.IModHelper.CreateTransitionalContentPack*
+  attributes:
+  - type: System.ObsoleteAttribute
+    ctor: System.ObsoleteAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: This method supports mods which previously had their own content packs, and shouldn't be used by new mods. It will be removed in SMAPI 3.0.
+- uid: StardewModdingAPI.IModHelper.GetContentPacks
+  commentId: M:StardewModdingAPI.IModHelper.GetContentPacks
+  id: GetContentPacks
+  parent: StardewModdingAPI.IModHelper
+  langs:
+  - csharp
+  - vb
+  name: GetContentPacks()
+  nameWithType: IModHelper.GetContentPacks()
+  fullName: StardewModdingAPI.IModHelper.GetContentPacks()
+  type: Method
+  source:
+    remote:
+      path: src/SMAPI/IModHelper.cs
+      branch: develop
+      repo: https://github.com/Pathoschild/SMAPI.git
+    id: GetContentPacks
+    path: IModHelper.cs
+    startLine: 77
+  assemblies:
+  - StardewModdingAPI
+  namespace: StardewModdingAPI
+  summary: Get all content packs loaded for this mod.
+  example: []
+  syntax:
+    content: IEnumerable<IContentPack> GetContentPacks()
+    return:
+      type: System.Collections.Generic.IEnumerable{StardewModdingAPI.IContentPack}
+    content.vb: Function GetContentPacks As IEnumerable(Of IContentPack)
+  overload: StardewModdingAPI.IModHelper.GetContentPacks*
+references:
+- uid: StardewModdingAPI
+  commentId: N:StardewModdingAPI
+  name: StardewModdingAPI
+  nameWithType: StardewModdingAPI
+  fullName: StardewModdingAPI
+- uid: StardewModdingAPI.IModHelper.DirectoryPath*
+  commentId: Overload:StardewModdingAPI.IModHelper.DirectoryPath
+  name: DirectoryPath
+  nameWithType: IModHelper.DirectoryPath
+  fullName: StardewModdingAPI.IModHelper.DirectoryPath
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: StardewModdingAPI.IModHelper.Content*
+  commentId: Overload:StardewModdingAPI.IModHelper.Content
+  name: Content
+  nameWithType: IModHelper.Content
+  fullName: StardewModdingAPI.IModHelper.Content
+- uid: StardewModdingAPI.IContentHelper
+  commentId: T:StardewModdingAPI.IContentHelper
+  parent: StardewModdingAPI
+  name: IContentHelper
+  nameWithType: IContentHelper
+  fullName: StardewModdingAPI.IContentHelper
+- uid: StardewModdingAPI.IModHelper.Reflection*
+  commentId: Overload:StardewModdingAPI.IModHelper.Reflection
+  name: Reflection
+  nameWithType: IModHelper.Reflection
+  fullName: StardewModdingAPI.IModHelper.Reflection
+- uid: StardewModdingAPI.IReflectionHelper
+  commentId: T:StardewModdingAPI.IReflectionHelper
+  parent: StardewModdingAPI
+  name: IReflectionHelper
+  nameWithType: IReflectionHelper
+  fullName: StardewModdingAPI.IReflectionHelper
+- uid: StardewModdingAPI.IModHelper.ModRegistry*
+  commentId: Overload:StardewModdingAPI.IModHelper.ModRegistry
+  name: ModRegistry
+  nameWithType: IModHelper.ModRegistry
+  fullName: StardewModdingAPI.IModHelper.ModRegistry
+- uid: StardewModdingAPI.IModRegistry
+  commentId: T:StardewModdingAPI.IModRegistry
+  parent: StardewModdingAPI
+  name: IModRegistry
+  nameWithType: IModRegistry
+  fullName: StardewModdingAPI.IModRegistry
+- uid: StardewModdingAPI.IModHelper.Multiplayer*
+  commentId: Overload:StardewModdingAPI.IModHelper.Multiplayer
+  name: Multiplayer
+  nameWithType: IModHelper.Multiplayer
+  fullName: StardewModdingAPI.IModHelper.Multiplayer
+- uid: StardewModdingAPI.IMultiplayerHelper
+  commentId: T:StardewModdingAPI.IMultiplayerHelper
+  parent: StardewModdingAPI
+  name: IMultiplayerHelper
+  nameWithType: IMultiplayerHelper
+  fullName: StardewModdingAPI.IMultiplayerHelper
+- uid: StardewModdingAPI.IModHelper.ConsoleCommands*
+  commentId: Overload:StardewModdingAPI.IModHelper.ConsoleCommands
+  name: ConsoleCommands
+  nameWithType: IModHelper.ConsoleCommands
+  fullName: StardewModdingAPI.IModHelper.ConsoleCommands
+- uid: StardewModdingAPI.ICommandHelper
+  commentId: T:StardewModdingAPI.ICommandHelper
+  parent: StardewModdingAPI
+  name: ICommandHelper
+  nameWithType: ICommandHelper
+  fullName: StardewModdingAPI.ICommandHelper
+- uid: StardewModdingAPI.IModHelper.Translation*
+  commentId: Overload:StardewModdingAPI.IModHelper.Translation
+  name: Translation
+  nameWithType: IModHelper.Translation
+  fullName: StardewModdingAPI.IModHelper.Translation
+- uid: StardewModdingAPI.ITranslationHelper
+  commentId: T:StardewModdingAPI.ITranslationHelper
+  parent: StardewModdingAPI
+  name: ITranslationHelper
+  nameWithType: ITranslationHelper
+  fullName: StardewModdingAPI.ITranslationHelper
+- uid: StardewModdingAPI.IModHelper.ReadConfig*
+  commentId: Overload:StardewModdingAPI.IModHelper.ReadConfig
+  name: ReadConfig
+  nameWithType: IModHelper.ReadConfig
+  fullName: StardewModdingAPI.IModHelper.ReadConfig
+- uid: '{TConfig}'
+  commentId: '!:TConfig'
+  definition: TConfig
+  name: TConfig
+  nameWithType: TConfig
+  fullName: TConfig
+- uid: TConfig
+  name: TConfig
+  nameWithType: TConfig
+  fullName: TConfig
+- uid: StardewModdingAPI.IModHelper.WriteConfig*
+  commentId: Overload:StardewModdingAPI.IModHelper.WriteConfig
+  name: WriteConfig
+  nameWithType: IModHelper.WriteConfig
+  fullName: StardewModdingAPI.IModHelper.WriteConfig
+- uid: StardewModdingAPI.IModHelper.ReadJsonFile*
+  commentId: Overload:StardewModdingAPI.IModHelper.ReadJsonFile
+  name: ReadJsonFile
+  nameWithType: IModHelper.ReadJsonFile
+  fullName: StardewModdingAPI.IModHelper.ReadJsonFile
+- uid: '{TModel}'
+  commentId: '!:TModel'
+  definition: TModel
+  name: TModel
+  nameWithType: TModel
+  fullName: TModel
+- uid: TModel
+  name: TModel
+  nameWithType: TModel
+  fullName: TModel
+- uid: StardewModdingAPI.IModHelper.WriteJsonFile*
+  commentId: Overload:StardewModdingAPI.IModHelper.WriteJsonFile
+  name: WriteJsonFile
+  nameWithType: IModHelper.WriteJsonFile
+  fullName: StardewModdingAPI.IModHelper.WriteJsonFile
+- uid: StardewModdingAPI.IModHelper.CreateTransitionalContentPack*
+  commentId: Overload:StardewModdingAPI.IModHelper.CreateTransitionalContentPack
+  name: CreateTransitionalContentPack
+  nameWithType: IModHelper.CreateTransitionalContentPack
+  fullName: StardewModdingAPI.IModHelper.CreateTransitionalContentPack
+- uid: StardewModdingAPI.ISemanticVersion
+  commentId: T:StardewModdingAPI.ISemanticVersion
+  parent: StardewModdingAPI
+  name: ISemanticVersion
+  nameWithType: ISemanticVersion
+  fullName: StardewModdingAPI.ISemanticVersion
+- uid: StardewModdingAPI.IContentPack
+  commentId: T:StardewModdingAPI.IContentPack
+  parent: StardewModdingAPI
+  name: IContentPack
+  nameWithType: IContentPack
+  fullName: StardewModdingAPI.IContentPack
+- uid: StardewModdingAPI.IModHelper.GetContentPacks*
+  commentId: Overload:StardewModdingAPI.IModHelper.GetContentPacks
+  name: GetContentPacks
+  nameWithType: IModHelper.GetContentPacks
+  fullName: StardewModdingAPI.IModHelper.GetContentPacks
+- uid: System.Collections.Generic.IEnumerable{StardewModdingAPI.IContentPack}
+  commentId: T:System.Collections.Generic.IEnumerable{StardewModdingAPI.IContentPack}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  name: IEnumerable<IContentPack>
+  nameWithType: IEnumerable<IContentPack>
+  fullName: System.Collections.Generic.IEnumerable<StardewModdingAPI.IContentPack>
+  nameWithType.vb: IEnumerable(Of IContentPack)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of StardewModdingAPI.IContentPack)
+  name.vb: IEnumerable(Of IContentPack)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    nameWithType: IEnumerable
+    fullName: System.Collections.Generic.IEnumerable
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: StardewModdingAPI.IContentPack
+    name: IContentPack
+    nameWithType: IContentPack
+    fullName: StardewModdingAPI.IContentPack
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    nameWithType: IEnumerable
+    fullName: System.Collections.Generic.IEnumerable
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: StardewModdingAPI.IContentPack
+    name: IContentPack
+    nameWithType: IContentPack
+    fullName: StardewModdingAPI.IContentPack
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    nameWithType: IEnumerable
+    fullName: System.Collections.Generic.IEnumerable
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    nameWithType: IEnumerable
+    fullName: System.Collections.Generic.IEnumerable
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
