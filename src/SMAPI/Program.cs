@@ -10,6 +10,7 @@ using System.Runtime.ExceptionServices;
 using System.Security;
 using System.Text.RegularExpressions;
 using System.Threading;
+using Microsoft.Win32;
 #if SMAPI_FOR_WINDOWS
 using System.Windows.Forms;
 #endif
@@ -168,6 +169,8 @@ namespace StardewModdingAPI
         [HandleProcessCorruptedStateExceptions, SecurityCritical] // let try..catch handle corrupted state exceptions
         public void RunInteractively()
         {
+            this.EnsureRegistryPath();
+
             // initialise SMAPI
             try
             {
@@ -371,6 +374,64 @@ namespace StardewModdingAPI
                     ? $"Oops! You're running Stardew Valley {Constants.GameVersion}, but the oldest supported version is {Constants.MinimumGameVersion}. Please update your game before using SMAPI."
                     : "Oops! SMAPI doesn't seem to be compatible with your game. Make sure you're running the latest version of Stardew Valley and SMAPI."
                 );
+            }
+        }
+
+        /// <summary>
+        /// Adds current installation path into Windows registry for easier updating.
+        /// </summary>
+        private void EnsureRegistryPath()
+        {
+            if (Constants.Platform == Platform.Windows)
+            {
+                try
+                {
+                    var key = "Software/SMAPI";
+                    var name = "InstallPaths";
+
+                    RegistryKey currentuser = Environment.Is64BitOperatingSystem ? RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64) : Registry.CurrentUser;
+                    RegistryKey openKey = currentuser.OpenSubKey(key);
+                    if (openKey == null)
+                    {
+                        openKey = currentuser;
+                        var keys = key.Split('\\');
+                        openKey = keys.Aggregate(openKey, (current, k) => current.CreateSubKey(k));
+                    }
+
+                    List<string> paths = new List<string>();
+                    var result = openKey.GetValue(name, null);
+                    if (!string.IsNullOrEmpty(name))
+                    {
+                        if (!name.Contains(";"))
+                        {
+                            paths = name.Split(';').ToList();
+                        }
+                        else
+                        {
+                            paths.Add(name);
+                        }
+                    }
+
+                    paths.Add(Constants.ExecutionPath);
+                    string executableFilename = EnvironmentUtility.GetExecutableName(Platform.Windows);
+                    var checkedPaths = (
+                            from path in paths.Distinct(StringComparer.InvariantCultureIgnoreCase)
+                            let dir = new DirectoryInfo(path)
+                            where dir.Exists && dir.EnumerateFiles(executableFilename).Any()
+                            select dir
+                        )
+                        .GroupBy(x => x.FullName) //adding duplicate paths check
+                        .Select(y => y.First());
+
+                    var res = checkedPaths.Aggregate("", (current, path) => current + path.FullName + ";").Trim(';');
+
+                    using (openKey)
+                        openKey.SetValue(name, res);
+                }
+                catch (Exception e)
+                {
+                    this.Monitor.Log($"SMAPI failed to insert its path in registry: {e.GetLogSummary()}", LogLevel.Warn);
+                }
             }
         }
 
