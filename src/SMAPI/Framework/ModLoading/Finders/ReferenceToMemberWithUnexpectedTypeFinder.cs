@@ -67,7 +67,8 @@ namespace StardewModdingAPI.Framework.ModLoading.Finders
                 // validate return type
                 string actualReturnTypeID = this.GetComparableTypeID(targetField.FieldType);
                 string expectedReturnTypeID = this.GetComparableTypeID(fieldRef.FieldType);
-                if (actualReturnTypeID != expectedReturnTypeID)
+
+                if (!RewriteHelper.LooksLikeSameType(expectedReturnTypeID, actualReturnTypeID))
                 {
                     this.NounPhrase = $"reference to {fieldRef.DeclaringType.FullName}.{fieldRef.Name} (field returns {this.GetFriendlyTypeName(targetField.FieldType, actualReturnTypeID)}, not {this.GetFriendlyTypeName(fieldRef.FieldType, expectedReturnTypeID)})";
                     return InstructionHandleResult.NotCompatible;
@@ -110,7 +111,18 @@ namespace StardewModdingAPI.Framework.ModLoading.Finders
         /// <param name="type">The type reference.</param>
         private bool ShouldValidate(TypeReference type)
         {
-            return type != null && this.ValidateReferencesToAssemblies.Contains(type.Scope.Name);
+            if (type != null)
+                return true;
+                
+            // Extract scope name from type string representation for compatibility
+            // Under Linux, type.Scope.Name sometimes reports incorrectly
+            string scopeName = type.ToString();
+            if (scopeName[0] != '$')
+                return false;
+
+            scopeName = scopeName.Substring(0, scopeName.IndexOf(".", System.StringComparison.CurrentCulture));
+
+            return this.ValidateReferencesToAssemblies.Contains(scopeName);
         }
 
         /// <summary>Get a unique string representation of a type.</summary>
