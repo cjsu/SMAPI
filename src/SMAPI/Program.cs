@@ -86,6 +86,9 @@ namespace StardewModdingAPI
         /// <summary>Whether the program has been disposed.</summary>
         private bool IsDisposed;
 
+        /// <summary>Whether to load mods.</summary>
+        private readonly bool AreModsEnabled;
+
         /// <summary>Regex patterns which match console messages to suppress from the console and log.</summary>
         private readonly Regex[] SuppressConsolePatterns =
         {
@@ -112,19 +115,24 @@ namespace StardewModdingAPI
 
             // get flags from arguments
             bool writeToConsole = !args.Contains("--no-terminal");
+            bool modsEnabled = !args.Contains("--no-mods");
 
             // load SMAPI
-            using (Program program = new Program(writeToConsole))
+            using (Program program = new Program(writeToConsole, modsEnabled))
                 program.RunInteractively();
         }
 
         /// <summary>Construct an instance.</summary>
         /// <param name="writeToConsole">Whether to output log messages to the console.</param>
-        public Program(bool writeToConsole)
+        /// <param name="modsEnabled">Whether to load mods</param>
+        public Program(bool writeToConsole, bool modsEnabled)
         {
             // init paths
             this.VerifyPath(Constants.ModPath);
             this.VerifyPath(Constants.LogDir);
+
+            //Store no-mods flag
+            this.AreModsEnabled = modsEnabled;
 
             // init log file
             this.PurgeLogFiles();
@@ -407,6 +415,11 @@ namespace StardewModdingAPI
             ModDatabase modDatabase = toolkit.GetModDatabase(Constants.ApiMetadataPath);
 
             // load mods
+            if (!this.AreModsEnabled)
+            {
+                this.Monitor.Log("Mods were disabled, no mods will be loaded", LogLevel.Info);
+            }
+            else
             {
                 this.Monitor.Log("Loading mod metadata...", LogLevel.Trace);
                 ModResolver resolver = new ModResolver();
