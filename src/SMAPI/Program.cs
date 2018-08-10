@@ -86,6 +86,9 @@ namespace StardewModdingAPI
         /// <summary>Whether the program has been disposed.</summary>
         private bool IsDisposed;
 
+        /// <summary>Whether to load mods.</summary>
+        private readonly bool AreModsEnabled;
+
         /// <summary>Regex patterns which match console messages to suppress from the console and log.</summary>
         private readonly Regex[] SuppressConsolePatterns =
         {
@@ -112,19 +115,24 @@ namespace StardewModdingAPI
 
             // get flags from arguments
             bool writeToConsole = !args.Contains("--no-terminal");
+            bool modsEnabled = !args.Contains("--no-mods");
 
             // load SMAPI
-            using (Program program = new Program(writeToConsole))
+            using (Program program = new Program(writeToConsole, modsEnabled))
                 program.RunInteractively();
         }
 
         /// <summary>Construct an instance.</summary>
         /// <param name="writeToConsole">Whether to output log messages to the console.</param>
-        public Program(bool writeToConsole)
+        /// <param name="modsEnabled">Whether to load mods</param>
+        public Program(bool writeToConsole, bool modsEnabled)
         {
             // init paths
             this.VerifyPath(Constants.ModPath);
             this.VerifyPath(Constants.LogDir);
+
+            //Store no-mods flag
+            this.AreModsEnabled = modsEnabled;
 
             // init log file
             this.PurgeLogFiles();
@@ -396,6 +404,8 @@ namespace StardewModdingAPI
                 this.Monitor.Log($"You configured SMAPI to not check for updates. Running an old version of SMAPI is not recommended. You can enable update checks by reinstalling SMAPI or editing {Constants.ApiConfigPath}.", LogLevel.Warn);
             if (!this.Monitor.WriteToConsole)
                 this.Monitor.Log("Writing to the terminal is disabled because the --no-terminal argument was received. This usually means launching the terminal failed.", LogLevel.Warn);
+            if (!this.AreModsEnabled)
+                this.Monitor.Log("Loading mods are disabled because the --no-mods argument was recieved", LogLevel.Info);
             this.VerboseLog("Verbose logging enabled.");
 
             // validate XNB integrity
@@ -407,6 +417,7 @@ namespace StardewModdingAPI
             ModDatabase modDatabase = toolkit.GetModDatabase(Constants.ApiMetadataPath);
 
             // load mods
+            if(this.AreModsEnabled)
             {
                 this.Monitor.Log("Loading mod metadata...", LogLevel.Trace);
                 ModResolver resolver = new ModResolver();
