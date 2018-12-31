@@ -21,6 +21,10 @@ namespace StardewModdingAPI
         /*********
         ** Public methods
         *********/
+        /// <summary>Get whether a given file exists in the content pack.</summary>
+        /// <param name="path">The file path to check.</param>
+        bool HasFile(string path);
+
         /// <summary>Read a JSON file from the content pack folder.</summary>
         /// <typeparam name="TModel">The model type. This should be a plain class that has public properties for the data you want. The properties can be complex types.</typeparam>
         /// <param name="path">The file path relative to the content pack directory.</param>
