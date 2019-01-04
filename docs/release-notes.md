@@ -2,6 +2,7 @@
 ## Upcoming release
 * For modders:
   * Added `IContentPack.HasFile` method.
+  * Updated to Json.NET 12.0.1.
 
 ## 2.10.2
 Released 08 January 2019 for Stardew Valley 1.3.32–33.
