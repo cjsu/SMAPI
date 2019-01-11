@@ -216,6 +216,9 @@ That error means the package couldn't find your game. You can specify the game p
 _[Game path](#game-path)_ above.
 
 ## Release notes
+### Upcoming release
+* Dropped support for very old versions of SMAPI and Visual Studio.
+
 ### 2.2
 * Added support for SMAPI 2.8+ (still compatible with earlier versions).
 * Added default game paths for 32-bit Windows.
