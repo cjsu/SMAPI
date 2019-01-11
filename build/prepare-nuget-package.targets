@@ -17,7 +17,5 @@
     <Copy SourceFiles="$(TargetDir)/StardewModdingAPI.Toolkit.dll" DestinationFolder="$(PackagePath)/build" />
     <Copy SourceFiles="$(TargetDir)/StardewModdingAPI.Toolkit.CoreInterfaces.dll" DestinationFolder="$(PackagePath)/build" />
     <Copy SourceFiles="$(SolutionDir)/SMAPI.ModBuildConfig.Analyzer/bin/netstandard1.3/StardewModdingAPI.ModBuildConfig.Analyzer.dll" DestinationFolder="$(PackagePath)/analyzers/dotnet/cs" />
-    <Copy SourceFiles="$(SolutionDir)/SMAPI.ModBuildConfig.Analyzer/tools/install.ps1" DestinationFolder="$(PackagePath)/tools" />
-    <Copy SourceFiles="$(SolutionDir)/SMAPI.ModBuildConfig.Analyzer/tools/uninstall.ps1" DestinationFolder="$(PackagePath)/tools" />
   </Target>
 </Project>
