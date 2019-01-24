@@ -1,5 +1,8 @@
 # Release notes
 ## Upcoming release
+* For players:
+  * Updated for Stardew Valley 1.3.35 beta. **Not compatible with non-beta versions of the game.**
+
 * For modders:
   * Added `IContentPack.HasFile` method.
   * Updated to Json.NET 12.0.1.

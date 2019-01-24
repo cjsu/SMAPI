@@ -1,9 +1,9 @@
 {
   "Name": "Console Commands",
   "Author": "SMAPI",
-  "Version": "2.10.2",
+  "Version": "2.11.0",
   "Description": "Adds SMAPI console commands that let you manipulate the game.",
   "UniqueID": "SMAPI.ConsoleCommands",
   "EntryDll": "ConsoleCommands.dll",
-  "MinimumApiVersion": "2.10.2"
+  "MinimumApiVersion": "2.11.0"
 }
