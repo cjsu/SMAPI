@@ -115,22 +115,9 @@
       "Default | UpdateKey": "Nexus:1820"
     },
 
-    /*********
-    ** Content packs
-    *********/
-    "Canon-Friendly Dialogue Expansion": {
-      "ID": "gizzymo.canonfriendlyexpansion",
-      "~1.1.1 | Status": "AssumeBroken" // causes a save crash on certain dates
-    },
-
-    "Everytime Submarine": {
-      "ID": "MustafaDemirel.EverytimeSubmarine",
-      "~1.0.0 | Status": "AssumeBroken" // breaks player saves if their beach bridge is fixed
-    },
-
 
     /*********
-    ** Mods
+    ** Map versions
     *********/
     "Adjust Artisan Prices": {
       "ID": "ThatNorthernMonkey.AdjustArtisanPrices",
@@ -144,28 +131,6 @@
         "1.21": "1.2.1",
         "1.22-unofficial.3.mizzion": "1.2.2-unofficial.3.mizzion"
       }
-    },
-
-    "Always Scroll Map": {
-      "ID": "bcmpinc.AlwaysScrollMap",
-      "~0.6 | Status": "AssumeBroken" // breaks newer versions of bcmpinc mods (per bcmpinc's request)
-    },
-
-    "Animal Mood Fix": {
-      "ID": "GPeters-AnimalMoodFix",
-      "~ | Status": "Obsolete",
-      "~ | StatusReasonPhrase": "the animal mood bugs were fixed in Stardew Valley 1.2."
-    },
-
-    "Arcade Pong": {
-      "ID": "Platonymous.ArcadePong",
-      "~1.0.2 | Status": "AssumeBroken" // broke in SMAPI 2.6-beta.16 due to reflection into SMAPI internals
-    },
-
-    "Automated Doors": {
-      "ID": "azah.automated-doors",
-      "FormerIDs": "1abcfa07-2cf4-4dc3-a6e9-6068b642112b", // changed in 1.4.1
-      "Default | UpdateKey": "GitHub:azah/AutomatedDoors" // added in 1.4.2
     },
 
     "Basic Sprinklers Improved": {
@@ -184,11 +149,6 @@
       "MapRemoteVersions": { "1.3.1": "1.3" } // manifest not updated
     },
 
-    "BJS Night Sounds": {
-      "ID": "BunnyJumps.BJSNightSounds",
-      "~1.0.0 | Status": "AssumeBroken" // runtime errors with Harmony 1.2.0.1 in SMAPI 2.8+
-    },
-
     "Casks Anywhere": {
       "ID": "CasksAnywhere",
       "MapLocalVersions": { "1.1-alpha": "1.1" }
@@ -199,20 +159,9 @@
       "MapLocalVersions": { "1.3-1": "1.3" }
     },
 
-    "Chest Pooling": {
-      "ID": "mralbobo.ChestPooling",
-      "Default | UpdateKey": "GitHub:mralbobo/stardew-chest-pooling"
-    },
-
     "Cobalt": {
       "ID": "spacechase0.Cobalt",
       "MapRemoteVersions": { "1.1.3": "1.1.2" } // not updated in manifest
-    },
-
-    "Colored Chests": {
-      "ID": "4befde5c-731c-4853-8e4b-c5cdf946805f",
-      "~ | Status": "Obsolete",
-      "~ | StatusReasonPhrase": "colored chests were added in Stardew Valley 1.1."
     },
 
     "Configurable Machines": {
@@ -220,20 +169,9 @@
       "MapLocalVersions": { "1.2-beta": "1.2" }
     },
 
-    "Craft Counter": {
-      "ID": "bcmpinc.CraftCounter",
-      "~0.6 | Status": "AssumeBroken" // breaks newer versions of bcmpinc mods (per bcmpinc's request)
-    },
-
     "Crafting Counter": {
       "ID": "lolpcgaming.CraftingCounter",
       "MapRemoteVersions": { "1.1": "1.0" } // not updated in manifest
-    },
-
-    "Custom Farming Automate Bridge": {
-      "ID": "Platonymous.CFAutomate",
-      "~1.0.1 | Status": "AssumeBroken", // no longer compatible with Automate
-      "~1.0.1 | AlternativeUrl": "https://www.nexusmods.com/stardewvalley/mods/991"
     },
 
     "Customizable Cart Redux": {
@@ -256,14 +194,138 @@
       "MapLocalVersions": { "1.1": "1.1.1" }
     },
 
-    "Enemy Health Bars": {
-      "ID": "Speeder.HealthBars",
-      "FormerIDs": "SPDHealthBar" // changed in 1.7.1-pathoschild-update
+    "Hunger Mod (skn)": {
+      "ID": "skn.HungerMod",
+      "MapRemoteVersions": { "1.2.1": "1.0" } // manifest not updated
     },
 
-    "Fall 28 Snow Day": {
-      "ID": "Omegasis.Fall28SnowDay",
-      "~1.4.1  | Status": "AssumeBroken" // broke in SMAPI 2.0, and update for SMAPI 2.0 doesn't do anything
+    "Idle Pause": {
+      "ID": "Veleek.IdlePause",
+      "MapRemoteVersions": { "1.2": "1.1" } // manifest not updated
+    },
+
+    "Item Auto Stacker": {
+      "ID": "cat.autostacker",
+      "MapRemoteVersions": { "1.0.1": "1.0" } // manifest not updated
+    },
+
+    "Move Faster": {
+      "ID": "shuaiz.MoveFasterMod",
+      "~1.0.1   | Status": "AssumeBroken" // doesn't do anything as of SDV 1.2.33 (bad Harmony patch?)
+    },
+
+    "Multiple Sprites and Portraits On Rotation (File Loading)": {
+      "ID": "FileLoading",
+      "MapLocalVersions": { "1.1": "1.12" }
+    },
+
+    "Night Owl": {
+      "ID": "Omegasis.NightOwl",
+      "MapLocalVersions": { "2.1": "1.3" } // 1.3 had wrong version in manifest
+    },
+
+    "Point-and-Plant": {
+      "ID": "jwdred.PointAndPlant",
+      "MapRemoteVersions": { "1.0.3": "1.0.2" } // manifest not updated
+    },
+
+    "Relationship Status": {
+      "ID": "relationshipstatus",
+      "MapRemoteVersions": { "1.0.5": "1.0.4" } // not updated in manifest
+    },
+
+    "ReRegeneration": {
+      "ID": "lrsk_sdvm_rerg.0925160827",
+      "MapLocalVersions": { "1.1.2-release": "1.1.2" }
+    },
+
+    "Shop Expander": {
+      "ID": "Entoarox.ShopExpander",
+      "FormerIDs": "EntoaroxShopExpander", // changed in 1.5.2
+      "MapRemoteVersions": { "1.6.0b": "1.6.0" }
+    },
+
+    "Showcase Mod": {
+      "ID": "Igorious.Showcase",
+      "MapLocalVersions": { "0.9-500": "0.9" }
+    },
+
+    "Siv's Marriage Mod": {
+      "ID": "6266959802", // official version
+      "FormerIDs": "Siv.MarriageMod | medoli900.Siv's Marriage Mod", // 1.2.3-unofficial versions
+      "MapLocalVersions": { "0.0": "1.4" }
+    },
+
+    "Solar Eclipse Event": {
+      "ID": "KoihimeNakamura.SolarEclipseEvent",
+      "MapLocalVersions": { "1.3.1-20180131": "1.3.1" }
+    },
+
+    "Time Reminder": {
+      "ID": "KoihimeNakamura.TimeReminder",
+      "MapLocalVersions": { "1.0-20170314": "1.0.2" }
+    },
+
+
+    /*********
+    ** Obsolete
+    *********/
+    "Animal Mood Fix": {
+      "ID": "GPeters-AnimalMoodFix",
+      "~ | Status": "Obsolete",
+      "~ | StatusReasonPhrase": "the animal mood bugs were fixed in Stardew Valley 1.2."
+    },
+
+    "Colored Chests": {
+      "ID": "4befde5c-731c-4853-8e4b-c5cdf946805f",
+      "~ | Status": "Obsolete",
+      "~ | StatusReasonPhrase": "colored chests were added in Stardew Valley 1.1."
+    },
+
+    "Modder Serialization Utility": {
+      "ID": "SerializerUtils-0-1",
+      "~ | Status": "Obsolete",
+      "~ | StatusReasonPhrase": "it's no longer maintained or used."
+    },
+
+    "No Debug Mode": {
+      "ID": "NoDebugMode",
+      "~ | Status": "Obsolete",
+      "~ | StatusReasonPhrase": "debug mode was removed in SMAPI 1.0."
+    },
+
+
+    /*********
+    ** Broke circa SDV 1.3
+    *********/
+    "Canon-Friendly Dialogue Expansion": {
+      "ID": "gizzymo.canonfriendlyexpansion",
+      "~1.1.1 | Status": "AssumeBroken" // causes a save crash on certain dates
+    },
+
+    "Everytime Submarine": {
+      "ID": "MustafaDemirel.EverytimeSubmarine",
+      "~1.0.0 | Status": "AssumeBroken" // breaks player saves if their beach bridge is fixed
+    },
+
+    "Always Scroll Map": {
+      "ID": "bcmpinc.AlwaysScrollMap",
+      "~0.6 | Status": "AssumeBroken" // breaks newer versions of bcmpinc mods (per bcmpinc's request)
+    },
+
+    "Arcade Pong": {
+      "ID": "Platonymous.ArcadePong",
+      "~1.0.2 | Status": "AssumeBroken" // broke in SMAPI 2.6-beta.16 due to reflection into SMAPI internals
+    },
+
+    "BJS Night Sounds": {
+      "ID": "BunnyJumps.BJSNightSounds",
+      "~1.0.0 | Status": "AssumeBroken" // runtime errors with Harmony 1.2.0.1 in SMAPI 2.8+
+    },
+
+    "Craft Counter": {
+      "ID": "bcmpinc.CraftCounter",
+      "~0.6 | Status": "AssumeBroken" // breaks newer versions of bcmpinc mods (per bcmpinc's request)
     },
 
     "Fishing Adjust": {
@@ -286,40 +348,9 @@
       "~0.3 | Status": "AssumeBroken" // broke in 1.3: Exception from HarmonyInstance "bcmpinc.FixScytheExp" [...] Bad label content in ILGenerator.
     },
 
-    "Gate Opener": {
-      "ID": "mralbobo.GateOpener",
-      "Default | UpdateKey": "GitHub:mralbobo/stardew-gate-opener"
-    },
-
     "Grass Growth": {
       "ID": "bcmpinc.GrassGrowth",
       "~0.6 | Status": "AssumeBroken" // breaks newer versions of bcmpinc mods (per bcmpinc's request)
-    },
-
-    "Hunger Mod (skn)": {
-      "ID": "skn.HungerMod",
-      "MapRemoteVersions": { "1.2.1": "1.0" } // manifest not updated
-    },
-
-    "Idle Pause": {
-      "ID": "Veleek.IdlePause",
-      "MapRemoteVersions": { "1.2": "1.1" } // manifest not updated
-    },
-
-    "Item Auto Stacker": {
-      "ID": "cat.autostacker",
-      "MapRemoteVersions": { "1.0.1": "1.0" } // manifest not updated
-    },
-
-    "Modder Serialization Utility": {
-      "ID": "SerializerUtils-0-1",
-      "~ | Status": "Obsolete",
-      "~ | StatusReasonPhrase": "it's no longer maintained or used."
-    },
-
-    "More Rain": {
-      "ID": "Omegasis.MoreRain",
-      "~1.4    | Status": "AssumeBroken" // broke in SMAPI 2.0
     },
 
     "More Silo Storage": {
@@ -327,24 +358,9 @@
       "~1.0.1 | Status": "AssumeBroken" // broke in SDV 1.3
     },
 
-    "Move Faster": {
-      "ID": "shuaiz.MoveFasterMod",
-      "~1.0.1   | Status": "AssumeBroken" // doesn't do anything as of SDV 1.2.33 (bad Harmony patch?)
-    },
-
     "Movement Speed": {
       "ID": "bcmpinc.MovementSpeed",
       "~0.6 | Status": "AssumeBroken" // breaks newer versions of bcmpinc mods (per bcmpinc's request)
-    },
-
-    "Multiple Sprites and Portraits On Rotation (File Loading)": {
-      "ID": "FileLoading",
-      "MapLocalVersions": { "1.1": "1.12" }
-    },
-
-    "Night Owl": {
-      "ID": "Omegasis.NightOwl",
-      "MapLocalVersions": { "2.1": "1.3" } // 1.3 had wrong version in manifest
     },
 
     "No Added Flying Mine Monsters": {
@@ -352,63 +368,9 @@
       "~1.1 | Status": "AssumeBroken" // runtime errors with Harmony 1.2.0.1 in SMAPI 2.8+
     },
 
-    "No Debug Mode": {
-      "ID": "NoDebugMode",
-      "~ | Status": "Obsolete",
-      "~ | StatusReasonPhrase": "debug mode was removed in SMAPI 1.0."
-    },
-
-    "OmniFarm": {
-      "ID": "PhthaloBlue.OmniFarm",
-      "FormerIDs": "BlueMod_OmniFarm", // changed in 2.0.2-pathoschild-update
-      "Default | UpdateKey": "GitHub:lambui/StardewValleyMod_OmniFarm"
-    },
-
-    "Point-and-Plant": {
-      "ID": "jwdred.PointAndPlant",
-      "MapRemoteVersions": { "1.0.3": "1.0.2" } // manifest not updated
-    },
-
-    "Prairie King Made Easy": {
-      "ID": "Mucchan.PrairieKingMadeEasy",
-      "~1.0    | Status": "AssumeBroken" // broke in SDV 1.2
-    },
-
-    "Relationship Status": {
-      "ID": "relationshipstatus",
-      "MapRemoteVersions": { "1.0.5": "1.0.4" } // not updated in manifest
-    },
-
-    "ReRegeneration": {
-      "ID": "lrsk_sdvm_rerg.0925160827",
-      "MapLocalVersions": { "1.1.2-release": "1.1.2" }
-    },
-
-    "Save Backup": {
-      "ID": "Omegasis.SaveBackup",
-      "~1.2    | Status": "AssumeBroken" // broke in SMAPI 2.0
-    },
-
     "Server Bookmarker": {
       "ID": "Ilyaki.ServerBookmarker",
       "~1.0.0 | Status": "AssumeBroken" // broke in Stardew Valley 1.3.29 (runtime errors)
-    },
-
-    "Shop Expander": {
-      "ID": "Entoarox.ShopExpander",
-      "FormerIDs": "EntoaroxShopExpander", // changed in 1.5.2
-      "MapRemoteVersions": { "1.6.0b": "1.6.0" }
-    },
-
-    "Showcase Mod": {
-      "ID": "Igorious.Showcase",
-      "MapLocalVersions": { "0.9-500": "0.9" }
-    },
-
-    "Siv's Marriage Mod": {
-      "ID": "6266959802", // official version
-      "FormerIDs": "Siv.MarriageMod | medoli900.Siv's Marriage Mod", // 1.2.3-unofficial versions
-      "MapLocalVersions": { "0.0": "1.4" }
     },
 
     "Skill Prestige: Cooking Adapter": {
@@ -423,11 +385,6 @@
       "1.3-beta | Status": "AssumeBroken" // doesn't work in multiplayer, no longer maintained
     },
 
-    "Solar Eclipse Event": {
-      "ID": "KoihimeNakamura.SolarEclipseEvent",
-      "MapLocalVersions": { "1.3.1-20180131": "1.3.1" }
-    },
-
     "Split Screen": {
       "ID": "Ilyaki.SplitScreen",
       "~3.0.1 | Status": "AssumeBroken" // broke in SMAPI 2.6-beta.16 due to reflection into SMAPI internals
@@ -436,11 +393,6 @@
     "Stardew Hack": {
       "ID": "bcmpinc.StardewHack",
       "~0.6 | Status": "AssumeBroken" // breaks newer versions of bcmpinc mods (per bcmpinc's request)
-    },
-
-    "Stardew Notification": {
-      "ID": "stardewnotification",
-      "Default | UpdateKey": "GitHub:monopandora/StardewNotification"
     },
 
     "Stephan's Lots of Crops": {
@@ -460,35 +412,14 @@
       "~0.6 | Status": "AssumeBroken" // breaks newer versions of bcmpinc mods (per bcmpinc's request)
     },
 
-    "Time Reminder": {
-      "ID": "KoihimeNakamura.TimeReminder",
-      "MapLocalVersions": { "1.0-20170314": "1.0.2" }
-    },
-
-    "Tool Charging": {
-      "ID": "mralbobo.ToolCharging",
-      "Default | UpdateKey": "GitHub:mralbobo/stardew-tool-charging"
-    },
-
     "Tree Spread": {
       "ID": "bcmpinc.TreeSpread",
       "~0.6 | Status": "AssumeBroken" // breaks newer versions of bcmpinc mods (per bcmpinc's request)
     },
 
-    "Variable Grass": {
-      "ID": "dantheman999.VariableGrass",
-      "Default | UpdateKey": "GitHub:dantheman999301/StardewMods"
-    },
-
     "Yet Another Harvest With Scythe Mod": {
       "ID": "bcmpinc.HarvestWithScythe",
       "~0.6 | Status": "AssumeBroken" // breaks newer versions of bcmpinc mods (per bcmpinc's request)
-    },
-
-    "Zoom Out Extreme": {
-      "ID": "RockinMods.ZoomMod",
-      "FormerIDs": "ZoomMod", // changed circa 1.2.1
-      "~0.1 | Status": "AssumeBroken" // broke in SDV 1.2
     }
   }
 }
