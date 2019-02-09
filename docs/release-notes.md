@@ -2,6 +2,9 @@
 ## 3.0 (upcoming release)
 These changes have not been released yet.
 
+* For players:
+  * Fixed Save Backup not pruning old backups if they're uncompressed.
+
 * For modders:
   * Added `IContentPack.HasFile` method.
   * Updated to Json.NET 12.0.1.
