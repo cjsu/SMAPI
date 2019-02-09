@@ -124,20 +124,23 @@ namespace StardewModdingAPI.Mods.SaveBackup
             try
             {
                 var oldBackups = backupFolder
-                    .GetFiles()
+                    .GetFileSystemInfos()
                     .OrderByDescending(p => p.CreationTimeUtc)
                     .Skip(backupsToKeep);
 
-                foreach (FileInfo file in oldBackups)
+                foreach (FileSystemInfo entry in oldBackups)
                 {
                     try
                     {
-                        this.Monitor.Log($"Deleting {file.Name}...", LogLevel.Trace);
-                        file.Delete();
+                        this.Monitor.Log($"Deleting {entry.Name}...", LogLevel.Trace);
+                        if (entry is DirectoryInfo folder)
+                            folder.Delete(recursive: true);
+                        else
+                            entry.Delete();
                     }
                     catch (Exception ex)
                     {
-                        this.Monitor.Log($"Error deleting old save backup '{file.Name}': {ex}");
+                        this.Monitor.Log($"Error deleting old save backup '{entry.Name}': {ex}");
                     }
                 }
             }

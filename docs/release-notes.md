@@ -1,14 +1,20 @@
 # Release notes
 ## Upcoming release
 * For players:
-  * Updated for Stardew Valley 1.3.35 beta. **Not compatible with non-beta versions of the game.**
+  * Fixed Save Backup not pruning old backups if they're uncompressed.
+
+## 2.11-beta
+Currently in beta for Stardew Valley 1.3.35-beta only. **Not compatible with non-beta versions of the game.**
+
+* For players:
+  * Updated for Stardew Valley 1.3.35 beta.
 
 * For modders:
   * Added `IContentPack.HasFile` method.
   * Updated to Json.NET 12.0.1.
 
 ## 2.10.2
-Released 08 January 2019 for Stardew Valley 1.3.32–33.
+Released 09 January 2019 for Stardew Valley 1.3.32–33.
 
 * For players:
   * SMAPI now keeps the first save backup created for the day, instead of the last one.
