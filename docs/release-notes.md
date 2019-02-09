@@ -9,6 +9,9 @@ Currently in beta for Stardew Valley 1.3.35-beta only. **Not compatible with non
 * For players:
   * Updated for Stardew Valley 1.3.35 beta.
 
+* For the web UI:
+  * Mod compatibility page now crosses out mod links if they're outdated to prevent confusion.
+
 * For modders:
   * Added `IContentPack.HasFile` method.
   * Updated to Json.NET 12.0.1.
