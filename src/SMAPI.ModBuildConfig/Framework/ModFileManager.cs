@@ -129,6 +129,7 @@ namespace StardewModdingAPI.ModBuildConfig.Framework
 
                 // Json.NET (bundled into SMAPI)
                 || this.EqualsInvariant(file.Name, "Newtonsoft.Json.dll")
+                || this.EqualsInvariant(file.Name, "Newtonsoft.Json.pdb")
                 || this.EqualsInvariant(file.Name, "Newtonsoft.Json.xml")
 
                 // code analysis files
