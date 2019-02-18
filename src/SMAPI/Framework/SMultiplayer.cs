@@ -201,7 +201,8 @@ namespace StardewModdingAPI.Framework
                         MultiplayerPeer newPeer = new MultiplayerPeer(message.FarmerID, model, sendMessage, isHost: false);
                         if (this.Peers.ContainsKey(message.FarmerID))
                         {
-                            this.Monitor.Log($"Rejected mod context from farmhand {message.FarmerID}: already received context for that player.", LogLevel.Error);
+                            this.Monitor.Log($"Received mod context from farmhand {message.FarmerID}, but the game didn't see them disconnect. This may indicate issues with the network connection.", LogLevel.Info);
+                            this.Peers.Remove(message.FarmerID);
                             return;
                         }
                         this.AddPeer(newPeer, canBeHost: false, raiseEvent: false);
