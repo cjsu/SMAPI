@@ -3,6 +3,9 @@
 * For players:
   * Fixed Save Backup not pruning old backups if they're uncompressed.
 
+* For the web UI:
+  * The log parser now displays available updates in a section at the top.
+
 ## 2.11-beta
 Currently in beta for Stardew Valley 1.3.35-beta only. **Not compatible with non-beta versions of the game.**
 
