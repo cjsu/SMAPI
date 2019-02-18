@@ -117,9 +117,60 @@ else if (Model.ParsedLog?.IsValid == true)
 @* parsed log *@
 @if (Model.ParsedLog?.IsValid == true)
 {
-    <h2>Log info</h2>
     <div id="output">
-        <table id="metadata">
+        @if (Model.ParsedLog.Mods.Any(mod => mod.HasUpdate))
+        {
+            <h2>Suggested fixes</h2>
+
+            <p>You have some mods that aren't fully up to date. Updating them can fix problems.</p>
+            <table id="updates" class="table">
+                <caption>
+                    Updates Available:
+                </caption>
+                @foreach (LogModInfo mod in Model.ParsedLog.Mods.Where(mod => (mod.HasUpdate && mod.ContentPackFor == null) || (contentPacks != null && contentPacks.TryGetValue(mod.Name, out LogModInfo[] contentPackList) && contentPackList.Any(pack => pack.HasUpdate))))
+                {
+                <tr class="mod-entry">
+                    <td>
+                        <strong class=@(!mod.HasUpdate ? "hidden": "")>@mod.Name</strong>
+                        @if (contentPacks != null && contentPacks.TryGetValue(mod.Name, out LogModInfo[] contentPackList))
+                        {
+                            <div class="content-packs">
+                                @foreach (LogModInfo contentPack in contentPackList.Where(pack => pack.HasUpdate))
+                                {
+                                    <text>+ @contentPack.Name</text><br />
+                                }
+                            </div>
+                        }
+                    </td>
+                    <td>
+                        @if (mod.HasUpdate)
+                        {
+                        <a href="@mod.UpdateLink" target="_blank">
+                            @(mod.Version == null ? @mod.UpdateVersion : $"{mod.Version} → {mod.UpdateVersion}")
+                            </a>
+                        }
+                        else
+                        {
+                            <span class="invisible">Okay</span>
+                        }
+
+                        @if (contentPacks != null && contentPacks.TryGetValue(mod.Name, out contentPackList))
+                        {
+                            <div>
+                                @foreach (LogModInfo contentPack in contentPackList.Where(pack => pack.HasUpdate))
+                                {
+                                    <a href="@contentPack.UpdateLink" target="_blank">@contentPack.Version → @contentPack.UpdateVersion</a><br />
+                                }
+                            </div>
+                        }
+                    </td>
+                </tr>
+                }
+            </table>
+        }
+
+        <h2>Log info</h2>
+        <table id="metadata" class="table">
             <caption>Game info:</caption>
             <tr>
                 <th>Stardew Valley:</th>
@@ -138,8 +189,8 @@ else if (Model.ParsedLog?.IsValid == true)
                 <td>@Model.ParsedLog.Timestamp.UtcDateTime.ToString("yyyy-MM-dd HH:mm") UTC ({{localTimeStarted}} your time)</td>
             </tr>
         </table>
-        <br />
-        <table id="mods" class="@(Model.ShowRaw ? "filters-disabled" : null)">
+        <br/>
+        <table id="mods" class="@(Model.ShowRaw ? "filters-disabled" : null) table">
             <caption>
                 Installed mods:
                 @if (!Model.ShowRaw)
@@ -149,7 +200,7 @@ else if (Model.ParsedLog?.IsValid == true)
                     <span class="notice btn txt" v-on:click="hideAllMods" v-bind:class="{ invisible: !anyModsShown || !anyModsHidden }">hide all</span>
                 }
             </caption>
-            @foreach (var mod in Model.ParsedLog.Mods.Where(p => p.ContentPackFor == null))
+            @foreach (var mod in Model.ParsedLog.Mods.Where(p => p.Loaded && p.ContentPackFor == null))
             {
                 <tr v-on:click="toggleMod('@Model.GetSlug(mod.Name)')" class="mod-entry" v-bind:class="{ hidden: !showMods['@Model.GetSlug(mod.Name)'] }">
                     <td><input type="checkbox" v-bind:checked="showMods['@Model.GetSlug(mod.Name)']" v-bind:class="{ invisible: !anyModsHidden }" /></td>

@@ -13,6 +13,13 @@ caption {
 #output {
     padding: 10px;
     overflow: auto;
+}
+
+#output h2 {
+    margin: -10px 0 10px -10px;
+}
+
+#output table {
     font-family: monospace;
 }
 
@@ -43,7 +50,7 @@ table caption {
 /*********
 ** Log metadata & filters
 *********/
-#metadata, #mods, #filters {
+.table, #filters {
     border-bottom: 1px dashed #888888;
     margin-bottom: 5px;
 }
@@ -53,7 +60,7 @@ table caption {
     padding-right: 0.7em;
 }
 
-table#metadata, table#mods {
+.table {
     border: 1px solid #000000;
     background: #ffffff;
     border-radius: 5px;
@@ -61,6 +68,18 @@ table#metadata, table#mods {
     overflow: hidden;
     cursor: default;
     box-shadow: 1px 1px 1px 1px #dddddd;
+}
+
+.mod-entry {
+    height: 1.8em;
+}
+
+.table > caption {
+    min-height: 1.3em;
+}
+
+#updates {
+    min-width: 10em;
 }
 
 .invisible {
@@ -87,8 +106,7 @@ table#metadata, table#mods {
     cursor: default;
 }
 
-#metadata tr,
-#mods tr {
+.table tr {
     background: #eee
 }
 
@@ -114,11 +132,11 @@ table#metadata, table#mods {
     display: inline-block;
 }
 
-#mods .mod-entry.hidden {
+.table .hidden {
     opacity: 0.5;
 }
 
-#mods .content-packs {
+.table .content-packs {
     margin-left: 1em;
     font-size: 0.9em;
     font-style: italic;
@@ -128,8 +146,7 @@ table#metadata, table#mods {
     padding-right: 5px;
 }
 
-#metadata tr:nth-child(even),
-#mods tr:nth-child(even) {
+.table tr:nth-child(even) {
     background: #fff
 }
 

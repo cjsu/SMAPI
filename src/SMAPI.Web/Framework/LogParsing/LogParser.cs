@@ -39,6 +39,15 @@ namespace StardewModdingAPI.Web.Framework.LogParsing
         /// <summary>A regex pattern matching an entry in SMAPI's content pack list.</summary>
         private readonly Regex ContentPackListEntryPattern = new Regex(@"^   (?<name>.+) (?<version>.+) by (?<author>.+) \| for (?<for>.+?)(?: \| (?<description>.+))?$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
+        /// <summary>A regex pattern matching the start of SMAPI's mod update list.</summary>
+        private readonly Regex ModUpdateListStartPattern = new Regex(@"^You can update \d+ mods?:$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+        /// <summary>A regex pattern matching an entry in SMAPI's mod update list.</summary>
+        private readonly Regex ModUpdateListEntryPattern = new Regex(@"^   (?<name>.+?) (?<version>" + SemanticVersion.UnboundedVersionPattern + @"): (?<link>.+)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+        /// <summary>A regex pattern matching SMAPI's update line.</summary>
+        private readonly Regex SMAPIUpdatePattern = new Regex(@"^You can update SMAPI to (?<version>" + SemanticVersion.UnboundedVersionPattern + @"): (?<link>.+)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
 
         /*********
         ** Public methods
@@ -69,11 +78,12 @@ namespace StardewModdingAPI.Web.Framework.LogParsing
                 };
 
                 // parse log messages
-                LogModInfo smapiMod = new LogModInfo { Name = "SMAPI", Author = "Pathoschild", Description = "" };
-                LogModInfo gameMod = new LogModInfo { Name = "game", Author = "", Description = "" };
+                LogModInfo smapiMod = new LogModInfo { Name = "SMAPI", Author = "Pathoschild", Description = "", Loaded = true};
+                LogModInfo gameMod = new LogModInfo { Name = "game", Author = "", Description = "", Loaded = true };
                 IDictionary<string, LogModInfo> mods = new Dictionary<string, LogModInfo>();
                 bool inModList = false;
                 bool inContentPackList = false;
+                bool inModUpdateList = false;
                 foreach (LogMessage message in log.Messages)
                 {
                     // collect stats
@@ -106,6 +116,8 @@ namespace StardewModdingAPI.Web.Framework.LogParsing
                             inModList = false;
                         if (inContentPackList && !this.ContentPackListEntryPattern.IsMatch(message.Text))
                             inContentPackList = false;
+                        if (inModUpdateList && !this.ModUpdateListEntryPattern.IsMatch(message.Text))
+                            inModUpdateList = false;
 
                         // mod list
                         if (!inModList && message.Level == LogLevel.Info && this.ModListStartPattern.IsMatch(message.Text))
@@ -117,7 +129,7 @@ namespace StardewModdingAPI.Web.Framework.LogParsing
                             string version = match.Groups["version"].Value;
                             string author = match.Groups["author"].Value;
                             string description = match.Groups["description"].Value;
-                            mods[name] = new LogModInfo { Name = name, Author = author, Version = version, Description = description };
+                            mods[name] = new LogModInfo { Name = name, Author = author, Version = version, Description = description, Loaded = true };
                         }
 
                         // content pack list
@@ -131,7 +143,36 @@ namespace StardewModdingAPI.Web.Framework.LogParsing
                             string author = match.Groups["author"].Value;
                             string description = match.Groups["description"].Value;
                             string forMod = match.Groups["for"].Value;
-                            mods[name] = new LogModInfo { Name = name, Author = author, Version = version, Description = description, ContentPackFor = forMod };
+                            mods[name] = new LogModInfo { Name = name, Author = author, Version = version, Description = description, ContentPackFor = forMod, Loaded = true };
+                        }
+
+                        // mod update list
+                        else if (!inModUpdateList && message.Level == LogLevel.Alert && this.ModUpdateListStartPattern.IsMatch(message.Text))
+                            inModUpdateList = true;
+                        else if (inModUpdateList)
+                        {
+                            Match match = this.ModUpdateListEntryPattern.Match(message.Text);
+                            string name = match.Groups["name"].Value;
+                            string version = match.Groups["version"].Value;
+                            string link = match.Groups["link"].Value;
+                            if (mods.ContainsKey(name))
+                            {
+                                mods[name].UpdateLink = link;
+                                mods[name].UpdateVersion = version;
+                            }
+                            else
+                            {
+                                mods[name] = new LogModInfo {Name = name, UpdateVersion = version, UpdateLink = link, Loaded = false};
+                            }
+                        }
+
+                        else if(message.Level == LogLevel.Alert && this.SMAPIUpdatePattern.IsMatch(message.Text))
+                        {
+                            Match match = this.SMAPIUpdatePattern.Match(message.Text);
+                            string version = match.Groups["version"].Value;
+                            string link = match.Groups["link"].Value;
+                            smapiMod.UpdateVersion = version;
+                            smapiMod.UpdateLink = link;
                         }
 
                         // platform info line
