@@ -125,7 +125,7 @@ else if (Model.ParsedLog?.IsValid == true)
             <p>You have some mods that aren't fully up to date. Updating them can fix problems.</p>
             <table id="updates" class="table">
                 <caption>
-                    Updates Available:
+                    Updates available:
                 </caption>
                 @foreach (LogModInfo mod in Model.ParsedLog.Mods.Where(mod => (mod.HasUpdate && mod.ContentPackFor == null) || (contentPacks != null && contentPacks.TryGetValue(mod.Name, out LogModInfo[] contentPackList) && contentPackList.Any(pack => pack.HasUpdate))))
                 {
