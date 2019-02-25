@@ -106,7 +106,6 @@ SMAPI uses a small number of conditional compilation constants, which you can se
 flag | purpose
 ---- | -------
 `SMAPI_FOR_WINDOWS` | Whether SMAPI is being compiled on Windows for players on Windows. Set automatically in `crossplatform.targets`.
-`SMAPI_3_0_STRICT` | Whether to exclude all deprecated APIs from compilation. This is useful for testing mods for SMAPI 3.0 compatibility.
 
 # SMAPI web services
 ## Overview

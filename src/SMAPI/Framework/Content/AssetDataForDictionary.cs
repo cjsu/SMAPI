@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace StardewModdingAPI.Framework.Content
 {
@@ -18,37 +17,5 @@ namespace StardewModdingAPI.Framework.Content
         /// <param name="onDataReplaced">A callback to invoke when the data is replaced (if any).</param>
         public AssetDataForDictionary(string locale, string assetName, IDictionary<TKey, TValue> data, Func<string, string> getNormalisedPath, Action<IDictionary<TKey, TValue>> onDataReplaced)
             : base(locale, assetName, data, getNormalisedPath, onDataReplaced) { }
-
-#if !SMAPI_3_0_STRICT
-        /// <summary>Add or replace an entry in the dictionary.</summary>
-        /// <param name="key">The entry key.</param>
-        /// <param name="value">The entry value.</param>
-        [Obsolete("Access " + nameof(AssetData<IDictionary<TKey, TValue>>.Data) + "field directly.")]
-        public void Set(TKey key, TValue value)
-        {
-            SCore.DeprecationManager.Warn($"AssetDataForDictionary.{nameof(Set)}", "2.10", DeprecationLevel.PendingRemoval);
-            this.Data[key] = value;
-        }
-
-        /// <summary>Add or replace an entry in the dictionary.</summary>
-        /// <param name="key">The entry key.</param>
-        /// <param name="value">A callback which accepts the current value and returns the new value.</param>
-        [Obsolete("Access " + nameof(AssetData<IDictionary<TKey, TValue>>.Data) + "field directly.")]
-        public void Set(TKey key, Func<TValue, TValue> value)
-        {
-            SCore.DeprecationManager.Warn($"AssetDataForDictionary.{nameof(Set)}", "2.10", DeprecationLevel.PendingRemoval);
-            this.Data[key] = value(this.Data[key]);
-        }
-
-        /// <summary>Dynamically replace values in the dictionary.</summary>
-        /// <param name="replacer">A lambda which takes the current key and value for an entry, and returns the new value.</param>
-        [Obsolete("Access " + nameof(AssetData<IDictionary<TKey, TValue>>.Data) + "field directly.")]
-        public void Set(Func<TKey, TValue, TValue> replacer)
-        {
-            SCore.DeprecationManager.Warn($"AssetDataForDictionary.{nameof(Set)}", "2.10", DeprecationLevel.PendingRemoval);
-            foreach (var pair in this.Data.ToArray())
-                this.Data[pair.Key] = replacer(pair.Key, pair.Value);
-        }
-#endif
     }
 }

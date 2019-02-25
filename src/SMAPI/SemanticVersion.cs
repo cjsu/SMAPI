@@ -1,6 +1,5 @@
 using System;
 using Newtonsoft.Json;
-using StardewModdingAPI.Framework;
 
 namespace StardewModdingAPI
 {
@@ -25,19 +24,6 @@ namespace StardewModdingAPI
 
         /// <summary>The patch version for backwards-compatible bug fixes.</summary>
         public int PatchVersion => this.Version.PatchVersion;
-
-#if !SMAPI_3_0_STRICT
-        /// <summary>An optional build tag.</summary>
-        [Obsolete("Use " + nameof(ISemanticVersion.PrereleaseTag) + " instead")]
-        public string Build
-        {
-            get
-            {
-                SCore.DeprecationManager?.Warn($"{nameof(ISemanticVersion)}.{nameof(ISemanticVersion.Build)}", "2.8", DeprecationLevel.PendingRemoval);
-                return this.Version.PrereleaseTag;
-            }
-        }
-#endif
 
         /// <summary>An optional prerelease tag.</summary>
         public string PrereleaseTag => this.Version.PrereleaseTag;

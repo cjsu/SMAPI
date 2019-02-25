@@ -1,11 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using StardewModdingAPI.Events;
 using StardewModdingAPI.Framework.Input;
 using StardewModdingAPI.Toolkit.Serialisation;
-using StardewModdingAPI.Toolkit.Serialisation.Models;
-using StardewModdingAPI.Toolkit.Utilities;
 
 namespace StardewModdingAPI.Framework.ModHelpers
 {
@@ -17,11 +14,6 @@ namespace StardewModdingAPI.Framework.ModHelpers
         *********/
         /// <summary>The full path to the mod's folder.</summary>
         public string DirectoryPath { get; }
-
-#if !SMAPI_3_0_STRICT
-        /// <summary>Encapsulates SMAPI's JSON file parsing.</summary>
-        private readonly JsonHelper JsonHelper;
-#endif
 
         /// <summary>Manages access to events raised by SMAPI, which let your mod react when something happens in the game.</summary>
         public IModEvents Events { get; }
@@ -60,7 +52,6 @@ namespace StardewModdingAPI.Framework.ModHelpers
         /// <summary>Construct an instance.</summary>
         /// <param name="modID">The mod's unique ID.</param>
         /// <param name="modDirectory">The full path to the mod's folder.</param>
-        /// <param name="jsonHelper">Encapsulate SMAPI's JSON parsing.</param>
         /// <param name="inputState">Manages the game's input state.</param>
         /// <param name="events">Manages access to events raised by SMAPI.</param>
         /// <param name="contentHelper">An API for loading content assets.</param>
@@ -73,7 +64,7 @@ namespace StardewModdingAPI.Framework.ModHelpers
         /// <param name="translationHelper">An API for reading translations stored in the mod's <c>i18n</c> folder.</param>
         /// <exception cref="ArgumentNullException">An argument is null or empty.</exception>
         /// <exception cref="InvalidOperationException">The <paramref name="modDirectory"/> path does not exist on disk.</exception>
-        public ModHelper(string modID, string modDirectory, JsonHelper jsonHelper, SInputState inputState, IModEvents events, IContentHelper contentHelper, IContentPackHelper contentPackHelper, ICommandHelper commandHelper, IDataHelper dataHelper, IModRegistry modRegistry, IReflectionHelper reflectionHelper, IMultiplayerHelper multiplayer, ITranslationHelper translationHelper)
+        public ModHelper(string modID, string modDirectory, SInputState inputState, IModEvents events, IContentHelper contentHelper, IContentPackHelper contentPackHelper, ICommandHelper commandHelper, IDataHelper dataHelper, IModRegistry modRegistry, IReflectionHelper reflectionHelper, IMultiplayerHelper multiplayer, ITranslationHelper translationHelper)
             : base(modID)
         {
             // validate directory
@@ -94,9 +85,6 @@ namespace StardewModdingAPI.Framework.ModHelpers
             this.Multiplayer = multiplayer ?? throw new ArgumentNullException(nameof(multiplayer));
             this.Translation = translationHelper ?? throw new ArgumentNullException(nameof(translationHelper));
             this.Events = events;
-#if !SMAPI_3_0_STRICT
-            this.JsonHelper = jsonHelper ?? throw new ArgumentNullException(nameof(jsonHelper));
-#endif
         }
 
         /****
@@ -120,63 +108,6 @@ namespace StardewModdingAPI.Framework.ModHelpers
         {
             this.Data.WriteJsonFile("config.json", config);
         }
-
-#if !SMAPI_3_0_STRICT
-        /****
-        ** Generic JSON files
-        ****/
-        /// <summary>Read a JSON file.</summary>
-        /// <typeparam name="TModel">The model type.</typeparam>
-        /// <param name="path">The file path relative to the mod directory.</param>
-        /// <returns>Returns the deserialised model, or <c>null</c> if the file doesn't exist or is empty.</returns>
-        [Obsolete("Use " + nameof(ModHelper.Data) + "." + nameof(IDataHelper.ReadJsonFile) + " instead")]
-        public TModel ReadJsonFile<TModel>(string path)
-            where TModel : class
-        {
-            path = Path.Combine(this.DirectoryPath, PathUtilities.NormalisePathSeparators(path));
-            return this.JsonHelper.ReadJsonFileIfExists(path, out TModel data)
-                ? data
-                : null;
-        }
-
-        /// <summary>Save to a JSON file.</summary>
-        /// <typeparam name="TModel">The model type.</typeparam>
-        /// <param name="path">The file path relative to the mod directory.</param>
-        /// <param name="model">The model to save.</param>
-        [Obsolete("Use " + nameof(ModHelper.Data) + "." + nameof(IDataHelper.WriteJsonFile) + " instead")]
-        public void WriteJsonFile<TModel>(string path, TModel model)
-            where TModel : class
-        {
-            path = Path.Combine(this.DirectoryPath, PathUtilities.NormalisePathSeparators(path));
-            this.JsonHelper.WriteJsonFile(path, model);
-        }
-#endif
-
-        /****
-        ** Content packs
-        ****/
-#if !SMAPI_3_0_STRICT
-        /// <summary>Manually create a transitional content pack to support pre-SMAPI content packs. This provides a way to access legacy content packs using the SMAPI content pack APIs, but the content pack will not be visible in the log or validated by SMAPI.</summary>
-        /// <param name="directoryPath">The absolute directory path containing the content pack files.</param>
-        /// <param name="id">The content pack's unique ID.</param>
-        /// <param name="name">The content pack name.</param>
-        /// <param name="description">The content pack description.</param>
-        /// <param name="author">The content pack author's name.</param>
-        /// <param name="version">The content pack version.</param>
-        [Obsolete("Use " + nameof(IModHelper) + "." + nameof(IModHelper.ContentPacks) + "." + nameof(IContentPackHelper.CreateTemporary) + " instead")]
-        public IContentPack CreateTransitionalContentPack(string directoryPath, string id, string name, string description, string author, ISemanticVersion version)
-        {
-            SCore.DeprecationManager.Warn($"{nameof(IModHelper)}.{nameof(IModHelper.CreateTransitionalContentPack)}", "2.5", DeprecationLevel.PendingRemoval);
-            return this.ContentPacks.CreateTemporary(directoryPath, id, name, description, author, version);
-        }
-
-        /// <summary>Get all content packs loaded for this mod.</summary>
-        [Obsolete("Use " + nameof(IModHelper) + "." + nameof(IModHelper.ContentPacks) + "." + nameof(IContentPackHelper.GetOwned) + " instead")]
-        public IEnumerable<IContentPack> GetContentPacks()
-        {
-            return this.ContentPacks.GetOwned();
-        }
-#endif
 
         /****
         ** Disposal

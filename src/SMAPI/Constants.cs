@@ -44,32 +44,10 @@ namespace StardewModdingAPI
         public static string SavesPath { get; } = Path.Combine(Constants.DataPath, "Saves");
 
         /// <summary>The name of the current save folder (if save info is available, regardless of whether the save file exists yet).</summary>
-        public static string SaveFolderName
-        {
-            get
-            {
-                return Constants.GetSaveFolderName()
-#if SMAPI_3_0_STRICT
-                    ;
-#else
-                    ?? "";
-#endif
-            }
-        }
+        public static string SaveFolderName => Constants.GetSaveFolderName();
 
         /// <summary>The absolute path to the current save folder (if save info is available and the save file exists).</summary>
-        public static string CurrentSavePath
-        {
-            get
-            {
-                return Constants.GetSaveFolderPathIfExists()
-#if SMAPI_3_0_STRICT
-                    ;
-#else
-                    ?? "";
-#endif
-            }
-        }
+        public static string CurrentSavePath => Constants.GetSaveFolderPathIfExists();
 
         /****
         ** Internal

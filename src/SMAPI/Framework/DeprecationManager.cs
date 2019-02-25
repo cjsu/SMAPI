@@ -14,22 +14,13 @@ namespace StardewModdingAPI.Framework
         private readonly HashSet<string> LoggedDeprecations = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
 
         /// <summary>Encapsulates monitoring and logging for a given module.</summary>
-#if !SMAPI_3_0_STRICT
-        private readonly Monitor Monitor;
-#else
         private readonly IMonitor Monitor;
-#endif
 
         /// <summary>Tracks the installed mods.</summary>
         private readonly ModRegistry ModRegistry;
 
         /// <summary>The queued deprecation warnings to display.</summary>
         private readonly IList<DeprecationWarning> QueuedWarnings = new List<DeprecationWarning>();
-
-#if !SMAPI_3_0_STRICT
-        /// <summary>Whether the one-time deprecation message has been shown.</summary>
-        private bool DeprecationHeaderShown = false;
-#endif
 
 
         /*********
@@ -38,11 +29,7 @@ namespace StardewModdingAPI.Framework
         /// <summary>Construct an instance.</summary>
         /// <param name="monitor">Encapsulates monitoring and logging for a given module.</param>
         /// <param name="modRegistry">Tracks the installed mods.</param>
-#if !SMAPI_3_0_STRICT
-        public DeprecationManager(Monitor monitor, ModRegistry modRegistry)
-#else
         public DeprecationManager(IMonitor monitor, ModRegistry modRegistry)
-#endif
         {
             this.Monitor = monitor;
             this.ModRegistry = modRegistry;
@@ -81,26 +68,10 @@ namespace StardewModdingAPI.Framework
         /// <summary>Print any queued messages.</summary>
         public void PrintQueued()
         {
-#if !SMAPI_3_0_STRICT
-            if (!this.DeprecationHeaderShown && this.QueuedWarnings.Any())
-            {
-                this.Monitor.Newline();
-                this.Monitor.Log("Some of your mods will break in the upcoming SMAPI 3.0. Please update your mods now, or notify the author if no update is available. See https://mods.smapi.io for links to the latest versions.", LogLevel.Warn);
-                this.Monitor.Newline();
-                this.DeprecationHeaderShown = true;
-            }
-#endif
-
             foreach (DeprecationWarning warning in this.QueuedWarnings.OrderBy(p => p.ModName).ThenBy(p => p.NounPhrase))
             {
                 // build message
-#if SMAPI_3_0_STRICT
                 string message = $"{warning.ModName} uses deprecated code ({warning.NounPhrase} is deprecated since SMAPI {warning.Version}).";
-#else
-                string message = warning.NounPhrase == "legacy events"
-                    ? $"{warning.ModName ?? "An unknown mod"} will break in the upcoming SMAPI 3.0 (legacy events are deprecated since SMAPI {warning.Version})."
-                    : $"{warning.ModName ?? "An unknown mod"} will break in the upcoming SMAPI 3.0 ({warning.NounPhrase} is deprecated since SMAPI {warning.Version}).";
-#endif
 
                 // get log level
                 LogLevel level;

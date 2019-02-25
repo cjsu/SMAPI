@@ -89,24 +89,6 @@ namespace StardewModdingAPI.Framework
             this.HostPeer = null;
         }
 
-#if !SMAPI_3_0_STRICT
-        /// <summary>Handle sync messages from other players and perform other initial sync logic.</summary>
-        public override void UpdateEarly()
-        {
-            this.EventManager.Legacy_BeforeMainSync.Raise();
-            base.UpdateEarly();
-            this.EventManager.Legacy_AfterMainSync.Raise();
-        }
-
-        /// <summary>Broadcast sync messages to other players and perform other final sync logic.</summary>
-        public override void UpdateLate(bool forceSync = false)
-        {
-            this.EventManager.Legacy_BeforeMainBroadcast.Raise();
-            base.UpdateLate(forceSync);
-            this.EventManager.Legacy_AfterMainBroadcast.Raise();
-        }
-#endif
-
         /// <summary>Initialise a client before the game connects to a remote server.</summary>
         /// <param name="client">The client to initialise.</param>
         public override Client InitClient(Client client)

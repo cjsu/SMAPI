@@ -67,20 +67,8 @@ namespace StardewModdingAPI.Toolkit.Serialisation.Converters
             int minor = obj.ValueIgnoreCase<int>(nameof(ISemanticVersion.MinorVersion));
             int patch = obj.ValueIgnoreCase<int>(nameof(ISemanticVersion.PatchVersion));
             string prereleaseTag = obj.ValueIgnoreCase<string>(nameof(ISemanticVersion.PrereleaseTag));
-#if !SMAPI_3_0_STRICT
-            if (string.IsNullOrWhiteSpace(prereleaseTag))
-            {
-                prereleaseTag = obj.ValueIgnoreCase<string>("Build");
-                if (prereleaseTag == "0")
-                    prereleaseTag = null; // '0' from incorrect examples in old SMAPI documentation
-            }
-#endif
 
-            return new SemanticVersion(major, minor, patch, prereleaseTag
-#if !SMAPI_3_0_STRICT
-                , isLegacyFormat: true
-#endif
-            );
+            return new SemanticVersion(major, minor, patch, prereleaseTag);
         }
 
         /// <summary>Read a JSON string.</summary>
