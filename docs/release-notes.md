@@ -5,6 +5,7 @@ These changes have not been released yet.
 * For players:
   * Fixed Save Backup not pruning old backups if they're uncompressed.
   * Fixed issues when a farmhand reconnects before the game notices they're disconnected.
+  * Fixed 'received message' logs shown in non-developer mode.
 
 * For modders:
   * Added `IContentPack.HasFile` method.

@@ -433,7 +433,7 @@ namespace StardewModdingAPI.Framework
             ModMessageModel model = this.JsonHelper.Deserialise<ModMessageModel>(json);
             HashSet<long> playerIDs = new HashSet<long>(model.ToPlayerIDs ?? this.GetKnownPlayerIDs());
             if (this.Monitor.IsVerbose)
-                this.Monitor.Log($"Received message: {json}.");
+                this.Monitor.Log($"Received message: {json}.", LogLevel.Trace);
 
             // notify local mods
             if (playerIDs.Contains(Game1.player.UniqueMultiplayerID))
