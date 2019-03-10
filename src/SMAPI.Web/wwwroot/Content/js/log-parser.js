@@ -69,6 +69,13 @@ smapi.logParser = function (data, sectionUrl) {
                 updateModFilters();
             },
 
+            toggleSection: function (name) {
+                if (!data.enableFilters)
+                    return;
+
+                this.showSections[name] = !this.showSections[name];
+            },
+
             showAllMods: function () {
                 if (!data.enableFilters)
                     return;
@@ -95,6 +102,10 @@ smapi.logParser = function (data, sectionUrl) {
 
             filtersAllow: function(modId, level) {
                 return this.showMods[modId] !== false && this.showLevels[level] !== false;
+            },
+
+            sectionsAllow: function (section) {
+                return this.showSections[section] !== false;
             }
         }
     });

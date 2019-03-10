@@ -219,6 +219,18 @@ table caption {
     font-weight: bold;
 }
 
+#log .section-start {
+    cursor: pointer;
+}
+
+#log .section-toggle-message {
+    color: blue;
+}
+
+#log .log-message-text {
+    white-space: pre-wrap;
+}
+
 #log {
     border-spacing: 0;
 }
@@ -233,7 +245,6 @@ table caption {
     border-bottom: 1px dotted #ccc;
     border-top: 2px solid #fff;
     vertical-align: top;
-    white-space: pre-wrap;
 }
 
 #log td:not(:last-child) {

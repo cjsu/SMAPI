@@ -27,6 +27,7 @@
                 logStarted: new Date(@Json.Serialize(Model.ParsedLog?.Timestamp)),
                 showPopup: @Json.Serialize(Model.ParsedLog == null),
                 showMods: @Json.Serialize(Model.ParsedLog?.Mods?.Select(p => Model.GetSlug(p.Name)).Distinct().ToDictionary(slug => slug, slug => true), noFormatting),
+                showSections: @Json.Serialize(Enum.GetNames(typeof(LogSection)).ToDictionary(section => section, section => false), noFormatting),
                 showLevels: @Json.Serialize(defaultFilters, noFormatting),
                 enableFilters: @Json.Serialize(!Model.ShowRaw)
             }, '@Model.SectionUrl');
@@ -261,16 +262,34 @@ else if (Model.ParsedLog?.IsValid == true)
                 @foreach (var message in Model.ParsedLog.Messages)
                 {
                     string levelStr = message.Level.ToString().ToLower();
+                    string sectionStartClass = message.IsStartOfSection ? "section-start" : null;
 
-                    <tr class="@levelStr mod" v-show="filtersAllow('@Model.GetSlug(message.Mod)', '@levelStr')">
+                    // filter the message by section if it has one
+                    string sectionFilter = message.Section != null ? $"&& sectionsAllow('{message.Section}')" : null;
+                    // always show the first message in the section regardless of section filters
+                    string sectionsAllow = message.IsStartOfSection ? null : sectionFilter;
+
+                    <tr class="@levelStr mod @sectionStartClass"
+                        @if (message.IsStartOfSection)
+                        {
+                            <text>v-on:click="toggleSection('@message.Section')"</text>
+                        }
+                        v-show="filtersAllow('@Model.GetSlug(message.Mod)', '@levelStr') @sectionsAllow">
                         <td v-pre>@message.Time</td>
                         <td v-pre>@message.Level.ToString().ToUpper()</td>
                         <td v-pre data-title="@message.Mod">@message.Mod</td>
-                        <td v-pre>@message.Text</td>
+                        <td>
+                            <span v-pre class="log-message-text">@message.Text</span>
+                            @if (message.IsStartOfSection)
+                            {
+                                <span class="section-toggle-message" v-show="!sectionsAllow('@message.Section')">This section is hidden. Click here to show it.</span>
+                                <span class="section-toggle-message" v-show="sectionsAllow('@message.Section')">This section is shown. Click here to hide it.</span>
+                            }
+                        </td>
                     </tr>
                     if (message.Repeated > 0)
                     {
-                        <tr class="@levelStr mod mod-repeat" v-show="filtersAllow('@Model.GetSlug(message.Mod)', '@levelStr')">
+                        <tr class="@levelStr mod mod-repeat" v-show="filtersAllow('@Model.GetSlug(message.Mod)', '@levelStr') @sectionsAllow">
                             <td colspan="3"></td>
                             <td v-pre><i>repeats [@message.Repeated] times.</i></td>
                         </tr>

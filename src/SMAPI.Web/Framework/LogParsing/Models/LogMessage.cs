@@ -20,5 +20,11 @@ namespace StardewModdingAPI.Web.Framework.LogParsing.Models
 
         /// <summary>The number of times this message was repeated consecutively.</summary>
         public int Repeated { get; set; }
+
+        /// <summary>The section that this log message belongs too.</summary>
+        public LogSection? Section { get; set; }
+
+        /// <summary>Whether this message is the first one of it's section.</summary>
+        public bool IsStartOfSection { get; set; }
     }
 }
