@@ -10,6 +10,7 @@ These changes have not been released yet.
 
 * For modders:
   * Added `IContentPack.HasFile` method.
+  * `this.Monitor.Log` now defaults to the `Trace` log level instead of `Debug`.
   * Dropped support for all deprecated APIs.
   * Updated to Json.NET 12.0.1.
 
