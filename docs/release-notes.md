@@ -30,8 +30,10 @@ Released 17 March 2019 for Stardew Valley 1.3.36.
   * Updated mod compatibility list.
   * Fixed `world_clear` console command removing chests edited to have a debris name.
 
-* For the web UI:
+* For modders:
   * Added support for suppressing false-positive warnings in rare cases.
+
+* For the web UI:
   * The log parser now collapses redundant sections by default.
   * Fixed log parser column resize bug.
 
