@@ -94,7 +94,10 @@ namespace StardewModdingAPI.Framework.Input
                 this.RealKeyboard = realKeyboard;
                 this.RealMouse = realMouse;
                 if (cursorAbsolutePos != this.CursorPositionImpl?.AbsolutePixels || playerTilePos != this.LastPlayerTile)
+                {
+                    this.LastPlayerTile = playerTilePos;
                     this.CursorPositionImpl = this.GetCursorPosition(realMouse, cursorAbsolutePos);
+                }
 
                 // update suppressed states
                 this.SuppressButtons.RemoveWhere(p => !this.GetStatus(activeButtons, p).IsDown());
