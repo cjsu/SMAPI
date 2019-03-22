@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using StardewModdingAPI.Framework.ModHelpers;
 using StardewModdingAPI.Toolkit.Framework.Clients.WebApi;
 using StardewModdingAPI.Toolkit.Framework.ModData;
 using StardewModdingAPI.Toolkit.Framework.UpdateData;
@@ -45,6 +46,9 @@ namespace StardewModdingAPI.Framework.ModLoading
 
         /// <summary>The content pack instance (if loaded and <see cref="IsContentPack"/> is true).</summary>
         public IContentPack ContentPack { get; private set; }
+
+        /// <summary>The translations for this mod (if loaded).</summary>
+        public TranslationHelper Translations { get; private set; }
 
         /// <summary>Writes messages to the console and log file as this mod.</summary>
         public IMonitor Monitor { get; private set; }
@@ -100,26 +104,30 @@ namespace StardewModdingAPI.Framework.ModLoading
 
         /// <summary>Set the mod instance.</summary>
         /// <param name="mod">The mod instance to set.</param>
-        public IModMetadata SetMod(IMod mod)
+        /// <param name="translations">The translations for this mod (if loaded).</param>
+        public IModMetadata SetMod(IMod mod, TranslationHelper translations)
         {
             if (this.ContentPack != null)
                 throw new InvalidOperationException("A mod can't be both an assembly mod and content pack.");
 
             this.Mod = mod;
             this.Monitor = mod.Monitor;
+            this.Translations = translations;
             return this;
         }
 
         /// <summary>Set the mod instance.</summary>
         /// <param name="contentPack">The contentPack instance to set.</param>
         /// <param name="monitor">Writes messages to the console and log file.</param>
-        public IModMetadata SetMod(IContentPack contentPack, IMonitor monitor)
+        /// <param name="translations">The translations for this mod (if loaded).</param>
+        public IModMetadata SetMod(IContentPack contentPack, IMonitor monitor, TranslationHelper translations)
         {
             if (this.Mod != null)
                 throw new InvalidOperationException("A mod can't be both an assembly mod and content pack.");
 
             this.ContentPack = contentPack;
             this.Monitor = monitor;
+            this.Translations = translations;
             return this;
         }
 

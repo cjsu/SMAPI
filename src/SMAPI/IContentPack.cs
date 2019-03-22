@@ -17,6 +17,9 @@ namespace StardewModdingAPI
         /// <summary>The content pack's manifest.</summary>
         IManifest Manifest { get; }
 
+        /// <summary>Provides translations stored in the content pack's <c>i18n</c> folder. See <see cref="IModHelper.Translation"/> for more info.</summary>
+        ITranslationHelper Translation { get; }
+
 
         /*********
         ** Public methods

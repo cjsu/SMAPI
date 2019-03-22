@@ -9,6 +9,7 @@ These changes have not been released yet.
   * Fixed 'received message' logs shown in non-developer mode.
 
 * For modders:
+  * Added support for content pack translations.
   * Added `IContentPack.HasFile` method.
   * `this.Monitor.Log` now defaults to the `Trace` log level instead of `Debug`.
   * Dropped support for all deprecated APIs.

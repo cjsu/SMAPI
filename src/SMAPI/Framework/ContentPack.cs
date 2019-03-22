@@ -30,6 +30,9 @@ namespace StardewModdingAPI.Framework
         /// <summary>The content pack's manifest.</summary>
         public IManifest Manifest { get; }
 
+        /// <summary>Provides translations stored in the content pack's <c>i18n</c> folder. See <see cref="IModHelper.Translation"/> for more info.</summary>
+        public ITranslationHelper Translation { get; }
+
 
         /*********
         ** Public methods
@@ -38,12 +41,14 @@ namespace StardewModdingAPI.Framework
         /// <param name="directoryPath">The full path to the content pack's folder.</param>
         /// <param name="manifest">The content pack's manifest.</param>
         /// <param name="content">Provides an API for loading content assets.</param>
+        /// <param name="translation">Provides translations stored in the content pack's <c>i18n</c> folder.</param>
         /// <param name="jsonHelper">Encapsulates SMAPI's JSON file parsing.</param>
-        public ContentPack(string directoryPath, IManifest manifest, IContentHelper content, JsonHelper jsonHelper)
+        public ContentPack(string directoryPath, IManifest manifest, IContentHelper content, ITranslationHelper translation, JsonHelper jsonHelper)
         {
             this.DirectoryPath = directoryPath;
             this.Manifest = manifest;
             this.Content = content;
+            this.Translation = translation;
             this.JsonHelper = jsonHelper;
         }
 
