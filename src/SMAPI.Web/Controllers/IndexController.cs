@@ -141,7 +141,7 @@ namespace StardewModdingAPI.Web.Controllers
 
             foreach (GitAsset asset in release.Assets)
             {
-                if (asset.FileName.StartsWith("Z_OLD"))
+                if (asset.FileName.StartsWith("Z_"))
                     continue;
 
                 Match match = Regex.Match(asset.FileName, @"SMAPI-(?<version>[\d\.]+(?:-.+)?)-installer(?<forDevs>-for-developers)?.zip");
