@@ -81,8 +81,8 @@ else
         konsole -p Environment=TERM=xterm -e "$LAUNCHER"
     elif $COMMAND terminal 2>/dev/null; then
         terminal -e "sh -c 'TERM=xterm $LAUNCHER'"
-	elif $COMMAND termite 2>/dev/null; then
-		termite -e "sh -c 'TERM=xterm $LAUNCHER'"
+    elif $COMMAND termite 2>/dev/null; then
+        termite -e "sh -c 'TERM=xterm $LAUNCHER'"
     else
         sh -c 'TERM=xterm $LAUNCHER'
     fi
