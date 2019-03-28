@@ -8,6 +8,7 @@ These changes have not been released yet.
   * Fixed Save Backup not pruning old backups if they're uncompressed.
   * Fixed issues when a farmhand reconnects before the game notices they're disconnected.
   * Fixed 'received message' logs shown in non-developer mode.
+  * Fixed errors during early startup not shown before exit.
 
 * For modders:
   * Added support for content pack translations.
