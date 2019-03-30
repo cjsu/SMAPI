@@ -214,7 +214,9 @@ _[Game path](#game-path)_ above.
 
 ## Release notes
 ### Upcoming release
+* If the project contains an `assets` folder, its contents are now included in the mod automatically.
 * Dropped support for very old versions of SMAPI and Visual Studio.
+* Fixed `Newtonsoft.Json.pdb` included in release zips when Json.NET is referenced directly.
 
 ### 2.2
 * Added support for SMAPI 2.8+ (still compatible with earlier versions).
