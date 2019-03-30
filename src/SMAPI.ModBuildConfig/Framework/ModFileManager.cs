@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using StardewModdingAPI.Toolkit.Serialisation;
 using StardewModdingAPI.Toolkit.Serialisation.Models;
+using StardewModdingAPI.Toolkit.Utilities;
 
 namespace StardewModdingAPI.ModBuildConfig.Framework
 {
@@ -61,18 +62,33 @@ namespace StardewModdingAPI.ModBuildConfig.Framework
                 hasProjectTranslations = true;
             }
 
+            // project assets folder
+            bool hasAssetsFolder = false;
+            DirectoryInfo assetsFolder = new DirectoryInfo(Path.Combine(projectDir, "assets"));
+            if (assetsFolder.Exists)
+            {
+                foreach (FileInfo file in assetsFolder.EnumerateFiles("*", SearchOption.AllDirectories))
+                {
+                    string relativePath = PathUtilities.GetRelativePath(projectDir, file.FullName);
+                    this.Files[relativePath] = file;
+                }
+                hasAssetsFolder = true;
+            }
+
             // build output
             DirectoryInfo buildFolder = new DirectoryInfo(targetDir);
             foreach (FileInfo file in buildFolder.EnumerateFiles("*", SearchOption.AllDirectories))
             {
-                // get relative paths
-                string relativePath = file.FullName.Replace(buildFolder.FullName, "");
-                string relativeDirPath = file.Directory.FullName.Replace(buildFolder.FullName, "");
+                // get path info
+                string relativePath = PathUtilities.GetRelativePath(buildFolder.FullName, file.FullName);
+                string[] segments = PathUtilities.GetSegments(relativePath);
 
-                // prefer project manifest/i18n files
+                // prefer project manifest/i18n/assets files
                 if (hasProjectManifest && this.EqualsInvariant(relativePath, this.ManifestFileName))
                     continue;
-                if (hasProjectTranslations && this.EqualsInvariant(relativeDirPath, "i18n"))
+                if (hasProjectTranslations && this.EqualsInvariant(segments[0], "i18n"))
+                    continue;
+                if (hasAssetsFolder && this.EqualsInvariant(segments[0], "assets"))
                     continue;
 
                 // handle ignored files
@@ -149,6 +165,8 @@ namespace StardewModdingAPI.ModBuildConfig.Framework
         /// <param name="other">The string to compare with.</param>
         private bool EqualsInvariant(string str, string other)
         {
+            if (str == null)
+                return other == null;
             return str.Equals(other, StringComparison.InvariantCultureIgnoreCase);
         }
     }

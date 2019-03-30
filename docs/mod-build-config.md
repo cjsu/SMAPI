@@ -6,6 +6,7 @@ The package...
 * detects your game install path;
 * adds the assembly references you need (with automatic support for Linux/Mac/Windows);
 * packages the mod into your `Mods` folder when you rebuild the code (configurable);
+* creates a release zip (configurable);
 * configures Visual Studio to enable debugging into the code when the game is running (_Windows only_);
 * adds C# analyzers to warn for Stardew Valley-specific issues.
 
@@ -17,25 +18,21 @@ The package...
 * [Release notes](#release-notes)
 
 ## Install
-**When creating a new mod:**
-
-1. Create an empty library project.
+1. Create an empty library project.<br /><small>(For an existing project, remove references to `Microsoft.Xna.*`, `MonoGame`, Stardew Valley,
+   `StardewModdingAPI`, and `xTile` instead.)</small>
 2. Reference the [`Pathoschild.Stardew.ModBuildConfig` NuGet package](https://www.nuget.org/packages/Pathoschild.Stardew.ModBuildConfig).
 3. [Write your code](https://stardewvalleywiki.com/Modding:Creating_a_SMAPI_mod).
 4. Compile on any platform.
 
-**When migrating an existing mod:**
-
-1. Remove any project references to `Microsoft.Xna.*`, `MonoGame`, Stardew Valley,
-   `StardewModdingAPI`, and `xTile`.
-2. Reference the [`Pathoschild.Stardew.ModBuildConfig` NuGet package](https://www.nuget.org/packages/Pathoschild.Stardew.ModBuildConfig).
-3. Compile on any platform.
-
 ## Configure
 ### Deploy files into the `Mods` folder
-By default, your mod will be copied into the game's `Mods` folder (with a subfolder matching your
-project name) when you rebuild the code. The package will automatically include your
-`manifest.json`, any `i18n` files, and the build output.
+Your mod is copied into the game's `Mods` folder (with a subfolder matching your project name)
+when you rebuild the code. The package automatically includes...
+
+* any build output;
+* your `manifest.json`;
+* any [`i18n` files](https://stardewvalleywiki.com/Modding:Translations);
+* the `assets` folder if present.
 
 To add custom files to the mod folder, just [add them to the build output](https://stackoverflow.com/a/10828462/262123).
 (If your project references another mod, make sure the reference is [_not_ marked 'copy local'](https://msdn.microsoft.com/en-us/library/t1zz5y8c(v=vs.100).aspx).)
@@ -52,9 +49,9 @@ If you don't want to deploy the mod automatically, you can add this:
 ```
 
 ### Create release zip
-By default, a zip file will be created in the build output when you rebuild the code. This zip file
-contains all the files needed to share your mod in the recommended format for uploading to Nexus
-Mods or other sites.
+A zip file is also created in the build output folder when you rebuild the code. This contains the
+same files deployed to the `Mods` folder, in the recommended format for uploading to Nexus Mods or
+other sites.
 
 You can change the zipped folder name (and zip name) by adding this above the first
 `</PropertyGroup>` in your `.csproj`:
