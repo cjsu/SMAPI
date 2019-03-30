@@ -45,6 +45,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\docs\mod-build-config.md">
+      <Link>mod-build-config.md</Link>
+    </None>
     <None Include="assets\nuget-icon.pdn" />
     <None Include="build\smapi.targets">
       <SubType>Designer</SubType>
