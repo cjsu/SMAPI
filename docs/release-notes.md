@@ -13,6 +13,8 @@ These changes have not been released yet.
 * For modders:
   * Added support for content pack translations.
   * Added `IContentPack.HasFile` method.
+  * Added `Context.IsGameLaunched` field.
+  * Mods are now loaded much earlier in the game launch. This lets mods intercept any content asset, but the game is not fully initialised when `Entry` is called (use the `GameLaunched` event if you need to run code when the game is initialised).
   * `this.Monitor.Log` now defaults to the `Trace` log level instead of `Debug`.
   * Dropped support for all deprecated APIs.
   * Updated to Json.NET 12.0.1.

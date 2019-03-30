@@ -28,6 +28,12 @@ namespace StardewModdingAPI.Framework.ContentManagers
         /// <summary>A lookup which indicates whether the asset is localisable (i.e. the filename contains the locale), if previously loaded.</summary>
         private readonly IDictionary<string, bool> IsLocalisableLookup;
 
+        /// <summary>Whether the next load is the first for any game content manager.</summary>
+        private static bool IsFirstLoad = true;
+
+        /// <summary>A callback to invoke the first time *any* game content manager loads an asset.</summary>
+        private readonly Action OnLoadingFirstAsset;
+
 
         /*********
         ** Public methods
@@ -41,10 +47,12 @@ namespace StardewModdingAPI.Framework.ContentManagers
         /// <param name="monitor">Encapsulates monitoring and logging.</param>
         /// <param name="reflection">Simplifies access to private code.</param>
         /// <param name="onDisposing">A callback to invoke when the content manager is being disposed.</param>
-        public GameContentManager(string name, IServiceProvider serviceProvider, string rootDirectory, CultureInfo currentCulture, ContentCoordinator coordinator, IMonitor monitor, Reflector reflection, Action<BaseContentManager> onDisposing)
+        /// <param name="onLoadingFirstAsset">A callback to invoke the first time *any* game content manager loads an asset.</param>
+        public GameContentManager(string name, IServiceProvider serviceProvider, string rootDirectory, CultureInfo currentCulture, ContentCoordinator coordinator, IMonitor monitor, Reflector reflection, Action<BaseContentManager> onDisposing, Action onLoadingFirstAsset)
             : base(name, serviceProvider, rootDirectory, currentCulture, coordinator, monitor, reflection, onDisposing, isModFolder: false)
         {
             this.IsLocalisableLookup = reflection.GetField<IDictionary<string, bool>>(this, "_localizedAsset").GetValue();
+            this.OnLoadingFirstAsset = onLoadingFirstAsset;
         }
 
         /// <summary>Load an asset that has been processed by the content pipeline.</summary>
@@ -53,6 +61,13 @@ namespace StardewModdingAPI.Framework.ContentManagers
         /// <param name="language">The language code for which to load content.</param>
         public override T Load<T>(string assetName, LanguageCode language)
         {
+            // raise first-load callback
+            if (GameContentManager.IsFirstLoad)
+            {
+                GameContentManager.IsFirstLoad = false;
+                this.OnLoadingFirstAsset();
+            }
+
             // normalise asset name
             assetName = this.AssertAndNormaliseAssetName(assetName);
             if (this.TryParseExplicitLanguageAssetKey(assetName, out string newAssetName, out LanguageCode newLanguage))

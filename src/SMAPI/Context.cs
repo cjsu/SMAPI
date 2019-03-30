@@ -14,6 +14,9 @@ namespace StardewModdingAPI
         /****
         ** Public
         ****/
+        /// <summary>Whether the game has performed core initialisation. This becomes true right before the first update tick..</summary>
+        public static bool IsGameLaunched { get; internal set; }
+
         /// <summary>Whether the player has loaded a save and the world has finished initialising.</summary>
         public static bool IsWorldReady { get; internal set; }
 
