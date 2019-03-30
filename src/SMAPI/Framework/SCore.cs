@@ -209,8 +209,19 @@ namespace StardewModdingAPI.Framework
                 AppDomain.CurrentDomain.AssemblyResolve += (sender, e) => AssemblyLoader.ResolveAssembly(e.Name);
 
                 // override game
-                SGame.ConstructorHack = new SGameConstructorHack(this.Monitor, this.Reflection, this.Toolkit.JsonHelper);
-                this.GameInstance = new SGame(this.Monitor, this.MonitorForGame, this.Reflection, this.EventManager, this.Toolkit.JsonHelper, this.ModRegistry, SCore.DeprecationManager, this.OnLocaleChanged, this.InitialiseAfterGameStart, this.Dispose);
+                SGame.ConstructorHack = new SGameConstructorHack(this.Monitor, this.Reflection, this.Toolkit.JsonHelper, this.InitialiseBeforeFirstAssetLoaded);
+                this.GameInstance = new SGame(
+                    monitor: this.Monitor,
+                    monitorForGame: this.MonitorForGame,
+                    reflection: this.Reflection,
+                    eventManager: this.EventManager,
+                    jsonHelper: this.Toolkit.JsonHelper,
+                    modRegistry: this.ModRegistry,
+                    deprecationManager: SCore.DeprecationManager,
+                    onLocaleChanged: this.OnLocaleChanged,
+                    onGameInitialised: this.InitialiseAfterGameStart,
+                    onGameExiting: this.Dispose
+                );
                 StardewValley.Program.gamePtr = this.GameInstance;
 
                 // apply game patches
@@ -278,6 +289,19 @@ namespace StardewModdingAPI.Framework
                 File.Delete(Constants.FatalCrashLog);
                 File.Delete(Constants.FatalCrashMarker);
             }
+
+            // add headers
+            if (this.Settings.DeveloperMode)
+                this.Monitor.Log($"You have SMAPI for developers, so the console will be much more verbose. You can disable developer mode by installing the non-developer version of SMAPI, or by editing {Constants.ApiConfigPath}.", LogLevel.Info);
+            if (!this.Settings.CheckForUpdates)
+                this.Monitor.Log($"You configured SMAPI to not check for updates. Running an old version of SMAPI is not recommended. You can enable update checks by reinstalling SMAPI or editing {Constants.ApiConfigPath}.", LogLevel.Warn);
+            if (!this.Monitor.WriteToConsole)
+                this.Monitor.Log("Writing to the terminal is disabled because the --no-terminal argument was received. This usually means launching the terminal failed.", LogLevel.Warn);
+            this.Monitor.VerboseLog("Verbose logging enabled.");
+
+            // update window titles
+            this.GameInstance.Window.Title = $"Stardew Valley {Constants.GameVersion} - running SMAPI {Constants.ApiVersion}";
+            Console.Title = $"SMAPI {Constants.ApiVersion} - running Stardew Valley {Constants.GameVersion}";
 
             // start game
             this.Monitor.Log("Starting game...", LogLevel.Debug);
@@ -348,21 +372,14 @@ namespace StardewModdingAPI.Framework
         /*********
         ** Private methods
         *********/
-        /// <summary>Initialise SMAPI and mods after the game starts.</summary>
-        private void InitialiseAfterGameStart()
+        /// <summary>Initialise mods before the first game asset is loaded. At this point the core content managers are loaded (so mods can load their own assets), but the game is mostly uninitialised.</summary>
+        private void InitialiseBeforeFirstAssetLoaded()
         {
-            // add headers
-            if (this.Settings.DeveloperMode)
-                this.Monitor.Log($"You have SMAPI for developers, so the console will be much more verbose. You can disable developer mode by installing the non-developer version of SMAPI, or by editing {Constants.ApiConfigPath}.", LogLevel.Info);
-            if (!this.Settings.CheckForUpdates)
-                this.Monitor.Log($"You configured SMAPI to not check for updates. Running an old version of SMAPI is not recommended. You can enable update checks by reinstalling SMAPI or editing {Constants.ApiConfigPath}.", LogLevel.Warn);
-            if (!this.Monitor.WriteToConsole)
-                this.Monitor.Log("Writing to the terminal is disabled because the --no-terminal argument was received. This usually means launching the terminal failed.", LogLevel.Warn);
-            this.Monitor.VerboseLog("Verbose logging enabled.");
-
-            // validate XNB integrity
-            if (!this.ValidateContentIntegrity())
-                this.Monitor.Log("SMAPI found problems in your game's content files which are likely to cause errors or crashes. Consider uninstalling XNB mods or reinstalling the game.", LogLevel.Error);
+            if (this.Monitor.IsExiting)
+            {
+                this.Monitor.Log("SMAPI shutting down: aborting initialisation.", LogLevel.Warn);
+                return;
+            }
 
             // load mod data
             ModToolkit toolkit = new ModToolkit();
@@ -403,16 +420,19 @@ namespace StardewModdingAPI.Framework
                 // check for updates
                 this.CheckForUpdatesAsync(mods);
             }
-            if (this.Monitor.IsExiting)
-            {
-                this.Monitor.Log("SMAPI shutting down: aborting initialisation.", LogLevel.Warn);
-                return;
-            }
 
             // update window titles
             int modsLoaded = this.ModRegistry.GetAll().Count();
             this.GameInstance.Window.Title = $"Stardew Valley {Constants.GameVersion} - running SMAPI {Constants.ApiVersion} with {modsLoaded} mods";
             Console.Title = $"SMAPI {Constants.ApiVersion} - running Stardew Valley {Constants.GameVersion} with {modsLoaded} mods";
+        }
+
+        /// <summary>Initialise SMAPI and mods after the game starts.</summary>
+        private void InitialiseAfterGameStart()
+        {
+            // validate XNB integrity
+            if (!this.ValidateContentIntegrity())
+                this.Monitor.Log("SMAPI found problems in your game's content files which are likely to cause errors or crashes. Consider uninstalling XNB mods or reinstalling the game.", LogLevel.Error);
 
             // start SMAPI console
             new Thread(this.RunConsoleLoop).Start();

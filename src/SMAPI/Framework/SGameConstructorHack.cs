@@ -1,3 +1,4 @@
+using System;
 using StardewModdingAPI.Framework.Reflection;
 using StardewModdingAPI.Toolkit.Serialisation;
 using StardewValley;
@@ -19,6 +20,9 @@ namespace StardewModdingAPI.Framework
         /// <summary>Encapsulates SMAPI's JSON file parsing.</summary>
         public JsonHelper JsonHelper { get; }
 
+        /// <summary>A callback to invoke the first time *any* game content manager loads an asset.</summary>
+        public Action OnLoadingFirstAsset { get; }
+
 
         /*********
         ** Public methods
@@ -27,11 +31,13 @@ namespace StardewModdingAPI.Framework
         /// <param name="monitor">Encapsulates monitoring and logging.</param>
         /// <param name="reflection">Simplifies access to private game code.</param>
         /// <param name="jsonHelper">Encapsulates SMAPI's JSON file parsing.</param>
-        public SGameConstructorHack(IMonitor monitor, Reflector reflection, JsonHelper jsonHelper)
+        /// <param name="onLoadingFirstAsset">A callback to invoke the first time *any* game content manager loads an asset.</param>
+        public SGameConstructorHack(IMonitor monitor, Reflector reflection, JsonHelper jsonHelper, Action onLoadingFirstAsset)
         {
             this.Monitor = monitor;
             this.Reflection = reflection;
             this.JsonHelper = jsonHelper;
+            this.OnLoadingFirstAsset = onLoadingFirstAsset;
         }
     }
 }

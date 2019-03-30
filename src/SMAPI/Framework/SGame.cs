@@ -75,6 +75,9 @@ namespace StardewModdingAPI.Framework
         /// <summary>A callback to invoke after the content language changes.</summary>
         private readonly Action OnLocaleChanged;
 
+        /// <summary>A callback to invoke the first time *any* game content manager loads an asset.</summary>
+        private readonly Action OnLoadingFirstAsset;
+
         /// <summary>A callback to invoke after the game finishes initialising.</summary>
         private readonly Action OnGameInitialised;
 
@@ -139,6 +142,7 @@ namespace StardewModdingAPI.Framework
         /// <param name="onGameExiting">A callback to invoke when the game exits.</param>
         internal SGame(IMonitor monitor, IMonitor monitorForGame, Reflector reflection, EventManager eventManager, JsonHelper jsonHelper, ModRegistry modRegistry, DeprecationManager deprecationManager, Action onLocaleChanged, Action onGameInitialised, Action onGameExiting)
         {
+            this.OnLoadingFirstAsset = SGame.ConstructorHack.OnLoadingFirstAsset;
             SGame.ConstructorHack = null;
 
             // check expectations
@@ -237,7 +241,7 @@ namespace StardewModdingAPI.Framework
             // NOTE: this method is called before the SGame constructor runs. Don't depend on anything being initialised at this point.
             if (this.ContentCore == null)
             {
-                this.ContentCore = new ContentCoordinator(serviceProvider, rootDirectory, Thread.CurrentThread.CurrentUICulture, SGame.ConstructorHack.Monitor, SGame.ConstructorHack.Reflection, SGame.ConstructorHack.JsonHelper);
+                this.ContentCore = new ContentCoordinator(serviceProvider, rootDirectory, Thread.CurrentThread.CurrentUICulture, SGame.ConstructorHack.Monitor, SGame.ConstructorHack.Reflection, SGame.ConstructorHack.JsonHelper, this.OnLoadingFirstAsset ?? SGame.ConstructorHack?.OnLoadingFirstAsset);
                 this.NextContentManagerIsMain = true;
                 return this.ContentCore.CreateGameContentManager("Game1._temporaryContent");
             }
@@ -764,7 +768,10 @@ namespace StardewModdingAPI.Framework
                 // game launched
                 bool isFirstTick = SGame.TicksElapsed == 0;
                 if (isFirstTick)
+                {
+                    Context.IsGameLaunched = true;
                     events.GameLaunched.Raise(new GameLaunchedEventArgs());
+                }
 
                 // preloaded
                 if (Context.IsSaveLoaded && Context.LoadStage != LoadStage.Loaded && Context.LoadStage != LoadStage.Ready)
