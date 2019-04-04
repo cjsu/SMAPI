@@ -4,6 +4,7 @@ These changes have not been released yet.
 
 * For players:
   * Improved performance.
+  * Updated mod compatibility list.
   * SMAPI now prevents invalid items from breaking menus on hover.
   * Fixed error when a custom map references certain vanilla tilesheets on MacOS.
   * Fixed Save Backup not pruning old backups if they're uncompressed.
