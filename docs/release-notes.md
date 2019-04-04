@@ -4,6 +4,7 @@ These changes have not been released yet.
 
 * For players:
   * Improved performance.
+  * Updated mod compatibility list.
   * SMAPI now prevents invalid items from breaking menus on hover.
   * Fixed Save Backup not pruning old backups if they're uncompressed.
   * Fixed issues when a farmhand reconnects before the game notices they're disconnected.
