@@ -80,10 +80,7 @@ namespace StardewModdingAPI.Framework.ModLoading.Finders
                 // compare return types
                 MethodDefinition methodDef = methodReference.Resolve();
                 if (methodDef == null)
-                {
-                    this.NounPhrase = $"reference to {methodReference.DeclaringType.FullName}.{methodReference.Name} (no such method)";
-                    return InstructionHandleResult.NotCompatible;
-                }
+                    return InstructionHandleResult.None; // validated by ReferenceToMissingMemberFinder
 
                 if (candidateMethods.All(method => !RewriteHelper.LooksLikeSameType(method.ReturnType, methodDef.ReturnType)))
                 {

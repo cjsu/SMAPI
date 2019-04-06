@@ -105,7 +105,7 @@ namespace StardewModdingAPI.Framework.ModLoading
                     continue;
 
                 // rewrite assembly
-                bool changed = this.RewriteAssembly(mod, assembly.Definition, assumeCompatible, loggedMessages, logPrefix: "      ");
+                bool changed = this.RewriteAssembly(mod, assembly.Definition, loggedMessages, logPrefix: "      ");
 
                 // detect broken assembly reference
                 foreach (AssemblyNameReference reference in assembly.Definition.MainModule.AssemblyReferences)
@@ -114,7 +114,7 @@ namespace StardewModdingAPI.Framework.ModLoading
                     {
                         this.Monitor.LogOnce(loggedMessages, $"      Broken code in {assembly.File.Name}: reference to missing assembly '{reference.FullName}'.");
                         if (!assumeCompatible)
-                            throw new IncompatibleInstructionException($"assembly reference to {reference.FullName}", $"Found a reference to missing assembly '{reference.FullName}' while loading assembly {assembly.File.Name}.");
+                            throw new IncompatibleInstructionException($"Found a reference to missing assembly '{reference.FullName}' while loading assembly {assembly.File.Name}.");
                         mod.SetWarning(ModWarning.BrokenCodeLoaded);
                         break;
                     }
@@ -142,6 +142,10 @@ namespace StardewModdingAPI.Framework.ModLoading
                 // track loaded assembly for definition resolution
                 this.AssemblyDefinitionResolver.Add(assembly.Definition);
             }
+
+            // throw if incompatibilities detected
+            if (!assumeCompatible && mod.Warnings.HasFlag(ModWarning.BrokenCodeLoaded))
+                throw new IncompatibleInstructionException();
 
             // last assembly loaded is the root
             return lastAssembly;
@@ -244,12 +248,11 @@ namespace StardewModdingAPI.Framework.ModLoading
         /// <summary>Rewrite the types referenced by an assembly.</summary>
         /// <param name="mod">The mod for which the assembly is being loaded.</param>
         /// <param name="assembly">The assembly to rewrite.</param>
-        /// <param name="assumeCompatible">Assume the mod is compatible, even if incompatible code is detected.</param>
         /// <param name="loggedMessages">The messages that have already been logged for this mod.</param>
         /// <param name="logPrefix">A string to prefix to log messages.</param>
         /// <returns>Returns whether the assembly was modified.</returns>
         /// <exception cref="IncompatibleInstructionException">An incompatible CIL instruction was found while rewriting the assembly.</exception>
-        private bool RewriteAssembly(IModMetadata mod, AssemblyDefinition assembly, bool assumeCompatible, HashSet<string> loggedMessages, string logPrefix)
+        private bool RewriteAssembly(IModMetadata mod, AssemblyDefinition assembly, HashSet<string> loggedMessages, string logPrefix)
         {
             ModuleDefinition module = assembly.MainModule;
             string filename = $"{assembly.Name.Name}.dll";
@@ -288,7 +291,7 @@ namespace StardewModdingAPI.Framework.ModLoading
                 foreach (IInstructionHandler handler in handlers)
                 {
                     InstructionHandleResult result = handler.Handle(module, method, this.AssemblyMap, platformChanged);
-                    this.ProcessInstructionHandleResult(mod, handler, result, loggedMessages, logPrefix, assumeCompatible, filename);
+                    this.ProcessInstructionHandleResult(mod, handler, result, loggedMessages, logPrefix, filename);
                     if (result == InstructionHandleResult.Rewritten)
                         anyRewritten = true;
                 }
@@ -303,7 +306,7 @@ namespace StardewModdingAPI.Framework.ModLoading
                     {
                         Instruction instruction = instructions[offset];
                         InstructionHandleResult result = handler.Handle(module, cil, instruction, this.AssemblyMap, platformChanged);
-                        this.ProcessInstructionHandleResult(mod, handler, result, loggedMessages, logPrefix, assumeCompatible, filename);
+                        this.ProcessInstructionHandleResult(mod, handler, result, loggedMessages, logPrefix, filename);
                         if (result == InstructionHandleResult.Rewritten)
                             anyRewritten = true;
                     }
@@ -318,10 +321,9 @@ namespace StardewModdingAPI.Framework.ModLoading
         /// <param name="handler">The instruction handler.</param>
         /// <param name="result">The result returned by the handler.</param>
         /// <param name="loggedMessages">The messages already logged for the current mod.</param>
-        /// <param name="assumeCompatible">Assume the mod is compatible, even if incompatible code is detected.</param>
         /// <param name="logPrefix">A string to prefix to log messages.</param>
         /// <param name="filename">The assembly filename for log messages.</param>
-        private void ProcessInstructionHandleResult(IModMetadata mod, IInstructionHandler handler, InstructionHandleResult result, HashSet<string> loggedMessages, string logPrefix, bool assumeCompatible, string filename)
+        private void ProcessInstructionHandleResult(IModMetadata mod, IInstructionHandler handler, InstructionHandleResult result, HashSet<string> loggedMessages, string logPrefix, string filename)
         {
             switch (result)
             {
@@ -331,8 +333,6 @@ namespace StardewModdingAPI.Framework.ModLoading
 
                 case InstructionHandleResult.NotCompatible:
                     this.Monitor.LogOnce(loggedMessages, $"{logPrefix}Broken code in {filename}: {handler.NounPhrase}.");
-                    if (!assumeCompatible)
-                        throw new IncompatibleInstructionException(handler.NounPhrase, $"Found an incompatible CIL instruction ({handler.NounPhrase}) while loading assembly {filename}.");
                     mod.SetWarning(ModWarning.BrokenCodeLoaded);
                     break;
 
