@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using StardewModdingAPI.Events;
 using StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands;
 
 namespace StardewModdingAPI.Mods.ConsoleCommands
