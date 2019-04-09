@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using StardewValley.Menus;
 
 namespace StardewModdingAPI
 {
@@ -24,6 +26,11 @@ namespace StardewModdingAPI
         /// <summary>The mod entry point, called after the mod is first loaded.</summary>
         /// <param name="helper">Provides simplified APIs for writing mods.</param>
         public abstract void Entry(IModHelper helper);
+
+        public virtual List<OptionsElement> GetConfigMenuItems()
+        {
+            return new List<OptionsElement>();
+        }
 
         /// <summary>Get an API that other mods can access. This is always called after <see cref="Entry"/>.</summary>
         public virtual object GetApi() => null;

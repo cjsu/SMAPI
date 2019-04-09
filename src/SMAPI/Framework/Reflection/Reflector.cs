@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.Caching;
+using System.Collections.Generic;
 
 namespace StardewModdingAPI.Framework.Reflection
 {
@@ -13,7 +13,7 @@ namespace StardewModdingAPI.Framework.Reflection
         ** Fields
         *********/
         /// <summary>The cached fields and methods found via reflection.</summary>
-        private readonly MemoryCache Cache = new MemoryCache(typeof(Reflector).FullName);
+        private readonly Dictionary<string, CacheEntry> Cache = new Dictionary<string, CacheEntry>();
 
         /// <summary>The sliding cache expiration time.</summary>
         private readonly TimeSpan SlidingCacheExpiry = TimeSpan.FromMinutes(5);
@@ -258,7 +258,7 @@ namespace StardewModdingAPI.Framework.Reflection
         private TMemberInfo GetCached<TMemberInfo>(string key, Func<TMemberInfo> fetch) where TMemberInfo : MemberInfo
         {
             // get from cache
-            if (this.Cache.Contains(key))
+            if (this.Cache.ContainsKey(key))
             {
                 CacheEntry entry = (CacheEntry)this.Cache[key];
                 return entry.IsValid
@@ -269,7 +269,7 @@ namespace StardewModdingAPI.Framework.Reflection
             // fetch & cache new value
             TMemberInfo result = fetch();
             CacheEntry cacheEntry = new CacheEntry(result != null, result);
-            this.Cache.Add(key, cacheEntry, new CacheItemPolicy { SlidingExpiration = this.SlidingCacheExpiry });
+            this.Cache.Add(key, cacheEntry);
             return result;
         }
     }

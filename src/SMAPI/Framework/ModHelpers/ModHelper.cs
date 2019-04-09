@@ -40,7 +40,7 @@ namespace StardewModdingAPI.Framework.ModHelpers
         public ICommandHelper ConsoleCommands { get; }
 
         /// <summary>Provides multiplayer utilities.</summary>
-        public IMultiplayerHelper Multiplayer { get; }
+        //public IMultiplayerHelper Multiplayer { get; }
 
         /// <summary>An API for reading translations stored in the mod's <c>i18n</c> folder, with one file per locale (like <c>en.json</c>) containing a flat key => value structure. Translations are fetched with locale fallback, so missing translations are filled in from broader locales (like <c>pt-BR.json</c> &lt; <c>pt.json</c> &lt; <c>default.json</c>).</summary>
         public ITranslationHelper Translation { get; }
@@ -64,7 +64,7 @@ namespace StardewModdingAPI.Framework.ModHelpers
         /// <param name="translationHelper">An API for reading translations stored in the mod's <c>i18n</c> folder.</param>
         /// <exception cref="ArgumentNullException">An argument is null or empty.</exception>
         /// <exception cref="InvalidOperationException">The <paramref name="modDirectory"/> path does not exist on disk.</exception>
-        public ModHelper(string modID, string modDirectory, SInputState inputState, IModEvents events, IContentHelper contentHelper, IContentPackHelper contentPackHelper, ICommandHelper commandHelper, IDataHelper dataHelper, IModRegistry modRegistry, IReflectionHelper reflectionHelper, IMultiplayerHelper multiplayer, ITranslationHelper translationHelper)
+        public ModHelper(string modID, string modDirectory, SInputState inputState, IModEvents events, IContentHelper contentHelper, IContentPackHelper contentPackHelper, ICommandHelper commandHelper, IDataHelper dataHelper, IModRegistry modRegistry, IReflectionHelper reflectionHelper, ITranslationHelper translationHelper)
             : base(modID)
         {
             // validate directory
@@ -82,7 +82,7 @@ namespace StardewModdingAPI.Framework.ModHelpers
             this.ModRegistry = modRegistry ?? throw new ArgumentNullException(nameof(modRegistry));
             this.ConsoleCommands = commandHelper ?? throw new ArgumentNullException(nameof(commandHelper));
             this.Reflection = reflectionHelper ?? throw new ArgumentNullException(nameof(reflectionHelper));
-            this.Multiplayer = multiplayer ?? throw new ArgumentNullException(nameof(multiplayer));
+            //this.Multiplayer = multiplayer ?? throw new ArgumentNullException(nameof(multiplayer));
             this.Translation = translationHelper ?? throw new ArgumentNullException(nameof(translationHelper));
             this.Events = events;
         }

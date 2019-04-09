@@ -32,16 +32,16 @@ namespace StardewModdingAPI
         public static GamePlatform TargetPlatform => (GamePlatform)Constants.Platform;
 
         /// <summary>The path to the game folder.</summary>
-        public static string ExecutionPath { get; } = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        public static string ExecutionPath { get; } = "/sdcard/SMDroid";
 
         /// <summary>The directory path containing Stardew Valley's app data.</summary>
-        public static string DataPath { get; } = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "StardewValley");
+        public static string DataPath { get; } = Path.Combine("/sdcard", "SMDroid");
 
         /// <summary>The directory path in which error logs should be stored.</summary>
         public static string LogDir { get; } = Path.Combine(Constants.DataPath, "ErrorLogs");
 
         /// <summary>The directory path where all saves are stored.</summary>
-        public static string SavesPath { get; } = Path.Combine(Constants.DataPath, "Saves");
+        public static string SavesPath { get; } = Path.Combine("/sdcard", "StardewValley");
 
         /// <summary>The name of the current save folder (if save info is available, regardless of whether the save file exists yet).</summary>
         public static string SaveFolderName => Constants.GetSaveFolderName();
@@ -56,7 +56,7 @@ namespace StardewModdingAPI
         internal const string HomePageUrl = "https://smapi.io";
 
         /// <summary>The absolute path to the folder containing SMAPI's internal files.</summary>
-        internal static readonly string InternalFilesPath = Program.DllSearchPath;
+        internal static readonly string InternalFilesPath = "/sdcard/SMDroid/smapi-internal";
 
         /// <summary>The file path for the SMAPI configuration file.</summary>
         internal static string ApiConfigPath => Path.Combine(Constants.InternalFilesPath, "StardewModdingAPI.config.json");
@@ -89,13 +89,13 @@ namespace StardewModdingAPI
         internal static string ModsPath { get; set; }
 
         /// <summary>The game's current semantic version.</summary>
-        internal static ISemanticVersion GameVersion { get; } = new GameVersion(Game1.version);
+        internal static ISemanticVersion GameVersion { get; } = new GameVersion("1.3.36");
 
         /// <summary>The target game platform.</summary>
-        internal static Platform Platform { get; } = EnvironmentUtility.DetectPlatform();
+        internal static Platform Platform { get; } = Platform.Android;
 
         /// <summary>The game's assembly name.</summary>
-        internal static string GameAssemblyName => Constants.Platform == Platform.Windows ? "Stardew Valley" : "StardewValley";
+        internal static string GameAssemblyName = "StardewValley";
 
 
         /*********
@@ -163,7 +163,18 @@ namespace StardewModdingAPI
                         typeof(Microsoft.Xna.Framework.Graphics.SpriteBatch).Assembly
                     };
                     break;
-
+                case Platform.Android:
+                    removeAssemblyReferences = new[]
+                    {
+                        "StardewValley",
+                        "MonoGame.Framework"
+                    };
+                    targetAssemblies = new[]
+                    {
+                        typeof(StardewValley.Game1).Assembly,
+                        typeof(Microsoft.Xna.Framework.Vector2).Assembly
+                    };
+                    break;
                 default:
                     throw new InvalidOperationException($"Unknown target platform '{targetPlatform}'.");
             }

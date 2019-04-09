@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Reflection;
@@ -75,8 +76,8 @@ namespace StardewModdingAPI.Patches
             if (LoadForNewGamePatch.IsCreating)
             {
                 // raise CreatedBasicInfo after locations are cleared twice
-                ObservableCollection<GameLocation> locations = (ObservableCollection<GameLocation>)Game1.locations;
-                locations.CollectionChanged += LoadForNewGamePatch.OnLocationListChanged;
+                List<GameLocation> locations = Game1.locations;
+                //locations.CollectionChanged += LoadForNewGamePatch.OnLocationListChanged;
             }
 
             return true;
@@ -89,8 +90,8 @@ namespace StardewModdingAPI.Patches
             if (LoadForNewGamePatch.IsCreating)
             {
                 // clean up
-                ObservableCollection<GameLocation> locations = (ObservableCollection<GameLocation>) Game1.locations;
-                locations.CollectionChanged -= LoadForNewGamePatch.OnLocationListChanged;
+                List<GameLocation> locations = Game1.locations;
+                //locations.CollectionChanged -= LoadForNewGamePatch.OnLocationListChanged;
 
                 // raise stage changed
                 LoadForNewGamePatch.OnStageChanged(LoadStage.CreatedLocations);

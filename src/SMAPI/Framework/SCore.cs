@@ -28,7 +28,6 @@ using StardewModdingAPI.Framework.Serialisation;
 using StardewModdingAPI.Internal;
 using StardewModdingAPI.Patches;
 using StardewModdingAPI.Toolkit;
-using StardewModdingAPI.Toolkit.Framework.Clients.WebApi;
 using StardewModdingAPI.Toolkit.Framework.ModData;
 using StardewModdingAPI.Toolkit.Serialisation;
 using StardewModdingAPI.Toolkit.Utilities;
@@ -66,7 +65,7 @@ namespace StardewModdingAPI.Framework
         private readonly SConfig Settings;
 
         /// <summary>The underlying game instance.</summary>
-        private SGame GameInstance;
+        public SGame GameInstance = SGame.instance;
 
         /// <summary>The underlying content manager.</summary>
         private ContentCoordinator ContentCore => this.GameInstance.ContentCore;
@@ -164,53 +163,53 @@ namespace StardewModdingAPI.Framework
             if (modsPath != Constants.DefaultModsPath)
                 this.Monitor.Log("(Using custom --mods-path argument.)", LogLevel.Trace);
             this.Monitor.Log($"Log started at {DateTime.UtcNow:s} UTC", LogLevel.Trace);
-
-            // validate platform
-#if SMAPI_FOR_WINDOWS
-            if (Constants.Platform != Platform.Windows)
-            {
-                this.Monitor.Log("Oops! You're running Windows, but this version of SMAPI is for Linux or Mac. Please reinstall SMAPI to fix this.", LogLevel.Error);
-                this.PressAnyKeyToExit();
-                return;
-            }
-#else
-            if (Constants.Platform == Platform.Windows)
-            {
-                this.Monitor.Log("Oops! You're running {Constants.Platform}, but this version of SMAPI is for Windows. Please reinstall SMAPI to fix this.", LogLevel.Error);
-                this.PressAnyKeyToExit();
-                return;
-            }
-#endif
-        }
-
-        /// <summary>Launch SMAPI.</summary>
-        [HandleProcessCorruptedStateExceptions, SecurityCritical] // let try..catch handle corrupted state exceptions
-        public void RunInteractively()
-        {
-            // initialise SMAPI
-            try
-            {
-                JsonConverter[] converters = {
+            JsonConverter[] converters = {
                     new ColorConverter(),
                     new PointConverter(),
                     new RectangleConverter()
                 };
-                foreach (JsonConverter converter in converters)
-                    this.Toolkit.JsonHelper.JsonSettings.Converters.Add(converter);
+            foreach (JsonConverter converter in converters)
+                this.Toolkit.JsonHelper.JsonSettings.Converters.Add(converter);
 
-                // add error handlers
+            // add error handlers
 #if SMAPI_FOR_WINDOWS
                 Application.ThreadException += (sender, e) => this.Monitor.Log($"Critical thread exception: {e.Exception.GetLogSummary()}", LogLevel.Error);
                 Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
 #endif
-                AppDomain.CurrentDomain.UnhandledException += (sender, e) => this.Monitor.Log($"Critical app domain exception: {e.ExceptionObject}", LogLevel.Error);
+            AppDomain.CurrentDomain.UnhandledException += (sender, e) => this.Monitor.Log($"Critical app domain exception: {e.ExceptionObject}", LogLevel.Error);
 
-                // add more leniant assembly resolvers
-                AppDomain.CurrentDomain.AssemblyResolve += (sender, e) => AssemblyLoader.ResolveAssembly(e.Name);
+            // add more leniant assembly resolvers
+            AppDomain.CurrentDomain.AssemblyResolve += (sender, e) => AssemblyLoader.ResolveAssembly(e.Name);
+            SGame.ConstructorHack = new SGameConstructorHack(this.Monitor, this.Reflection, this.Toolkit.JsonHelper, this.InitialiseBeforeFirstAssetLoaded);
 
+            // validate platform
+            //#if SMAPI_FOR_WINDOWS
+            //            if (Constants.Platform != Platform.Windows)
+            //            {
+            //                this.Monitor.Log("Oops! You're running Windows, but this version of SMAPI is for Linux or Mac. Please reinstall SMAPI to fix this.", LogLevel.Error);
+            //                this.PressAnyKeyToExit();
+            //                return;
+            //            }
+            //#else
+            //            if (Constants.Platform == Platform.Windows)
+            //            {
+            //                this.Monitor.Log("Oops! You're running {Constants.Platform}, but this version of SMAPI is for Windows. Please reinstall SMAPI to fix this.", LogLevel.Error);
+            //                this.PressAnyKeyToExit();
+            //                return;
+            //            }
+            //#endif
+        }
+
+        /// <summary>Launch SMAPI.</summary>
+        [HandleProcessCorruptedStateExceptions, SecurityCritical] // let try..catch handle corrupted state exceptions
+        public void RunInteractively(ContentCoordinator contentCore)
+        {
+            // initialise SMAPI
+            try
+            {
                 // override game
-                SGame.ConstructorHack = new SGameConstructorHack(this.Monitor, this.Reflection, this.Toolkit.JsonHelper, this.InitialiseBeforeFirstAssetLoaded);
                 this.GameInstance = new SGame(
+                    contentCore,
                     monitor: this.Monitor,
                     monitorForGame: this.MonitorForGame,
                     reflection: this.Reflection,
@@ -222,38 +221,37 @@ namespace StardewModdingAPI.Framework
                     onGameInitialised: this.InitialiseAfterGameStart,
                     onGameExiting: this.Dispose
                 );
-                StardewValley.Program.gamePtr = this.GameInstance;
-
+                StardewValley.Program.gamePtr = Game1.game1;
                 // apply game patches
-                new GamePatcher(this.Monitor).Apply(
-                    new DialogueErrorPatch(this.MonitorForGame, this.Reflection),
-                    new ObjectErrorPatch(),
-                    new LoadForNewGamePatch(this.Reflection, this.GameInstance.OnLoadStageChanged)
-                );
+                //new GamePatcher(this.Monitor).Apply(
+                //    new DialogueErrorPatch(this.MonitorForGame, this.Reflection),
+                //    new ObjectErrorPatch(),
+                //    new LoadForNewGamePatch(this.Reflection, this.GameInstance.OnLoadStageChanged)
+                //);
 
-                // add exit handler
-                new Thread(() =>
-                {
-                    this.CancellationTokenSource.Token.WaitHandle.WaitOne();
-                    if (this.IsGameRunning)
-                    {
-                        try
-                        {
-                            File.WriteAllText(Constants.FatalCrashMarker, string.Empty);
-                            File.Copy(this.LogFile.Path, Constants.FatalCrashLog, overwrite: true);
-                        }
-                        catch (Exception ex)
-                        {
-                            this.Monitor.Log($"SMAPI failed trying to track the crash details: {ex.GetLogSummary()}", LogLevel.Error);
-                        }
+                //// add exit handler
+                //new Thread(() =>
+                //{
+                //    this.CancellationTokenSource.Token.WaitHandle.WaitOne();
+                //    if (this.IsGameRunning)
+                //    {
+                //        try
+                //        {
+                //            File.WriteAllText(Constants.FatalCrashMarker, string.Empty);
+                //            File.Copy(this.LogFile.Path, Constants.FatalCrashLog, overwrite: true);
+                //        }
+                //        catch (Exception ex)
+                //        {
+                //            this.Monitor.Log($"SMAPI failed trying to track the crash details: {ex.GetLogSummary()}", LogLevel.Error);
+                //        }
 
-                        this.GameInstance.Exit();
-                    }
-                }).Start();
+                //        Game1.game1.Exit();
+                //    }
+                //}).Start();
 
                 // set window titles
-                this.GameInstance.Window.Title = $"Stardew Valley {Constants.GameVersion} - running SMAPI {Constants.ApiVersion}";
-                Console.Title = $"SMAPI {Constants.ApiVersion} - running Stardew Valley {Constants.GameVersion}";
+                //Game1.game1.Window.Title = $"Stardew Valley {Constants.GameVersion} - running SMAPI {Constants.ApiVersion}";
+                //Console.Title = $"SMAPI {Constants.ApiVersion} - running Stardew Valley {Constants.GameVersion}";
             }
             catch (Exception ex)
             {
@@ -300,38 +298,8 @@ namespace StardewModdingAPI.Framework
             this.Monitor.VerboseLog("Verbose logging enabled.");
 
             // update window titles
-            this.GameInstance.Window.Title = $"Stardew Valley {Constants.GameVersion} - running SMAPI {Constants.ApiVersion}";
-            Console.Title = $"SMAPI {Constants.ApiVersion} - running Stardew Valley {Constants.GameVersion}";
-
-            // start game
-            this.Monitor.Log("Starting game...", LogLevel.Debug);
-            try
-            {
-                this.IsGameRunning = true;
-                StardewValley.Program.releaseBuild = true; // game's debug logic interferes with SMAPI opening the game window
-                this.GameInstance.Run();
-            }
-            catch (InvalidOperationException ex) when (ex.Source == "Microsoft.Xna.Framework.Xact" && ex.StackTrace.Contains("Microsoft.Xna.Framework.Audio.AudioEngine..ctor"))
-            {
-                this.Monitor.Log("The game couldn't load audio. Do you have speakers or headphones plugged in?", LogLevel.Error);
-                this.Monitor.Log($"Technical details: {ex.GetLogSummary()}", LogLevel.Trace);
-                this.PressAnyKeyToExit();
-            }
-            catch (FileNotFoundException ex) when (ex.Message == "Could not find file 'C:\\Program Files (x86)\\Steam\\SteamApps\\common\\Stardew Valley\\Content\\XACT\\FarmerSounds.xgs'.") // path in error is hardcoded regardless of install path
-            {
-                this.Monitor.Log("The game can't find its Content\\XACT\\FarmerSounds.xgs file. You can usually fix this by resetting your content files (see https://smapi.io/troubleshoot#reset-content ), or by uninstalling and reinstalling the game.", LogLevel.Error);
-                this.Monitor.Log($"Technical details: {ex.GetLogSummary()}", LogLevel.Trace);
-                this.PressAnyKeyToExit();
-            }
-            catch (Exception ex)
-            {
-                this.MonitorForGame.Log($"The game failed to launch: {ex.GetLogSummary()}", LogLevel.Error);
-                this.PressAnyKeyToExit();
-            }
-            finally
-            {
-                this.Dispose();
-            }
+            //Game1.game1.Window.Title = $"Stardew Valley {Constants.GameVersion} - running SMAPI {Constants.ApiVersion}";
+            //Console.Title = $"SMAPI {Constants.ApiVersion} - running Stardew Valley {Constants.GameVersion}";
         }
 
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
@@ -361,7 +329,7 @@ namespace StardewModdingAPI.Framework
             this.ConsoleManager?.Dispose();
             this.ContentCore?.Dispose();
             this.CancellationTokenSource?.Dispose();
-            this.GameInstance?.Dispose();
+            //this.GameInstance?.Dispose();
             this.LogFile?.Dispose();
 
             // end game (moved from Game1.OnExiting to let us clean up first)
@@ -418,13 +386,13 @@ namespace StardewModdingAPI.Framework
                 }
 
                 // check for updates
-                this.CheckForUpdatesAsync(mods);
+                //this.CheckForUpdatesAsync(mods);
             }
 
             // update window titles
-            int modsLoaded = this.ModRegistry.GetAll().Count();
-            this.GameInstance.Window.Title = $"Stardew Valley {Constants.GameVersion} - running SMAPI {Constants.ApiVersion} with {modsLoaded} mods";
-            Console.Title = $"SMAPI {Constants.ApiVersion} - running Stardew Valley {Constants.GameVersion} with {modsLoaded} mods";
+            //int modsLoaded = this.ModRegistry.GetAll().Count();
+            //Game1.game1.Window.Title = $"Stardew Valley {Constants.GameVersion} - running SMAPI {Constants.ApiVersion} with {modsLoaded} mods";
+            //Console.Title = $"SMAPI {Constants.ApiVersion} - running Stardew Valley {Constants.GameVersion} with {modsLoaded} mods";
         }
 
         /// <summary>Initialise SMAPI and mods after the game starts.</summary>
@@ -435,7 +403,7 @@ namespace StardewModdingAPI.Framework
                 this.Monitor.Log("SMAPI found problems in your game's content files which are likely to cause errors or crashes. Consider uninstalling XNB mods or reinstalling the game.", LogLevel.Error);
 
             // start SMAPI console
-            new Thread(this.RunConsoleLoop).Start();
+            //new Thread(this.RunConsoleLoop).Start();
         }
 
         /// <summary>Handle the game changing locale.</summary>
@@ -538,153 +506,153 @@ namespace StardewModdingAPI.Framework
             return !issuesFound;
         }
 
-        /// <summary>Asynchronously check for a new version of SMAPI and any installed mods, and print alerts to the console if an update is available.</summary>
-        /// <param name="mods">The mods to include in the update check (if eligible).</param>
-        private void CheckForUpdatesAsync(IModMetadata[] mods)
-        {
-            if (!this.Settings.CheckForUpdates)
-                return;
+//        /// <summary>Asynchronously check for a new version of SMAPI and any installed mods, and print alerts to the console if an update is available.</summary>
+//        /// <param name="mods">The mods to include in the update check (if eligible).</param>
+//        private void CheckForUpdatesAsync(IModMetadata[] mods)
+//        {
+//            if (!this.Settings.CheckForUpdates)
+//                return;
 
-            new Thread(() =>
-            {
-                // create client
-                string url = this.Settings.WebApiBaseUrl;
-#if !SMAPI_FOR_WINDOWS
-                url = url.Replace("https://", "http://"); // workaround for OpenSSL issues with the game's bundled Mono on Linux/Mac
-#endif
-                WebApiClient client = new WebApiClient(url, Constants.ApiVersion);
-                this.Monitor.Log("Checking for updates...", LogLevel.Trace);
+//            new Thread(() =>
+//            {
+//                // create client
+//                string url = this.Settings.WebApiBaseUrl;
+//#if !SMAPI_FOR_WINDOWS
+//                url = url.Replace("https://", "http://"); // workaround for OpenSSL issues with the game's bundled Mono on Linux/Mac
+//#endif
+//                WebApiClient client = new WebApiClient(url, Constants.ApiVersion);
+//                this.Monitor.Log("Checking for updates...", LogLevel.Trace);
 
-                // check SMAPI version
-                ISemanticVersion updateFound = null;
-                try
-                {
-                    ModEntryModel response = client.GetModInfo(new[] { new ModSearchEntryModel("Pathoschild.SMAPI", new[] { $"GitHub:{this.Settings.GitHubProjectName}" }) }).Single().Value;
-                    ISemanticVersion latestStable = response.Main?.Version;
-                    ISemanticVersion latestBeta = response.Optional?.Version;
+//                // check SMAPI version
+//                ISemanticVersion updateFound = null;
+//                try
+//                {
+//                    ModEntryModel response = client.GetModInfo(new[] { new ModSearchEntryModel("Pathoschild.SMAPI", new[] { $"GitHub:{this.Settings.GitHubProjectName}" }) }).Single().Value;
+//                    ISemanticVersion latestStable = response.Main?.Version;
+//                    ISemanticVersion latestBeta = response.Optional?.Version;
 
-                    if (latestStable == null && response.Errors.Any())
-                    {
-                        this.Monitor.Log("Couldn't check for a new version of SMAPI. This won't affect your game, but you may not be notified of new versions if this keeps happening.", LogLevel.Warn);
-                        this.Monitor.Log($"Error: {string.Join("\n", response.Errors)}", LogLevel.Trace);
-                    }
-                    else if (this.IsValidUpdate(Constants.ApiVersion, latestBeta, this.Settings.UseBetaChannel))
-                    {
-                        updateFound = latestBeta;
-                        this.Monitor.Log($"You can update SMAPI to {latestBeta}: {Constants.HomePageUrl}", LogLevel.Alert);
-                    }
-                    else if (this.IsValidUpdate(Constants.ApiVersion, latestStable, this.Settings.UseBetaChannel))
-                    {
-                        updateFound = latestStable;
-                        this.Monitor.Log($"You can update SMAPI to {latestStable}: {Constants.HomePageUrl}", LogLevel.Alert);
-                    }
-                    else
-                        this.Monitor.Log("   SMAPI okay.", LogLevel.Trace);
-                }
-                catch (Exception ex)
-                {
-                    this.Monitor.Log("Couldn't check for a new version of SMAPI. This won't affect your game, but you won't be notified of new versions if this keeps happening.", LogLevel.Warn);
-                    this.Monitor.Log(ex is WebException && ex.InnerException == null
-                        ? $"Error: {ex.Message}"
-                        : $"Error: {ex.GetLogSummary()}", LogLevel.Trace
-                    );
-                }
+//                    if (latestStable == null && response.Errors.Any())
+//                    {
+//                        this.Monitor.Log("Couldn't check for a new version of SMAPI. This won't affect your game, but you may not be notified of new versions if this keeps happening.", LogLevel.Warn);
+//                        this.Monitor.Log($"Error: {string.Join("\n", response.Errors)}", LogLevel.Trace);
+//                    }
+//                    else if (this.IsValidUpdate(Constants.ApiVersion, latestBeta, this.Settings.UseBetaChannel))
+//                    {
+//                        updateFound = latestBeta;
+//                        this.Monitor.Log($"You can update SMAPI to {latestBeta}: {Constants.HomePageUrl}", LogLevel.Alert);
+//                    }
+//                    else if (this.IsValidUpdate(Constants.ApiVersion, latestStable, this.Settings.UseBetaChannel))
+//                    {
+//                        updateFound = latestStable;
+//                        this.Monitor.Log($"You can update SMAPI to {latestStable}: {Constants.HomePageUrl}", LogLevel.Alert);
+//                    }
+//                    else
+//                        this.Monitor.Log("   SMAPI okay.", LogLevel.Trace);
+//                }
+//                catch (Exception ex)
+//                {
+//                    this.Monitor.Log("Couldn't check for a new version of SMAPI. This won't affect your game, but you won't be notified of new versions if this keeps happening.", LogLevel.Warn);
+//                    this.Monitor.Log(ex is WebException && ex.InnerException == null
+//                        ? $"Error: {ex.Message}"
+//                        : $"Error: {ex.GetLogSummary()}", LogLevel.Trace
+//                    );
+//                }
 
-                // show update message on next launch
-                if (updateFound != null)
-                    File.WriteAllText(Constants.UpdateMarker, updateFound.ToString());
+//                // show update message on next launch
+//                if (updateFound != null)
+//                    File.WriteAllText(Constants.UpdateMarker, updateFound.ToString());
 
-                // check mod versions
-                if (mods.Any())
-                {
-                    try
-                    {
-                        HashSet<string> suppressUpdateChecks = new HashSet<string>(this.Settings.SuppressUpdateChecks, StringComparer.InvariantCultureIgnoreCase);
+//                // check mod versions
+//                if (mods.Any())
+//                {
+//                    try
+//                    {
+//                        HashSet<string> suppressUpdateChecks = new HashSet<string>(this.Settings.SuppressUpdateChecks, StringComparer.InvariantCultureIgnoreCase);
 
-                        // prepare search model
-                        List<ModSearchEntryModel> searchMods = new List<ModSearchEntryModel>();
-                        foreach (IModMetadata mod in mods)
-                        {
-                            if (!mod.HasID() || suppressUpdateChecks.Contains(mod.Manifest.UniqueID))
-                                continue;
+//                        // prepare search model
+//                        List<ModSearchEntryModel> searchMods = new List<ModSearchEntryModel>();
+//                        foreach (IModMetadata mod in mods)
+//                        {
+//                            if (!mod.HasID() || suppressUpdateChecks.Contains(mod.Manifest.UniqueID))
+//                                continue;
 
-                            string[] updateKeys = mod
-                                .GetUpdateKeys(validOnly: true)
-                                .Select(p => p.ToString())
-                                .ToArray();
-                            searchMods.Add(new ModSearchEntryModel(mod.Manifest.UniqueID, updateKeys.ToArray()));
-                        }
+//                            string[] updateKeys = mod
+//                                .GetUpdateKeys(validOnly: true)
+//                                .Select(p => p.ToString())
+//                                .ToArray();
+//                            searchMods.Add(new ModSearchEntryModel(mod.Manifest.UniqueID, updateKeys.ToArray()));
+//                        }
 
-                        // fetch results
-                        this.Monitor.Log($"   Checking for updates to {searchMods.Count} mods...", LogLevel.Trace);
-                        IDictionary<string, ModEntryModel> results = client.GetModInfo(searchMods.ToArray());
+//                        // fetch results
+//                        this.Monitor.Log($"   Checking for updates to {searchMods.Count} mods...", LogLevel.Trace);
+//                        IDictionary<string, ModEntryModel> results = client.GetModInfo(searchMods.ToArray());
 
-                        // extract update alerts & errors
-                        var updates = new List<Tuple<IModMetadata, ISemanticVersion, string>>();
-                        var errors = new StringBuilder();
-                        foreach (IModMetadata mod in mods.OrderBy(p => p.DisplayName))
-                        {
-                            // link to update-check data
-                            if (!mod.HasID() || !results.TryGetValue(mod.Manifest.UniqueID, out ModEntryModel result))
-                                continue;
-                            mod.SetUpdateData(result);
+//                        // extract update alerts & errors
+//                        var updates = new List<Tuple<IModMetadata, ISemanticVersion, string>>();
+//                        var errors = new StringBuilder();
+//                        foreach (IModMetadata mod in mods.OrderBy(p => p.DisplayName))
+//                        {
+//                            // link to update-check data
+//                            if (!mod.HasID() || !results.TryGetValue(mod.Manifest.UniqueID, out ModEntryModel result))
+//                                continue;
+//                            mod.SetUpdateData(result);
 
-                            // handle errors
-                            if (result.Errors != null && result.Errors.Any())
-                            {
-                                errors.AppendLine(result.Errors.Length == 1
-                                    ? $"   {mod.DisplayName}: {result.Errors[0]}"
-                                    : $"   {mod.DisplayName}:\n      - {string.Join("\n      - ", result.Errors)}"
-                                );
-                            }
+//                            // handle errors
+//                            if (result.Errors != null && result.Errors.Any())
+//                            {
+//                                errors.AppendLine(result.Errors.Length == 1
+//                                    ? $"   {mod.DisplayName}: {result.Errors[0]}"
+//                                    : $"   {mod.DisplayName}:\n      - {string.Join("\n      - ", result.Errors)}"
+//                                );
+//                            }
 
-                            // parse versions
-                            bool useBetaInfo = result.HasBetaInfo && Constants.ApiVersion.IsPrerelease();
-                            ISemanticVersion localVersion = mod.DataRecord?.GetLocalVersionForUpdateChecks(mod.Manifest.Version) ?? mod.Manifest.Version;
-                            ISemanticVersion latestVersion = mod.DataRecord?.GetRemoteVersionForUpdateChecks(result.Main?.Version) ?? result.Main?.Version;
-                            ISemanticVersion optionalVersion = mod.DataRecord?.GetRemoteVersionForUpdateChecks(result.Optional?.Version) ?? result.Optional?.Version;
-                            ISemanticVersion unofficialVersion = useBetaInfo ? result.UnofficialForBeta?.Version : result.Unofficial?.Version;
+//                            // parse versions
+//                            bool useBetaInfo = result.HasBetaInfo && Constants.ApiVersion.IsPrerelease();
+//                            ISemanticVersion localVersion = mod.DataRecord?.GetLocalVersionForUpdateChecks(mod.Manifest.Version) ?? mod.Manifest.Version;
+//                            ISemanticVersion latestVersion = mod.DataRecord?.GetRemoteVersionForUpdateChecks(result.Main?.Version) ?? result.Main?.Version;
+//                            ISemanticVersion optionalVersion = mod.DataRecord?.GetRemoteVersionForUpdateChecks(result.Optional?.Version) ?? result.Optional?.Version;
+//                            ISemanticVersion unofficialVersion = useBetaInfo ? result.UnofficialForBeta?.Version : result.Unofficial?.Version;
 
-                            // show update alerts
-                            if (this.IsValidUpdate(localVersion, latestVersion, useBetaChannel: true))
-                                updates.Add(Tuple.Create(mod, latestVersion, result.Main?.Url));
-                            else if (this.IsValidUpdate(localVersion, optionalVersion, useBetaChannel: localVersion.IsPrerelease()))
-                                updates.Add(Tuple.Create(mod, optionalVersion, result.Optional?.Url));
-                            else if (this.IsValidUpdate(localVersion, unofficialVersion, useBetaChannel: mod.Status == ModMetadataStatus.Failed))
-                                updates.Add(Tuple.Create(mod, unofficialVersion, useBetaInfo ? result.UnofficialForBeta?.Url : result.Unofficial?.Url));
-                        }
+//                            // show update alerts
+//                            if (this.IsValidUpdate(localVersion, latestVersion, useBetaChannel: true))
+//                                updates.Add(Tuple.Create(mod, latestVersion, result.Main?.Url));
+//                            else if (this.IsValidUpdate(localVersion, optionalVersion, useBetaChannel: localVersion.IsPrerelease()))
+//                                updates.Add(Tuple.Create(mod, optionalVersion, result.Optional?.Url));
+//                            else if (this.IsValidUpdate(localVersion, unofficialVersion, useBetaChannel: mod.Status == ModMetadataStatus.Failed))
+//                                updates.Add(Tuple.Create(mod, unofficialVersion, useBetaInfo ? result.UnofficialForBeta?.Url : result.Unofficial?.Url));
+//                        }
 
-                        // show update errors
-                        if (errors.Length != 0)
-                            this.Monitor.Log("Got update-check errors for some mods:\n" + errors.ToString().TrimEnd(), LogLevel.Trace);
+//                        // show update errors
+//                        if (errors.Length != 0)
+//                            this.Monitor.Log("Got update-check errors for some mods:\n" + errors.ToString().TrimEnd(), LogLevel.Trace);
 
-                        // show update alerts
-                        if (updates.Any())
-                        {
-                            this.Monitor.Newline();
-                            this.Monitor.Log($"You can update {updates.Count} mod{(updates.Count != 1 ? "s" : "")}:", LogLevel.Alert);
-                            foreach (var entry in updates)
-                            {
-                                IModMetadata mod = entry.Item1;
-                                ISemanticVersion newVersion = entry.Item2;
-                                string newUrl = entry.Item3;
-                                this.Monitor.Log($"   {mod.DisplayName} {newVersion}: {newUrl}", LogLevel.Alert);
-                            }
-                        }
-                        else
-                            this.Monitor.Log("   All mods up to date.", LogLevel.Trace);
-                    }
-                    catch (Exception ex)
-                    {
-                        this.Monitor.Log("Couldn't check for new mod versions. This won't affect your game, but you won't be notified of mod updates if this keeps happening.", LogLevel.Warn);
-                        this.Monitor.Log(ex is WebException && ex.InnerException == null
-                            ? ex.Message
-                            : ex.ToString(), LogLevel.Trace
-                        );
-                    }
-                }
-            }).Start();
-        }
+//                        // show update alerts
+//                        if (updates.Any())
+//                        {
+//                            this.Monitor.Newline();
+//                            this.Monitor.Log($"You can update {updates.Count} mod{(updates.Count != 1 ? "s" : "")}:", LogLevel.Alert);
+//                            foreach (var entry in updates)
+//                            {
+//                                IModMetadata mod = entry.Item1;
+//                                ISemanticVersion newVersion = entry.Item2;
+//                                string newUrl = entry.Item3;
+//                                this.Monitor.Log($"   {mod.DisplayName} {newVersion}: {newUrl}", LogLevel.Alert);
+//                            }
+//                        }
+//                        else
+//                            this.Monitor.Log("   All mods up to date.", LogLevel.Trace);
+//                    }
+//                    catch (Exception ex)
+//                    {
+//                        this.Monitor.Log("Couldn't check for new mod versions. This won't affect your game, but you won't be notified of mod updates if this keeps happening.", LogLevel.Warn);
+//                        this.Monitor.Log(ex is WebException && ex.InnerException == null
+//                            ? ex.Message
+//                            : ex.ToString(), LogLevel.Trace
+//                        );
+//                    }
+//                }
+//            }).Start();
+//        }
 
         /// <summary>Get whether a given version should be offered to the user as an update.</summary>
         /// <param name="currentVersion">The current semantic version.</param>
@@ -1013,7 +981,7 @@ namespace StardewModdingAPI.Framework
                         IDataHelper dataHelper = new DataHelper(manifest.UniqueID, mod.DirectoryPath, jsonHelper);
                         IReflectionHelper reflectionHelper = new ReflectionHelper(manifest.UniqueID, mod.DisplayName, this.Reflection);
                         IModRegistry modRegistryHelper = new ModRegistryHelper(manifest.UniqueID, this.ModRegistry, proxyFactory, monitor);
-                        IMultiplayerHelper multiplayerHelper = new MultiplayerHelper(manifest.UniqueID, this.GameInstance.Multiplayer);
+                        //IMultiplayerHelper multiplayerHelper = new MultiplayerHelper(manifest.UniqueID, this.GameInstance.Multiplayer);
 
                         IContentPack CreateFakeContentPack(string packDirPath, IManifest packManifest)
                         {
@@ -1023,7 +991,7 @@ namespace StardewModdingAPI.Framework
                             return new ContentPack(packDirPath, packManifest, packContentHelper, packTranslationHelper, this.Toolkit.JsonHelper);
                         }
 
-                        modHelper = new ModHelper(manifest.UniqueID, mod.DirectoryPath, this.GameInstance.Input, events, contentHelper, contentPackHelper, commandHelper, dataHelper, modRegistryHelper, reflectionHelper, multiplayerHelper, translationHelper);
+                        modHelper = new ModHelper(manifest.UniqueID, mod.DirectoryPath, this.GameInstance.Input, events, contentHelper, contentPackHelper, commandHelper, dataHelper, modRegistryHelper, reflectionHelper, translationHelper);
                     }
 
                     // init mod

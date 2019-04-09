@@ -53,13 +53,13 @@ namespace StardewModdingAPI.Framework.Content
             this.Cache = reflection.GetField<Dictionary<string, object>>(contentManager, "loadedAssets").GetValue();
 
             // get key normalisation logic
-            if (Constants.Platform == Platform.Windows)
-            {
-                IReflectedMethod method = reflection.GetMethod(typeof(TitleContainer), "GetCleanPath");
-                this.NormaliseAssetNameForPlatform = path => method.Invoke<string>(path);
-            }
-            else
-                this.NormaliseAssetNameForPlatform = key => key.Replace('\\', '/'); // based on MonoGame's ContentManager.Load<T> logic
+            //if (Constants.Platform == Platform.Windows)
+            //{
+            //    IReflectedMethod method = reflection.GetMethod(typeof(TitleContainer), "GetCleanPath");
+            //    this.NormaliseAssetNameForPlatform = path => method.Invoke<string>(path);
+            //}
+            //else
+            this.NormaliseAssetNameForPlatform = key => key.Replace('\\', '/'); // based on MonoGame's ContentManager.Load<T> logic
         }
 
         /****

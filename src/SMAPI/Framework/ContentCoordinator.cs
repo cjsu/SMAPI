@@ -82,7 +82,7 @@ namespace StardewModdingAPI.Framework
             this.Reflection = reflection;
             this.JsonHelper = jsonHelper;
             this.OnLoadingFirstAsset = onLoadingFirstAsset;
-            this.FullRootDirectory = Path.Combine(Constants.ExecutionPath, rootDirectory);
+            this.FullRootDirectory = rootDirectory;
             this.ContentManagers.Add(
                 this.MainContentManager = new GameContentManager("Game1.content", serviceProvider, rootDirectory, currentCulture, this, monitor, reflection, this.OnDisposing, onLoadingFirstAsset)
             );

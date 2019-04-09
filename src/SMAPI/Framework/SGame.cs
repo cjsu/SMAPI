@@ -33,7 +33,7 @@ using SObject = StardewValley.Object;
 namespace StardewModdingAPI.Framework
 {
     /// <summary>SMAPI's extension of the game's core <see cref="Game1"/>, used to inject events.</summary>
-    internal class SGame : Game1
+    internal class SGame
     {
         /*********
         ** Fields
@@ -76,7 +76,7 @@ namespace StardewModdingAPI.Framework
         private readonly Action OnLocaleChanged;
 
         /// <summary>A callback to invoke the first time *any* game content manager loads an asset.</summary>
-        private readonly Action OnLoadingFirstAsset;
+        public static Action OnLoadingFirstAsset;
 
         /// <summary>A callback to invoke after the game finishes initialising.</summary>
         private readonly Action OnGameInitialised;
@@ -99,6 +99,10 @@ namespace StardewModdingAPI.Framework
         /// <summary>Whether the next content manager requested by the game will be for <see cref="Game1.content"/>.</summary>
         private bool NextContentManagerIsMain;
 
+        public static void printLog(string msg)
+        {
+            SGame.instance.Monitor.Log(msg);
+        }
 
         /*********
         ** Accessors
@@ -116,15 +120,20 @@ namespace StardewModdingAPI.Framework
         public CommandManager CommandManager { get; } = new CommandManager();
 
         /// <summary>Manages input visible to the game.</summary>
-        public SInputState Input => (SInputState)Game1.input;
+        public SInputState Input => (SInputState)this.Reflection.GetField<InputState>(typeof(Game1), "input").GetValue();
 
-        /// <summary>The game's core multiplayer utility.</summary>
-        public SMultiplayer Multiplayer => (SMultiplayer)Game1.multiplayer;
+        ///// <summary>The game's core multiplayer utility.</summary>
+        //public SMultiplayer Multiplayer => (SMultiplayer)this.Reflection.GetField<Multiplayer>(typeof(Game1), "multiplayer").GetValue();
 
         /// <summary>A list of queued commands to execute.</summary>
         /// <remarks>This property must be threadsafe, since it's accessed from a separate console input thread.</remarks>
         public ConcurrentQueue<string> CommandQueue { get; } = new ConcurrentQueue<string>();
 
+        private bool saveParsed;
+
+        public static SGame instance;
+
+        
 
         /*********
         ** Protected methods
@@ -140,14 +149,15 @@ namespace StardewModdingAPI.Framework
         /// <param name="onLocaleChanged">A callback to invoke after the content language changes.</param>
         /// <param name="onGameInitialised">A callback to invoke after the game finishes initialising.</param>
         /// <param name="onGameExiting">A callback to invoke when the game exits.</param>
-        internal SGame(IMonitor monitor, IMonitor monitorForGame, Reflector reflection, EventManager eventManager, JsonHelper jsonHelper, ModRegistry modRegistry, DeprecationManager deprecationManager, Action onLocaleChanged, Action onGameInitialised, Action onGameExiting)
+        internal SGame(ContentCoordinator contentCore, IMonitor monitor, IMonitor monitorForGame, Reflector reflection, EventManager eventManager, JsonHelper jsonHelper, ModRegistry modRegistry, DeprecationManager deprecationManager, Action onLocaleChanged, Action onGameInitialised, Action onGameExiting)
         {
-            this.OnLoadingFirstAsset = SGame.ConstructorHack.OnLoadingFirstAsset;
+            SGame.OnLoadingFirstAsset = SGame.ConstructorHack.OnLoadingFirstAsset;
             SGame.ConstructorHack = null;
 
             // check expectations
-            if (this.ContentCore == null)
+            if (contentCore == null)
                 throw new InvalidOperationException($"The game didn't initialise its first content manager before SMAPI's {nameof(SGame)} constructor. This indicates an incompatible lifecycle change.");
+            this.ContentCore = contentCore;
 
             // init XNA
             Game1.graphics.GraphicsProfile = GraphicsProfile.HiDef;
@@ -162,12 +172,14 @@ namespace StardewModdingAPI.Framework
             this.OnLocaleChanged = onLocaleChanged;
             this.OnGameInitialised = onGameInitialised;
             this.OnGameExiting = onGameExiting;
-            Game1.input = new SInputState();
-            Game1.multiplayer = new SMultiplayer(monitor, eventManager, jsonHelper, modRegistry, reflection, this.OnModMessageReceived);
-            Game1.hooks = new SModHooks(this.OnNewDayAfterFade);
+            this.Reflection.GetField<InputState>(typeof(Game1), "input").SetValue(new SInputState());
+            //this.Reflection.GetField<Multiplayer>(typeof(Game1), "multiplayer").SetValue(new SMultiplayer(monitor, eventManager, jsonHelper, modRegistry, reflection, this.OnModMessageReceived));
+            //Game1.hooks = new SModHooks(this.OnNewDayAfterFade);
 
             // init observables
-            Game1.locations = new ObservableCollection<GameLocation>();
+            //Game1.locations = new ObservableCollection<GameLocation>();
+            this.saveParsed = false;
+            SGame.instance = this;
         }
 
         /// <summary>Initialise just before the game's first update tick.</summary>
@@ -183,18 +195,18 @@ namespace StardewModdingAPI.Framework
             this.OnGameInitialised();
         }
 
-        /// <summary>Perform cleanup logic when the game exits.</summary>
-        /// <param name="sender">The event sender.</param>
-        /// <param name="args">The event args.</param>
-        /// <remarks>This overrides the logic in <see cref="Game1.exitEvent"/> to let SMAPI clean up before exit.</remarks>
-        protected override void OnExiting(object sender, EventArgs args)
-        {
-            Game1.multiplayer.Disconnect();
-            this.OnGameExiting?.Invoke();
-        }
+        ///// <summary>Perform cleanup logic when the game exits.</summary>
+        ///// <param name="sender">The event sender.</param>
+        ///// <param name="args">The event args.</param>
+        ///// <remarks>This overrides the logic in <see cref="Game1.exitEvent"/> to let SMAPI clean up before exit.</remarks>
+        //protected override void OnExiting(object sender, EventArgs args)
+        //{
+        //    Game1.multiplayer.Disconnect();
+        //    this.OnGameExiting?.Invoke();
+        //}
 
         /// <summary>A callback invoked before <see cref="Game1.newDayAfterFade"/> runs.</summary>
-        protected void OnNewDayAfterFade()
+        public void OnNewDayAfterFade()
         {
             this.Events.DayEnding.RaiseEmpty();
         }
@@ -222,7 +234,7 @@ namespace StardewModdingAPI.Framework
             if (newStage == LoadStage.None)
             {
                 this.Monitor.Log("Context: returned to title", LogLevel.Trace);
-                this.Multiplayer.CleanupOnMultiplayerExit();
+                //this.Multiplayer.CleanupOnMultiplayerExit();
             }
             this.Monitor.VerboseLog($"Context: load stage changed to {newStage}");
 
@@ -232,34 +244,34 @@ namespace StardewModdingAPI.Framework
                 this.Events.ReturnedToTitle.RaiseEmpty();
         }
 
-        /// <summary>Constructor a content manager to read XNB files.</summary>
-        /// <param name="serviceProvider">The service provider to use to locate services.</param>
-        /// <param name="rootDirectory">The root directory to search for content.</param>
-        protected override LocalizedContentManager CreateContentManager(IServiceProvider serviceProvider, string rootDirectory)
-        {
-            // Game1._temporaryContent initialising from SGame constructor
-            // NOTE: this method is called before the SGame constructor runs. Don't depend on anything being initialised at this point.
-            if (this.ContentCore == null)
-            {
-                this.ContentCore = new ContentCoordinator(serviceProvider, rootDirectory, Thread.CurrentThread.CurrentUICulture, SGame.ConstructorHack.Monitor, SGame.ConstructorHack.Reflection, SGame.ConstructorHack.JsonHelper, this.OnLoadingFirstAsset ?? SGame.ConstructorHack?.OnLoadingFirstAsset);
-                this.NextContentManagerIsMain = true;
-                return this.ContentCore.CreateGameContentManager("Game1._temporaryContent");
-            }
+        ///// <summary>Constructor a content manager to read XNB files.</summary>
+        ///// <param name="serviceProvider">The service provider to use to locate services.</param>
+        ///// <param name="rootDirectory">The root directory to search for content.</param>
+        //public LocalizedContentManager CreateContentManager(IServiceProvider serviceProvider, string rootDirectory)
+        //{
+        //    // Game1._temporaryContent initialising from SGame constructor
+        //    // NOTE: this method is called before the SGame constructor runs. Don't depend on anything being initialised at this point.
+        //    if (this.ContentCore == null)
+        //    {
+        //        this.ContentCore = new ContentCoordinator(serviceProvider, rootDirectory, Thread.CurrentThread.CurrentUICulture, SGame.ConstructorHack.Monitor, SGame.ConstructorHack.Reflection, SGame.ConstructorHack.JsonHelper, this.OnLoadingFirstAsset ?? SGame.ConstructorHack?.OnLoadingFirstAsset);
+        //        this.NextContentManagerIsMain = true;
+        //        return this.ContentCore.CreateGameContentManager("Game1._temporaryContent");
+        //    }
 
-            // Game1.content initialising from LoadContent
-            if (this.NextContentManagerIsMain)
-            {
-                this.NextContentManagerIsMain = false;
-                return this.ContentCore.MainContentManager;
-            }
+        //    // Game1.content initialising from LoadContent
+        //    if (this.NextContentManagerIsMain)
+        //    {
+        //        this.NextContentManagerIsMain = false;
+        //        return this.ContentCore.MainContentManager;
+        //    }
 
-            // any other content manager
-            return this.ContentCore.CreateGameContentManager("(generated)");
-        }
+        //    // any other content manager
+        //    return this.ContentCore.CreateGameContentManager("(generated)");
+        //}
 
         /// <summary>The method called when the game is updating its state. This happens roughly 60 times per second.</summary>
         /// <param name="gameTime">A snapshot of the game timing state.</param>
-        protected override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             var events = this.Events;
 
@@ -286,42 +298,41 @@ namespace StardewModdingAPI.Framework
 
                 // Run async tasks synchronously to avoid issues due to mod events triggering
                 // concurrently with game code.
-                bool saveParsed = false;
                 if (Game1.currentLoader != null)
                 {
-                    this.Monitor.Log("Game loader synchronising...", LogLevel.Trace);
-                    while (Game1.currentLoader?.MoveNext() == true)
+                    int stage = Game1.currentLoader.Current;
+                    switch (stage)
                     {
-                        // raise load stage changed
-                        switch (Game1.currentLoader.Current)
-                        {
-                            case 20 when (!saveParsed && SaveGame.loaded != null):
-                                saveParsed = true;
-                                this.OnLoadStageChanged(LoadStage.SaveParsed);
-                                break;
+                        case 20 when (!this.saveParsed && SaveGame.loaded != null):
+                            this.saveParsed = true;
+                            this.OnLoadStageChanged(LoadStage.SaveParsed);
+                            break;
 
-                            case 36:
-                                this.OnLoadStageChanged(LoadStage.SaveLoadedBasicInfo);
-                                break;
+                        case 36:
+                            this.OnLoadStageChanged(LoadStage.SaveLoadedBasicInfo);
+                            break;
 
-                            case 50:
-                                this.OnLoadStageChanged(LoadStage.SaveLoadedLocations);
-                                break;
+                        case 50:
+                            this.OnLoadStageChanged(LoadStage.SaveLoadedLocations);
+                            break;
 
-                            default:
-                                if (Game1.gameMode == Game1.playingGameMode)
-                                    this.OnLoadStageChanged(LoadStage.Preloaded);
-                                break;
-                        }
+                        case 100:
+                            Game1.currentLoader = null;
+                            this.Monitor.Log("Game loader done.", LogLevel.Trace);
+                            break;
+
+                        default:
+                            if (Game1.gameMode == Game1.playingGameMode)
+                                this.OnLoadStageChanged(LoadStage.Preloaded);
+                            break;
                     }
-
-                    Game1.currentLoader = null;
-                    this.Monitor.Log("Game loader done.", LogLevel.Trace);
+                    return;
                 }
-                if (Game1._newDayTask?.Status == TaskStatus.Created)
+                Task _newDayTask = this.Reflection.GetField<Task>(typeof(Game1), "_newDayTask").GetValue();
+                if (_newDayTask?.Status == TaskStatus.Created)
                 {
                     this.Monitor.Log("New day task synchronising...", LogLevel.Trace);
-                    Game1._newDayTask.RunSynchronously();
+                    _newDayTask.RunSynchronously();
                     this.Monitor.Log("New day task done.", LogLevel.Trace);
                 }
 
@@ -334,11 +345,11 @@ namespace StardewModdingAPI.Framework
                 // a small chance that the task will finish after we defer but before the game checks,
                 // which means technically events should be raised, but the effects of missing one
                 // update tick are neglible and not worth the complications of bypassing Game1.Update.
-                if (Game1._newDayTask != null || Game1.gameMode == Game1.loadingMode)
+                if (_newDayTask != null || Game1.gameMode == Game1.loadingMode)
                 {
                     events.UnvalidatedUpdateTicking.RaiseEmpty();
                     SGame.TicksElapsed++;
-                    base.Update(gameTime);
+                    //base.Update(gameTime);
                     events.UnvalidatedUpdateTicked.RaiseEmpty();
                     return;
                 }
@@ -387,8 +398,8 @@ namespace StardewModdingAPI.Framework
                 // this too. For example, doing this after mod event suppression would prevent the
                 // user from doing anything on the overnight shipping screen.
                 SInputState inputState = this.Input;
-                if (this.IsActive)
-                    inputState.TrueUpdate();
+                //if (Game1.game1.IsActive)
+                inputState.TrueUpdate();
 
                 /*********
                 ** Save events + suppress events during save
@@ -419,7 +430,7 @@ namespace StardewModdingAPI.Framework
                     // suppress non-save events
                     events.UnvalidatedUpdateTicking.RaiseEmpty();
                     SGame.TicksElapsed++;
-                    base.Update(gameTime);
+                    //base.Update(gameTime);
                     events.UnvalidatedUpdateTicked.RaiseEmpty();
                     return;
                 }
@@ -518,7 +529,7 @@ namespace StardewModdingAPI.Framework
                 /*********
                 ** Input events (if window has focus)
                 *********/
-                if (this.IsActive)
+                //if (Game1.game1.IsActive)
                 {
                     // raise events
                     bool isChatInput = Game1.IsChatting || (Context.IsMultiplayer && Context.IsWorldReady && Game1.activeClickableMenu == null && Game1.currentMinigame == null && inputState.IsAnyDown(Game1.options.chatButton));
@@ -596,6 +607,23 @@ namespace StardewModdingAPI.Framework
 
                     // raise menu events
                     events.MenuChanged.Raise(new MenuChangedEventArgs(was, now));
+                    GameMenu gameMenu = now as GameMenu;
+                    if (gameMenu != null)
+                    {
+                        foreach (IClickableMenu menuPage in gameMenu.pages)
+                        {
+                            OptionsPage optionsPage = menuPage as OptionsPage;
+                            if (optionsPage != null)
+                            {
+                                List<OptionsElement> options = this.Reflection.GetField<List<OptionsElement>>(optionsPage, "options").GetValue();
+                                foreach(IModMetadata modMetadata in this.ModRegistry.GetAll())
+                                {
+                                    options.InsertRange(0, modMetadata.Mod.GetConfigMenuItems());
+                                }
+                                this.Reflection.GetMethod(optionsPage, "updateContentPositions").Invoke();
+                            }
+                        }
+                    }
                 }
 
                 /*********
@@ -787,7 +815,7 @@ namespace StardewModdingAPI.Framework
                 {
                     this.Input.UpdateSuppression();
                     SGame.TicksElapsed++;
-                    base.Update(gameTime);
+                    //base.Update(gameTime);
                 }
                 catch (Exception ex)
                 {
@@ -814,708 +842,708 @@ namespace StardewModdingAPI.Framework
             }
         }
 
-        /// <summary>The method called to draw everything to the screen.</summary>
-        /// <param name="gameTime">A snapshot of the game timing state.</param>
-        protected override void Draw(GameTime gameTime)
-        {
-            Context.IsInDrawLoop = true;
-            try
-            {
-                this.DrawImpl(gameTime);
-                this.DrawCrashTimer.Reset();
-            }
-            catch (Exception ex)
-            {
-                // log error
-                this.Monitor.Log($"An error occured in the overridden draw loop: {ex.GetLogSummary()}", LogLevel.Error);
+        ///// <summary>The method called to draw everything to the screen.</summary>
+        ///// <param name="gameTime">A snapshot of the game timing state.</param>
+        //protected override void Draw(GameTime gameTime)
+        //{
+        //    Context.IsInDrawLoop = true;
+        //    try
+        //    {
+        //        this.DrawImpl(gameTime);
+        //        this.DrawCrashTimer.Reset();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // log error
+        //        this.Monitor.Log($"An error occured in the overridden draw loop: {ex.GetLogSummary()}", LogLevel.Error);
 
-                // exit if irrecoverable
-                if (!this.DrawCrashTimer.Decrement())
-                {
-                    this.Monitor.ExitGameImmediately("the game crashed when drawing, and SMAPI was unable to recover the game.");
-                    return;
-                }
+        //        // exit if irrecoverable
+        //        if (!this.DrawCrashTimer.Decrement())
+        //        {
+        //            this.Monitor.ExitGameImmediately("the game crashed when drawing, and SMAPI was unable to recover the game.");
+        //            return;
+        //        }
 
-                // recover sprite batch
-                try
-                {
-                    if (Game1.spriteBatch.IsOpen(this.Reflection))
-                    {
-                        this.Monitor.Log("Recovering sprite batch from error...", LogLevel.Trace);
-                        Game1.spriteBatch.End();
-                    }
-                }
-                catch (Exception innerEx)
-                {
-                    this.Monitor.Log($"Could not recover sprite batch state: {innerEx.GetLogSummary()}", LogLevel.Error);
-                }
-            }
-            Context.IsInDrawLoop = false;
-        }
+        //        // recover sprite batch
+        //        try
+        //        {
+        //            if (Game1.spriteBatch.IsOpen(this.Reflection))
+        //            {
+        //                this.Monitor.Log("Recovering sprite batch from error...", LogLevel.Trace);
+        //                Game1.spriteBatch.End();
+        //            }
+        //        }
+        //        catch (Exception innerEx)
+        //        {
+        //            this.Monitor.Log($"Could not recover sprite batch state: {innerEx.GetLogSummary()}", LogLevel.Error);
+        //        }
+        //    }
+        //    Context.IsInDrawLoop = false;
+        //}
 
-        /// <summary>Replicate the game's draw logic with some changes for SMAPI.</summary>
-        /// <param name="gameTime">A snapshot of the game timing state.</param>
-        /// <remarks>This implementation is identical to <see cref="Game1.Draw"/>, except for try..catch around menu draw code, private field references replaced by wrappers, and added events.</remarks>
-        [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator", Justification = "copied from game code as-is")]
-        [SuppressMessage("ReSharper", "LocalVariableHidesMember", Justification = "copied from game code as-is")]
-        [SuppressMessage("ReSharper", "PossibleLossOfFraction", Justification = "copied from game code as-is")]
-        [SuppressMessage("ReSharper", "RedundantArgumentDefaultValue", Justification = "copied from game code as-is")]
-        [SuppressMessage("ReSharper", "RedundantCast", Justification = "copied from game code as-is")]
-        [SuppressMessage("ReSharper", "RedundantExplicitNullableCreation", Justification = "copied from game code as-is")]
-        [SuppressMessage("ReSharper", "RedundantTypeArgumentsOfMethod", Justification = "copied from game code as-is")]
-        [SuppressMessage("SMAPI.CommonErrors", "AvoidNetField", Justification = "copied from game code as-is")]
-        [SuppressMessage("SMAPI.CommonErrors", "AvoidImplicitNetFieldCast", Justification = "copied from game code as-is")]
-        private void DrawImpl(GameTime gameTime)
-        {
-            var events = this.Events;
+        ///// <summary>Replicate the game's draw logic with some changes for SMAPI.</summary>
+        ///// <param name="gameTime">A snapshot of the game timing state.</param>
+        ///// <remarks>This implementation is identical to <see cref="Game1.Draw"/>, except for try..catch around menu draw code, private field references replaced by wrappers, and added events.</remarks>
+        //[SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator", Justification = "copied from game code as-is")]
+        //[SuppressMessage("ReSharper", "LocalVariableHidesMember", Justification = "copied from game code as-is")]
+        //[SuppressMessage("ReSharper", "PossibleLossOfFraction", Justification = "copied from game code as-is")]
+        //[SuppressMessage("ReSharper", "RedundantArgumentDefaultValue", Justification = "copied from game code as-is")]
+        //[SuppressMessage("ReSharper", "RedundantCast", Justification = "copied from game code as-is")]
+        //[SuppressMessage("ReSharper", "RedundantExplicitNullableCreation", Justification = "copied from game code as-is")]
+        //[SuppressMessage("ReSharper", "RedundantTypeArgumentsOfMethod", Justification = "copied from game code as-is")]
+        //[SuppressMessage("SMAPI.CommonErrors", "AvoidNetField", Justification = "copied from game code as-is")]
+        //[SuppressMessage("SMAPI.CommonErrors", "AvoidImplicitNetFieldCast", Justification = "copied from game code as-is")]
+        //private void DrawImpl(GameTime gameTime)
+        //{
+        //    var events = this.Events;
 
-            if (Game1._newDayTask != null)
-                this.GraphicsDevice.Clear(this.bgColor);
-            else
-            {
-                if ((double)Game1.options.zoomLevel != 1.0)
-                    this.GraphicsDevice.SetRenderTarget(this.screen);
-                if (this.IsSaving)
-                {
-                    this.GraphicsDevice.Clear(this.bgColor);
-                    IClickableMenu activeClickableMenu = Game1.activeClickableMenu;
-                    if (activeClickableMenu != null)
-                    {
-                        Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, (DepthStencilState)null, (RasterizerState)null);
-                        events.Rendering.RaiseEmpty();
-                        try
-                        {
-                            events.RenderingActiveMenu.RaiseEmpty();
-                            activeClickableMenu.draw(Game1.spriteBatch);
-                            events.RenderedActiveMenu.RaiseEmpty();
-                        }
-                        catch (Exception ex)
-                        {
-                            this.Monitor.Log($"The {activeClickableMenu.GetType().FullName} menu crashed while drawing itself during save. SMAPI will force it to exit to avoid crashing the game.\n{ex.GetLogSummary()}", LogLevel.Error);
-                            activeClickableMenu.exitThisMenu();
-                        }
-                        events.Rendered.RaiseEmpty();
-                        Game1.spriteBatch.End();
-                    }
-                    if (Game1.overlayMenu != null)
-                    {
-                        Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, (DepthStencilState)null, (RasterizerState)null);
-                        Game1.overlayMenu.draw(Game1.spriteBatch);
-                        Game1.spriteBatch.End();
-                    }
-                    this.renderScreenBuffer();
-                }
-                else
-                {
-                    this.GraphicsDevice.Clear(this.bgColor);
-                    if (Game1.activeClickableMenu != null && Game1.options.showMenuBackground && Game1.activeClickableMenu.showWithoutTransparencyIfOptionIsSet())
-                    {
-                        Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, (DepthStencilState)null, (RasterizerState)null);
+        //    if (Game1._newDayTask != null)
+        //        this.GraphicsDevice.Clear(this.bgColor);
+        //    else
+        //    {
+        //        if ((double)Game1.options.zoomLevel != 1.0)
+        //            this.GraphicsDevice.SetRenderTarget(this.screen);
+        //        if (this.IsSaving)
+        //        {
+        //            this.GraphicsDevice.Clear(this.bgColor);
+        //            IClickableMenu activeClickableMenu = Game1.activeClickableMenu;
+        //            if (activeClickableMenu != null)
+        //            {
+        //                Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, (DepthStencilState)null, (RasterizerState)null);
+        //                events.Rendering.RaiseEmpty();
+        //                try
+        //                {
+        //                    events.RenderingActiveMenu.RaiseEmpty();
+        //                    activeClickableMenu.draw(Game1.spriteBatch);
+        //                    events.RenderedActiveMenu.RaiseEmpty();
+        //                }
+        //                catch (Exception ex)
+        //                {
+        //                    this.Monitor.Log($"The {activeClickableMenu.GetType().FullName} menu crashed while drawing itself during save. SMAPI will force it to exit to avoid crashing the game.\n{ex.GetLogSummary()}", LogLevel.Error);
+        //                    activeClickableMenu.exitThisMenu();
+        //                }
+        //                events.Rendered.RaiseEmpty();
+        //                Game1.spriteBatch.End();
+        //            }
+        //            if (Game1.overlayMenu != null)
+        //            {
+        //                Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, (DepthStencilState)null, (RasterizerState)null);
+        //                Game1.overlayMenu.draw(Game1.spriteBatch);
+        //                Game1.spriteBatch.End();
+        //            }
+        //            this.renderScreenBuffer();
+        //        }
+        //        else
+        //        {
+        //            this.GraphicsDevice.Clear(this.bgColor);
+        //            if (Game1.activeClickableMenu != null && Game1.options.showMenuBackground && Game1.activeClickableMenu.showWithoutTransparencyIfOptionIsSet())
+        //            {
+        //                Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, (DepthStencilState)null, (RasterizerState)null);
 
-                        events.Rendering.RaiseEmpty();
-                        try
-                        {
-                            Game1.activeClickableMenu.drawBackground(Game1.spriteBatch);
-                            events.RenderingActiveMenu.RaiseEmpty();
-                            Game1.activeClickableMenu.draw(Game1.spriteBatch);
-                            events.RenderedActiveMenu.RaiseEmpty();
-                        }
-                        catch (Exception ex)
-                        {
-                            this.Monitor.Log($"The {Game1.activeClickableMenu.GetType().FullName} menu crashed while drawing itself. SMAPI will force it to exit to avoid crashing the game.\n{ex.GetLogSummary()}", LogLevel.Error);
-                            Game1.activeClickableMenu.exitThisMenu();
-                        }
-                        events.Rendered.RaiseEmpty();
-                        Game1.spriteBatch.End();
-                        this.drawOverlays(Game1.spriteBatch);
-                        if ((double)Game1.options.zoomLevel != 1.0)
-                        {
-                            this.GraphicsDevice.SetRenderTarget((RenderTarget2D)null);
-                            this.GraphicsDevice.Clear(this.bgColor);
-                            Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone);
-                            Game1.spriteBatch.Draw((Texture2D)this.screen, Vector2.Zero, new Microsoft.Xna.Framework.Rectangle?(this.screen.Bounds), Color.White, 0.0f, Vector2.Zero, Game1.options.zoomLevel, SpriteEffects.None, 1f);
-                            Game1.spriteBatch.End();
-                        }
-                        if (Game1.overlayMenu == null)
-                            return;
-                        Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, (DepthStencilState)null, (RasterizerState)null);
-                        Game1.overlayMenu.draw(Game1.spriteBatch);
-                        Game1.spriteBatch.End();
-                    }
-                    else if (Game1.gameMode == (byte)11)
-                    {
-                        Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, (DepthStencilState)null, (RasterizerState)null);
-                        events.Rendering.RaiseEmpty();
-                        Game1.spriteBatch.DrawString(Game1.dialogueFont, Game1.content.LoadString("Strings\\StringsFromCSFiles:Game1.cs.3685"), new Vector2(16f, 16f), Color.HotPink);
-                        Game1.spriteBatch.DrawString(Game1.dialogueFont, Game1.content.LoadString("Strings\\StringsFromCSFiles:Game1.cs.3686"), new Vector2(16f, 32f), new Color(0, (int)byte.MaxValue, 0));
-                        Game1.spriteBatch.DrawString(Game1.dialogueFont, Game1.parseText(Game1.errorMessage, Game1.dialogueFont, Game1.graphics.GraphicsDevice.Viewport.Width), new Vector2(16f, 48f), Color.White);
-                        events.Rendered.RaiseEmpty();
-                        Game1.spriteBatch.End();
-                    }
-                    else if (Game1.currentMinigame != null)
-                    {
-                        Game1.currentMinigame.draw(Game1.spriteBatch);
-                        if (Game1.globalFade && !Game1.menuUp && (!Game1.nameSelectUp || Game1.messagePause))
-                        {
-                            Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, (DepthStencilState)null, (RasterizerState)null);
-                            Game1.spriteBatch.Draw(Game1.fadeToBlackRect, Game1.graphics.GraphicsDevice.Viewport.Bounds, Color.Black * (Game1.gameMode == (byte)0 ? 1f - Game1.fadeToBlackAlpha : Game1.fadeToBlackAlpha));
-                            Game1.spriteBatch.End();
-                        }
-                        this.drawOverlays(Game1.spriteBatch);
-                        if ((double)Game1.options.zoomLevel == 1.0)
-                            return;
-                        this.GraphicsDevice.SetRenderTarget((RenderTarget2D)null);
-                        this.GraphicsDevice.Clear(this.bgColor);
-                        Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone);
-                        Game1.spriteBatch.Draw((Texture2D)this.screen, Vector2.Zero, new Microsoft.Xna.Framework.Rectangle?(this.screen.Bounds), Color.White, 0.0f, Vector2.Zero, Game1.options.zoomLevel, SpriteEffects.None, 1f);
-                        Game1.spriteBatch.End();
-                    }
-                    else if (Game1.showingEndOfNightStuff)
-                    {
-                        Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, (DepthStencilState)null, (RasterizerState)null);
-                        events.Rendering.RaiseEmpty();
-                        if (Game1.activeClickableMenu != null)
-                        {
-                            try
-                            {
-                                events.RenderingActiveMenu.RaiseEmpty();
-                                Game1.activeClickableMenu.draw(Game1.spriteBatch);
-                                events.RenderedActiveMenu.RaiseEmpty();
-                            }
-                            catch (Exception ex)
-                            {
-                                this.Monitor.Log($"The {Game1.activeClickableMenu.GetType().FullName} menu crashed while drawing itself during end-of-night-stuff. SMAPI will force it to exit to avoid crashing the game.\n{ex.GetLogSummary()}", LogLevel.Error);
-                                Game1.activeClickableMenu.exitThisMenu();
-                            }
-                        }
-                        events.Rendered.RaiseEmpty();
-                        Game1.spriteBatch.End();
-                        this.drawOverlays(Game1.spriteBatch);
-                        if ((double)Game1.options.zoomLevel == 1.0)
-                            return;
-                        this.GraphicsDevice.SetRenderTarget((RenderTarget2D)null);
-                        this.GraphicsDevice.Clear(this.bgColor);
-                        Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone);
-                        Game1.spriteBatch.Draw((Texture2D)this.screen, Vector2.Zero, new Microsoft.Xna.Framework.Rectangle?(this.screen.Bounds), Color.White, 0.0f, Vector2.Zero, Game1.options.zoomLevel, SpriteEffects.None, 1f);
-                        Game1.spriteBatch.End();
-                    }
-                    else if (Game1.gameMode == (byte)6 || Game1.gameMode == (byte)3 && Game1.currentLocation == null)
-                    {
-                        Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, (DepthStencilState)null, (RasterizerState)null);
-                        events.Rendering.RaiseEmpty();
-                        string str1 = "";
-                        for (int index = 0; (double)index < gameTime.TotalGameTime.TotalMilliseconds % 999.0 / 333.0; ++index)
-                            str1 += ".";
-                        string str2 = Game1.content.LoadString("Strings\\StringsFromCSFiles:Game1.cs.3688");
-                        string s = str2 + str1;
-                        string str3 = str2 + "... ";
-                        int widthOfString = SpriteText.getWidthOfString(str3);
-                        int height = 64;
-                        int x = 64;
-                        int y = Game1.graphics.GraphicsDevice.Viewport.GetTitleSafeArea().Bottom - height;
-                        SpriteText.drawString(Game1.spriteBatch, s, x, y, 999999, widthOfString, height, 1f, 0.88f, false, 0, str3, -1);
-                        events.Rendered.RaiseEmpty();
-                        Game1.spriteBatch.End();
-                        this.drawOverlays(Game1.spriteBatch);
-                        if ((double)Game1.options.zoomLevel != 1.0)
-                        {
-                            this.GraphicsDevice.SetRenderTarget((RenderTarget2D)null);
-                            this.GraphicsDevice.Clear(this.bgColor);
-                            Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone);
-                            Game1.spriteBatch.Draw((Texture2D)this.screen, Vector2.Zero, new Microsoft.Xna.Framework.Rectangle?(this.screen.Bounds), Color.White, 0.0f, Vector2.Zero, Game1.options.zoomLevel, SpriteEffects.None, 1f);
-                            Game1.spriteBatch.End();
-                        }
-                        if (Game1.overlayMenu != null)
-                        {
-                            Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, (DepthStencilState)null, (RasterizerState)null);
-                            Game1.overlayMenu.draw(Game1.spriteBatch);
-                            Game1.spriteBatch.End();
-                        }
-                        //base.Draw(gameTime);
-                    }
-                    else
-                    {
-                        byte batchOpens = 0; // used for rendering event
+        //                events.Rendering.RaiseEmpty();
+        //                try
+        //                {
+        //                    Game1.activeClickableMenu.drawBackground(Game1.spriteBatch);
+        //                    events.RenderingActiveMenu.RaiseEmpty();
+        //                    Game1.activeClickableMenu.draw(Game1.spriteBatch);
+        //                    events.RenderedActiveMenu.RaiseEmpty();
+        //                }
+        //                catch (Exception ex)
+        //                {
+        //                    this.Monitor.Log($"The {Game1.activeClickableMenu.GetType().FullName} menu crashed while drawing itself. SMAPI will force it to exit to avoid crashing the game.\n{ex.GetLogSummary()}", LogLevel.Error);
+        //                    Game1.activeClickableMenu.exitThisMenu();
+        //                }
+        //                events.Rendered.RaiseEmpty();
+        //                Game1.spriteBatch.End();
+        //                this.drawOverlays(Game1.spriteBatch);
+        //                if ((double)Game1.options.zoomLevel != 1.0)
+        //                {
+        //                    this.GraphicsDevice.SetRenderTarget((RenderTarget2D)null);
+        //                    this.GraphicsDevice.Clear(this.bgColor);
+        //                    Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone);
+        //                    Game1.spriteBatch.Draw((Texture2D)this.screen, Vector2.Zero, new Microsoft.Xna.Framework.Rectangle?(this.screen.Bounds), Color.White, 0.0f, Vector2.Zero, Game1.options.zoomLevel, SpriteEffects.None, 1f);
+        //                    Game1.spriteBatch.End();
+        //                }
+        //                if (Game1.overlayMenu == null)
+        //                    return;
+        //                Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, (DepthStencilState)null, (RasterizerState)null);
+        //                Game1.overlayMenu.draw(Game1.spriteBatch);
+        //                Game1.spriteBatch.End();
+        //            }
+        //            else if (Game1.gameMode == (byte)11)
+        //            {
+        //                Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, (DepthStencilState)null, (RasterizerState)null);
+        //                events.Rendering.RaiseEmpty();
+        //                Game1.spriteBatch.DrawString(Game1.dialogueFont, Game1.content.LoadString("Strings\\StringsFromCSFiles:Game1.cs.3685"), new Vector2(16f, 16f), Color.HotPink);
+        //                Game1.spriteBatch.DrawString(Game1.dialogueFont, Game1.content.LoadString("Strings\\StringsFromCSFiles:Game1.cs.3686"), new Vector2(16f, 32f), new Color(0, (int)byte.MaxValue, 0));
+        //                Game1.spriteBatch.DrawString(Game1.dialogueFont, Game1.parseText(Game1.errorMessage, Game1.dialogueFont, Game1.graphics.GraphicsDevice.Viewport.Width), new Vector2(16f, 48f), Color.White);
+        //                events.Rendered.RaiseEmpty();
+        //                Game1.spriteBatch.End();
+        //            }
+        //            else if (Game1.currentMinigame != null)
+        //            {
+        //                Game1.currentMinigame.draw(Game1.spriteBatch);
+        //                if (Game1.globalFade && !Game1.menuUp && (!Game1.nameSelectUp || Game1.messagePause))
+        //                {
+        //                    Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, (DepthStencilState)null, (RasterizerState)null);
+        //                    Game1.spriteBatch.Draw(Game1.fadeToBlackRect, Game1.graphics.GraphicsDevice.Viewport.Bounds, Color.Black * (Game1.gameMode == (byte)0 ? 1f - Game1.fadeToBlackAlpha : Game1.fadeToBlackAlpha));
+        //                    Game1.spriteBatch.End();
+        //                }
+        //                this.drawOverlays(Game1.spriteBatch);
+        //                if ((double)Game1.options.zoomLevel == 1.0)
+        //                    return;
+        //                this.GraphicsDevice.SetRenderTarget((RenderTarget2D)null);
+        //                this.GraphicsDevice.Clear(this.bgColor);
+        //                Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone);
+        //                Game1.spriteBatch.Draw((Texture2D)this.screen, Vector2.Zero, new Microsoft.Xna.Framework.Rectangle?(this.screen.Bounds), Color.White, 0.0f, Vector2.Zero, Game1.options.zoomLevel, SpriteEffects.None, 1f);
+        //                Game1.spriteBatch.End();
+        //            }
+        //            else if (Game1.showingEndOfNightStuff)
+        //            {
+        //                Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, (DepthStencilState)null, (RasterizerState)null);
+        //                events.Rendering.RaiseEmpty();
+        //                if (Game1.activeClickableMenu != null)
+        //                {
+        //                    try
+        //                    {
+        //                        events.RenderingActiveMenu.RaiseEmpty();
+        //                        Game1.activeClickableMenu.draw(Game1.spriteBatch);
+        //                        events.RenderedActiveMenu.RaiseEmpty();
+        //                    }
+        //                    catch (Exception ex)
+        //                    {
+        //                        this.Monitor.Log($"The {Game1.activeClickableMenu.GetType().FullName} menu crashed while drawing itself during end-of-night-stuff. SMAPI will force it to exit to avoid crashing the game.\n{ex.GetLogSummary()}", LogLevel.Error);
+        //                        Game1.activeClickableMenu.exitThisMenu();
+        //                    }
+        //                }
+        //                events.Rendered.RaiseEmpty();
+        //                Game1.spriteBatch.End();
+        //                this.drawOverlays(Game1.spriteBatch);
+        //                if ((double)Game1.options.zoomLevel == 1.0)
+        //                    return;
+        //                this.GraphicsDevice.SetRenderTarget((RenderTarget2D)null);
+        //                this.GraphicsDevice.Clear(this.bgColor);
+        //                Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone);
+        //                Game1.spriteBatch.Draw((Texture2D)this.screen, Vector2.Zero, new Microsoft.Xna.Framework.Rectangle?(this.screen.Bounds), Color.White, 0.0f, Vector2.Zero, Game1.options.zoomLevel, SpriteEffects.None, 1f);
+        //                Game1.spriteBatch.End();
+        //            }
+        //            else if (Game1.gameMode == (byte)6 || Game1.gameMode == (byte)3 && Game1.currentLocation == null)
+        //            {
+        //                Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, (DepthStencilState)null, (RasterizerState)null);
+        //                events.Rendering.RaiseEmpty();
+        //                string str1 = "";
+        //                for (int index = 0; (double)index < gameTime.TotalGameTime.TotalMilliseconds % 999.0 / 333.0; ++index)
+        //                    str1 += ".";
+        //                string str2 = Game1.content.LoadString("Strings\\StringsFromCSFiles:Game1.cs.3688");
+        //                string s = str2 + str1;
+        //                string str3 = str2 + "... ";
+        //                int widthOfString = SpriteText.getWidthOfString(str3);
+        //                int height = 64;
+        //                int x = 64;
+        //                int y = Game1.graphics.GraphicsDevice.Viewport.GetTitleSafeArea().Bottom - height;
+        //                SpriteText.drawString(Game1.spriteBatch, s, x, y, 999999, widthOfString, height, 1f, 0.88f, false, 0, str3, -1);
+        //                events.Rendered.RaiseEmpty();
+        //                Game1.spriteBatch.End();
+        //                this.drawOverlays(Game1.spriteBatch);
+        //                if ((double)Game1.options.zoomLevel != 1.0)
+        //                {
+        //                    this.GraphicsDevice.SetRenderTarget((RenderTarget2D)null);
+        //                    this.GraphicsDevice.Clear(this.bgColor);
+        //                    Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone);
+        //                    Game1.spriteBatch.Draw((Texture2D)this.screen, Vector2.Zero, new Microsoft.Xna.Framework.Rectangle?(this.screen.Bounds), Color.White, 0.0f, Vector2.Zero, Game1.options.zoomLevel, SpriteEffects.None, 1f);
+        //                    Game1.spriteBatch.End();
+        //                }
+        //                if (Game1.overlayMenu != null)
+        //                {
+        //                    Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, (DepthStencilState)null, (RasterizerState)null);
+        //                    Game1.overlayMenu.draw(Game1.spriteBatch);
+        //                    Game1.spriteBatch.End();
+        //                }
+        //                //base.Draw(gameTime);
+        //            }
+        //            else
+        //            {
+        //                byte batchOpens = 0; // used for rendering event
 
-                        Microsoft.Xna.Framework.Rectangle rectangle;
-                        Viewport viewport;
-                        if (Game1.gameMode == (byte)0)
-                        {
-                            Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, (DepthStencilState)null, (RasterizerState)null);
-                            if (++batchOpens == 1)
-                                events.Rendering.RaiseEmpty();
-                        }
-                        else
-                        {
-                            if (Game1.drawLighting)
-                            {
-                                this.GraphicsDevice.SetRenderTarget(Game1.lightmap);
-                                this.GraphicsDevice.Clear(Color.White * 0.0f);
-                                Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, (DepthStencilState)null, (RasterizerState)null);
-                                if (++batchOpens == 1)
-                                    events.Rendering.RaiseEmpty();
-                                Game1.spriteBatch.Draw(Game1.staminaRect, Game1.lightmap.Bounds, Game1.currentLocation.Name.StartsWith("UndergroundMine") ? Game1.mine.getLightingColor(gameTime) : (Game1.ambientLight.Equals(Color.White) || Game1.isRaining && (bool)((NetFieldBase<bool, NetBool>)Game1.currentLocation.isOutdoors) ? Game1.outdoorLight : Game1.ambientLight));
-                                for (int index = 0; index < Game1.currentLightSources.Count; ++index)
-                                {
-                                    if (Utility.isOnScreen((Vector2)((NetFieldBase<Vector2, NetVector2>)Game1.currentLightSources.ElementAt<LightSource>(index).position), (int)((double)(float)((NetFieldBase<float, NetFloat>)Game1.currentLightSources.ElementAt<LightSource>(index).radius) * 64.0 * 4.0)))
-                                        Game1.spriteBatch.Draw(Game1.currentLightSources.ElementAt<LightSource>(index).lightTexture, Game1.GlobalToLocal(Game1.viewport, (Vector2)((NetFieldBase<Vector2, NetVector2>)Game1.currentLightSources.ElementAt<LightSource>(index).position)) / (float)(Game1.options.lightingQuality / 2), new Microsoft.Xna.Framework.Rectangle?(Game1.currentLightSources.ElementAt<LightSource>(index).lightTexture.Bounds), (Color)((NetFieldBase<Color, NetColor>)Game1.currentLightSources.ElementAt<LightSource>(index).color), 0.0f, new Vector2((float)Game1.currentLightSources.ElementAt<LightSource>(index).lightTexture.Bounds.Center.X, (float)Game1.currentLightSources.ElementAt<LightSource>(index).lightTexture.Bounds.Center.Y), (float)((NetFieldBase<float, NetFloat>)Game1.currentLightSources.ElementAt<LightSource>(index).radius) / (float)(Game1.options.lightingQuality / 2), SpriteEffects.None, 0.9f);
-                                }
-                                Game1.spriteBatch.End();
-                                this.GraphicsDevice.SetRenderTarget((double)Game1.options.zoomLevel == 1.0 ? (RenderTarget2D)null : this.screen);
-                            }
-                            if (Game1.bloomDay && Game1.bloom != null)
-                                Game1.bloom.BeginDraw();
-                            this.GraphicsDevice.Clear(this.bgColor);
-                            Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, (DepthStencilState)null, (RasterizerState)null);
-                            if (++batchOpens == 1)
-                                events.Rendering.RaiseEmpty();
-                            events.RenderingWorld.RaiseEmpty();
-                            if (Game1.background != null)
-                                Game1.background.draw(Game1.spriteBatch);
-                            Game1.mapDisplayDevice.BeginScene(Game1.spriteBatch);
-                            Game1.currentLocation.Map.GetLayer("Back").Draw(Game1.mapDisplayDevice, Game1.viewport, Location.Origin, false, 4);
-                            Game1.currentLocation.drawWater(Game1.spriteBatch);
-                            this._farmerShadows.Clear();
-                            if (Game1.currentLocation.currentEvent != null && !Game1.currentLocation.currentEvent.isFestival && Game1.currentLocation.currentEvent.farmerActors.Count > 0)
-                            {
-                                foreach (Farmer farmerActor in Game1.currentLocation.currentEvent.farmerActors)
-                                {
-                                    if (farmerActor.IsLocalPlayer && Game1.displayFarmer || !(bool)((NetFieldBase<bool, NetBool>)farmerActor.hidden))
-                                        this._farmerShadows.Add(farmerActor);
-                                }
-                            }
-                            else
-                            {
-                                foreach (Farmer farmer in Game1.currentLocation.farmers)
-                                {
-                                    if (farmer.IsLocalPlayer && Game1.displayFarmer || !(bool)((NetFieldBase<bool, NetBool>)farmer.hidden))
-                                        this._farmerShadows.Add(farmer);
-                                }
-                            }
-                            if (!Game1.currentLocation.shouldHideCharacters())
-                            {
-                                if (Game1.CurrentEvent == null)
-                                {
-                                    foreach (NPC character in Game1.currentLocation.characters)
-                                    {
-                                        if (!(bool)((NetFieldBase<bool, NetBool>)character.swimming) && !character.HideShadow && (!character.IsInvisible && !Game1.currentLocation.shouldShadowBeDrawnAboveBuildingsLayer(character.getTileLocation())))
-                                            Game1.spriteBatch.Draw(Game1.shadowTexture, Game1.GlobalToLocal(Game1.viewport, character.Position + new Vector2((float)(character.Sprite.SpriteWidth * 4) / 2f, (float)(character.GetBoundingBox().Height + (character.IsMonster ? 0 : 12)))), new Microsoft.Xna.Framework.Rectangle?(Game1.shadowTexture.Bounds), Color.White, 0.0f, new Vector2((float)Game1.shadowTexture.Bounds.Center.X, (float)Game1.shadowTexture.Bounds.Center.Y), (float)(4.0 + (double)character.yJumpOffset / 40.0) * (float)((NetFieldBase<float, NetFloat>)character.scale), SpriteEffects.None, Math.Max(0.0f, (float)character.getStandingY() / 10000f) - 1E-06f);
-                                    }
-                                }
-                                else
-                                {
-                                    foreach (NPC actor in Game1.CurrentEvent.actors)
-                                    {
-                                        if (!(bool)((NetFieldBase<bool, NetBool>)actor.swimming) && !actor.HideShadow && !Game1.currentLocation.shouldShadowBeDrawnAboveBuildingsLayer(actor.getTileLocation()))
-                                            Game1.spriteBatch.Draw(Game1.shadowTexture, Game1.GlobalToLocal(Game1.viewport, actor.Position + new Vector2((float)(actor.Sprite.SpriteWidth * 4) / 2f, (float)(actor.GetBoundingBox().Height + (actor.IsMonster ? 0 : (actor.Sprite.SpriteHeight <= 16 ? -4 : 12))))), new Microsoft.Xna.Framework.Rectangle?(Game1.shadowTexture.Bounds), Color.White, 0.0f, new Vector2((float)Game1.shadowTexture.Bounds.Center.X, (float)Game1.shadowTexture.Bounds.Center.Y), (float)(4.0 + (double)actor.yJumpOffset / 40.0) * (float)((NetFieldBase<float, NetFloat>)actor.scale), SpriteEffects.None, Math.Max(0.0f, (float)actor.getStandingY() / 10000f) - 1E-06f);
-                                    }
-                                }
-                                foreach (Farmer farmerShadow in this._farmerShadows)
-                                {
-                                    if (!(bool)((NetFieldBase<bool, NetBool>)farmerShadow.swimming) && !farmerShadow.isRidingHorse() && (Game1.currentLocation == null || !Game1.currentLocation.shouldShadowBeDrawnAboveBuildingsLayer(farmerShadow.getTileLocation())))
-                                    {
-                                        SpriteBatch spriteBatch = Game1.spriteBatch;
-                                        Texture2D shadowTexture = Game1.shadowTexture;
-                                        Vector2 local = Game1.GlobalToLocal(farmerShadow.Position + new Vector2(32f, 24f));
-                                        Microsoft.Xna.Framework.Rectangle? sourceRectangle = new Microsoft.Xna.Framework.Rectangle?(Game1.shadowTexture.Bounds);
-                                        Color white = Color.White;
-                                        double num1 = 0.0;
-                                        Microsoft.Xna.Framework.Rectangle bounds = Game1.shadowTexture.Bounds;
-                                        double x = (double)bounds.Center.X;
-                                        bounds = Game1.shadowTexture.Bounds;
-                                        double y = (double)bounds.Center.Y;
-                                        Vector2 origin = new Vector2((float)x, (float)y);
-                                        double num2 = 4.0 - (!farmerShadow.running && !farmerShadow.UsingTool || farmerShadow.FarmerSprite.currentAnimationIndex <= 1 ? 0.0 : (double)Math.Abs(FarmerRenderer.featureYOffsetPerFrame[farmerShadow.FarmerSprite.CurrentFrame]) * 0.5);
-                                        int num3 = 0;
-                                        double num4 = 0.0;
-                                        spriteBatch.Draw(shadowTexture, local, sourceRectangle, white, (float)num1, origin, (float)num2, (SpriteEffects)num3, (float)num4);
-                                    }
-                                }
-                            }
-                            Game1.currentLocation.Map.GetLayer("Buildings").Draw(Game1.mapDisplayDevice, Game1.viewport, Location.Origin, false, 4);
-                            Game1.mapDisplayDevice.EndScene();
-                            Game1.spriteBatch.End();
-                            Game1.spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend, SamplerState.PointClamp, (DepthStencilState)null, (RasterizerState)null);
-                            if (!Game1.currentLocation.shouldHideCharacters())
-                            {
-                                if (Game1.CurrentEvent == null)
-                                {
-                                    foreach (NPC character in Game1.currentLocation.characters)
-                                    {
-                                        if (!(bool)((NetFieldBase<bool, NetBool>)character.swimming) && !character.HideShadow && Game1.currentLocation.shouldShadowBeDrawnAboveBuildingsLayer(character.getTileLocation()))
-                                            Game1.spriteBatch.Draw(Game1.shadowTexture, Game1.GlobalToLocal(Game1.viewport, character.Position + new Vector2((float)(character.Sprite.SpriteWidth * 4) / 2f, (float)(character.GetBoundingBox().Height + (character.IsMonster ? 0 : 12)))), new Microsoft.Xna.Framework.Rectangle?(Game1.shadowTexture.Bounds), Color.White, 0.0f, new Vector2((float)Game1.shadowTexture.Bounds.Center.X, (float)Game1.shadowTexture.Bounds.Center.Y), (float)(4.0 + (double)character.yJumpOffset / 40.0) * (float)((NetFieldBase<float, NetFloat>)character.scale), SpriteEffects.None, Math.Max(0.0f, (float)character.getStandingY() / 10000f) - 1E-06f);
-                                    }
-                                }
-                                else
-                                {
-                                    foreach (NPC actor in Game1.CurrentEvent.actors)
-                                    {
-                                        if (!(bool)((NetFieldBase<bool, NetBool>)actor.swimming) && !actor.HideShadow && Game1.currentLocation.shouldShadowBeDrawnAboveBuildingsLayer(actor.getTileLocation()))
-                                            Game1.spriteBatch.Draw(Game1.shadowTexture, Game1.GlobalToLocal(Game1.viewport, actor.Position + new Vector2((float)(actor.Sprite.SpriteWidth * 4) / 2f, (float)(actor.GetBoundingBox().Height + (actor.IsMonster ? 0 : 12)))), new Microsoft.Xna.Framework.Rectangle?(Game1.shadowTexture.Bounds), Color.White, 0.0f, new Vector2((float)Game1.shadowTexture.Bounds.Center.X, (float)Game1.shadowTexture.Bounds.Center.Y), (float)(4.0 + (double)actor.yJumpOffset / 40.0) * (float)((NetFieldBase<float, NetFloat>)actor.scale), SpriteEffects.None, Math.Max(0.0f, (float)actor.getStandingY() / 10000f) - 1E-06f);
-                                    }
-                                }
-                                foreach (Farmer farmerShadow in this._farmerShadows)
-                                {
-                                    if (!(bool)((NetFieldBase<bool, NetBool>)farmerShadow.swimming) && !farmerShadow.isRidingHorse() && (Game1.currentLocation != null && Game1.currentLocation.shouldShadowBeDrawnAboveBuildingsLayer(farmerShadow.getTileLocation())))
-                                    {
-                                        SpriteBatch spriteBatch = Game1.spriteBatch;
-                                        Texture2D shadowTexture = Game1.shadowTexture;
-                                        Vector2 local = Game1.GlobalToLocal(farmerShadow.Position + new Vector2(32f, 24f));
-                                        Microsoft.Xna.Framework.Rectangle? sourceRectangle = new Microsoft.Xna.Framework.Rectangle?(Game1.shadowTexture.Bounds);
-                                        Color white = Color.White;
-                                        double num1 = 0.0;
-                                        Microsoft.Xna.Framework.Rectangle bounds = Game1.shadowTexture.Bounds;
-                                        double x = (double)bounds.Center.X;
-                                        bounds = Game1.shadowTexture.Bounds;
-                                        double y = (double)bounds.Center.Y;
-                                        Vector2 origin = new Vector2((float)x, (float)y);
-                                        double num2 = 4.0 - (!farmerShadow.running && !farmerShadow.UsingTool || farmerShadow.FarmerSprite.currentAnimationIndex <= 1 ? 0.0 : (double)Math.Abs(FarmerRenderer.featureYOffsetPerFrame[farmerShadow.FarmerSprite.CurrentFrame]) * 0.5);
-                                        int num3 = 0;
-                                        double num4 = 0.0;
-                                        spriteBatch.Draw(shadowTexture, local, sourceRectangle, white, (float)num1, origin, (float)num2, (SpriteEffects)num3, (float)num4);
-                                    }
-                                }
-                            }
-                            if ((Game1.eventUp || Game1.killScreen) && (!Game1.killScreen && Game1.currentLocation.currentEvent != null))
-                                Game1.currentLocation.currentEvent.draw(Game1.spriteBatch);
-                            if (Game1.player.currentUpgrade != null && Game1.player.currentUpgrade.daysLeftTillUpgradeDone <= 3 && Game1.currentLocation.Name.Equals("Farm"))
-                                Game1.spriteBatch.Draw(Game1.player.currentUpgrade.workerTexture, Game1.GlobalToLocal(Game1.viewport, Game1.player.currentUpgrade.positionOfCarpenter), new Microsoft.Xna.Framework.Rectangle?(Game1.player.currentUpgrade.getSourceRectangle()), Color.White, 0.0f, Vector2.Zero, 1f, SpriteEffects.None, (float)(((double)Game1.player.currentUpgrade.positionOfCarpenter.Y + 48.0) / 10000.0));
-                            Game1.currentLocation.draw(Game1.spriteBatch);
-                            if (Game1.eventUp && Game1.currentLocation.currentEvent != null)
-                            {
-                                string messageToScreen = Game1.currentLocation.currentEvent.messageToScreen;
-                            }
-                            if (Game1.player.ActiveObject == null && (Game1.player.UsingTool || Game1.pickingTool) && (Game1.player.CurrentTool != null && (!Game1.player.CurrentTool.Name.Equals("Seeds") || Game1.pickingTool)))
-                                Game1.drawTool(Game1.player);
-                            if (Game1.currentLocation.Name.Equals("Farm"))
-                                this.drawFarmBuildings();
-                            if (Game1.tvStation >= 0)
-                                Game1.spriteBatch.Draw(Game1.tvStationTexture, Game1.GlobalToLocal(Game1.viewport, new Vector2(400f, 160f)), new Microsoft.Xna.Framework.Rectangle?(new Microsoft.Xna.Framework.Rectangle(Game1.tvStation * 24, 0, 24, 15)), Color.White, 0.0f, Vector2.Zero, 4f, SpriteEffects.None, 1E-08f);
-                            if (Game1.panMode)
-                            {
-                                Game1.spriteBatch.Draw(Game1.fadeToBlackRect, new Microsoft.Xna.Framework.Rectangle((int)Math.Floor((double)(Game1.getOldMouseX() + Game1.viewport.X) / 64.0) * 64 - Game1.viewport.X, (int)Math.Floor((double)(Game1.getOldMouseY() + Game1.viewport.Y) / 64.0) * 64 - Game1.viewport.Y, 64, 64), Color.Lime * 0.75f);
-                                foreach (Warp warp in (NetList<Warp, NetRef<Warp>>)Game1.currentLocation.warps)
-                                    Game1.spriteBatch.Draw(Game1.fadeToBlackRect, new Microsoft.Xna.Framework.Rectangle(warp.X * 64 - Game1.viewport.X, warp.Y * 64 - Game1.viewport.Y, 64, 64), Color.Red * 0.75f);
-                            }
-                            Game1.mapDisplayDevice.BeginScene(Game1.spriteBatch);
-                            Game1.currentLocation.Map.GetLayer("Front").Draw(Game1.mapDisplayDevice, Game1.viewport, Location.Origin, false, 4);
-                            Game1.mapDisplayDevice.EndScene();
-                            Game1.currentLocation.drawAboveFrontLayer(Game1.spriteBatch);
-                            Game1.spriteBatch.End();
-                            Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, (DepthStencilState)null, (RasterizerState)null);
-                            if (Game1.displayFarmer && Game1.player.ActiveObject != null && ((bool)((NetFieldBase<bool, NetBool>)Game1.player.ActiveObject.bigCraftable) && this.checkBigCraftableBoundariesForFrontLayer()) && Game1.currentLocation.Map.GetLayer("Front").PickTile(new Location(Game1.player.getStandingX(), Game1.player.getStandingY()), Game1.viewport.Size) == null)
-                                Game1.drawPlayerHeldObject(Game1.player);
-                            else if (Game1.displayFarmer && Game1.player.ActiveObject != null)
-                            {
-                                if (Game1.currentLocation.Map.GetLayer("Front").PickTile(new Location((int)Game1.player.Position.X, (int)Game1.player.Position.Y - 38), Game1.viewport.Size) == null || Game1.currentLocation.Map.GetLayer("Front").PickTile(new Location((int)Game1.player.Position.X, (int)Game1.player.Position.Y - 38), Game1.viewport.Size).TileIndexProperties.ContainsKey("FrontAlways"))
-                                {
-                                    Layer layer1 = Game1.currentLocation.Map.GetLayer("Front");
-                                    rectangle = Game1.player.GetBoundingBox();
-                                    Location mapDisplayLocation1 = new Location(rectangle.Right, (int)Game1.player.Position.Y - 38);
-                                    Size size1 = Game1.viewport.Size;
-                                    if (layer1.PickTile(mapDisplayLocation1, size1) != null)
-                                    {
-                                        Layer layer2 = Game1.currentLocation.Map.GetLayer("Front");
-                                        rectangle = Game1.player.GetBoundingBox();
-                                        Location mapDisplayLocation2 = new Location(rectangle.Right, (int)Game1.player.Position.Y - 38);
-                                        Size size2 = Game1.viewport.Size;
-                                        if (layer2.PickTile(mapDisplayLocation2, size2).TileIndexProperties.ContainsKey("FrontAlways"))
-                                            goto label_129;
-                                    }
-                                    else
-                                        goto label_129;
-                                }
-                                Game1.drawPlayerHeldObject(Game1.player);
-                            }
-                            label_129:
-                            if ((Game1.player.UsingTool || Game1.pickingTool) && Game1.player.CurrentTool != null && ((!Game1.player.CurrentTool.Name.Equals("Seeds") || Game1.pickingTool) && (Game1.currentLocation.Map.GetLayer("Front").PickTile(new Location(Game1.player.getStandingX(), (int)Game1.player.Position.Y - 38), Game1.viewport.Size) != null && Game1.currentLocation.Map.GetLayer("Front").PickTile(new Location(Game1.player.getStandingX(), Game1.player.getStandingY()), Game1.viewport.Size) == null)))
-                                Game1.drawTool(Game1.player);
-                            if (Game1.currentLocation.Map.GetLayer("AlwaysFront") != null)
-                            {
-                                Game1.mapDisplayDevice.BeginScene(Game1.spriteBatch);
-                                Game1.currentLocation.Map.GetLayer("AlwaysFront").Draw(Game1.mapDisplayDevice, Game1.viewport, Location.Origin, false, 4);
-                                Game1.mapDisplayDevice.EndScene();
-                            }
-                            if ((double)Game1.toolHold > 400.0 && Game1.player.CurrentTool.UpgradeLevel >= 1 && Game1.player.canReleaseTool)
-                            {
-                                Color color = Color.White;
-                                switch ((int)((double)Game1.toolHold / 600.0) + 2)
-                                {
-                                    case 1:
-                                        color = Tool.copperColor;
-                                        break;
-                                    case 2:
-                                        color = Tool.steelColor;
-                                        break;
-                                    case 3:
-                                        color = Tool.goldColor;
-                                        break;
-                                    case 4:
-                                        color = Tool.iridiumColor;
-                                        break;
-                                }
-                                Game1.spriteBatch.Draw(Game1.littleEffect, new Microsoft.Xna.Framework.Rectangle((int)Game1.player.getLocalPosition(Game1.viewport).X - 2, (int)Game1.player.getLocalPosition(Game1.viewport).Y - (Game1.player.CurrentTool.Name.Equals("Watering Can") ? 0 : 64) - 2, (int)((double)Game1.toolHold % 600.0 * 0.0799999982118607) + 4, 12), Color.Black);
-                                Game1.spriteBatch.Draw(Game1.littleEffect, new Microsoft.Xna.Framework.Rectangle((int)Game1.player.getLocalPosition(Game1.viewport).X, (int)Game1.player.getLocalPosition(Game1.viewport).Y - (Game1.player.CurrentTool.Name.Equals("Watering Can") ? 0 : 64), (int)((double)Game1.toolHold % 600.0 * 0.0799999982118607), 8), color);
-                            }
-                            if (Game1.isDebrisWeather && Game1.currentLocation.IsOutdoors && (!(bool)((NetFieldBase<bool, NetBool>)Game1.currentLocation.ignoreDebrisWeather) && !Game1.currentLocation.Name.Equals("Desert")) && Game1.viewport.X > -10)
-                            {
-                                foreach (WeatherDebris weatherDebris in Game1.debrisWeather)
-                                    weatherDebris.draw(Game1.spriteBatch);
-                            }
-                            if (Game1.farmEvent != null)
-                                Game1.farmEvent.draw(Game1.spriteBatch);
-                            if ((double)Game1.currentLocation.LightLevel > 0.0 && Game1.timeOfDay < 2000)
-                            {
-                                SpriteBatch spriteBatch = Game1.spriteBatch;
-                                Texture2D fadeToBlackRect = Game1.fadeToBlackRect;
-                                viewport = Game1.graphics.GraphicsDevice.Viewport;
-                                Microsoft.Xna.Framework.Rectangle bounds = viewport.Bounds;
-                                Color color = Color.Black * Game1.currentLocation.LightLevel;
-                                spriteBatch.Draw(fadeToBlackRect, bounds, color);
-                            }
-                            if (Game1.screenGlow)
-                            {
-                                SpriteBatch spriteBatch = Game1.spriteBatch;
-                                Texture2D fadeToBlackRect = Game1.fadeToBlackRect;
-                                viewport = Game1.graphics.GraphicsDevice.Viewport;
-                                Microsoft.Xna.Framework.Rectangle bounds = viewport.Bounds;
-                                Color color = Game1.screenGlowColor * Game1.screenGlowAlpha;
-                                spriteBatch.Draw(fadeToBlackRect, bounds, color);
-                            }
-                            Game1.currentLocation.drawAboveAlwaysFrontLayer(Game1.spriteBatch);
-                            if (Game1.player.CurrentTool != null && Game1.player.CurrentTool is FishingRod && ((Game1.player.CurrentTool as FishingRod).isTimingCast || (double)(Game1.player.CurrentTool as FishingRod).castingChosenCountdown > 0.0 || ((Game1.player.CurrentTool as FishingRod).fishCaught || (Game1.player.CurrentTool as FishingRod).showingTreasure)))
-                                Game1.player.CurrentTool.draw(Game1.spriteBatch);
-                            if (Game1.isRaining && Game1.currentLocation.IsOutdoors && (!Game1.currentLocation.Name.Equals("Desert") && !(Game1.currentLocation is Summit)) && (!Game1.eventUp || Game1.currentLocation.isTileOnMap(new Vector2((float)(Game1.viewport.X / 64), (float)(Game1.viewport.Y / 64)))))
-                            {
-                                for (int index = 0; index < Game1.rainDrops.Length; ++index)
-                                    Game1.spriteBatch.Draw(Game1.rainTexture, Game1.rainDrops[index].position, new Microsoft.Xna.Framework.Rectangle?(Game1.getSourceRectForStandardTileSheet(Game1.rainTexture, Game1.rainDrops[index].frame, -1, -1)), Color.White);
-                            }
-                            Game1.spriteBatch.End();
-                            Game1.spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend, SamplerState.PointClamp, (DepthStencilState)null, (RasterizerState)null);
-                            if (Game1.eventUp && Game1.currentLocation.currentEvent != null)
-                            {
-                                foreach (NPC actor in Game1.currentLocation.currentEvent.actors)
-                                {
-                                    if (actor.isEmoting)
-                                    {
-                                        Vector2 localPosition = actor.getLocalPosition(Game1.viewport);
-                                        localPosition.Y -= 140f;
-                                        if (actor.Age == 2)
-                                            localPosition.Y += 32f;
-                                        else if (actor.Gender == 1)
-                                            localPosition.Y += 10f;
-                                        Game1.spriteBatch.Draw(Game1.emoteSpriteSheet, localPosition, new Microsoft.Xna.Framework.Rectangle?(new Microsoft.Xna.Framework.Rectangle(actor.CurrentEmoteIndex * 16 % Game1.emoteSpriteSheet.Width, actor.CurrentEmoteIndex * 16 / Game1.emoteSpriteSheet.Width * 16, 16, 16)), Color.White, 0.0f, Vector2.Zero, 4f, SpriteEffects.None, (float)actor.getStandingY() / 10000f);
-                                    }
-                                }
-                            }
-                            Game1.spriteBatch.End();
-                            if (Game1.drawLighting)
-                            {
-                                Game1.spriteBatch.Begin(SpriteSortMode.Deferred, this.lightingBlend, SamplerState.LinearClamp, (DepthStencilState)null, (RasterizerState)null);
-                                Game1.spriteBatch.Draw((Texture2D)Game1.lightmap, Vector2.Zero, new Microsoft.Xna.Framework.Rectangle?(Game1.lightmap.Bounds), Color.White, 0.0f, Vector2.Zero, (float)(Game1.options.lightingQuality / 2), SpriteEffects.None, 1f);
-                                if (Game1.isRaining && (bool)((NetFieldBase<bool, NetBool>)Game1.currentLocation.isOutdoors) && !(Game1.currentLocation is Desert))
-                                {
-                                    SpriteBatch spriteBatch = Game1.spriteBatch;
-                                    Texture2D staminaRect = Game1.staminaRect;
-                                    viewport = Game1.graphics.GraphicsDevice.Viewport;
-                                    Microsoft.Xna.Framework.Rectangle bounds = viewport.Bounds;
-                                    Color color = Color.OrangeRed * 0.45f;
-                                    spriteBatch.Draw(staminaRect, bounds, color);
-                                }
-                                Game1.spriteBatch.End();
-                            }
-                            Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, (DepthStencilState)null, (RasterizerState)null);
-                            events.RenderedWorld.RaiseEmpty();
-                            if (Game1.drawGrid)
-                            {
-                                int num1 = -Game1.viewport.X % 64;
-                                float num2 = (float)(-Game1.viewport.Y % 64);
-                                int num3 = num1;
-                                while (true)
-                                {
-                                    int num4 = num3;
-                                    viewport = Game1.graphics.GraphicsDevice.Viewport;
-                                    int width1 = viewport.Width;
-                                    if (num4 < width1)
-                                    {
-                                        SpriteBatch spriteBatch = Game1.spriteBatch;
-                                        Texture2D staminaRect = Game1.staminaRect;
-                                        int x = num3;
-                                        int y = (int)num2;
-                                        int width2 = 1;
-                                        viewport = Game1.graphics.GraphicsDevice.Viewport;
-                                        int height = viewport.Height;
-                                        Microsoft.Xna.Framework.Rectangle destinationRectangle = new Microsoft.Xna.Framework.Rectangle(x, y, width2, height);
-                                        Color color = Color.Red * 0.5f;
-                                        spriteBatch.Draw(staminaRect, destinationRectangle, color);
-                                        num3 += 64;
-                                    }
-                                    else
-                                        break;
-                                }
-                                float num5 = num2;
-                                while (true)
-                                {
-                                    double num4 = (double)num5;
-                                    viewport = Game1.graphics.GraphicsDevice.Viewport;
-                                    double height1 = (double)viewport.Height;
-                                    if (num4 < height1)
-                                    {
-                                        SpriteBatch spriteBatch = Game1.spriteBatch;
-                                        Texture2D staminaRect = Game1.staminaRect;
-                                        int x = num1;
-                                        int y = (int)num5;
-                                        viewport = Game1.graphics.GraphicsDevice.Viewport;
-                                        int width = viewport.Width;
-                                        int height2 = 1;
-                                        Microsoft.Xna.Framework.Rectangle destinationRectangle = new Microsoft.Xna.Framework.Rectangle(x, y, width, height2);
-                                        Color color = Color.Red * 0.5f;
-                                        spriteBatch.Draw(staminaRect, destinationRectangle, color);
-                                        num5 += 64f;
-                                    }
-                                    else
-                                        break;
-                                }
-                            }
-                            if (Game1.currentBillboard != 0)
-                                this.drawBillboard();
-                            if ((Game1.displayHUD || Game1.eventUp) && (Game1.currentBillboard == 0 && Game1.gameMode == (byte)3) && (!Game1.freezeControls && !Game1.panMode && !Game1.HostPaused))
-                            {
-                                events.RenderingHud.RaiseEmpty();
-                                this.drawHUD();
-                                events.RenderedHud.RaiseEmpty();
-                            }
-                            else if (Game1.activeClickableMenu == null && Game1.farmEvent == null)
-                                Game1.spriteBatch.Draw(Game1.mouseCursors, new Vector2((float)Game1.getOldMouseX(), (float)Game1.getOldMouseY()), new Microsoft.Xna.Framework.Rectangle?(Game1.getSourceRectForStandardTileSheet(Game1.mouseCursors, 0, 16, 16)), Color.White, 0.0f, Vector2.Zero, (float)(4.0 + (double)Game1.dialogueButtonScale / 150.0), SpriteEffects.None, 1f);
-                            if (Game1.hudMessages.Count > 0 && (!Game1.eventUp || Game1.isFestival()))
-                            {
-                                for (int i = Game1.hudMessages.Count - 1; i >= 0; --i)
-                                    Game1.hudMessages[i].draw(Game1.spriteBatch, i);
-                            }
-                        }
-                        if (Game1.farmEvent != null)
-                            Game1.farmEvent.draw(Game1.spriteBatch);
-                        if (Game1.dialogueUp && !Game1.nameSelectUp && !Game1.messagePause && (Game1.activeClickableMenu == null || !(Game1.activeClickableMenu is DialogueBox)))
-                            this.drawDialogueBox();
-                        if (Game1.progressBar)
-                        {
-                            SpriteBatch spriteBatch1 = Game1.spriteBatch;
-                            Texture2D fadeToBlackRect = Game1.fadeToBlackRect;
-                            int x1 = (Game1.graphics.GraphicsDevice.Viewport.GetTitleSafeArea().Width - Game1.dialogueWidth) / 2;
-                            rectangle = Game1.graphics.GraphicsDevice.Viewport.GetTitleSafeArea();
-                            int y1 = rectangle.Bottom - 128;
-                            int dialogueWidth = Game1.dialogueWidth;
-                            int height1 = 32;
-                            Microsoft.Xna.Framework.Rectangle destinationRectangle1 = new Microsoft.Xna.Framework.Rectangle(x1, y1, dialogueWidth, height1);
-                            Color lightGray = Color.LightGray;
-                            spriteBatch1.Draw(fadeToBlackRect, destinationRectangle1, lightGray);
-                            SpriteBatch spriteBatch2 = Game1.spriteBatch;
-                            Texture2D staminaRect = Game1.staminaRect;
-                            int x2 = (Game1.graphics.GraphicsDevice.Viewport.GetTitleSafeArea().Width - Game1.dialogueWidth) / 2;
-                            rectangle = Game1.graphics.GraphicsDevice.Viewport.GetTitleSafeArea();
-                            int y2 = rectangle.Bottom - 128;
-                            int width = (int)((double)Game1.pauseAccumulator / (double)Game1.pauseTime * (double)Game1.dialogueWidth);
-                            int height2 = 32;
-                            Microsoft.Xna.Framework.Rectangle destinationRectangle2 = new Microsoft.Xna.Framework.Rectangle(x2, y2, width, height2);
-                            Color dimGray = Color.DimGray;
-                            spriteBatch2.Draw(staminaRect, destinationRectangle2, dimGray);
-                        }
-                        if (Game1.eventUp && Game1.currentLocation != null && Game1.currentLocation.currentEvent != null)
-                            Game1.currentLocation.currentEvent.drawAfterMap(Game1.spriteBatch);
-                        if (Game1.isRaining && Game1.currentLocation != null && ((bool)((NetFieldBase<bool, NetBool>)Game1.currentLocation.isOutdoors) && !(Game1.currentLocation is Desert)))
-                        {
-                            SpriteBatch spriteBatch = Game1.spriteBatch;
-                            Texture2D staminaRect = Game1.staminaRect;
-                            viewport = Game1.graphics.GraphicsDevice.Viewport;
-                            Microsoft.Xna.Framework.Rectangle bounds = viewport.Bounds;
-                            Color color = Color.Blue * 0.2f;
-                            spriteBatch.Draw(staminaRect, bounds, color);
-                        }
-                        if ((Game1.fadeToBlack || Game1.globalFade) && !Game1.menuUp && (!Game1.nameSelectUp || Game1.messagePause))
-                        {
-                            SpriteBatch spriteBatch = Game1.spriteBatch;
-                            Texture2D fadeToBlackRect = Game1.fadeToBlackRect;
-                            viewport = Game1.graphics.GraphicsDevice.Viewport;
-                            Microsoft.Xna.Framework.Rectangle bounds = viewport.Bounds;
-                            Color color = Color.Black * (Game1.gameMode == (byte)0 ? 1f - Game1.fadeToBlackAlpha : Game1.fadeToBlackAlpha);
-                            spriteBatch.Draw(fadeToBlackRect, bounds, color);
-                        }
-                        else if ((double)Game1.flashAlpha > 0.0)
-                        {
-                            if (Game1.options.screenFlash)
-                            {
-                                SpriteBatch spriteBatch = Game1.spriteBatch;
-                                Texture2D fadeToBlackRect = Game1.fadeToBlackRect;
-                                viewport = Game1.graphics.GraphicsDevice.Viewport;
-                                Microsoft.Xna.Framework.Rectangle bounds = viewport.Bounds;
-                                Color color = Color.White * Math.Min(1f, Game1.flashAlpha);
-                                spriteBatch.Draw(fadeToBlackRect, bounds, color);
-                            }
-                            Game1.flashAlpha -= 0.1f;
-                        }
-                        if ((Game1.messagePause || Game1.globalFade) && Game1.dialogueUp)
-                            this.drawDialogueBox();
-                        foreach (TemporaryAnimatedSprite overlayTempSprite in Game1.screenOverlayTempSprites)
-                            overlayTempSprite.draw(Game1.spriteBatch, true, 0, 0, 1f);
-                        if (Game1.debugMode)
-                        {
-                            StringBuilder debugStringBuilder = Game1._debugStringBuilder;
-                            debugStringBuilder.Clear();
-                            if (Game1.panMode)
-                            {
-                                debugStringBuilder.Append((Game1.getOldMouseX() + Game1.viewport.X) / 64);
-                                debugStringBuilder.Append(",");
-                                debugStringBuilder.Append((Game1.getOldMouseY() + Game1.viewport.Y) / 64);
-                            }
-                            else
-                            {
-                                debugStringBuilder.Append("player: ");
-                                debugStringBuilder.Append(Game1.player.getStandingX() / 64);
-                                debugStringBuilder.Append(", ");
-                                debugStringBuilder.Append(Game1.player.getStandingY() / 64);
-                            }
-                            debugStringBuilder.Append(" mouseTransparency: ");
-                            debugStringBuilder.Append(Game1.mouseCursorTransparency);
-                            debugStringBuilder.Append(" mousePosition: ");
-                            debugStringBuilder.Append(Game1.getMouseX());
-                            debugStringBuilder.Append(",");
-                            debugStringBuilder.Append(Game1.getMouseY());
-                            debugStringBuilder.Append(Environment.NewLine);
-                            debugStringBuilder.Append("debugOutput: ");
-                            debugStringBuilder.Append(Game1.debugOutput);
-                            Game1.spriteBatch.DrawString(Game1.smallFont, debugStringBuilder, new Vector2((float)this.GraphicsDevice.Viewport.GetTitleSafeArea().X, (float)(this.GraphicsDevice.Viewport.GetTitleSafeArea().Y + Game1.smallFont.LineSpacing * 8)), Color.Red, 0.0f, Vector2.Zero, 1f, SpriteEffects.None, 0.9999999f);
-                        }
-                        if (Game1.showKeyHelp)
-                            Game1.spriteBatch.DrawString(Game1.smallFont, Game1.keyHelpString, new Vector2(64f, (float)(Game1.viewport.Height - 64 - (Game1.dialogueUp ? 192 + (Game1.isQuestion ? Game1.questionChoices.Count * 64 : 0) : 0)) - Game1.smallFont.MeasureString(Game1.keyHelpString).Y), Color.LightGray, 0.0f, Vector2.Zero, 1f, SpriteEffects.None, 0.9999999f);
-                        if (Game1.activeClickableMenu != null)
-                        {
-                            try
-                            {
-                                events.RenderingActiveMenu.RaiseEmpty();
-                                Game1.activeClickableMenu.draw(Game1.spriteBatch);
-                                events.RenderedActiveMenu.RaiseEmpty();
-                            }
-                            catch (Exception ex)
-                            {
-                                this.Monitor.Log($"The {Game1.activeClickableMenu.GetType().FullName} menu crashed while drawing itself. SMAPI will force it to exit to avoid crashing the game.\n{ex.GetLogSummary()}", LogLevel.Error);
-                                Game1.activeClickableMenu.exitThisMenu();
-                            }
-                        }
-                        else if (Game1.farmEvent != null)
-                            Game1.farmEvent.drawAboveEverything(Game1.spriteBatch);
-                        if (Game1.HostPaused)
-                        {
-                            string s = Game1.content.LoadString("Strings\\StringsFromCSFiles:DayTimeMoneyBox.cs.10378");
-                            SpriteText.drawStringWithScrollBackground(Game1.spriteBatch, s, 96, 32, "", 1f, -1);
-                        }
+        //                Microsoft.Xna.Framework.Rectangle rectangle;
+        //                Viewport viewport;
+        //                if (Game1.gameMode == (byte)0)
+        //                {
+        //                    Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, (DepthStencilState)null, (RasterizerState)null);
+        //                    if (++batchOpens == 1)
+        //                        events.Rendering.RaiseEmpty();
+        //                }
+        //                else
+        //                {
+        //                    if (Game1.drawLighting)
+        //                    {
+        //                        this.GraphicsDevice.SetRenderTarget(Game1.lightmap);
+        //                        this.GraphicsDevice.Clear(Color.White * 0.0f);
+        //                        Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, (DepthStencilState)null, (RasterizerState)null);
+        //                        if (++batchOpens == 1)
+        //                            events.Rendering.RaiseEmpty();
+        //                        Game1.spriteBatch.Draw(Game1.staminaRect, Game1.lightmap.Bounds, Game1.currentLocation.Name.StartsWith("UndergroundMine") ? Game1.mine.getLightingColor(gameTime) : (Game1.ambientLight.Equals(Color.White) || Game1.isRaining && (bool)((NetFieldBase<bool, NetBool>)Game1.currentLocation.isOutdoors) ? Game1.outdoorLight : Game1.ambientLight));
+        //                        for (int index = 0; index < Game1.currentLightSources.Count; ++index)
+        //                        {
+        //                            if (Utility.isOnScreen((Vector2)((NetFieldBase<Vector2, NetVector2>)Game1.currentLightSources.ElementAt<LightSource>(index).position), (int)((double)(float)((NetFieldBase<float, NetFloat>)Game1.currentLightSources.ElementAt<LightSource>(index).radius) * 64.0 * 4.0)))
+        //                                Game1.spriteBatch.Draw(Game1.currentLightSources.ElementAt<LightSource>(index).lightTexture, Game1.GlobalToLocal(Game1.viewport, (Vector2)((NetFieldBase<Vector2, NetVector2>)Game1.currentLightSources.ElementAt<LightSource>(index).position)) / (float)(Game1.options.lightingQuality / 2), new Microsoft.Xna.Framework.Rectangle?(Game1.currentLightSources.ElementAt<LightSource>(index).lightTexture.Bounds), (Color)((NetFieldBase<Color, NetColor>)Game1.currentLightSources.ElementAt<LightSource>(index).color), 0.0f, new Vector2((float)Game1.currentLightSources.ElementAt<LightSource>(index).lightTexture.Bounds.Center.X, (float)Game1.currentLightSources.ElementAt<LightSource>(index).lightTexture.Bounds.Center.Y), (float)((NetFieldBase<float, NetFloat>)Game1.currentLightSources.ElementAt<LightSource>(index).radius) / (float)(Game1.options.lightingQuality / 2), SpriteEffects.None, 0.9f);
+        //                        }
+        //                        Game1.spriteBatch.End();
+        //                        this.GraphicsDevice.SetRenderTarget((double)Game1.options.zoomLevel == 1.0 ? (RenderTarget2D)null : this.screen);
+        //                    }
+        //                    if (Game1.bloomDay && Game1.bloom != null)
+        //                        Game1.bloom.BeginDraw();
+        //                    this.GraphicsDevice.Clear(this.bgColor);
+        //                    Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, (DepthStencilState)null, (RasterizerState)null);
+        //                    if (++batchOpens == 1)
+        //                        events.Rendering.RaiseEmpty();
+        //                    events.RenderingWorld.RaiseEmpty();
+        //                    if (Game1.background != null)
+        //                        Game1.background.draw(Game1.spriteBatch);
+        //                    Game1.mapDisplayDevice.BeginScene(Game1.spriteBatch);
+        //                    Game1.currentLocation.Map.GetLayer("Back").Draw(Game1.mapDisplayDevice, Game1.viewport, Location.Origin, false, 4);
+        //                    Game1.currentLocation.drawWater(Game1.spriteBatch);
+        //                    this._farmerShadows.Clear();
+        //                    if (Game1.currentLocation.currentEvent != null && !Game1.currentLocation.currentEvent.isFestival && Game1.currentLocation.currentEvent.farmerActors.Count > 0)
+        //                    {
+        //                        foreach (Farmer farmerActor in Game1.currentLocation.currentEvent.farmerActors)
+        //                        {
+        //                            if (farmerActor.IsLocalPlayer && Game1.displayFarmer || !(bool)((NetFieldBase<bool, NetBool>)farmerActor.hidden))
+        //                                this._farmerShadows.Add(farmerActor);
+        //                        }
+        //                    }
+        //                    else
+        //                    {
+        //                        foreach (Farmer farmer in Game1.currentLocation.farmers)
+        //                        {
+        //                            if (farmer.IsLocalPlayer && Game1.displayFarmer || !(bool)((NetFieldBase<bool, NetBool>)farmer.hidden))
+        //                                this._farmerShadows.Add(farmer);
+        //                        }
+        //                    }
+        //                    if (!Game1.currentLocation.shouldHideCharacters())
+        //                    {
+        //                        if (Game1.CurrentEvent == null)
+        //                        {
+        //                            foreach (NPC character in Game1.currentLocation.characters)
+        //                            {
+        //                                if (!(bool)((NetFieldBase<bool, NetBool>)character.swimming) && !character.HideShadow && (!character.IsInvisible && !Game1.currentLocation.shouldShadowBeDrawnAboveBuildingsLayer(character.getTileLocation())))
+        //                                    Game1.spriteBatch.Draw(Game1.shadowTexture, Game1.GlobalToLocal(Game1.viewport, character.Position + new Vector2((float)(character.Sprite.SpriteWidth * 4) / 2f, (float)(character.GetBoundingBox().Height + (character.IsMonster ? 0 : 12)))), new Microsoft.Xna.Framework.Rectangle?(Game1.shadowTexture.Bounds), Color.White, 0.0f, new Vector2((float)Game1.shadowTexture.Bounds.Center.X, (float)Game1.shadowTexture.Bounds.Center.Y), (float)(4.0 + (double)character.yJumpOffset / 40.0) * (float)((NetFieldBase<float, NetFloat>)character.scale), SpriteEffects.None, Math.Max(0.0f, (float)character.getStandingY() / 10000f) - 1E-06f);
+        //                            }
+        //                        }
+        //                        else
+        //                        {
+        //                            foreach (NPC actor in Game1.CurrentEvent.actors)
+        //                            {
+        //                                if (!(bool)((NetFieldBase<bool, NetBool>)actor.swimming) && !actor.HideShadow && !Game1.currentLocation.shouldShadowBeDrawnAboveBuildingsLayer(actor.getTileLocation()))
+        //                                    Game1.spriteBatch.Draw(Game1.shadowTexture, Game1.GlobalToLocal(Game1.viewport, actor.Position + new Vector2((float)(actor.Sprite.SpriteWidth * 4) / 2f, (float)(actor.GetBoundingBox().Height + (actor.IsMonster ? 0 : (actor.Sprite.SpriteHeight <= 16 ? -4 : 12))))), new Microsoft.Xna.Framework.Rectangle?(Game1.shadowTexture.Bounds), Color.White, 0.0f, new Vector2((float)Game1.shadowTexture.Bounds.Center.X, (float)Game1.shadowTexture.Bounds.Center.Y), (float)(4.0 + (double)actor.yJumpOffset / 40.0) * (float)((NetFieldBase<float, NetFloat>)actor.scale), SpriteEffects.None, Math.Max(0.0f, (float)actor.getStandingY() / 10000f) - 1E-06f);
+        //                            }
+        //                        }
+        //                        foreach (Farmer farmerShadow in this._farmerShadows)
+        //                        {
+        //                            if (!(bool)((NetFieldBase<bool, NetBool>)farmerShadow.swimming) && !farmerShadow.isRidingHorse() && (Game1.currentLocation == null || !Game1.currentLocation.shouldShadowBeDrawnAboveBuildingsLayer(farmerShadow.getTileLocation())))
+        //                            {
+        //                                SpriteBatch spriteBatch = Game1.spriteBatch;
+        //                                Texture2D shadowTexture = Game1.shadowTexture;
+        //                                Vector2 local = Game1.GlobalToLocal(farmerShadow.Position + new Vector2(32f, 24f));
+        //                                Microsoft.Xna.Framework.Rectangle? sourceRectangle = new Microsoft.Xna.Framework.Rectangle?(Game1.shadowTexture.Bounds);
+        //                                Color white = Color.White;
+        //                                double num1 = 0.0;
+        //                                Microsoft.Xna.Framework.Rectangle bounds = Game1.shadowTexture.Bounds;
+        //                                double x = (double)bounds.Center.X;
+        //                                bounds = Game1.shadowTexture.Bounds;
+        //                                double y = (double)bounds.Center.Y;
+        //                                Vector2 origin = new Vector2((float)x, (float)y);
+        //                                double num2 = 4.0 - (!farmerShadow.running && !farmerShadow.UsingTool || farmerShadow.FarmerSprite.currentAnimationIndex <= 1 ? 0.0 : (double)Math.Abs(FarmerRenderer.featureYOffsetPerFrame[farmerShadow.FarmerSprite.CurrentFrame]) * 0.5);
+        //                                int num3 = 0;
+        //                                double num4 = 0.0;
+        //                                spriteBatch.Draw(shadowTexture, local, sourceRectangle, white, (float)num1, origin, (float)num2, (SpriteEffects)num3, (float)num4);
+        //                            }
+        //                        }
+        //                    }
+        //                    Game1.currentLocation.Map.GetLayer("Buildings").Draw(Game1.mapDisplayDevice, Game1.viewport, Location.Origin, false, 4);
+        //                    Game1.mapDisplayDevice.EndScene();
+        //                    Game1.spriteBatch.End();
+        //                    Game1.spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend, SamplerState.PointClamp, (DepthStencilState)null, (RasterizerState)null);
+        //                    if (!Game1.currentLocation.shouldHideCharacters())
+        //                    {
+        //                        if (Game1.CurrentEvent == null)
+        //                        {
+        //                            foreach (NPC character in Game1.currentLocation.characters)
+        //                            {
+        //                                if (!(bool)((NetFieldBase<bool, NetBool>)character.swimming) && !character.HideShadow && Game1.currentLocation.shouldShadowBeDrawnAboveBuildingsLayer(character.getTileLocation()))
+        //                                    Game1.spriteBatch.Draw(Game1.shadowTexture, Game1.GlobalToLocal(Game1.viewport, character.Position + new Vector2((float)(character.Sprite.SpriteWidth * 4) / 2f, (float)(character.GetBoundingBox().Height + (character.IsMonster ? 0 : 12)))), new Microsoft.Xna.Framework.Rectangle?(Game1.shadowTexture.Bounds), Color.White, 0.0f, new Vector2((float)Game1.shadowTexture.Bounds.Center.X, (float)Game1.shadowTexture.Bounds.Center.Y), (float)(4.0 + (double)character.yJumpOffset / 40.0) * (float)((NetFieldBase<float, NetFloat>)character.scale), SpriteEffects.None, Math.Max(0.0f, (float)character.getStandingY() / 10000f) - 1E-06f);
+        //                            }
+        //                        }
+        //                        else
+        //                        {
+        //                            foreach (NPC actor in Game1.CurrentEvent.actors)
+        //                            {
+        //                                if (!(bool)((NetFieldBase<bool, NetBool>)actor.swimming) && !actor.HideShadow && Game1.currentLocation.shouldShadowBeDrawnAboveBuildingsLayer(actor.getTileLocation()))
+        //                                    Game1.spriteBatch.Draw(Game1.shadowTexture, Game1.GlobalToLocal(Game1.viewport, actor.Position + new Vector2((float)(actor.Sprite.SpriteWidth * 4) / 2f, (float)(actor.GetBoundingBox().Height + (actor.IsMonster ? 0 : 12)))), new Microsoft.Xna.Framework.Rectangle?(Game1.shadowTexture.Bounds), Color.White, 0.0f, new Vector2((float)Game1.shadowTexture.Bounds.Center.X, (float)Game1.shadowTexture.Bounds.Center.Y), (float)(4.0 + (double)actor.yJumpOffset / 40.0) * (float)((NetFieldBase<float, NetFloat>)actor.scale), SpriteEffects.None, Math.Max(0.0f, (float)actor.getStandingY() / 10000f) - 1E-06f);
+        //                            }
+        //                        }
+        //                        foreach (Farmer farmerShadow in this._farmerShadows)
+        //                        {
+        //                            if (!(bool)((NetFieldBase<bool, NetBool>)farmerShadow.swimming) && !farmerShadow.isRidingHorse() && (Game1.currentLocation != null && Game1.currentLocation.shouldShadowBeDrawnAboveBuildingsLayer(farmerShadow.getTileLocation())))
+        //                            {
+        //                                SpriteBatch spriteBatch = Game1.spriteBatch;
+        //                                Texture2D shadowTexture = Game1.shadowTexture;
+        //                                Vector2 local = Game1.GlobalToLocal(farmerShadow.Position + new Vector2(32f, 24f));
+        //                                Microsoft.Xna.Framework.Rectangle? sourceRectangle = new Microsoft.Xna.Framework.Rectangle?(Game1.shadowTexture.Bounds);
+        //                                Color white = Color.White;
+        //                                double num1 = 0.0;
+        //                                Microsoft.Xna.Framework.Rectangle bounds = Game1.shadowTexture.Bounds;
+        //                                double x = (double)bounds.Center.X;
+        //                                bounds = Game1.shadowTexture.Bounds;
+        //                                double y = (double)bounds.Center.Y;
+        //                                Vector2 origin = new Vector2((float)x, (float)y);
+        //                                double num2 = 4.0 - (!farmerShadow.running && !farmerShadow.UsingTool || farmerShadow.FarmerSprite.currentAnimationIndex <= 1 ? 0.0 : (double)Math.Abs(FarmerRenderer.featureYOffsetPerFrame[farmerShadow.FarmerSprite.CurrentFrame]) * 0.5);
+        //                                int num3 = 0;
+        //                                double num4 = 0.0;
+        //                                spriteBatch.Draw(shadowTexture, local, sourceRectangle, white, (float)num1, origin, (float)num2, (SpriteEffects)num3, (float)num4);
+        //                            }
+        //                        }
+        //                    }
+        //                    if ((Game1.eventUp || Game1.killScreen) && (!Game1.killScreen && Game1.currentLocation.currentEvent != null))
+        //                        Game1.currentLocation.currentEvent.draw(Game1.spriteBatch);
+        //                    if (Game1.player.currentUpgrade != null && Game1.player.currentUpgrade.daysLeftTillUpgradeDone <= 3 && Game1.currentLocation.Name.Equals("Farm"))
+        //                        Game1.spriteBatch.Draw(Game1.player.currentUpgrade.workerTexture, Game1.GlobalToLocal(Game1.viewport, Game1.player.currentUpgrade.positionOfCarpenter), new Microsoft.Xna.Framework.Rectangle?(Game1.player.currentUpgrade.getSourceRectangle()), Color.White, 0.0f, Vector2.Zero, 1f, SpriteEffects.None, (float)(((double)Game1.player.currentUpgrade.positionOfCarpenter.Y + 48.0) / 10000.0));
+        //                    Game1.currentLocation.draw(Game1.spriteBatch);
+        //                    if (Game1.eventUp && Game1.currentLocation.currentEvent != null)
+        //                    {
+        //                        string messageToScreen = Game1.currentLocation.currentEvent.messageToScreen;
+        //                    }
+        //                    if (Game1.player.ActiveObject == null && (Game1.player.UsingTool || Game1.pickingTool) && (Game1.player.CurrentTool != null && (!Game1.player.CurrentTool.Name.Equals("Seeds") || Game1.pickingTool)))
+        //                        Game1.drawTool(Game1.player);
+        //                    if (Game1.currentLocation.Name.Equals("Farm"))
+        //                        this.drawFarmBuildings();
+        //                    if (Game1.tvStation >= 0)
+        //                        Game1.spriteBatch.Draw(Game1.tvStationTexture, Game1.GlobalToLocal(Game1.viewport, new Vector2(400f, 160f)), new Microsoft.Xna.Framework.Rectangle?(new Microsoft.Xna.Framework.Rectangle(Game1.tvStation * 24, 0, 24, 15)), Color.White, 0.0f, Vector2.Zero, 4f, SpriteEffects.None, 1E-08f);
+        //                    if (Game1.panMode)
+        //                    {
+        //                        Game1.spriteBatch.Draw(Game1.fadeToBlackRect, new Microsoft.Xna.Framework.Rectangle((int)Math.Floor((double)(Game1.getOldMouseX() + Game1.viewport.X) / 64.0) * 64 - Game1.viewport.X, (int)Math.Floor((double)(Game1.getOldMouseY() + Game1.viewport.Y) / 64.0) * 64 - Game1.viewport.Y, 64, 64), Color.Lime * 0.75f);
+        //                        foreach (Warp warp in (NetList<Warp, NetRef<Warp>>)Game1.currentLocation.warps)
+        //                            Game1.spriteBatch.Draw(Game1.fadeToBlackRect, new Microsoft.Xna.Framework.Rectangle(warp.X * 64 - Game1.viewport.X, warp.Y * 64 - Game1.viewport.Y, 64, 64), Color.Red * 0.75f);
+        //                    }
+        //                    Game1.mapDisplayDevice.BeginScene(Game1.spriteBatch);
+        //                    Game1.currentLocation.Map.GetLayer("Front").Draw(Game1.mapDisplayDevice, Game1.viewport, Location.Origin, false, 4);
+        //                    Game1.mapDisplayDevice.EndScene();
+        //                    Game1.currentLocation.drawAboveFrontLayer(Game1.spriteBatch);
+        //                    Game1.spriteBatch.End();
+        //                    Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, (DepthStencilState)null, (RasterizerState)null);
+        //                    if (Game1.displayFarmer && Game1.player.ActiveObject != null && ((bool)((NetFieldBase<bool, NetBool>)Game1.player.ActiveObject.bigCraftable) && this.checkBigCraftableBoundariesForFrontLayer()) && Game1.currentLocation.Map.GetLayer("Front").PickTile(new Location(Game1.player.getStandingX(), Game1.player.getStandingY()), Game1.viewport.Size) == null)
+        //                        Game1.drawPlayerHeldObject(Game1.player);
+        //                    else if (Game1.displayFarmer && Game1.player.ActiveObject != null)
+        //                    {
+        //                        if (Game1.currentLocation.Map.GetLayer("Front").PickTile(new Location((int)Game1.player.Position.X, (int)Game1.player.Position.Y - 38), Game1.viewport.Size) == null || Game1.currentLocation.Map.GetLayer("Front").PickTile(new Location((int)Game1.player.Position.X, (int)Game1.player.Position.Y - 38), Game1.viewport.Size).TileIndexProperties.ContainsKey("FrontAlways"))
+        //                        {
+        //                            Layer layer1 = Game1.currentLocation.Map.GetLayer("Front");
+        //                            rectangle = Game1.player.GetBoundingBox();
+        //                            Location mapDisplayLocation1 = new Location(rectangle.Right, (int)Game1.player.Position.Y - 38);
+        //                            Size size1 = Game1.viewport.Size;
+        //                            if (layer1.PickTile(mapDisplayLocation1, size1) != null)
+        //                            {
+        //                                Layer layer2 = Game1.currentLocation.Map.GetLayer("Front");
+        //                                rectangle = Game1.player.GetBoundingBox();
+        //                                Location mapDisplayLocation2 = new Location(rectangle.Right, (int)Game1.player.Position.Y - 38);
+        //                                Size size2 = Game1.viewport.Size;
+        //                                if (layer2.PickTile(mapDisplayLocation2, size2).TileIndexProperties.ContainsKey("FrontAlways"))
+        //                                    goto label_129;
+        //                            }
+        //                            else
+        //                                goto label_129;
+        //                        }
+        //                        Game1.drawPlayerHeldObject(Game1.player);
+        //                    }
+        //                    label_129:
+        //                    if ((Game1.player.UsingTool || Game1.pickingTool) && Game1.player.CurrentTool != null && ((!Game1.player.CurrentTool.Name.Equals("Seeds") || Game1.pickingTool) && (Game1.currentLocation.Map.GetLayer("Front").PickTile(new Location(Game1.player.getStandingX(), (int)Game1.player.Position.Y - 38), Game1.viewport.Size) != null && Game1.currentLocation.Map.GetLayer("Front").PickTile(new Location(Game1.player.getStandingX(), Game1.player.getStandingY()), Game1.viewport.Size) == null)))
+        //                        Game1.drawTool(Game1.player);
+        //                    if (Game1.currentLocation.Map.GetLayer("AlwaysFront") != null)
+        //                    {
+        //                        Game1.mapDisplayDevice.BeginScene(Game1.spriteBatch);
+        //                        Game1.currentLocation.Map.GetLayer("AlwaysFront").Draw(Game1.mapDisplayDevice, Game1.viewport, Location.Origin, false, 4);
+        //                        Game1.mapDisplayDevice.EndScene();
+        //                    }
+        //                    if ((double)Game1.toolHold > 400.0 && Game1.player.CurrentTool.UpgradeLevel >= 1 && Game1.player.canReleaseTool)
+        //                    {
+        //                        Color color = Color.White;
+        //                        switch ((int)((double)Game1.toolHold / 600.0) + 2)
+        //                        {
+        //                            case 1:
+        //                                color = Tool.copperColor;
+        //                                break;
+        //                            case 2:
+        //                                color = Tool.steelColor;
+        //                                break;
+        //                            case 3:
+        //                                color = Tool.goldColor;
+        //                                break;
+        //                            case 4:
+        //                                color = Tool.iridiumColor;
+        //                                break;
+        //                        }
+        //                        Game1.spriteBatch.Draw(Game1.littleEffect, new Microsoft.Xna.Framework.Rectangle((int)Game1.player.getLocalPosition(Game1.viewport).X - 2, (int)Game1.player.getLocalPosition(Game1.viewport).Y - (Game1.player.CurrentTool.Name.Equals("Watering Can") ? 0 : 64) - 2, (int)((double)Game1.toolHold % 600.0 * 0.0799999982118607) + 4, 12), Color.Black);
+        //                        Game1.spriteBatch.Draw(Game1.littleEffect, new Microsoft.Xna.Framework.Rectangle((int)Game1.player.getLocalPosition(Game1.viewport).X, (int)Game1.player.getLocalPosition(Game1.viewport).Y - (Game1.player.CurrentTool.Name.Equals("Watering Can") ? 0 : 64), (int)((double)Game1.toolHold % 600.0 * 0.0799999982118607), 8), color);
+        //                    }
+        //                    if (Game1.isDebrisWeather && Game1.currentLocation.IsOutdoors && (!(bool)((NetFieldBase<bool, NetBool>)Game1.currentLocation.ignoreDebrisWeather) && !Game1.currentLocation.Name.Equals("Desert")) && Game1.viewport.X > -10)
+        //                    {
+        //                        foreach (WeatherDebris weatherDebris in Game1.debrisWeather)
+        //                            weatherDebris.draw(Game1.spriteBatch);
+        //                    }
+        //                    if (Game1.farmEvent != null)
+        //                        Game1.farmEvent.draw(Game1.spriteBatch);
+        //                    if ((double)Game1.currentLocation.LightLevel > 0.0 && Game1.timeOfDay < 2000)
+        //                    {
+        //                        SpriteBatch spriteBatch = Game1.spriteBatch;
+        //                        Texture2D fadeToBlackRect = Game1.fadeToBlackRect;
+        //                        viewport = Game1.graphics.GraphicsDevice.Viewport;
+        //                        Microsoft.Xna.Framework.Rectangle bounds = viewport.Bounds;
+        //                        Color color = Color.Black * Game1.currentLocation.LightLevel;
+        //                        spriteBatch.Draw(fadeToBlackRect, bounds, color);
+        //                    }
+        //                    if (Game1.screenGlow)
+        //                    {
+        //                        SpriteBatch spriteBatch = Game1.spriteBatch;
+        //                        Texture2D fadeToBlackRect = Game1.fadeToBlackRect;
+        //                        viewport = Game1.graphics.GraphicsDevice.Viewport;
+        //                        Microsoft.Xna.Framework.Rectangle bounds = viewport.Bounds;
+        //                        Color color = Game1.screenGlowColor * Game1.screenGlowAlpha;
+        //                        spriteBatch.Draw(fadeToBlackRect, bounds, color);
+        //                    }
+        //                    Game1.currentLocation.drawAboveAlwaysFrontLayer(Game1.spriteBatch);
+        //                    if (Game1.player.CurrentTool != null && Game1.player.CurrentTool is FishingRod && ((Game1.player.CurrentTool as FishingRod).isTimingCast || (double)(Game1.player.CurrentTool as FishingRod).castingChosenCountdown > 0.0 || ((Game1.player.CurrentTool as FishingRod).fishCaught || (Game1.player.CurrentTool as FishingRod).showingTreasure)))
+        //                        Game1.player.CurrentTool.draw(Game1.spriteBatch);
+        //                    if (Game1.isRaining && Game1.currentLocation.IsOutdoors && (!Game1.currentLocation.Name.Equals("Desert") && !(Game1.currentLocation is Summit)) && (!Game1.eventUp || Game1.currentLocation.isTileOnMap(new Vector2((float)(Game1.viewport.X / 64), (float)(Game1.viewport.Y / 64)))))
+        //                    {
+        //                        for (int index = 0; index < Game1.rainDrops.Length; ++index)
+        //                            Game1.spriteBatch.Draw(Game1.rainTexture, Game1.rainDrops[index].position, new Microsoft.Xna.Framework.Rectangle?(Game1.getSourceRectForStandardTileSheet(Game1.rainTexture, Game1.rainDrops[index].frame, -1, -1)), Color.White);
+        //                    }
+        //                    Game1.spriteBatch.End();
+        //                    Game1.spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend, SamplerState.PointClamp, (DepthStencilState)null, (RasterizerState)null);
+        //                    if (Game1.eventUp && Game1.currentLocation.currentEvent != null)
+        //                    {
+        //                        foreach (NPC actor in Game1.currentLocation.currentEvent.actors)
+        //                        {
+        //                            if (actor.isEmoting)
+        //                            {
+        //                                Vector2 localPosition = actor.getLocalPosition(Game1.viewport);
+        //                                localPosition.Y -= 140f;
+        //                                if (actor.Age == 2)
+        //                                    localPosition.Y += 32f;
+        //                                else if (actor.Gender == 1)
+        //                                    localPosition.Y += 10f;
+        //                                Game1.spriteBatch.Draw(Game1.emoteSpriteSheet, localPosition, new Microsoft.Xna.Framework.Rectangle?(new Microsoft.Xna.Framework.Rectangle(actor.CurrentEmoteIndex * 16 % Game1.emoteSpriteSheet.Width, actor.CurrentEmoteIndex * 16 / Game1.emoteSpriteSheet.Width * 16, 16, 16)), Color.White, 0.0f, Vector2.Zero, 4f, SpriteEffects.None, (float)actor.getStandingY() / 10000f);
+        //                            }
+        //                        }
+        //                    }
+        //                    Game1.spriteBatch.End();
+        //                    if (Game1.drawLighting)
+        //                    {
+        //                        Game1.spriteBatch.Begin(SpriteSortMode.Deferred, this.lightingBlend, SamplerState.LinearClamp, (DepthStencilState)null, (RasterizerState)null);
+        //                        Game1.spriteBatch.Draw((Texture2D)Game1.lightmap, Vector2.Zero, new Microsoft.Xna.Framework.Rectangle?(Game1.lightmap.Bounds), Color.White, 0.0f, Vector2.Zero, (float)(Game1.options.lightingQuality / 2), SpriteEffects.None, 1f);
+        //                        if (Game1.isRaining && (bool)((NetFieldBase<bool, NetBool>)Game1.currentLocation.isOutdoors) && !(Game1.currentLocation is Desert))
+        //                        {
+        //                            SpriteBatch spriteBatch = Game1.spriteBatch;
+        //                            Texture2D staminaRect = Game1.staminaRect;
+        //                            viewport = Game1.graphics.GraphicsDevice.Viewport;
+        //                            Microsoft.Xna.Framework.Rectangle bounds = viewport.Bounds;
+        //                            Color color = Color.OrangeRed * 0.45f;
+        //                            spriteBatch.Draw(staminaRect, bounds, color);
+        //                        }
+        //                        Game1.spriteBatch.End();
+        //                    }
+        //                    Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, (DepthStencilState)null, (RasterizerState)null);
+        //                    events.RenderedWorld.RaiseEmpty();
+        //                    if (Game1.drawGrid)
+        //                    {
+        //                        int num1 = -Game1.viewport.X % 64;
+        //                        float num2 = (float)(-Game1.viewport.Y % 64);
+        //                        int num3 = num1;
+        //                        while (true)
+        //                        {
+        //                            int num4 = num3;
+        //                            viewport = Game1.graphics.GraphicsDevice.Viewport;
+        //                            int width1 = viewport.Width;
+        //                            if (num4 < width1)
+        //                            {
+        //                                SpriteBatch spriteBatch = Game1.spriteBatch;
+        //                                Texture2D staminaRect = Game1.staminaRect;
+        //                                int x = num3;
+        //                                int y = (int)num2;
+        //                                int width2 = 1;
+        //                                viewport = Game1.graphics.GraphicsDevice.Viewport;
+        //                                int height = viewport.Height;
+        //                                Microsoft.Xna.Framework.Rectangle destinationRectangle = new Microsoft.Xna.Framework.Rectangle(x, y, width2, height);
+        //                                Color color = Color.Red * 0.5f;
+        //                                spriteBatch.Draw(staminaRect, destinationRectangle, color);
+        //                                num3 += 64;
+        //                            }
+        //                            else
+        //                                break;
+        //                        }
+        //                        float num5 = num2;
+        //                        while (true)
+        //                        {
+        //                            double num4 = (double)num5;
+        //                            viewport = Game1.graphics.GraphicsDevice.Viewport;
+        //                            double height1 = (double)viewport.Height;
+        //                            if (num4 < height1)
+        //                            {
+        //                                SpriteBatch spriteBatch = Game1.spriteBatch;
+        //                                Texture2D staminaRect = Game1.staminaRect;
+        //                                int x = num1;
+        //                                int y = (int)num5;
+        //                                viewport = Game1.graphics.GraphicsDevice.Viewport;
+        //                                int width = viewport.Width;
+        //                                int height2 = 1;
+        //                                Microsoft.Xna.Framework.Rectangle destinationRectangle = new Microsoft.Xna.Framework.Rectangle(x, y, width, height2);
+        //                                Color color = Color.Red * 0.5f;
+        //                                spriteBatch.Draw(staminaRect, destinationRectangle, color);
+        //                                num5 += 64f;
+        //                            }
+        //                            else
+        //                                break;
+        //                        }
+        //                    }
+        //                    if (Game1.currentBillboard != 0)
+        //                        this.drawBillboard();
+        //                    if ((Game1.displayHUD || Game1.eventUp) && (Game1.currentBillboard == 0 && Game1.gameMode == (byte)3) && (!Game1.freezeControls && !Game1.panMode && !Game1.HostPaused))
+        //                    {
+        //                        events.RenderingHud.RaiseEmpty();
+        //                        this.drawHUD();
+        //                        events.RenderedHud.RaiseEmpty();
+        //                    }
+        //                    else if (Game1.activeClickableMenu == null && Game1.farmEvent == null)
+        //                        Game1.spriteBatch.Draw(Game1.mouseCursors, new Vector2((float)Game1.getOldMouseX(), (float)Game1.getOldMouseY()), new Microsoft.Xna.Framework.Rectangle?(Game1.getSourceRectForStandardTileSheet(Game1.mouseCursors, 0, 16, 16)), Color.White, 0.0f, Vector2.Zero, (float)(4.0 + (double)Game1.dialogueButtonScale / 150.0), SpriteEffects.None, 1f);
+        //                    if (Game1.hudMessages.Count > 0 && (!Game1.eventUp || Game1.isFestival()))
+        //                    {
+        //                        for (int i = Game1.hudMessages.Count - 1; i >= 0; --i)
+        //                            Game1.hudMessages[i].draw(Game1.spriteBatch, i);
+        //                    }
+        //                }
+        //                if (Game1.farmEvent != null)
+        //                    Game1.farmEvent.draw(Game1.spriteBatch);
+        //                if (Game1.dialogueUp && !Game1.nameSelectUp && !Game1.messagePause && (Game1.activeClickableMenu == null || !(Game1.activeClickableMenu is DialogueBox)))
+        //                    this.drawDialogueBox();
+        //                if (Game1.progressBar)
+        //                {
+        //                    SpriteBatch spriteBatch1 = Game1.spriteBatch;
+        //                    Texture2D fadeToBlackRect = Game1.fadeToBlackRect;
+        //                    int x1 = (Game1.graphics.GraphicsDevice.Viewport.GetTitleSafeArea().Width - Game1.dialogueWidth) / 2;
+        //                    rectangle = Game1.graphics.GraphicsDevice.Viewport.GetTitleSafeArea();
+        //                    int y1 = rectangle.Bottom - 128;
+        //                    int dialogueWidth = Game1.dialogueWidth;
+        //                    int height1 = 32;
+        //                    Microsoft.Xna.Framework.Rectangle destinationRectangle1 = new Microsoft.Xna.Framework.Rectangle(x1, y1, dialogueWidth, height1);
+        //                    Color lightGray = Color.LightGray;
+        //                    spriteBatch1.Draw(fadeToBlackRect, destinationRectangle1, lightGray);
+        //                    SpriteBatch spriteBatch2 = Game1.spriteBatch;
+        //                    Texture2D staminaRect = Game1.staminaRect;
+        //                    int x2 = (Game1.graphics.GraphicsDevice.Viewport.GetTitleSafeArea().Width - Game1.dialogueWidth) / 2;
+        //                    rectangle = Game1.graphics.GraphicsDevice.Viewport.GetTitleSafeArea();
+        //                    int y2 = rectangle.Bottom - 128;
+        //                    int width = (int)((double)Game1.pauseAccumulator / (double)Game1.pauseTime * (double)Game1.dialogueWidth);
+        //                    int height2 = 32;
+        //                    Microsoft.Xna.Framework.Rectangle destinationRectangle2 = new Microsoft.Xna.Framework.Rectangle(x2, y2, width, height2);
+        //                    Color dimGray = Color.DimGray;
+        //                    spriteBatch2.Draw(staminaRect, destinationRectangle2, dimGray);
+        //                }
+        //                if (Game1.eventUp && Game1.currentLocation != null && Game1.currentLocation.currentEvent != null)
+        //                    Game1.currentLocation.currentEvent.drawAfterMap(Game1.spriteBatch);
+        //                if (Game1.isRaining && Game1.currentLocation != null && ((bool)((NetFieldBase<bool, NetBool>)Game1.currentLocation.isOutdoors) && !(Game1.currentLocation is Desert)))
+        //                {
+        //                    SpriteBatch spriteBatch = Game1.spriteBatch;
+        //                    Texture2D staminaRect = Game1.staminaRect;
+        //                    viewport = Game1.graphics.GraphicsDevice.Viewport;
+        //                    Microsoft.Xna.Framework.Rectangle bounds = viewport.Bounds;
+        //                    Color color = Color.Blue * 0.2f;
+        //                    spriteBatch.Draw(staminaRect, bounds, color);
+        //                }
+        //                if ((Game1.fadeToBlack || Game1.globalFade) && !Game1.menuUp && (!Game1.nameSelectUp || Game1.messagePause))
+        //                {
+        //                    SpriteBatch spriteBatch = Game1.spriteBatch;
+        //                    Texture2D fadeToBlackRect = Game1.fadeToBlackRect;
+        //                    viewport = Game1.graphics.GraphicsDevice.Viewport;
+        //                    Microsoft.Xna.Framework.Rectangle bounds = viewport.Bounds;
+        //                    Color color = Color.Black * (Game1.gameMode == (byte)0 ? 1f - Game1.fadeToBlackAlpha : Game1.fadeToBlackAlpha);
+        //                    spriteBatch.Draw(fadeToBlackRect, bounds, color);
+        //                }
+        //                else if ((double)Game1.flashAlpha > 0.0)
+        //                {
+        //                    if (Game1.options.screenFlash)
+        //                    {
+        //                        SpriteBatch spriteBatch = Game1.spriteBatch;
+        //                        Texture2D fadeToBlackRect = Game1.fadeToBlackRect;
+        //                        viewport = Game1.graphics.GraphicsDevice.Viewport;
+        //                        Microsoft.Xna.Framework.Rectangle bounds = viewport.Bounds;
+        //                        Color color = Color.White * Math.Min(1f, Game1.flashAlpha);
+        //                        spriteBatch.Draw(fadeToBlackRect, bounds, color);
+        //                    }
+        //                    Game1.flashAlpha -= 0.1f;
+        //                }
+        //                if ((Game1.messagePause || Game1.globalFade) && Game1.dialogueUp)
+        //                    this.drawDialogueBox();
+        //                foreach (TemporaryAnimatedSprite overlayTempSprite in Game1.screenOverlayTempSprites)
+        //                    overlayTempSprite.draw(Game1.spriteBatch, true, 0, 0, 1f);
+        //                if (Game1.debugMode)
+        //                {
+        //                    StringBuilder debugStringBuilder = Game1._debugStringBuilder;
+        //                    debugStringBuilder.Clear();
+        //                    if (Game1.panMode)
+        //                    {
+        //                        debugStringBuilder.Append((Game1.getOldMouseX() + Game1.viewport.X) / 64);
+        //                        debugStringBuilder.Append(",");
+        //                        debugStringBuilder.Append((Game1.getOldMouseY() + Game1.viewport.Y) / 64);
+        //                    }
+        //                    else
+        //                    {
+        //                        debugStringBuilder.Append("player: ");
+        //                        debugStringBuilder.Append(Game1.player.getStandingX() / 64);
+        //                        debugStringBuilder.Append(", ");
+        //                        debugStringBuilder.Append(Game1.player.getStandingY() / 64);
+        //                    }
+        //                    debugStringBuilder.Append(" mouseTransparency: ");
+        //                    debugStringBuilder.Append(Game1.mouseCursorTransparency);
+        //                    debugStringBuilder.Append(" mousePosition: ");
+        //                    debugStringBuilder.Append(Game1.getMouseX());
+        //                    debugStringBuilder.Append(",");
+        //                    debugStringBuilder.Append(Game1.getMouseY());
+        //                    debugStringBuilder.Append(Environment.NewLine);
+        //                    debugStringBuilder.Append("debugOutput: ");
+        //                    debugStringBuilder.Append(Game1.debugOutput);
+        //                    Game1.spriteBatch.DrawString(Game1.smallFont, debugStringBuilder, new Vector2((float)this.GraphicsDevice.Viewport.GetTitleSafeArea().X, (float)(this.GraphicsDevice.Viewport.GetTitleSafeArea().Y + Game1.smallFont.LineSpacing * 8)), Color.Red, 0.0f, Vector2.Zero, 1f, SpriteEffects.None, 0.9999999f);
+        //                }
+        //                if (Game1.showKeyHelp)
+        //                    Game1.spriteBatch.DrawString(Game1.smallFont, Game1.keyHelpString, new Vector2(64f, (float)(Game1.viewport.Height - 64 - (Game1.dialogueUp ? 192 + (Game1.isQuestion ? Game1.questionChoices.Count * 64 : 0) : 0)) - Game1.smallFont.MeasureString(Game1.keyHelpString).Y), Color.LightGray, 0.0f, Vector2.Zero, 1f, SpriteEffects.None, 0.9999999f);
+        //                if (Game1.activeClickableMenu != null)
+        //                {
+        //                    try
+        //                    {
+        //                        events.RenderingActiveMenu.RaiseEmpty();
+        //                        Game1.activeClickableMenu.draw(Game1.spriteBatch);
+        //                        events.RenderedActiveMenu.RaiseEmpty();
+        //                    }
+        //                    catch (Exception ex)
+        //                    {
+        //                        this.Monitor.Log($"The {Game1.activeClickableMenu.GetType().FullName} menu crashed while drawing itself. SMAPI will force it to exit to avoid crashing the game.\n{ex.GetLogSummary()}", LogLevel.Error);
+        //                        Game1.activeClickableMenu.exitThisMenu();
+        //                    }
+        //                }
+        //                else if (Game1.farmEvent != null)
+        //                    Game1.farmEvent.drawAboveEverything(Game1.spriteBatch);
+        //                if (Game1.HostPaused)
+        //                {
+        //                    string s = Game1.content.LoadString("Strings\\StringsFromCSFiles:DayTimeMoneyBox.cs.10378");
+        //                    SpriteText.drawStringWithScrollBackground(Game1.spriteBatch, s, 96, 32, "", 1f, -1);
+        //                }
 
-                        events.Rendered.RaiseEmpty();
-                        Game1.spriteBatch.End();
-                        this.drawOverlays(Game1.spriteBatch);
-                        this.renderScreenBuffer();
-                    }
-                }
-            }
-        }
+        //                events.Rendered.RaiseEmpty();
+        //                Game1.spriteBatch.End();
+        //                this.drawOverlays(Game1.spriteBatch);
+        //                this.renderScreenBuffer();
+        //            }
+        //        }
+        //    }
+        //}
     }
 }

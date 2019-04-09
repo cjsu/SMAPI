@@ -53,9 +53,9 @@ namespace StardewModdingAPI.Framework.StateTracking
         /// <summary>Construct an instance.</summary>
         /// <param name="locations">The game's list of locations.</param>
         /// <param name="activeMineLocations">The game's list of active mine locations.</param>
-        public WorldLocationsTracker(ObservableCollection<GameLocation> locations, IList<MineShaft> activeMineLocations)
+        public WorldLocationsTracker(List<GameLocation> locations, IList<MineShaft> activeMineLocations)
         {
-            this.LocationListWatcher = WatcherFactory.ForObservableCollection(locations);
+            this.LocationListWatcher = WatcherFactory.ForReferenceList(locations);
             this.MineLocationListWatcher = WatcherFactory.ForReferenceList(activeMineLocations);
         }
 

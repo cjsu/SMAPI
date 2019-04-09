@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using StardewModdingAPI.Framework.ModHelpers;
 using StardewModdingAPI.Framework.ModLoading;
-using StardewModdingAPI.Toolkit.Framework.Clients.WebApi;
+//using StardewModdingAPI.Toolkit.Framework.Clients.WebApi;
 using StardewModdingAPI.Toolkit.Framework.ModData;
 using StardewModdingAPI.Toolkit.Framework.UpdateData;
 
@@ -52,8 +52,8 @@ namespace StardewModdingAPI.Framework
         /// <summary>The mod-provided API (if any).</summary>
         object Api { get; }
 
-        /// <summary>The update-check metadata for this mod (if any).</summary>
-        ModEntryModel UpdateCheckData { get; }
+        ///// <summary>The update-check metadata for this mod (if any).</summary>
+        //ModEntryModel UpdateCheckData { get; }
 
 
         /*********
@@ -84,9 +84,9 @@ namespace StardewModdingAPI.Framework
         /// <param name="api">The mod-provided API.</param>
         IModMetadata SetApi(object api);
 
-        /// <summary>Set the update-check metadata for this mod.</summary>
-        /// <param name="data">The update-check metadata.</param>
-        IModMetadata SetUpdateData(ModEntryModel data);
+        ///// <summary>Set the update-check metadata for this mod.</summary>
+        ///// <param name="data">The update-check metadata.</param>
+        //IModMetadata SetUpdateData(ModEntryModel data);
 
         /// <summary>Whether the mod manifest was loaded (regardless of whether the mod itself was loaded).</summary>
         bool HasManifest();

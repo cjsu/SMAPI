@@ -51,7 +51,7 @@ namespace StardewModdingAPI.Framework.ModLoading
             // cache assembly metadata
             this.Targets = targetAssemblies;
             this.TargetReferences = this.Targets.ToDictionary(assembly => assembly, assembly => AssemblyNameReference.Parse(assembly.FullName));
-            this.TargetModules = this.Targets.ToDictionary(assembly => assembly, assembly => ModuleDefinition.ReadModule(assembly.Modules.Single().FullyQualifiedName, new ReaderParameters { InMemory = true }));
+            this.TargetModules = this.Targets.ToDictionary(assembly => assembly, assembly => ModuleDefinition.ReadModule(System.IO.Path.Combine(Constants.ExecutionPath, assembly.Modules.Single().FullyQualifiedName), new ReaderParameters { InMemory = true }));
         }
 
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
