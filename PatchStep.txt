@@ -1,0 +1,21 @@
+1. Inject assembly reference, namespace: SMDroid
+
+2.Modify class StardewValley.Game1, modify constructor method£¬insert Instructions at beginning:
+newobj	System.Void SMDroid.ModEntry::.ctor()
+stsfld	StardewValley.ModHooks StardewValley.Game1::hooks
+
+3.Modify class StardewValley.ModHooks, inject method:
+	public virtual void OnGame1_Update(GameTime time);
+	public virtual LocalizedContentManager OnGame1_CreateContentManager(IServiceProvider serviceProvider, string rootDirectory) => null;
+
+4.Modify class StardewValley.Game1, modify method  Update(GameTime gameTime), insert Instructions at beginning:
+ldsfld	StardewValley.ModHooks StardewValley.Game1::hooks
+ldarg.1	
+callvirt	System.Void StardewValley.ModHooks::OnGame1_Update(Microsoft.Xna.Framework.GameTime)
+
+5.Modify class StardewValley.Game1, modify method  CreateContentManager(GameTime gameTime), replace Instructions to:
+ldsfld	StardewValley.ModHooks StardewValley.Game1::hooks
+ldarg.1	
+ldarg.2	
+callvirt	StardewValley.LocalizedContentManager StardewValley.ModHooks::OnGame1_CreateContentManager(System.IServiceProvider,System.String)
+ret	

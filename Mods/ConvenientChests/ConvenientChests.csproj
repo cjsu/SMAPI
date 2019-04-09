@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{84A712EC-5F80-43DC-879C-D3604B6F5644}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ConvenientChests</RootNamespace>
+    <AssemblyName>ConvenientChests</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Mod">
+      <HintPath>..\assemblies\Mod.dll</HintPath>
+    </Reference>
+    <Reference Include="StardewValley">
+      <HintPath>..\assemblies\StardewValley.dll</HintPath>
+    </Reference>
+    <Reference Include="BmFont, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\BmFont.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Android.Vending.Expansion.Downloader, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Google.Android.Vending.Expansion.Downloader.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Android.Vending.Expansion.ZipFile, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Google.Android.Vending.Expansion.ZipFile.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Android.Vending.Licensing, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Google.Android.Vending.Licensing.dll</HintPath>
+    </Reference>
+    <Reference Include="Java.Interop, Version=0.1.0.0, Culture=neutral, PublicKeyToken=84e04ff9cfb79065, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Java.Interop.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AppCenter, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Microsoft.AppCenter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AppCenter.Analytics, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Microsoft.AppCenter.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AppCenter.Analytics.Android.Bindings, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Microsoft.AppCenter.Analytics.Android.Bindings.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AppCenter.Android.Bindings, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Microsoft.AppCenter.Android.Bindings.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AppCenter.Crashes, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Microsoft.AppCenter.Crashes.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AppCenter.Crashes.Android.Bindings, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Microsoft.AppCenter.Crashes.Android.Bindings.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=84e04ff9cfb79065, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Mono.Android.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Security, Version=2.0.5.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoGame.Framework, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <HintPath>..\assemblies\mscorlib.dll</HintPath>
+    </Reference>
+    <Reference Include="System, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <HintPath>..\assemblies\System.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <HintPath>..\assemblies\System.Xml</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <HintPath>..\assemblies\System.Net.Http</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <HintPath>..\assemblies\System.Runtime.Serialization</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Arch.Core.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Arch.Core.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Arch.Lifecycle.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Arch.Lifecycle.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Arch.Lifecycle.Runtime, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Arch.Lifecycle.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.Annotations, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Support.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.Compat, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Support.Compat.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.Core.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Support.Core.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.Core.Utils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Support.Core.Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.Fragment, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Support.Fragment.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.Media.Compat, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Support.Media.Compat.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.v4, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Support.v4.dll</HintPath>
+    </Reference>
+    <Reference Include="xTile, Version=1.0.7033.16602, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\xTile.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CategorizeChests\CategorizeChestsModule.cs" />
+    <Compile Include="CategorizeChests\Framework\ChestData.cs" />
+    <Compile Include="CategorizeChests\Framework\ChestDataManager.cs" />
+    <Compile Include="CategorizeChests\Framework\ChestExtension.cs" />
+    <Compile Include="CategorizeChests\Framework\ChestFinder.cs" />
+    <Compile Include="CategorizeChests\Framework\DiscoveredItem.cs" />
+    <Compile Include="CategorizeChests\Framework\IChestDataManager.cs" />
+    <Compile Include="CategorizeChests\Framework\IChestFiller.cs" />
+    <Compile Include="CategorizeChests\Framework\IChestFinder.cs" />
+    <Compile Include="CategorizeChests\Framework\IItemDataManager.cs" />
+    <Compile Include="CategorizeChests\Framework\ItemBlacklist.cs" />
+    <Compile Include="CategorizeChests\Framework\ItemDataManager.cs" />
+    <Compile Include="CategorizeChests\Framework\ItemKey.cs" />
+    <Compile Include="CategorizeChests\Framework\ItemNotImplementedException.cs" />
+    <Compile Include="CategorizeChests\Framework\ItemType.cs" />
+    <Compile Include="CategorizeChests\Framework\Persistence\ChestAddress.cs" />
+    <Compile Include="CategorizeChests\Framework\Persistence\ChestEntry.cs" />
+    <Compile Include="CategorizeChests\Framework\Persistence\ChestLocationType.cs" />
+    <Compile Include="CategorizeChests\Framework\Persistence\InvalidSaveDataException.cs" />
+    <Compile Include="CategorizeChests\Framework\Persistence\ISaveManager.cs" />
+    <Compile Include="CategorizeChests\Framework\Persistence\SaveData.cs" />
+    <Compile Include="CategorizeChests\Framework\Persistence\SaveManager.cs" />
+    <Compile Include="CategorizeChests\Framework\Saver.cs" />
+    <Compile Include="CategorizeChests\Interface\InterfaceHost.cs" />
+    <Compile Include="CategorizeChests\Interface\ITooltipManager.cs" />
+    <Compile Include="CategorizeChests\Interface\NineSlice.cs" />
+    <Compile Include="CategorizeChests\Interface\Sprites.cs" />
+    <Compile Include="CategorizeChests\Interface\TextureRegion.cs" />
+    <Compile Include="CategorizeChests\Interface\TooltipManager.cs" />
+    <Compile Include="CategorizeChests\Interface\WidgetHost.cs" />
+    <Compile Include="CategorizeChests\Interface\Widgets\Background.cs" />
+    <Compile Include="CategorizeChests\Interface\Widgets\Button.cs" />
+    <Compile Include="CategorizeChests\Interface\Widgets\CategoryMenu.cs" />
+    <Compile Include="CategorizeChests\Interface\Widgets\ChestOverlay.cs" />
+    <Compile Include="CategorizeChests\Interface\Widgets\ItemToggle.cs" />
+    <Compile Include="CategorizeChests\Interface\Widgets\ItemTooltip.cs" />
+    <Compile Include="CategorizeChests\Interface\Widgets\Label.cs" />
+    <Compile Include="CategorizeChests\Interface\Widgets\LabeledCheckbox.cs" />
+    <Compile Include="CategorizeChests\Interface\Widgets\SpriteButton.cs" />
+    <Compile Include="CategorizeChests\Interface\Widgets\Stamp.cs" />
+    <Compile Include="CategorizeChests\Interface\Widgets\TextButton.cs" />
+    <Compile Include="CategorizeChests\Interface\Widgets\Widget.cs" />
+    <Compile Include="CategorizeChests\Interface\Widgets\WrapBag.cs" />
+    <Compile Include="CategorizeChests\ItemHelper.cs" />
+    <Compile Include="CategorizeChests\Utility.cs" />
+    <Compile Include="Config.cs" />
+    <Compile Include="ModEntry.cs" />
+    <Compile Include="Module.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StackToNearbyChests\StackLogic.cs" />
+    <Compile Include="StackToNearbyChests\StashToNearbyChestsModule.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -1,0 +1,277 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5EF944E3-D54B-4936-B507-A40C17B17B8E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Automate</RootNamespace>
+    <AssemblyName>Automate</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>7.2</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>7.2</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Mod">
+      <HintPath>..\assemblies\Mod.dll</HintPath>
+    </Reference>
+    <Reference Include="StardewValley">
+      <HintPath>..\assemblies\StardewValley.dll</HintPath>
+    </Reference>
+    <Reference Include="BmFont, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\BmFont.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Android.Vending.Expansion.Downloader, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Google.Android.Vending.Expansion.Downloader.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Android.Vending.Expansion.ZipFile, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Google.Android.Vending.Expansion.ZipFile.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Android.Vending.Licensing, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Google.Android.Vending.Licensing.dll</HintPath>
+    </Reference>
+    <Reference Include="Java.Interop, Version=0.1.0.0, Culture=neutral, PublicKeyToken=84e04ff9cfb79065, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Java.Interop.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AppCenter, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Microsoft.AppCenter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AppCenter.Analytics, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Microsoft.AppCenter.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AppCenter.Analytics.Android.Bindings, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Microsoft.AppCenter.Analytics.Android.Bindings.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AppCenter.Android.Bindings, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Microsoft.AppCenter.Android.Bindings.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AppCenter.Crashes, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Microsoft.AppCenter.Crashes.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AppCenter.Crashes.Android.Bindings, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Microsoft.AppCenter.Crashes.Android.Bindings.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=84e04ff9cfb79065, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Mono.Android.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Security, Version=2.0.5.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoGame.Framework, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <HintPath>..\assemblies\mscorlib.dll</HintPath>
+    </Reference>
+    <Reference Include="System, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <HintPath>..\assemblies\System.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <HintPath>..\assemblies\System.Xml</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <HintPath>..\assemblies\System.Net.Http</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <HintPath>..\assemblies\System.Runtime.Serialization</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Arch.Core.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Arch.Core.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Arch.Lifecycle.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Arch.Lifecycle.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Arch.Lifecycle.Runtime, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Arch.Lifecycle.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.Annotations, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Support.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.Compat, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Support.Compat.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.Core.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Support.Core.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.Core.Utils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Support.Core.Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.Fragment, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Support.Fragment.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.Media.Compat, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Support.Media.Compat.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.v4, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Support.v4.dll</HintPath>
+    </Reference>
+    <Reference Include="xTile, Version=1.0.7033.16602, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\xTile.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Automate\Framework\AutomateAPI.cs" />
+    <Compile Include="Automate\Framework\AutomationFactory.cs" />
+    <Compile Include="Automate\Framework\BaseMachine.cs" />
+    <Compile Include="Automate\Framework\Connector.cs" />
+    <Compile Include="Automate\Framework\Consumable.cs" />
+    <Compile Include="Automate\Framework\GenericObjectMachine.cs" />
+    <Compile Include="Automate\Framework\MachineGroup.cs" />
+    <Compile Include="Automate\Framework\MachineGroupBuilder.cs" />
+    <Compile Include="Automate\Framework\MachineGroupFactory.cs" />
+    <Compile Include="Automate\Framework\Machines\Buildings\JunimoHutMachine.cs" />
+    <Compile Include="Automate\Framework\Machines\Buildings\MillMachine.cs" />
+    <Compile Include="Automate\Framework\Machines\Buildings\ShippingBinMachine.cs" />
+    <Compile Include="Automate\Framework\Machines\Objects\AutoGrabberMachine.cs" />
+    <Compile Include="Automate\Framework\Machines\Objects\BeeHouseMachine.cs" />
+    <Compile Include="Automate\Framework\Machines\Objects\CaskMachine.cs" />
+    <Compile Include="Automate\Framework\Machines\Objects\CharcoalKilnMachine.cs" />
+    <Compile Include="Automate\Framework\Machines\Objects\CheesePressMachine.cs" />
+    <Compile Include="Automate\Framework\Machines\Objects\CoopIncubatorMachine.cs" />
+    <Compile Include="Automate\Framework\Machines\Objects\CrabPotMachine.cs" />
+    <Compile Include="Automate\Framework\Machines\Objects\CrystalariumMachine.cs" />
+    <Compile Include="Automate\Framework\Machines\Objects\FeedHopperMachine.cs" />
+    <Compile Include="Automate\Framework\Machines\Objects\FurnaceMachine.cs" />
+    <Compile Include="Automate\Framework\Machines\Objects\KegMachine.cs" />
+    <Compile Include="Automate\Framework\Machines\Objects\LightningRodMachine.cs" />
+    <Compile Include="Automate\Framework\Machines\Objects\LoomMachine.cs" />
+    <Compile Include="Automate\Framework\Machines\Objects\MayonnaiseMachine.cs" />
+    <Compile Include="Automate\Framework\Machines\Objects\MushroomBoxMachine.cs" />
+    <Compile Include="Automate\Framework\Machines\Objects\OilMakerMachine.cs" />
+    <Compile Include="Automate\Framework\Machines\Objects\PreservesJarMachine.cs" />
+    <Compile Include="Automate\Framework\Machines\Objects\RecyclingMachine.cs" />
+    <Compile Include="Automate\Framework\Machines\Objects\SeedMakerMachine.cs" />
+    <Compile Include="Automate\Framework\Machines\Objects\SlimeEggPressMachine.cs" />
+    <Compile Include="Automate\Framework\Machines\Objects\SlimeIncubatorMachine.cs" />
+    <Compile Include="Automate\Framework\Machines\Objects\SodaMachine.cs" />
+    <Compile Include="Automate\Framework\Machines\Objects\StatueOfEndlessFortuneMachine.cs" />
+    <Compile Include="Automate\Framework\Machines\Objects\StatueOfPerfectionMachine.cs" />
+    <Compile Include="Automate\Framework\Machines\Objects\TapperMachine.cs" />
+    <Compile Include="Automate\Framework\Machines\Objects\WormBinMachine.cs" />
+    <Compile Include="Automate\Framework\Machines\TerrainFeatures\FruitTreeMachine.cs" />
+    <Compile Include="Automate\Framework\Machines\Tiles\TrashCanMachine.cs" />
+    <Compile Include="Automate\Framework\Models\ModConfig.cs" />
+    <Compile Include="Automate\Framework\Models\ModConfigObject.cs" />
+    <Compile Include="Automate\Framework\Models\ObjectType.cs" />
+    <Compile Include="Automate\Framework\OverlayMenu.cs" />
+    <Compile Include="Automate\Framework\Recipe.cs" />
+    <Compile Include="Automate\Framework\StorageManager.cs" />
+    <Compile Include="Automate\Framework\Storage\ChestContainer.cs" />
+    <Compile Include="Automate\Framework\Storage\ContainerExtensions.cs" />
+    <Compile Include="Automate\IAutomatable.cs" />
+    <Compile Include="Automate\IAutomateAPI.cs" />
+    <Compile Include="Automate\IAutomationFactory.cs" />
+    <Compile Include="Automate\IConsumable.cs" />
+    <Compile Include="Automate\IContainer.cs" />
+    <Compile Include="Automate\IMachine.cs" />
+    <Compile Include="Automate\IRecipe.cs" />
+    <Compile Include="Automate\IStorage.cs" />
+    <Compile Include="Automate\ITrackedStack.cs" />
+    <Compile Include="Automate\MachineState.cs" />
+    <Compile Include="Automate\ModEntry.cs" />
+    <Compile Include="Automate\obj\x86\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="Automate\obj\x86\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="Automate\obj\x86\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
+    <Compile Include="Automate\TrackedItem.cs" />
+    <Compile Include="Automate\TrackedItemCollection.cs" />
+    <Compile Include="Common\CommonHelper.cs" />
+    <Compile Include="Common\DataParsers\CropDataParser.cs" />
+    <Compile Include="Common\Integrations\Automate\AutomateIntegration.cs" />
+    <Compile Include="Common\Integrations\Automate\IAutomateApi.cs" />
+    <Compile Include="Common\Integrations\BaseIntegration.cs" />
+    <Compile Include="Common\Integrations\BetterJunimos\BetterJunimosIntegration.cs" />
+    <Compile Include="Common\Integrations\BetterJunimos\IBetterJunimosApi.cs" />
+    <Compile Include="Common\Integrations\BetterSprinklers\BetterSprinklersIntegration.cs" />
+    <Compile Include="Common\Integrations\BetterSprinklers\IBetterSprinklersApi.cs" />
+    <Compile Include="Common\Integrations\Cobalt\CobaltIntegration.cs" />
+    <Compile Include="Common\Integrations\Cobalt\ICobaltApi.cs" />
+    <Compile Include="Common\Integrations\CustomFarmingRedux\CustomFarmingReduxIntegration.cs" />
+    <Compile Include="Common\Integrations\CustomFarmingRedux\ICustomFarmingApi.cs" />
+    <Compile Include="Common\Integrations\FarmExpansion\FarmExpansionIntegration.cs" />
+    <Compile Include="Common\Integrations\FarmExpansion\IFarmExpansionApi.cs" />
+    <Compile Include="Common\Integrations\IModIntegration.cs" />
+    <Compile Include="Common\Integrations\LineSprinklers\ILineSprinklersApi.cs" />
+    <Compile Include="Common\Integrations\LineSprinklers\LineSprinklersIntegration.cs" />
+    <Compile Include="Common\Integrations\PelicanFiber\PelicanFiberIntegration.cs" />
+    <Compile Include="Common\Integrations\PrismaticTools\IPrismaticToolsApi.cs" />
+    <Compile Include="Common\Integrations\PrismaticTools\PrismaticToolsIntegration.cs" />
+    <Compile Include="Common\Integrations\SimpleSprinkler\ISimplerSprinklerApi.cs" />
+    <Compile Include="Common\Integrations\SimpleSprinkler\SimpleSprinklerIntegration.cs" />
+    <Compile Include="Common\PathUtilities.cs" />
+    <Compile Include="Common\SpriteInfo.cs" />
+    <Compile Include="Common\StringEnumArrayConverter.cs" />
+    <Compile Include="Common\TileHelper.cs" />
+    <Compile Include="Common\UI\BaseOverlay.cs" />
+    <Compile Include="Common\UI\CommonSprites.cs" />
+    <Compile Include="Common\Utilities\ConstraintSet.cs" />
+    <Compile Include="Common\Utilities\InvariantDictionary.cs" />
+    <Compile Include="Common\Utilities\InvariantHashSet.cs" />
+    <Compile Include="Common\Utilities\ObjectReferenceComparer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Automate\screenshots\chests-anywhere-config.png" />
+    <Content Include="Automate\screenshots\connectors.png" />
+    <Content Include="Automate\screenshots\crab-pot-factory.png" />
+    <Content Include="Automate\screenshots\example-overlay.png" />
+    <Content Include="Automate\screenshots\extensibility-machine-groups.png" />
+    <Content Include="Automate\screenshots\iridium-bar-factory.png" />
+    <Content Include="Automate\screenshots\iridium-cheese-factory.png" />
+    <Content Include="Automate\screenshots\iridium-mead-factory.png" />
+    <Content Include="Automate\screenshots\refined-quartz-factory.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Automate\obj\x86\Debug\Automate.csproj.CoreCompileInputs.cache" />
+    <None Include="Automate\obj\x86\Debug\project.razor.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Automate\bin\Debug\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
