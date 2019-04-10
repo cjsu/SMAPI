@@ -1,0 +1,6 @@
+1.Patch the StardewValley.dll£¬see PatchStep.txt
+2.Put the folder SMDroid into /sdcard/
+3.Put the patched StardewValley.dll into /sdcard/SMDroid/
+4.Replace StardewValley.dll and StardewModdingAPI.dll into game's base.apk(copy to user folder  to operate if no root acesss), compress level must be storage.Resign apk if you have no root access.
+5.Reinstall the patched base.apk
+Enjoy it.
