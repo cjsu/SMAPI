@@ -7,8 +7,8 @@
     <ProjectGuid>{23B6885E-0282-435B-A854-D49ABF1391D6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Mod</RootNamespace>
-    <AssemblyName>Mod</AssemblyName>
+    <RootNamespace>StardewModdingAPI</RootNamespace>
+    <AssemblyName>StardewModdingAPI</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

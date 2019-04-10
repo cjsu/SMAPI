@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,5 +12,6 @@ namespace AutoFish
         public bool autoHit { get; set; } = true;
         public bool fastBite { get; set; } = false;
         public bool catchTreasure { get; set; } = true;
+        public bool autoPlay { get; set; } = true;
     }
 }

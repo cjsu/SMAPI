@@ -1,0 +1,271 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8E1D56B0-D640-4EB0-A703-E280C40A655D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ContentPatcher</RootNamespace>
+    <AssemblyName>ContentPatcher</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <LangVersion>7.2</LangVersion>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>7.2</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="StardewModdingAPI">
+      <HintPath>..\assemblies\StardewModdingAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="StardewValley">
+      <HintPath>..\assemblies\StardewValley.dll</HintPath>
+    </Reference>
+    <Reference Include="BmFont, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\BmFont.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Android.Vending.Expansion.Downloader, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Google.Android.Vending.Expansion.Downloader.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Android.Vending.Expansion.ZipFile, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Google.Android.Vending.Expansion.ZipFile.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Android.Vending.Licensing, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Google.Android.Vending.Licensing.dll</HintPath>
+    </Reference>
+    <Reference Include="Java.Interop, Version=0.1.0.0, Culture=neutral, PublicKeyToken=84e04ff9cfb79065, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Java.Interop.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AppCenter, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Microsoft.AppCenter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AppCenter.Analytics, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Microsoft.AppCenter.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AppCenter.Analytics.Android.Bindings, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Microsoft.AppCenter.Analytics.Android.Bindings.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AppCenter.Android.Bindings, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Microsoft.AppCenter.Android.Bindings.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AppCenter.Crashes, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Microsoft.AppCenter.Crashes.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AppCenter.Crashes.Android.Bindings, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Microsoft.AppCenter.Crashes.Android.Bindings.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=84e04ff9cfb79065, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Mono.Android.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Security, Version=2.0.5.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoGame.Framework, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <HintPath>..\assemblies\mscorlib.dll</HintPath>
+    </Reference>
+    <Reference Include="System, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <HintPath>..\assemblies\System.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <HintPath>..\assemblies\System.Xml</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <HintPath>..\assemblies\System.Net.Http</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <HintPath>..\assemblies\System.Runtime.Serialization</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Arch.Core.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Arch.Core.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Arch.Lifecycle.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Arch.Lifecycle.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Arch.Lifecycle.Runtime, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Arch.Lifecycle.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.Annotations, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Support.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.Compat, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Support.Compat.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.Core.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Support.Core.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.Core.Utils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Support.Core.Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.Fragment, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Support.Fragment.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.Media.Compat, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Support.Media.Compat.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.v4, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Support.v4.dll</HintPath>
+    </Reference>
+    <Reference Include="xTile, Version=1.0.7033.16602, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\xTile.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\CommonHelper.cs" />
+    <Compile Include="Common\DataParsers\CropDataParser.cs" />
+    <Compile Include="Common\Integrations\Automate\AutomateIntegration.cs" />
+    <Compile Include="Common\Integrations\Automate\IAutomateApi.cs" />
+    <Compile Include="Common\Integrations\BaseIntegration.cs" />
+    <Compile Include="Common\Integrations\BetterJunimos\BetterJunimosIntegration.cs" />
+    <Compile Include="Common\Integrations\BetterJunimos\IBetterJunimosApi.cs" />
+    <Compile Include="Common\Integrations\BetterSprinklers\BetterSprinklersIntegration.cs" />
+    <Compile Include="Common\Integrations\BetterSprinklers\IBetterSprinklersApi.cs" />
+    <Compile Include="Common\Integrations\Cobalt\CobaltIntegration.cs" />
+    <Compile Include="Common\Integrations\Cobalt\ICobaltApi.cs" />
+    <Compile Include="Common\Integrations\CustomFarmingRedux\CustomFarmingReduxIntegration.cs" />
+    <Compile Include="Common\Integrations\CustomFarmingRedux\ICustomFarmingApi.cs" />
+    <Compile Include="Common\Integrations\FarmExpansion\FarmExpansionIntegration.cs" />
+    <Compile Include="Common\Integrations\FarmExpansion\IFarmExpansionApi.cs" />
+    <Compile Include="Common\Integrations\IModIntegration.cs" />
+    <Compile Include="Common\Integrations\LineSprinklers\ILineSprinklersApi.cs" />
+    <Compile Include="Common\Integrations\LineSprinklers\LineSprinklersIntegration.cs" />
+    <Compile Include="Common\Integrations\PelicanFiber\PelicanFiberIntegration.cs" />
+    <Compile Include="Common\Integrations\PrismaticTools\IPrismaticToolsApi.cs" />
+    <Compile Include="Common\Integrations\PrismaticTools\PrismaticToolsIntegration.cs" />
+    <Compile Include="Common\Integrations\SimpleSprinkler\ISimplerSprinklerApi.cs" />
+    <Compile Include="Common\Integrations\SimpleSprinkler\SimpleSprinklerIntegration.cs" />
+    <Compile Include="Common\PathUtilities.cs" />
+    <Compile Include="Common\SpriteInfo.cs" />
+    <Compile Include="Common\StringEnumArrayConverter.cs" />
+    <Compile Include="Common\TileHelper.cs" />
+    <Compile Include="Common\UI\BaseOverlay.cs" />
+    <Compile Include="Common\UI\CommonSprites.cs" />
+    <Compile Include="Common\Utilities\ConstraintSet.cs" />
+    <Compile Include="Common\Utilities\InvariantDictionary.cs" />
+    <Compile Include="Common\Utilities\InvariantHashSet.cs" />
+    <Compile Include="Common\Utilities\ObjectReferenceComparer.cs" />
+    <Compile Include="Framework\CaseInsensitiveExtensions.cs" />
+    <Compile Include="Framework\Commands\CommandHandler.cs" />
+    <Compile Include="Framework\Commands\PatchInfo.cs" />
+    <Compile Include="Framework\Conditions\Condition.cs" />
+    <Compile Include="Framework\Conditions\ConditionDictionary.cs" />
+    <Compile Include="Framework\Conditions\ConditionType.cs" />
+    <Compile Include="Framework\Conditions\PatchType.cs" />
+    <Compile Include="Framework\Conditions\TokenString.cs" />
+    <Compile Include="Framework\Conditions\Weather.cs" />
+    <Compile Include="Framework\ConfigFileHandler.cs" />
+    <Compile Include="Framework\ConfigModels\ConfigField.cs" />
+    <Compile Include="Framework\ConfigModels\ConfigSchemaFieldConfig.cs" />
+    <Compile Include="Framework\ConfigModels\ContentConfig.cs" />
+    <Compile Include="Framework\ConfigModels\DynamicTokenConfig.cs" />
+    <Compile Include="Framework\ConfigModels\ModConfig.cs" />
+    <Compile Include="Framework\ConfigModels\PatchConfig.cs" />
+    <Compile Include="Framework\Constants\FarmCaveType.cs" />
+    <Compile Include="Framework\Constants\FarmType.cs" />
+    <Compile Include="Framework\Constants\Gender.cs" />
+    <Compile Include="Framework\Constants\PetType.cs" />
+    <Compile Include="Framework\Constants\Profession.cs" />
+    <Compile Include="Framework\Constants\Skill.cs" />
+    <Compile Include="Framework\Constants\WalletItem.cs" />
+    <Compile Include="Framework\DebugOverlay.cs" />
+    <Compile Include="Framework\GenericTokenContext.cs" />
+    <Compile Include="Framework\Lexing\Lexer.cs" />
+    <Compile Include="Framework\Lexing\LexTokens\ILexToken.cs" />
+    <Compile Include="Framework\Lexing\LexTokens\LexBit.cs" />
+    <Compile Include="Framework\Lexing\LexTokens\LexBitType.cs" />
+    <Compile Include="Framework\Lexing\LexTokens\LexTokenInputArg.cs" />
+    <Compile Include="Framework\Lexing\LexTokens\LexTokenLiteral.cs" />
+    <Compile Include="Framework\Lexing\LexTokens\LexTokenPipe.cs" />
+    <Compile Include="Framework\Lexing\LexTokens\LexTokenToken.cs" />
+    <Compile Include="Framework\Lexing\LexTokens\LexTokenType.cs" />
+    <Compile Include="Framework\ManagedContentPack.cs" />
+    <Compile Include="Framework\Migrations\AggregateMigration.cs" />
+    <Compile Include="Framework\Migrations\BaseMigration.cs" />
+    <Compile Include="Framework\Migrations\IMigration.cs" />
+    <Compile Include="Framework\Migrations\Migration_1_3.cs" />
+    <Compile Include="Framework\Migrations\Migration_1_4.cs" />
+    <Compile Include="Framework\Migrations\Migration_1_5.cs" />
+    <Compile Include="Framework\Migrations\Migration_1_6.cs" />
+    <Compile Include="Framework\ModTokenContext.cs" />
+    <Compile Include="Framework\Patches\DisabledPatch.cs" />
+    <Compile Include="Framework\Patches\EditDataPatch.cs" />
+    <Compile Include="Framework\Patches\EditDataPatchField.cs" />
+    <Compile Include="Framework\Patches\EditDataPatchRecord.cs" />
+    <Compile Include="Framework\Patches\EditImagePatch.cs" />
+    <Compile Include="Framework\Patches\IPatch.cs" />
+    <Compile Include="Framework\Patches\LoadPatch.cs" />
+    <Compile Include="Framework\Patches\Patch.cs" />
+    <Compile Include="Framework\PatchManager.cs" />
+    <Compile Include="Framework\RawContentPack.cs" />
+    <Compile Include="Framework\TokenManager.cs" />
+    <Compile Include="Framework\Tokens\DynamicToken.cs" />
+    <Compile Include="Framework\Tokens\DynamicTokenValue.cs" />
+    <Compile Include="Framework\Tokens\GenericToken.cs" />
+    <Compile Include="Framework\Tokens\IContext.cs" />
+    <Compile Include="Framework\Tokens\ImmutableToken.cs" />
+    <Compile Include="Framework\Tokens\IToken.cs" />
+    <Compile Include="Framework\Tokens\TokenName.cs" />
+    <Compile Include="Framework\Tokens\ValueProviders\BaseValueProvider.cs" />
+    <Compile Include="Framework\Tokens\ValueProviders\ConditionTypeValueProvider.cs" />
+    <Compile Include="Framework\Tokens\ValueProviders\DynamicTokenValueProvider.cs" />
+    <Compile Include="Framework\Tokens\ValueProviders\HasFileValueProvider.cs" />
+    <Compile Include="Framework\Tokens\ValueProviders\HasProfessionValueProvider.cs" />
+    <Compile Include="Framework\Tokens\ValueProviders\HasWalletItemValueProvider.cs" />
+    <Compile Include="Framework\Tokens\ValueProviders\ImmutableValueProvider.cs" />
+    <Compile Include="Framework\Tokens\ValueProviders\IValueProvider.cs" />
+    <Compile Include="Framework\Tokens\ValueProviders\SkillLevelValueProvider.cs" />
+    <Compile Include="Framework\Tokens\ValueProviders\VillagerHeartsValueProvider.cs" />
+    <Compile Include="Framework\Tokens\ValueProviders\VillagerRelationshipValueProvider.cs" />
+    <Compile Include="Framework\Validators\BaseValidator.cs" />
+    <Compile Include="Framework\Validators\IAssetValidator.cs" />
+    <Compile Include="Framework\Validators\StardewValley_1_3_36_Validator.cs" />
+    <Compile Include="ModEntry.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

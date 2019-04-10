@@ -40,6 +40,7 @@ namespace SMDroid
                 this.ContentCore = new ContentCoordinator(serviceProvider, rootDirectory, Thread.CurrentThread.CurrentUICulture, SGame.ConstructorHack.Monitor, SGame.ConstructorHack.Reflection, SGame.ConstructorHack.JsonHelper, SGame.OnLoadingFirstAsset ?? SGame.ConstructorHack?.OnLoadingFirstAsset);
                 this.NextContentManagerIsMain = true;
                 this.core.RunInteractively(this.ContentCore);
+                SGame.printLog("ROOT Directory:" + rootDirectory);
                 return this.ContentCore.CreateGameContentManager("Game1._temporaryContent");
             }
 

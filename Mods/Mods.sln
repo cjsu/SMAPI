@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScytheHarvesting", "ScytheH
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConvenientChests", "ConvenientChests\ConvenientChests.csproj", "{84A712EC-5F80-43DC-879C-D3604B6F5644}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContentPatcher", "ContentPatcher\ContentPatcher.csproj", "{8E1D56B0-D640-4EB0-A703-E280C40A655D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{84A712EC-5F80-43DC-879C-D3604B6F5644}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84A712EC-5F80-43DC-879C-D3604B6F5644}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84A712EC-5F80-43DC-879C-D3604B6F5644}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E1D56B0-D640-4EB0-A703-E280C40A655D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E1D56B0-D640-4EB0-A703-E280C40A655D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E1D56B0-D640-4EB0-A703-E280C40A655D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E1D56B0-D640-4EB0-A703-E280C40A655D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

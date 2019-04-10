@@ -25,6 +25,12 @@ namespace AutoFish
         public override List<OptionsElement> GetConfigMenuItems()
         {
             List<OptionsElement> options = new List<OptionsElement>();
+            ModOptionsCheckbox _optionsCheckboxPlay = new ModOptionsCheckbox("自动钓鱼", 0x8765, delegate (bool value) {
+                this.Config.autoPlay = value;
+                this.Helper.WriteConfig<ModConfig>(this.Config);
+            }, -1, -1);
+            _optionsCheckboxPlay.isChecked = this.Config.autoPlay;
+            options.Add(_optionsCheckboxPlay);
             ModOptionsCheckbox _optionsCheckboxAutoHit = new ModOptionsCheckbox("自动起钩", 0x8765, delegate (bool value) {
                 this.Config.autoHit = value;
                 this.Helper.WriteConfig<ModConfig>(this.Config);
@@ -43,12 +49,6 @@ namespace AutoFish
             }, -1, -1);
             _optionsCheckboxFastBite.isChecked = this.Config.fastBite;
             options.Add(_optionsCheckboxFastBite);
-            ModOptionsCheckbox _optionsCheckboxCatchTreasure = new ModOptionsCheckbox("钓取宝箱", 0x8765, delegate (bool value) {
-                this.Config.catchTreasure = value;
-                this.Helper.WriteConfig<ModConfig>(this.Config);
-            }, -1, -1);
-            _optionsCheckboxCatchTreasure.isChecked = this.Config.catchTreasure;
-            options.Add(_optionsCheckboxCatchTreasure);
             return options;
         }
 
@@ -71,7 +71,7 @@ namespace AutoFish
                     currentTool.castingPower = 1;
             }
 
-            if (Game1.activeClickableMenu is BobberBar) // 自动小游戏
+            if (this.Config.autoPlay && Game1.activeClickableMenu is BobberBar) // 自动小游戏
             {
                 BobberBar bar = Game1.activeClickableMenu as BobberBar;
                 float barPos = this.Helper.Reflection.GetField<float>(bar, "bobberBarPos").GetValue();

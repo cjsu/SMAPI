@@ -29,6 +29,9 @@ namespace StardewModdingAPI.Framework.ContentManagers
         /// <summary>Encapsulates monitoring and logging.</summary>
         protected readonly IMonitor Monitor;
 
+        /// <summary>Reflector.</summary>
+        protected readonly Reflector Reflector;
+
         /// <summary>Whether the content coordinator has been disposed.</summary>
         private bool IsDisposed;
 
@@ -76,6 +79,7 @@ namespace StardewModdingAPI.Framework.ContentManagers
             this.Coordinator = coordinator ?? throw new ArgumentNullException(nameof(coordinator));
             this.Cache = new ContentCache(this, reflection);
             this.Monitor = monitor ?? throw new ArgumentNullException(nameof(monitor));
+            this.Reflector = reflection;
             this.OnDisposing = onDisposing;
             this.IsModContentManager = isModFolder;
 

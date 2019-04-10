@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -398,8 +399,8 @@ namespace StardewModdingAPI.Framework
                 // this too. For example, doing this after mod event suppression would prevent the
                 // user from doing anything on the overnight shipping screen.
                 SInputState inputState = this.Input;
-                //if (Game1.game1.IsActive)
-                inputState.TrueUpdate();
+                if (Game1.game1.IsActive)
+                    inputState.TrueUpdate();
 
                 /*********
                 ** Save events + suppress events during save
@@ -529,7 +530,7 @@ namespace StardewModdingAPI.Framework
                 /*********
                 ** Input events (if window has focus)
                 *********/
-                //if (Game1.game1.IsActive)
+                if (Game1.game1.IsActive)
                 {
                     // raise events
                     bool isChatInput = Game1.IsChatting || (Context.IsMultiplayer && Context.IsWorldReady && Game1.activeClickableMenu == null && Game1.currentMinigame == null && inputState.IsAnyDown(Game1.options.chatButton));
@@ -618,7 +619,10 @@ namespace StardewModdingAPI.Framework
                                 List<OptionsElement> options = this.Reflection.GetField<List<OptionsElement>>(optionsPage, "options").GetValue();
                                 foreach(IModMetadata modMetadata in this.ModRegistry.GetAll())
                                 {
-                                    options.InsertRange(0, modMetadata.Mod.GetConfigMenuItems());
+                                    if(modMetadata.Mod != null)
+                                    {
+                                        options.InsertRange(0, modMetadata.Mod.GetConfigMenuItems());
+                                    }
                                 }
                                 this.Reflection.GetMethod(optionsPage, "updateContentPositions").Invoke();
                             }

@@ -1,4 +1,4 @@
-1. Inject assembly reference, namespace: SMDroid
+1. Inject assembly reference, namespace: StardewModdingAPI
 
 2.Modify class StardewValley.Game1, modify constructor method£¬insert Instructions at beginning:
 newobj	System.Void SMDroid.ModEntry::.ctor()
