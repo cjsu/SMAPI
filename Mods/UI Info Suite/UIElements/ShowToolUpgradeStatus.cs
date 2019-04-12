@@ -120,15 +120,15 @@ namespace UIInfoSuite.UIElements
         private void OnRenderingHud(object sender, RenderingHudEventArgs e)
         {
             // draw tool upgrade status
-            if (!Game1.eventUp && this._toolBeingUpgraded != null)
+            if (!Game1.eventUp && this._toolBeingUpgraded != null && Game1.activeClickableMenu == null)
             {
                 Point iconPosition = IconHandler.Handler.GetNewIconPosition();
                 this._toolUpgradeIcon =
                     new ClickableTextureComponent(
-                        new Rectangle(iconPosition.X, iconPosition.Y, 40, 40),
+                        new Rectangle(iconPosition.X, iconPosition.Y, 60, 60),
                         Game1.toolSpriteSheet,
                         this._toolTexturePosition,
-                        2.5f);
+                        3.75f);
                 this._toolUpgradeIcon.draw(Game1.spriteBatch);
             }
         }

@@ -69,6 +69,28 @@ namespace StardewModdingAPI.Framework
         /// <remarks>Skipping a few frames ensures the game finishes initialising the world before mods try to change it.</remarks>
         private readonly Countdown AfterLoadTimer = new Countdown(5);
 
+        internal bool OnObjectCanBePlacedHere(SObject instance, GameLocation location, Vector2 tile, ref bool result)
+        {
+            ObjectCanBePlacedHereEventArgs args = new ObjectCanBePlacedHereEventArgs(instance, location, tile, result);
+            bool run =this.Events.ObjectCanBePlacedHere.RaiseForChainRun(args);
+            result = args.__result;
+            return run;
+        }
+
+        internal void OnObjectIsIndexOkForBasicShippedCategory(int index, ref bool result)
+        {
+            ObjectIsIndexOkForBasicShippedCategoryEventArgs args = new ObjectIsIndexOkForBasicShippedCategoryEventArgs(index, result);
+            this.Events.ObjectIsIndexOkForBasicShippedCategory.RaiseForChainRun(args);
+            result = args.__result;
+        }
+
+        internal bool OnObjectCheckForAction(SObject instance)
+        {
+            ObjectCheckForActionEventArgs args = new ObjectCheckForActionEventArgs(instance);
+            bool run = this.Events.ObjectCheckForAction.RaiseForChainRun(args);
+            return run;
+        }
+
         /// <summary>Whether the game is saving and SMAPI has already raised <see cref="IGameLoopEvents.Saving"/>.</summary>
         private bool IsBetweenSaveEvents;
 

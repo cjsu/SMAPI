@@ -93,13 +93,13 @@ namespace UIInfoSuite.UIElements
         private void OnRenderingHud(object sender, EventArgs e)
         {
             // draw birthday icon
-            if (!Game1.eventUp)
+            if (!Game1.eventUp && Game1.activeClickableMenu == null)
             {
                 if (this._birthdayNPC != null)
                 {
                     Rectangle headShot = this._birthdayNPC.GetHeadShot();
                     Point iconPosition = IconHandler.Handler.GetNewIconPosition();
-                    float scale = 2.9f;
+                    float scale = 4.35f;
 
                     Game1.spriteBatch.Draw(
                         Game1.mouseCursors,

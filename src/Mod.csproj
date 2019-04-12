@@ -443,6 +443,7 @@
     <Compile Include="SMAPI\Events\DayStartedEventArgs.cs" />
     <Compile Include="SMAPI\Events\DebrisListChangedEventArgs.cs" />
     <Compile Include="SMAPI\Events\GameLaunchedEventArgs.cs" />
+    <Compile Include="SMAPI\Events\IHookEvents.cs" />
     <Compile Include="SMAPI\Events\IDisplayEvents.cs" />
     <Compile Include="SMAPI\Events\IGameLoopEvents.cs" />
     <Compile Include="SMAPI\Events\IInputEvents.cs" />
@@ -462,6 +463,8 @@
     <Compile Include="SMAPI\Events\ModMessageReceivedEventArgs.cs" />
     <Compile Include="SMAPI\Events\MouseWheelScrolledEventArgs.cs" />
     <Compile Include="SMAPI\Events\NpcListChangedEventArgs.cs" />
+    <Compile Include="SMAPI\Events\ObjectCheckForActionEventArgs.cs" />
+    <Compile Include="SMAPI\Events\ObjectIsIndexOkForBasicShippedCategoryEventArgs.cs" />
     <Compile Include="SMAPI\Events\ObjectListChangedEventArgs.cs" />
     <Compile Include="SMAPI\Events\OneSecondUpdateTickedEventArgs.cs" />
     <Compile Include="SMAPI\Events\OneSecondUpdateTickingEventArgs.cs" />
@@ -488,6 +491,7 @@
     <Compile Include="SMAPI\Events\UpdateTickedEventArgs.cs" />
     <Compile Include="SMAPI\Events\UpdateTickingEventArgs.cs" />
     <Compile Include="SMAPI\Events\WarpedEventArgs.cs" />
+    <Compile Include="SMAPI\Events\ObjectCanBePlacedHereEventArgs.cs" />
     <Compile Include="SMAPI\Events\WindowResizedEventArgs.cs" />
     <Compile Include="SMAPI\Framework\Command.cs" />
     <Compile Include="SMAPI\Framework\CommandManager.cs" />
@@ -513,6 +517,7 @@
     <Compile Include="SMAPI\Framework\Events\ModEvents.cs" />
     <Compile Include="SMAPI\Framework\Events\ModEventsBase.cs" />
     <Compile Include="SMAPI\Framework\Events\ModGameLoopEvents.cs" />
+    <Compile Include="SMAPI\Framework\Events\ModHookEvents.cs" />
     <Compile Include="SMAPI\Framework\Events\ModInputEvents.cs" />
     <Compile Include="SMAPI\Framework\Events\ModMultiplayerEvents.cs" />
     <Compile Include="SMAPI\Framework\Events\ModPlayerEvents.cs" />

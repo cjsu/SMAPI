@@ -26,3 +26,48 @@ ldsfld	StardewValley.ModHooks StardewValley.Game1::hooks
 ldarg.1	
 ldnull	
 callvirt	System.Void StardewValley.ModHooks::OnGame1_Draw(Microsoft.Xna.Framework.GameTime,Microsoft.Xna.Framework.Graphics.RenderTarget2D)
+
+
+Optional Section
+
+Fix back button£º
+
+Modify class StardewValley.Game1, modify method  updateAndroidMenus(), modify Instructions at beginning:
+ldsfld	StardewValley.InputState StardewValley.Game1::input
+callvirt	Microsoft.Xna.Framework.Input.GamePadState StardewValley.InputState::GetGamePadState()
+
+
+
+Json Asset Support£º
+
+Modify class StardewValley.Object, modify method checkForAction,insert instructions at beginning:
+ldsfld	StardewValley.ModHooks StardewValley.Game1::hooks
+ldarg.0	
+callvirt	System.Boolean StardewValley.ModHooks::OnObject_checkForAction(StardewValley.Object)
+brtrue.s	-> (6) ldarg.2 
+ldc.i4.0	
+ret	
+
+modify method isIndexOkForBasicShippedCategory,replace instructions:
+ldarg.0	
+ldc.i4	434
+bne.un.s	-> (5) ldsfld StardewValley.ModHooks StardewValley.Game1::hooks
+ldc.i4.0	
+ret	
+ldsfld	StardewValley.ModHooks StardewValley.Game1::hooks
+ldarg.0	
+ldloca.s	-> (0) (System.Boolean)
+callvirt	System.Void StardewValley.ModHooks::OnObject_isIndexOkForBasicShippedCategory(System.Int32,System.Boolean&)
+ldloc.0	
+ret
+
+modify method canBePlacedHere insert instructions at beginning:
+ldsfld	StardewValley.ModHooks StardewValley.Game1::hooks
+ldarg.0	
+ldarg.1	
+ldarg.2	
+ldloca.s	-> (1) (System.Boolean)
+callvirt	System.Boolean StardewValley.ModHooks::OnObject_canBePlacedHere(StardewValley.Object,StardewValley.GameLocation,Microsoft.Xna.Framework.Vector2,System.Boolean&)
+brtrue.s	-> (9) ldarg.1 
+ldloc.1	
+ret	

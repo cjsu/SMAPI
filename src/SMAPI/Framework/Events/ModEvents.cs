@@ -29,6 +29,7 @@ namespace StardewModdingAPI.Framework.Events
         /// <summary>Events serving specialised edge cases that shouldn't be used by most mods.</summary>
         public ISpecialisedEvents Specialised { get; }
 
+        public IHookEvents Hook { get; }
 
         /*********
         ** Public methods
@@ -45,6 +46,7 @@ namespace StardewModdingAPI.Framework.Events
             this.Player = new ModPlayerEvents(mod, eventManager);
             this.World = new ModWorldEvents(mod, eventManager);
             this.Specialised = new ModSpecialisedEvents(mod, eventManager);
+            this.Hook = new ModHookEvents(mod, eventManager);
         }
     }
 }

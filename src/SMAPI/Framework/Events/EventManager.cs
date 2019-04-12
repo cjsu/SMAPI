@@ -163,6 +163,11 @@ namespace StardewModdingAPI.Framework.Events
         /// <summary>Raised after the game performs its overall update tick (≈60 times per second). See notes on <see cref="ISpecialisedEvents.UnvalidatedUpdateTicked"/>.</summary>
         public readonly ManagedEvent<UnvalidatedUpdateTickedEventArgs> UnvalidatedUpdateTicked;
 
+        public readonly ManagedEvent<ObjectCanBePlacedHereEventArgs> ObjectCanBePlacedHere;
+
+        public readonly ManagedEvent<ObjectCheckForActionEventArgs> ObjectCheckForAction;
+
+        public readonly ManagedEvent<ObjectIsIndexOkForBasicShippedCategoryEventArgs> ObjectIsIndexOkForBasicShippedCategory;
 
         /*********
         ** Public methods
@@ -226,6 +231,10 @@ namespace StardewModdingAPI.Framework.Events
             this.LoadStageChanged = ManageEventOf<LoadStageChangedEventArgs>(nameof(IModEvents.Specialised), nameof(ISpecialisedEvents.LoadStageChanged));
             this.UnvalidatedUpdateTicking = ManageEventOf<UnvalidatedUpdateTickingEventArgs>(nameof(IModEvents.Specialised), nameof(ISpecialisedEvents.UnvalidatedUpdateTicking));
             this.UnvalidatedUpdateTicked = ManageEventOf<UnvalidatedUpdateTickedEventArgs>(nameof(IModEvents.Specialised), nameof(ISpecialisedEvents.UnvalidatedUpdateTicked));
+
+            this.ObjectCheckForAction = ManageEventOf<ObjectCheckForActionEventArgs>(nameof(IModEvents.Specialised), nameof(ISpecialisedEvents.LoadStageChanged));
+            this.ObjectCanBePlacedHere = ManageEventOf<ObjectCanBePlacedHereEventArgs>(nameof(IModEvents.Specialised), nameof(ISpecialisedEvents.UnvalidatedUpdateTicking));
+            this.ObjectIsIndexOkForBasicShippedCategory = ManageEventOf<ObjectIsIndexOkForBasicShippedCategoryEventArgs>(nameof(IModEvents.Specialised), nameof(ISpecialisedEvents.UnvalidatedUpdateTicked));
         }
     }
 }

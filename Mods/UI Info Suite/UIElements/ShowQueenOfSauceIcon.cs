@@ -146,24 +146,24 @@ namespace UIInfoSuite.UIElements
         private void OnRenderingHud(object sender, RenderingHudEventArgs e)
         {
             // draw icon
-            if (!Game1.eventUp)
+            if (!Game1.eventUp && Game1.activeClickableMenu == null)
             {
                 if (this._drawQueenOfSauceIcon)
                 {
                     Point iconPosition = IconHandler.Handler.GetNewIconPosition();
 
                     this._queenOfSauceIcon = new ClickableTextureComponent(
-                        new Rectangle(iconPosition.X, iconPosition.Y, 40, 40),
+                        new Rectangle(iconPosition.X, iconPosition.Y, 10 * 6, 10 * 6),
                         Game1.mouseCursors,
                         new Rectangle(609, 361, 28, 28),
-                        1.3f);
+                        1.95f);
                     this._queenOfSauceIcon.draw(Game1.spriteBatch);
                 }
 
                 if (this._drawDishOfDayIcon)
                 {
                     Point iconLocation = IconHandler.Handler.GetNewIconPosition();
-                    float scale = 2.9f;
+                    float scale = 4.35f;
 
                     Game1.spriteBatch.Draw(
                         Game1.objectSpriteSheet,
@@ -188,7 +188,7 @@ namespace UIInfoSuite.UIElements
                             this._gus.Name,
                             this._gus.Sprite.Texture,
                             this._gus.GetHeadShot(),
-                            2f);
+                            3f);
 
                     texture.draw(Game1.spriteBatch);
 
@@ -210,7 +210,7 @@ namespace UIInfoSuite.UIElements
         {
             // draw hover text
             if (this._drawQueenOfSauceIcon &&
-                this._queenOfSauceIcon.containsPoint(Game1.getMouseX(), Game1.getMouseY()))
+                this._queenOfSauceIcon.containsPoint((int)(Game1.getMouseX() * Game1.options.zoomLevel), (int)(Game1.getMouseY() * Game1.options.zoomLevel)))
             {
                 IClickableMenu.drawHoverText(
                     Game1.spriteBatch,

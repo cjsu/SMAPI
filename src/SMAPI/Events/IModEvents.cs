@@ -23,5 +23,6 @@ namespace StardewModdingAPI.Events
 
         /// <summary>Events serving specialised edge cases that shouldn't be used by most mods.</summary>
         ISpecialisedEvents Specialised { get; }
+        IHookEvents Hook { get; }
     }
 }

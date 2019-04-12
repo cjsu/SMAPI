@@ -14,6 +14,8 @@ namespace StardewModdingAPI.Framework.Events
         /// <summary>The underlying event.</summary>
         private event EventHandler<TEventArgs> Event;
 
+        private event Func<TEventArgs, bool> Func;
+
         /// <summary>A human-readable name for the event.</summary>
         private readonly string EventName;
 
@@ -26,8 +28,11 @@ namespace StardewModdingAPI.Framework.Events
         /// <summary>The display names for the mods which added each delegate.</summary>
         private readonly IDictionary<EventHandler<TEventArgs>, IModMetadata> SourceMods = new Dictionary<EventHandler<TEventArgs>, IModMetadata>();
 
+        private readonly IDictionary<Func<TEventArgs, bool>, IModMetadata> SourceModsFunc = new Dictionary<Func<TEventArgs, bool>, IModMetadata>();
+
         /// <summary>The cached invocation list.</summary>
         private EventHandler<TEventArgs>[] CachedInvocationList;
+        private Func<TEventArgs, bool>[] CachedInvocationListFunc;
 
 
         /*********
@@ -57,6 +62,11 @@ namespace StardewModdingAPI.Framework.Events
             this.Add(handler, this.ModRegistry.GetFromStack());
         }
 
+        public void Add(Func<TEventArgs, bool> handler)
+        {
+            this.Add(handler, this.ModRegistry.GetFromStack());
+        }
+
         /// <summary>Add an event handler.</summary>
         /// <param name="handler">The event handler.</param>
         /// <param name="mod">The mod which added the event handler.</param>
@@ -66,12 +76,24 @@ namespace StardewModdingAPI.Framework.Events
             this.AddTracking(mod, handler, this.Event?.GetInvocationList().Cast<EventHandler<TEventArgs>>());
         }
 
+        public void Add(Func<TEventArgs, bool> handler, IModMetadata mod)
+        {
+            this.Func += handler;
+            this.AddTracking(mod, handler, this.Func?.GetInvocationList().Cast<Func<TEventArgs, bool>>());
+        }
+
         /// <summary>Remove an event handler.</summary>
         /// <param name="handler">The event handler.</param>
         public void Remove(EventHandler<TEventArgs> handler)
         {
             this.Event -= handler;
             this.RemoveTracking(handler, this.Event?.GetInvocationList().Cast<EventHandler<TEventArgs>>());
+        }
+
+        public void Remove(Func<TEventArgs, bool> handler)
+        {
+            this.Func -= handler;
+            this.RemoveTracking(handler, this.Event?.GetInvocationList().Cast<Func<TEventArgs, bool>>());
         }
 
         /// <summary>Raise the event and notify all handlers.</summary>
@@ -92,6 +114,31 @@ namespace StardewModdingAPI.Framework.Events
                     this.LogError(handler, ex);
                 }
             }
+        }
+
+        /// <summary>Raise the event and notify all handlers wait for a actively response.</summary>
+        /// <param name="args">The event arguments to pass.</param>
+        public bool RaiseForChainRun(TEventArgs args)
+        {
+            if (this.Func == null)
+                return true;
+
+            foreach (Func<TEventArgs, bool> handler in this.CachedInvocationListFunc)
+            {
+                try
+                {
+                    bool run = handler.Invoke(args);
+                    if (!run)
+                    {
+                        return false;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    this.LogError(handler, ex);
+                }
+            }
+            return true;
         }
 
         /// <summary>Raise the event and notify all handlers.</summary>
@@ -132,6 +179,12 @@ namespace StardewModdingAPI.Framework.Events
             this.CachedInvocationList = invocationList?.ToArray() ?? new EventHandler<TEventArgs>[0];
         }
 
+        protected void AddTracking(IModMetadata mod, Func<TEventArgs, bool> handler, IEnumerable<Func<TEventArgs, bool>> invocationList)
+        {
+            this.SourceModsFunc[handler] = mod;
+            this.CachedInvocationListFunc = invocationList?.ToArray() ?? new Func<TEventArgs, bool>[0];
+        }
+
         /// <summary>Remove tracking for an event handler.</summary>
         /// <param name="handler">The event handler.</param>
         /// <param name="invocationList">The updated event invocation list.</param>
@@ -140,6 +193,12 @@ namespace StardewModdingAPI.Framework.Events
             this.CachedInvocationList = invocationList?.ToArray() ?? new EventHandler<TEventArgs>[0];
             if (!this.CachedInvocationList.Contains(handler)) // don't remove if there's still a reference to the removed handler (e.g. it was added twice and removed once)
                 this.SourceMods.Remove(handler);
+        }
+        protected void RemoveTracking(Func<TEventArgs, bool> handler, IEnumerable<Func<TEventArgs, bool>> invocationList)
+        {
+            this.CachedInvocationListFunc = invocationList?.ToArray() ?? new Func<TEventArgs, bool>[0];
+            if (!this.CachedInvocationListFunc.Contains(handler)) // don't remove if there's still a reference to the removed handler (e.g. it was added twice and removed once)
+                this.SourceModsFunc.Remove(handler);
         }
 
         /// <summary>Get the mod which registered the given event handler, if available.</summary>
@@ -150,13 +209,26 @@ namespace StardewModdingAPI.Framework.Events
                 ? mod
                 : null;
         }
-
+        protected IModMetadata GetSourceModFunc(Func<TEventArgs, bool> handler)
+        {
+            return this.SourceModsFunc.TryGetValue(handler, out IModMetadata mod)
+                ? mod
+                : null;
+        }
         /// <summary>Log an exception from an event handler.</summary>
         /// <param name="handler">The event handler instance.</param>
         /// <param name="ex">The exception that was raised.</param>
         protected void LogError(EventHandler<TEventArgs> handler, Exception ex)
         {
             IModMetadata mod = this.GetSourceMod(handler);
+            if (mod != null)
+                mod.LogAsMod($"This mod failed in the {this.EventName} event. Technical details: \n{ex.GetLogSummary()}", LogLevel.Error);
+            else
+                this.Monitor.Log($"A mod failed in the {this.EventName} event. Technical details: \n{ex.GetLogSummary()}", LogLevel.Error);
+        }
+        protected void LogError(Func<TEventArgs, bool> handler, Exception ex)
+        {
+            IModMetadata mod = this.GetSourceModFunc(handler);
             if (mod != null)
                 mod.LogAsMod($"This mod failed in the {this.EventName} event. Technical details: \n{ex.GetLogSummary()}", LogLevel.Error);
             else

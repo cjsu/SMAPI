@@ -1,19 +1,8 @@
 using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using StardewValley;
-using StardewValley.Menus;
 using StardewModdingAPI.Framework;
-using StardewModdingAPI.Framework.Events;
-using StardewModdingAPI.Framework.ModHelpers;
-using StardewModdingAPI.Framework.Reflection;
-using StardewModdingAPI;
-using StardewModdingAPI.Events;
-using StardewModdingAPI.Framework.Logging;
 using System.Threading;
-using StardewModdingAPI.Internal.ConsoleWriting;
-using StardewModdingAPI.Toolkit.Serialisation;
-using StardewModdingAPI.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace SMDroid
@@ -67,6 +56,18 @@ namespace SMDroid
         {
             this.core.GameInstance.OnNewDayAfterFade();
             base.OnGame1_NewDayAfterFade(action);
+        }
+        public override bool OnObject_canBePlacedHere(StardewValley.Object __instance, GameLocation location, Vector2 tile, ref bool __result)
+        {
+            return this.core.GameInstance.OnObjectCanBePlacedHere(__instance, location, tile, ref __result);
+        }
+        public override void OnObject_isIndexOkForBasicShippedCategory(int index, ref bool __result)
+        {
+            this.core.GameInstance.OnObjectIsIndexOkForBasicShippedCategory(index, ref __result);
+        }
+        public override bool OnObject_checkForAction(StardewValley.Object __instance)
+        {
+            return this.core.GameInstance.OnObjectCheckForAction(__instance);
         }
     }
 }

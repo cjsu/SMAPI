@@ -60,15 +60,15 @@ namespace UIInfoSuite.UIElements
         private void OnRenderingHud(object sender, RenderingHudEventArgs e)
         {
             // draw traveling merchant
-            if (!Game1.eventUp && this._travelingMerchantIsHere)
+            if (!Game1.eventUp && this._travelingMerchantIsHere && Game1.activeClickableMenu == null)
             {
                 Point iconPosition = IconHandler.Handler.GetNewIconPosition();
                 this._travelingMerchantIcon = 
                     new ClickableTextureComponent(
-                        new Rectangle(iconPosition.X, iconPosition.Y, 40, 40), 
+                        new Rectangle(iconPosition.X, iconPosition.Y, 60, 60), 
                         Game1.mouseCursors, 
                         new Rectangle(192, 1411, 20, 20), 
-                        2f);
+                        3f);
                 this._travelingMerchantIcon.draw(Game1.spriteBatch);
             }
         }
