@@ -22,14 +22,14 @@ namespace ScytheHarvesting
             if (enumerable != null)
             {
                 IEnumerable<TerrainFeature> enumerable2 = from x in enumerable
-                    select x.Value into x
-                    where x is HoeDirt
-                    select x;
+                                                          select x.Value into x
+                                                          where x is HoeDirt
+                                                          select x;
                 this.CountOfCropsReadyForHarvest = (from x in enumerable2
-                    select (HoeDirt) x into x
-                    where x.crop != null
-                    where x.readyForHarvest()
-                    select x).Count<HoeDirt>();
+                                                    select (HoeDirt)x into x
+                                                    where x.crop != null
+                                                    where x.readyForHarvest()
+                                                    select x).Count<HoeDirt>();
             }
         }
 
@@ -42,6 +42,7 @@ namespace ScytheHarvesting
         {
             config = this.Helper.ReadConfig<ModConfig>();
             helper.Events.GameLoop.UpdateTicked += this.Events_TickUpdate;
+            helper.Events.Input.ButtonPressed += this.Events_MouseActionOnHoeDirt;
         }
         public override List<OptionsElement> GetConfigMenuItems()
         {
@@ -60,92 +61,94 @@ namespace ScytheHarvesting
             options.Add(_optionsCheckboxEnableFlowers);
             return options;
         }
+        private void Events_MouseActionOnHoeDirt(object sender, EventArgs e)
+        {
+
+            if ((config.EnableMod && Context.IsWorldReady) && (Game1.currentLocation.IsFarm || (Game1.currentLocation.Name == "Greenhouse")))
+            {
+                this.SetTargetAsXP();
+            }
+        }
 
         private void Events_TickUpdate(object sender, EventArgs e)
         {
-            TickCount++;
-            if(TickCount == 10)
+            if ((Context.IsWorldReady && (Game1.currentLocation != null)) && ((Context.IsWorldReady && config.EnableMod) && (Game1.currentLocation.IsFarm || Game1.currentLocation.Name.Equals("Greenhouse"))))
             {
-                TickCount = 0;
-                if ((Context.IsWorldReady && (Game1.currentLocation != null)) && ((Context.IsWorldReady && config.EnableMod) && (Game1.currentLocation.IsFarm || Game1.currentLocation.Name.Equals("Greenhouse"))))
+                IEnumerable<KeyValuePair<Vector2, TerrainFeature>> enumerable = Game1.currentLocation.terrainFeatures.Pairs;
+                if (enumerable != null)
                 {
-                    this.SetTargetAsXP();
-                    IEnumerable<KeyValuePair<Vector2, TerrainFeature>> enumerable = Game1.currentLocation.terrainFeatures.Pairs;
-                    if (enumerable != null)
+                    List<HoeDirt> list = new List<HoeDirt>();
+                    this.FarmHasSunflowers = false;
+                    foreach (KeyValuePair<Vector2, TerrainFeature> pair in enumerable)
                     {
-                        List<HoeDirt> list = new List<HoeDirt>();
-                        this.FarmHasSunflowers = false;
-                        foreach (KeyValuePair<Vector2, TerrainFeature> pair in enumerable)
+                        if (pair.Value is HoeDirt)
                         {
-                            if (pair.Value is HoeDirt)
-                            {
-                                list.Add((HoeDirt)pair.Value);
-                            }
+                            list.Add((HoeDirt)pair.Value);
                         }
-                        foreach (HoeDirt dirt in list)
+                    }
+                    foreach (HoeDirt dirt in list)
+                    {
+                        if (dirt.crop != null)
                         {
-                            if (dirt.crop != null)
+                            if (dirt.crop.indexOfHarvest.Value != 0x1a5)
                             {
-                                if (dirt.crop.indexOfHarvest.Value != 0x1a5)
+                                if (config.EnableFlowers)
                                 {
-                                    if (config.EnableFlowers)
-                                    {
-                                        dirt.crop.harvestMethod.Value = 1;
-                                    }
-                                    else if ((((dirt.crop.indexOfHarvest.Value != 0x24f) && (dirt.crop.indexOfHarvest.Value != 0x251)) && ((dirt.crop.indexOfHarvest.Value != 0x253) && (dirt.crop.indexOfHarvest.Value != 0x255))) && (dirt.crop.indexOfHarvest.Value != 0x178))
-                                    {
-                                        dirt.crop.harvestMethod.Value = 1;
-                                    }
+                                    dirt.crop.harvestMethod.Value = 1;
                                 }
-                                else if (config.EnableSunflowers)
+                                else if ((((dirt.crop.indexOfHarvest.Value != 0x24f) && (dirt.crop.indexOfHarvest.Value != 0x251)) && ((dirt.crop.indexOfHarvest.Value != 0x253) && (dirt.crop.indexOfHarvest.Value != 0x255))) && (dirt.crop.indexOfHarvest.Value != 0x178))
                                 {
-                                    this.FarmHasSunflowers = true;
                                     dirt.crop.harvestMethod.Value = 1;
                                 }
                             }
-                        }
-                    }
-                    if (enumerable != null)
-                    {
-                        int num = (from x in from x in enumerable select x.Value
-                                   where x is HoeDirt
-                                   select (HoeDirt)x into x
-                                   where x.crop != null
-                                   where x.readyForHarvest()
-                                   select x).Count<HoeDirt>();
-                        int num2 = Math.Max(0, this.CountOfCropsReadyForHarvest - num);
-                        if ((num2 > 0) && (this.HoveredCrop != 0))
-                        {
-                            string str = Game1.objectInformation[this.HoveredCrop];
-                            char[] separator = new char[] { '/' };
-                            int num3 = Convert.ToInt32(str.Split(separator)[1]);
-                            float num4 = (float)(16.0 * Math.Log((0.018 * num3) + 1.0, 2.71828182845905));
-                            float num5 = num4 * num2;
-                            if (num5 <= 0f)
+                            else if (config.EnableSunflowers)
                             {
-                                num5 = 15 * num2;
-                            }
-                            Game1.player.gainExperience(0, (int)Math.Round((double)num5));
-                            if ((this.HoveredCrop == 0x1a5) && this.FarmHasSunflowers)
-                            {
-                                int num6 = new Random().Next(1, 10);
-                                if ((num6 >= 1) && (num6 <= 3))
-                                {
-                                    this.CreateSunflowerSeeds(0x1af, this.HoveredX, this.HoveredY, 1);
-                                }
-                                else if ((num6 >= 4) && (num6 <= 6))
-                                {
-                                    this.CreateSunflowerSeeds(0x1af, this.HoveredX, this.HoveredY, 2);
-                                }
-                                else if ((num6 >= 7) || (num6 <= 8))
-                                {
-                                    this.CreateSunflowerSeeds(0x1af, this.HoveredX, this.HoveredY, 3);
-                                }
+                                this.FarmHasSunflowers = true;
+                                dirt.crop.harvestMethod.Value = 1;
                             }
                         }
                     }
-                    this.CountCurrentHarvestableCrop();
                 }
+                if (enumerable != null)
+                {
+                    int num = (from x in from x in enumerable select x.Value
+                               where x is HoeDirt
+                               select (HoeDirt)x into x
+                               where x.crop != null
+                               where x.readyForHarvest()
+                               select x).Count<HoeDirt>();
+                    int num2 = Math.Max(0, this.CountOfCropsReadyForHarvest - num);
+                    if ((num2 > 0) && (this.HoveredCrop != 0))
+                    {
+                        string str = Game1.objectInformation[this.HoveredCrop];
+                        char[] separator = new char[] { '/' };
+                        int num3 = Convert.ToInt32(str.Split(separator)[1]);
+                        float num4 = (float)(16.0 * Math.Log((0.018 * num3) + 1.0, 2.71828182845905));
+                        float num5 = num4 * num2;
+                        if (num5 <= 0f)
+                        {
+                            num5 = 15 * num2;
+                        }
+                        Game1.player.gainExperience(0, (int)Math.Round((double)num5));
+                        if ((this.HoveredCrop == 0x1a5) && this.FarmHasSunflowers)
+                        {
+                            int num6 = new Random().Next(1, 10);
+                            if ((num6 >= 1) && (num6 <= 3))
+                            {
+                                this.CreateSunflowerSeeds(0x1af, this.HoveredX, this.HoveredY, 1);
+                            }
+                            else if ((num6 >= 4) && (num6 <= 6))
+                            {
+                                this.CreateSunflowerSeeds(0x1af, this.HoveredX, this.HoveredY, 2);
+                            }
+                            else if ((num6 >= 7) || (num6 <= 8))
+                            {
+                                this.CreateSunflowerSeeds(0x1af, this.HoveredX, this.HoveredY, 3);
+                            }
+                        }
+                    }
+                }
+                this.CountCurrentHarvestableCrop();
             }
         }
 

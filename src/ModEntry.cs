@@ -14,6 +14,7 @@ using System.Threading;
 using StardewModdingAPI.Internal.ConsoleWriting;
 using StardewModdingAPI.Toolkit.Serialisation;
 using StardewModdingAPI.Framework.Input;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace SMDroid
 {
@@ -57,6 +58,10 @@ namespace SMDroid
         public override void OnGame1_Update(GameTime time)
         {
             this.core.GameInstance.Update(time);
+        }
+        public override void OnGame1_Draw(GameTime time, RenderTarget2D toBuffer)
+        {
+            this.core.GameInstance.Draw(time, toBuffer);
         }
         public override void OnGame1_NewDayAfterFade(Action action)
         {

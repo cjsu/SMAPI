@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>b9e9edfc-e98a-4370-994f-40a9f39a0284</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Common</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)DataParsers\CropDataParser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Integrations\BaseIntegration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Integrations\Automate\AutomateIntegration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Integrations\Automate\IAutomateApi.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Integrations\LineSprinklers\LineSprinklersIntegration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Integrations\LineSprinklers\ILineSprinklersApi.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Integrations\PrismaticTools\PrismaticToolsIntegration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Integrations\PrismaticTools\IPrismaticToolsApi.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Integrations\BetterJunimos\BetterJunimosIntegration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Integrations\BetterJunimos\IBetterJunimosApi.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PathUtilities.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\BaseOverlay.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CommonHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Integrations\FarmExpansion\FarmExpansionIntegration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Integrations\FarmExpansion\IFarmExpansionApi.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Integrations\BetterSprinklers\BetterSprinklersIntegration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Integrations\BetterSprinklers\IBetterSprinklersApi.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Integrations\Cobalt\CobaltIntegration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Integrations\Cobalt\ICobaltApi.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Integrations\CustomFarmingRedux\CustomFarmingReduxIntegration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Integrations\CustomFarmingRedux\ICustomFarmingApi.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Integrations\IModIntegration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Integrations\PelicanFiber\PelicanFiberIntegration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Integrations\SimpleSprinkler\ISimplerSprinklerApi.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Integrations\SimpleSprinkler\SimpleSprinklerIntegration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SpriteInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)StringEnumArrayConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TileHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\CommonSprites.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\ConstraintSet.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\InvariantDictionary.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\InvariantHashSet.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\ObjectReferenceComparer.cs" />
+  </ItemGroup>
+</Project>

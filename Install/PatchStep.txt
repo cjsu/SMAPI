@@ -6,6 +6,7 @@ stsfld	StardewValley.ModHooks StardewValley.Game1::hooks
 
 3.Modify class StardewValley.ModHooks, inject method:
 	public virtual void OnGame1_Update(GameTime time);
+	public virtual void OnGame1_Draw(GameTime time, RenderTarget2D toBuffer);
 	public virtual LocalizedContentManager OnGame1_CreateContentManager(IServiceProvider serviceProvider, string rootDirectory) => null;
 
 4.Modify class StardewValley.Game1, modify method  Update(GameTime gameTime), insert Instructions at beginning:
@@ -19,3 +20,9 @@ ldarg.1
 ldarg.2	
 callvirt	StardewValley.LocalizedContentManager StardewValley.ModHooks::OnGame1_CreateContentManager(System.IServiceProvider,System.String)
 ret	
+
+6.Modify class StardewValley.Game1, modify method  Draw(GameTime gameTime, RenderTarget2D toBuffer), modify Instructions at beginning:
+ldsfld	StardewValley.ModHooks StardewValley.Game1::hooks
+ldarg.1	
+ldnull	
+callvirt	System.Void StardewValley.ModHooks::OnGame1_Draw(Microsoft.Xna.Framework.GameTime,Microsoft.Xna.Framework.Graphics.RenderTarget2D)

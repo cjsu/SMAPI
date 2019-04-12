@@ -1,0 +1,282 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D1395D25-1604-4104-AFF9-49097E4B9B90}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LookupAnything</RootNamespace>
+    <AssemblyName>LookupAnything</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <LangVersion>7.2</LangVersion>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>7.2</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="StardewModdingAPI">
+      <HintPath>..\assemblies\StardewModdingAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="StardewValley">
+      <HintPath>..\assemblies\StardewValley.dll</HintPath>
+    </Reference>
+    <Reference Include="BmFont, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\BmFont.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Android.Vending.Expansion.Downloader, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Google.Android.Vending.Expansion.Downloader.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Android.Vending.Expansion.ZipFile, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Google.Android.Vending.Expansion.ZipFile.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Android.Vending.Licensing, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Google.Android.Vending.Licensing.dll</HintPath>
+    </Reference>
+    <Reference Include="Java.Interop, Version=0.1.0.0, Culture=neutral, PublicKeyToken=84e04ff9cfb79065, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Java.Interop.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AppCenter, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Microsoft.AppCenter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AppCenter.Analytics, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Microsoft.AppCenter.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AppCenter.Analytics.Android.Bindings, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Microsoft.AppCenter.Analytics.Android.Bindings.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AppCenter.Android.Bindings, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Microsoft.AppCenter.Android.Bindings.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AppCenter.Crashes, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Microsoft.AppCenter.Crashes.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AppCenter.Crashes.Android.Bindings, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Microsoft.AppCenter.Crashes.Android.Bindings.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=84e04ff9cfb79065, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Mono.Android.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Security, Version=2.0.5.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoGame.Framework, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <HintPath>..\assemblies\mscorlib.dll</HintPath>
+    </Reference>
+    <Reference Include="System, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <HintPath>..\assemblies\System.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <HintPath>..\assemblies\System.Xml.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <HintPath>..\assemblies\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <HintPath>..\assemblies\System.Runtime.Serialization.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Arch.Core.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Arch.Core.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Arch.Lifecycle.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Arch.Lifecycle.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Arch.Lifecycle.Runtime, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Arch.Lifecycle.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.Annotations, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Support.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.Compat, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Support.Compat.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.Core.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Support.Core.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.Core.Utils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Support.Core.Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.Fragment, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Support.Fragment.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.Media.Compat, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Support.Media.Compat.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.v4, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\Xamarin.Android.Support.v4.dll</HintPath>
+    </Reference>
+    <Reference Include="xTile, Version=1.0.7033.16602, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\assemblies\xTile.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\CommonHelper.cs" />
+    <Compile Include="Common\DataParsers\CropDataParser.cs" />
+    <Compile Include="Common\Integrations\Automate\AutomateIntegration.cs" />
+    <Compile Include="Common\Integrations\Automate\IAutomateApi.cs" />
+    <Compile Include="Common\Integrations\BaseIntegration.cs" />
+    <Compile Include="Common\Integrations\BetterJunimos\BetterJunimosIntegration.cs" />
+    <Compile Include="Common\Integrations\BetterJunimos\IBetterJunimosApi.cs" />
+    <Compile Include="Common\Integrations\BetterSprinklers\BetterSprinklersIntegration.cs" />
+    <Compile Include="Common\Integrations\BetterSprinklers\IBetterSprinklersApi.cs" />
+    <Compile Include="Common\Integrations\Cobalt\CobaltIntegration.cs" />
+    <Compile Include="Common\Integrations\Cobalt\ICobaltApi.cs" />
+    <Compile Include="Common\Integrations\CustomFarmingRedux\CustomFarmingReduxIntegration.cs" />
+    <Compile Include="Common\Integrations\CustomFarmingRedux\ICustomFarmingApi.cs" />
+    <Compile Include="Common\Integrations\FarmExpansion\FarmExpansionIntegration.cs" />
+    <Compile Include="Common\Integrations\FarmExpansion\IFarmExpansionApi.cs" />
+    <Compile Include="Common\Integrations\IModIntegration.cs" />
+    <Compile Include="Common\Integrations\LineSprinklers\ILineSprinklersApi.cs" />
+    <Compile Include="Common\Integrations\LineSprinklers\LineSprinklersIntegration.cs" />
+    <Compile Include="Common\Integrations\PelicanFiber\PelicanFiberIntegration.cs" />
+    <Compile Include="Common\Integrations\PrismaticTools\IPrismaticToolsApi.cs" />
+    <Compile Include="Common\Integrations\PrismaticTools\PrismaticToolsIntegration.cs" />
+    <Compile Include="Common\Integrations\SimpleSprinkler\ISimplerSprinklerApi.cs" />
+    <Compile Include="Common\Integrations\SimpleSprinkler\SimpleSprinklerIntegration.cs" />
+    <Compile Include="Common\PathUtilities.cs" />
+    <Compile Include="Common\SpriteInfo.cs" />
+    <Compile Include="Common\StringEnumArrayConverter.cs" />
+    <Compile Include="Common\TileHelper.cs" />
+    <Compile Include="Common\UI\BaseOverlay.cs" />
+    <Compile Include="Common\UI\CommonSprites.cs" />
+    <Compile Include="Common\Utilities\ConstraintSet.cs" />
+    <Compile Include="Common\Utilities\InvariantDictionary.cs" />
+    <Compile Include="Common\Utilities\InvariantHashSet.cs" />
+    <Compile Include="Common\Utilities\ObjectReferenceComparer.cs" />
+    <Compile Include="Components\DebugInterface.cs" />
+    <Compile Include="Components\LookupMenu.cs" />
+    <Compile Include="Components\Sprites.cs" />
+    <Compile Include="DataParser.cs" />
+    <Compile Include="DrawHelper.cs" />
+    <Compile Include="Framework\Constants\ChildAge.cs" />
+    <Compile Include="Framework\Constants\Constant.cs" />
+    <Compile Include="Framework\Constants\FacingDirection.cs" />
+    <Compile Include="Framework\Constants\FenceType.cs" />
+    <Compile Include="Framework\Constants\FruitTreeGrowthStage.cs" />
+    <Compile Include="Framework\Constants\GiftTaste.cs" />
+    <Compile Include="Framework\Constants\ItemQuality.cs" />
+    <Compile Include="Framework\Constants\ItemSpriteType.cs" />
+    <Compile Include="Framework\Constants\L10n.cs" />
+    <Compile Include="Framework\Constants\LookupMode.cs" />
+    <Compile Include="Framework\Constants\TreeType.cs" />
+    <Compile Include="Framework\Constants\WildTreeGrowthStage.cs" />
+    <Compile Include="Framework\Data\AdventureGuildQuestData.cs" />
+    <Compile Include="Framework\Data\BuildingRecipeData.cs" />
+    <Compile Include="Framework\Data\CharacterData.cs" />
+    <Compile Include="Framework\Data\ConstantData.cs" />
+    <Compile Include="Framework\Data\ItemDropData.cs" />
+    <Compile Include="Framework\Data\MachineRecipeData.cs" />
+    <Compile Include="Framework\Data\MonsterData.cs" />
+    <Compile Include="Framework\Data\ObjectContext.cs" />
+    <Compile Include="Framework\Data\ObjectData.cs" />
+    <Compile Include="Framework\Data\ShopData.cs" />
+    <Compile Include="Framework\DebugFields\GenericDebugField.cs" />
+    <Compile Include="Framework\DebugFields\IDebugField.cs" />
+    <Compile Include="Framework\Fields\CharacterFriendshipField.cs" />
+    <Compile Include="Framework\Fields\CharacterGiftTastesField.cs" />
+    <Compile Include="Framework\Fields\CheckboxListField.cs" />
+    <Compile Include="Framework\Fields\DataMiningField.cs" />
+    <Compile Include="Framework\Fields\GenericField.cs" />
+    <Compile Include="Framework\Fields\ICustomField.cs" />
+    <Compile Include="Framework\Fields\ILinkField.cs" />
+    <Compile Include="Framework\Fields\ItemDropListField.cs" />
+    <Compile Include="Framework\Fields\ItemGiftTastesField.cs" />
+    <Compile Include="Framework\Fields\ItemIconField.cs" />
+    <Compile Include="Framework\Fields\ItemIconListField.cs" />
+    <Compile Include="Framework\Fields\LinkField.cs" />
+    <Compile Include="Framework\Fields\PercentageBarField.cs" />
+    <Compile Include="Framework\Fields\RecipesForIngredientField.cs" />
+    <Compile Include="Framework\Fields\SkillBarField.cs" />
+    <Compile Include="Framework\FormattedText.cs" />
+    <Compile Include="Framework\IFormattedText.cs" />
+    <Compile Include="Framework\InternalExtensions.cs" />
+    <Compile Include="Framework\Metadata.cs" />
+    <Compile Include="Framework\ModConfig.cs" />
+    <Compile Include="Framework\Models\BundleIngredientModel.cs" />
+    <Compile Include="Framework\Models\BundleModel.cs" />
+    <Compile Include="Framework\Models\FriendshipModel.cs" />
+    <Compile Include="Framework\Models\GiftTasteModel.cs" />
+    <Compile Include="Framework\Models\ObjectModel.cs" />
+    <Compile Include="Framework\Models\RecipeModel.cs" />
+    <Compile Include="Framework\Models\RecipeType.cs" />
+    <Compile Include="Framework\Subjects\BaseSubject.cs" />
+    <Compile Include="Framework\Subjects\BuildingSubject.cs" />
+    <Compile Include="Framework\Subjects\CharacterSubject.cs" />
+    <Compile Include="Framework\Subjects\FarmAnimalSubject.cs" />
+    <Compile Include="Framework\Subjects\FarmerSubject.cs" />
+    <Compile Include="Framework\Subjects\FruitTreeSubject.cs" />
+    <Compile Include="Framework\Subjects\ISubject.cs" />
+    <Compile Include="Framework\Subjects\ItemSubject.cs" />
+    <Compile Include="Framework\Subjects\TileSubject.cs" />
+    <Compile Include="Framework\Subjects\TreeSubject.cs" />
+    <Compile Include="Framework\TargetFactory.cs" />
+    <Compile Include="Framework\Targets\BuildingTarget.cs" />
+    <Compile Include="Framework\Targets\CharacterTarget.cs" />
+    <Compile Include="Framework\Targets\CropTarget.cs" />
+    <Compile Include="Framework\Targets\FarmAnimalTarget.cs" />
+    <Compile Include="Framework\Targets\FarmerTarget.cs" />
+    <Compile Include="Framework\Targets\FruitTreeTarget.cs" />
+    <Compile Include="Framework\Targets\GenericTarget.cs" />
+    <Compile Include="Framework\Targets\ITarget.cs" />
+    <Compile Include="Framework\Targets\ObjectTarget.cs" />
+    <Compile Include="Framework\Targets\TileTarget.cs" />
+    <Compile Include="Framework\Targets\TreeTarget.cs" />
+    <Compile Include="Framework\Targets\UnknownTarget.cs" />
+    <Compile Include="Framework\TargetType.cs" />
+    <Compile Include="Framework\TranslationHelperExtensions.cs" />
+    <Compile Include="GameHelper.cs" />
+    <Compile Include="ModEntry.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Common\.Common.shproj" />
+    <None Include="Common\Common.projitems" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
