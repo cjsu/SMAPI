@@ -330,6 +330,7 @@
     <Compile Include="Framework\Monitor.cs" />
     <Compile Include="Metadata\InstructionMetadata.cs" />
     <Compile Include="Mod.cs" />
+    <Compile Include="Patches\CheckEventPreconditionErrorPatch.cs" />
     <Compile Include="Patches\LoadForNewGamePatch.cs" />
     <Compile Include="Patches\ObjectErrorPatch.cs" />
     <Compile Include="Patches\DialogueErrorPatch.cs" />
