@@ -208,6 +208,9 @@ namespace StardewModdingAPI.Framework
                 // add more leniant assembly resolvers
                 AppDomain.CurrentDomain.AssemblyResolve += (sender, e) => AssemblyLoader.ResolveAssembly(e.Name);
 
+                // hook locale event
+                LocalizedContentManager.OnLanguageChange += locale => this.OnLocaleChanged();
+
                 // override game
                 SGame.ConstructorHack = new SGameConstructorHack(this.Monitor, this.Reflection, this.Toolkit.JsonHelper, this.InitialiseBeforeFirstAssetLoaded);
                 this.GameInstance = new SGame(
@@ -218,7 +221,6 @@ namespace StardewModdingAPI.Framework
                     jsonHelper: this.Toolkit.JsonHelper,
                     modRegistry: this.ModRegistry,
                     deprecationManager: SCore.DeprecationManager,
-                    onLocaleChanged: this.OnLocaleChanged,
                     onGameInitialised: this.InitialiseAfterGameStart,
                     onGameExiting: this.Dispose
                 );
@@ -442,6 +444,8 @@ namespace StardewModdingAPI.Framework
         /// <summary>Handle the game changing locale.</summary>
         private void OnLocaleChanged()
         {
+            this.ContentCore.OnLocaleChanged();
+
             // get locale
             string locale = this.ContentCore.GetLocale();
             LocalizedContentManager.LanguageCode languageCode = this.ContentCore.Language;

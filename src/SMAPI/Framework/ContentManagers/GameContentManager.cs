@@ -112,6 +112,29 @@ namespace StardewModdingAPI.Framework.ContentManagers
             return data;
         }
 
+        /// <summary>Perform any cleanup needed when the locale changes.</summary>
+        public override void OnLocaleChanged()
+        {
+            base.OnLocaleChanged();
+
+            // find assets for which a translatable version was loaded
+            HashSet<string> removeAssetNames = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
+            foreach (string key in this.IsLocalisableLookup.Where(p => p.Value).Select(p => p.Key))
+                removeAssetNames.Add(this.TryParseExplicitLanguageAssetKey(key, out string assetName, out _) ? assetName : key);
+
+            // invalidate translatable assets
+            string[] invalidated = this
+                .InvalidateCache((key, type) =>
+                    removeAssetNames.Contains(key)
+                    || (this.TryParseExplicitLanguageAssetKey(key, out string assetName, out _) && removeAssetNames.Contains(assetName))
+                )
+                .Select(p => p.Item1)
+                .OrderBy(p => p, StringComparer.InvariantCultureIgnoreCase)
+                .ToArray();
+            if (invalidated.Any())
+                this.Monitor.Log($"Invalidated {invalidated.Length} asset names: {string.Join(", ", invalidated)} for locale change.", LogLevel.Trace);
+        }
+
         /// <summary>Create a new content manager for temporary use.</summary>
         public override LocalizedContentManager CreateTemporary()
         {

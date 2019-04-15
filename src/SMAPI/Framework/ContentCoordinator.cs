@@ -114,6 +114,13 @@ namespace StardewModdingAPI.Framework
             return this.MainContentManager.GetLocale(LocalizedContentManager.CurrentLanguageCode);
         }
 
+        /// <summary>Perform any cleanup needed when the locale changes.</summary>
+        public void OnLocaleChanged()
+        {
+            foreach (IContentManager contentManager in this.ContentManagers)
+                contentManager.OnLocaleChanged();
+        }
+
         /// <summary>Get whether this asset is mapped to a mod folder.</summary>
         /// <param name="key">The asset key.</param>
         public bool IsManagedAssetKey(string key)
