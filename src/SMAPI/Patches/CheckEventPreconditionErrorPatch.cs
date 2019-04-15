@@ -1,26 +1,25 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
-
 using Harmony;
-
 using StardewModdingAPI.Framework.Patching;
-using StardewModdingAPI.Framework.Reflection;
-
 using StardewValley;
 
-namespace StardewModdingAPI.Patches {
+namespace StardewModdingAPI.Patches
+{
     /// <summary>A Harmony patch for the <see cref="Dialogue"/> constructor which intercepts invalid dialogue lines and logs an error instead of crashing.</summary>
-    internal class CheckEventPreconditionErrorPatch : IHarmonyPatch {
+    internal class CheckEventPreconditionErrorPatch : IHarmonyPatch
+    {
         /*********
-        ** Private methods
+        ** Fields
         *********/
         /// <summary>Writes messages to the console and log file on behalf of the game.</summary>
         private static IMonitor MonitorForGame;
 
-        /// <summary>Local variable to store the original method.</summary>
-        private static MethodInfo originalMethod;
-        /// <summary>Local variable to check if the method was already arbitrated.</summary>
-        private static bool isArbitrated;
+        /// <summary>The method being wrapped.</summary>
+        private static MethodInfo OriginalMethod;
+
+        /// <summary>Whether the method is currently being intercepted.</summary>
+        private static bool IsArbitrated;
 
 
         /*********
@@ -35,18 +34,19 @@ namespace StardewModdingAPI.Patches {
         *********/
         /// <summary>Construct an instance.</summary>
         /// <param name="monitorForGame">Writes messages to the console and log file on behalf of the game.</param>
-        /// <param name="reflector">Simplifies access to private code.</param>
-        public CheckEventPreconditionErrorPatch(IMonitor monitorForGame, Reflector reflector) {
+        public CheckEventPreconditionErrorPatch(IMonitor monitorForGame)
+        {
             CheckEventPreconditionErrorPatch.MonitorForGame = monitorForGame;
         }
 
-
         /// <summary>Apply the Harmony patch.</summary>
         /// <param name="harmony">The Harmony instance.</param>
-        public void Apply(HarmonyInstance harmony) {
-            originalMethod = AccessTools.Method(typeof(GameLocation), "checkEventPrecondition");
-            harmony.Patch(originalMethod, new HarmonyMethod(AccessTools.Method(this.GetType(), "Prefix")));
+        public void Apply(HarmonyInstance harmony)
+        {
+            CheckEventPreconditionErrorPatch.OriginalMethod = AccessTools.Method(typeof(GameLocation), "checkEventPrecondition");
+            harmony.Patch(CheckEventPreconditionErrorPatch.OriginalMethod, new HarmonyMethod(AccessTools.Method(this.GetType(), nameof(CheckEventPreconditionErrorPatch.Prefix))));
         }
+
 
         /*********
         ** Private methods
@@ -58,16 +58,23 @@ namespace StardewModdingAPI.Patches {
         /// <returns>Returns whether to execute the original method.</returns>
         /// <remarks>This method must be static for Harmony to work correctly. See the Harmony documentation before renaming arguments.</remarks>
         [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Argument names are defined by Harmony.")]
-        private static bool Prefix(GameLocation __instance, ref int __result, string precondition) {
-            if (isArbitrated) {
-                isArbitrated = false;
+        private static bool Prefix(GameLocation __instance, ref int __result, string precondition)
+        {
+            if (CheckEventPreconditionErrorPatch.IsArbitrated)
+            {
+                CheckEventPreconditionErrorPatch.IsArbitrated = false;
                 return true;
-            } else {
-                isArbitrated = true;
-                try {
-                    object _ = originalMethod.Invoke(__instance, new object[] { precondition });
-                    __result = _ is null ? -1 : (int)_;
-                } catch (System.Exception ex) {
+            }
+            else
+            {
+                CheckEventPreconditionErrorPatch.IsArbitrated = true;
+                try
+                {
+                    object isValid = CheckEventPreconditionErrorPatch.OriginalMethod.Invoke(__instance, new object[] { precondition });
+                    __result = isValid is null ? -1 : (int)isValid;
+                }
+                catch (System.Exception ex)
+                {
                     __result = -1;
                     CheckEventPreconditionErrorPatch.MonitorForGame.Log($"Failed parsing event info. Event precondition: {precondition}\n{ex}", LogLevel.Error);
                 }
