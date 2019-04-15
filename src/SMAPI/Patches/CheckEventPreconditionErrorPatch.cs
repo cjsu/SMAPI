@@ -70,16 +70,15 @@ namespace StardewModdingAPI.Patches
                 CheckEventPreconditionErrorPatch.IsArbitrated = true;
                 try
                 {
-                    object isValid = CheckEventPreconditionErrorPatch.OriginalMethod.Invoke(__instance, new object[] { precondition });
-                    __result = isValid is null ? -1 : (int)isValid;
+                    __result = (int)CheckEventPreconditionErrorPatch.OriginalMethod.Invoke(__instance, new object[] { precondition });
+                    return false;
                 }
-                catch (System.Exception ex)
+                catch (TargetInvocationException ex)
                 {
                     __result = -1;
-                    CheckEventPreconditionErrorPatch.MonitorForGame.Log($"Failed parsing event info. Event precondition: {precondition}\n{ex}", LogLevel.Error);
+                    CheckEventPreconditionErrorPatch.MonitorForGame.Log($"Failed parsing event precondition ({precondition}):\n{ex.InnerException}", LogLevel.Error);
+                    return false;
                 }
-
-                return false;
             }
         }
     }
