@@ -27,13 +27,13 @@ namespace StardewModdingAPI.Patches
             // object.getDescription
             harmony.Patch(
                 original: AccessTools.Method(typeof(SObject), nameof(SObject.getDescription)),
-                prefix: new HarmonyMethod(AccessTools.Method(this.GetType(), nameof(ObjectErrorPatch.Object_GetDescription_Prefix)))
+                prefix: new HarmonyMethod(this.GetType(), nameof(ObjectErrorPatch.Object_GetDescription_Prefix))
             );
 
             // IClickableMenu.drawToolTip
             harmony.Patch(
                 original: AccessTools.Method(typeof(IClickableMenu), nameof(IClickableMenu.drawToolTip)),
-                prefix: new HarmonyMethod(AccessTools.Method(this.GetType(), nameof(ObjectErrorPatch.IClickableMenu_DrawTooltip_Prefix)))
+                prefix: new HarmonyMethod(this.GetType(), nameof(ObjectErrorPatch.IClickableMenu_DrawTooltip_Prefix))
             );
         }
 
