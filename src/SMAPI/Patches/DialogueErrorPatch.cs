@@ -13,7 +13,7 @@ namespace StardewModdingAPI.Patches
     internal class DialogueErrorPatch : IHarmonyPatch
     {
         /*********
-        ** Private methods
+        ** Fields
         *********/
         /// <summary>Writes messages to the console and log file on behalf of the game.</summary>
         private static IMonitor MonitorForGame;

@@ -16,7 +16,7 @@ namespace StardewModdingAPI.Patches
     internal class LoadForNewGamePatch : IHarmonyPatch
     {
         /*********
-        ** Accessors
+        ** Fields
         *********/
         /// <summary>Simplifies access to private code.</summary>
         private static Reflector Reflection;
