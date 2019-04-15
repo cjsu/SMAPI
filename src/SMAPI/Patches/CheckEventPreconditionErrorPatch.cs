@@ -42,7 +42,7 @@ namespace StardewModdingAPI.Patches
         {
             harmony.Patch(
                 original: AccessTools.Method(typeof(GameLocation), "checkEventPrecondition"),
-                prefix: new HarmonyMethod(AccessTools.Method(this.GetType(), nameof(CheckEventPreconditionErrorPatch.Prefix)))
+                prefix: new HarmonyMethod(this.GetType(), nameof(CheckEventPreconditionErrorPatch.Prefix))
             );
         }
 

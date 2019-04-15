@@ -46,10 +46,10 @@ namespace StardewModdingAPI.Patches
         /// <param name="harmony">The Harmony instance.</param>
         public void Apply(HarmonyInstance harmony)
         {
-            ConstructorInfo constructor = AccessTools.Constructor(typeof(Dialogue), new[] { typeof(string), typeof(NPC) });
-            MethodInfo prefix = AccessTools.Method(this.GetType(), nameof(DialogueErrorPatch.Prefix));
-
-            harmony.Patch(constructor, new HarmonyMethod(prefix), null);
+            harmony.Patch(
+                original: AccessTools.Constructor(typeof(Dialogue), new[] { typeof(string), typeof(NPC) }),
+                prefix: new HarmonyMethod(this.GetType(), nameof(DialogueErrorPatch.Prefix))
+            );
         }
 
 

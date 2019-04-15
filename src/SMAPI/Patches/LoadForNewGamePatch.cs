@@ -1,7 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Reflection;
 using Harmony;
 using StardewModdingAPI.Enums;
 using StardewModdingAPI.Framework.Patching;
@@ -28,7 +27,7 @@ namespace StardewModdingAPI.Patches
         private static bool IsCreating;
 
         /// <summary>The number of times that <see cref="Game1.locations"/> has been cleared since <see cref="Game1.loadForNewGame"/> started.</summary>
-        private static int TimesLocationsCleared = 0;
+        private static int TimesLocationsCleared;
 
 
         /*********
@@ -54,11 +53,11 @@ namespace StardewModdingAPI.Patches
         /// <param name="harmony">The Harmony instance.</param>
         public void Apply(HarmonyInstance harmony)
         {
-            MethodInfo method = AccessTools.Method(typeof(Game1), nameof(Game1.loadForNewGame));
-            MethodInfo prefix = AccessTools.Method(this.GetType(), nameof(LoadForNewGamePatch.Prefix));
-            MethodInfo postfix = AccessTools.Method(this.GetType(), nameof(LoadForNewGamePatch.Postfix));
-
-            harmony.Patch(method, new HarmonyMethod(prefix), new HarmonyMethod(postfix));
+            harmony.Patch(
+                original: AccessTools.Method(typeof(Game1), nameof(Game1.loadForNewGame)),
+                prefix: new HarmonyMethod(this.GetType(), nameof(LoadForNewGamePatch.Prefix)),
+                postfix: new HarmonyMethod(this.GetType(), nameof(LoadForNewGamePatch.Postfix))
+            );
         }
 
 
@@ -89,7 +88,7 @@ namespace StardewModdingAPI.Patches
             if (LoadForNewGamePatch.IsCreating)
             {
                 // clean up
-                ObservableCollection<GameLocation> locations = (ObservableCollection<GameLocation>) Game1.locations;
+                ObservableCollection<GameLocation> locations = (ObservableCollection<GameLocation>)Game1.locations;
                 locations.CollectionChanged -= LoadForNewGamePatch.OnLocationListChanged;
 
                 // raise stage changed
