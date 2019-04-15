@@ -52,6 +52,9 @@ namespace StardewModdingAPI.Framework.ContentManagers
         /// <param name="asset">The asset to clone.</param>
         T CloneIfPossible<T>(T asset);
 
+        /// <summary>Perform any cleanup needed when the locale changes.</summary>
+        void OnLocaleChanged();
+
         /// <summary>Normalise path separators in a file path. For asset keys, see <see cref="AssertAndNormaliseAssetName"/> instead.</summary>
         /// <param name="path">The file path to normalise.</param>
         [Pure]
