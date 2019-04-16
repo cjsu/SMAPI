@@ -57,7 +57,7 @@ namespace StardewModdingAPI.Framework.ContentManagers
                 if (contentManagerID != this.Name)
                 {
                     T data = this.Coordinator.LoadAndCloneManagedAsset<T>(assetName, contentManagerID, relativePath, language);
-                    this.Inject(assetName, data);
+                    this.Inject(assetName, data, language);
                     return data;
                 }
 
@@ -127,7 +127,7 @@ namespace StardewModdingAPI.Framework.ContentManagers
                         {
                             Texture2D texture = Texture2D.FromStream(Game1.graphics.GraphicsDevice, stream);
                             texture = this.PremultiplyTransparency(texture);
-                            this.Inject(internalKey, texture);
+                            this.Inject(internalKey, texture, language);
                             return (T)(object)texture;
                         }
 

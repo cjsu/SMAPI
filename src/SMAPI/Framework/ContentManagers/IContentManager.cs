@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using Microsoft.Xna.Framework.Content;
 using StardewModdingAPI.Framework.Exceptions;
@@ -45,7 +44,8 @@ namespace StardewModdingAPI.Framework.ContentManagers
         /// <typeparam name="T">The type of asset to inject.</typeparam>
         /// <param name="assetName">The asset path relative to the loader root directory, not including the <c>.xnb</c> extension.</param>
         /// <param name="value">The asset value.</param>
-        void Inject<T>(string assetName, T value);
+        /// <param name="language">The language code for which to inject the asset.</param>
+        void Inject<T>(string assetName, T value, LocalizedContentManager.LanguageCode language);
 
         /// <summary>Get a copy of the given asset if supported.</summary>
         /// <typeparam name="T">The asset type.</typeparam>
@@ -63,7 +63,6 @@ namespace StardewModdingAPI.Framework.ContentManagers
         /// <summary>Assert that the given key has a valid format and return a normalised form consistent with the underlying cache.</summary>
         /// <param name="assetName">The asset key to check.</param>
         /// <exception cref="SContentLoadException">The asset key is empty or contains invalid characters.</exception>
-        [SuppressMessage("ReSharper", "ParameterOnlyUsedForPreconditionCheck.Local", Justification = "Parameter is only used for assertion checks by design.")]
         string AssertAndNormaliseAssetName(string assetName);
 
         /// <summary>Get the current content locale.</summary>

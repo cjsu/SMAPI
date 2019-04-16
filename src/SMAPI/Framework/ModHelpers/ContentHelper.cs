@@ -126,7 +126,7 @@ namespace StardewModdingAPI.Framework.ModHelpers
                             this.FixCustomTilesheetPaths(map, relativeMapPath: key);
 
                             // inject map
-                            this.ModContentManager.Inject(internalKey, map);
+                            this.ModContentManager.Inject(internalKey, map, this.CurrentLocaleConstant);
                             return (T)(object)map;
                         }
 
