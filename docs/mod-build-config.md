@@ -214,6 +214,7 @@ _[Game path](#game-path)_ above.
 
 ## Release notes
 ### Upcoming release
+* Updated for Stardew Valley 1.4.
 * If the project contains an `assets` folder, its contents are now included in the mod automatically.
 * Dropped support for very old versions of SMAPI and Visual Studio.
 * Fixed `Newtonsoft.Json.pdb` included in release zips when Json.NET is referenced directly.

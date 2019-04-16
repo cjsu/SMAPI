@@ -95,6 +95,11 @@
           <Private>false</Private>
           <Private Condition="$(CopyModReferencesToBuildOutput)">true</Private>
         </Reference>
+        <Reference Include="StardewValley.GameData">
+          <HintPath>$(GamePath)\StardewValley.GameData.dll</HintPath>
+          <Private>false</Private>
+          <Private Condition="$(CopyModReferencesToBuildOutput)">true</Private>
+        </Reference>
         <Reference Include="StardewModdingAPI">
           <HintPath>$(GamePath)\StardewModdingAPI.exe</HintPath>
           <Private>false</Private>
@@ -131,6 +136,11 @@
         </Reference>
         <Reference Include="StardewValley">
           <HintPath>$(GamePath)\StardewValley.exe</HintPath>
+          <Private>false</Private>
+          <Private Condition="$(CopyModReferencesToBuildOutput)">true</Private>
+        </Reference>
+        <Reference Include="StardewValley.GameData">
+          <HintPath>$(GamePath)\StardewValley.GameData.dll</HintPath>
           <Private>false</Private>
           <Private Condition="$(CopyModReferencesToBuildOutput)">true</Private>
         </Reference>
