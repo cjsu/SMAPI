@@ -35,6 +35,10 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework
             yield return new SearchableItem(ItemType.Tool, this.CustomIDOffset + 2, new Pan());
             yield return new SearchableItem(ItemType.Tool, this.CustomIDOffset + 3, new Wand());
 
+            // clothing
+            foreach (int id in Game1.clothingInformation.Keys)
+                yield return new SearchableItem(ItemType.Clothing, id, new Clothing(id));
+
             // wallpapers
             for (int id = 0; id < 112; id++)
                 yield return new SearchableItem(ItemType.Wallpaper, id, new Wallpaper(id) { Category = SObject.furnitureCategory });

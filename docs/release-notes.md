@@ -3,6 +3,7 @@
 These changes have not been released yet.
 
 * For players:
+  * Updated for Stardew Valley 1.4.
   * Improved performance.
   * Updated mod compatibility list.
   * SMAPI now prevents invalid items from breaking menus on hover.
