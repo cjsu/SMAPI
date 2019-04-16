@@ -152,12 +152,12 @@ namespace StardewModdingAPI.Metadata
                 case "characters\\farmer\\farmer_base": // Farmer
                     if (Game1.player == null || !Game1.player.IsMale)
                         return false;
-                    return Game1.player.FarmerRenderer = new FarmerRenderer(key);
+                    return Game1.player.FarmerRenderer = new FarmerRenderer(key, Game1.player);
 
                 case "characters\\farmer\\farmer_girl_base": // Farmer
                     if (Game1.player == null || Game1.player.IsMale)
                         return false;
-                    return Game1.player.FarmerRenderer = new FarmerRenderer(key);
+                    return Game1.player.FarmerRenderer = new FarmerRenderer(key, Game1.player);
 
                 case "characters\\farmer\\hairstyles": // Game1.loadContent
                     return FarmerRenderer.hairStylesTexture = content.Load<Texture2D>(key);
