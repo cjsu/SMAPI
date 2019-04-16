@@ -81,7 +81,7 @@ namespace StardewModdingAPI.Framework.ContentManagers
             if (this.Coordinator.TryParseManagedAssetKey(assetName, out string contentManagerID, out string relativePath))
             {
                 T managedAsset = this.Coordinator.LoadAndCloneManagedAsset<T>(assetName, contentManagerID, relativePath, language);
-                this.Inject(assetName, managedAsset);
+                this.Inject(assetName, managedAsset, language);
                 return managedAsset;
             }
 
@@ -108,8 +108,28 @@ namespace StardewModdingAPI.Framework.ContentManagers
             }
 
             // update cache & return data
-            this.Inject(assetName, data);
+            this.Inject(assetName, data, language);
             return data;
+        }
+
+        /// <summary>Inject an asset into the cache.</summary>
+        /// <typeparam name="T">The type of asset to inject.</typeparam>
+        /// <param name="assetName">The asset path relative to the loader root directory, not including the <c>.xnb</c> extension.</param>
+        /// <param name="value">The asset value.</param>
+        /// <param name="language">The language code for which to inject the asset.</param>
+        public override void Inject<T>(string assetName, T value, LanguageCode language)
+        {
+            base.Inject(assetName, value, language);
+
+            // track whether the injected asset is translatable for is-loaded lookups
+            bool isTranslated = this.TryParseExplicitLanguageAssetKey(assetName, out _, out _);
+            string localisedKey = isTranslated ? assetName : $"{assetName}.{language}";
+            if (this.Cache.ContainsKey(localisedKey))
+                this.IsLocalisableLookup[localisedKey] = true;
+            else if (!isTranslated && this.Cache.ContainsKey(assetName))
+                this.IsLocalisableLookup[localisedKey] = false;
+            else
+                this.Monitor.Log($"Asset '{assetName}' could not be found in the cache immediately after injection.", LogLevel.Error);
         }
 
         /// <summary>Perform any cleanup needed when the locale changes.</summary>
@@ -154,11 +174,11 @@ namespace StardewModdingAPI.Framework.ContentManagers
                 return this.Cache.ContainsKey(normalisedAssetName);
 
             // translated
-            string localeKey = $"{normalisedAssetName}.{this.GetLocale(this.GetCurrentLanguage())}";
-            if (this.IsLocalisableLookup.TryGetValue(localeKey, out bool localisable))
+            string localisedKey = $"{normalisedAssetName}.{this.GetLocale(this.GetCurrentLanguage())}";
+            if (this.IsLocalisableLookup.TryGetValue(localisedKey, out bool localisable))
             {
                 return localisable
-                    ? this.Cache.ContainsKey(localeKey)
+                    ? this.Cache.ContainsKey(localisedKey)
                     : this.Cache.ContainsKey(normalisedAssetName);
             }
 

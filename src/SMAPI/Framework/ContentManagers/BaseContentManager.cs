@@ -103,11 +103,11 @@ namespace StardewModdingAPI.Framework.ContentManagers
         /// <typeparam name="T">The type of asset to inject.</typeparam>
         /// <param name="assetName">The asset path relative to the loader root directory, not including the <c>.xnb</c> extension.</param>
         /// <param name="value">The asset value.</param>
-        public void Inject<T>(string assetName, T value)
+        /// <param name="language">The language code for which to inject the asset.</param>
+        public virtual void Inject<T>(string assetName, T value, LanguageCode language)
         {
             assetName = this.AssertAndNormaliseAssetName(assetName);
             this.Cache[assetName] = value;
-
         }
 
         /// <summary>Get a copy of the given asset if supported.</summary>
