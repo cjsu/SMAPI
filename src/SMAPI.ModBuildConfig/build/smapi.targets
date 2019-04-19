@@ -95,7 +95,7 @@
           <Private>false</Private>
           <Private Condition="$(CopyModReferencesToBuildOutput)">true</Private>
         </Reference>
-        <Reference Include="StardewValley.GameData">
+        <Reference Include="StardewValley.GameData" Condition="Exists('$(GamePath)\StardewValley.GameData.dll')">
           <HintPath>$(GamePath)\StardewValley.GameData.dll</HintPath>
           <Private>false</Private>
           <Private Condition="$(CopyModReferencesToBuildOutput)">true</Private>
@@ -113,7 +113,7 @@
         <Reference Include="xTile, Version=2.0.4.0, Culture=neutral, processorArchitecture=x86">
           <HintPath>$(GamePath)\xTile.dll</HintPath>
           <Private>false</Private>
-          <SpecificVersion>False</SpecificVersion>
+          <SpecificVersion>false</SpecificVersion>
           <Private Condition="$(CopyModReferencesToBuildOutput)">true</Private>
         </Reference>
       </ItemGroup>
@@ -131,7 +131,7 @@
         <Reference Include="MonoGame.Framework">
           <HintPath>$(GamePath)\MonoGame.Framework.dll</HintPath>
           <Private>false</Private>
-          <SpecificVersion>False</SpecificVersion>
+          <SpecificVersion>false</SpecificVersion>
           <Private Condition="$(CopyModReferencesToBuildOutput)">true</Private>
         </Reference>
         <Reference Include="StardewValley">
@@ -139,8 +139,8 @@
           <Private>false</Private>
           <Private Condition="$(CopyModReferencesToBuildOutput)">true</Private>
         </Reference>
-        <Reference Include="StardewValley.GameData">
-          <HintPath>$(GamePath)\StardewValley.GameData.dll</HintPath>
+        <Reference Include="StardewValley.GameData.MonoGame" Condition="Exists('$(GamePath)\StardewValley.GameData.MonoGame.dll')">
+          <HintPath>$(GamePath)\StardewValley.GameData.MonoGame.dll</HintPath>
           <Private>false</Private>
           <Private Condition="$(CopyModReferencesToBuildOutput)">true</Private>
         </Reference>
