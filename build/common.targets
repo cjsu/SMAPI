@@ -40,8 +40,12 @@
     <When Condition="'$(MSBuildProjectName)' == 'StardewModdingAPI' OR '$(MSBuildProjectName)' == 'StardewModdingAPI.Mods.ConsoleCommands' OR '$(MSBuildProjectName)' == 'StardewModdingAPI.Mods.SaveBackup' OR '$(MSBuildProjectName)' == 'StardewModdingAPI.Tests'">
       <!-- Windows -->
       <ItemGroup Condition="$(OS) == 'Windows_NT'">
-        <Reference  Include="Stardew Valley">
+        <Reference Include="Stardew Valley">
           <HintPath>$(GamePath)\Stardew Valley.exe</HintPath>
+          <Private Condition="'$(MSBuildProjectName)' != 'StardewModdingAPI.Tests'">False</Private>
+        </Reference>
+        <Reference Include="StardewValley.GameData">
+          <HintPath>$(GamePath)\StardewValley.GameData.dll</HintPath>
           <Private Condition="'$(MSBuildProjectName)' != 'StardewModdingAPI.Tests'">False</Private>
         </Reference>
         <Reference Include="Netcode">
@@ -67,6 +71,10 @@
         <Reference Include="StardewValley">
           <HintPath>$(GamePath)\StardewValley.exe</HintPath>
           <Private>False</Private>
+        </Reference>
+        <Reference Include="StardewValley.GameData.MonoGame">
+          <HintPath>$(GamePath)\StardewValley.GameData.MonoGame.dll</HintPath>
+          <Private Condition="'$(MSBuildProjectName)' != 'StardewModdingAPI.Tests'">False</Private>
         </Reference>
         <Reference Include="MonoGame.Framework">
           <HintPath>$(GamePath)\MonoGame.Framework.dll</HintPath>
