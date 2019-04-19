@@ -26,16 +26,9 @@ The package...
 
 ## Configure
 ### Deploy files into the `Mods` folder
-Your mod is copied into the game's `Mods` folder (with a subfolder matching your project name)
-when you rebuild the code. The package automatically includes...
-
-* any build output;
-* your `manifest.json`;
-* any [`i18n` files](https://stardewvalleywiki.com/Modding:Translations);
-* the `assets` folder if present.
-
-To add custom files to the mod folder, just [add them to the build output](https://stackoverflow.com/a/10828462/262123).
-(If your project references another mod, make sure the reference is [_not_ marked 'copy local'](https://msdn.microsoft.com/en-us/library/t1zz5y8c(v=vs.100).aspx).)
+Your mod is copied into the game's `Mods` folder when you rebuild the code, with a subfolder
+matching the mod's project name. This includes the files set via [_Files included in the release_](#files-included-in-release)
+below.
 
 You can change the mod's folder name by adding this above the first `</PropertyGroup>` in your
 `.csproj`:
@@ -49,9 +42,9 @@ If you don't want to deploy the mod automatically, you can add this:
 ```
 
 ### Create release zip
-A zip file is also created in the build output folder when you rebuild the code. This contains the
-same files deployed to the `Mods` folder, in the recommended format for uploading to Nexus Mods or
-other sites.
+A zip file is also created in the build output folder when you rebuild the code. This includes the
+files set via [_Files included in the release_](#files-included-in-release) below, in the format
+recommended for uploading to Nexus Mods or other sites.
 
 You can change the zipped folder name (and zip name) by adding this above the first
 `</PropertyGroup>` in your `.csproj`:
@@ -118,15 +111,30 @@ or you have multiple installs, you can specify the path yourself. There's two wa
 The configuration will check your custom path first, then fall back to the default paths (so it'll
 still compile on a different computer).
 
-### Ignore files
-If you don't want to include a file in the mod folder or release zip:
-* Make sure it's not copied to the build output. For a DLL, make sure the reference is [not marked 'copy local'](https://msdn.microsoft.com/en-us/library/t1zz5y8c(v=vs.100).aspx).
+You access the game path via `$(GamePath)` in MSBuild properties, if you need to reference another
+file in the game folder.
+
+### Files included in release
+The package automatically considers these files to be part of your mod:
+
+* the `manifest.json` in your project;
+* the [`i18n` files](https://stardewvalleywiki.com/Modding:Translations)  in your project (if any);
+* the `assets` folder in your project (if present);
+* and any files in the build output folder.
+
+To add custom files to the release, just [add them to the build output](https://stackoverflow.com/a/10828462/262123).
+(If your project references another mod, make sure the reference is [_not_ marked 'copy local'](https://msdn.microsoft.com/en-us/library/t1zz5y8c(v=vs.100).aspx).)
+
+To exclude a file from the release:
+* Make sure it's not copied to the build output. (For a DLL, make sure the reference is [not marked 'copy local'](https://msdn.microsoft.com/en-us/library/t1zz5y8c(v=vs.100).aspx).) This doesn't apply to `manifest.json`,
+  `assets`, or `i18n` which are copied regardless.)
 * Or add this to your `.csproj` file under the `<Project` line:
   ```xml
   <IgnoreModFilePatterns>\.txt$, \.pdf$</IgnoreModFilePatterns>
   ```
   This is a comma-delimited list of regular expression patterns. If any pattern matches a file's
-  relative path in your mod folder, that file won't be included.
+  relative path in your mod folder, that file won't be included. (This also works for `assets` and
+  `i18n`.)
 
 ### Non-mod projects
 You can use the package in non-mod projects too (e.g. unit tests or framework DLLs). You'll need to
@@ -216,8 +224,9 @@ _[Game path](#game-path)_ above.
 ### Upcoming release
 * Updated for Stardew Valley 1.4.
 * If the project contains an `assets` folder, its contents are now included in the mod automatically.
-* Dropped support for very old versions of SMAPI and Visual Studio.
 * Fixed `Newtonsoft.Json.pdb` included in release zips when Json.NET is referenced directly.
+* Fixed `<IgnoreModFilePatterns>` not working for `i18n` files.
+* Dropped support for very old versions of SMAPI and Visual Studio.
 
 ### 2.2
 * Added support for SMAPI 2.8+ (still compatible with earlier versions).
