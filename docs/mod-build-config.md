@@ -136,6 +136,12 @@ To exclude a file from the release:
   relative path in your mod folder, that file won't be included. (This also works for `assets` and
   `i18n`.)
 
+  Note that path delimiters are _not_ normalised in `<IgnoreFilePatterns>`. For crossplatform
+  compatibility, format those like this:
+  ```xml
+  <IgnoreModFilePatterns>assets[/\\]paths.png</IgnoreModFilePatterns>
+  ```
+
 ### Non-mod projects
 You can use the package in non-mod projects too (e.g. unit tests or framework DLLs). You'll need to
 disable deploying the mod and creating a release zip:
