@@ -2,12 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>Pathoschild.Stardew.ModBuildConfig</id>
-    <version>3.0.0</version>
+    <version>3.0.0-alpha.20190419</version>
     <title>Build package for SMAPI mods</title>
     <authors>Pathoschild</authors>
     <owners>Pathoschild</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <licenseUrl>https://github.com/Pathoschild/SMAPI/blob/develop/LICENSE.txt</licenseUrl>
+    <license type="expression">MIT</license>
+    <repository type="git" url="https://github.com/Pathoschild/SMAPI" />
     <projectUrl>https://github.com/Pathoschild/SMAPI/blob/develop/docs/mod-build-config.md#readme</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/Pathoschild/SMAPI/develop/src/SMAPI.ModBuildConfig/assets/nuget-icon.png</iconUrl>
     <description>Automates the build configuration for crossplatform Stardew Valley SMAPI mods. For SMAPI 2.11 or later.</description>
