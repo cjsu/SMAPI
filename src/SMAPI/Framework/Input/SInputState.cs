@@ -26,6 +26,9 @@ namespace StardewModdingAPI.Framework.Input
         /// <summary>An inactive gamepad state for later comparison.</summary>
         private static GamePadState InactiveGamePadState = new GamePadState( Vector2.Zero, Vector2.Zero, 0f, 0f );
 
+        /// <summary>All existing PlayerIndex values.</summary>
+        private static PlayerIndex[] PlayerIndices = (PlayerIndex[])Enum.GetValues(typeof(PlayerIndex));
+
         /*********
         ** Accessors
         *********/
@@ -102,7 +105,7 @@ namespace StardewModdingAPI.Framework.Input
             try
             {
                 // check active controller
-                foreach (PlayerIndex index in (PlayerIndex[])Enum.GetValues(typeof(PlayerIndex)))
+                foreach (PlayerIndex index in PlayerIndices)
                 {
                     if (index != this.ActiveControllerPlayerIndex && IsControllerPlayerIndexActive(index))
                     {
