@@ -23,10 +23,15 @@ namespace StardewModdingAPI.Framework.Input
         /// <summary>The player's last known tile position.</summary>
         private Vector2? LastPlayerTile;
 
+        /// <summary>An inactive gamepad state for later comparison.</summary>
+        private static GamePadState InactiveGamePadState = new GamePadState( Vector2.Zero, Vector2.Zero, 0f, 0f );
 
         /*********
         ** Accessors
         *********/
+        /// <summary>The last controller to be active its index.</summary>
+        public PlayerIndex ActiveControllerPlayerIndex { get; private set; }
+
         /// <summary>The controller state as of the last update.</summary>
         public GamePadState RealController { get; private set; }
 
@@ -75,13 +80,38 @@ namespace StardewModdingAPI.Framework.Input
         [Obsolete("This method should only be called by the game itself.")]
         public override void Update() { }
 
+        /// <summary>Checks whether any control on the given gamepad state is being used.</summary>
+        public static bool IsGamePadStateActive(GamePadState state)
+        {
+            return (state.Buttons != InactiveGamePadState.Buttons)
+                || (state.DPad != InactiveGamePadState.DPad)
+                || (state.ThumbSticks != InactiveGamePadState.ThumbSticks)
+                || (state.Triggers != InactiveGamePadState.Triggers);
+        }
+
+        /// <summary>Checks whether a controller is being used by index.</summary>
+        public static bool IsControllerPlayerIndexActive(PlayerIndex index)
+        {
+            GamePadState state = GamePad.GetState(index);
+            return (state.IsConnected ? IsGamePadStateActive(state) : false);
+        }
+
         /// <summary>Update the current button statuses for the given tick.</summary>
         public void TrueUpdate()
         {
             try
             {
+                // check active controller
+                foreach (PlayerIndex index in (PlayerIndex[])Enum.GetValues(typeof(PlayerIndex)))
+                {
+                    if (index != this.ActiveControllerPlayerIndex && IsControllerPlayerIndexActive(index))
+                    {
+                        this.ActiveControllerPlayerIndex = index;
+                    }
+                }
+
                 // get new states
-                GamePadState realController = GamePad.GetState(PlayerIndex.One);
+                GamePadState realController = GamePad.GetState(this.ActiveControllerPlayerIndex);
                 KeyboardState realKeyboard = Keyboard.GetState();
                 MouseState realMouse = Mouse.GetState();
                 var activeButtons = this.DeriveStatuses(this.ActiveButtons, realKeyboard, realMouse, realController);
