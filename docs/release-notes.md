@@ -1,10 +1,10 @@
 # Release notes
 ## 2.11.2
-Released 22 April 2019 for Stardew Valley 1.3.36.
+Released 23 April 2019 for Stardew Valley 1.3.36.
 
 * For players:
-  * Fixed error when a custom map references certain vanilla tilesheets on MacOS.
-  * Fixed compatibility with Arch Linux.
+  * Fixed error when a custom map references certain vanilla tilesheets on Linux/Mac.
+  * Fixed compatibility with some Linux distros.
 
 ## 2.11.1
 Released 17 March 2019 for Stardew Valley 1.3.36.
