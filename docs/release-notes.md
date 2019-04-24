@@ -8,6 +8,7 @@ These changes have not been released yet.
   * Updated mod compatibility list.
   * SMAPI now prevents invalid items from breaking menus on hover.
   * SMAPI now prevents invalid event preconditions from crashing the game (thanks to berkayylmao!).
+  * Rewrote launch script on Linux to improve compatibility (thanks to kurumushi and toastal!).
   * Fixed Save Backup not pruning old backups if they're uncompressed.
   * Fixed issues when a farmhand reconnects before the game notices they're disconnected.
   * Fixed 'received message' logs shown in non-developer mode.

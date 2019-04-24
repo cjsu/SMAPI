@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # MonoKickstart Shell Script
 # Written by Ethan "flibitijibibo" Lee
-# Modified for StardewModdingAPI by Viz and Pathoschild
+# Modified for SMAPI by various contributors
 
 # Move to script's directory
 cd "$(dirname "$0")" || exit $?
@@ -61,9 +61,7 @@ else
         COMMAND="type"
     fi
 
-    # open SMAPI in terminal
-    # First let's try xterm (best compatiblity) or find a sensible default
-    # Setting TERMINAL should let you override this at the commandline for easier testing of other terminals.
+    # select terminal (prefer $TERMINAL for overrides and testing, then xterm for best compatibility, then known supported terminals)
     for terminal in "$TERMINAL" xterm x-terminal-emulator kitty terminator xfce4-terminal gnome-terminal konsole terminal termite; do
         if $COMMAND "$terminal" 2>/dev/null; then
             # Find the true shell behind x-terminal-emulator
@@ -72,15 +70,15 @@ else
                 break;
             else
                 export LAUNCHTERM="$(basename "$(readlink -ef which x-terminal-emulator)")"
-                # Remember that we are using x-terminal-emulator just in case it points outside the $PATH
+                # Remember that we're using x-terminal-emulator just in case it points outside the $PATH
                 export XTE=1
                 break;
             fi
         fi
     done
 
+    # if no terminal was found, run in current shell or with no output
     if [ -z "$LAUNCHTERM" ]; then
-        # We failed to detect a terminal, run in current shell, or with no output
         sh -c 'TERM=xterm $LAUNCHER'
         if [ $? -eq 127 ]; then
             $LAUNCHER --no-terminal
@@ -88,7 +86,7 @@ else
         exit
     fi
 
-    # Now let's run the terminal and account for quirks, or if no terminal was found, run in the current process.
+    # run in selected terminal and account for quirks
     case $LAUNCHTERM in
         terminator)
             # Terminator converts -e to -x when used through x-terminal-emulator for some reason
