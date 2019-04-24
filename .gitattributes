@@ -1,2 +1,3 @@
 # normalise line endings
 * text=auto
+README.txt text=crlf
