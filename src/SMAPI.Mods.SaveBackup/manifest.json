@@ -1,7 +1,7 @@
 {
   "Name": "Save Backup",
   "Author": "SMAPI",
-  "Version": "2.11.2",
+  "Version": "3.0.0",
   "Description": "Automatically backs up all your saves once per day into its folder.",
   "UniqueID": "SMAPI.SaveBackup",
   "EntryDll": "SaveBackup.dll",
