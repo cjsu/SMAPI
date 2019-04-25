@@ -228,11 +228,11 @@ _[Game path](#game-path)_ above.
 
 ## Release notes
 ### Upcoming release
-* Updated for Stardew Valley 1.4.
+* Updated for SMAPI 3.0 and Stardew Valley 1.4.
 * If the project contains an `assets` folder, its contents are now included in the mod automatically.
 * Fixed `Newtonsoft.Json.pdb` included in release zips when Json.NET is referenced directly.
 * Fixed `<IgnoreModFilePatterns>` not working for `i18n` files.
-* Dropped support for very old versions of SMAPI and Visual Studio.
+* Dropped support for older versions of SMAPI and Visual Studio.
 
 ### 2.2
 * Added support for SMAPI 2.8+ (still compatible with earlier versions).

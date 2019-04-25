@@ -139,12 +139,14 @@ namespace StardewModdingAPI
                         "Microsoft.Xna.Framework",
                         "Microsoft.Xna.Framework.Game",
                         "Microsoft.Xna.Framework.Graphics",
-                        "Microsoft.Xna.Framework.Xact"
+                        "Microsoft.Xna.Framework.Xact",
+                        "StardewModdingAPI.Toolkit.CoreInterfaces" // renamed in SMAPI 3.0
                     };
                     targetAssemblies = new[]
                     {
                         typeof(StardewValley.Game1).Assembly, // note: includes Netcode types on Linux/Mac
-                        typeof(Microsoft.Xna.Framework.Vector2).Assembly
+                        typeof(Microsoft.Xna.Framework.Vector2).Assembly,
+                        typeof(StardewModdingAPI.IManifest).Assembly
                     };
                     break;
 
@@ -152,7 +154,8 @@ namespace StardewModdingAPI
                     removeAssemblyReferences = new[]
                     {
                         "StardewValley",
-                        "MonoGame.Framework"
+                        "MonoGame.Framework",
+                        "StardewModdingAPI.Toolkit.CoreInterfaces" // renamed in SMAPI 3.0
                     };
                     targetAssemblies = new[]
                     {
@@ -160,7 +163,8 @@ namespace StardewModdingAPI
                         typeof(StardewValley.Game1).Assembly,
                         typeof(Microsoft.Xna.Framework.Vector2).Assembly,
                         typeof(Microsoft.Xna.Framework.Game).Assembly,
-                        typeof(Microsoft.Xna.Framework.Graphics.SpriteBatch).Assembly
+                        typeof(Microsoft.Xna.Framework.Graphics.SpriteBatch).Assembly,
+                        typeof(StardewModdingAPI.IManifest).Assembly
                     };
                     break;
 

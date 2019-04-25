@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <RootNamespace>StardewModdingAPI.ModBuildConfig</RootNamespace>
-    <AssemblyName>StardewModdingAPI.ModBuildConfig</AssemblyName>
+    <AssemblyName>SMAPI.ModBuildConfig</AssemblyName>
     <TargetFramework>net45</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <LangVersion>latest</LangVersion>
@@ -30,5 +30,6 @@
 
   <Import Project="..\SMAPI.Internal\SMAPI.Internal.projitems" Label="Shared" />
   <Import Project="..\..\build\common.targets" />
+  <Import Project="..\..\build\prepare-nuget-package.targets" />
 
 </Project>

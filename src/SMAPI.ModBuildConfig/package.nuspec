@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>Pathoschild.Stardew.ModBuildConfig</id>
-    <version>3.0.0-alpha.20190419</version>
+    <version>3.0.0-alpha.20190426</version>
     <title>Build package for SMAPI mods</title>
     <authors>Pathoschild</authors>
     <owners>Pathoschild</owners>
@@ -14,11 +14,11 @@
     <description>Automates the build configuration for crossplatform Stardew Valley SMAPI mods. For SMAPI 2.11 or later.</description>
     <releaseNotes>
       3.0.0:
-      - Updated for Stardew Valley 1.4.
+      - Updated for SMAPI 3.0 and Stardew Valley 1.4.
       - If the project contains an `assets` folder, its contents are now included in the mod automatically.
-      - Dropped support for very old versions of SMAPI and Visual Studio.
       - Fixed `Newtonsoft.Json.pdb` included in release zips when Json.NET is referenced directly.
       - Fixed `&lt;IgnoreModFilePatterns&gt;` not working for `i18n` files.
+      - Dropped support for older versions of SMAPI and Visual Studio.
     </releaseNotes>
   </metadata>
 </package>
