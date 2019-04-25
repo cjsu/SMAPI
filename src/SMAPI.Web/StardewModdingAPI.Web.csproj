@@ -25,7 +25,7 @@
   </ItemGroup>
   <Import Project="..\SMAPI.Internal\SMAPI.Internal.projitems" Label="Shared" />
   <ItemGroup>
-    <ProjectReference Include="..\StardewModdingAPI.Toolkit\StardewModdingAPI.Toolkit.csproj" />
+    <ProjectReference Include="..\SMAPI.Toolkit\SMAPI.Toolkit.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="Views\Index\Privacy.cshtml">

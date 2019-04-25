@@ -32,27 +32,32 @@
 
   <!-- add common references -->
   <ItemGroup>
-    <Reference Condition="'$(OS)' == 'Windows_NT' AND '$(MSBuildProjectName)' != 'StardewModdingAPI.Toolkit' AND '$(MSBuildProjectName)' != 'StardewModdingAPI.Toolkit.CoreInterfaces'" Include="System.Management" />
+    <Reference Condition="'$(OS)' == 'Windows_NT' AND '$(MSBuildProjectName)' != 'SMAPI.Toolkit' AND '$(MSBuildProjectName)' != 'SMAPI.Toolkit.CoreInterfaces'" Include="System.Management" />
   </ItemGroup>
 
   <!-- add game references-->
   <Choose>
-    <When Condition="'$(MSBuildProjectName)' == 'StardewModdingAPI' OR '$(MSBuildProjectName)' == 'StardewModdingAPI.Mods.ConsoleCommands' OR '$(MSBuildProjectName)' == 'StardewModdingAPI.Mods.SaveBackup' OR '$(MSBuildProjectName)' == 'StardewModdingAPI.Tests'">
+    <When Condition="'$(MSBuildProjectName)' == 'SMAPI' OR '$(MSBuildProjectName)' == 'SMAPI.Mods.ConsoleCommands' OR '$(MSBuildProjectName)' == 'SMAPI.Mods.SaveBackup' OR '$(MSBuildProjectName)' == 'SMAPI.Tests'">
       <Choose>
         <!-- Windows -->
         <When Condition="$(OS) == 'Windows_NT'">
+          <PropertyGroup>
+            <!--recognise XNA Framework DLLs in the GAC-->
+            <AssemblySearchPaths>$(AssemblySearchPaths);{GAC}</AssemblySearchPaths>
+          </PropertyGroup>
+
           <ItemGroup>
             <Reference Include="Stardew Valley">
               <HintPath>$(GamePath)\Stardew Valley.exe</HintPath>
-              <Private Condition="'$(MSBuildProjectName)' != 'StardewModdingAPI.Tests'">False</Private>
+              <Private Condition="'$(MSBuildProjectName)' != 'SMAPI.Tests'">False</Private>
             </Reference>
             <Reference Include="StardewValley.GameData">
               <HintPath>$(GamePath)\StardewValley.GameData.dll</HintPath>
-              <Private Condition="'$(MSBuildProjectName)' != 'StardewModdingAPI.Tests'">False</Private>
+              <Private Condition="'$(MSBuildProjectName)' != 'SMAPI.Tests'">False</Private>
             </Reference>
             <Reference Include="Netcode">
               <HintPath>$(GamePath)\Netcode.dll</HintPath>
-              <Private Condition="'$(MSBuildProjectName)' != 'StardewModdingAPI.Tests'">False</Private>
+              <Private Condition="'$(MSBuildProjectName)' != 'SMAPI.Tests'">False</Private>
             </Reference>
             <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
               <Private>False</Private>
@@ -78,7 +83,7 @@
             </Reference>
             <Reference Include="StardewValley.GameData.MonoGame">
               <HintPath>$(GamePath)\StardewValley.GameData.MonoGame.dll</HintPath>
-              <Private Condition="'$(MSBuildProjectName)' != 'StardewModdingAPI.Tests'">False</Private>
+              <Private Condition="'$(MSBuildProjectName)' != 'SMAPI.Tests'">False</Private>
             </Reference>
             <Reference Include="MonoGame.Framework">
               <HintPath>$(GamePath)\MonoGame.Framework.dll</HintPath>
@@ -107,15 +112,15 @@
   </Choose>
 
   <!-- if game path is invalid, show one user-friendly error instead of a slew of reference errors -->
-  <Target Name="BeforeBuild">
+  <Target Name="ValidateInstallPath" AfterTargets="BeforeBuild">
     <Error Condition="!Exists('$(GamePath)')" Text="Failed to find the game install path automatically; edit the *.csproj file and manually add a &lt;GamePath&gt; setting with the full directory path containing the Stardew Valley executable." />
   </Target>
 
   <!-- copy files into game directory and enable debugging -->
-  <Target Name="AfterBuild">
+  <Target Name="CopySmapiFiles" AfterTargets="AfterBuild">
     <CallTarget Targets="CopySMAPI;CopyDefaultMods" />
   </Target>
-  <Target Name="CopySMAPI" Condition="'$(MSBuildProjectName)' == 'StardewModdingAPI'">
+  <Target Name="CopySMAPI" Condition="'$(MSBuildProjectName)' == 'SMAPI'">
     <Copy SourceFiles="$(TargetDir)\$(TargetName).exe" DestinationFolder="$(GamePath)" />
     <Copy SourceFiles="$(TargetDir)\$(TargetName).pdb" DestinationFolder="$(GamePath)" />
     <Copy SourceFiles="$(TargetDir)\$(TargetName).xml" DestinationFolder="$(GamePath)" />
@@ -125,17 +130,17 @@
     <Copy SourceFiles="$(TargetDir)\Newtonsoft.Json.dll" DestinationFolder="$(GamePath)\smapi-internal" />
     <Copy SourceFiles="$(TargetDir)\Mono.Cecil.dll" DestinationFolder="$(GamePath)\smapi-internal" />
   </Target>
-  <Target Name="CopyDefaultMods" Condition="'$(MSBuildProjectName)' == 'StardewModdingAPI.Mods.ConsoleCommands' OR '$(MSBuildProjectName)' == 'StardewModdingAPI.Mods.SaveBackup'">
+  <Target Name="CopyDefaultMods" Condition="'$(MSBuildProjectName)' == 'SMAPI.Mods.ConsoleCommands' OR '$(MSBuildProjectName)' == 'SMAPI.Mods.SaveBackup'">
     <Copy SourceFiles="$(TargetDir)\$(TargetName).dll" DestinationFolder="$(GamePath)\Mods\$(AssemblyName)" />
     <Copy SourceFiles="$(TargetDir)\$(TargetName).pdb" DestinationFolder="$(GamePath)\Mods\$(AssemblyName)" Condition="Exists('$(TargetDir)\$(TargetName).pdb')" />
     <Copy SourceFiles="$(TargetDir)\manifest.json" DestinationFolder="$(GamePath)\Mods\$(AssemblyName)" />
   </Target>
-  <Target Name="CopyToolkit" Condition="'$(MSBuildProjectName)' == 'StardewModdingAPI.Toolkit' AND $(TargetFramework) == 'net4.5'" AfterTargets="PostBuildEvent">
+  <Target Name="CopyToolkit" Condition="'$(MSBuildProjectName)' == 'SMAPI.Toolkit' AND $(TargetFramework) == 'net4.5'" AfterTargets="PostBuildEvent">
       <Copy SourceFiles="$(TargetDir)\$(TargetName).dll" DestinationFolder="$(GamePath)\smapi-internal" />
       <Copy SourceFiles="$(TargetDir)\$(TargetName).pdb" DestinationFolder="$(GamePath)\smapi-internal" />
       <Copy SourceFiles="$(TargetDir)\$(TargetName).xml" DestinationFolder="$(GamePath)\smapi-internal" />
   </Target>
-  <Target Name="CopyToolkitCoreInterfaces" Condition="'$(MSBuildProjectName)' == 'StardewModdingAPI.Toolkit.CoreInterfaces' AND $(TargetFramework) == 'net4.5'" AfterTargets="PostBuildEvent">
+  <Target Name="CopyToolkitCoreInterfaces" Condition="'$(MSBuildProjectName)' == 'SMAPI.Toolkit.CoreInterfaces' AND $(TargetFramework) == 'net4.5'" AfterTargets="PostBuildEvent">
     <Copy SourceFiles="$(TargetDir)\$(TargetName).dll" DestinationFolder="$(GamePath)\smapi-internal" />
     <Copy SourceFiles="$(TargetDir)\$(TargetName).pdb" DestinationFolder="$(GamePath)\smapi-internal" />
     <Copy SourceFiles="$(TargetDir)\$(TargetName).xml" DestinationFolder="$(GamePath)\smapi-internal" />

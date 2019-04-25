@@ -1,11 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>net4.5;netstandard2.0</TargetFrameworks>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <OutputPath>..\..\bin\$(Configuration)\SMAPI.Toolkit</OutputPath>
-    <DocumentationFile>..\..\bin\$(Configuration)\SMAPI.Toolkit\$(TargetFramework)\StardewModdingAPI.Toolkit.xml</DocumentationFile>
+    <DocumentationFile>..\..\bin\$(Configuration)\SMAPI.Toolkit\$(TargetFramework)\SMAPI.Toolkit.xml</DocumentationFile>
     <LangVersion>latest</LangVersion>
+    <PlatformTarget Condition="'$(TargetFramework)' == 'net4.5'">x86</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\StardewModdingAPI.Toolkit.CoreInterfaces\StardewModdingAPI.Toolkit.CoreInterfaces.csproj" />
+    <ProjectReference Include="..\SMAPI.Toolkit.CoreInterfaces\SMAPI.Toolkit.CoreInterfaces.csproj" />
   </ItemGroup>
 
   <Import Project="..\..\build\common.targets" />

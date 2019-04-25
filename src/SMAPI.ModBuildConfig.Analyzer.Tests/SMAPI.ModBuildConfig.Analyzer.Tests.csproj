@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SMAPI.ModBuildConfig.Analyzer\StardewModdingAPI.ModBuildConfig.Analyzer.csproj" />
+    <ProjectReference Include="..\SMAPI.ModBuildConfig.Analyzer\SMAPI.ModBuildConfig.Analyzer.csproj" />
   </ItemGroup>
 
 </Project>

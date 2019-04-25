@@ -5,7 +5,7 @@
   package files to the bin\Pathoschild.Stardew.ModBuildConfig folder.
   
   -->
-  <Target Name="AfterBuild">
+  <Target Name="PreparePackage" AfterTargets="AfterBuild">
     <PropertyGroup>
       <PackagePath>$(SolutionDir)\..\bin\Pathoschild.Stardew.ModBuildConfig</PackagePath>
     </PropertyGroup>
@@ -13,9 +13,9 @@
     <Copy SourceFiles="$(ProjectDir)/package.nuspec" DestinationFolder="$(PackagePath)" />
     <Copy SourceFiles="$(ProjectDir)/build/smapi.targets" DestinationFiles="$(PackagePath)/build/Pathoschild.Stardew.ModBuildConfig.targets" />
     <Copy SourceFiles="$(TargetDir)/Newtonsoft.Json.dll" DestinationFolder="$(PackagePath)/build" />
-    <Copy SourceFiles="$(TargetDir)/StardewModdingAPI.ModBuildConfig.dll" DestinationFolder="$(PackagePath)/build" />
-    <Copy SourceFiles="$(TargetDir)/StardewModdingAPI.Toolkit.dll" DestinationFolder="$(PackagePath)/build" />
-    <Copy SourceFiles="$(TargetDir)/StardewModdingAPI.Toolkit.CoreInterfaces.dll" DestinationFolder="$(PackagePath)/build" />
-    <Copy SourceFiles="$(SolutionDir)/SMAPI.ModBuildConfig.Analyzer/bin/netstandard1.3/StardewModdingAPI.ModBuildConfig.Analyzer.dll" DestinationFolder="$(PackagePath)/analyzers/dotnet/cs" />
+    <Copy SourceFiles="$(TargetDir)/SMAPI.ModBuildConfig.dll" DestinationFolder="$(PackagePath)/build" />
+    <Copy SourceFiles="$(TargetDir)/SMAPI.Toolkit.dll" DestinationFolder="$(PackagePath)/build" />
+    <Copy SourceFiles="$(TargetDir)/SMAPI.Toolkit.CoreInterfaces.dll" DestinationFolder="$(PackagePath)/build" />
+    <Copy SourceFiles="$(SolutionDir)/SMAPI.ModBuildConfig.Analyzer/bin/netstandard1.3/SMAPI.ModBuildConfig.Analyzer.dll" DestinationFolder="$(PackagePath)/analyzers/dotnet/cs" />
   </Target>
 </Project>

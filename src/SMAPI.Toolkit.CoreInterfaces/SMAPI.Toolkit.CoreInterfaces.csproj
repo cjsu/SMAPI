@@ -1,12 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>net4.5;netstandard2.0</TargetFrameworks>
     <RootNamespace>StardewModdingAPI</RootNamespace>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <OutputPath>..\..\bin\$(Configuration)\SMAPI.Toolkit.CoreInterfaces</OutputPath>
-    <DocumentationFile>..\..\bin\$(Configuration)\SMAPI.Toolkit.CoreInterfaces\$(TargetFramework)\StardewModdingAPI.Toolkit.CoreInterfaces.xml</DocumentationFile>
+    <DocumentationFile>..\..\bin\$(Configuration)\SMAPI.Toolkit.CoreInterfaces\$(TargetFramework)\SMAPI.Toolkit.CoreInterfaces.xml</DocumentationFile>
     <LangVersion>latest</LangVersion>
+    <PlatformTarget Condition="'$(TargetFramework)' == 'net4.5'">x86</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
