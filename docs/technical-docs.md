@@ -70,8 +70,8 @@ on the wiki for the first-time setup.
 
 ## Customisation
 ### Configuration file
-You can customise the SMAPI behaviour by editing the `smapi-internal/StardewModdingAPI.config.json`
-file in your game folder.
+You can customise the SMAPI behaviour by editing the `smapi-internal/config.json` file in your game
+folder.
 
 Basic fields:
 

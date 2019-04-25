@@ -112,6 +112,7 @@ namespace StardewModdingApi.Installer
             yield return GetInstallPath("StardewModdingAPI.pdb");      // Windows only
             yield return GetInstallPath("StardewModdingAPI.xml");
             yield return GetInstallPath("smapi-internal");
+            yield return GetInstallPath("steam_appid.txt");
 
             // obsolete
             yield return GetInstallPath(Path.Combine("Mods", ".cache"));     // 1.3-1.4
@@ -133,11 +134,9 @@ namespace StardewModdingApi.Installer
             yield return GetInstallPath("StardewModdingAPI.Toolkit.CoreInterfaces.dll"); // moved in 2.8
             yield return GetInstallPath("StardewModdingAPI.Toolkit.CoreInterfaces.pdb"); // moved in 2.8
             yield return GetInstallPath("StardewModdingAPI.Toolkit.CoreInterfaces.xml"); // moved in 2.8
-            yield return GetInstallPath("StardewModdingAPI.xml");             // moved in 2.8
             yield return GetInstallPath("System.Numerics.dll");               // moved in 2.8
             yield return GetInstallPath("System.Runtime.Caching.dll");        // moved in 2.8
             yield return GetInstallPath("System.ValueTuple.dll");             // moved in 2.8
-            yield return GetInstallPath("steam_appid.txt");                   // moved in 2.8
 
             if (modsDir.Exists)
             {

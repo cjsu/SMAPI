@@ -65,7 +65,7 @@ namespace StardewModdingAPI.Web.Controllers
         /// <param name="nexus">The Nexus API client.</param>
         public ModsApiController(IHostingEnvironment environment, IMemoryCache cache, IOptions<ModUpdateCheckConfig> configProvider, IChucklefishClient chucklefish, IGitHubClient github, IModDropClient modDrop, INexusClient nexus)
         {
-            this.ModDatabase = new ModToolkit().GetModDatabase(Path.Combine(environment.WebRootPath, "StardewModdingAPI.metadata.json"));
+            this.ModDatabase = new ModToolkit().GetModDatabase(Path.Combine(environment.WebRootPath, "SMAPI.metadata.json"));
             ModUpdateCheckConfig config = configProvider.Value;
             this.CompatibilityPageUrl = config.CompatibilityPageUrl;
 

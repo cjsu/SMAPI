@@ -38,8 +38,8 @@
     <Copy SourceFiles="$(CompiledSmapiPath)\0Harmony.dll" DestinationFolder="$(PackagePath)\bundle\smapi-internal" />
     <Copy SourceFiles="$(CompiledSmapiPath)\Mono.Cecil.dll" DestinationFolder="$(PackagePath)\bundle\smapi-internal" />
     <Copy SourceFiles="$(CompiledSmapiPath)\Newtonsoft.Json.dll" DestinationFolder="$(PackagePath)\bundle\smapi-internal" />
-    <Copy SourceFiles="$(CompiledSmapiPath)\StardewModdingAPI.config.json" DestinationFolder="$(PackagePath)\bundle\smapi-internal" />
-    <Copy SourceFiles="$(CompiledSmapiPath)\StardewModdingAPI.metadata.json" DestinationFolder="$(PackagePath)\bundle\smapi-internal" />
+    <Copy SourceFiles="$(CompiledSmapiPath)\SMAPI.config.json" DestinationFiles="$(PackagePath)\bundle\smapi-internal\config.json" />
+    <Copy SourceFiles="$(CompiledSmapiPath)\SMAPI.metadata.json" DestinationFiles="$(PackagePath)\bundle\smapi-internal\metadata.json" />
     <Copy SourceFiles="$(CompiledToolkitPath)\SMAPI.Toolkit.dll" DestinationFolder="$(PackagePath)\bundle\smapi-internal" />
     <Copy SourceFiles="$(CompiledToolkitPath)\SMAPI.Toolkit.pdb" DestinationFolder="$(PackagePath)\bundle\smapi-internal" />
     <Copy SourceFiles="$(CompiledToolkitPath)\SMAPI.Toolkit.xml" DestinationFolder="$(PackagePath)\bundle\smapi-internal" />
@@ -76,7 +76,7 @@
     <RemoveDir Directories="$(PackageDevPath)\bundle" />
 
     <!-- finalise normal installer -->
-    <ReplaceFileText FilePath="$(PackagePath)\bundle\smapi-internal\StardewModdingAPI.config.json" Search="&quot;DeveloperMode&quot;: true" Replace="&quot;DeveloperMode&quot;: false" />
+    <ReplaceFileText FilePath="$(PackagePath)\bundle\smapi-internal\config.json" Search="&quot;DeveloperMode&quot;: true" Replace="&quot;DeveloperMode&quot;: false" />
     <ZipDirectory FromDirPath="$(PackagePath)\bundle" ToFilePath="$(PackagePath)\internal\$(PlatformName)-install.dat" />
     <RemoveDir Directories="$(PackagePath)\bundle" />
   </Target>

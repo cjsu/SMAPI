@@ -34,7 +34,7 @@
     <Content Update="Views\Mods\Index.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="wwwroot\StardewModdingAPI.metadata.json">
+    <Content Update="wwwroot\SMAPI.metadata.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

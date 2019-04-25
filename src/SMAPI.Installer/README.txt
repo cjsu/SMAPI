@@ -40,5 +40,5 @@ When installing on Linux or Mac:
 - Make sure Mono is installed (normally the installer checks for you). While it's not required,
   many mods won't work correctly without it. (Specifically, mods which load PNG images may crash or
   freeze the game.)
-- To configure the color scheme, edit the `smapi-internal/StardewModdingAPI.config.json` file and
-  see instructions there for the 'ColorScheme' setting.
+- To configure the color scheme, edit the `smapi-internal/config.json` file and see instructions
+  there for the 'ColorScheme' setting.

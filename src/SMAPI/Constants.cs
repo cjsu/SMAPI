@@ -59,10 +59,10 @@ namespace StardewModdingAPI
         internal static readonly string InternalFilesPath = Program.DllSearchPath;
 
         /// <summary>The file path for the SMAPI configuration file.</summary>
-        internal static string ApiConfigPath => Path.Combine(Constants.InternalFilesPath, "StardewModdingAPI.config.json");
+        internal static string ApiConfigPath => Path.Combine(Constants.InternalFilesPath, "config.json");
 
         /// <summary>The file path for the SMAPI metadata file.</summary>
-        internal static string ApiMetadataPath => Path.Combine(Constants.InternalFilesPath, "StardewModdingAPI.metadata.json");
+        internal static string ApiMetadataPath => Path.Combine(Constants.InternalFilesPath, "metadata.json");
 
         /// <summary>The filename prefix used for all SMAPI logs.</summary>
         internal static string LogNamePrefix { get; } = "SMAPI-";
