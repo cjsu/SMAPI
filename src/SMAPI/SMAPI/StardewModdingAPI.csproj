@@ -1,0 +1,392 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{F1A573B0-F436-472C-AE29-0B91EA6B9F8F}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>StardewModdingAPI</RootNamespace>
+    <AssemblyName>StardewModdingAPI</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <LangVersion>latest</LangVersion>
+    <LargeAddressAware Condition="'$(OS)' == 'Windows_NT'">true</LargeAddressAware>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+    <Optimize>false</Optimize>
+    <OutputPath>$(SolutionDir)\..\bin\Debug\SMAPI</OutputPath>
+    <DocumentationFile>$(SolutionDir)\..\bin\Debug\SMAPI\StardewModdingAPI.xml</DocumentationFile>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+    <OutputPath>$(SolutionDir)\..\bin\Release\SMAPI</OutputPath>
+    <DocumentationFile>$(SolutionDir)\..\bin\Release\SMAPI\StardewModdingAPI.xml</DocumentationFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="LargeAddressAware" Version="1.0.3" />
+    <PackageReference Include="Lib.Harmony" Version="1.2.0.1" />
+    <PackageReference Include="Mono.Cecil" Version="0.10.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Caching">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Forms" Condition="$(OS) == 'Windows_NT'" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\build\GlobalAssemblyInfo.cs">
+      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Enums\LoadStage.cs" />
+    <Compile Include="Enums\SkillType.cs" />
+    <Compile Include="Events\BuildingListChangedEventArgs.cs" />
+    <Compile Include="Events\ButtonPressedEventArgs.cs" />
+    <Compile Include="Events\ButtonReleasedEventArgs.cs" />
+    <Compile Include="Events\ChangeType.cs" />
+    <Compile Include="Events\ContentEvents.cs" />
+    <Compile Include="Events\ControlEvents.cs" />
+    <Compile Include="Events\CursorMovedEventArgs.cs" />
+    <Compile Include="Events\DayEndingEventArgs.cs" />
+    <Compile Include="Events\DayStartedEventArgs.cs" />
+    <Compile Include="Events\DebrisListChangedEventArgs.cs" />
+    <Compile Include="Events\EventArgsClickableMenuChanged.cs" />
+    <Compile Include="Events\EventArgsClickableMenuClosed.cs" />
+    <Compile Include="Events\EventArgsControllerButtonPressed.cs" />
+    <Compile Include="Events\EventArgsControllerButtonReleased.cs" />
+    <Compile Include="Events\EventArgsControllerTriggerPressed.cs" />
+    <Compile Include="Events\EventArgsControllerTriggerReleased.cs" />
+    <Compile Include="Events\EventArgsInput.cs" />
+    <Compile Include="Events\EventArgsIntChanged.cs" />
+    <Compile Include="Events\EventArgsInventoryChanged.cs" />
+    <Compile Include="Events\EventArgsKeyboardStateChanged.cs" />
+    <Compile Include="Events\EventArgsKeyPressed.cs" />
+    <Compile Include="Events\EventArgsLevelUp.cs" />
+    <Compile Include="Events\EventArgsLocationBuildingsChanged.cs" />
+    <Compile Include="Events\EventArgsLocationObjectsChanged.cs" />
+    <Compile Include="Events\EventArgsLocationsChanged.cs" />
+    <Compile Include="Events\EventArgsMineLevelChanged.cs" />
+    <Compile Include="Events\EventArgsMouseStateChanged.cs" />
+    <Compile Include="Events\EventArgsPlayerWarped.cs" />
+    <Compile Include="Events\EventArgsValueChanged.cs" />
+    <Compile Include="Events\GameEvents.cs" />
+    <Compile Include="Events\GameLaunchedEventArgs.cs" />
+    <Compile Include="Events\GraphicsEvents.cs" />
+    <Compile Include="Events\IDisplayEvents.cs" />
+    <Compile Include="Events\IGameLoopEvents.cs" />
+    <Compile Include="Events\IInputEvents.cs" />
+    <Compile Include="Events\IModEvents.cs" />
+    <Compile Include="Events\IMultiplayerEvents.cs" />
+    <Compile Include="Events\InputEvents.cs" />
+    <Compile Include="Events\InventoryChangedEventArgs.cs" />
+    <Compile Include="Events\IPlayerEvents.cs" />
+    <Compile Include="Events\ISpecialisedEvents.cs" />
+    <Compile Include="Events\ItemStackChange.cs" />
+    <Compile Include="Events\ItemStackSizeChange.cs" />
+    <Compile Include="Events\IWorldEvents.cs" />
+    <Compile Include="Events\LargeTerrainFeatureListChangedEventArgs.cs" />
+    <Compile Include="Events\LevelChangedEventArgs.cs" />
+    <Compile Include="Events\LoadStageChangedEventArgs.cs" />
+    <Compile Include="Events\LocationEvents.cs" />
+    <Compile Include="Events\LocationListChangedEventArgs.cs" />
+    <Compile Include="Events\MenuChangedEventArgs.cs" />
+    <Compile Include="Events\MenuEvents.cs" />
+    <Compile Include="Events\MineEvents.cs" />
+    <Compile Include="Events\ModMessageReceivedEventArgs.cs" />
+    <Compile Include="Events\MouseWheelScrolledEventArgs.cs" />
+    <Compile Include="Events\MultiplayerEvents.cs" />
+    <Compile Include="Events\NpcListChangedEventArgs.cs" />
+    <Compile Include="Events\ObjectListChangedEventArgs.cs" />
+    <Compile Include="Events\OneSecondUpdateTickedEventArgs.cs" />
+    <Compile Include="Events\OneSecondUpdateTickingEventArgs.cs" />
+    <Compile Include="Events\PeerContextReceivedEventArgs.cs" />
+    <Compile Include="Events\PeerDisconnectedEventArgs.cs" />
+    <Compile Include="Events\PlayerEvents.cs" />
+    <Compile Include="Events\RenderedActiveMenuEventArgs.cs" />
+    <Compile Include="Events\RenderedEventArgs.cs" />
+    <Compile Include="Events\RenderedHudEventArgs.cs" />
+    <Compile Include="Events\RenderedWorldEventArgs.cs" />
+    <Compile Include="Events\RenderingActiveMenuEventArgs.cs" />
+    <Compile Include="Events\RenderingEventArgs.cs" />
+    <Compile Include="Events\RenderingHudEventArgs.cs" />
+    <Compile Include="Events\RenderingWorldEventArgs.cs" />
+    <Compile Include="Events\ReturnedToTitleEventArgs.cs" />
+    <Compile Include="Events\SaveCreatedEventArgs.cs" />
+    <Compile Include="Events\SaveCreatingEventArgs.cs" />
+    <Compile Include="Events\SavedEventArgs.cs" />
+    <Compile Include="Events\SaveEvents.cs" />
+    <Compile Include="Events\SaveLoadedEventArgs.cs" />
+    <Compile Include="Events\SavingEventArgs.cs" />
+    <Compile Include="Events\SpecialisedEvents.cs" />
+    <Compile Include="Events\TerrainFeatureListChangedEventArgs.cs" />
+    <Compile Include="Events\TimeChangedEventArgs.cs" />
+    <Compile Include="Events\TimeEvents.cs" />
+    <Compile Include="Events\UnvalidatedUpdateTickedEventArgs.cs" />
+    <Compile Include="Events\UnvalidatedUpdateTickingEventArgs.cs" />
+    <Compile Include="Events\UpdateTickedEventArgs.cs" />
+    <Compile Include="Events\UpdateTickingEventArgs.cs" />
+    <Compile Include="Events\WarpedEventArgs.cs" />
+    <Compile Include="Events\WindowResizedEventArgs.cs" />
+    <Compile Include="Framework\DeprecationWarning.cs" />
+    <Compile Include="Framework\Events\EventManager.cs" />
+    <Compile Include="Framework\Events\ManagedEvent.cs" />
+    <Compile Include="Framework\Events\ManagedEventBase.cs" />
+    <Compile Include="Framework\Events\ModDisplayEvents.cs" />
+    <Compile Include="Framework\Events\ModEvents.cs" />
+    <Compile Include="Framework\Events\ModEventsBase.cs" />
+    <Compile Include="Framework\Events\ModGameLoopEvents.cs" />
+    <Compile Include="Framework\Events\ModInputEvents.cs" />
+    <Compile Include="Framework\Events\ModMultiplayerEvents.cs" />
+    <Compile Include="Framework\Events\ModPlayerEvents.cs" />
+    <Compile Include="Framework\Events\ModSpecialisedEvents.cs" />
+    <Compile Include="Framework\Events\ModWorldEvents.cs" />
+    <Compile Include="Framework\ModHelpers\ContentPackHelper.cs" />
+    <Compile Include="Framework\ModHelpers\DataHelper.cs" />
+    <Compile Include="Framework\Networking\MessageType.cs" />
+    <Compile Include="Framework\Networking\ModMessageModel.cs" />
+    <Compile Include="Framework\Networking\MultiplayerPeer.cs" />
+    <Compile Include="Framework\Networking\MultiplayerPeerMod.cs" />
+    <Compile Include="Framework\Networking\RemoteContextModel.cs" />
+    <Compile Include="Framework\Networking\RemoteContextModModel.cs" />
+    <Compile Include="Framework\Networking\SGalaxyNetClient.cs" />
+    <Compile Include="Framework\Networking\SGalaxyNetServer.cs" />
+    <Compile Include="Framework\Networking\SLidgrenClient.cs" />
+    <Compile Include="Framework\Networking\SLidgrenServer.cs" />
+    <Compile Include="Framework\SCore.cs" />
+    <Compile Include="Framework\SGameConstructorHack.cs" />
+    <Compile Include="Framework\ContentManagers\BaseContentManager.cs" />
+    <Compile Include="Framework\ContentManagers\GameContentManager.cs" />
+    <Compile Include="Framework\ContentManagers\IContentManager.cs" />
+    <Compile Include="Framework\ContentManagers\ModContentManager.cs" />
+    <Compile Include="Framework\Models\ModFolderExport.cs" />
+    <Compile Include="Framework\ModLoading\TypeReferenceComparer.cs" />
+    <Compile Include="Framework\Patching\GamePatcher.cs" />
+    <Compile Include="Framework\Patching\IHarmonyPatch.cs" />
+    <Compile Include="Framework\Serialisation\ColorConverter.cs" />
+    <Compile Include="Framework\Serialisation\PointConverter.cs" />
+    <Compile Include="Framework\Serialisation\RectangleConverter.cs" />
+    <Compile Include="Framework\ContentPack.cs" />
+    <Compile Include="Framework\Content\ContentCache.cs" />
+    <Compile Include="Framework\Input\GamePadStateBuilder.cs" />
+    <Compile Include="Framework\ModHelpers\InputHelper.cs" />
+    <Compile Include="Framework\SModHooks.cs" />
+    <Compile Include="Framework\Singleton.cs" />
+    <Compile Include="Framework\StateTracking\Comparers\GenericEqualsComparer.cs" />
+    <Compile Include="Framework\StateTracking\FieldWatchers\ComparableListWatcher.cs" />
+    <Compile Include="Framework\WatcherCore.cs" />
+    <Compile Include="IContentPackHelper.cs" />
+    <Compile Include="IDataHelper.cs" />
+    <Compile Include="IInputHelper.cs" />
+    <Compile Include="Framework\Input\SInputState.cs" />
+    <Compile Include="Framework\Input\InputStatus.cs" />
+    <Compile Include="Framework\ModHelpers\MultiplayerHelper.cs" />
+    <Compile Include="Framework\ModLoading\Finders\EventFinder.cs" />
+    <Compile Include="Framework\ModLoading\Finders\FieldFinder.cs" />
+    <Compile Include="Framework\ModLoading\Finders\MethodFinder.cs" />
+    <Compile Include="Framework\ModLoading\Finders\PropertyFinder.cs" />
+    <Compile Include="Framework\ModLoading\Finders\ReferenceToMissingMemberFinder.cs" />
+    <Compile Include="Framework\ModLoading\Finders\TypeFinder.cs" />
+    <Compile Include="Framework\ModLoading\IInstructionHandler.cs" />
+    <Compile Include="Framework\ModLoading\IncompatibleInstructionException.cs" />
+    <Compile Include="Framework\ModLoading\InstructionHandleResult.cs" />
+    <Compile Include="Framework\ModLoading\PlatformAssemblyMap.cs" />
+    <Compile Include="Framework\ModLoading\RewriteHelper.cs" />
+    <Compile Include="Framework\ModLoading\Rewriters\FieldReplaceRewriter.cs" />
+    <Compile Include="Framework\ModLoading\Rewriters\StaticFieldToConstantRewriter.cs" />
+    <Compile Include="Framework\ModLoading\Rewriters\FieldToPropertyRewriter.cs" />
+    <Compile Include="Framework\ModLoading\Finders\ReferenceToMemberWithUnexpectedTypeFinder.cs" />
+    <Compile Include="Framework\ModLoading\Rewriters\MethodParentRewriter.cs" />
+    <Compile Include="Framework\ModLoading\Rewriters\TypeReferenceRewriter.cs" />
+    <Compile Include="Framework\Exceptions\SAssemblyLoadFailedException.cs" />
+    <Compile Include="Framework\ModLoading\AssemblyLoadStatus.cs" />
+    <Compile Include="Framework\Reflection\InterfaceProxyBuilder.cs" />
+    <Compile Include="Framework\Reflection\InterfaceProxyFactory.cs" />
+    <Compile Include="Framework\RewriteFacades\SpriteBatchMethods.cs" />
+    <Compile Include="Framework\SMultiplayer.cs" />
+    <Compile Include="Framework\StateTracking\Comparers\EquatableComparer.cs" />
+    <Compile Include="Framework\StateTracking\Comparers\ObjectReferenceComparer.cs" />
+    <Compile Include="Framework\StateTracking\FieldWatchers\BaseDisposableWatcher.cs" />
+    <Compile Include="Framework\StateTracking\FieldWatchers\ComparableWatcher.cs" />
+    <Compile Include="Framework\StateTracking\FieldWatchers\NetDictionaryWatcher.cs" />
+    <Compile Include="Framework\StateTracking\FieldWatchers\NetValueWatcher.cs" />
+    <Compile Include="Framework\StateTracking\FieldWatchers\NetCollectionWatcher.cs" />
+    <Compile Include="Framework\StateTracking\FieldWatchers\ObservableCollectionWatcher.cs" />
+    <Compile Include="Framework\StateTracking\FieldWatchers\WatcherFactory.cs" />
+    <Compile Include="Framework\StateTracking\ICollectionWatcher.cs" />
+    <Compile Include="Framework\StateTracking\IDictionaryWatcher.cs" />
+    <Compile Include="Framework\StateTracking\IValueWatcher.cs" />
+    <Compile Include="Framework\StateTracking\IWatcher.cs" />
+    <Compile Include="Framework\StateTracking\WorldLocationsTracker.cs" />
+    <Compile Include="Framework\StateTracking\LocationTracker.cs" />
+    <Compile Include="Framework\StateTracking\PlayerTracker.cs" />
+    <Compile Include="Framework\Utilities\ContextHash.cs" />
+    <Compile Include="IContentPack.cs" />
+    <Compile Include="IModInfo.cs" />
+    <Compile Include="IMultiplayerHelper.cs" />
+    <Compile Include="IMultiplayerPeer.cs" />
+    <Compile Include="IReflectedField.cs" />
+    <Compile Include="IReflectedMethod.cs" />
+    <Compile Include="IReflectedProperty.cs" />
+    <Compile Include="IMultiplayerPeerMod.cs" />
+    <Compile Include="Metadata\CoreAssetPropagator.cs" />
+    <Compile Include="ContentSource.cs" />
+    <Compile Include="Framework\Content\AssetInfo.cs" />
+    <Compile Include="Framework\Exceptions\SContentLoadException.cs" />
+    <Compile Include="Framework\Command.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="Framework\Utilities\Countdown.cs" />
+    <Compile Include="Framework\GameVersion.cs" />
+    <Compile Include="Framework\IModMetadata.cs" />
+    <Compile Include="Framework\ModHelpers\BaseHelper.cs" />
+    <Compile Include="Framework\ModHelpers\CommandHelper.cs" />
+    <Compile Include="Framework\ModHelpers\ContentHelper.cs" />
+    <Compile Include="Framework\ModHelpers\ModHelper.cs" />
+    <Compile Include="Framework\ModHelpers\ModRegistryHelper.cs" />
+    <Compile Include="Framework\ModHelpers\ReflectionHelper.cs" />
+    <Compile Include="Framework\ModHelpers\TranslationHelper.cs" />
+    <Compile Include="Framework\ModLoading\InvalidModStateException.cs" />
+    <Compile Include="Framework\ModLoading\ModDependencyStatus.cs" />
+    <Compile Include="Framework\ModLoading\ModMetadataStatus.cs" />
+    <Compile Include="Framework\ModLoading\ModResolver.cs" />
+    <Compile Include="Framework\ModLoading\AssemblyDefinitionResolver.cs" />
+    <Compile Include="Framework\ModLoading\AssemblyParseResult.cs" />
+    <Compile Include="Framework\CommandManager.cs" />
+    <Compile Include="Framework\Content\AssetData.cs" />
+    <Compile Include="Framework\Content\AssetDataForObject.cs" />
+    <Compile Include="Framework\Content\AssetDataForDictionary.cs" />
+    <Compile Include="Framework\Content\AssetDataForImage.cs" />
+    <Compile Include="Context.cs" />
+    <Compile Include="Framework\Logging\ConsoleInterceptionManager.cs" />
+    <Compile Include="Framework\Logging\InterceptingTextWriter.cs" />
+    <Compile Include="Framework\Models\SConfig.cs" />
+    <Compile Include="Framework\ModLoading\ModMetadata.cs" />
+    <Compile Include="Framework\Reflection\ReflectedProperty.cs" />
+    <Compile Include="Framework\RequestExitDelegate.cs" />
+    <Compile Include="Framework\ContentCoordinator.cs" />
+    <Compile Include="IAssetEditor.cs" />
+    <Compile Include="IAssetInfo.cs" />
+    <Compile Include="IAssetLoader.cs" />
+    <Compile Include="ICommandHelper.cs" />
+    <Compile Include="IAssetData.cs" />
+    <Compile Include="IAssetDataForDictionary.cs" />
+    <Compile Include="IAssetDataForImage.cs" />
+    <Compile Include="IContentHelper.cs" />
+    <Compile Include="IModRegistry.cs" />
+    <Compile Include="Framework\DeprecationLevel.cs" />
+    <Compile Include="Framework\DeprecationManager.cs" />
+    <Compile Include="Framework\InternalExtensions.cs" />
+    <Compile Include="Framework\ModLoading\AssemblyLoader.cs" />
+    <Compile Include="Framework\Reflection\CacheEntry.cs" />
+    <Compile Include="Framework\Reflection\ReflectedField.cs" />
+    <Compile Include="Framework\Reflection\ReflectedMethod.cs" />
+    <Compile Include="Framework\Reflection\Reflector.cs" />
+    <Compile Include="IMod.cs" />
+    <Compile Include="IModHelper.cs" />
+    <Compile Include="IModLinked.cs" />
+    <Compile Include="Framework\Logging\LogFileManager.cs" />
+    <Compile Include="ITranslationHelper.cs" />
+    <Compile Include="LogLevel.cs" />
+    <Compile Include="Framework\ModRegistry.cs" />
+    <Compile Include="IMonitor.cs" />
+    <Compile Include="Framework\Monitor.cs" />
+    <Compile Include="Metadata\InstructionMetadata.cs" />
+    <Compile Include="Mod.cs" />
+    <Compile Include="Patches\LoadForNewGamePatch.cs" />
+    <Compile Include="Patches\ObjectErrorPatch.cs" />
+    <Compile Include="Patches\DialogueErrorPatch.cs" />
+    <Compile Include="PatchMode.cs" />
+    <Compile Include="GamePlatform.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Framework\SGame.cs" />
+    <Compile Include="IReflectionHelper.cs" />
+    <Compile Include="SemanticVersion.cs" />
+    <Compile Include="Translation.cs" />
+    <Compile Include="ICursorPosition.cs" />
+    <Compile Include="Utilities\SDate.cs" />
+    <Compile Include="SButton.cs" />
+    <Compile Include="Framework\CursorPosition.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="StardewModdingAPI.config.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\SMAPI.Web\wwwroot\StardewModdingAPI.metadata.json">
+      <Link>StardewModdingAPI.metadata.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="icon.ico" />
+    <Content Include="steam_appid.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\SMAPI.ModBuildConfig.Analyzer\bin\netstandard1.3\StardewModdingAPI.ModBuildConfig.Analyzer.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\StardewModdingAPI.Toolkit.CoreInterfaces\StardewModdingAPI.Toolkit.CoreInterfaces.csproj">
+      <Project>{d5cfd923-37f1-4bc3-9be8-e506e202ac28}</Project>
+      <Name>StardewModdingAPI.Toolkit.CoreInterfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StardewModdingAPI.Toolkit\StardewModdingAPI.Toolkit.csproj">
+      <Project>{ea5cfd2e-9453-4d29-b80f-8e0ea23f4ac6}</Project>
+      <Name>StardewModdingAPI.Toolkit</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="..\SMAPI.Internal\SMAPI.Internal.projitems" Label="Shared" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\..\build\common.targets" />
+</Project>

@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>85208f8d-6fd1-4531-be05-7142490f59fe</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>SMAPI.Internal</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)ConsoleWriting\ColorfulConsoleWriter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EnvironmentUtility.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ConsoleWriting\LogLevel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ConsoleWriting\MonitorColorScheme.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platform.cs" />
+  </ItemGroup>
+</Project>

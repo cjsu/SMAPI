@@ -1,0 +1,865 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{07D25129-216D-4613-88BB-DEE2CACDB4D1}</ProjectGuid>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TemplateGuid>{9ef11e43-1701-4396-8835-8392d57abb70}</TemplateGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>StardewModdingAPI</RootNamespace>
+    <AssemblyName>StardewModdingAPI</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
+    <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet />
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet />
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="SMainActivity.cs" />
+    <Compile Include="Harmony\Attributes.cs" />
+    <Compile Include="Harmony\CodeInstruction.cs" />
+    <Compile Include="Harmony\CodeTranspiler.cs" />
+    <Compile Include="Harmony\Extras\DelegateTypeFactory.cs" />
+    <Compile Include="Harmony\Extras\FastAccess.cs" />
+    <Compile Include="Harmony\Extras\MethodInvoker.cs" />
+    <Compile Include="Harmony\GlobalSuppressions.cs" />
+    <Compile Include="Harmony\HarmonyInstance.cs" />
+    <Compile Include="Harmony\HarmonyMethod.cs" />
+    <Compile Include="Harmony\HarmonySharedState.cs" />
+    <Compile Include="Harmony\ILCopying\ByteBuffer.cs" />
+    <Compile Include="Harmony\ILCopying\Emitter.cs" />
+    <Compile Include="Harmony\ILCopying\ILInstruction.cs" />
+    <Compile Include="Harmony\ILCopying\Memory.cs" />
+    <Compile Include="Harmony\ILCopying\MethodCopier.cs" />
+    <Compile Include="Harmony\ILCopying\Signature.cs" />
+    <Compile Include="Harmony\MethodPatcher.cs" />
+    <Compile Include="Harmony\Patch.cs" />
+    <Compile Include="Harmony\PatchFunctions.cs" />
+    <Compile Include="Harmony\PatchProcessor.cs" />
+    <Compile Include="Harmony\Priority.cs" />
+    <Compile Include="Harmony\Tools\AccessCache.cs" />
+    <Compile Include="Harmony\Tools\AccessTools.cs" />
+    <Compile Include="Harmony\Tools\DynamicTools.cs" />
+    <Compile Include="Harmony\Tools\Extensions.cs" />
+    <Compile Include="Harmony\Tools\FileLog.cs" />
+    <Compile Include="Harmony\Tools\PatchTools.cs" />
+    <Compile Include="Harmony\Tools\SelfPatching.cs" />
+    <Compile Include="Harmony\Tools\SymbolExtensions.cs" />
+    <Compile Include="Harmony\Tools\Traverse.cs" />
+    <Compile Include="Harmony\Transpilers.cs" />
+    <Compile Include="Mono\Cecil\ArrayType.cs" />
+    <Compile Include="Mono\Cecil\AssemblyDefinition.cs" />
+    <Compile Include="Mono\Cecil\AssemblyFlags.cs" />
+    <Compile Include="Mono\Cecil\AssemblyHashAlgorithm.cs" />
+    <Compile Include="Mono\Cecil\AssemblyLinkedResource.cs" />
+    <Compile Include="Mono\Cecil\AssemblyNameDefinition.cs" />
+    <Compile Include="Mono\Cecil\AssemblyNameReference.cs" />
+    <Compile Include="Mono\Cecil\AssemblyReader.cs" />
+    <Compile Include="Mono\Cecil\AssemblyWriter.cs" />
+    <Compile Include="Mono\Cecil\BaseAssemblyResolver.cs" />
+    <Compile Include="Mono\Cecil\CallSite.cs" />
+    <Compile Include="Mono\Cecil\Cil\Code.cs" />
+    <Compile Include="Mono\Cecil\Cil\CodeReader.cs" />
+    <Compile Include="Mono\Cecil\Cil\CodeWriter.cs" />
+    <Compile Include="Mono\Cecil\Cil\Document.cs" />
+    <Compile Include="Mono\Cecil\Cil\ExceptionHandler.cs" />
+    <Compile Include="Mono\Cecil\Cil\ILProcessor.cs" />
+    <Compile Include="Mono\Cecil\Cil\Instruction.cs" />
+    <Compile Include="Mono\Cecil\Cil\MethodBody.cs" />
+    <Compile Include="Mono\Cecil\Cil\OpCode.cs" />
+    <Compile Include="Mono\Cecil\Cil\OpCodes.cs" />
+    <Compile Include="Mono\Cecil\Cil\PortablePdb.cs" />
+    <Compile Include="Mono\Cecil\Cil\SequencePoint.cs" />
+    <Compile Include="Mono\Cecil\Cil\Symbols.cs" />
+    <Compile Include="Mono\Cecil\Cil\VariableDefinition.cs" />
+    <Compile Include="Mono\Cecil\Cil\VariableReference.cs" />
+    <Compile Include="Mono\Cecil\Consts.cs" />
+    <Compile Include="Mono\Cecil\CustomAttribute.cs" />
+    <Compile Include="Mono\Cecil\DefaultAssemblyResolver.cs" />
+    <Compile Include="Mono\Cecil\EmbeddedResource.cs" />
+    <Compile Include="Mono\Cecil\EventAttributes.cs" />
+    <Compile Include="Mono\Cecil\EventDefinition.cs" />
+    <Compile Include="Mono\Cecil\EventReference.cs" />
+    <Compile Include="Mono\Cecil\ExportedType.cs" />
+    <Compile Include="Mono\Cecil\FieldAttributes.cs" />
+    <Compile Include="Mono\Cecil\FieldDefinition.cs" />
+    <Compile Include="Mono\Cecil\FieldReference.cs" />
+    <Compile Include="Mono\Cecil\FileAttributes.cs" />
+    <Compile Include="Mono\Cecil\FunctionPointerType.cs" />
+    <Compile Include="Mono\Cecil\GenericInstanceMethod.cs" />
+    <Compile Include="Mono\Cecil\GenericInstanceType.cs" />
+    <Compile Include="Mono\Cecil\GenericParameter.cs" />
+    <Compile Include="Mono\Cecil\GenericParameterAttributes.cs" />
+    <Compile Include="Mono\Cecil\IConstantProvider.cs" />
+    <Compile Include="Mono\Cecil\ICustomAttributeProvider.cs" />
+    <Compile Include="Mono\Cecil\IGenericInstance.cs" />
+    <Compile Include="Mono\Cecil\IGenericParameterProvider.cs" />
+    <Compile Include="Mono\Cecil\IMarshalInfoProvider.cs" />
+    <Compile Include="Mono\Cecil\IMemberDefinition.cs" />
+    <Compile Include="Mono\Cecil\IMetadataScope.cs" />
+    <Compile Include="Mono\Cecil\IMetadataTokenProvider.cs" />
+    <Compile Include="Mono\Cecil\IMethodSignature.cs" />
+    <Compile Include="Mono\Cecil\Import.cs" />
+    <Compile Include="Mono\Cecil\LinkedResource.cs" />
+    <Compile Include="Mono\Cecil\ManifestResourceAttributes.cs" />
+    <Compile Include="Mono\Cecil\MarshalInfo.cs" />
+    <Compile Include="Mono\Cecil\MemberDefinitionCollection.cs" />
+    <Compile Include="Mono\Cecil\MemberReference.cs" />
+    <Compile Include="Mono\Cecil\MetadataResolver.cs" />
+    <Compile Include="Mono\Cecil\MetadataSystem.cs" />
+    <Compile Include="Mono\Cecil\Metadata\BlobHeap.cs" />
+    <Compile Include="Mono\Cecil\Metadata\Buffers.cs" />
+    <Compile Include="Mono\Cecil\Metadata\CodedIndex.cs" />
+    <Compile Include="Mono\Cecil\Metadata\ElementType.cs" />
+    <Compile Include="Mono\Cecil\Metadata\GuidHeap.cs" />
+    <Compile Include="Mono\Cecil\Metadata\Heap.cs" />
+    <Compile Include="Mono\Cecil\Metadata\MetadataToken.cs" />
+    <Compile Include="Mono\Cecil\Metadata\PdbHeap.cs" />
+    <Compile Include="Mono\Cecil\Metadata\Row.cs" />
+    <Compile Include="Mono\Cecil\Metadata\StringHeap.cs" />
+    <Compile Include="Mono\Cecil\Metadata\TableHeap.cs" />
+    <Compile Include="Mono\Cecil\Metadata\TokenType.cs" />
+    <Compile Include="Mono\Cecil\Metadata\UserStringHeap.cs" />
+    <Compile Include="Mono\Cecil\Metadata\Utilities.cs" />
+    <Compile Include="Mono\Cecil\MethodAttributes.cs" />
+    <Compile Include="Mono\Cecil\MethodCallingConvention.cs" />
+    <Compile Include="Mono\Cecil\MethodDefinition.cs" />
+    <Compile Include="Mono\Cecil\MethodImplAttributes.cs" />
+    <Compile Include="Mono\Cecil\MethodReference.cs" />
+    <Compile Include="Mono\Cecil\MethodReturnType.cs" />
+    <Compile Include="Mono\Cecil\MethodSemanticsAttributes.cs" />
+    <Compile Include="Mono\Cecil\MethodSpecification.cs" />
+    <Compile Include="Mono\Cecil\Modifiers.cs" />
+    <Compile Include="Mono\Cecil\ModuleDefinition.cs" />
+    <Compile Include="Mono\Cecil\ModuleKind.cs" />
+    <Compile Include="Mono\Cecil\ModuleReference.cs" />
+    <Compile Include="Mono\Cecil\NativeType.cs" />
+    <Compile Include="Mono\Cecil\ParameterAttributes.cs" />
+    <Compile Include="Mono\Cecil\ParameterDefinition.cs" />
+    <Compile Include="Mono\Cecil\ParameterDefinitionCollection.cs" />
+    <Compile Include="Mono\Cecil\ParameterReference.cs" />
+    <Compile Include="Mono\Cecil\PE\BinaryStreamReader.cs" />
+    <Compile Include="Mono\Cecil\PE\BinaryStreamWriter.cs" />
+    <Compile Include="Mono\Cecil\PE\ByteBuffer.cs" />
+    <Compile Include="Mono\Cecil\PE\ByteBufferEqualityComparer.cs" />
+    <Compile Include="Mono\Cecil\PE\DataDirectory.cs" />
+    <Compile Include="Mono\Cecil\PE\Image.cs" />
+    <Compile Include="Mono\Cecil\PE\ImageReader.cs" />
+    <Compile Include="Mono\Cecil\PE\ImageWriter.cs" />
+    <Compile Include="Mono\Cecil\PE\Section.cs" />
+    <Compile Include="Mono\Cecil\PE\TextMap.cs" />
+    <Compile Include="Mono\Cecil\PinnedType.cs" />
+    <Compile Include="Mono\Cecil\PInvokeAttributes.cs" />
+    <Compile Include="Mono\Cecil\PInvokeInfo.cs" />
+    <Compile Include="Mono\Cecil\PointerType.cs" />
+    <Compile Include="Mono\Cecil\PropertyAttributes.cs" />
+    <Compile Include="Mono\Cecil\PropertyDefinition.cs" />
+    <Compile Include="Mono\Cecil\PropertyReference.cs" />
+    <Compile Include="Mono\Cecil\ReferenceType.cs" />
+    <Compile Include="Mono\Cecil\Resource.cs" />
+    <Compile Include="Mono\Cecil\SecurityDeclaration.cs" />
+    <Compile Include="Mono\Cecil\SentinelType.cs" />
+    <Compile Include="Mono\Cecil\TargetRuntime.cs" />
+    <Compile Include="Mono\Cecil\Treatments.cs" />
+    <Compile Include="Mono\Cecil\TypeAttributes.cs" />
+    <Compile Include="Mono\Cecil\TypeDefinition.cs" />
+    <Compile Include="Mono\Cecil\TypeDefinitionCollection.cs" />
+    <Compile Include="Mono\Cecil\TypeParser.cs" />
+    <Compile Include="Mono\Cecil\TypeReference.cs" />
+    <Compile Include="Mono\Cecil\TypeSpecification.cs" />
+    <Compile Include="Mono\Cecil\TypeSystem.cs" />
+    <Compile Include="Mono\Cecil\VariantType.cs" />
+    <Compile Include="Mono\Cecil\WindowsRuntimeProjections.cs" />
+    <Compile Include="Mono\Collections\Generic\Collection.cs" />
+    <Compile Include="Mono\Collections\Generic\ReadOnlyCollection.cs" />
+    <Compile Include="Mono\Disposable.cs" />
+    <Compile Include="Mono\Empty.cs" />
+    <Compile Include="Mono\MergeSort.cs" />
+    <Compile Include="Mono\Security\Cryptography\CryptoConvert.cs" />
+    <Compile Include="Mono\Security\Cryptography\CryptoService.cs" />
+    <Compile Include="Mono\Type.cs" />
+    <Compile Include="Newtonsoft.Json\Bson\BsonBinaryType.cs" />
+    <Compile Include="Newtonsoft.Json\Bson\BsonBinaryWriter.cs" />
+    <Compile Include="Newtonsoft.Json\Bson\BsonObjectId.cs" />
+    <Compile Include="Newtonsoft.Json\Bson\BsonReader.cs" />
+    <Compile Include="Newtonsoft.Json\Bson\BsonToken.cs" />
+    <Compile Include="Newtonsoft.Json\Bson\BsonType.cs" />
+    <Compile Include="Newtonsoft.Json\Bson\BsonWriter.cs" />
+    <Compile Include="Newtonsoft.Json\ConstructorHandling.cs" />
+    <Compile Include="Newtonsoft.Json\Converters\BinaryConverter.cs" />
+    <Compile Include="Newtonsoft.Json\Converters\BsonObjectIdConverter.cs" />
+    <Compile Include="Newtonsoft.Json\Converters\CustomCreationConverter.cs" />
+    <Compile Include="Newtonsoft.Json\Converters\DataSetConverter.cs" />
+    <Compile Include="Newtonsoft.Json\Converters\DataTableConverter.cs" />
+    <Compile Include="Newtonsoft.Json\Converters\DateTimeConverterBase.cs" />
+    <Compile Include="Newtonsoft.Json\Converters\DiscriminatedUnionConverter.cs" />
+    <Compile Include="Newtonsoft.Json\Converters\EntityKeyMemberConverter.cs" />
+    <Compile Include="Newtonsoft.Json\Converters\ExpandoObjectConverter.cs" />
+    <Compile Include="Newtonsoft.Json\Converters\IsoDateTimeConverter.cs" />
+    <Compile Include="Newtonsoft.Json\Converters\JavaScriptDateTimeConverter.cs" />
+    <Compile Include="Newtonsoft.Json\Converters\KeyValuePairConverter.cs" />
+    <Compile Include="Newtonsoft.Json\Converters\RegexConverter.cs" />
+    <Compile Include="Newtonsoft.Json\Converters\StringEnumConverter.cs" />
+    <Compile Include="Newtonsoft.Json\Converters\UnixDateTimeConverter.cs" />
+    <Compile Include="Newtonsoft.Json\Converters\VersionConverter.cs" />
+    <Compile Include="Newtonsoft.Json\Converters\XmlNodeConverter.cs" />
+    <Compile Include="Newtonsoft.Json\DateFormatHandling.cs" />
+    <Compile Include="Newtonsoft.Json\DateParseHandling.cs" />
+    <Compile Include="Newtonsoft.Json\DateTimeZoneHandling.cs" />
+    <Compile Include="Newtonsoft.Json\DefaultJsonNameTable.cs" />
+    <Compile Include="Newtonsoft.Json\DefaultValueHandling.cs" />
+    <Compile Include="Newtonsoft.Json\FloatFormatHandling.cs" />
+    <Compile Include="Newtonsoft.Json\FloatParseHandling.cs" />
+    <Compile Include="Newtonsoft.Json\FormatterAssemblyStyle.cs" />
+    <Compile Include="Newtonsoft.Json\Formatting.cs" />
+    <Compile Include="Newtonsoft.Json\IArrayPool.cs" />
+    <Compile Include="Newtonsoft.Json\IJsonLineInfo.cs" />
+    <Compile Include="Newtonsoft.Json\JsonArrayAttribute.cs" />
+    <Compile Include="Newtonsoft.Json\JsonConstructorAttribute.cs" />
+    <Compile Include="Newtonsoft.Json\JsonContainerAttribute.cs" />
+    <Compile Include="Newtonsoft.Json\JsonConvert.cs" />
+    <Compile Include="Newtonsoft.Json\JsonConverter.cs" />
+    <Compile Include="Newtonsoft.Json\JsonConverterAttribute.cs" />
+    <Compile Include="Newtonsoft.Json\JsonConverterCollection.cs" />
+    <Compile Include="Newtonsoft.Json\JsonDictionaryAttribute.cs" />
+    <Compile Include="Newtonsoft.Json\JsonException.cs" />
+    <Compile Include="Newtonsoft.Json\JsonExtensionDataAttribute.cs" />
+    <Compile Include="Newtonsoft.Json\JsonIgnoreAttribute.cs" />
+    <Compile Include="Newtonsoft.Json\JsonNameTable.cs" />
+    <Compile Include="Newtonsoft.Json\JsonObjectAttribute.cs" />
+    <Compile Include="Newtonsoft.Json\JsonPosition.cs" />
+    <Compile Include="Newtonsoft.Json\JsonPropertyAttribute.cs" />
+    <Compile Include="Newtonsoft.Json\JsonReader.Async.cs" />
+    <Compile Include="Newtonsoft.Json\JsonReader.cs" />
+    <Compile Include="Newtonsoft.Json\JsonReaderException.cs" />
+    <Compile Include="Newtonsoft.Json\JsonRequiredAttribute.cs" />
+    <Compile Include="Newtonsoft.Json\JsonSerializationException.cs" />
+    <Compile Include="Newtonsoft.Json\JsonSerializer.cs" />
+    <Compile Include="Newtonsoft.Json\JsonSerializerSettings.cs" />
+    <Compile Include="Newtonsoft.Json\JsonTextReader.Async.cs" />
+    <Compile Include="Newtonsoft.Json\JsonTextReader.cs" />
+    <Compile Include="Newtonsoft.Json\JsonTextWriter.Async.cs" />
+    <Compile Include="Newtonsoft.Json\JsonTextWriter.cs" />
+    <Compile Include="Newtonsoft.Json\JsonToken.cs" />
+    <Compile Include="Newtonsoft.Json\JsonValidatingReader.cs" />
+    <Compile Include="Newtonsoft.Json\JsonWriter.Async.cs" />
+    <Compile Include="Newtonsoft.Json\JsonWriter.cs" />
+    <Compile Include="Newtonsoft.Json\JsonWriterException.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\CommentHandling.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\DuplicatePropertyNameHandling.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\Extensions.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\IJEnumerable.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\JArray.Async.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\JArray.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\JConstructor.Async.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\JConstructor.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\JContainer.Async.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\JContainer.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\JEnumerable.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\JObject.Async.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\JObject.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\JProperty.Async.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\JProperty.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\JPropertyDescriptor.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\JPropertyKeyedCollection.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\JRaw.Async.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\JRaw.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\JsonLoadSettings.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\JsonMergeSettings.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\JsonPath\ArrayIndexFilter.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\JsonPath\ArrayMultipleIndexFilter.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\JsonPath\ArraySliceFilter.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\JsonPath\FieldFilter.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\JsonPath\FieldMultipleFilter.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\JsonPath\JPath.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\JsonPath\PathFilter.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\JsonPath\QueryExpression.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\JsonPath\QueryFilter.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\JsonPath\QueryScanFilter.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\JsonPath\RootFilter.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\JsonPath\ScanFilter.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\JsonPath\ScanMultipleFilter.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\JToken.Async.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\JToken.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\JTokenEqualityComparer.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\JTokenReader.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\JTokenType.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\JTokenWriter.Async.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\JTokenWriter.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\JValue.Async.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\JValue.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\LineInfoHandling.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\MergeArrayHandling.cs" />
+    <Compile Include="Newtonsoft.Json\Linq\MergeNullValueHandling.cs" />
+    <Compile Include="Newtonsoft.Json\MemberSerialization.cs" />
+    <Compile Include="Newtonsoft.Json\MetadataPropertyHandling.cs" />
+    <Compile Include="Newtonsoft.Json\MissingMemberHandling.cs" />
+    <Compile Include="Newtonsoft.Json\NullValueHandling.cs" />
+    <Compile Include="Newtonsoft.Json\ObjectCreationHandling.cs" />
+    <Compile Include="Newtonsoft.Json\PreserveReferencesHandling.cs" />
+    <Compile Include="Newtonsoft.Json\ReferenceLoopHandling.cs" />
+    <Compile Include="Newtonsoft.Json\Required.cs" />
+    <Compile Include="Newtonsoft.Json\Schema\Extensions.cs" />
+    <Compile Include="Newtonsoft.Json\Schema\JsonSchema.cs" />
+    <Compile Include="Newtonsoft.Json\Schema\JsonSchemaBuilder.cs" />
+    <Compile Include="Newtonsoft.Json\Schema\JsonSchemaConstants.cs" />
+    <Compile Include="Newtonsoft.Json\Schema\JsonSchemaException.cs" />
+    <Compile Include="Newtonsoft.Json\Schema\JsonSchemaGenerator.cs" />
+    <Compile Include="Newtonsoft.Json\Schema\JsonSchemaModel.cs" />
+    <Compile Include="Newtonsoft.Json\Schema\JsonSchemaModelBuilder.cs" />
+    <Compile Include="Newtonsoft.Json\Schema\JsonSchemaNode.cs" />
+    <Compile Include="Newtonsoft.Json\Schema\JsonSchemaNodeCollection.cs" />
+    <Compile Include="Newtonsoft.Json\Schema\JsonSchemaResolver.cs" />
+    <Compile Include="Newtonsoft.Json\Schema\JsonSchemaType.cs" />
+    <Compile Include="Newtonsoft.Json\Schema\JsonSchemaWriter.cs" />
+    <Compile Include="Newtonsoft.Json\Schema\UndefinedSchemaIdHandling.cs" />
+    <Compile Include="Newtonsoft.Json\Schema\ValidationEventArgs.cs" />
+    <Compile Include="Newtonsoft.Json\Schema\ValidationEventHandler.cs" />
+    <Compile Include="Newtonsoft.Json\SerializationBinder.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\CachedAttributeGetter.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\CamelCaseNamingStrategy.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\CamelCasePropertyNamesContractResolver.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\DefaultContractResolver.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\DefaultNamingStrategy.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\DefaultReferenceResolver.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\DefaultSerializationBinder.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\DiagnosticsTraceWriter.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\DynamicValueProvider.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\ErrorContext.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\ErrorEventArgs.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\ExpressionValueProvider.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\FormatterConverter.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\IAttributeProvider.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\IContractResolver.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\IReferenceResolver.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\ISerializationBinder.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\ITraceWriter.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\IValueProvider.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\JsonArrayContract.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\JsonContainerContract.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\JsonContract.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\JsonDictionaryContract.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\JsonDynamicContract.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\JsonFormatterConverter.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\JsonISerializableContract.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\JsonLinqContract.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\JsonObjectContract.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\JsonPrimitiveContract.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\JsonProperty.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\JsonPropertyCollection.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\JsonSerializerInternalBase.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\JsonSerializerInternalReader.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\JsonSerializerInternalWriter.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\JsonSerializerProxy.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\JsonStringContract.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\JsonTypeReflector.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\MemoryTraceWriter.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\NamingStrategy.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\ObjectConstructor.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\OnErrorAttribute.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\ReflectionAttributeProvider.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\ReflectionValueProvider.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\SerializationBinderAdapter.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\SnakeCaseNamingStrategy.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\TraceJsonReader.cs" />
+    <Compile Include="Newtonsoft.Json\Serialization\TraceJsonWriter.cs" />
+    <Compile Include="Newtonsoft.Json\StringEscapeHandling.cs" />
+    <Compile Include="Newtonsoft.Json\TraceLevel.cs" />
+    <Compile Include="Newtonsoft.Json\TypeNameAssemblyFormatHandling.cs" />
+    <Compile Include="Newtonsoft.Json\TypeNameHandling.cs" />
+    <Compile Include="Newtonsoft.Json\Utilities\AsyncUtils.cs" />
+    <Compile Include="Newtonsoft.Json\Utilities\Base64Encoder.cs" />
+    <Compile Include="Newtonsoft.Json\Utilities\BidirectionalDictionary.cs" />
+    <Compile Include="Newtonsoft.Json\Utilities\CollectionUtils.cs" />
+    <Compile Include="Newtonsoft.Json\Utilities\CollectionWrapper.cs" />
+    <Compile Include="Newtonsoft.Json\Utilities\ConvertUtils.cs" />
+    <Compile Include="Newtonsoft.Json\Utilities\DateTimeParser.cs" />
+    <Compile Include="Newtonsoft.Json\Utilities\DateTimeUtils.cs" />
+    <Compile Include="Newtonsoft.Json\Utilities\DictionaryWrapper.cs" />
+    <Compile Include="Newtonsoft.Json\Utilities\DynamicProxy.cs" />
+    <Compile Include="Newtonsoft.Json\Utilities\DynamicProxyMetaObject.cs" />
+    <Compile Include="Newtonsoft.Json\Utilities\DynamicReflectionDelegateFactory.cs" />
+    <Compile Include="Newtonsoft.Json\Utilities\DynamicUtils.cs" />
+    <Compile Include="Newtonsoft.Json\Utilities\EnumInfo.cs" />
+    <Compile Include="Newtonsoft.Json\Utilities\EnumUtils.cs" />
+    <Compile Include="Newtonsoft.Json\Utilities\ExpressionReflectionDelegateFactory.cs" />
+    <Compile Include="Newtonsoft.Json\Utilities\FSharpUtils.cs" />
+    <Compile Include="Newtonsoft.Json\Utilities\ILGeneratorExtensions.cs" />
+    <Compile Include="Newtonsoft.Json\Utilities\ImmutableCollectionsUtils.cs" />
+    <Compile Include="Newtonsoft.Json\Utilities\JavaScriptUtils.cs" />
+    <Compile Include="Newtonsoft.Json\Utilities\JsonTokenUtils.cs" />
+    <Compile Include="Newtonsoft.Json\Utilities\LateBoundReflectionDelegateFactory.cs" />
+    <Compile Include="Newtonsoft.Json\Utilities\LinqBridge.cs" />
+    <Compile Include="Newtonsoft.Json\Utilities\MathUtils.cs" />
+    <Compile Include="Newtonsoft.Json\Utilities\MethodBinder.cs" />
+    <Compile Include="Newtonsoft.Json\Utilities\MethodCall.cs" />
+    <Compile Include="Newtonsoft.Json\Utilities\MiscellaneousUtils.cs" />
+    <Compile Include="Newtonsoft.Json\Utilities\ReflectionDelegateFactory.cs" />
+    <Compile Include="Newtonsoft.Json\Utilities\ReflectionObject.cs" />
+    <Compile Include="Newtonsoft.Json\Utilities\ReflectionUtils.cs" />
+    <Compile Include="Newtonsoft.Json\Utilities\StringBuffer.cs" />
+    <Compile Include="Newtonsoft.Json\Utilities\StringReference.cs" />
+    <Compile Include="Newtonsoft.Json\Utilities\StringUtils.cs" />
+    <Compile Include="Newtonsoft.Json\Utilities\StructMultiKey.cs" />
+    <Compile Include="Newtonsoft.Json\Utilities\ThreadSafeStore.cs" />
+    <Compile Include="Newtonsoft.Json\Utilities\TypeExtensions.cs" />
+    <Compile Include="Newtonsoft.Json\Utilities\ValidationUtils.cs" />
+    <Compile Include="Newtonsoft.Json\WriteState.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Resource.designer.cs" />
+    <Compile Include="SMAPI.Internal\ConsoleWriting\ColorfulConsoleWriter.cs" />
+    <Compile Include="SMAPI.Internal\ConsoleWriting\LogLevel.cs" />
+    <Compile Include="SMAPI.Internal\ConsoleWriting\MonitorColorScheme.cs" />
+    <Compile Include="SMAPI.Internal\EnvironmentUtility.cs" />
+    <Compile Include="SMAPI.Internal\Platform.cs" />
+    <Compile Include="SMAPI\Constants.cs" />
+    <Compile Include="SMAPI\ContentSource.cs" />
+    <Compile Include="SMAPI\Context.cs" />
+    <Compile Include="SMAPI\Enums\LoadStage.cs" />
+    <Compile Include="SMAPI\Enums\SkillType.cs" />
+    <Compile Include="SMAPI\Events\BuildingListChangedEventArgs.cs" />
+    <Compile Include="SMAPI\Events\ButtonPressedEventArgs.cs" />
+    <Compile Include="SMAPI\Events\ButtonReleasedEventArgs.cs" />
+    <Compile Include="SMAPI\Events\ChangeType.cs" />
+    <Compile Include="SMAPI\Events\ContentEvents.cs" />
+    <Compile Include="SMAPI\Events\ControlEvents.cs" />
+    <Compile Include="SMAPI\Events\CursorMovedEventArgs.cs" />
+    <Compile Include="SMAPI\Events\DayEndingEventArgs.cs" />
+    <Compile Include="SMAPI\Events\DayStartedEventArgs.cs" />
+    <Compile Include="SMAPI\Events\DebrisListChangedEventArgs.cs" />
+    <Compile Include="SMAPI\Events\EventArgsClickableMenuChanged.cs" />
+    <Compile Include="SMAPI\Events\EventArgsClickableMenuClosed.cs" />
+    <Compile Include="SMAPI\Events\EventArgsControllerButtonPressed.cs" />
+    <Compile Include="SMAPI\Events\EventArgsControllerButtonReleased.cs" />
+    <Compile Include="SMAPI\Events\EventArgsControllerTriggerPressed.cs" />
+    <Compile Include="SMAPI\Events\EventArgsControllerTriggerReleased.cs" />
+    <Compile Include="SMAPI\Events\EventArgsInput.cs" />
+    <Compile Include="SMAPI\Events\EventArgsIntChanged.cs" />
+    <Compile Include="SMAPI\Events\EventArgsInventoryChanged.cs" />
+    <Compile Include="SMAPI\Events\EventArgsKeyboardStateChanged.cs" />
+    <Compile Include="SMAPI\Events\EventArgsKeyPressed.cs" />
+    <Compile Include="SMAPI\Events\EventArgsLevelUp.cs" />
+    <Compile Include="SMAPI\Events\EventArgsLocationBuildingsChanged.cs" />
+    <Compile Include="SMAPI\Events\EventArgsLocationObjectsChanged.cs" />
+    <Compile Include="SMAPI\Events\EventArgsLocationsChanged.cs" />
+    <Compile Include="SMAPI\Events\EventArgsMineLevelChanged.cs" />
+    <Compile Include="SMAPI\Events\EventArgsMouseStateChanged.cs" />
+    <Compile Include="SMAPI\Events\EventArgsPlayerWarped.cs" />
+    <Compile Include="SMAPI\Events\EventArgsValueChanged.cs" />
+    <Compile Include="SMAPI\Events\GameEvents.cs" />
+    <Compile Include="SMAPI\Events\GameLaunchedEventArgs.cs" />
+    <Compile Include="SMAPI\Events\GraphicsEvents.cs" />
+    <Compile Include="SMAPI\Events\IDisplayEvents.cs" />
+    <Compile Include="SMAPI\Events\IGameLoopEvents.cs" />
+    <Compile Include="SMAPI\Events\IInputEvents.cs" />
+    <Compile Include="SMAPI\Events\IModEvents.cs" />
+    <Compile Include="SMAPI\Events\IMultiplayerEvents.cs" />
+    <Compile Include="SMAPI\Events\InputEvents.cs" />
+    <Compile Include="SMAPI\Events\InventoryChangedEventArgs.cs" />
+    <Compile Include="SMAPI\Events\IPlayerEvents.cs" />
+    <Compile Include="SMAPI\Events\ISpecialisedEvents.cs" />
+    <Compile Include="SMAPI\Events\ItemStackChange.cs" />
+    <Compile Include="SMAPI\Events\ItemStackSizeChange.cs" />
+    <Compile Include="SMAPI\Events\IWorldEvents.cs" />
+    <Compile Include="SMAPI\Events\LargeTerrainFeatureListChangedEventArgs.cs" />
+    <Compile Include="SMAPI\Events\LevelChangedEventArgs.cs" />
+    <Compile Include="SMAPI\Events\LoadStageChangedEventArgs.cs" />
+    <Compile Include="SMAPI\Events\LocationEvents.cs" />
+    <Compile Include="SMAPI\Events\LocationListChangedEventArgs.cs" />
+    <Compile Include="SMAPI\Events\MenuChangedEventArgs.cs" />
+    <Compile Include="SMAPI\Events\MenuEvents.cs" />
+    <Compile Include="SMAPI\Events\MineEvents.cs" />
+    <Compile Include="SMAPI\Events\ModMessageReceivedEventArgs.cs" />
+    <Compile Include="SMAPI\Events\MouseWheelScrolledEventArgs.cs" />
+    <Compile Include="SMAPI\Events\MultiplayerEvents.cs" />
+    <Compile Include="SMAPI\Events\NpcListChangedEventArgs.cs" />
+    <Compile Include="SMAPI\Events\ObjectListChangedEventArgs.cs" />
+    <Compile Include="SMAPI\Events\OneSecondUpdateTickedEventArgs.cs" />
+    <Compile Include="SMAPI\Events\OneSecondUpdateTickingEventArgs.cs" />
+    <Compile Include="SMAPI\Events\PeerContextReceivedEventArgs.cs" />
+    <Compile Include="SMAPI\Events\PeerDisconnectedEventArgs.cs" />
+    <Compile Include="SMAPI\Events\PlayerEvents.cs" />
+    <Compile Include="SMAPI\Events\RenderedActiveMenuEventArgs.cs" />
+    <Compile Include="SMAPI\Events\RenderedEventArgs.cs" />
+    <Compile Include="SMAPI\Events\RenderedHudEventArgs.cs" />
+    <Compile Include="SMAPI\Events\RenderedWorldEventArgs.cs" />
+    <Compile Include="SMAPI\Events\RenderingActiveMenuEventArgs.cs" />
+    <Compile Include="SMAPI\Events\RenderingEventArgs.cs" />
+    <Compile Include="SMAPI\Events\RenderingHudEventArgs.cs" />
+    <Compile Include="SMAPI\Events\RenderingWorldEventArgs.cs" />
+    <Compile Include="SMAPI\Events\ReturnedToTitleEventArgs.cs" />
+    <Compile Include="SMAPI\Events\SaveCreatedEventArgs.cs" />
+    <Compile Include="SMAPI\Events\SaveCreatingEventArgs.cs" />
+    <Compile Include="SMAPI\Events\SavedEventArgs.cs" />
+    <Compile Include="SMAPI\Events\SaveEvents.cs" />
+    <Compile Include="SMAPI\Events\SaveLoadedEventArgs.cs" />
+    <Compile Include="SMAPI\Events\SavingEventArgs.cs" />
+    <Compile Include="SMAPI\Events\SpecialisedEvents.cs" />
+    <Compile Include="SMAPI\Events\TerrainFeatureListChangedEventArgs.cs" />
+    <Compile Include="SMAPI\Events\TimeChangedEventArgs.cs" />
+    <Compile Include="SMAPI\Events\TimeEvents.cs" />
+    <Compile Include="SMAPI\Events\UnvalidatedUpdateTickedEventArgs.cs" />
+    <Compile Include="SMAPI\Events\UnvalidatedUpdateTickingEventArgs.cs" />
+    <Compile Include="SMAPI\Events\UpdateTickedEventArgs.cs" />
+    <Compile Include="SMAPI\Events\UpdateTickingEventArgs.cs" />
+    <Compile Include="SMAPI\Events\WarpedEventArgs.cs" />
+    <Compile Include="SMAPI\Events\WindowResizedEventArgs.cs" />
+    <Compile Include="SMAPI\Framework\Command.cs" />
+    <Compile Include="SMAPI\Framework\CommandManager.cs" />
+    <Compile Include="SMAPI\Framework\ContentCoordinator.cs" />
+    <Compile Include="SMAPI\Framework\ContentManagers\BaseContentManager.cs" />
+    <Compile Include="SMAPI\Framework\ContentManagers\GameContentManager.cs" />
+    <Compile Include="SMAPI\Framework\ContentManagers\IContentManager.cs" />
+    <Compile Include="SMAPI\Framework\ContentManagers\ModContentManager.cs" />
+    <Compile Include="SMAPI\Framework\ContentPack.cs" />
+    <Compile Include="SMAPI\Framework\Content\AssetData.cs" />
+    <Compile Include="SMAPI\Framework\Content\AssetDataForDictionary.cs" />
+    <Compile Include="SMAPI\Framework\Content\AssetDataForImage.cs" />
+    <Compile Include="SMAPI\Framework\Content\AssetDataForObject.cs" />
+    <Compile Include="SMAPI\Framework\Content\AssetInfo.cs" />
+    <Compile Include="SMAPI\Framework\Content\ContentCache.cs" />
+    <Compile Include="SMAPI\Framework\CursorPosition.cs" />
+    <Compile Include="SMAPI\Framework\DeprecationLevel.cs" />
+    <Compile Include="SMAPI\Framework\DeprecationManager.cs" />
+    <Compile Include="SMAPI\Framework\DeprecationWarning.cs" />
+    <Compile Include="SMAPI\Framework\Events\EventManager.cs" />
+    <Compile Include="SMAPI\Framework\Events\ManagedEvent.cs" />
+    <Compile Include="SMAPI\Framework\Events\ManagedEventBase.cs" />
+    <Compile Include="SMAPI\Framework\Events\ModDisplayEvents.cs" />
+    <Compile Include="SMAPI\Framework\Events\ModEvents.cs" />
+    <Compile Include="SMAPI\Framework\Events\ModEventsBase.cs" />
+    <Compile Include="SMAPI\Framework\Events\ModGameLoopEvents.cs" />
+    <Compile Include="SMAPI\Framework\Events\ModInputEvents.cs" />
+    <Compile Include="SMAPI\Framework\Events\ModMultiplayerEvents.cs" />
+    <Compile Include="SMAPI\Framework\Events\ModPlayerEvents.cs" />
+    <Compile Include="SMAPI\Framework\Events\ModSpecialisedEvents.cs" />
+    <Compile Include="SMAPI\Framework\Events\ModWorldEvents.cs" />
+    <Compile Include="SMAPI\Framework\Exceptions\SAssemblyLoadFailedException.cs" />
+    <Compile Include="SMAPI\Framework\Exceptions\SContentLoadException.cs" />
+    <Compile Include="SMAPI\Framework\GameVersion.cs" />
+    <Compile Include="SMAPI\Framework\IModMetadata.cs" />
+    <Compile Include="SMAPI\Framework\Input\GamePadStateBuilder.cs" />
+    <Compile Include="SMAPI\Framework\Input\InputStatus.cs" />
+    <Compile Include="SMAPI\Framework\Input\SInputState.cs" />
+    <Compile Include="SMAPI\Framework\InternalExtensions.cs" />
+    <Compile Include="SMAPI\Framework\Logging\ConsoleInterceptionManager.cs" />
+    <Compile Include="SMAPI\Framework\Logging\InterceptingTextWriter.cs" />
+    <Compile Include="SMAPI\Framework\Logging\LogFileManager.cs" />
+    <Compile Include="SMAPI\Framework\Models\ModFolderExport.cs" />
+    <Compile Include="SMAPI\Framework\Models\SConfig.cs" />
+    <Compile Include="SMAPI\Framework\ModHelpers\BaseHelper.cs" />
+    <Compile Include="SMAPI\Framework\ModHelpers\CommandHelper.cs" />
+    <Compile Include="SMAPI\Framework\ModHelpers\ContentHelper.cs" />
+    <Compile Include="SMAPI\Framework\ModHelpers\ContentPackHelper.cs" />
+    <Compile Include="SMAPI\Framework\ModHelpers\DataHelper.cs" />
+    <Compile Include="SMAPI\Framework\ModHelpers\InputHelper.cs" />
+    <Compile Include="SMAPI\Framework\ModHelpers\ModHelper.cs" />
+    <Compile Include="SMAPI\Framework\ModHelpers\ModRegistryHelper.cs" />
+    <Compile Include="SMAPI\Framework\ModHelpers\MultiplayerHelper.cs" />
+    <Compile Include="SMAPI\Framework\ModHelpers\ReflectionHelper.cs" />
+    <Compile Include="SMAPI\Framework\ModHelpers\TranslationHelper.cs" />
+    <Compile Include="SMAPI\Framework\ModLoading\AssemblyDefinitionResolver.cs" />
+    <Compile Include="SMAPI\Framework\ModLoading\AssemblyLoader.cs" />
+    <Compile Include="SMAPI\Framework\ModLoading\AssemblyLoadStatus.cs" />
+    <Compile Include="SMAPI\Framework\ModLoading\AssemblyParseResult.cs" />
+    <Compile Include="SMAPI\Framework\ModLoading\Finders\EventFinder.cs" />
+    <Compile Include="SMAPI\Framework\ModLoading\Finders\FieldFinder.cs" />
+    <Compile Include="SMAPI\Framework\ModLoading\Finders\MethodFinder.cs" />
+    <Compile Include="SMAPI\Framework\ModLoading\Finders\PropertyFinder.cs" />
+    <Compile Include="SMAPI\Framework\ModLoading\Finders\ReferenceToMemberWithUnexpectedTypeFinder.cs" />
+    <Compile Include="SMAPI\Framework\ModLoading\Finders\ReferenceToMissingMemberFinder.cs" />
+    <Compile Include="SMAPI\Framework\ModLoading\Finders\TypeFinder.cs" />
+    <Compile Include="SMAPI\Framework\ModLoading\IInstructionHandler.cs" />
+    <Compile Include="SMAPI\Framework\ModLoading\IncompatibleInstructionException.cs" />
+    <Compile Include="SMAPI\Framework\ModLoading\InstructionHandleResult.cs" />
+    <Compile Include="SMAPI\Framework\ModLoading\InvalidModStateException.cs" />
+    <Compile Include="SMAPI\Framework\ModLoading\ModDependencyStatus.cs" />
+    <Compile Include="SMAPI\Framework\ModLoading\ModMetadata.cs" />
+    <Compile Include="SMAPI\Framework\ModLoading\ModMetadataStatus.cs" />
+    <Compile Include="SMAPI\Framework\ModLoading\ModResolver.cs" />
+    <Compile Include="SMAPI\Framework\ModLoading\PlatformAssemblyMap.cs" />
+    <Compile Include="SMAPI\Framework\ModLoading\RewriteHelper.cs" />
+    <Compile Include="SMAPI\Framework\ModLoading\Rewriters\FieldReplaceRewriter.cs" />
+    <Compile Include="SMAPI\Framework\ModLoading\Rewriters\FieldToPropertyRewriter.cs" />
+    <Compile Include="SMAPI\Framework\ModLoading\Rewriters\MethodParentRewriter.cs" />
+    <Compile Include="SMAPI\Framework\ModLoading\Rewriters\StaticFieldToConstantRewriter.cs" />
+    <Compile Include="SMAPI\Framework\ModLoading\Rewriters\TypeReferenceRewriter.cs" />
+    <Compile Include="SMAPI\Framework\ModLoading\TypeReferenceComparer.cs" />
+    <Compile Include="SMAPI\Framework\ModRegistry.cs" />
+    <Compile Include="SMAPI\Framework\Monitor.cs" />
+    <Compile Include="SMAPI\Framework\Networking\MessageType.cs" />
+    <Compile Include="SMAPI\Framework\Networking\ModMessageModel.cs" />
+    <Compile Include="SMAPI\Framework\Networking\MultiplayerPeer.cs" />
+    <Compile Include="SMAPI\Framework\Networking\MultiplayerPeerMod.cs" />
+    <Compile Include="SMAPI\Framework\Networking\RemoteContextModel.cs" />
+    <Compile Include="SMAPI\Framework\Networking\RemoteContextModModel.cs" />
+    <Compile Include="SMAPI\Framework\Patching\GamePatcher.cs" />
+    <Compile Include="SMAPI\Framework\Patching\IHarmonyPatch.cs" />
+    <Compile Include="SMAPI\Framework\Reflection\CacheEntry.cs" />
+    <Compile Include="SMAPI\Framework\Reflection\InterfaceProxyBuilder.cs" />
+    <Compile Include="SMAPI\Framework\Reflection\InterfaceProxyFactory.cs" />
+    <Compile Include="SMAPI\Framework\Reflection\ReflectedField.cs" />
+    <Compile Include="SMAPI\Framework\Reflection\ReflectedMethod.cs" />
+    <Compile Include="SMAPI\Framework\Reflection\ReflectedProperty.cs" />
+    <Compile Include="SMAPI\Framework\Reflection\Reflector.cs" />
+    <Compile Include="SMAPI\Framework\RequestExitDelegate.cs" />
+    <Compile Include="SMAPI\Framework\RewriteFacades\SpriteBatchMethods.cs" />
+    <Compile Include="SMAPI\Framework\SCore.cs" />
+    <Compile Include="SMAPI\Framework\Serialisation\ColorConverter.cs" />
+    <Compile Include="SMAPI\Framework\Serialisation\PointConverter.cs" />
+    <Compile Include="SMAPI\Framework\Serialisation\RectangleConverter.cs" />
+    <Compile Include="SMAPI\Framework\SGame.cs" />
+    <Compile Include="SMAPI\Framework\SGameConstructorHack.cs" />
+    <Compile Include="SMAPI\Framework\Singleton.cs" />
+    <Compile Include="SMAPI\Framework\SModHooks.cs" />
+    <Compile Include="SMAPI\Framework\SMultiplayer.cs" />
+    <Compile Include="SMAPI\Framework\StateTracking\Comparers\EquatableComparer.cs" />
+    <Compile Include="SMAPI\Framework\StateTracking\Comparers\GenericEqualsComparer.cs" />
+    <Compile Include="SMAPI\Framework\StateTracking\Comparers\ObjectReferenceComparer.cs" />
+    <Compile Include="SMAPI\Framework\StateTracking\FieldWatchers\BaseDisposableWatcher.cs" />
+    <Compile Include="SMAPI\Framework\StateTracking\FieldWatchers\ComparableListWatcher.cs" />
+    <Compile Include="SMAPI\Framework\StateTracking\FieldWatchers\ComparableWatcher.cs" />
+    <Compile Include="SMAPI\Framework\StateTracking\FieldWatchers\NetCollectionWatcher.cs" />
+    <Compile Include="SMAPI\Framework\StateTracking\FieldWatchers\NetDictionaryWatcher.cs" />
+    <Compile Include="SMAPI\Framework\StateTracking\FieldWatchers\NetValueWatcher.cs" />
+    <Compile Include="SMAPI\Framework\StateTracking\FieldWatchers\ObservableCollectionWatcher.cs" />
+    <Compile Include="SMAPI\Framework\StateTracking\FieldWatchers\WatcherFactory.cs" />
+    <Compile Include="SMAPI\Framework\StateTracking\ICollectionWatcher.cs" />
+    <Compile Include="SMAPI\Framework\StateTracking\IDictionaryWatcher.cs" />
+    <Compile Include="SMAPI\Framework\StateTracking\IValueWatcher.cs" />
+    <Compile Include="SMAPI\Framework\StateTracking\IWatcher.cs" />
+    <Compile Include="SMAPI\Framework\StateTracking\LocationTracker.cs" />
+    <Compile Include="SMAPI\Framework\StateTracking\PlayerTracker.cs" />
+    <Compile Include="SMAPI\Framework\StateTracking\WorldLocationsTracker.cs" />
+    <Compile Include="SMAPI\Framework\Utilities\ContextHash.cs" />
+    <Compile Include="SMAPI\Framework\Utilities\Countdown.cs" />
+    <Compile Include="SMAPI\Framework\WatcherCore.cs" />
+    <Compile Include="SMAPI\GamePlatform.cs" />
+    <Compile Include="SMAPI\IAssetData.cs" />
+    <Compile Include="SMAPI\IAssetDataForDictionary.cs" />
+    <Compile Include="SMAPI\IAssetDataForImage.cs" />
+    <Compile Include="SMAPI\IAssetEditor.cs" />
+    <Compile Include="SMAPI\IAssetInfo.cs" />
+    <Compile Include="SMAPI\IAssetLoader.cs" />
+    <Compile Include="SMAPI\ICommandHelper.cs" />
+    <Compile Include="SMAPI\IContentHelper.cs" />
+    <Compile Include="SMAPI\IContentPack.cs" />
+    <Compile Include="SMAPI\IContentPackHelper.cs" />
+    <Compile Include="SMAPI\ICursorPosition.cs" />
+    <Compile Include="SMAPI\IDataHelper.cs" />
+    <Compile Include="SMAPI\IInputHelper.cs" />
+    <Compile Include="SMAPI\IMod.cs" />
+    <Compile Include="SMAPI\IModHelper.cs" />
+    <Compile Include="SMAPI\IModInfo.cs" />
+    <Compile Include="SMAPI\IModLinked.cs" />
+    <Compile Include="SMAPI\IModRegistry.cs" />
+    <Compile Include="SMAPI\IMonitor.cs" />
+    <Compile Include="SMAPI\IMultiplayerHelper.cs" />
+    <Compile Include="SMAPI\IMultiplayerPeer.cs" />
+    <Compile Include="SMAPI\IMultiplayerPeerMod.cs" />
+    <Compile Include="SMAPI\IReflectedField.cs" />
+    <Compile Include="SMAPI\IReflectedMethod.cs" />
+    <Compile Include="SMAPI\IReflectedProperty.cs" />
+    <Compile Include="SMAPI\IReflectionHelper.cs" />
+    <Compile Include="SMAPI\ITranslationHelper.cs" />
+    <Compile Include="SMAPI\LogLevel.cs" />
+    <Compile Include="SMAPI\Metadata\CoreAssetPropagator.cs" />
+    <Compile Include="SMAPI\Metadata\InstructionMetadata.cs" />
+    <Compile Include="SMAPI\Mod.cs" />
+    <Compile Include="SMAPI\Patches\DialogueErrorPatch.cs" />
+    <Compile Include="SMAPI\Patches\LoadForNewGamePatch.cs" />
+    <Compile Include="SMAPI\Patches\ObjectErrorPatch.cs" />
+    <Compile Include="SMAPI\PatchMode.cs" />
+    <Compile Include="SMAPI\Program.cs" />
+    <Compile Include="SMAPI\SButton.cs" />
+    <Compile Include="SMAPI\SemanticVersion.cs" />
+    <Compile Include="SMAPI\Translation.cs" />
+    <Compile Include="SMAPI\Utilities\SDate.cs" />
+    <Compile Include="StardewModdingAPI.Toolkit.CoreInterfaces\IManifest.cs" />
+    <Compile Include="StardewModdingAPI.Toolkit.CoreInterfaces\IManifestContentPackFor.cs" />
+    <Compile Include="StardewModdingAPI.Toolkit.CoreInterfaces\IManifestDependency.cs" />
+    <Compile Include="StardewModdingAPI.Toolkit.CoreInterfaces\ISemanticVersion.cs" />
+    <Compile Include="StardewModdingAPI.Toolkit\Framework\Clients\WebApi\ModEntryModel.cs" />
+    <Compile Include="StardewModdingAPI.Toolkit\Framework\Clients\WebApi\ModEntryVersionModel.cs" />
+    <Compile Include="StardewModdingAPI.Toolkit\Framework\Clients\WebApi\ModExtendedMetadataModel.cs" />
+    <Compile Include="StardewModdingAPI.Toolkit\Framework\Clients\WebApi\ModSeachModel.cs" />
+    <Compile Include="StardewModdingAPI.Toolkit\Framework\Clients\WebApi\ModSearchEntryModel.cs" />
+    <Compile Include="StardewModdingAPI.Toolkit\Framework\Clients\WebApi\WebApiClient.cs" />
+    <Compile Include="StardewModdingAPI.Toolkit\Framework\ModData\MetadataModel.cs" />
+    <Compile Include="StardewModdingAPI.Toolkit\Framework\ModData\ModDatabase.cs" />
+    <Compile Include="StardewModdingAPI.Toolkit\Framework\ModData\ModDataField.cs" />
+    <Compile Include="StardewModdingAPI.Toolkit\Framework\ModData\ModDataFieldKey.cs" />
+    <Compile Include="StardewModdingAPI.Toolkit\Framework\ModData\ModDataModel.cs" />
+    <Compile Include="StardewModdingAPI.Toolkit\Framework\ModData\ModDataRecord.cs" />
+    <Compile Include="StardewModdingAPI.Toolkit\Framework\ModData\ModDataRecordVersionedFields.cs" />
+    <Compile Include="StardewModdingAPI.Toolkit\Framework\ModData\ModStatus.cs" />
+    <Compile Include="StardewModdingAPI.Toolkit\Framework\ModData\ModWarning.cs" />
+    <Compile Include="StardewModdingAPI.Toolkit\Framework\ModScanning\ModFolder.cs" />
+    <Compile Include="StardewModdingAPI.Toolkit\Framework\ModScanning\ModScanner.cs" />
+    <Compile Include="StardewModdingAPI.Toolkit\Framework\UpdateData\ModRepositoryKey.cs" />
+    <Compile Include="StardewModdingAPI.Toolkit\Framework\UpdateData\UpdateKey.cs" />
+    <Compile Include="StardewModdingAPI.Toolkit\ModToolkit.cs" />
+    <Compile Include="StardewModdingAPI.Toolkit\SemanticVersion.cs" />
+    <Compile Include="StardewModdingAPI.Toolkit\Serialisation\Converters\ManifestContentPackForConverter.cs" />
+    <Compile Include="StardewModdingAPI.Toolkit\Serialisation\Converters\ManifestDependencyArrayConverter.cs" />
+    <Compile Include="StardewModdingAPI.Toolkit\Serialisation\Converters\SemanticVersionConverter.cs" />
+    <Compile Include="StardewModdingAPI.Toolkit\Serialisation\Converters\SimpleReadOnlyConverter.cs" />
+    <Compile Include="StardewModdingAPI.Toolkit\Serialisation\InternalExtensions.cs" />
+    <Compile Include="StardewModdingAPI.Toolkit\Serialisation\JsonHelper.cs" />
+    <Compile Include="StardewModdingAPI.Toolkit\Serialisation\Models\Manifest.cs" />
+    <Compile Include="StardewModdingAPI.Toolkit\Serialisation\Models\ManifestContentPackFor.cs" />
+    <Compile Include="StardewModdingAPI.Toolkit\Serialisation\Models\ManifestDependency.cs" />
+    <Compile Include="StardewModdingAPI.Toolkit\Serialisation\SParseException.cs" />
+    <Compile Include="StardewModdingAPI.Toolkit\Utilities\FileUtilities.cs" />
+    <Compile Include="StardewModdingAPI.Toolkit\Utilities\PathUtilities.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\drawable\" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\values\strings.xml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Newtonsoft.Json\Dynamic.snk" />
+    <None Include="Newtonsoft.Json\Newtonsoft.Json.ruleset" />
+    <None Include="SMAPI.Internal\SMAPI.Internal.projitems" />
+    <None Include="SMAPI.Internal\StardewModdingAPI.Internal.shproj" />
+    <None Include="SMAPI\StardewModdingAPI.config.json" />
+    <None Include="StardewModdingAPI.Toolkit.CoreInterfaces\obj\Debug\net4.5\StardewModdingAPI.Toolkit.CoreInterfaces.assets.cache" />
+    <None Include="StardewModdingAPI.Toolkit.CoreInterfaces\obj\Debug\net4.5\StardewModdingAPI.Toolkit.CoreInterfaces.csproj.CoreCompileInputs.cache" />
+    <None Include="StardewModdingAPI.Toolkit.CoreInterfaces\obj\Debug\net4.5\StardewModdingAPI.Toolkit.CoreInterfaces.csprojAssemblyReference.cache" />
+    <None Include="StardewModdingAPI.Toolkit.CoreInterfaces\obj\Debug\netstandard2.0\StardewModdingAPI.Toolkit.CoreInterfaces.assets.cache" />
+    <None Include="StardewModdingAPI.Toolkit.CoreInterfaces\obj\Debug\netstandard2.0\StardewModdingAPI.Toolkit.CoreInterfaces.csproj.CoreCompileInputs.cache" />
+    <None Include="StardewModdingAPI.Toolkit.CoreInterfaces\obj\Debug\netstandard2.0\StardewModdingAPI.Toolkit.CoreInterfaces.csprojAssemblyReference.cache" />
+    <None Include="StardewModdingAPI.Toolkit.CoreInterfaces\obj\project.assets.json" />
+    <None Include="StardewModdingAPI.Toolkit.CoreInterfaces\obj\StardewModdingAPI.Toolkit.CoreInterfaces.csproj.nuget.cache" />
+    <None Include="StardewModdingAPI.Toolkit.CoreInterfaces\obj\StardewModdingAPI.Toolkit.CoreInterfaces.csproj.nuget.dgspec.json" />
+    <None Include="StardewModdingAPI.Toolkit.CoreInterfaces\obj\StardewModdingAPI.Toolkit.CoreInterfaces.csproj.nuget.g.props" />
+    <None Include="StardewModdingAPI.Toolkit.CoreInterfaces\obj\StardewModdingAPI.Toolkit.CoreInterfaces.csproj.nuget.g.targets" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Newtonsoft.Json\Newtonsoft.Json.csproj" />
+    <Content Include="SMAPI\icon.ico" />
+    <Content Include="SMAPI\StardewModdingAPI.csproj" />
+    <Content Include="SMAPI\steam_appid.txt" />
+    <Content Include="StardewModdingAPI.Toolkit.CoreInterfaces\StardewModdingAPI.Toolkit.CoreInterfaces.csproj" />
+    <Content Include="StardewModdingAPI.Toolkit\StardewModdingAPI.Toolkit.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="BmFont">
+      <HintPath>..\..\..\..\Downloads\stardew\unknown\assemblies\BmFont.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Android.Vending.Expansion.Downloader">
+      <HintPath>..\..\..\..\Downloads\stardew\unknown\assemblies\Google.Android.Vending.Expansion.Downloader.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Android.Vending.Expansion.ZipFile">
+      <HintPath>..\..\..\..\Downloads\stardew\unknown\assemblies\Google.Android.Vending.Expansion.ZipFile.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Android.Vending.Licensing">
+      <HintPath>..\..\..\..\Downloads\stardew\unknown\assemblies\Google.Android.Vending.Licensing.dll</HintPath>
+    </Reference>
+    <Reference Include="Java.Interop" />
+    <Reference Include="Microsoft.AppCenter">
+      <HintPath>..\..\..\..\Downloads\stardew\unknown\assemblies\Microsoft.AppCenter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AppCenter.Analytics">
+      <HintPath>..\..\..\..\Downloads\stardew\unknown\assemblies\Microsoft.AppCenter.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AppCenter.Analytics.Android.Bindings">
+      <HintPath>..\..\..\..\Downloads\stardew\unknown\assemblies\Microsoft.AppCenter.Analytics.Android.Bindings.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AppCenter.Android.Bindings">
+      <HintPath>..\..\..\..\Downloads\stardew\unknown\assemblies\Microsoft.AppCenter.Android.Bindings.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AppCenter.Crashes">
+      <HintPath>..\..\..\..\Downloads\stardew\unknown\assemblies\Microsoft.AppCenter.Crashes.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AppCenter.Crashes.Android.Bindings">
+      <HintPath>..\..\..\..\Downloads\stardew\unknown\assemblies\Microsoft.AppCenter.Crashes.Android.Bindings.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Android" />
+    <Reference Include="Mono.Security" />
+    <Reference Include="MonoGame.Framework">
+      <HintPath>..\..\..\..\Downloads\stardew\unknown\assemblies\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="StardewValley">
+      <HintPath>..\..\..\..\Downloads\StardewValleyAndroidStuff\Stardew-Valley-v1-19_mod\unknown\assemblies\StardewValley.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel.Internals" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Serialization" />
+    <Reference Include="Xamarin.Android.Arch.Core.Common">
+      <HintPath>..\..\..\..\Downloads\stardew\unknown\assemblies\Xamarin.Android.Arch.Core.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Arch.Lifecycle.Common">
+      <HintPath>..\..\..\..\Downloads\stardew\unknown\assemblies\Xamarin.Android.Arch.Lifecycle.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Arch.Lifecycle.Runtime">
+      <HintPath>..\..\..\..\Downloads\stardew\unknown\assemblies\Xamarin.Android.Arch.Lifecycle.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.Annotations">
+      <HintPath>..\..\..\..\Downloads\stardew\unknown\assemblies\Xamarin.Android.Support.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.Compat">
+      <HintPath>..\..\..\..\Downloads\stardew\unknown\assemblies\Xamarin.Android.Support.Compat.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.Core.UI">
+      <HintPath>..\..\..\..\Downloads\stardew\unknown\assemblies\Xamarin.Android.Support.Core.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.Core.Utils">
+      <HintPath>..\..\..\..\Downloads\stardew\unknown\assemblies\Xamarin.Android.Support.Core.Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.Fragment">
+      <HintPath>..\..\..\..\Downloads\stardew\unknown\assemblies\Xamarin.Android.Support.Fragment.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.Media.Compat">
+      <HintPath>..\..\..\..\Downloads\stardew\unknown\assemblies\Xamarin.Android.Support.Media.Compat.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.v4">
+      <HintPath>..\..\..\..\Downloads\stardew\unknown\assemblies\Xamarin.Android.Support.v4.dll</HintPath>
+    </Reference>
+    <Reference Include="xTile">
+      <HintPath>..\..\..\..\Downloads\stardew\unknown\assemblies\xTile.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
