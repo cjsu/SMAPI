@@ -1,4 +1,4 @@
-﻿using Android.App;
+using Android.App;
 using Android.Content;
 using Android.Content.PM;
 using Android.Graphics;
@@ -171,63 +171,65 @@ namespace StardewModdingAPI
         {
             instance = this;
             AppCenter.Start("5677d40e-f7b3-4ccb-bee4-5dca56d86ade", typeof(Analytics), typeof(Crashes));
-            RequestWindowFeature(WindowFeatures.NoTitle);
+            this.RequestWindowFeature(WindowFeatures.NoTitle);
             if (Build.VERSION.SdkInt >= BuildVersionCodes.P)
             {
-                Window.Attributes.LayoutInDisplayCutoutMode = LayoutInDisplayCutoutMode.ShortEdges;
+                this.Window.Attributes.LayoutInDisplayCutoutMode = LayoutInDisplayCutoutMode.ShortEdges;
             }
-            Window.SetFlags(WindowManagerFlags.Fullscreen, WindowManagerFlags.Fullscreen);
-            Window.SetFlags(WindowManagerFlags.KeepScreenOn, WindowManagerFlags.KeepScreenOn);
-            PowerManager powerManager = (PowerManager)GetSystemService("power");
-            _wakeLock = powerManager.NewWakeLock(WakeLockFlags.Full, "StardewWakeLock");
-            _wakeLock.Acquire();
+            this.Window.SetFlags(WindowManagerFlags.Fullscreen, WindowManagerFlags.Fullscreen);
+            this.Window.SetFlags(WindowManagerFlags.KeepScreenOn, WindowManagerFlags.KeepScreenOn);
+            PowerManager powerManager = (PowerManager)this.GetSystemService("power");
+            this._wakeLock = powerManager.NewWakeLock(WakeLockFlags.Full, "StardewWakeLock");
+            this._wakeLock.Acquire();
             base.OnCreate(bundle);
-            CheckAppPermissions();
+            this.CheckAppPermissions();
         }
 
         public void OnCreatePartTwo()
         {
-            //instance = this;
-            SetZoomScaleAndMenuButtonScale();
-            SetSavesPath();
-            SetPaddingForMenus();
+            this.SetZoomScaleAndMenuButtonScale();
+            this.SetSavesPath();
+            this.SetPaddingForMenus();
             Toast.MakeText(context: this, "Starting SMAPI", ToastLength.Long).Show();
-            core = new SCore("/sdcard/StardewValley/Mods", false);
 
-            core.RunInteractively();
-            SetContentView((View)core.GameInstance.Services.GetService(typeof(View)));
-            core.GameInstance.Run();
+            Program.Main(null);
+
+            this.core = new SCore(System.IO.Path.Combine(Android.OS.Environment.ExternalStorageDirectory.Path, "StardewValley/Mods"), false);
+
+            this.core.RunInteractively();
+            this.SetContentView((View)this.core.GameInstance.Services.GetService(typeof(View)));
+            this.core.GameInstance.Run();
 
             //this._game1 = new Game1();
             //SetContentView((View)_game1.Services.GetService(typeof(View)));
             //_game1.Run();
 
-            CheckForValidLicence();
+            this.CheckForValidLicence();
         }
 
         protected override void OnResume()
         {
             base.OnResume();
-            if (_wakeLock != null && !_wakeLock.IsHeld)
+            if (this._wakeLock != null && !this._wakeLock.IsHeld)
             {
-                _wakeLock.Acquire();
+                this._wakeLock.Acquire();
             }
-            if (_expansionDownloaderService != null)
+            if (this._expansionDownloaderService != null)
             {
                 try
                 {
-                    _expansionDownloaderService.RequestContinueDownload();
+                    this._expansionDownloaderService.RequestContinueDownload();
                 }
                 catch (System.Exception exception)
                 {
                     Crashes.TrackError(exception);
                 }
             }
-            RequestedOrientation = ScreenOrientation.SensorLandscape;
-            SetImmersive();
-            if (_downloaderServiceConnection != null)
+            this.RequestedOrientation = ScreenOrientation.SensorLandscape;
+            this.SetImmersive();
+            if (this._downloaderServiceConnection != null)
             {
-                _downloaderServiceConnection.Connect(this);
+                this._downloaderServiceConnection.Connect(this);
             }
         }
 
@@ -235,9 +237,9 @@ namespace StardewModdingAPI
         {
             try
             {
-                if (_wakeLock != null && _wakeLock.IsHeld)
+                if (this._wakeLock != null && this._wakeLock.IsHeld)
                 {
-                    _wakeLock.Release();
+                    this._wakeLock.Release();
                 }
             }
             catch (System.Exception exception)
@@ -245,9 +247,9 @@ namespace StardewModdingAPI
                 Crashes.TrackError(exception);
             }
             base.OnStop();
-            if (_downloaderServiceConnection != null)
+            if (this._downloaderServiceConnection != null)
             {
-                _downloaderServiceConnection.Disconnect(this);
+                this._downloaderServiceConnection.Disconnect(this);
             }
         }
 
@@ -256,8 +258,8 @@ namespace StardewModdingAPI
             base.OnWindowFocusChanged(hasFocus);
             if (hasFocus)
             {
-                RequestedOrientation = ScreenOrientation.SensorLandscape;
-                SetImmersive();
+                this.RequestedOrientation = ScreenOrientation.SensorLandscape;
+                this.SetImmersive();
             }
         }
 
@@ -265,20 +267,20 @@ namespace StardewModdingAPI
         {
             try
             {
-                if (_wakeLock != null && _wakeLock.IsHeld)
+                if (this._wakeLock != null && this._wakeLock.IsHeld)
                 {
-                    _wakeLock.Release();
+                    this._wakeLock.Release();
                 }
             }
             catch (System.Exception exception)
             {
                 Crashes.TrackError(exception);
             }
-            if (_expansionDownloaderService != null)
+            if (this._expansionDownloaderService != null)
             {
                 try
                 {
-                    _expansionDownloaderService.RequestPauseDownload();
+                    this._expansionDownloaderService.RequestPauseDownload();
                 }
                 catch (System.Exception exception2)
                 {
@@ -293,7 +295,7 @@ namespace StardewModdingAPI
         {
             if (Build.VERSION.SdkInt >= BuildVersionCodes.Kitkat)
             {
-                Window.DecorView.SystemUiVisibility = (StatusBarVisibility)5894;
+                this.Window.DecorView.SystemUiVisibility = (StatusBarVisibility)5894;
             }
         }
 
@@ -306,10 +308,10 @@ namespace StardewModdingAPI
         private void SetZoomScaleAndMenuButtonScale()
         {
             Android.Graphics.Point point = new Android.Graphics.Point();
-            WindowManager.DefaultDisplay.GetRealSize(point);
+            this.WindowManager.DefaultDisplay.GetRealSize(point);
             float num = point.X;
             float num2 = point.Y;
-            float num3 = System.Math.Min(Resources.DisplayMetrics.Xdpi, Resources.DisplayMetrics.Ydpi);
+            float num3 = System.Math.Min(this.Resources.DisplayMetrics.Xdpi, this.Resources.DisplayMetrics.Ydpi);
             if (point.Y > point.X)
             {
                 num = point.Y;
@@ -340,9 +342,9 @@ namespace StardewModdingAPI
         public void SetPaddingForMenus()
         {
             //("MainActivity.SetPaddingForMenus build:" + GetBuild());
-            if (Build.VERSION.SdkInt >= BuildVersionCodes.P && Window != null && Window.DecorView != null && Window.DecorView.RootWindowInsets != null && Window.DecorView.RootWindowInsets.DisplayCutout != null)
+            if (Build.VERSION.SdkInt >= BuildVersionCodes.P && this.Window != null && this.Window.DecorView != null && this.Window.DecorView.RootWindowInsets != null && this.Window.DecorView.RootWindowInsets.DisplayCutout != null)
             {
-                DisplayCutout displayCutout = Window.DecorView.RootWindowInsets.DisplayCutout;
+                DisplayCutout displayCutout = this.Window.DecorView.RootWindowInsets.DisplayCutout;
                 //("MainActivity.SetPaddingForMenus DisplayCutout:" + displayCutout);
                 if (displayCutout.SafeInsetLeft > 0 || displayCutout.SafeInsetRight > 0)
                 {
@@ -374,7 +376,7 @@ namespace StardewModdingAPI
             else
             {
                 DisplayMetrics displayMetrics = new DisplayMetrics();
-                WindowManager.DefaultDisplay.GetRealMetrics(displayMetrics);
+                this.WindowManager.DefaultDisplay.GetRealMetrics(displayMetrics);
                 if (displayMetrics.HeightPixels >= 1920 || displayMetrics.WidthPixels >= 1920)
                 {
                     Game1.xEdge = 20;
@@ -417,11 +419,11 @@ namespace StardewModdingAPI
             string savesPath = Game1.savesPath;
             if (!Directory.Exists(savesPath + "/Ahsoka_119548412"))
             {
-                CopySaveGame("Ahsoka_119548412");
+                this.CopySaveGame("Ahsoka_119548412");
             }
             if (!Directory.Exists(savesPath + "/Leia_116236289"))
             {
-                CopySaveGame("Leia_116236289");
+                this.CopySaveGame("Leia_116236289");
             }
         }
 
@@ -520,7 +522,7 @@ namespace StardewModdingAPI
             {
             });
             Dialog dialog = builder.Create();
-            if (!IsFinishing)
+            if (!this.IsFinishing)
             {
                 dialog.Show();
             }
@@ -528,13 +530,13 @@ namespace StardewModdingAPI
 
         public void PromptForPermissionsIfNecessary(Action callback = null)
         {
-            if (HasPermissions)
+            if (this.HasPermissions)
             {
                 callback?.Invoke();
                 return;
             }
-            _callback = callback;
-            PromptForPermissions();
+            this._callback = callback;
+            this.PromptForPermissions();
         }
 
         private void LogPermissions()
@@ -544,24 +546,24 @@ namespace StardewModdingAPI
 
         public void CheckAppPermissions()
         {
-            LogPermissions();
-            if (HasPermissions)
+            this.LogPermissions();
+            if (this.HasPermissions)
             {
                 //("MainActivity.CheckAppPermissions permissions already granted.");
-                OnCreatePartTwo();
+                this.OnCreatePartTwo();
             }
             else
             {
-                PromptForPermissions();
+                this.PromptForPermissions();
             }
         }
 
         public void PromptForPermissions()
         {
             //("MainActivity.PromptForPermissions requesting permissions...");
-            if (!IsFinishing)
+            if (!this.IsFinishing)
             {
-                ActivityCompat.RequestPermissions(this, deniedPermissionsArray, 0);
+                ActivityCompat.RequestPermissions(this, this.deniedPermissionsArray, 0);
             }
         }
 
@@ -647,7 +649,7 @@ namespace StardewModdingAPI
                             builder.SetMessage(message);
                             builder.SetPositiveButton("OK", delegate
                             {
-                                PromptForPermissions();
+                                this.PromptForPermissions();
                             });
                         }
                         else
@@ -655,11 +657,11 @@ namespace StardewModdingAPI
                             builder.SetMessage(message2);
                             builder.SetPositiveButton("OK", delegate
                             {
-                                FinishAffinity();
+                                this.FinishAffinity();
                             });
                         }
                         Dialog dialog = builder.Create();
-                        if (!IsFinishing)
+                        if (!this.IsFinishing)
                         {
                             dialog.Show();
                         }
@@ -669,16 +671,16 @@ namespace StardewModdingAPI
             }
             if (num == permissions.Length)
             {
-                if (_callback != null)
+                if (this._callback != null)
                 {
                     //("MainActivity.OnRequestPermissionsResult permissions granted, calling callback");
-                    _callback();
-                    _callback = null;
+                    this._callback();
+                    this._callback = null;
                 }
                 else
                 {
                     //("MainActivity.OnRequestPermissionsResult " + num + "/" + permissions.Length + " granted, check for licence...");
-                    OnCreatePartTwo();
+                    this.OnCreatePartTwo();
                 }
             }
         }
@@ -704,26 +706,26 @@ namespace StardewModdingAPI
                 117,
                 36
             };
-            string packageName = PackageName;
-            string @string = Settings.Secure.GetString(ContentResolver, "android_id");
+            string packageName = this.PackageName;
+            string @string = Settings.Secure.GetString(this.ContentResolver, "android_id");
             AESObfuscator obfuscator = new AESObfuscator(salt, packageName, @string);
             ServerManagedPolicy policy = new ServerManagedPolicy(this, obfuscator);
-            _licenseChecker = new LicenseChecker(this, policy, "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAry4fecehDpCohQk4XhiIZX9ylIGUThWZxfN9qwvQyTh53hvnpQl/lCrjfflKoPz6gz5jJn6JI1PTnoBy/iXVx1+kbO99qBgJE2V8PS5pq+Usbeqqmqqzx4lEzhiYQ2um92v4qkldNYZFwbTODYPIMbSbaLm7eK9ZyemaRbg9ssAl4QYs0EVxzDK1DjuXilRk28WxiK3lNJTz4cT38bfs4q6Zvuk1vWUvnMqcxiugox6c/9j4zZS5C4+k+WY6mHjUMuwssjCY3G+aImWDSwnU3w9G41q8EoPvJ1049PIi7GJXErusTYZITmqfonyejmSFLPt8LHtux9AmJgFSrC3UhwIDAQAB");
-            _licenseChecker.CheckAccess(this);
+            this._licenseChecker = new LicenseChecker(this, policy, "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAry4fecehDpCohQk4XhiIZX9ylIGUThWZxfN9qwvQyTh53hvnpQl/lCrjfflKoPz6gz5jJn6JI1PTnoBy/iXVx1+kbO99qBgJE2V8PS5pq+Usbeqqmqqzx4lEzhiYQ2um92v4qkldNYZFwbTODYPIMbSbaLm7eK9ZyemaRbg9ssAl4QYs0EVxzDK1DjuXilRk28WxiK3lNJTz4cT38bfs4q6Zvuk1vWUvnMqcxiugox6c/9j4zZS5C4+k+WY6mHjUMuwssjCY3G+aImWDSwnU3w9G41q8EoPvJ1049PIi7GJXErusTYZITmqfonyejmSFLPt8LHtux9AmJgFSrC3UhwIDAQAB");
+            this._licenseChecker.CheckAccess(this);
         }
 
         private void CheckForValidLicence()
         {
             //("MainActivity.CheckForValidLicence");
             StrictPolicy policy = new StrictPolicy();
-            _licenseChecker = new LicenseChecker(this, policy, "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAry4fecehDpCohQk4XhiIZX9ylIGUThWZxfN9qwvQyTh53hvnpQl/lCrjfflKoPz6gz5jJn6JI1PTnoBy/iXVx1+kbO99qBgJE2V8PS5pq+Usbeqqmqqzx4lEzhiYQ2um92v4qkldNYZFwbTODYPIMbSbaLm7eK9ZyemaRbg9ssAl4QYs0EVxzDK1DjuXilRk28WxiK3lNJTz4cT38bfs4q6Zvuk1vWUvnMqcxiugox6c/9j4zZS5C4+k+WY6mHjUMuwssjCY3G+aImWDSwnU3w9G41q8EoPvJ1049PIi7GJXErusTYZITmqfonyejmSFLPt8LHtux9AmJgFSrC3UhwIDAQAB");
-            _licenseChecker.CheckAccess(this);
+            this._licenseChecker = new LicenseChecker(this, policy, "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAry4fecehDpCohQk4XhiIZX9ylIGUThWZxfN9qwvQyTh53hvnpQl/lCrjfflKoPz6gz5jJn6JI1PTnoBy/iXVx1+kbO99qBgJE2V8PS5pq+Usbeqqmqqzx4lEzhiYQ2um92v4qkldNYZFwbTODYPIMbSbaLm7eK9ZyemaRbg9ssAl4QYs0EVxzDK1DjuXilRk28WxiK3lNJTz4cT38bfs4q6Zvuk1vWUvnMqcxiugox6c/9j4zZS5C4+k+WY6mHjUMuwssjCY3G+aImWDSwnU3w9G41q8EoPvJ1049PIi7GJXErusTYZITmqfonyejmSFLPt8LHtux9AmJgFSrC3UhwIDAQAB");
+            this._licenseChecker.CheckAccess(this);
         }
 
         public void Allow(PolicyResponse response)
         {
             //("MainActivity.Allow response:" + response.ToString());
-            CheckToDownloadExpansion();
+            this.CheckToDownloadExpansion();
         }
 
         public void DontAllow(PolicyResponse response)
@@ -732,10 +734,10 @@ namespace StardewModdingAPI
             switch (response)
             {
                 case PolicyResponse.Retry:
-                    WaitThenCheckForValidLicence();
+                    this.WaitThenCheckForValidLicence();
                     break;
                 case PolicyResponse.Licensed:
-                    CheckToDownloadExpansion();
+                    this.CheckToDownloadExpansion();
                     break;
             }
         }
@@ -743,7 +745,7 @@ namespace StardewModdingAPI
         private async void WaitThenCheckForValidLicence()
         {
             await Task.Delay(TimeSpan.FromSeconds(30.0));
-            CheckForValidLicence();
+            this.CheckForValidLicence();
         }
 
         public void ApplicationError(LicenseCheckerErrorCode errorCode)
@@ -753,15 +755,15 @@ namespace StardewModdingAPI
 
         private void CheckToDownloadExpansion()
         {
-            if (ExpansionAlreadyDownloaded())
+            if (this.ExpansionAlreadyDownloaded())
             {
                 //("MainActivity.CheckToDownloadExpansion Expansion already downloaded");
-                OnExpansionDowloaded();
+                this.OnExpansionDowloaded();
             }
             else
             {
                 //("MainActivity.CheckToDownloadExpansion Need to download expansion");
-                StartExpansionDownload();
+                this.StartExpansionDownload();
             }
         }
 
@@ -788,16 +790,16 @@ namespace StardewModdingAPI
 
         private void OnExpansionDowloaded()
         {
-            if (core.GameInstance != null)
+            if (this.core.GameInstance != null)
             {
-                core.GameInstance.CreateMusicWaveBank();
+                this.core.GameInstance.CreateMusicWaveBank();
             }
         }
 
         private void StartExpansionDownload()
         {
             //("MainActivity.StartExpansionDownload");
-            Intent intent = Intent;
+            Intent intent = this.Intent;
             Intent intent2 = new Intent(this, typeof(SMainActivity));
             intent2.SetFlags(ActivityFlags.ClearTop | ActivityFlags.NewTask);
             intent2.SetAction(intent.Action);
@@ -815,14 +817,14 @@ namespace StardewModdingAPI
                 if (downloaderServiceRequirement != 0)
                 {
                     //("MainActivity.StartExpansionDownload A startResult:" + downloaderServiceRequirement);
-                    _downloaderServiceConnection = DownloaderClientMarshaller.CreateStub(this, typeof(ExpansionDownloaderService));
-                    _downloaderServiceConnection.Connect(this);
+                    this._downloaderServiceConnection = DownloaderClientMarshaller.CreateStub(this, typeof(ExpansionDownloaderService));
+                    this._downloaderServiceConnection.Connect(this);
                     //("MainActivity.StartExpansionDownload B startResult:" + downloaderServiceRequirement);
                 }
                 else
                 {
                     //("MainActivity.StartExpansionDownload - all files have finished downloading already");
-                    OnExpansionDowloaded();
+                    this.OnExpansionDowloaded();
                 }
             }
             catch (IllegalStateException ex)
@@ -835,8 +837,8 @@ namespace StardewModdingAPI
         public void OnServiceConnected(Messenger messenger)
         {
             //("MainActivity.OnServiceConnected messenger:" + messenger.ToString());
-            _expansionDownloaderService = DownloaderServiceMarshaller.CreateProxy(messenger);
-            _expansionDownloaderService.OnClientUpdated(_downloaderServiceConnection.GetMessenger());
+            this._expansionDownloaderService = DownloaderServiceMarshaller.CreateProxy(messenger);
+            this._expansionDownloaderService.OnClientUpdated(this._downloaderServiceConnection.GetMessenger());
         }
 
         public void OnDownloadProgress(DownloadProgressInfo progress)
@@ -851,16 +853,16 @@ namespace StardewModdingAPI
             {
                 case DownloaderClientState.PausedWifiDisabledNeedCellularPermission:
                 case DownloaderClientState.PausedNeedCellularPermission:
-                    _expansionDownloaderService.SetDownloadFlags(DownloaderServiceFlags.DownloadOverCellular);
-                    _expansionDownloaderService.RequestContinueDownload();
+                    this._expansionDownloaderService.SetDownloadFlags(DownloaderServiceFlags.DownloadOverCellular);
+                    this._expansionDownloaderService.RequestContinueDownload();
                     break;
                 case DownloaderClientState.Completed:
-                    if (_expansionDownloaderService != null)
+                    if (this._expansionDownloaderService != null)
                     {
-                        _expansionDownloaderService.Dispose();
-                        _expansionDownloaderService = null;
+                        this._expansionDownloaderService.Dispose();
+                        this._expansionDownloaderService = null;
                     }
-                    OnExpansionDowloaded();
+                    this.OnExpansionDowloaded();
                     break;
             }
         }
