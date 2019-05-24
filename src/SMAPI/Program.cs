@@ -20,7 +20,7 @@ namespace StardewModdingAPI
         /// <summary>The absolute path to search for SMAPI's internal DLLs.</summary>
         /// <remarks>We can't use <see cref="Constants.ExecutionPath"/> directly, since <see cref="Constants"/> depends on DLLs loaded from this folder.</remarks>
         [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute", Justification = "The assembly location is never null in this context.")]
-        internal static readonly string DllSearchPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "smapi-internal");
+        internal static readonly string DllSearchPath = Path.Combine(Android.OS.Environment.ExternalStorageDirectory.Path, "StardewValley/smapi-internal");
 
 
         /*********
@@ -31,9 +31,9 @@ namespace StardewModdingAPI
         public static void Main(string[] args)
         {
             AppDomain.CurrentDomain.AssemblyResolve += Program.CurrentDomain_AssemblyResolve;
-            Program.AssertGamePresent();
-            Program.AssertGameVersion();
-            Program.Start(args);
+            //Program.AssertGamePresent();
+            //Program.AssertGameVersion();
+            //Program.Start(args);
         }
 
 
@@ -51,13 +51,16 @@ namespace StardewModdingAPI
                 foreach (FileInfo dll in new DirectoryInfo(Program.DllSearchPath).EnumerateFiles("*.dll"))
                 {
                     if (name.Name.Equals(AssemblyName.GetAssemblyName(dll.FullName).Name, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        Android.Util.Log.Error("Program", $"Resolving assembly: {dll.FullName}");
                         return Assembly.LoadFrom(dll.FullName);
+                    }
+                        
                 }
                 return null;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error resolving assembly: {ex}");
                 return null;
             }
         }

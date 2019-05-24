@@ -78,7 +78,7 @@ namespace StardewModdingAPI.Framework.ModLoading
         /// <summary>Get whether a method definition matches the signature expected by a method reference.</summary>
         /// <param name="definition">The method definition.</param>
         /// <param name="reference">The method reference.</param>
-        public static bool HasMatchingSignature(MethodInfo definition, MethodReference reference)
+        public static bool HasMatchingSignature(MethodBase definition, MethodReference reference)
         {
             // same name
             if (definition.Name != reference.Name)
@@ -103,8 +103,12 @@ namespace StardewModdingAPI.Framework.ModLoading
         public static bool HasMatchingSignature(Type type, MethodReference reference)
         {
             return type
-                .GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public)
-                .Any(method => RewriteHelper.HasMatchingSignature(method, reference));
+               .GetMethods(BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly | BindingFlags.Public)
+               .Any(method => RewriteHelper.HasMatchingSignature(method, reference))
+               ||
+               type
+               .GetConstructors(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly)
+               .Any(method => RewriteHelper.HasMatchingSignature(method, reference));
         }
     }
 }

@@ -586,7 +586,8 @@ namespace StardewModdingAPI
         Z = Keys.Z,
 
         /// <summary>The Zoom button on a keyboard.</summary>
-        Zoom = Keys.Zoom
+        Zoom = Keys.Zoom,
+
     }
 
     /// <summary>Provides extension methods for <see cref="SButton"/>.</summary>

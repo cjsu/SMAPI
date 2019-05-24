@@ -38,6 +38,9 @@ namespace StardewModdingAPI.Framework.ContentManagers
         /// <summary>The language enum values indexed by locale code.</summary>
         protected IDictionary<string, LanguageCode> LanguageCodes { get; }
 
+        /// <summary>Reflector.</summary>
+        protected readonly Reflector Reflector;
+
 
         /*********
         ** Accessors
@@ -77,6 +80,7 @@ namespace StardewModdingAPI.Framework.ContentManagers
             this.Cache = new ContentCache(this, reflection);
             this.Monitor = monitor ?? throw new ArgumentNullException(nameof(monitor));
             this.OnDisposing = onDisposing;
+            this.Reflector = reflection;
             this.IsModContentManager = isModFolder;
 
             // get asset data

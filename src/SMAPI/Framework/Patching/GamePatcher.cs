@@ -1,5 +1,6 @@
 using System;
 using Harmony;
+using MonoMod.RuntimeDetour;
 
 namespace StardewModdingAPI.Framework.Patching
 {
@@ -27,6 +28,8 @@ namespace StardewModdingAPI.Framework.Patching
         /// <param name="patches">The patches to apply.</param>
         public void Apply(params IHarmonyPatch[] patches)
         {
+            HarmonyDetourBridge.Init();
+            
             HarmonyInstance harmony = HarmonyInstance.Create("io.smapi");
             foreach (IHarmonyPatch patch in patches)
             {

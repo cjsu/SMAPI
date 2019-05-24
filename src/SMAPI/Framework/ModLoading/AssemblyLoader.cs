@@ -281,7 +281,7 @@ namespace StardewModdingAPI.Framework.ModLoading
 
             // find (and optionally rewrite) incompatible instructions
             bool anyRewritten = false;
-            IInstructionHandler[] handlers = new InstructionMetadata().GetHandlers(this.ParanoidMode).ToArray();
+            IInstructionHandler[] handlers = new InstructionMetadata().GetHandlers(this.ParanoidMode, this.Monitor).ToArray();
             foreach (MethodDefinition method in this.GetMethods(module))
             {
                 // check method definition

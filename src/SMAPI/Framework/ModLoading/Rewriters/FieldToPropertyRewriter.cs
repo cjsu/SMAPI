@@ -17,7 +17,6 @@ namespace StardewModdingAPI.Framework.ModLoading.Rewriters
         /// <summary>The property name.</summary>
         private readonly string PropertyName;
 
-
         /*********
         ** Public methods
         *********/
