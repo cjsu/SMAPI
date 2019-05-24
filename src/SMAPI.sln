@@ -1,14 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2036
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StardewModdingAPI.Mods.ConsoleCommands", "SMAPI.Mods.ConsoleCommands\StardewModdingAPI.Mods.ConsoleCommands.csproj", "{28480467-1A48-46A7-99F8-236D95225359}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StardewModdingAPI", "SMAPI\StardewModdingAPI.csproj", "{F1A573B0-F436-472C-AE29-0B91EA6B9F8F}"
-	ProjectSection(ProjectDependencies) = postProject
-		{80AD8528-AA49-4731-B4A6-C691845815A1} = {80AD8528-AA49-4731-B4A6-C691845815A1}
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".root", ".root", "{86C452BE-D2D8-45B4-B63F-E329EB06CEDA}"
 	ProjectSection(SolutionItems) = preProject
@@ -22,7 +17,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StardewModdingAPI.Installer
 	ProjectSection(ProjectDependencies) = postProject
 		{E272EB5D-8C57-417E-8E60-C1079D3F53C4} = {E272EB5D-8C57-417E-8E60-C1079D3F53C4}
 		{28480467-1A48-46A7-99F8-236D95225359} = {28480467-1A48-46A7-99F8-236D95225359}
-		{F1A573B0-F436-472C-AE29-0B91EA6B9F8F} = {F1A573B0-F436-472C-AE29-0B91EA6B9F8F}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StardewModdingAPI.Tests", "SMAPI.Tests\StardewModdingAPI.Tests.csproj", "{36CCB19E-92EB-48C7-9615-98EEFD45109B}"
@@ -77,12 +71,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ISSUE_TEMPLATE", "ISSUE_TEM
 		..\.github\ISSUE_TEMPLATE\general.md = ..\.github\ISSUE_TEMPLATE\general.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StardewModdingAPI", "StardewModdingAPI\StardewModdingAPI.csproj", "{9898B56E-51EB-40CF-8B1F-ACEB4B6397A7}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		SMAPI.Internal\SMAPI.Internal.projitems*{443ddf81-6aaf-420a-a610-3459f37e5575}*SharedItemsImports = 4
 		SMAPI.Internal\SMAPI.Internal.projitems*{85208f8d-6fd1-4531-be05-7142490f59fe}*SharedItemsImports = 13
+		SMAPI.Internal\SMAPI.Internal.projitems*{9898b56e-51eb-40cf-8b1f-aceb4b6397a7}*SharedItemsImports = 4
 		SMAPI.Internal\SMAPI.Internal.projitems*{ea4f1e80-743f-4a1d-9757-ae66904a196a}*SharedItemsImports = 4
-		SMAPI.Internal\SMAPI.Internal.projitems*{f1a573b0-f436-472c-ae29-0b91ea6b9f8f}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,10 +89,6 @@ Global
 		{28480467-1A48-46A7-99F8-236D95225359}.Debug|Any CPU.Build.0 = Debug|x86
 		{28480467-1A48-46A7-99F8-236D95225359}.Release|Any CPU.ActiveCfg = Release|x86
 		{28480467-1A48-46A7-99F8-236D95225359}.Release|Any CPU.Build.0 = Release|x86
-		{F1A573B0-F436-472C-AE29-0B91EA6B9F8F}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{F1A573B0-F436-472C-AE29-0B91EA6B9F8F}.Debug|Any CPU.Build.0 = Debug|x86
-		{F1A573B0-F436-472C-AE29-0B91EA6B9F8F}.Release|Any CPU.ActiveCfg = Release|x86
-		{F1A573B0-F436-472C-AE29-0B91EA6B9F8F}.Release|Any CPU.Build.0 = Release|x86
 		{443DDF81-6AAF-420A-A610-3459F37E5575}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{443DDF81-6AAF-420A-A610-3459F37E5575}.Debug|Any CPU.Build.0 = Debug|x86
 		{443DDF81-6AAF-420A-A610-3459F37E5575}.Release|Any CPU.ActiveCfg = Release|x86
@@ -133,6 +125,10 @@ Global
 		{D5CFD923-37F1-4BC3-9BE8-E506E202AC28}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5CFD923-37F1-4BC3-9BE8-E506E202AC28}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5CFD923-37F1-4BC3-9BE8-E506E202AC28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9898B56E-51EB-40CF-8B1F-ACEB4B6397A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9898B56E-51EB-40CF-8B1F-ACEB4B6397A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9898B56E-51EB-40CF-8B1F-ACEB4B6397A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9898B56E-51EB-40CF-8B1F-ACEB4B6397A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProjectGuid>{F1A573B0-F436-472C-AE29-0B91EA6B9F8F}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>StardewModdingAPI</RootNamespace>
     <AssemblyName>StardewModdingAPI</AssemblyName>
@@ -54,24 +54,13 @@
   <PropertyGroup>
     <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="LargeAddressAware" Version="1.0.3" />
     <PackageReference Include="Lib.Harmony" Version="1.2.0.1" />
     <PackageReference Include="Mono.Cecil" Version="0.10.1" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Numerics">
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Runtime.Caching">
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Windows.Forms" Condition="$(OS) == 'Windows_NT'" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\build\GlobalAssemblyInfo.cs">
@@ -340,6 +329,7 @@
     <Compile Include="Framework\SGame.cs" />
     <Compile Include="IReflectionHelper.cs" />
     <Compile Include="SemanticVersion.cs" />
+    <Compile Include="SMainActivity.cs" />
     <Compile Include="Translation.cs" />
     <Compile Include="ICursorPosition.cs" />
     <Compile Include="Utilities\SDate.cs" />
@@ -377,16 +367,8 @@
     <Analyzer Include="..\SMAPI.ModBuildConfig.Analyzer\bin\netstandard1.3\StardewModdingAPI.ModBuildConfig.Analyzer.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\StardewModdingAPI.Toolkit.CoreInterfaces\StardewModdingAPI.Toolkit.CoreInterfaces.csproj">
-      <Project>{d5cfd923-37f1-4bc3-9be8-e506e202ac28}</Project>
-      <Name>StardewModdingAPI.Toolkit.CoreInterfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\StardewModdingAPI.Toolkit\StardewModdingAPI.Toolkit.csproj">
-      <Project>{ea5cfd2e-9453-4d29-b80f-8e0ea23f4ac6}</Project>
-      <Name>StardewModdingAPI.Toolkit</Name>
-    </ProjectReference>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
-  <Import Project="..\SMAPI.Internal\SMAPI.Internal.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\build\common.targets" />
 </Project>

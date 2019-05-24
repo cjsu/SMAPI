@@ -32,10 +32,10 @@ namespace StardewModdingAPI
         public static GamePlatform TargetPlatform => (GamePlatform)Constants.Platform;
 
         /// <summary>The path to the game folder.</summary>
-        public static string ExecutionPath { get; } = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        public static string ExecutionPath { get; } = Path.Combine(Android.OS.Environment.ExternalStorageDirectory.Path, "StardewValley");
 
         /// <summary>The directory path containing Stardew Valley's app data.</summary>
-        public static string DataPath { get; } = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "StardewValley");
+        public static string DataPath { get; } = Path.Combine(Android.OS.Environment.ExternalStorageDirectory.Path, "StardewValley");
 
         /// <summary>The directory path in which error logs should be stored.</summary>
         public static string LogDir { get; } = Path.Combine(Constants.DataPath, "ErrorLogs");
@@ -111,7 +111,7 @@ namespace StardewModdingAPI
         internal static string ModsPath { get; set; }
 
         /// <summary>The game's current semantic version.</summary>
-        internal static ISemanticVersion GameVersion { get; } = new GameVersion(Game1.version);
+        internal static ISemanticVersion GameVersion { get; } = new GameVersion("1.3.36");
 
         /// <summary>The target game platform.</summary>
         internal static Platform Platform { get; } = EnvironmentUtility.DetectPlatform();
