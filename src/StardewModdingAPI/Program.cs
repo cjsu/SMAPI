@@ -7,6 +7,7 @@ using System.Threading;
 #if SMAPI_FOR_WINDOWS
 #endif
 using StardewModdingAPI.Framework;
+using StardewModdingAPI.Framework.ModLoading;
 using StardewModdingAPI.Internal;
 
 namespace StardewModdingAPI
@@ -52,7 +53,6 @@ namespace StardewModdingAPI
                 {
                     if (name.Name.Equals(AssemblyName.GetAssemblyName(dll.FullName).Name, StringComparison.InvariantCultureIgnoreCase))
                     {
-                        Android.Util.Log.Error("Program", $"Resolving assembly: {dll.FullName}");
                         return Assembly.LoadFrom(dll.FullName);
                     }
                         

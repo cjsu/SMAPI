@@ -1,0 +1,10 @@
+{
+  "Name": "VirtualKeyboard",
+  "Author": "MartyrPher",
+  "Version": "1.0.0",
+  "MinimumApiVersion": "2.10.1",
+  "Description": "A much needed Virtual Keyboard for SMAPI Android.",
+  "UniqueID": "VirtualKeyboard",
+  "EntryDll": "VirtualKeyboard.dll",
+  "UpdateKeys": [ "Nexus: null" ]
+}

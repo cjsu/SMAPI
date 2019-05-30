@@ -20,6 +20,13 @@ namespace StardewModdingAPI.Metadata
         /// <remarks>The current implementation only works correctly with assemblies that should always be present.</remarks>
         private readonly string[] ValidateReferencesToAssemblies = { "StardewModdingAPI", "Stardew Valley", "StardewValley", "Netcode" };
 
+        private readonly IMonitor Monitor;
+
+        public InstructionMetadata(IMonitor monitor)
+        {
+            this.Monitor = monitor;
+        }
+
 
         /*********
         ** Public methods
@@ -42,8 +49,11 @@ namespace StardewModdingAPI.Metadata
 
             //Constructor Rewrites
             yield return new MethodParentRewriter(typeof(HUDMessage), typeof(HUDMessageMethods));
-            yield return new MethodParentRewriter(typeof(MapPageMethods), typeof(MapPageMethods));
+            yield return new MethodParentRewriter(typeof(MapPage), typeof(MapPageMethods));
             yield return new MethodParentRewriter(typeof(TextBox), typeof(TextBoxMethods));
+
+            //Field Rewriters
+            yield return new FieldReplaceRewriter(typeof(ItemGrabMenu), "context", "specialObject");
 
             // rewrite for Stardew Valley 1.3
             yield return new StaticFieldToConstantRewriter<int>(typeof(Game1), "tileSize", Game1.tileSize);
@@ -58,8 +68,8 @@ namespace StardewModdingAPI.Metadata
             yield return new FieldToPropertyRewriter(typeof(Game1), "stats");
 
             //isRaining and isDebrisWeather fix 50% done.
-            yield return new TypeFieldToAnotherTypeFieldRewriter(typeof(Game1), typeof(RainManager), "isRaining", "Instance");
-            yield return new TypeFieldToAnotherTypeFieldRewriter(typeof(Game1), typeof(DebrisManager), "isDebrisWeather", "Instance");
+            yield return new TypeFieldToAnotherTypeFieldRewriter(typeof(Game1), typeof(RainManager), "isRaining", "Instance", this.Monitor);
+            yield return new TypeFieldToAnotherTypeFieldRewriter(typeof(Game1), typeof(WeatherDebrisManager), "isDebrisWeather", "Instance", this.Monitor);
 
             /****
             ** detect mod issues

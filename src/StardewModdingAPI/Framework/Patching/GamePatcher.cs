@@ -1,4 +1,5 @@
 using System;
+using Android.OS;
 using Harmony;
 using MonoMod.RuntimeDetour;
 
@@ -28,21 +29,24 @@ namespace StardewModdingAPI.Framework.Patching
         /// <param name="patches">The patches to apply.</param>
         public void Apply(params IHarmonyPatch[] patches)
         {
-            HarmonyDetourBridge.Init();
-            
-            HarmonyInstance harmony = HarmonyInstance.Create("io.smapi");
-            foreach (IHarmonyPatch patch in patches)
+            if(Build.VERSION.SdkInt > BuildVersionCodes.LollipopMr1)
             {
-                try
+                HarmonyDetourBridge.Init();
+
+                HarmonyInstance harmony = HarmonyInstance.Create("io.smapi");
+                foreach (IHarmonyPatch patch in patches)
                 {
-                    patch.Apply(harmony);
+                    try
+                    {
+                        patch.Apply(harmony);
+                    }
+                    catch (Exception ex)
+                    {
+                        this.Monitor.Log($"Couldn't apply runtime patch '{patch.Name}' to the game. Some SMAPI features may not work correctly. See log file for details.", LogLevel.Error);
+                        this.Monitor.Log(ex.GetLogSummary(), LogLevel.Trace);
+                    }
                 }
-                catch (Exception ex)
-                {
-                    this.Monitor.Log($"Couldn't apply runtime patch '{patch.Name}' to the game. Some SMAPI features may not work correctly. See log file for details.", LogLevel.Error);
-                    this.Monitor.Log(ex.GetLogSummary(), LogLevel.Trace);
-                }
-            }
+            }  
         }
     }
 }

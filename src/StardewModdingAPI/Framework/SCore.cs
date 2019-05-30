@@ -76,7 +76,7 @@ namespace StardewModdingAPI.Framework
         private readonly ModRegistry ModRegistry = new ModRegistry();
 
         /// <summary>Manages SMAPI events for mods.</summary>
-        private readonly EventManager EventManager;
+        public readonly EventManager EventManager;
 
         /// <summary>Whether the game is currently running.</summary>
         private bool IsGameRunning;
@@ -296,7 +296,7 @@ namespace StardewModdingAPI.Framework
                 this.Monitor.Log("The game crashed last time you played. That can be due to bugs in the game, but if it happens repeatedly you can ask for help here: https://community.playstarbound.com/threads/108375/.", LogLevel.Error);
                 this.Monitor.Log("If you ask for help, make sure to share your SMAPI log: https://log.smapi.io.", LogLevel.Error);
                 this.Monitor.Log("Press any key to delete the crash data and continue playing.", LogLevel.Info);
-                Console.ReadKey();
+                //Console.ReadKey();
                 File.Delete(Constants.FatalCrashLog);
                 File.Delete(Constants.FatalCrashMarker);
             }

@@ -25,6 +25,7 @@ using System.Threading.Tasks;
 using StardewModdingAPI.Framework;
 using StardewValley;
 using Android.Widget;
+using StardewModdingAPI.Framework.ModLoading;
 
 namespace StardewModdingAPI
 {
@@ -130,11 +131,14 @@ namespace StardewModdingAPI
         {
             get
             {
-                if (ContextCompat.CheckSelfPermission(this, "android.permission.ACCESS_NETWORK_STATE") == Permission.Granted && ContextCompat.CheckSelfPermission(this, "android.permission.ACCESS_NETWORK_STATE") == Permission.Granted && ContextCompat.CheckSelfPermission(this, "android.permission.ACCESS_WIFI_STATE") == Permission.Granted && ContextCompat.CheckSelfPermission(this, "android.permission.INTERNET") == Permission.Granted && ContextCompat.CheckSelfPermission(this, "android.permission.READ_EXTERNAL_STORAGE") == Permission.Granted && ContextCompat.CheckSelfPermission(this, "android.permission.VIBRATE") == Permission.Granted && ContextCompat.CheckSelfPermission(this, "android.permission.WAKE_LOCK") == Permission.Granted && ContextCompat.CheckSelfPermission(this, "android.permission.WRITE_EXTERNAL_STORAGE") == Permission.Granted && ContextCompat.CheckSelfPermission(this, "com.android.vending.CHECK_LICENSE") == Permission.Granted)
-                {
-                    return true;
-                }
-                return false;
+                return this.PackageManager.CheckPermission("android.permission.ACCESS_NETWORK_STATE", this.PackageName) == Permission.Granted
+                    && this.PackageManager.CheckPermission("android.permission.ACCESS_WIFI_STATE", this.PackageName) == Permission.Granted
+                    && this.PackageManager.CheckPermission("android.permission.INTERNET", this.PackageName) == Permission.Granted
+                    && this.PackageManager.CheckPermission("android.permission.READ_EXTERNAL_STORAGE", this.PackageName) == Permission.Granted
+                    && this.PackageManager.CheckPermission("android.permission.VIBRATE", this.PackageName) == Permission.Granted
+                    && this.PackageManager.CheckPermission("android.permission.WAKE_LOCK", this.PackageName) == Permission.Granted
+                    && this.PackageManager.CheckPermission("android.permission.WRITE_EXTERNAL_STORAGE", this.PackageName) == Permission.Granted
+                    && this.PackageManager.CheckPermission("com.android.vending.CHECK_LICENSE", this.PackageName) == Permission.Granted;
             }
         }
 
@@ -530,14 +534,198 @@ namespace StardewModdingAPI
 
         public void PromptForPermissionsIfNecessary(Action callback = null)
         {
+            //Log.It("MainActivity.PromptForPermissionsIfNecessary...");
             if (this.HasPermissions)
             {
-                callback?.Invoke();
-                return;
+                if (callback != null)
+                {
+                    //Log.It("MainActivity.PromptForPermissionsIfNecessary has permissions, calling callback");
+                    callback();
+                    return;
+                }
             }
-            this._callback = callback;
-            this.PromptForPermissions();
+            else
+            {
+                //Log.It("MainActivity.PromptForPermissionsIfNecessary doesn't have permissions, prompt for them");
+                this._callback = callback;
+                this.PromptForPermissionsWithReasonFirst();
+            }
         }
+
+        private void PromptForPermissionsWithReasonFirst()
+        {
+            //Log.It("MainActivity.PromptForPermissionsWithReasonFirst...");
+            if (!this.HasPermissions)
+            {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                string languageCode = Locale.Default.Language.Substring(0, 2);
+                builder.SetMessage(this.PermissionMessageA(languageCode));
+                builder.SetPositiveButton(this.GetOKString(languageCode), delegate (object senderAlert, DialogClickEventArgs args)
+                {
+                    //Log.It("MainActivity.PromptForPermissionsWithReasonFirst PromptForPermissions A");
+                    this.PromptForPermissions();
+                });
+                Dialog dialog = builder.Create();
+                if (!this.IsFinishing)
+                {
+                    dialog.Show();
+                    return;
+                }
+            }
+            else
+            {
+                //Log.It("MainActivity.PromptForPermissionsWithReasonFirst PromptForPermissions B");
+                this.PromptForPermissions();
+            }
+        }
+
+        private string GetOKString(string languageCode)
+        {
+            if (languageCode == "de")
+            {
+                return "OK";
+            }
+            if (languageCode == "es")
+            {
+                return "DE ACUERDO";
+            }
+            if (languageCode == "ja")
+            {
+                return "OK";
+            }
+            if (languageCode == "pt")
+            {
+                return "Está bem";
+            }
+            if (languageCode == "ru")
+            {
+                return "Хорошо";
+            }
+            if (languageCode == "ko")
+            {
+                return "승인";
+            }
+            if (languageCode == "tr")
+            {
+                return "tamam";
+            }
+            if (languageCode == "fr")
+            {
+                return "D'accord";
+            }
+            if (languageCode == "hu")
+            {
+                return "rendben";
+            }
+            if (languageCode == "it")
+            {
+                return "ok";
+            }
+            if (languageCode == "zh")
+            {
+                return "好";
+            }
+            return "OK";
+        }
+
+        private string PermissionMessageA(string languageCode)
+        {
+            if (languageCode == "de")
+            {
+                return "Du musst die Erlaubnis zum Lesen/Schreiben auf dem externen Speicher geben, um das Spiel zu speichern und Speicherstände auf andere Plattformen übertragen zu können. Bitte gib diese Genehmigung, um spielen zu können.";
+            }
+            if (languageCode == "es")
+            {
+                return "Para guardar la partida y transferir partidas guardadas a y desde otras plataformas, se necesita permiso para leer/escribir en almacenamiento externo. Concede este permiso para poder jugar.";
+            }
+            if (languageCode == "ja")
+            {
+                return "外部機器への読み込み/書き出しの許可が、ゲームのセーブデータの保存や他プラットフォームとの双方向のデータ移行実行に必要です。プレイを続けるには許可をしてください。";
+            }
+            if (languageCode == "pt")
+            {
+                return "Para salvar o jogo e transferir jogos salvos entre plataformas é necessário permissão para ler/gravar em armazenamento externo. Forneça essa permissão para jogar.";
+            }
+            if (languageCode == "ru")
+            {
+                return "Для сохранения игры и переноса сохранений с/на другие платформы нужно разрешение на чтение-запись на внешнюю память. Дайте разрешение, чтобы начать играть.";
+            }
+            if (languageCode == "ko")
+            {
+                return "게임을 저장하려면 외부 저장공간에 대한 읽기/쓰기 권한이 필요합니다. 또한 저장 데이터 이전 기능을 허용해 다른 플랫폼에서 게임 진행상황을 가져올 때에도 권한이 필요합니다. 게임을 플레이하려면 권한을 허용해 주십시오.";
+            }
+            if (languageCode == "tr")
+            {
+                return "Oyunu kaydetmek ve kayıtları platformlardan platformlara taşımak için harici depolamada okuma/yazma izni gereklidir. Lütfen oynayabilmek için izin verin.";
+            }
+            if (languageCode == "fr")
+            {
+                return "Une autorisation de lecture / écriture sur un stockage externe est requise pour sauvegarder le jeu et vous permettre de transférer des sauvegardes vers et depuis d'autres plateformes. Veuillez donner l'autorisation afin de jouer.";
+            }
+            if (languageCode == "hu")
+            {
+                return "A játék mentéséhez, és ahhoz, hogy a különböző platformok között hordozhasd a játékmentést, engedélyezned kell a külső tárhely olvasását/írását, Kérjük, a játékhoz engedélyezd ezeket.";
+            }
+            if (languageCode == "it")
+            {
+                return "È necessaria l'autorizzazione a leggere/scrivere su un dispositivo di memorizzazione esterno per salvare la partita e per consentire di trasferire i salvataggi da e su altre piattaforme. Concedi l'autorizzazione per giocare.";
+            }
+            if (languageCode == "zh")
+            {
+                return "《星露谷物语》请求获得授权用来保存游戏数据以及访问线上功能。";
+            }
+            return "Read/write to external storage permission is required to save the game, and to allow to you transfer saves to and from other platforms. Please give permission in order to play.";
+        }
+
+        private string PermissionMessageB(string languageCode)
+        {
+            if (languageCode == "de")
+            {
+                return "Bitte geh in die Handy-Einstellungen > Apps > Stardew Valley > Berechtigungen und aktiviere den Speicher, um das Spiel zu spielen.";
+            }
+            if (languageCode == "es")
+            {
+                return "En el teléfono, ve a Ajustes > Aplicaciones > Stardew Valley > Permisos y activa Almacenamiento para jugar al juego.";
+            }
+            if (languageCode == "ja")
+            {
+                return "設定 > アプリ > スターデューバレー > 許可の順に開いていき、ストレージを有効にしてからゲームをプレイしましょう。";
+            }
+            if (languageCode == "pt")
+            {
+                return "Acesse Configurar > Aplicativos > Stardew Valley > Permissões e ative Armazenamento para jogar.";
+            }
+            if (languageCode == "ru")
+            {
+                return "Перейдите в меню Настройки > Приложения > Stardew Valley > Разрешения и дайте доступ к памяти, чтобы начать играть.";
+            }
+            if (languageCode == "ko")
+            {
+                return "휴대전화의 설정 > 어플리케이션 > 스타듀 밸리 > 권한 에서 저장공간을 활성화한 뒤 게임을 플레이해 주십시오.";
+            }
+            if (languageCode == "tr")
+            {
+                return "Lütfen oyunu oynayabilmek için telefonda Ayarlar > Uygulamalar > Stardew Valley > İzinler ve Depolamayı etkinleştir yapın.";
+            }
+            if (languageCode == "fr")
+            {
+                return "Veuillez aller dans les Paramètres du téléphone> Applications> Stardew Valley> Autorisations, puis activez Stockage pour jouer.";
+            }
+            if (languageCode == "hu")
+            {
+                return "Lépje be a telefonodon a Beállítások > Alkalmazások > Stardew Valley > Engedélyek menübe, majd engedélyezd a Tárhelyet a játékhoz.";
+            }
+            if (languageCode == "it")
+            {
+                return "Nel telefono, vai su Impostazioni > Applicazioni > Stardew Valley > Autorizzazioni e attiva Memoria archiviazione per giocare.";
+            }
+            if (languageCode == "zh")
+            {
+                return "可在“设置-权限隐私-按应用管理权限-星露谷物语”进行设置，并打开“电话”、“读取位置信息”、“存储”权限。";
+            }
+            return "Please go into phone Settings > Apps > Stardew Valley > Permissions, and enable Storage to play the game.";
+        }
+
 
         private void LogPermissions()
         {
@@ -551,20 +739,15 @@ namespace StardewModdingAPI
             {
                 //("MainActivity.CheckAppPermissions permissions already granted.");
                 this.OnCreatePartTwo();
+                return;
             }
-            else
-            {
-                this.PromptForPermissions();
-            }
+            this.PromptForPermissionsWithReasonFirst();
         }
 
         public void PromptForPermissions()
         {
             //("MainActivity.PromptForPermissions requesting permissions...");
-            if (!this.IsFinishing)
-            {
-                ActivityCompat.RequestPermissions(this, this.deniedPermissionsArray, 0);
-            }
+            ActivityCompat.RequestPermissions(this, this.deniedPermissionsArray, 0);
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
@@ -574,62 +757,8 @@ namespace StardewModdingAPI
             {
                 //("MainActivity.OnRequestPermissionsResult no permissions returned, RETURNING");
                 return;
-            }
-            string text = Java.Util.Locale.Default.Language.Substring(0, 2);
-            //("OnRequestPermissionsResult Language Code:" + text);
-            string message;
-            string message2;
-            switch (text)
-            {
-                case "de":
-                    message = "Du musst die Erlaubnis zum Lesen/Schreiben auf dem externen Speicher geben, um das Spiel zu speichern und Speicherstände auf andere Plattformen übertragen zu können. Bitte gib diese Genehmigung, um spielen zu können.";
-                    message2 = "Bitte geh in die Handy-Einstellungen > Apps > Stardew Valley > Berechtigungen und aktiviere den Speicher, um das Spiel zu spielen.";
-                    break;
-                case "es":
-                    message = "Para guardar la partida y transferir partidas guardadas a y desde otras plataformas, se necesita permiso para leer/escribir en almacenamiento externo. Concede este permiso para poder jugar.";
-                    message2 = "En el teléfono, ve a Ajustes > Aplicaciones > Stardew Valley > Permisos y activa Almacenamiento para jugar al juego.";
-                    break;
-                case "ja":
-                    message = "外部機器への読み込み/書き出しの許可が、ゲ\u30fcムのセ\u30fcブデ\u30fcタの保存や他プラットフォ\u30fcムとの双方向のデ\u30fcタ移行実行に必要です。プレイを続けるには許可をしてください。";
-                    message2 = "設定 > アプリ > スタ\u30fcデュ\u30fcバレ\u30fc > 許可の順に開いていき、ストレ\u30fcジを有効にしてからゲ\u30fcムをプレイしましょう。";
-                    break;
-                case "pt":
-                    message = "Para salvar o jogo e transferir jogos salvos entre plataformas é necessário permissão para ler/gravar em armazenamento externo. Forneça essa permissão para jogar.";
-                    message2 = "Acesse Configurar > Aplicativos > Stardew Valley > Permissões e ative Armazenamento para jogar.";
-                    break;
-                case "ru":
-                    message = "Для сохранения игры и переноса сохранений с/на другие платформы нужно разрешение на чтение-запись на внешнюю память. Дайте разрешение, чтобы начать играть.";
-                    message2 = "Перейдите в меню Настройки > Приложения > Stardew Valley > Разрешения и дайте доступ к памяти, чтобы начать играть.";
-                    break;
-                case "ko":
-                    message = "게임을 저장하려면 외부 저장공간에 대한 읽기/쓰기 권한이 필요합니다. 또한 저장 데이터 이전 기능을 허용해 다른 플랫폼에서 게임 진행상황을 가져올 때에도 권한이 필요합니다. 게임을 플레이하려면 권한을 허용해 주십시오.";
-                    message2 = "휴대전화의 설정 > 어플리케이션 > 스타듀 밸리 > 권한 에서 저장공간을 활성화한 뒤 게임을 플레이해 주십시오.";
-                    break;
-                case "tr":
-                    message = "Oyunu kaydetmek ve kayıtları platformlardan platformlara taşımak için harici depolamada okuma/yazma izni gereklidir. Lütfen oynayabilmek için izin verin.";
-                    message2 = "Lütfen oyunu oynayabilmek için telefonda Ayarlar > Uygulamalar > Stardew Valley > İzinler ve Depolamayı etkinleştir yapın.";
-                    break;
-                case "fr":
-                    message = "Une autorisation de lecture / écriture sur un stockage externe est requise pour sauvegarder le jeu et vous permettre de transférer des sauvegardes vers et depuis d'autres plateformes. Veuillez donner l'autorisation afin de jouer.";
-                    message2 = "Veuillez aller dans les Paramètres du téléphone> Applications> Stardew Valley> Autorisations, puis activez Stockage pour jouer.";
-                    break;
-                case "hu":
-                    message = "A játék mentéséhez, és ahhoz, hogy a különböző platformok között hordozhasd a játékmentést, engedélyezned kell a külső tárhely olvasását/írását, Kérjük, a játékhoz engedélyezd ezeket.";
-                    message2 = "Lépje be a telefonodon a Beállítások > Alkalmazások > Stardew Valley > Engedélyek menübe, majd engedélyezd a Tárhelyet a játékhoz.";
-                    break;
-                case "it":
-                    message = "È necessaria l'autorizzazione a leggere/scrivere su un dispositivo di memorizzazione esterno per salvare la partita e per consentire di trasferire i salvataggi da e su altre piattaforme. Concedi l'autorizzazione per giocare.";
-                    message2 = "Nel telefono, vai su Impostazioni > Applicazioni > Stardew Valley > Autorizzazioni e attiva Memoria archiviazione per giocare.";
-                    break;
-                case "zh":
-                    message = "保存游戏进度，以及授权与其它平台交换游戏进度文件，都需要对外部存储器进行读 / 写的权限。要正常游戏，请授予权限。";
-                    message2 = "请转到手机的设置 > 应用 > Stardew Valley > 权限里，启用“存储”，以正常游戏。";
-                    break;
-                default:
-                    message = "Read/write to external storage permission is required to save the game, and to allow to you transfer saves to and from other platforms. Please give permission in order to play.";
-                    message2 = "Please go into phone Settings > Apps > Stardew Valley > Permissions, and enable Storage to play the game.";
-                    break;
-            }
+            }  
+            string languageCode = Locale.Default.Language.Substring(0, 2);
             int num = 0;
             if (requestCode == 0)
             {
@@ -646,18 +775,19 @@ namespace StardewModdingAPI
                         AlertDialog.Builder builder = new AlertDialog.Builder(this);
                         if (ActivityCompat.ShouldShowRequestPermissionRationale(this, permissions[i]))
                         {
-                            builder.SetMessage(message);
-                            builder.SetPositiveButton("OK", delegate
+                            builder.SetMessage(this.PermissionMessageA(languageCode));
+                            builder.SetPositiveButton(this.GetOKString(languageCode), delegate (object senderAlert, DialogClickEventArgs args)
                             {
+                                //Log.It("MainActivity.OnRequestPermissionsResult PromptForPermissions D");
                                 this.PromptForPermissions();
                             });
                         }
                         else
                         {
-                            builder.SetMessage(message2);
-                            builder.SetPositiveButton("OK", delegate
+                            builder.SetMessage(this.PermissionMessageB(languageCode));
+                            builder.SetPositiveButton(this.GetOKString(languageCode), delegate (object senderAlert, DialogClickEventArgs args)
                             {
-                                this.FinishAffinity();
+                                this.OpenAppSettingsOnPhone();
                             });
                         }
                         Dialog dialog = builder.Create();
@@ -683,6 +813,15 @@ namespace StardewModdingAPI
                     this.OnCreatePartTwo();
                 }
             }
+        }
+
+        private void OpenAppSettingsOnPhone()
+        {
+            Intent intent = new Intent();
+            intent.SetAction("android.settings.APPLICATION_DETAILS_SETTINGS");
+            Android.Net.Uri data = Android.Net.Uri.FromParts("package", this.PackageName, null);
+            intent.SetData(data);
+            this.StartActivity(intent);
         }
 
         private void CheckUsingServerManagedPolicy()

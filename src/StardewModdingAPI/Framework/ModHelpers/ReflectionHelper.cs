@@ -39,9 +39,10 @@ namespace StardewModdingAPI.Framework.ModHelpers
         /// <param name="required">Whether to throw an exception if the field is not found.</param>
         public IReflectedField<TValue> GetField<TValue>(object obj, string name, bool required = true)
         {
-            return this.AssertAccessAllowed(
-                this.Reflector.GetField<TValue>(obj, name, required)
-            );
+            //return this.AssertAccessAllowed(
+            //    this.Reflector.GetField<TValue>(obj, name, required)
+            //);
+            return this.Reflector.GetField<TValue>(obj, name, required);
         }
 
         /// <summary>Get a static field.</summary>
@@ -51,9 +52,10 @@ namespace StardewModdingAPI.Framework.ModHelpers
         /// <param name="required">Whether to throw an exception if the field is not found.</param>
         public IReflectedField<TValue> GetField<TValue>(Type type, string name, bool required = true)
         {
-            return this.AssertAccessAllowed(
-                this.Reflector.GetField<TValue>(type, name, required)
-            );
+            //return this.AssertAccessAllowed(
+            //    this.Reflector.GetField<TValue>(type, name, required)
+            //);
+            return this.Reflector.GetField<TValue>(type, name, required);
         }
 
         /// <summary>Get an instance property.</summary>
@@ -86,9 +88,10 @@ namespace StardewModdingAPI.Framework.ModHelpers
         /// <param name="required">Whether to throw an exception if the field is not found.</param>
         public IReflectedMethod GetMethod(object obj, string name, bool required = true)
         {
-            return this.AssertAccessAllowed(
-                this.Reflector.GetMethod(obj, name, required)
-            );
+            //return this.AssertAccessAllowed(
+            //    this.Reflector.GetMethod(obj, name, required)
+            //);
+            return this.Reflector.GetMethod(obj, name, required);
         }
 
         /// <summary>Get a static method.</summary>
@@ -97,9 +100,10 @@ namespace StardewModdingAPI.Framework.ModHelpers
         /// <param name="required">Whether to throw an exception if the field is not found.</param>
         public IReflectedMethod GetMethod(Type type, string name, bool required = true)
         {
-            return this.AssertAccessAllowed(
-                this.Reflector.GetMethod(type, name, required)
-            );
+            //return this.AssertAccessAllowed(
+            //    this.Reflector.GetMethod(type, name, required)
+            //);
+            return this.Reflector.GetMethod(type, name, required);
         }
 
 

@@ -16,6 +16,9 @@ namespace StardewModdingAPI.Framework.ModLoading.Rewriters
         /// <summary>The type whose field to which references should be rewritten to.</summary>
         private readonly Type ToType;
 
+        /// <summary>The field name.</summary>
+        private readonly string FieldName;
+
         /// <summary>The property name.</summary>
         private readonly string PropertyName;
 
@@ -28,12 +31,13 @@ namespace StardewModdingAPI.Framework.ModLoading.Rewriters
         /// <param name="type">The type whose field to which references should be rewritten.</param>
         /// <param name="fieldName">The field name to rewrite.</param>
         /// <param name="propertyName">The property name (if different).</param>
-        public TypeFieldToAnotherTypeFieldRewriter(Type type, Type toType, string fieldName, string propertyName)
+        public TypeFieldToAnotherTypeFieldRewriter(Type type, Type toType, string fieldName, string propertyName, IMonitor monitor)
             : base(type.FullName, fieldName, InstructionHandleResult.None)
         {
-            //this.Monitor = monitor;
+            this.Monitor = monitor;
             this.Type = type;
             this.ToType = toType;
+            this.FieldName = fieldName;
             this.PropertyName = propertyName;
         }
 
@@ -41,7 +45,7 @@ namespace StardewModdingAPI.Framework.ModLoading.Rewriters
         /// <param name="type">The type whose field to which references should be rewritten.</param>
         /// <param name="fieldName">The field name to rewrite.</param>
         public TypeFieldToAnotherTypeFieldRewriter(Type type, Type toType, string fieldName, IMonitor monitor)
-            : this(type, toType, fieldName, fieldName) { }
+            : this(type, toType, fieldName, fieldName, monitor) { }
 
         /// <summary>Perform the predefined logic for an instruction if applicable.</summary>
         /// <param name="module">The assembly module containing the instruction.</param>
@@ -54,22 +58,20 @@ namespace StardewModdingAPI.Framework.ModLoading.Rewriters
             if (!this.IsMatch(instruction))
                 return InstructionHandleResult.None;
 
-            //Instruction: IL_0025: ldsfld StardewValley.GameLocation StardewValley.Game1::currentLocation
             string methodPrefix = instruction.OpCode == OpCodes.Ldsfld || instruction.OpCode == OpCodes.Ldfld ? "get" : "set";
             try
             {
-                //MethodReference propertyRef = module.ImportReference(this.ToType.GetMethod($"{methodPrefix}_{this.PropertyName}"));
-
                 MethodReference method = module.ImportReference(this.ToType.GetMethod($"{methodPrefix}_{this.PropertyName}"));
-                this.Monitor.Log("Method Ref: " + method.ToString());
+                FieldReference field = module.ImportReference(this.ToType.GetField(this.FieldName));
 
+                cil.InsertAfter(instruction, cil.Create(OpCodes.Ldfld, field));
                 cil.Replace(instruction, cil.Create(OpCodes.Call, method));
             }
             catch (Exception e)
             {
-                //this.Monitor.Log(e.Message);
+                this.Monitor.Log(e.Message);
+                this.Monitor.Log(e.StackTrace);
             }
-
 
             return InstructionHandleResult.Rewritten;
         }

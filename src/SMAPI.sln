@@ -73,6 +73,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ISSUE_TEMPLATE", "ISSUE_TEM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StardewModdingAPI", "StardewModdingAPI\StardewModdingAPI.csproj", "{9898B56E-51EB-40CF-8B1F-ACEB4B6397A7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StardewModdingAPI.Mods.VirtualKeyboard", "StardewModdingAPI.Mods.VirtualKeyboard\StardewModdingAPI.Mods.VirtualKeyboard.csproj", "{29CCE9C9-6811-415D-A681-A6D47073924D}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		SMAPI.Internal\SMAPI.Internal.projitems*{443ddf81-6aaf-420a-a610-3459f37e5575}*SharedItemsImports = 4
@@ -129,6 +131,10 @@ Global
 		{9898B56E-51EB-40CF-8B1F-ACEB4B6397A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9898B56E-51EB-40CF-8B1F-ACEB4B6397A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9898B56E-51EB-40CF-8B1F-ACEB4B6397A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29CCE9C9-6811-415D-A681-A6D47073924D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29CCE9C9-6811-415D-A681-A6D47073924D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29CCE9C9-6811-415D-A681-A6D47073924D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29CCE9C9-6811-415D-A681-A6D47073924D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

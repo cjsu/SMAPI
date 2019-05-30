@@ -166,7 +166,11 @@ namespace StardewModdingAPI
                     targetAssemblies = new[]
                     {
                         typeof(StardewValley.Game1).Assembly, // note: includes Netcode types on Linux/Mac
-                        typeof(Microsoft.Xna.Framework.Vector2).Assembly
+                        typeof(Microsoft.Xna.Framework.Vector2).Assembly,
+                        typeof(MonoMod.RuntimeDetour.HarmonyDetourBridge).Assembly,
+                        typeof(MonoMod.Utils.Platform).Assembly,
+                        typeof(Harmony.HarmonyPatch).Assembly,
+                        typeof(Mono.Cecil.MethodDefinition).Assembly,
                     };
                     break;
 
