@@ -26,6 +26,7 @@ using StardewModdingAPI.Framework;
 using StardewValley;
 using Android.Widget;
 using StardewModdingAPI.Framework.ModLoading;
+using System.Reflection;
 
 namespace StardewModdingAPI
 {
@@ -174,8 +175,7 @@ namespace StardewModdingAPI
         protected override void OnCreate(Bundle bundle)
         {
             instance = this;
-            AppCenter.Start("5677d40e-f7b3-4ccb-bee4-5dca56d86ade", typeof(Analytics), typeof(Crashes));
-            this.RequestWindowFeature(WindowFeatures.NoTitle);
+            base.RequestWindowFeature(WindowFeatures.NoTitle);
             if (Build.VERSION.SdkInt >= BuildVersionCodes.P)
             {
                 this.Window.Attributes.LayoutInDisplayCutoutMode = LayoutInDisplayCutoutMode.ShortEdges;
@@ -186,7 +186,8 @@ namespace StardewModdingAPI
             this._wakeLock = powerManager.NewWakeLock(WakeLockFlags.Full, "StardewWakeLock");
             this._wakeLock.Acquire();
             base.OnCreate(bundle);
-            this.CheckAppPermissions();
+            //this.CheckAppPermissions();
+            this.OnCreatePartTwo();
         }
 
         public void OnCreatePartTwo()
@@ -204,11 +205,7 @@ namespace StardewModdingAPI
             this.SetContentView((View)this.core.GameInstance.Services.GetService(typeof(View)));
             this.core.GameInstance.Run();
 
-            //this._game1 = new Game1();
-            //SetContentView((View)_game1.Services.GetService(typeof(View)));
-            //_game1.Run();
-
-            this.CheckForValidLicence();
+            this.CheckUsingServerManagedPolicy();
         }
 
         protected override void OnResume()
@@ -735,7 +732,7 @@ namespace StardewModdingAPI
         public void CheckAppPermissions()
         {
             this.LogPermissions();
-            if (this.HasPermissions)
+            if (base.HasPermissions)
             {
                 //("MainActivity.CheckAppPermissions permissions already granted.");
                 this.OnCreatePartTwo();
@@ -864,7 +861,7 @@ namespace StardewModdingAPI
         public void Allow(PolicyResponse response)
         {
             //("MainActivity.Allow response:" + response.ToString());
-            this.CheckToDownloadExpansion();
+            typeof(MainActivity).GetMethod("CheckToDownloadExpansion", BindingFlags.Instance | BindingFlags.NonPublic)?.Invoke(this, null);
         }
 
         public void DontAllow(PolicyResponse response)
@@ -876,7 +873,7 @@ namespace StardewModdingAPI
                     this.WaitThenCheckForValidLicence();
                     break;
                 case PolicyResponse.Licensed:
-                    this.CheckToDownloadExpansion();
+                    typeof(MainActivity).GetMethod("CheckToDownloadExpansion", BindingFlags.Instance | BindingFlags.NonPublic)?.Invoke(this, null);
                     break;
             }
         }
@@ -884,7 +881,7 @@ namespace StardewModdingAPI
         private async void WaitThenCheckForValidLicence()
         {
             await Task.Delay(TimeSpan.FromSeconds(30.0));
-            this.CheckForValidLicence();
+            this.CheckUsingServerManagedPolicy();
         }
 
         public void ApplicationError(LicenseCheckerErrorCode errorCode)
@@ -929,6 +926,7 @@ namespace StardewModdingAPI
 
         private void OnExpansionDowloaded()
         {
+            this.OnCreatePartTwo();
             if (this.core.GameInstance != null)
             {
                 this.core.GameInstance.CreateMusicWaveBank();

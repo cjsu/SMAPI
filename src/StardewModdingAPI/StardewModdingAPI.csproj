@@ -295,6 +295,7 @@
     <Compile Include="Framework\Reflection\ReflectedProperty.cs" />
     <Compile Include="Framework\Reflection\Reflector.cs" />
     <Compile Include="Framework\RequestExitDelegate.cs" />
+    <Compile Include="Framework\RewriteFacades\ItemGrabMenuMethods.cs" />
     <Compile Include="Framework\RewriteFacades\TextBoxMethods.cs" />
     <Compile Include="Framework\RewriteFacades\MapPageMethods.cs" />
     <Compile Include="Framework\RewriteFacades\IClickableMenuMethods.cs" />

@@ -54,10 +54,11 @@ namespace StardewModdingAPI.Metadata
 
             //Field Rewriters
             yield return new FieldReplaceRewriter(typeof(ItemGrabMenu), "context", "specialObject");
+            yield return new FieldReplaceRewriter(typeof(GameLocation), "isGreenhouse", "isFarm");
 
             // rewrite for Stardew Valley 1.3
             yield return new StaticFieldToConstantRewriter<int>(typeof(Game1), "tileSize", Game1.tileSize);
-            yield return new TypeReferenceRewriter("System.Collections.Generic.IList`1<StardewValley.Menus.IClickableMenu>", typeof(List<IClickableMenu>));
+            //yield return new TypeReferenceRewriter("System.Collections.Generic.IList`1<StardewValley.Menus.IClickableMenu>", typeof(List<IClickableMenu>));
             yield return new FieldToPropertyRewriter(typeof(Game1), "player");
             yield return new FieldToPropertyRewriter(typeof(Game1), "currentLocation");
             yield return new FieldToPropertyRewriter(typeof(Character), "currentLocation");

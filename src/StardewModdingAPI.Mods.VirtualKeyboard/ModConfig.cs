@@ -10,10 +10,10 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
     class ModConfig
     {
         public VirtualButton[] buttons { get; set; } = new VirtualButton[] {
-            new VirtualButton(SButton.Q, new Rect(192, 125, 90, 90, 6), 0.5f),
-            new VirtualButton(SButton.I, new Rect(288, 125, 90, 90, 6), 0.5f),
-            new VirtualButton(SButton.O, new Rect(384, 125, 90, 90, 6), 0.5f),
-            new VirtualButton(SButton.P, new Rect(480, 125, 90, 90, 6), 0.5f)
+            new VirtualButton(SButton.Q, new Rect(192, 150, 90, 90, 6), 0.5f),
+            new VirtualButton(SButton.I, new Rect(288, 150, 90, 90, 6), 0.5f),
+            new VirtualButton(SButton.O, new Rect(384, 150, 90, 90, 6), 0.5f),
+            new VirtualButton(SButton.P, new Rect(480, 150, 90, 90, 6), 0.5f)
         };
         internal class VirtualButton
         {

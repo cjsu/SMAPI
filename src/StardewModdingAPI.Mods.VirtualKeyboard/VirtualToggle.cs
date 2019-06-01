@@ -11,7 +11,7 @@ using StardewValley.Mobile;
 
 namespace StardewModdingAPI.Mods.VirtualKeyboard
 {
-    class VirtualToggle
+    class VirtualToggle : IClickableMenu
     {
         private readonly IModHelper helper;
         private readonly IMonitor Monitor;
@@ -46,19 +46,24 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
         {
             if (!this.enabled && this.shouldTrigger())
             {
-                this.enabled = true;
-                foreach (var keys in this.keyboard)
-                {
-                    keys.hidden = false;
-                }
+                this.hiddenKeys(true, false);
             }
             else if (this.enabled && this.shouldTrigger())
             {
-                this.enabled = false;
-                foreach (var keys in this.keyboard)
+                this.hiddenKeys(false, true);
+                if (Game1.activeClickableMenu is IClickableMenu menu)
                 {
-                    keys.hidden = true;
-                }
+                    menu.exitThisMenu();
+                }        
+            }
+        }
+
+        private void hiddenKeys(bool enabled, bool hidden)
+        {
+            this.enabled = enabled;
+            foreach (var keys in this.keyboard)
+            {
+                keys.hidden = hidden;
             }
         }
 
@@ -68,6 +73,7 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
             int y1 = Mouse.GetState().Y / (int)Game1.NativeZoomLevel;
             if (this.virtualToggleButton.containsPoint(x1, y1))
             {
+                Toolbar.toolbarPressed = true;
                 return true;
             }
             return false;
@@ -89,8 +95,8 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
             {
                 scale = 0.5f;
             }
-            if(!Game1.eventUp)
-                this.virtualToggleButton.draw(Game1.spriteBatch, Color.White * scale, 0f);
+            if(!Game1.eventUp || Game1.activeClickableMenu is GameMenu == false)
+                this.virtualToggleButton.draw(Game1.spriteBatch, Color.White * scale, 0.000001f);
         }
     }
 }

@@ -291,38 +291,46 @@ namespace StardewModdingAPI.Framework
 
                 // Run async tasks synchronously to avoid issues due to mod events triggering
                 // concurrently with game code.
-                //bool saveParsed = false;
-                //if (Game1.currentLoader != null)
-                //{
-                //    this.Monitor.Log("Game loader synchronising...", LogLevel.Trace);
-                //    while (Game1.currentLoader?.MoveNext() == true)
-                //    {
-                //        // raise load stage changed
-                //        switch (Game1.currentLoader.Current)
-                //        {
-                //            case 20 when (!saveParsed && SaveGame.loaded != null):
-                //                saveParsed = true;
-                //                this.OnLoadStageChanged(LoadStage.SaveParsed);
-                //                break;
+                bool saveParsed = false;
+                if (Game1.currentLoader != null)
+                {
+                    this.Monitor.Log("Game loader synchronising...", LogLevel.Trace);
+                    while (Game1.currentLoader?.MoveNext() == true)
+                    {
+                        // raise load stage changed
+                        switch (Game1.currentLoader.Current)
+                        {
+                            case 1:
+                                break;
+                            case 24:
+                                return;
 
-                //            case 36:
-                //                this.OnLoadStageChanged(LoadStage.SaveLoadedBasicInfo);
-                //                break;
+                            case 20:
+                                if (!saveParsed && SaveGame.loaded != null)
+                                {
+                                    saveParsed = true;
+                                    this.OnLoadStageChanged(LoadStage.SaveParsed);
+                                }
+                                return;
 
-                //            case 50:
-                //                this.OnLoadStageChanged(LoadStage.SaveLoadedLocations);
-                //                break;
+                            case 36:
+                                this.OnLoadStageChanged(LoadStage.SaveLoadedBasicInfo);
+                                break;
 
-                //            default:
-                //                if (Game1.gameMode == Game1.playingGameMode)
-                //                    this.OnLoadStageChanged(LoadStage.Preloaded);
-                //                break;
-                //        }
-                //    }
+                            case 50:
+                                this.OnLoadStageChanged(LoadStage.SaveLoadedLocations);
+                                break;
 
-                //    Game1.currentLoader = null;
-                //    this.Monitor.Log("Game loader done.", LogLevel.Trace);
-                //}
+                            default:
+                                if (Game1.gameMode == Game1.playingGameMode)
+                                    this.OnLoadStageChanged(LoadStage.Preloaded);
+                                break;
+                        }
+                    }
+
+                    Game1.currentLoader = null;
+                    this.Monitor.Log("Game loader done.", LogLevel.Trace);
+                }
                 if (Game1._newDayTask?.Status == TaskStatus.Created)
                 {
                     this.Monitor.Log("New day task synchronising...", LogLevel.Trace);
