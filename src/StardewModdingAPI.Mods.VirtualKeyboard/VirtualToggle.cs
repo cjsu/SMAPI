@@ -95,7 +95,7 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
             {
                 scale = 0.5f;
             }
-            if(!Game1.eventUp || Game1.activeClickableMenu is GameMenu == false)
+            if(!Game1.eventUp && Game1.activeClickableMenu is GameMenu == false)
                 this.virtualToggleButton.draw(Game1.spriteBatch, Color.White * scale, 0.000001f);
         }
     }
