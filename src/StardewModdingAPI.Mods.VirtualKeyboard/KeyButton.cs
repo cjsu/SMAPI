@@ -50,9 +50,6 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
             helper.Events.Input.ButtonReleased += this.EventInputButtonReleased;
             helper.Events.Input.ButtonPressed += this.EventInputButtonPressed;
 
-            //TODO
-            //re-enable SMAPI IReflected checks
-
             MainActivity activity = this.helper.Reflection.GetField<MainActivity>(typeof(MainActivity), "instance").GetValue();
             object score = activity.GetType().GetField("core", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(activity);
             object eventManager = score.GetType().GetField("EventManager", BindingFlags.Public | BindingFlags.Instance).GetValue(score);
@@ -115,7 +112,7 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
             }
             if (this.shouldTrigger())
             {
-                object inputState = this.helper.Reflection.GetField<object>(e, "InputState").GetValue();
+                object inputState = e.GetType().GetField("InputState", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(e);
                 object buttonReleasedEventArgs = Activator.CreateInstance(typeof(ButtonReleasedEventArgs), BindingFlags.NonPublic | BindingFlags.Instance, null, new object[] { this.button, e.Cursor, inputState }, null);
                 EventArgsKeyPressed eventArgsKeyReleased = new EventArgsKeyPressed((Keys)this.button);
                 try
