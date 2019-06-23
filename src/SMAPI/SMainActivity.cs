@@ -110,7 +110,6 @@ namespace StardewModdingAPI
             this._wakeLock = powerManager.NewWakeLock(WakeLockFlags.Full, "StardewWakeLock");
             this._wakeLock.Acquire();
             base.OnCreate(bundle);
-            Android.Util.Log.Error("Stardew", base.HasPermissions.ToString());
             if (!base.HasPermissions)
             {
                 base.PromptForPermissions();
@@ -124,6 +123,8 @@ namespace StardewModdingAPI
             typeof(MainActivity).GetMethod("SetSavesPath")?.Invoke(this, null);
             base.SetPaddingForMenus();
             Toast.MakeText(context: this, "Initializing SMAPI", ToastLength.Long).Show();
+
+            new SGameConsole();
 
             Program.Main(null);
 

@@ -62,7 +62,8 @@ namespace StardewModdingAPI
         {
             get
             {
-                return Constants.GetSaveFolderPathIfExists()
+                //return Constants.GetSaveFolderPathIfExists()
+                return Constants.SavesPath
 #if SMAPI_3_0_STRICT
                     ;
 #else

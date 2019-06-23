@@ -126,6 +126,8 @@ namespace StardewModdingAPI.Framework
         /// <remarks>This property must be threadsafe, since it's accessed from a separate console input thread.</remarks>
         public ConcurrentQueue<string> CommandQueue { get; } = new ConcurrentQueue<string>();
 
+        public static SGame instance;
+
 
         /*********
         ** Protected methods
@@ -168,6 +170,7 @@ namespace StardewModdingAPI.Framework
 
             // init observables
             Game1.locations = new ObservableCollection<GameLocation>();
+            SGame.instance = this;
         }
 
         /// <summary>Initialise just before the game's first update tick.</summary>
@@ -255,6 +258,7 @@ namespace StardewModdingAPI.Framework
             if (this.NextContentManagerIsMain)
             {
                 this.NextContentManagerIsMain = false;
+                SGameConsole.Instance.InitializeContent(this.ContentCore.MainContentManager);
                 return this.ContentCore.MainContentManager;
             }
 
@@ -294,36 +298,41 @@ namespace StardewModdingAPI.Framework
                 bool saveParsed = false;
                 if (Game1.currentLoader != null)
                 {
-                    this.Monitor.Log("Game loader synchronising...", LogLevel.Trace);
+                    //this.Monitor.Log("Game loader synchronising...", LogLevel.Trace);
                     while (Game1.currentLoader?.MoveNext() == true)
                     {
                         // raise load stage changed
                         switch (Game1.currentLoader.Current)
                         {
                             case 1:
-                                break;
                             case 24:
                                 return;
 
                             case 20:
                                 if (!saveParsed && SaveGame.loaded != null)
                                 {
+                                    this.Monitor.Log("SaveParsed", LogLevel.Debug);
                                     saveParsed = true;
                                     this.OnLoadStageChanged(LoadStage.SaveParsed);
                                 }
                                 return;
 
                             case 36:
+                                this.Monitor.Log("SaveLoadedBasicInfo", LogLevel.Debug);
                                 this.OnLoadStageChanged(LoadStage.SaveLoadedBasicInfo);
                                 break;
 
                             case 50:
+                                this.Monitor.Log("SaveLoadedLocations", LogLevel.Debug);
                                 this.OnLoadStageChanged(LoadStage.SaveLoadedLocations);
                                 break;
 
                             default:
                                 if (Game1.gameMode == Game1.playingGameMode)
+                                {
+                                    this.Monitor.Log("Preloaded", LogLevel.Debug);
                                     this.OnLoadStageChanged(LoadStage.Preloaded);
+                                }   
                                 break;
                         }
                     }
@@ -686,6 +695,15 @@ namespace StardewModdingAPI.Framework
                         this.Monitor.Log($"Context: menu changed from {was?.GetType().FullName ?? "none"} to {now?.GetType().FullName ?? "none"}.", LogLevel.Trace);
 
                     // raise menu events
+                    int forSaleCount = 0;
+                    Dictionary<Item, int[]> itemPriceAndStock;
+                    List<Item> forSale;
+                    if (now is ShopMenu shop && !(was is ShopMenu))
+                    {
+                        itemPriceAndStock = this.Reflection.GetField<Dictionary<Item, int[]>>(shop, "itemPriceAndStock").GetValue();
+                        forSale = this.Reflection.GetField<List<Item>>(shop, "forSale").GetValue();
+                        forSaleCount = forSale.Count;
+                    }
                     events.MenuChanged.Raise(new MenuChangedEventArgs(was, now));
 #if !SMAPI_3_0_STRICT
                     if (now != null)
@@ -693,6 +711,31 @@ namespace StardewModdingAPI.Framework
                     else
                         events.Legacy_MenuClosed.Raise(new EventArgsClickableMenuClosed(was));
 #endif
+
+                    if (now is GameMenu gameMenu)
+                    {
+                        foreach (IClickableMenu menu in gameMenu.pages)
+                        {
+                            OptionsPage optionsPage = menu as OptionsPage;
+                            if (optionsPage != null)
+                            {
+                                List<OptionsElement> options = this.Reflection.GetField<List<OptionsElement>>(optionsPage, "options").GetValue();
+                                options.Insert(0, new OptionsButton("Console", () => SGameConsole.Instance.Show()));
+                                this.Reflection.GetMethod(optionsPage, "updateContentPositions").Invoke();
+                            }
+                        }
+                    }
+                    else if (now is ShopMenu shopMenu && !(was is ShopMenu))
+                    {
+                        itemPriceAndStock = this.Reflection.GetField<Dictionary<Item, int[]>>(shopMenu, "itemPriceAndStock").GetValue();
+                        forSale = this.Reflection.GetField<List<Item>>(shopMenu, "forSale").GetValue();
+                        if (forSaleCount != forSale.Count)
+                        {
+                            Game1.activeClickableMenu = new ShopMenu(itemPriceAndStock,
+                                this.Reflection.GetField<int>(shopMenu, "currency").GetValue(),
+                                this.Reflection.GetField<string>(shopMenu, "personName").GetValue());
+                        }
+                    }
                 }
 
                 /*********
@@ -958,6 +1001,39 @@ namespace StardewModdingAPI.Framework
             Context.IsInDrawLoop = true;
             try
             {
+                if (SGameConsole.Instance.isVisible)
+                {
+                    Game1.game1.GraphicsDevice.SetRenderTarget(Game1.game1.screen);
+                    Game1.game1.GraphicsDevice.Clear(Color.Black);
+                    Game1.spriteBatch.Begin(SpriteSortMode.Deferred,
+                        BlendState.AlphaBlend,
+                        SamplerState.PointClamp,
+                        null,
+                        null,
+                        null,
+                        null);
+                    SGameConsole.Instance.draw(Game1.spriteBatch);
+                    Game1.spriteBatch.End();
+                    Game1.game1.GraphicsDevice.SetRenderTarget(null);
+                    Game1.spriteBatch.Begin(SpriteSortMode.Deferred,
+                        BlendState.AlphaBlend,
+                        SamplerState.LinearClamp,
+                        DepthStencilState.Default,
+                        RasterizerState.CullNone,
+                        null,
+                        null);
+                    Game1.spriteBatch.Draw(Game1.game1.screen,
+                        Vector2.Zero,
+                        new Microsoft.Xna.Framework.Rectangle?(Game1.game1.screen.Bounds),
+                        Color.White,
+                        0f,
+                        Vector2.Zero,
+                        Game1.options.zoomLevel,
+                        SpriteEffects.None,
+                        1f);
+                    Game1.spriteBatch.End();
+                    return;
+                }
                 this.DrawImpl(gameTime);
                 this.DrawCrashTimer.Reset();
             }

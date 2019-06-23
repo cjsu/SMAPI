@@ -13,10 +13,10 @@ namespace StardewModdingAPI.Framework.RewriteFacades
         }
 
         [SuppressMessage("ReSharper", "CS0109", Justification = "The 'new' modifier applies when compiled on Windows.")]
-        public new bool addItemToInventoryBool(Item item)
-        {
-            return base.addItemToInventoryBool(item, false);
-        }
+        //public new bool addItemToInventoryBool(Item item)
+        //{
+        //    return base.addItemToInventoryBool(item, false);
+        //}
 
         [SuppressMessage("ReSharper", "CS0109", Justification = "The 'new' modifier applies when compiled on Windows.")]
         public new int freeSpotsInInventory()

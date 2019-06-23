@@ -146,6 +146,10 @@ namespace StardewModdingAPI.Framework
                     this.ConsoleWriter.WriteLine(consoleMessage, level);
                 });
             }
+            else if (this.ShowTraceInConsole || level != ConsoleLogLevel.Trace)
+            {
+                SGameConsole.Instance.WriteLine(consoleMessage, level);
+            }
 
             // write to log file
             this.LogFile.WriteLine(fullMessage);

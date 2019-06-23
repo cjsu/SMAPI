@@ -295,7 +295,10 @@
     <Compile Include="Framework\Reflection\ReflectedProperty.cs" />
     <Compile Include="Framework\Reflection\Reflector.cs" />
     <Compile Include="Framework\RequestExitDelegate.cs" />
+    <Compile Include="Framework\RewriteFacades\GameLocationMethods.cs" />
     <Compile Include="Framework\RewriteFacades\ItemGrabMenuMethods.cs" />
+    <Compile Include="Framework\RewriteFacades\NPCMethods.cs" />
+    <Compile Include="Framework\RewriteFacades\SpriteTextMethods.cs" />
     <Compile Include="Framework\RewriteFacades\TextBoxMethods.cs" />
     <Compile Include="Framework\RewriteFacades\MapPageMethods.cs" />
     <Compile Include="Framework\RewriteFacades\IClickableMenuMethods.cs" />
@@ -375,6 +378,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SButton.cs" />
     <Compile Include="SemanticVersion.cs" />
+    <Compile Include="SGameConsole.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="SMainActivity.cs" />
     <Compile Include="Translation.cs" />
     <Compile Include="Utilities\SDate.cs" />

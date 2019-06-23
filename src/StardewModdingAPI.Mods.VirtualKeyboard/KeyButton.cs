@@ -67,10 +67,20 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
             this.Legacy_KeyReleased = this.legacyButtonReleased.GetType().GetMethod("Raise", BindingFlags.Public | BindingFlags.Instance);
         }
 
-        private bool shouldTrigger()
+        private bool shouldTrigger(Vector2 point)
         {
-            int x1 = Mouse.GetState().X / (int)Game1.NativeZoomLevel;
-            int y1 = Mouse.GetState().Y / (int)Game1.NativeZoomLevel;
+            int x1;
+            int y1;
+            try
+            {
+                x1 = (int)((float)Mouse.GetState().X / Game1.NativeZoomLevel);
+                y1 = (int)((float)Mouse.GetState().Y / Game1.NativeZoomLevel);
+            }
+            catch
+            {
+                x1 = (int)point.X;
+                y1 = (int)point.Y;
+            }
             if (this.buttonRectangle.Contains(x1, y1))
             {
                 return true;
@@ -84,7 +94,8 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
             {
                 return;
             }
-            if (this.shouldTrigger())
+            Vector2 point = e.Cursor.ScreenPixels;
+            if (this.shouldTrigger(point) && !this.hidden)
             {
                 object inputState = e.GetType().GetField("InputState", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(e);
 
@@ -110,7 +121,8 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
             {
                 return;
             }
-            if (this.shouldTrigger())
+            Vector2 point = e.Cursor.ScreenPixels;
+            if (this.shouldTrigger(point))
             {
                 object inputState = e.GetType().GetField("InputState", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(e);
                 object buttonReleasedEventArgs = Activator.CreateInstance(typeof(ButtonReleasedEventArgs), BindingFlags.NonPublic | BindingFlags.Instance, null, new object[] { this.button, e.Cursor, inputState }, null);

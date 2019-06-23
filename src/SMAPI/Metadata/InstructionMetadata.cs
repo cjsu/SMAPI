@@ -6,6 +6,7 @@ using StardewModdingAPI.Framework.ModLoading.Finders;
 using StardewModdingAPI.Framework.ModLoading.Rewriters;
 using StardewModdingAPI.Framework.RewriteFacades;
 using StardewValley;
+using StardewValley.BellsAndWhistles;
 using StardewValley.Menus;
 
 namespace StardewModdingAPI.Metadata
@@ -41,11 +42,18 @@ namespace StardewModdingAPI.Metadata
             // rewrite for crossplatform compatibility
             yield return new MethodParentRewriter(typeof(SpriteBatch), typeof(SpriteBatchMethods), onlyIfPlatformChanged: true);
 
+            //isRaining and isDebrisWeather fix 50% done.
+            yield return new TypeFieldToAnotherTypeFieldRewriter(typeof(Game1), typeof(RainManager), "isRaining", "Instance", this.Monitor);
+            yield return new TypeFieldToAnotherTypeFieldRewriter(typeof(Game1), typeof(WeatherDebrisManager), "isDebrisWeather", "Instance", this.Monitor);
+
             //Method Rewrites
             yield return new MethodParentRewriter(typeof(Game1), typeof(Game1Methods));
             yield return new MethodParentRewriter(typeof(Farmer), typeof(FarmerMethods));
             yield return new MethodParentRewriter(typeof(IClickableMenu), typeof(IClickableMenuMethods));
             yield return new MethodParentRewriter(typeof(FarmerRenderer), typeof(FarmerRendererMethods));
+            yield return new MethodParentRewriter(typeof(SpriteText), typeof(SpriteTextMethods));
+            yield return new MethodParentRewriter(typeof(NPC), typeof(NPCMethods));
+            yield return new MethodParentRewriter(typeof(GameLocation), typeof(GameLocationMethods));
 
             //Constructor Rewrites
             yield return new MethodParentRewriter(typeof(HUDMessage), typeof(HUDMessageMethods));
@@ -54,7 +62,6 @@ namespace StardewModdingAPI.Metadata
 
             //Field Rewriters
             yield return new FieldReplaceRewriter(typeof(ItemGrabMenu), "context", "specialObject");
-            yield return new FieldReplaceRewriter(typeof(GameLocation), "isGreenhouse", "isFarm");
 
             // rewrite for Stardew Valley 1.3
             yield return new StaticFieldToConstantRewriter<int>(typeof(Game1), "tileSize", Game1.tileSize);
@@ -67,10 +74,6 @@ namespace StardewModdingAPI.Metadata
             yield return new FieldToPropertyRewriter(typeof(Game1), "currentMinigame");
             yield return new FieldToPropertyRewriter(typeof(Game1), "activeClickableMenu");
             yield return new FieldToPropertyRewriter(typeof(Game1), "stats");
-
-            //isRaining and isDebrisWeather fix 50% done.
-            yield return new TypeFieldToAnotherTypeFieldRewriter(typeof(Game1), typeof(RainManager), "isRaining", "Instance", this.Monitor);
-            yield return new TypeFieldToAnotherTypeFieldRewriter(typeof(Game1), typeof(WeatherDebrisManager), "isDebrisWeather", "Instance", this.Monitor);
 
             /****
             ** detect mod issues

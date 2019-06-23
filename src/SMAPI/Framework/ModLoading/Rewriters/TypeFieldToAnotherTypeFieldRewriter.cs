@@ -22,6 +22,8 @@ namespace StardewModdingAPI.Framework.ModLoading.Rewriters
         /// <summary>The property name.</summary>
         private readonly string PropertyName;
 
+        private readonly string TestName;
+
         private readonly IMonitor Monitor;
 
         /*********
@@ -31,7 +33,7 @@ namespace StardewModdingAPI.Framework.ModLoading.Rewriters
         /// <param name="type">The type whose field to which references should be rewritten.</param>
         /// <param name="fieldName">The field name to rewrite.</param>
         /// <param name="propertyName">The property name (if different).</param>
-        public TypeFieldToAnotherTypeFieldRewriter(Type type, Type toType, string fieldName, string propertyName, IMonitor monitor)
+        public TypeFieldToAnotherTypeFieldRewriter(Type type, Type toType, string fieldName, string propertyName, IMonitor monitor, string testName = null)
             : base(type.FullName, fieldName, InstructionHandleResult.None)
         {
             this.Monitor = monitor;
@@ -39,6 +41,7 @@ namespace StardewModdingAPI.Framework.ModLoading.Rewriters
             this.ToType = toType;
             this.FieldName = fieldName;
             this.PropertyName = propertyName;
+            this.TestName = testName;
         }
 
         /// <summary>Construct an instance.</summary>
@@ -58,10 +61,10 @@ namespace StardewModdingAPI.Framework.ModLoading.Rewriters
             if (!this.IsMatch(instruction))
                 return InstructionHandleResult.None;
 
-            string methodPrefix = instruction.OpCode == OpCodes.Ldsfld || instruction.OpCode == OpCodes.Ldfld ? "get" : "set";
+            //string methodPrefix = instruction.OpCode == OpCodes.Ldsfld || instruction.OpCode == OpCodes.Ldfld ? "get";
             try
             {
-                MethodReference method = module.ImportReference(this.ToType.GetMethod($"{methodPrefix}_{this.PropertyName}"));
+                MethodReference method = module.ImportReference(this.ToType.GetMethod($"get_{this.PropertyName}"));
                 FieldReference field = module.ImportReference(this.ToType.GetField(this.FieldName));
 
                 cil.InsertAfter(instruction, cil.Create(OpCodes.Ldfld, field));

@@ -428,6 +428,7 @@ namespace StardewModdingAPI.Framework
                 // check for updates
                 this.CheckForUpdatesAsync(mods);
             }
+            SGameConsole.Instance.isVisible = false;
             if (this.Monitor.IsExiting)
             {
                 this.Monitor.Log("SMAPI shutting down: aborting initialisation.", LogLevel.Warn);
