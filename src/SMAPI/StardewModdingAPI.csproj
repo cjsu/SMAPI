@@ -295,6 +295,9 @@
     <Compile Include="Framework\Reflection\ReflectedProperty.cs" />
     <Compile Include="Framework\Reflection\Reflector.cs" />
     <Compile Include="Framework\RequestExitDelegate.cs" />
+    <Compile Include="Framework\RewriteFacades\DebrisMethods.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Framework\RewriteFacades\GameLocationMethods.cs" />
     <Compile Include="Framework\RewriteFacades\ItemGrabMenuMethods.cs" />
     <Compile Include="Framework\RewriteFacades\NPCMethods.cs" />
@@ -307,6 +310,7 @@
     <Compile Include="Framework\RewriteFacades\FarmerRenderMethods.cs" />
     <Compile Include="Framework\RewriteFacades\FarmerMethods.cs" />
     <Compile Include="Framework\RewriteFacades\SpriteBatchMethods.cs" />
+    <Compile Include="Framework\RewriteFacades\WeatherDebrisMethods.cs" />
     <Compile Include="Framework\SCore.cs" />
     <Compile Include="Framework\Serialisation\ColorConverter.cs" />
     <Compile Include="Framework\Serialisation\PointConverter.cs" />
@@ -372,6 +376,7 @@
     <Compile Include="Patches\DialogueErrorPatch.cs" />
     <Compile Include="Patches\LoadForNewGamePatch.cs" />
     <Compile Include="Patches\ObjectErrorPatch.cs" />
+    <Compile Include="Patches\SaveBackupPatch.cs" />
     <Compile Include="PatchMode.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Resources\Resource.designer.cs" />

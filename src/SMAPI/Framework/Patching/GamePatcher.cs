@@ -29,7 +29,7 @@ namespace StardewModdingAPI.Framework.Patching
         /// <param name="patches">The patches to apply.</param>
         public void Apply(params IHarmonyPatch[] patches)
         {
-            if(Build.VERSION.SdkInt > BuildVersionCodes.LollipopMr1)
+            if (Build.VERSION.SdkInt > BuildVersionCodes.LollipopMr1)
             {
                 HarmonyDetourBridge.Init();
 
@@ -46,7 +46,11 @@ namespace StardewModdingAPI.Framework.Patching
                         this.Monitor.Log(ex.GetLogSummary(), LogLevel.Trace);
                     }
                 }
-            }  
+            }
+            else
+            {
+                this.Monitor.Log("Harmony mods are not supported on this Android Version.");
+            }
         }
     }
 }

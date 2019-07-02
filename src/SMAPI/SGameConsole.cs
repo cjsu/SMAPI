@@ -24,6 +24,8 @@ namespace StardewModdingAPI
 
         private SpriteFont smallFont;
 
+        private  Vector2 size;
+
         private bool scrolling = false;
 
         internal SGameConsole()
@@ -40,11 +42,14 @@ namespace StardewModdingAPI
             this.scrollbox = new MobileScrollbox(0, 0, 1280, 320, this.consoleMessageQueue.Count, new Rectangle(0, 0, 1280, 320));
             this.textBoxBounds = new Rectangle(this.textBox.X, this.textBox.Y, this.textBox.Width, this.textBox.Height);
             this.scrollbox.Bounds = this.textBoxBounds;
+
+            
         }
 
         internal void InitializeContent(LocalizedContentManager content)
         {
             this.smallFont = content.Load<SpriteFont>(@"Fonts\SmallFont");
+            this.size = this.smallFont.MeasureString("aA");
         }
 
         public void Show()
@@ -104,13 +109,16 @@ namespace StardewModdingAPI
 
         public override void draw(SpriteBatch b)
         {
-            Vector2 size = this.smallFont.MeasureString("aA");
-            float y = Game1.game1.screen.Height - size.Y * 2;
+            float y = Game1.game1.screen.Height - this.size.Y;
             lock (this.consoleMessageQueue)
             {
                 foreach (var log in this.consoleMessageQueue)
                 {
                     string text = log.Value;
+                    if (text.Length > 125)
+                    {
+                        text = text.Insert(125, "\n");
+                    }
                     switch (log.Key)
                     {
                         case ConsoleLogLevel.Critical:
@@ -133,13 +141,13 @@ namespace StardewModdingAPI
                             b.DrawString(this.smallFont, text, new Vector2(16, y), Color.LightGray);
                             break;
                     }
-
-                    size = this.smallFont.MeasureString(text);
+                    
+                    this.size = this.smallFont.MeasureString(text);
                     if (y < 0)
                     {
                         break;
                     }
-                    y -= size.Y;
+                    y -= this.size.Y;
                 }
             }
         }

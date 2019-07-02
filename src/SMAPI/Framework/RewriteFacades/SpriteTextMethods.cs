@@ -16,7 +16,12 @@ namespace StardewModdingAPI.Framework.RewriteFacades
 
         public static void drawStringHorizontallyCenteredAt(SpriteBatch b, string s, int x, int y, int characterPosition = 999999, int width = -1, int height = 999999, float alpha = -1f, float layerDepth = 0.88f, bool junimoText = false, int color = -1, int maxWdith = 99999)
         {
-            SpriteText.drawString(b, s, x - SpriteText.getWidthOfString(s) / 2, y, characterPosition, width, height, alpha, layerDepth, junimoText, -1, "", color);
+            drawString(b, s, x - SpriteText.getWidthOfString(s) / 2, y, characterPosition, width, height, alpha, layerDepth, junimoText, -1, "", color);
+        }
+
+        public static void drawStringWithScrollBackground(SpriteBatch b, string s, int x, int y, string placeHolderWidthText, float alpha, int color)
+        {
+            drawStringWithScrollBackground(b, s, x, y, placeHolderWidthText, alpha, color, 0.088f);
         }
     }
 }

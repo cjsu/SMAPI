@@ -17,55 +17,30 @@ using StardewModdingAPI.Framework;
 using StardewValley;
 using Android.Widget;
 using System.Reflection;
+using Microsoft.Xna.Framework;
 
 namespace StardewModdingAPI
 {
-    [Activity(Label = "Stardew Valley", Icon = "@mipmap/ic_launcher", Theme = "@style/Theme.Splash", MainLauncher = false, AlwaysRetainTaskState = true, LaunchMode = LaunchMode.SingleInstance, ScreenOrientation = ScreenOrientation.SensorLandscape, ConfigurationChanges = (ConfigChanges.Keyboard | ConfigChanges.KeyboardHidden | ConfigChanges.Orientation | ConfigChanges.ScreenLayout | ConfigChanges.ScreenSize | ConfigChanges.UiMode))]
+    [Activity(Label = "Stardew Valley", Icon = "@mipmap/ic_launcher", Theme = "@style/Theme.Splash", MainLauncher = true, AlwaysRetainTaskState = true, LaunchMode = LaunchMode.SingleInstance, ScreenOrientation = ScreenOrientation.SensorLandscape, ConfigurationChanges = (ConfigChanges.Keyboard | ConfigChanges.KeyboardHidden | ConfigChanges.Orientation | ConfigChanges.ScreenLayout | ConfigChanges.ScreenSize | ConfigChanges.UiMode))]
     public class SMainActivity: MainActivity, ILicenseCheckerCallback, IJavaObject, IDisposable, IDownloaderClient
     {
-        [Service]
-        public class ExpansionDownloaderService : DownloaderService
-        {
-            public override string PublicKey => "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAry4fecehDpCohQk4XhiIZX9ylIGUThWZxfN9qwvQyTh53hvnpQl/lCrjfflKoPz6gz5jJn6JI1PTnoBy/iXVx1+kbO99qBgJE2V8PS5pq+Usbeqqmqqzx4lEzhiYQ2um92v4qkldNYZFwbTODYPIMbSbaLm7eK9ZyemaRbg9ssAl4QYs0EVxzDK1DjuXilRk28WxiK3lNJTz4cT38bfs4q6Zvuk1vWUvnMqcxiugox6c/9j4zZS5C4+k+WY6mHjUMuwssjCY3G+aImWDSwnU3w9G41q8EoPvJ1049PIi7GJXErusTYZITmqfonyejmSFLPt8LHtux9AmJgFSrC3UhwIDAQAB";
-
-            public override string AlarmReceiverClassName => Class.FromType(typeof(ExpansionDownloaderReceiver)).CanonicalName;
-
-            public override byte[] GetSalt()
-            {
-                return new byte[15]
-                {
-                    98,
-                    100,
-                    12,
-                    43,
-                    2,
-                    8,
-                    4,
-                    9,
-                    5,
-                    106,
-                    108,
-                    33,
-                    45,
-                    1,
-                    84
-                };
-            }
-        }
-
-        [BroadcastReceiver(Exported = false)]
-        public class ExpansionDownloaderReceiver : BroadcastReceiver
-        {
-            public override void OnReceive(Android.Content.Context context, Intent intent)
-            {
-                DownloaderService.StartDownloadServiceIfRequired(context, intent, typeof(ExpansionDownloaderService));
-            }
-        }
-    
         private SCore core;
         private LicenseChecker _licenseChecker;
         private PowerManager.WakeLock _wakeLock;
-        private Action _callback;
+        public new bool HasPermissions
+        {
+            get
+            {
+                return this.PackageManager.CheckPermission("android.permission.ACCESS_NETWORK_STATE", this.PackageName) == Permission.Granted
+                    && this.PackageManager.CheckPermission("android.permission.ACCESS_WIFI_STATE", this.PackageName) == Permission.Granted
+                    && this.PackageManager.CheckPermission("android.permission.INTERNET", this.PackageName) == Permission.Granted
+                    && this.PackageManager.CheckPermission("android.permission.READ_EXTERNAL_STORAGE", this.PackageName) == Permission.Granted
+                    && this.PackageManager.CheckPermission("android.permission.VIBRATE", this.PackageName) == Permission.Granted
+                    && this.PackageManager.CheckPermission("android.permission.WAKE_LOCK", this.PackageName) == Permission.Granted
+                    && this.PackageManager.CheckPermission("android.permission.WRITE_EXTERNAL_STORAGE", this.PackageName) == Permission.Granted
+                    && this.PackageManager.CheckPermission("com.android.vending.CHECK_LICENSE", this.PackageName) == Permission.Granted;
+            }
+        }
 
         private string[] requiredPermissions => new string[8]
         {
@@ -79,7 +54,7 @@ namespace StardewModdingAPI
             "com.android.vending.CHECK_LICENSE"
         };
 
-        private string[] deniedPermissionsArray
+        private string[] DeniedPermissionsArray
         {
             get
             {
@@ -109,19 +84,16 @@ namespace StardewModdingAPI
             PowerManager powerManager = (PowerManager)this.GetSystemService("power");
             this._wakeLock = powerManager.NewWakeLock(WakeLockFlags.Full, "StardewWakeLock");
             this._wakeLock.Acquire();
+            typeof(MainActivity).GetField("_wakeLock", BindingFlags.Instance | BindingFlags.NonPublic)?.SetValue(this, this._wakeLock);
             base.OnCreate(bundle);
-            if (!base.HasPermissions)
-            {
-                base.PromptForPermissions();
-            }
-            this.OnCreatePartTwo();
+            this.CheckAppPermissions();
         }
 
         public void OnCreatePartTwo()
         {
             typeof(MainActivity).GetMethod("SetZoomScaleAndMenuButtonScale")?.Invoke(this, null);
             typeof(MainActivity).GetMethod("SetSavesPath")?.Invoke(this, null);
-            base.SetPaddingForMenus();
+            this.SetPaddingForMenus();
             Toast.MakeText(context: this, "Initializing SMAPI", ToastLength.Long).Show();
 
             new SGameConsole();
@@ -129,13 +101,27 @@ namespace StardewModdingAPI
             Program.Main(null);
 
             this.core = new SCore(System.IO.Path.Combine(Android.OS.Environment.ExternalStorageDirectory.Path, "StardewValley/Mods"), false);
-
             this.core.RunInteractively();
-            this.SetContentView((View)this.core.GameInstance.Services.GetService(typeof(View)));
-            this.core.GameInstance.Run();
 
+            typeof(MainActivity).GetField("_game1", BindingFlags.Instance | BindingFlags.NonPublic)?.SetValue(this, this.core.GameInstance);
+
+            this.SetContentView((View)this.core.GameInstance.Services.GetService(typeof(View)));
+            //this.core.GameInstance.Run();
+            
             this.CheckUsingServerManagedPolicy();
         }
+
+        public new void CheckAppPermissions()
+        {
+            if (!this.HasPermissions)
+                this.PromptForPermissions();
+            this.OnCreatePartTwo();
+        }
+
+        public new void PromptForPermissions()
+        {
+            ActivityCompat.RequestPermissions(this, this.DeniedPermissionsArray, 0);
+        } 
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
         {
@@ -172,12 +158,6 @@ namespace StardewModdingAPI
             }
             if (num == permissions.Length)
             {
-                if (this._callback != null)
-                {
-                    this._callback();
-                    this._callback = null;
-                    return;
-                }
                 this.OnCreatePartTwo();
             }
         }

@@ -160,6 +160,7 @@ namespace StardewModdingAPI.Framework
 
             // init logging
             this.Monitor.Log($"SMAPI {Constants.ApiVersion} with Stardew Valley {Constants.GameVersion} on {EnvironmentUtility.GetFriendlyPlatformName(Constants.Platform)}", LogLevel.Info);
+            this.Monitor.Log($"MartyrPher's Android SMAPI Loader: {Constants.AndroidApiVersion} on Android: {Android.OS.Build.VERSION.Sdk}", LogLevel.Info);
             this.Monitor.Log($"Mods go here: {modsPath}");
             if (modsPath != Constants.DefaultModsPath)
                 this.Monitor.Log("(Using custom --mods-path argument.)", LogLevel.Trace);
@@ -235,7 +236,8 @@ namespace StardewModdingAPI.Framework
                 new GamePatcher(this.Monitor).Apply(
                     new DialogueErrorPatch(this.MonitorForGame, this.Reflection),
                     new ObjectErrorPatch(),
-                    new LoadForNewGamePatch(this.Reflection, this.GameInstance.OnLoadStageChanged)
+                    new LoadForNewGamePatch(this.Reflection, this.GameInstance.OnLoadStageChanged),
+                    new SaveBackupPatch(this.EventManager)
                 );
 
                 // add exit handler
@@ -259,7 +261,7 @@ namespace StardewModdingAPI.Framework
                 }).Start();
 
                 // set window titles
-                this.GameInstance.Window.Title = $"Stardew Valley {Constants.GameVersion} - running SMAPI {Constants.ApiVersion}";
+                //this.GameInstance.Window.Title = $"Stardew Valley {Constants.GameVersion} - running SMAPI {Constants.ApiVersion}";
                 //Console.Title = $"SMAPI {Constants.ApiVersion} - running Stardew Valley {Constants.GameVersion}";
 #if SMAPI_3_0_STRICT
                 this.GameInstance.Window.Title += " [SMAPI 3.0 strict mode]";
@@ -307,24 +309,24 @@ namespace StardewModdingAPI.Framework
             {
                 this.IsGameRunning = true;
                 StardewValley.Program.releaseBuild = true; // game's debug logic interferes with SMAPI opening the game window
-                //this.GameInstance.Run();
+                this.GameInstance.Run();
             }
             catch (InvalidOperationException ex) when (ex.Source == "Microsoft.Xna.Framework.Xact" && ex.StackTrace.Contains("Microsoft.Xna.Framework.Audio.AudioEngine..ctor"))
             {
                 this.Monitor.Log("The game couldn't load audio. Do you have speakers or headphones plugged in?", LogLevel.Error);
                 this.Monitor.Log($"Technical details: {ex.GetLogSummary()}", LogLevel.Trace);
-                this.PressAnyKeyToExit();
+                //this.PressAnyKeyToExit();
             }
             catch (FileNotFoundException ex) when (ex.Message == "Could not find file 'C:\\Program Files (x86)\\Steam\\SteamApps\\common\\Stardew Valley\\Content\\XACT\\FarmerSounds.xgs'.") // path in error is hardcoded regardless of install path
             {
                 this.Monitor.Log("The game can't find its Content\\XACT\\FarmerSounds.xgs file. You can usually fix this by resetting your content files (see https://smapi.io/troubleshoot#reset-content ), or by uninstalling and reinstalling the game.", LogLevel.Error);
                 this.Monitor.Log($"Technical details: {ex.GetLogSummary()}", LogLevel.Trace);
-                this.PressAnyKeyToExit();
+                //this.PressAnyKeyToExit();
             }
             catch (Exception ex)
             {
                 this.MonitorForGame.Log($"The game failed to launch: {ex.GetLogSummary()}", LogLevel.Error);
-                this.PressAnyKeyToExit();
+                //this.PressAnyKeyToExit();
             }
             finally
             {

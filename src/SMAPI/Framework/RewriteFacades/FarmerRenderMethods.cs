@@ -10,7 +10,7 @@ namespace StardewModdingAPI.Framework.RewriteFacades
         [SuppressMessage("ReSharper", "CS0109", Justification = "The 'new' modifier applies when compiled on Windows.")]
         public new void drawMiniPortrat(SpriteBatch b, Vector2 position, float layerDepth, float scale, int facingDirection, Farmer who)
         {
-            base.drawMiniPortrat(b, position, layerDepth, scale, facingDirection, who);
+            base.drawMiniPortrat(b, position, layerDepth, scale, facingDirection, who, false);
         }
     }
 }

@@ -26,6 +26,10 @@ namespace StardewModdingAPI.Framework.ModLoading.Rewriters
 
         private readonly IMonitor Monitor;
 
+        private readonly bool UsingInstance;
+
+        private readonly bool RainDropFix;
+
         /*********
         ** Public methods
         *********/
@@ -33,7 +37,7 @@ namespace StardewModdingAPI.Framework.ModLoading.Rewriters
         /// <param name="type">The type whose field to which references should be rewritten.</param>
         /// <param name="fieldName">The field name to rewrite.</param>
         /// <param name="propertyName">The property name (if different).</param>
-        public TypeFieldToAnotherTypeFieldRewriter(Type type, Type toType, string fieldName, string propertyName, IMonitor monitor, string testName = null)
+        public TypeFieldToAnotherTypeFieldRewriter(Type type, Type toType, string fieldName, string propertyName, IMonitor monitor, string testName = null, bool usingInstance = true, bool rainDropFix = false)
             : base(type.FullName, fieldName, InstructionHandleResult.None)
         {
             this.Monitor = monitor;
@@ -42,13 +46,15 @@ namespace StardewModdingAPI.Framework.ModLoading.Rewriters
             this.FieldName = fieldName;
             this.PropertyName = propertyName;
             this.TestName = testName;
+            this.UsingInstance = usingInstance;
+            this.RainDropFix = rainDropFix;
         }
 
         /// <summary>Construct an instance.</summary>
         /// <param name="type">The type whose field to which references should be rewritten.</param>
         /// <param name="fieldName">The field name to rewrite.</param>
-        public TypeFieldToAnotherTypeFieldRewriter(Type type, Type toType, string fieldName, IMonitor monitor)
-            : this(type, toType, fieldName, fieldName, monitor) { }
+        public TypeFieldToAnotherTypeFieldRewriter(Type type, Type toType, string fieldName, IMonitor monitor, string testName = null, bool usingInstance = true, bool rainDropFix = false)
+            : this(type, toType, fieldName, fieldName, monitor, testName, usingInstance, rainDropFix) { }
 
         /// <summary>Perform the predefined logic for an instruction if applicable.</summary>
         /// <param name="module">The assembly module containing the instruction.</param>
@@ -61,14 +67,39 @@ namespace StardewModdingAPI.Framework.ModLoading.Rewriters
             if (!this.IsMatch(instruction))
                 return InstructionHandleResult.None;
 
-            //string methodPrefix = instruction.OpCode == OpCodes.Ldsfld || instruction.OpCode == OpCodes.Ldfld ? "get";
             try
             {
-                MethodReference method = module.ImportReference(this.ToType.GetMethod($"get_{this.PropertyName}"));
-                FieldReference field = module.ImportReference(this.ToType.GetField(this.FieldName));
+                if (this.TestName == null && !this.RainDropFix)
+                {
+                    MethodReference method = module.ImportReference(this.ToType.GetMethod($"get_{this.PropertyName}"));
+                    FieldReference field = module.ImportReference(this.ToType.GetField(this.FieldName));
 
-                cil.InsertAfter(instruction, cil.Create(OpCodes.Ldfld, field));
-                cil.Replace(instruction, cil.Create(OpCodes.Call, method));
+                    cil.InsertAfter(instruction, cil.Create(OpCodes.Ldfld, field));
+                    cil.Replace(instruction, cil.Create(OpCodes.Call, method));
+                }
+                else if (this.TestName != null && this.UsingInstance && !this.RainDropFix)
+                {
+                    MethodReference method = module.ImportReference(this.ToType.GetMethod($"get_{this.PropertyName}"));
+                    MethodReference field = module.ImportReference(this.ToType.GetMethod($"get_{this.TestName}"));
+
+                    cil.InsertAfter(instruction, cil.Create(OpCodes.Callvirt, field));
+                    cil.Replace(instruction, cil.Create(OpCodes.Call, method));
+                }
+                else if (this.RainDropFix && !this.UsingInstance)
+                {
+                    FieldReference field = module.ImportReference(this.ToType.GetField(this.FieldName));
+
+                    cil.Replace(instruction, cil.Create(OpCodes.Ldsfld, field));
+                }
+                else
+                {
+                    MethodReference method = module.ImportReference(this.Type.GetMethod($"get_{this.FieldName}"));
+                    MethodReference field = module.ImportReference(this.ToType.GetMethod($"get_{this.TestName}"));
+
+                    cil.InsertAfter(instruction, cil.Create(OpCodes.Callvirt, field));
+                    cil.Replace(instruction, cil.Create(OpCodes.Call, method));
+                }
+                
             }
             catch (Exception e)
             {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using StardewValley;
+using StardewValley.Menus;
 
 namespace StardewModdingAPI.Mods.VirtualKeyboard
 {
@@ -20,11 +21,13 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
             public SButton key;
             public Rect rectangle;
             public float transparency;
-            public VirtualButton(SButton key, Rect rectangle, float transparency)
+            public string alias;
+            public VirtualButton(SButton key, Rect rectangle, float transparency, string alias = null)
             {
                 this.key = key;
                 this.rectangle = rectangle;
                 this.transparency = transparency;
+                this.alias = alias;
             }
         }
         internal class Rect

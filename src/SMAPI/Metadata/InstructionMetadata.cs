@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using StardewModdingAPI.Events;
 using StardewModdingAPI.Framework.ModLoading;
@@ -42,9 +43,13 @@ namespace StardewModdingAPI.Metadata
             // rewrite for crossplatform compatibility
             yield return new MethodParentRewriter(typeof(SpriteBatch), typeof(SpriteBatchMethods), onlyIfPlatformChanged: true);
 
-            //isRaining and isDebrisWeather fix 50% done.
+            //isRaining and isDebrisWeather fix 75% done.
             yield return new TypeFieldToAnotherTypeFieldRewriter(typeof(Game1), typeof(RainManager), "isRaining", "Instance", this.Monitor);
             yield return new TypeFieldToAnotherTypeFieldRewriter(typeof(Game1), typeof(WeatherDebrisManager), "isDebrisWeather", "Instance", this.Monitor);
+            yield return new TypeFieldToAnotherTypeFieldRewriter(typeof(GameLocation), typeof(DebrisManager), "debris", "Instance", this.Monitor, "debrisNetCollection", false);
+            yield return new TypeFieldToAnotherTypeFieldRewriter(typeof(Game1), typeof(WeatherDebrisManager), "debrisWeather", "Instance", this.Monitor, "weatherDebrisList");
+            yield return new TypeFieldToAnotherTypeFieldRewriter(typeof(Game1), typeof(Game1Methods), "rainDrops", "Instance", this.Monitor, null, false, true);
+            yield return new TypeFieldToAnotherTypeFieldRewriter(typeof(Game1), typeof(Game1Methods), "onScreenMenus", "", this.Monitor, null, false, true);
 
             //Method Rewrites
             yield return new MethodParentRewriter(typeof(Game1), typeof(Game1Methods));
@@ -53,19 +58,20 @@ namespace StardewModdingAPI.Metadata
             yield return new MethodParentRewriter(typeof(FarmerRenderer), typeof(FarmerRendererMethods));
             yield return new MethodParentRewriter(typeof(SpriteText), typeof(SpriteTextMethods));
             yield return new MethodParentRewriter(typeof(NPC), typeof(NPCMethods));
-            yield return new MethodParentRewriter(typeof(GameLocation), typeof(GameLocationMethods));
 
             //Constructor Rewrites
             yield return new MethodParentRewriter(typeof(HUDMessage), typeof(HUDMessageMethods));
             yield return new MethodParentRewriter(typeof(MapPage), typeof(MapPageMethods));
             yield return new MethodParentRewriter(typeof(TextBox), typeof(TextBoxMethods));
+            yield return new MethodParentRewriter(typeof(WeatherDebris), typeof(WeatherDebrisMethods));
+            yield return new MethodParentRewriter(typeof(Debris), typeof(DebrisMethods));
 
             //Field Rewriters
             yield return new FieldReplaceRewriter(typeof(ItemGrabMenu), "context", "specialObject");
+            yield return new FieldReplaceRewriter(typeof(FarmerTeam), "demolishLock", "buildingLock");
 
             // rewrite for Stardew Valley 1.3
             yield return new StaticFieldToConstantRewriter<int>(typeof(Game1), "tileSize", Game1.tileSize);
-            //yield return new TypeReferenceRewriter("System.Collections.Generic.IList`1<StardewValley.Menus.IClickableMenu>", typeof(List<IClickableMenu>));
             yield return new FieldToPropertyRewriter(typeof(Game1), "player");
             yield return new FieldToPropertyRewriter(typeof(Game1), "currentLocation");
             yield return new FieldToPropertyRewriter(typeof(Character), "currentLocation");

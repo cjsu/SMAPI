@@ -10,7 +10,7 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
     {
         public override void Entry(IModHelper helper)
         {
-            VirtualToggle virtualToggle = new VirtualToggle(helper, this.Monitor);
+            new VirtualToggle(helper, this.Monitor);
         }
     }
 }

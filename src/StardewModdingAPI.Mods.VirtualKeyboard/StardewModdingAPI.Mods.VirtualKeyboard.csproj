@@ -79,16 +79,16 @@
     <Compile Include="VirtualToggle.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\StardewModdingAPI\StardewModdingAPI.csproj">
-      <Project>{9898b56e-51eb-40cf-8b1f-aceb4b6397a7}</Project>
-      <Name>StardewModdingAPI</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="manifest.json" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\togglebutton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SMAPI\StardewModdingAPI.csproj">
+      <Project>{9898b56e-51eb-40cf-8b1f-aceb4b6397a7}</Project>
+      <Name>StardewModdingAPI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

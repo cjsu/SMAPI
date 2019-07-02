@@ -1078,7 +1078,7 @@ namespace StardewModdingAPI.Framework
         [SuppressMessage("ReSharper", "RedundantTypeArgumentsOfMethod", Justification = "copied from game code as-is")]
         [SuppressMessage("SMAPI.CommonErrors", "AvoidNetField", Justification = "copied from game code as-is")]
         [SuppressMessage("SMAPI.CommonErrors", "AvoidImplicitNetFieldCast", Justification = "copied from game code as-is")]
-        private void DrawImpl(GameTime gameTime)
+        private void DrawImpl(GameTime gameTime, RenderTarget2D toBuffer = null)
         {
             var events = this.Events;
             if (skipNextDrawCall)
@@ -1118,11 +1118,21 @@ namespace StardewModdingAPI.Framework
                 if (_newDayTask != null)
                 {
                     base.GraphicsDevice.Clear(bgColor.GetValue());
+                    if (Game1.showInterDayScroll)
+                    {
+                        Matrix value = Matrix.CreateScale(1f);
+                        Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, new Matrix?(value));
+                        SpriteText.drawStringWithScrollCenteredAt(Game1.spriteBatch, Game1.content.LoadString("Strings\\UI:please_wait"), base.GraphicsDevice.Viewport.Width / 2, base.GraphicsDevice.Viewport.Height / 2, "", 1f, -1, 0, 0.088f, false);
+                        Game1.spriteBatch.End();
+                    }
                     return;
                 }
                 if (options.zoomLevel != 1f)
                 {
-                    base.GraphicsDevice.SetRenderTarget(screen);
+                    if (toBuffer != null)
+                        base.GraphicsDevice.SetRenderTarget(toBuffer);
+                    else
+                        base.GraphicsDevice.SetRenderTarget(this.screen);
                 }
                 if (IsSaving)
                 {
