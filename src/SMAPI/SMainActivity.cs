@@ -22,7 +22,7 @@ using Microsoft.Xna.Framework;
 namespace StardewModdingAPI
 {
     [Activity(Label = "Stardew Valley", Icon = "@mipmap/ic_launcher", Theme = "@style/Theme.Splash", MainLauncher = true, AlwaysRetainTaskState = true, LaunchMode = LaunchMode.SingleInstance, ScreenOrientation = ScreenOrientation.SensorLandscape, ConfigurationChanges = (ConfigChanges.Keyboard | ConfigChanges.KeyboardHidden | ConfigChanges.Orientation | ConfigChanges.ScreenLayout | ConfigChanges.ScreenSize | ConfigChanges.UiMode))]
-    public class SMainActivity: MainActivity, ILicenseCheckerCallback, IJavaObject, IDisposable, IDownloaderClient
+    public class SMainActivity: MainActivity, ILicenseCheckerCallback, IJavaObject, IDisposable
     {
         private SCore core;
         private LicenseChecker _licenseChecker;
@@ -91,10 +91,10 @@ namespace StardewModdingAPI
 
         public void OnCreatePartTwo()
         {
-            typeof(MainActivity).GetMethod("SetZoomScaleAndMenuButtonScale")?.Invoke(this, null);
-            typeof(MainActivity).GetMethod("SetSavesPath")?.Invoke(this, null);
-            this.SetPaddingForMenus();
-            Toast.MakeText(context: this, "Initializing SMAPI", ToastLength.Long).Show();
+            //typeof(MainActivity).GetMethod("SetZoomScaleAndMenuButtonScale", BindingFlags.Instance | BindingFlags.NonPublic)?.Invoke(this, null);
+            //typeof(MainActivity).GetMethod("SetSavesPath", BindingFlags.Instance | BindingFlags.NonPublic)?.Invoke(this, null);
+            //this.SetPaddingForMenus();
+            //Toast.MakeText(context: this, "Initializing SMAPI", ToastLength.Long).Show();
 
             new SGameConsole();
 

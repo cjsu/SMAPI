@@ -1,7 +1,7 @@
 {
   "Name": "VirtualKeyboard",
   "Author": "MartyrPher",
-  "Version": "0.9.4",
+  "Version": "0.9.5",
   "MinimumApiVersion": "2.10.1",
   "Description": "A much needed Virtual Keyboard for SMAPI Android.",
   "UniqueID": "VirtualKeyboard",

@@ -41,9 +41,7 @@ namespace StardewModdingAPI
             };
             this.scrollbox = new MobileScrollbox(0, 0, 1280, 320, this.consoleMessageQueue.Count, new Rectangle(0, 0, 1280, 320));
             this.textBoxBounds = new Rectangle(this.textBox.X, this.textBox.Y, this.textBox.Width, this.textBox.Height);
-            this.scrollbox.Bounds = this.textBoxBounds;
-
-            
+            this.scrollbox.Bounds = this.textBoxBounds;   
         }
 
         internal void InitializeContent(LocalizedContentManager content)
@@ -115,9 +113,9 @@ namespace StardewModdingAPI
                 foreach (var log in this.consoleMessageQueue)
                 {
                     string text = log.Value;
-                    if (text.Length > 125)
+                    if (text.Contains("\n"))
                     {
-                        text = text.Insert(125, "\n");
+                        text = text.Replace("\n", " ");
                     }
                     switch (log.Key)
                     {

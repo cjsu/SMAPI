@@ -23,7 +23,7 @@ namespace StardewModdingAPI
         public static ISemanticVersion ApiVersion { get; } = new Toolkit.SemanticVersion("2.11.2");
 
         /// <summary>Android SMAPI's current semantic version.</summary>
-        public static ISemanticVersion AndroidApiVersion { get; } = new Toolkit.SemanticVersion("0.8.7");
+        public static ISemanticVersion AndroidApiVersion { get; } = new Toolkit.SemanticVersion("0.8.8");
 
         /// <summary>The minimum supported version of Stardew Valley.</summary>
         public static ISemanticVersion MinimumGameVersion { get; } = new GameVersion("1.3.36");
@@ -79,7 +79,7 @@ namespace StardewModdingAPI
         ** Internal
         ****/
         /// <summary>The URL of the SMAPI home page.</summary>
-        internal const string HomePageUrl = "https://smapi.io";
+        internal const string HomePageUrl = "https://github.com/MartyrPher/SMAPI-Android-Installer/releases/latest";
 
         /// <summary>The absolute path to the folder containing SMAPI's internal files.</summary>
         internal static readonly string InternalFilesPath = Program.DllSearchPath;

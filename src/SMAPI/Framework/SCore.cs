@@ -11,6 +11,8 @@ using System.Security;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
+using Android.Widget;
 #if SMAPI_FOR_WINDOWS
 using System.Windows.Forms;
 #endif
@@ -285,9 +287,10 @@ namespace StardewModdingAPI.Framework
                     {
                         this.Monitor.Log("A new version of SMAPI was detected last time you played.", LogLevel.Error);
                         this.Monitor.Log($"You can update to {updateFound}: https://smapi.io.", LogLevel.Error);
-                        this.Monitor.Log("Press any key to continue playing anyway. (This only appears when using a SMAPI beta.)", LogLevel.Info);
-                        Console.ReadKey();
+                        this.Monitor.Log("Press any key to continue playing anyway. (This only appears when using a SMAPI beta.)", LogLevel.Info);       
+                        //Console.ReadKey();
                     }
+                    Toast.MakeText(SMainActivity.instance, $"You can update to {updateFound}: {Constants.HomePageUrl}.", ToastLength.Long).Show();
                 }
                 File.Delete(Constants.UpdateMarker);
             }
@@ -391,55 +394,66 @@ namespace StardewModdingAPI.Framework
             if (!this.ValidateContentIntegrity())
                 this.Monitor.Log("SMAPI found problems in your game's content files which are likely to cause errors or crashes. Consider uninstalling XNB mods or reinstalling the game.", LogLevel.Error);
 
-            // load mod data
-            ModToolkit toolkit = new ModToolkit();
-            ModDatabase modDatabase = toolkit.GetModDatabase(Constants.ApiMetadataPath);
-
-            // load mods
+            this.GameInstance.IsGameSuspended = true;
+            this.Monitor.Log("You can ignore the error below this line. It won't find saved games without it.", LogLevel.Debug);
+            Task.Run(() =>
             {
-                this.Monitor.Log("Loading mod metadata...", LogLevel.Trace);
-                ModResolver resolver = new ModResolver();
+                while (!this.GameInstance.IsAfterInitialize)
+                    Thread.Sleep(10);
 
-                // load manifests
-                IModMetadata[] mods = resolver.ReadManifests(toolkit, this.ModsPath, modDatabase).ToArray();
-
-                // filter out ignored mods
-                foreach (IModMetadata mod in mods.Where(p => p.IsIgnored))
-                    this.Monitor.Log($"  Skipped {mod.RelativeDirectoryPath} (folder name starts with a dot).", LogLevel.Trace);
-                mods = mods.Where(p => !p.IsIgnored).ToArray();
+                // load mod data
+                ModToolkit toolkit = new ModToolkit();
+                ModDatabase modDatabase = toolkit.GetModDatabase(Constants.ApiMetadataPath);
 
                 // load mods
-                resolver.ValidateManifests(mods, Constants.ApiVersion, toolkit.GetUpdateUrl);
-                mods = resolver.ProcessDependencies(mods, modDatabase).ToArray();
-                this.LoadMods(mods, this.Toolkit.JsonHelper, this.ContentCore, modDatabase);
-
-                // write metadata file
-                if (this.Settings.DumpMetadata)
                 {
-                    ModFolderExport export = new ModFolderExport
-                    {
-                        Exported = DateTime.UtcNow.ToString("O"),
-                        ApiVersion = Constants.ApiVersion.ToString(),
-                        GameVersion = Constants.GameVersion.ToString(),
-                        ModFolderPath = this.ModsPath,
-                        Mods = mods
-                    };
-                    this.Toolkit.JsonHelper.WriteJsonFile(Path.Combine(Constants.LogDir, $"{Constants.LogNamePrefix}metadata-dump.json"), export);
-                }
+                    this.Monitor.Log("Loading mod metadata...", LogLevel.Trace);
+                    ModResolver resolver = new ModResolver();
 
-                // check for updates
-                this.CheckForUpdatesAsync(mods);
-            }
-            SGameConsole.Instance.isVisible = false;
-            if (this.Monitor.IsExiting)
-            {
-                this.Monitor.Log("SMAPI shutting down: aborting initialisation.", LogLevel.Warn);
-                return;
-            }
+                    // load manifests
+                    IModMetadata[] mods = resolver.ReadManifests(toolkit, this.ModsPath, modDatabase).ToArray();
+
+                    // filter out ignored mods
+                    foreach (IModMetadata mod in mods.Where(p => p.IsIgnored))
+                        this.Monitor.Log($"  Skipped {mod.RelativeDirectoryPath} (folder name starts with a dot).", LogLevel.Trace);
+                    mods = mods.Where(p => !p.IsIgnored).ToArray();
+
+                    // load mods
+                    resolver.ValidateManifests(mods, Constants.ApiVersion, toolkit.GetUpdateUrl);
+                    mods = resolver.ProcessDependencies(mods, modDatabase).ToArray();
+                    this.LoadMods(mods, this.Toolkit.JsonHelper, this.ContentCore, modDatabase);
+
+                    // write metadata file
+                    if (this.Settings.DumpMetadata)
+                    {
+                        ModFolderExport export = new ModFolderExport
+                        {
+                            Exported = DateTime.UtcNow.ToString("O"),
+                            ApiVersion = Constants.ApiVersion.ToString(),
+                            GameVersion = Constants.GameVersion.ToString(),
+                            ModFolderPath = this.ModsPath,
+                            Mods = mods
+                        };
+                        this.Toolkit.JsonHelper.WriteJsonFile(Path.Combine(Constants.LogDir, $"{Constants.LogNamePrefix}metadata-dump.json"), export);
+                    }
+
+                    // check for updates
+                    this.CheckForUpdatesAsync(mods);
+                }               
+                SGameConsole.Instance.isVisible = false;
+                this.GameInstance.IsGameSuspended = false;
+                if (this.Monitor.IsExiting)
+                {
+                    this.Monitor.Log("SMAPI shutting down: aborting initialisation.", LogLevel.Warn);
+                    return;
+                }
+                int modsLoaded = this.ModRegistry.GetAll().Count();
+            }).Start();
+            //The Start() above throws an error but without it won't find saved games.
 
             // update window titles
-            int modsLoaded = this.ModRegistry.GetAll().Count();
-            this.GameInstance.Window.Title = $"Stardew Valley {Constants.GameVersion} - running SMAPI {Constants.ApiVersion} with {modsLoaded} mods";
+
+            //this.GameInstance.Window.Title = $"Stardew Valley {Constants.GameVersion} - running SMAPI {Constants.ApiVersion} with {modsLoaded} mods";
             //Console.Title = $"SMAPI {Constants.ApiVersion} - running Stardew Valley {Constants.GameVersion} with {modsLoaded} mods";
 #if SMAPI_3_0_STRICT
             this.GameInstance.Window.Title += " [SMAPI 3.0 strict mode]";
@@ -557,7 +571,7 @@ namespace StardewModdingAPI.Framework
         {
             if (!this.Settings.CheckForUpdates)
                 return;
-
+            
             new Thread(() =>
             {
                 // create client
@@ -572,7 +586,7 @@ namespace StardewModdingAPI.Framework
                 ISemanticVersion updateFound = null;
                 try
                 {
-                    ModEntryModel response = client.GetModInfo(new[] { new ModSearchEntryModel("Pathoschild.SMAPI", new[] { $"GitHub:{this.Settings.GitHubProjectName}" }) }).Single().Value;
+                    ModEntryModel response = client.GetModInfo(new[] { new ModSearchEntryModel("MartyrPher.SMAPI-Android-Installer", new[] { $"GitHub:{this.Settings.GitHubProjectName}" }) }).Single().Value;
                     ISemanticVersion latestStable = response.Main?.Version;
                     ISemanticVersion latestBeta = response.Optional?.Version;
 
@@ -581,12 +595,12 @@ namespace StardewModdingAPI.Framework
                         this.Monitor.Log("Couldn't check for a new version of SMAPI. This won't affect your game, but you may not be notified of new versions if this keeps happening.", LogLevel.Warn);
                         this.Monitor.Log($"Error: {string.Join("\n", response.Errors)}");
                     }
-                    else if (this.IsValidUpdate(Constants.ApiVersion, latestBeta, this.Settings.UseBetaChannel))
+                    else if (this.IsValidUpdate(Constants.AndroidApiVersion, latestBeta, this.Settings.UseBetaChannel))
                     {
                         updateFound = latestBeta;
                         this.Monitor.Log($"You can update SMAPI to {latestBeta}: {Constants.HomePageUrl}", LogLevel.Alert);
                     }
-                    else if (this.IsValidUpdate(Constants.ApiVersion, latestStable, this.Settings.UseBetaChannel))
+                    else if (this.IsValidUpdate(Constants.AndroidApiVersion, latestStable, this.Settings.UseBetaChannel))
                     {
                         updateFound = latestStable;
                         this.Monitor.Log($"You can update SMAPI to {latestStable}: {Constants.HomePageUrl}", LogLevel.Alert);

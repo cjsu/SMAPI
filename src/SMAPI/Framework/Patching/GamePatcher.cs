@@ -29,27 +29,20 @@ namespace StardewModdingAPI.Framework.Patching
         /// <param name="patches">The patches to apply.</param>
         public void Apply(params IHarmonyPatch[] patches)
         {
-            if (Build.VERSION.SdkInt > BuildVersionCodes.LollipopMr1)
-            {
-                HarmonyDetourBridge.Init();
+            HarmonyDetourBridge.Init();
 
-                HarmonyInstance harmony = HarmonyInstance.Create("io.smapi");
-                foreach (IHarmonyPatch patch in patches)
-                {
-                    try
-                    {
-                        patch.Apply(harmony);
-                    }
-                    catch (Exception ex)
-                    {
-                        this.Monitor.Log($"Couldn't apply runtime patch '{patch.Name}' to the game. Some SMAPI features may not work correctly. See log file for details.", LogLevel.Error);
-                        this.Monitor.Log(ex.GetLogSummary(), LogLevel.Trace);
-                    }
-                }
-            }
-            else
+            HarmonyInstance harmony = HarmonyInstance.Create("io.smapi");
+            foreach (IHarmonyPatch patch in patches)
             {
-                this.Monitor.Log("Harmony mods are not supported on this Android Version.");
+                try
+                {
+                    patch.Apply(harmony);
+                }
+                catch (Exception ex)
+                {
+                    this.Monitor.Log($"Couldn't apply runtime patch '{patch.Name}' to the game. Some SMAPI features may not work correctly. See log file for details.", LogLevel.Error);
+                    this.Monitor.Log(ex.GetLogSummary(), LogLevel.Trace);
+                }
             }
         }
     }

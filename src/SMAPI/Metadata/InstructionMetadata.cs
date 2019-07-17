@@ -63,6 +63,7 @@ namespace StardewModdingAPI.Metadata
             yield return new MethodParentRewriter(typeof(HUDMessage), typeof(HUDMessageMethods));
             yield return new MethodParentRewriter(typeof(MapPage), typeof(MapPageMethods));
             yield return new MethodParentRewriter(typeof(TextBox), typeof(TextBoxMethods));
+            yield return new MethodParentRewriter(typeof(ItemGrabMenu), typeof(ItemGrabMenuMethods));
             yield return new MethodParentRewriter(typeof(WeatherDebris), typeof(WeatherDebrisMethods));
             yield return new MethodParentRewriter(typeof(Debris), typeof(DebrisMethods));
 
