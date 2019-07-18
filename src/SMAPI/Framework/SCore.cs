@@ -448,6 +448,10 @@ namespace StardewModdingAPI.Framework
                     return;
                 }
                 int modsLoaded = this.ModRegistry.GetAll().Count();
+
+                this.Monitor.Log("Type 'help' for help, or 'help <cmd>' for a command's usage", LogLevel.Info);
+                this.GameInstance.CommandManager.Add(null, "help", "Lists command documentation.\n\nUsage: help\nLists all available commands.\n\nUsage: help <cmd>\n- cmd: The name of a command whose documentation to display.", this.HandleCommand);
+                this.GameInstance.CommandManager.Add(null, "reload_i18n", "Reloads translation files for all mods.\n\nUsage: reload_i18n", this.HandleCommand);
             }).Start();
             //The Start() above throws an error but without it won't find saved games.
 
@@ -462,7 +466,7 @@ namespace StardewModdingAPI.Framework
 
 
             // start SMAPI console
-            new Thread(this.RunConsoleLoop).Start();
+            //new Thread(this.RunConsoleLoop).Start();
         }
 
         /// <summary>Handle the game changing locale.</summary>
