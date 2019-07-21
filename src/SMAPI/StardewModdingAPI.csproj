@@ -87,7 +87,7 @@
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="StardewValley">
-      <HintPath>..\..\..\..\..\Downloads\Stardew-Valley-v1-25_mod\unknown\assemblies\StardewValley.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\com.chucklefish.stardewvalley_1.31\assemblies\StardewValley.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">

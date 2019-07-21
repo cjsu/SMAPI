@@ -1157,7 +1157,7 @@ namespace StardewModdingAPI.Framework
                     if (this.IsSaving)
                     {
                         base.GraphicsDevice.Clear(bgColor.GetValue());
-                        this.renderScreenBuffer(BlendState.Opaque);
+                        this.renderScreenBuffer(BlendState.Opaque, toBuffer);
                         if (activeClickableMenu != null)
                         {
                             if (IsActiveClickableMenuNativeScaled)
@@ -1267,7 +1267,7 @@ namespace StardewModdingAPI.Framework
 
                             _spriteBatchEnd.Invoke();
                             this.drawOverlays(spriteBatch);
-                            this.renderScreenBuffer(BlendState.AlphaBlend);
+                            this.renderScreenBuffer(BlendState.AlphaBlend, toBuffer);
                             if (overlayMenu != null)
                             {
                                 SetSpriteBatchBeginNextID("D");
@@ -1327,7 +1327,7 @@ namespace StardewModdingAPI.Framework
                                     _spriteBatchEnd.Invoke();
                                 }
                                 this.drawOverlays(spriteBatch);
-                                this.renderScreenBuffer(BlendState.AlphaBlend);
+                                this.renderScreenBuffer(BlendState.AlphaBlend, null);
                                 if (currentMinigame is FishingGame && activeClickableMenu != null)
                                 {
                                     SetSpriteBatchBeginNextID("A-A");
@@ -1364,7 +1364,7 @@ namespace StardewModdingAPI.Framework
                             }
                             else if (showingEndOfNightStuff)
                             {
-                                this.renderScreenBuffer(BlendState.Opaque);
+                                this.renderScreenBuffer(BlendState.Opaque, null);
                                 BackupViewportAndZoom(divideByZoom: true);
                                 SetSpriteBatchBeginNextID("A-B");
                                 SpriteBatchBegin.Invoke(NativeZoomLevel);
@@ -1410,7 +1410,7 @@ namespace StardewModdingAPI.Framework
 #endif
 
                                 this.drawOverlays(spriteBatch);
-                                this.renderScreenBuffer(BlendState.AlphaBlend);
+                                this.renderScreenBuffer(BlendState.AlphaBlend, toBuffer);
                                 if (overlayMenu != null)
                                 {
                                     SetSpriteBatchBeginNextID("H");
@@ -2055,7 +2055,7 @@ label_168:
 #endif
                                 _spriteBatchEnd.Invoke();
                                 this.drawOverlays(spriteBatch);
-                                this.renderScreenBuffer(BlendState.Opaque);
+                                this.renderScreenBuffer(BlendState.Opaque, toBuffer);
                                 if (_drawHUD.GetValue())
                                 {
                                     DrawDayTimeMoneyBox.Invoke();
