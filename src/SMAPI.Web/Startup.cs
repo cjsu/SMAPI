@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using StardewModdingAPI.Toolkit.Serialisation;
 using StardewModdingAPI.Web.Framework;
 using StardewModdingAPI.Web.Framework.Caching;
+using StardewModdingAPI.Web.Framework.Caching.Mods;
 using StardewModdingAPI.Web.Framework.Caching.Wiki;
 using StardewModdingAPI.Web.Framework.Clients.Chucklefish;
 using StardewModdingAPI.Web.Framework.Clients.GitHub;
@@ -88,6 +89,7 @@ namespace StardewModdingAPI.Web
                 BsonSerializer.RegisterSerializer(new UtcDateTimeOffsetSerializer());
                 return new MongoClient(mongoConfig.GetConnectionString()).GetDatabase(mongoConfig.Database);
             });
+            services.AddSingleton<IModCacheRepository>(serv => new ModCacheRepository(serv.GetRequiredService<IMongoDatabase>()));
             services.AddSingleton<IWikiCacheRepository>(serv => new WikiCacheRepository(serv.GetRequiredService<IMongoDatabase>()));
 
             // init Hangfire

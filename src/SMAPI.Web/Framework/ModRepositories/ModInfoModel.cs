@@ -18,7 +18,7 @@ namespace StardewModdingAPI.Web.Framework.ModRepositories
         /// <summary>The mod's web URL.</summary>
         public string Url { get; set; }
 
-        /// <summary>The mod availability status.</summary>
+        /// <summary>The mod availability status on the remote site.</summary>
         public RemoteModStatus Status { get; set; } = RemoteModStatus.Ok;
 
         /// <summary>The error message indicating why the mod is invalid (if applicable).</summary>
@@ -45,7 +45,7 @@ namespace StardewModdingAPI.Web.Framework.ModRepositories
         }
 
         /// <summary>Set a mod error.</summary>
-        /// <param name="status">The mod availability status.</param>
+        /// <param name="status">The mod availability status on the remote site.</param>
         /// <param name="error">The error message indicating why the mod is invalid (if applicable).</param>
         public ModInfoModel WithError(RemoteModStatus status, string error)
         {
