@@ -7,7 +7,7 @@ using StardewModdingAPI.Toolkit.Framework.Clients.Wiki;
 namespace StardewModdingAPI.Web.Framework.Caching.Wiki
 {
     /// <summary>The model for cached wiki mods.</summary>
-    public class CachedWikiMod
+    internal class CachedWikiMod
     {
         /*********
         ** Accessors

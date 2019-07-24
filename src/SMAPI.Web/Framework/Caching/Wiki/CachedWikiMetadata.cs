@@ -5,7 +5,7 @@ using MongoDB.Bson;
 namespace StardewModdingAPI.Web.Framework.Caching.Wiki
 {
     /// <summary>The model for cached wiki metadata.</summary>
-    public class CachedWikiMetadata
+    internal class CachedWikiMetadata
     {
         /*********
         ** Accessors

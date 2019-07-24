@@ -5,8 +5,8 @@ using StardewModdingAPI.Toolkit.Framework.Clients.Wiki;
 
 namespace StardewModdingAPI.Web.Framework.Caching.Wiki
 {
-    /// <summary>Encapsulates logic for accessing the mod data cache.</summary>
-    internal interface IWikiCacheRepository
+    /// <summary>Encapsulates logic for accessing the wiki data cache.</summary>
+    internal interface IWikiCacheRepository : ICacheRepository
     {
         /*********
         ** Methods
@@ -14,11 +14,6 @@ namespace StardewModdingAPI.Web.Framework.Caching.Wiki
         /// <summary>Get the cached wiki metadata.</summary>
         /// <param name="metadata">The fetched metadata.</param>
         bool TryGetWikiMetadata(out CachedWikiMetadata metadata);
-
-        /// <summary>Whether cached data is stale.</summary>
-        /// <param name="lastUpdated">The date when the data was updated.</param>
-        /// <param name="staleMinutes">The age in minutes before data is considered stale.</param>
-        bool IsStale(DateTimeOffset lastUpdated, int staleMinutes);
 
         /// <summary>Get the cached wiki mods.</summary>
         /// <param name="filter">A filter to apply, if any.</param>
