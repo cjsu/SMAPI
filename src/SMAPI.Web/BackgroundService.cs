@@ -5,6 +5,7 @@ using Hangfire;
 using Microsoft.Extensions.Hosting;
 using StardewModdingAPI.Toolkit;
 using StardewModdingAPI.Toolkit.Framework.Clients.Wiki;
+using StardewModdingAPI.Web.Framework.Caching.Mods;
 using StardewModdingAPI.Web.Framework.Caching.Wiki;
 
 namespace StardewModdingAPI.Web
@@ -19,8 +20,11 @@ namespace StardewModdingAPI.Web
         /// <summary>The background task server.</summary>
         private static BackgroundJobServer JobServer;
 
-        /// <summary>The cache in which to store mod metadata.</summary>
+        /// <summary>The cache in which to store wiki metadata.</summary>
         private static IWikiCacheRepository WikiCache;
+
+        /// <summary>The cache in which to store mod data.</summary>
+        private static IModCacheRepository ModCache;
 
 
         /*********
@@ -30,10 +34,12 @@ namespace StardewModdingAPI.Web
         ** Hosted service
         ****/
         /// <summary>Construct an instance.</summary>
-        /// <param name="wikiCache">The cache in which to store mod metadata.</param>
-        public BackgroundService(IWikiCacheRepository wikiCache)
+        /// <param name="wikiCache">The cache in which to store wiki metadata.</param>
+        /// <param name="modCache">The cache in which to store mod data.</param>
+        public BackgroundService(IWikiCacheRepository wikiCache, IModCacheRepository modCache)
         {
             BackgroundService.WikiCache = wikiCache;
+            BackgroundService.ModCache = modCache;
         }
 
         /// <summary>Start the service.</summary>
@@ -44,9 +50,11 @@ namespace StardewModdingAPI.Web
 
             // set startup tasks
             BackgroundJob.Enqueue(() => BackgroundService.UpdateWikiAsync());
+            BackgroundJob.Enqueue(() => BackgroundService.RemoveStaleMods());
 
             // set recurring tasks
-            RecurringJob.AddOrUpdate(() => BackgroundService.UpdateWikiAsync(), "*/10 * * * *");
+            RecurringJob.AddOrUpdate(() => BackgroundService.UpdateWikiAsync(), "*/10 * * * *"); // every 10 minutes
+            RecurringJob.AddOrUpdate(() => BackgroundService.RemoveStaleMods(), "0 * * * *"); // hourly
 
             return Task.CompletedTask;
         }
@@ -73,6 +81,12 @@ namespace StardewModdingAPI.Web
         {
             WikiModList wikiCompatList = await new ModToolkit().GetWikiCompatibilityListAsync();
             BackgroundService.WikiCache.SaveWikiData(wikiCompatList.StableVersion, wikiCompatList.BetaVersion, wikiCompatList.Mods, out _, out _);
+        }
+
+        /// <summary>Remove mods which haven't been requested in over 48 hours.</summary>
+        public static async Task RemoveStaleMods()
+        {
+            BackgroundService.ModCache.RemoveStaleMods(TimeSpan.FromHours(48));
         }
 
 

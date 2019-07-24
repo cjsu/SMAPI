@@ -67,6 +67,14 @@ namespace StardewModdingAPI.Web.Framework.Caching.Mods
             cachedMod = this.SaveMod(new CachedMod(site, id, mod));
         }
 
+        /// <summary>Delete data for mods which haven't been requested within a given time limit.</summary>
+        /// <param name="age">The minimum age for which to remove mods.</param>
+        public void RemoveStaleMods(TimeSpan age)
+        {
+            DateTimeOffset minDate = DateTimeOffset.UtcNow.Subtract(age);
+            var result = this.Mods.DeleteMany(p => p.LastRequested < minDate);
+        }
+
 
         /*********
         ** Private methods
