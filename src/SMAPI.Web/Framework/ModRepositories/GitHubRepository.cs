@@ -32,7 +32,7 @@ namespace StardewModdingAPI.Web.Framework.ModRepositories
         {
             // validate ID format
             if (!id.Contains("/") || id.IndexOf("/", StringComparison.InvariantCultureIgnoreCase) != id.LastIndexOf("/", StringComparison.InvariantCultureIgnoreCase))
-                return new ModInfoModel($"The value '{id}' isn't a valid GitHub mod ID, must be a username and project name like 'Pathoschild/LookupAnything'.");
+                return new ModInfoModel().WithError(RemoteModStatus.DoesNotExist, $"The value '{id}' isn't a valid GitHub mod ID, must be a username and project name like 'Pathoschild/LookupAnything'.");
 
             // fetch info
             try
@@ -40,7 +40,7 @@ namespace StardewModdingAPI.Web.Framework.ModRepositories
                 // get latest release (whether preview or stable)
                 GitRelease latest = await this.Client.GetLatestReleaseAsync(id, includePrerelease: true);
                 if (latest == null)
-                    return new ModInfoModel("Found no mod with this ID.");
+                    return new ModInfoModel().WithError(RemoteModStatus.DoesNotExist, "Found no GitHub release for this ID.");
 
                 // split stable/prerelease if applicable
                 GitRelease preview = null;
@@ -59,7 +59,7 @@ namespace StardewModdingAPI.Web.Framework.ModRepositories
             }
             catch (Exception ex)
             {
-                return new ModInfoModel(ex.ToString());
+                return new ModInfoModel().WithError(RemoteModStatus.TemporaryError, ex.ToString());
             }
         }
 

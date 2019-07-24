@@ -49,6 +49,7 @@ These changes have not been released yet.
   * The installer now recognises custom game paths stored in `stardewvalley.targets`, if any.
   * Trace logs for a broken mod now list all detected issues (instead of the first one).
   * Trace logs when loading mods are now more clear.
+  * Clarified update-check errors for mods with multiple update keys.
   * Fixed custom maps loaded from `.xnb` files not having their tilesheet paths automatically adjusted.
   * Fixed custom maps loaded from the mod folder with tilesheets in a subfolder not working crossplatform. All tilesheet paths are now normalised for the OS automatically.
   * Removed all deprecated APIs.

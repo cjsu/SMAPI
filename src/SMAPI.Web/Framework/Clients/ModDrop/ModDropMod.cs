@@ -17,8 +17,5 @@ namespace StardewModdingAPI.Web.Framework.Clients.ModDrop
 
         /// <summary>The mod's web URL.</summary>
         public string Url { get; set; }
-
-        /// <summary>A user-friendly error which indicates why fetching the mod info failed (if applicable).</summary>
-        public string Error { get; set; }
     }
 }

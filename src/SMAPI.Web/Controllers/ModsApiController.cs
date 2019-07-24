@@ -245,11 +245,11 @@ namespace StardewModdingAPI.Web.Controllers
             // parse update key
             UpdateKey parsed = UpdateKey.Parse(updateKey);
             if (!parsed.LooksValid)
-                return new ModInfoModel($"The update key '{updateKey}' isn't in a valid format. It should contain the site key and mod ID like 'Nexus:541'.");
+                return new ModInfoModel().WithError(RemoteModStatus.DoesNotExist, $"The update key '{updateKey}' isn't in a valid format. It should contain the site key and mod ID like 'Nexus:541'.");
 
             // get matching repository
             if (!this.Repositories.TryGetValue(parsed.Repository, out IModRepository repository))
-                return new ModInfoModel($"There's no mod site with key '{parsed.Repository}'. Expected one of [{string.Join(", ", this.Repositories.Keys)}].");
+                return new ModInfoModel().WithError(RemoteModStatus.DoesNotExist, $"There's no mod site with key '{parsed.Repository}'. Expected one of [{string.Join(", ", this.Repositories.Keys)}].");
 
             // fetch mod info
             return await this.Cache.GetOrCreateAsync($"{repository.VendorKey}:{parsed.ID}".ToLower(), async entry =>
@@ -258,11 +258,11 @@ namespace StardewModdingAPI.Web.Controllers
                 if (result.Error == null)
                 {
                     if (result.Version == null)
-                        result.Error = $"The update key '{updateKey}' matches a mod with no version number.";
+                        result.WithError(RemoteModStatus.InvalidData, $"The update key '{updateKey}' matches a mod with no version number.");
                     else if (!Regex.IsMatch(result.Version, this.VersionRegex, RegexOptions.CultureInvariant | RegexOptions.IgnoreCase))
-                        result.Error = $"The update key '{updateKey}' matches a mod with invalid semantic version '{result.Version}'.";
+                        result.WithError(RemoteModStatus.InvalidData, $"The update key '{updateKey}' matches a mod with invalid semantic version '{result.Version}'.");
                 }
-                entry.AbsoluteExpiration = DateTimeOffset.UtcNow.AddMinutes(result.Error == null ? this.SuccessCacheMinutes : this.ErrorCacheMinutes);
+                entry.AbsoluteExpiration = DateTimeOffset.UtcNow.AddMinutes(result.Status == RemoteModStatus.TemporaryError ? this.ErrorCacheMinutes : this.SuccessCacheMinutes);
                 return result;
             });
         }
