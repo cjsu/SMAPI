@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Rewrite;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using Newtonsoft.Json;
 using StardewModdingAPI.Toolkit.Serialisation;
 using StardewModdingAPI.Web.Framework;
+using StardewModdingAPI.Web.Framework.Caching;
 using StardewModdingAPI.Web.Framework.Caching.Wiki;
 using StardewModdingAPI.Web.Framework.Clients.Chucklefish;
 using StardewModdingAPI.Web.Framework.Clients.GitHub;
@@ -81,7 +83,11 @@ namespace StardewModdingAPI.Web
             }
 
             // init MongoDB
-            services.AddSingleton<IMongoDatabase>(serv => new MongoClient(mongoConfig.GetConnectionString()).GetDatabase(mongoConfig.Database));
+            services.AddSingleton<IMongoDatabase>(serv =>
+            {
+                BsonSerializer.RegisterSerializer(new UtcDateTimeOffsetSerializer());
+                return new MongoClient(mongoConfig.GetConnectionString()).GetDatabase(mongoConfig.Database);
+            });
             services.AddSingleton<IWikiCacheRepository>(serv => new WikiCacheRepository(serv.GetRequiredService<IMongoDatabase>()));
 
             // init Hangfire
