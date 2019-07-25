@@ -12,6 +12,9 @@ namespace StardewModdingAPI.Web.Framework.Clients.Nexus
         /// <summary>The mod hasn't been published yet.</summary>
         NotPublished,
 
+        /// <summary>The mod contains adult content which is hidden for anonymous web users.</summary>
+        AdultContentForbidden,
+
         /// <summary>The Nexus API returned an unhandled error.</summary>
         Other
     }

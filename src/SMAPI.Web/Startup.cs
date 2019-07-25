@@ -136,10 +136,12 @@ namespace StardewModdingAPI.Web
                 ));
 
                 services.AddSingleton<INexusClient>(new NexusClient(
-                    userAgent: userAgent,
-                    baseUrl: api.NexusBaseUrl,
-                    modUrlFormat: api.NexusModUrlFormat,
-                    modScrapeUrlFormat: api.NexusModScrapeUrlFormat
+                    webUserAgent: userAgent,
+                    webBaseUrl: api.NexusBaseUrl,
+                    webModUrlFormat: api.NexusModUrlFormat,
+                    webModScrapeUrlFormat: api.NexusModScrapeUrlFormat,
+                    apiAppVersion: version,
+                    apiKey: api.NexusApiKey
                 ));
 
                 services.AddSingleton<IPastebinClient>(new PastebinClient(

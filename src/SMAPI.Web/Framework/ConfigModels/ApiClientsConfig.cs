@@ -65,6 +65,9 @@ namespace StardewModdingAPI.Web.Framework.ConfigModels
         /// <summary>The URL for a Nexus mod page to scrape for versions, excluding the <see cref="NexusBaseUrl"/>, where {0} is the mod ID.</summary>
         public string NexusModScrapeUrlFormat { get; set; }
 
+        /// <summary>The Nexus API authentication key.</summary>
+        public string NexusApiKey { get; set; }
+
         /****
         ** Pastebin
         ****/
