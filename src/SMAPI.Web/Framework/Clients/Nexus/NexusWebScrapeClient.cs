@@ -74,8 +74,14 @@ namespace StardewModdingAPI.Web.Framework.Clients.Nexus
                     case "not found":
                         return null;
 
+                    case "hidden mod":
+                        return new NexusMod { Error = $"Nexus error: {errorCode} ({errorText}).", Status = NexusModStatus.Hidden };
+
+                    case "not published":
+                        return new NexusMod { Error = $"Nexus error: {errorCode} ({errorText}).", Status = NexusModStatus.NotPublished };
+
                     default:
-                        return new NexusMod { Error = $"Nexus error: {errorCode} ({errorText})." };
+                        return new NexusMod { Error = $"Nexus error: {errorCode} ({errorText}).", Status = NexusModStatus.Other };
                 }
             }
 

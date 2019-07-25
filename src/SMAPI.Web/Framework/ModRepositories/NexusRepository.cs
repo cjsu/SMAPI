@@ -41,7 +41,13 @@ namespace StardewModdingAPI.Web.Framework.ModRepositories
                 if (mod == null)
                     return new ModInfoModel().WithError(RemoteModStatus.DoesNotExist, "Found no Nexus mod with this ID.");
                 if (mod.Error != null)
-                    return new ModInfoModel().WithError(RemoteModStatus.TemporaryError, mod.Error);
+                {
+                    RemoteModStatus remoteStatus = mod.Status == NexusModStatus.Hidden || mod.Status == NexusModStatus.NotPublished
+                        ? RemoteModStatus.DoesNotExist
+                        : RemoteModStatus.TemporaryError;
+                    return new ModInfoModel().WithError(remoteStatus, mod.Error);
+                }
+
                 return new ModInfoModel(name: mod.Name, version: this.NormaliseVersion(mod.Version), previewVersion: mod.LatestFileVersion?.ToString(), url: mod.Url);
             }
             catch (Exception ex)
