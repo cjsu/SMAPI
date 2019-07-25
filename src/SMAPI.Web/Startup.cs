@@ -135,7 +135,7 @@ namespace StardewModdingAPI.Web
                     modUrlFormat: api.ModDropModPageUrl
                 ));
 
-                services.AddSingleton<INexusClient>(new NexusWebScrapeClient(
+                services.AddSingleton<INexusClient>(new NexusClient(
                     userAgent: userAgent,
                     baseUrl: api.NexusBaseUrl,
                     modUrlFormat: api.NexusModUrlFormat,

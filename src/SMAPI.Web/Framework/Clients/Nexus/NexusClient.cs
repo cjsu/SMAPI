@@ -10,7 +10,7 @@ using StardewModdingAPI.Toolkit;
 namespace StardewModdingAPI.Web.Framework.Clients.Nexus
 {
     /// <summary>An HTTP client for fetching mod metadata from the Nexus website.</summary>
-    internal class NexusWebScrapeClient : INexusClient
+    internal class NexusClient : INexusClient
     {
         /*********
         ** Fields
@@ -33,7 +33,7 @@ namespace StardewModdingAPI.Web.Framework.Clients.Nexus
         /// <param name="baseUrl">The base URL for the Nexus Mods site.</param>
         /// <param name="modUrlFormat">The URL for a Nexus Mods mod page for the user, excluding the <paramref name="baseUrl"/>, where {0} is the mod ID.</param>
         /// <param name="modScrapeUrlFormat">The URL for a Nexus mod page to scrape for versions, excluding the base URL, where {0} is the mod ID.</param>
-        public NexusWebScrapeClient(string userAgent, string baseUrl, string modUrlFormat, string modScrapeUrlFormat)
+        public NexusClient(string userAgent, string baseUrl, string modUrlFormat, string modScrapeUrlFormat)
         {
             this.ModUrlFormat = modUrlFormat;
             this.ModScrapeUrlFormat = modScrapeUrlFormat;
