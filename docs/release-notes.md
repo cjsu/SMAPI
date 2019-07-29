@@ -15,6 +15,7 @@ These changes have not been released yet.
     * Now ignores metadata files/folders like `__MACOSX` and `__folder_managed_by_vortex`.
     * Now ignores content files like `.txt` or `.png`, which avoids missing-manifest errors in some common cases.
     * Now detects XNB mods more accurately, and consolidates multi-folder XNB mods.
+  * Save Backup now works in the background, to avoid affecting startup time for players with a large number of saves.
   * Duplicate-mod errors now show the mod version in each folder.
   * Updated mod compatibility list.
   * Fixed mods needing to load custom `Map` assets before the game accesses them (SMAPI will now do so automatically).
