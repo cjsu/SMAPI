@@ -32,19 +32,19 @@ namespace StardewModdingAPI.Web.Framework.ModRepositories
         {
             // validate ID format
             if (!long.TryParse(id, out long modDropID))
-                return new ModInfoModel().WithError(RemoteModStatus.DoesNotExist, $"The value '{id}' isn't a valid ModDrop mod ID, must be an integer ID.");
+                return new ModInfoModel().SetError(RemoteModStatus.DoesNotExist, $"The value '{id}' isn't a valid ModDrop mod ID, must be an integer ID.");
 
             // fetch info
             try
             {
                 ModDropMod mod = await this.Client.GetModAsync(modDropID);
-                if (mod == null)
-                    return new ModInfoModel().WithError(RemoteModStatus.DoesNotExist, "Found no ModDrop mod with this ID.");
-                return new ModInfoModel(name: mod.Name, version: mod.LatestDefaultVersion?.ToString(), previewVersion: mod.LatestOptionalVersion?.ToString(), url: mod.Url);
+                return mod != null
+                    ? new ModInfoModel(name: mod.Name, version: mod.LatestDefaultVersion?.ToString(), previewVersion: mod.LatestOptionalVersion?.ToString(), url: mod.Url)
+                    : new ModInfoModel().SetError(RemoteModStatus.DoesNotExist, "Found no ModDrop mod with this ID.");
             }
             catch (Exception ex)
             {
-                return new ModInfoModel().WithError(RemoteModStatus.TemporaryError, ex.ToString());
+                return new ModInfoModel().SetError(RemoteModStatus.TemporaryError, ex.ToString());
             }
         }
 

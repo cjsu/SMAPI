@@ -121,8 +121,6 @@ namespace StardewModdingAPI.Web
 
                 services.AddSingleton<IGitHubClient>(new GitHubClient(
                     baseUrl: api.GitHubBaseUrl,
-                    stableReleaseUrlFormat: api.GitHubStableReleaseUrlFormat,
-                    anyReleaseUrlFormat: api.GitHubAnyReleaseUrlFormat,
                     userAgent: userAgent,
                     acceptHeader: api.GitHubAcceptHeader,
                     username: api.GitHubUsername,

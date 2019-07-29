@@ -123,18 +123,33 @@ namespace StardewModdingAPI.Web.Controllers
             // crossreference data
             ModDataRecord record = this.ModDatabase.Get(search.ID);
             WikiModEntry wikiEntry = wikiData.FirstOrDefault(entry => entry.ID.Contains(search.ID.Trim(), StringComparer.InvariantCultureIgnoreCase));
-            string[] updateKeys = this.GetUpdateKeys(search.UpdateKeys, record, wikiEntry).ToArray();
+            UpdateKey[] updateKeys = this.GetUpdateKeys(search.UpdateKeys, record, wikiEntry).ToArray();
+
+            // add soft lookups (don't log errors if the target doesn't exist)
+            UpdateKey[] softUpdateKeys = updateKeys.All(key => key.Repository != ModRepositoryKey.GitHub) && !string.IsNullOrWhiteSpace(wikiEntry?.GitHubRepo)
+                ? new[] { new UpdateKey(ModRepositoryKey.GitHub, wikiEntry.GitHubRepo) }
+                : new UpdateKey[0];
 
             // get latest versions
             ModEntryModel result = new ModEntryModel { ID = search.ID };
             IList<string> errors = new List<string>();
-            foreach (string updateKey in updateKeys)
+            foreach (UpdateKey updateKey in updateKeys.Concat(softUpdateKeys))
             {
+                bool isSoftLookup = softUpdateKeys.Contains(updateKey);
+
+                // validate update key
+                if (!updateKey.LooksValid)
+                {
+                    errors.Add($"The update key '{updateKey}' isn't in a valid format. It should contain the site key and mod ID like 'Nexus:541'.");
+                    continue;
+                }
+
                 // fetch data
                 ModInfoModel data = await this.GetInfoForUpdateKeyAsync(updateKey);
                 if (data.Error != null)
                 {
-                    errors.Add(data.Error);
+                    if (!isSoftLookup || data.Status != RemoteModStatus.DoesNotExist)
+                        errors.Add(data.Error);
                     continue;
                 }
 
@@ -221,32 +236,27 @@ namespace StardewModdingAPI.Web.Controllers
 
         /// <summary>Get the mod info for an update key.</summary>
         /// <param name="updateKey">The namespaced update key.</param>
-        private async Task<ModInfoModel> GetInfoForUpdateKeyAsync(string updateKey)
+        private async Task<ModInfoModel> GetInfoForUpdateKeyAsync(UpdateKey updateKey)
         {
-            // parse update key
-            UpdateKey parsed = UpdateKey.Parse(updateKey);
-            if (!parsed.LooksValid)
-                return new ModInfoModel().WithError(RemoteModStatus.DoesNotExist, $"The update key '{updateKey}' isn't in a valid format. It should contain the site key and mod ID like 'Nexus:541'.");
-
             // get mod
-            if (!this.ModCache.TryGetMod(parsed.Repository, parsed.ID, out CachedMod mod) || this.ModCache.IsStale(mod.LastUpdated, mod.FetchStatus == RemoteModStatus.TemporaryError ? this.ErrorCacheMinutes : this.SuccessCacheMinutes))
+            if (!this.ModCache.TryGetMod(updateKey.Repository, updateKey.ID, out CachedMod mod) || this.ModCache.IsStale(mod.LastUpdated, mod.FetchStatus == RemoteModStatus.TemporaryError ? this.ErrorCacheMinutes : this.SuccessCacheMinutes))
             {
                 // get site
-                if (!this.Repositories.TryGetValue(parsed.Repository, out IModRepository repository))
-                    return new ModInfoModel().WithError(RemoteModStatus.DoesNotExist, $"There's no mod site with key '{parsed.Repository}'. Expected one of [{string.Join(", ", this.Repositories.Keys)}].");
+                if (!this.Repositories.TryGetValue(updateKey.Repository, out IModRepository repository))
+                    return new ModInfoModel().SetError(RemoteModStatus.DoesNotExist, $"There's no mod site with key '{updateKey.Repository}'. Expected one of [{string.Join(", ", this.Repositories.Keys)}].");
 
                 // fetch mod
-                ModInfoModel result = await repository.GetModInfoAsync(parsed.ID);
+                ModInfoModel result = await repository.GetModInfoAsync(updateKey.ID);
                 if (result.Error == null)
                 {
                     if (result.Version == null)
-                        result.WithError(RemoteModStatus.InvalidData, $"The update key '{updateKey}' matches a mod with no version number.");
+                        result.SetError(RemoteModStatus.InvalidData, $"The update key '{updateKey}' matches a mod with no version number.");
                     else if (!SemanticVersion.TryParse(result.Version, out _))
-                        result.WithError(RemoteModStatus.InvalidData, $"The update key '{updateKey}' matches a mod with invalid semantic version '{result.Version}'.");
+                        result.SetError(RemoteModStatus.InvalidData, $"The update key '{updateKey}' matches a mod with invalid semantic version '{result.Version}'.");
                 }
 
                 // cache mod
-                this.ModCache.SaveMod(repository.VendorKey, parsed.ID, result, out mod);
+                this.ModCache.SaveMod(repository.VendorKey, updateKey.ID, result, out mod);
             }
             return mod.GetModel();
         }
@@ -255,7 +265,7 @@ namespace StardewModdingAPI.Web.Controllers
         /// <param name="specifiedKeys">The specified update keys.</param>
         /// <param name="record">The mod's entry in SMAPI's internal database.</param>
         /// <param name="entry">The mod's entry in the wiki list.</param>
-        public IEnumerable<string> GetUpdateKeys(string[] specifiedKeys, ModDataRecord record, WikiModEntry entry)
+        public IEnumerable<UpdateKey> GetUpdateKeys(string[] specifiedKeys, ModDataRecord record, WikiModEntry entry)
         {
             IEnumerable<string> GetRaw()
             {
@@ -283,10 +293,14 @@ namespace StardewModdingAPI.Web.Controllers
                 }
             }
 
-            HashSet<string> seen = new HashSet<string>(StringComparer.InvariantCulture);
-            foreach (string key in GetRaw())
+            HashSet<UpdateKey> seen = new HashSet<UpdateKey>();
+            foreach (string rawKey in GetRaw())
             {
-                if (!string.IsNullOrWhiteSpace(key) && seen.Add(key))
+                if (string.IsNullOrWhiteSpace(rawKey))
+                    continue;
+
+                UpdateKey key = UpdateKey.Parse(rawKey);
+                if (seen.Add(key))
                     yield return key;
             }
         }

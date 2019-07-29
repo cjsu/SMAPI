@@ -32,21 +32,19 @@ namespace StardewModdingAPI.Web.Framework.ModRepositories
         {
             // validate ID format
             if (!uint.TryParse(id, out uint realID))
-                return new ModInfoModel().WithError(RemoteModStatus.DoesNotExist, $"The value '{id}' isn't a valid Chucklefish mod ID, must be an integer ID.");
+                return new ModInfoModel().SetError(RemoteModStatus.DoesNotExist, $"The value '{id}' isn't a valid Chucklefish mod ID, must be an integer ID.");
 
             // fetch info
             try
             {
                 var mod = await this.Client.GetModAsync(realID);
-                if (mod == null)
-                    return new ModInfoModel().WithError(RemoteModStatus.DoesNotExist, "Found no Chucklefish mod with this ID.");
-
-                // create model
-                return new ModInfoModel(name: mod.Name, version: this.NormaliseVersion(mod.Version), url: mod.Url);
+                return mod != null
+                    ? new ModInfoModel(name: mod.Name, version: this.NormaliseVersion(mod.Version), url: mod.Url)
+                    : new ModInfoModel().SetError(RemoteModStatus.DoesNotExist, "Found no Chucklefish mod with this ID.");
             }
             catch (Exception ex)
             {
-                return new ModInfoModel().WithError(RemoteModStatus.TemporaryError, ex.ToString());
+                return new ModInfoModel().SetError(RemoteModStatus.TemporaryError, ex.ToString());
             }
         }
 

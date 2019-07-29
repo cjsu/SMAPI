@@ -58,6 +58,12 @@ namespace StardewModdingAPI.Web.Framework.Caching.Mods
         /// <summary>The URL for the mod page.</summary>
         public string Url { get; set; }
 
+        /// <summary>The license URL, if available.</summary>
+        public string LicenseUrl { get; set; }
+
+        /// <summary>The license name, if available.</summary>
+        public string LicenseName { get; set; }
+
 
         /*********
         ** Accessors
@@ -86,12 +92,16 @@ namespace StardewModdingAPI.Web.Framework.Caching.Mods
             this.MainVersion = mod.Version;
             this.PreviewVersion = mod.PreviewVersion;
             this.Url = mod.Url;
+            this.LicenseUrl = mod.LicenseUrl;
+            this.LicenseName = mod.LicenseName;
         }
 
         /// <summary>Get the API model for the cached data.</summary>
         public ModInfoModel GetModel()
         {
-            return new ModInfoModel(name: this.Name, version: this.MainVersion, previewVersion: this.PreviewVersion, url: this.Url).WithError(this.FetchStatus, this.FetchError);
+            return new ModInfoModel(name: this.Name, version: this.MainVersion, url: this.Url, previewVersion: this.PreviewVersion)
+                .SetLicense(this.LicenseUrl, this.LicenseName)
+                .SetError(this.FetchStatus, this.FetchError);
         }
     }
 }

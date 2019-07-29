@@ -30,6 +30,7 @@ These changes have not been released yet.
   * Fixed map reloads not updating door warps.
   * Fixed outdoor tilesheets being seasonalised when added to an indoor location.
   * Fixed update checks failing for Nexus mods marked as adult content.
+  * Fixed update checks not recognising releases on GitHub if they're not explicitly listed as update keys.
 
 * For the mod compatibility list:
   * Now loads faster (since data is fetched in a background service).

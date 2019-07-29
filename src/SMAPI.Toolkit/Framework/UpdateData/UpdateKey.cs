@@ -3,7 +3,7 @@ using System;
 namespace StardewModdingAPI.Toolkit.Framework.UpdateData
 {
     /// <summary>A namespaced mod ID which uniquely identifies a mod within a mod repository.</summary>
-    public class UpdateKey
+    public class UpdateKey : IEquatable<UpdateKey>
     {
         /*********
         ** Accessors
@@ -38,6 +38,12 @@ namespace StardewModdingAPI.Toolkit.Framework.UpdateData
                 && !string.IsNullOrWhiteSpace(id);
         }
 
+        /// <summary>Construct an instance.</summary>
+        /// <param name="repository">The mod repository containing the mod.</param>
+        /// <param name="id">The mod ID within the repository.</param>
+        public UpdateKey(ModRepositoryKey repository, string id)
+            : this($"{repository}:{id}", repository, id) { }
+
         /// <summary>Parse a raw update key.</summary>
         /// <param name="raw">The raw update key to parse.</param>
         public static UpdateKey Parse(string raw)
@@ -68,6 +74,30 @@ namespace StardewModdingAPI.Toolkit.Framework.UpdateData
             return this.LooksValid
                 ? $"{this.Repository}:{this.ID}"
                 : this.RawText;
+        }
+
+        /// <summary>Indicates whether the current object is equal to another object of the same type.</summary>
+        /// <param name="other">An object to compare with this object.</param>
+        public bool Equals(UpdateKey other)
+        {
+            return
+                other != null
+                && this.Repository == other.Repository
+                && string.Equals(this.ID, other.ID, StringComparison.InvariantCultureIgnoreCase);
+        }
+
+        /// <summary>Determines whether the specified object is equal to the current object.</summary>
+        /// <param name="obj">The object to compare with the current object.</param>
+        public override bool Equals(object obj)
+        {
+            return obj is UpdateKey other && this.Equals(other);
+        }
+
+        /// <summary>Serves as the default hash function. </summary>
+        /// <returns>A hash code for the current object.</returns>
+        public override int GetHashCode()
+        {
+            return $"{this.Repository}:{this.ID}".ToLower().GetHashCode();
         }
     }
 }
