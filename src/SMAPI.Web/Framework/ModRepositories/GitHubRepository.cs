@@ -45,7 +45,7 @@ namespace StardewModdingAPI.Web.Framework.ModRepositories
                     return result.SetError(RemoteModStatus.DoesNotExist, "Found no GitHub repository for this ID.");
                 result
                     .SetBasicInfo(repository.FullName, $"{repository.WebUrl}/releases")
-                    .SetLicense(url: repository.License?.Url, name: repository.License?.Name);
+                    .SetLicense(url: repository.License?.Url, name: repository.License?.SpdxId ?? repository.License?.Name);
 
                 // get latest release (whether preview or stable)
                 GitRelease latest = await this.Client.GetLatestReleaseAsync(id, includePrerelease: true);
