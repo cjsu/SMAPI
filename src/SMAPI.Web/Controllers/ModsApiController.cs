@@ -125,18 +125,11 @@ namespace StardewModdingAPI.Web.Controllers
             WikiModEntry wikiEntry = wikiData.FirstOrDefault(entry => entry.ID.Contains(search.ID.Trim(), StringComparer.InvariantCultureIgnoreCase));
             UpdateKey[] updateKeys = this.GetUpdateKeys(search.UpdateKeys, record, wikiEntry).ToArray();
 
-            // add soft lookups (don't log errors if the target doesn't exist)
-            UpdateKey[] softUpdateKeys = updateKeys.All(key => key.Repository != ModRepositoryKey.GitHub) && !string.IsNullOrWhiteSpace(wikiEntry?.GitHubRepo)
-                ? new[] { new UpdateKey(ModRepositoryKey.GitHub, wikiEntry.GitHubRepo) }
-                : new UpdateKey[0];
-
             // get latest versions
             ModEntryModel result = new ModEntryModel { ID = search.ID };
             IList<string> errors = new List<string>();
-            foreach (UpdateKey updateKey in updateKeys.Concat(softUpdateKeys))
+            foreach (UpdateKey updateKey in updateKeys)
             {
-                bool isSoftLookup = softUpdateKeys.Contains(updateKey);
-
                 // validate update key
                 if (!updateKey.LooksValid)
                 {
@@ -148,7 +141,7 @@ namespace StardewModdingAPI.Web.Controllers
                 ModInfoModel data = await this.GetInfoForUpdateKeyAsync(updateKey);
                 if (data.Error != null)
                 {
-                    if (!isSoftLookup || data.Status != RemoteModStatus.DoesNotExist)
+                    if (data.Status != RemoteModStatus.DoesNotExist)
                         errors.Add(data.Error);
                     continue;
                 }
