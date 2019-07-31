@@ -141,8 +141,7 @@ namespace StardewModdingAPI.Web.Controllers
                 ModInfoModel data = await this.GetInfoForUpdateKeyAsync(updateKey);
                 if (data.Error != null)
                 {
-                    if (data.Status != RemoteModStatus.DoesNotExist)
-                        errors.Add(data.Error);
+                    errors.Add(data.Error);
                     continue;
                 }
 
