@@ -18,6 +18,10 @@ These changes have not been released yet.
   * Save Backup now works in the background, to avoid affecting startup time for players with a large number of saves.
   * Duplicate-mod errors now show the mod version in each folder.
   * Updated mod compatibility list.
+  * Improved update checks:
+    * Update checks are now faster in some cases.
+    * Fixed error if a Nexus mod is marked as adult content.
+    * Fixed error if the Chucklefish page for an update key doesn't exist.
   * Fixed mods needing to load custom `Map` assets before the game accesses them (SMAPI will now do so automatically).
   * Fixed Save Backup not pruning old backups if they're uncompressed.
   * Fixed issues when a farmhand reconnects before the game notices they're disconnected.
@@ -29,8 +33,6 @@ These changes have not been released yet.
   * Fixed map reloads resetting tilesheet seasons.
   * Fixed map reloads not updating door warps.
   * Fixed outdoor tilesheets being seasonalised when added to an indoor location.
-  * Fixed update checks failing for Nexus mods marked as adult content.
-  * Fixed update checks not recognising releases on GitHub if they're not explicitly listed as update keys.
 
 * For the mod compatibility list:
   * Now loads faster (since data is fetched in a background service).
