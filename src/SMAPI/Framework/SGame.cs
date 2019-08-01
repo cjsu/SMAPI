@@ -190,7 +190,7 @@ namespace StardewModdingAPI.Framework
         /// <remarks>This overrides the logic in <see cref="Game1.exitEvent"/> to let SMAPI clean up before exit.</remarks>
         protected override void OnExiting(object sender, EventArgs args)
         {
-            Game1.multiplayer.Disconnect();
+            Game1.multiplayer.Disconnect(StardewValley.Multiplayer.DisconnectType.ClosedGame);
             this.OnGameExiting?.Invoke();
         }
 
