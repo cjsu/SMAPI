@@ -42,6 +42,9 @@ namespace StardewModdingAPI.Framework
         /// <summary>Whether the content coordinator has been disposed.</summary>
         private bool IsDisposed;
 
+        /// <summary>A callback to invoke the first time *any* game content manager loads an asset.</summary>
+        private readonly Action OnLoadingFirstAsset;
+
 
         /*********
         ** Accessors
@@ -72,14 +75,15 @@ namespace StardewModdingAPI.Framework
         /// <param name="monitor">Encapsulates monitoring and logging.</param>
         /// <param name="reflection">Simplifies access to private code.</param>
         /// <param name="jsonHelper">Encapsulates SMAPI's JSON file parsing.</param>
-        public ContentCoordinator(IServiceProvider serviceProvider, string rootDirectory, CultureInfo currentCulture, IMonitor monitor, Reflector reflection, JsonHelper jsonHelper)
+        public ContentCoordinator(IServiceProvider serviceProvider, string rootDirectory, CultureInfo currentCulture, IMonitor monitor, Reflector reflection, JsonHelper jsonHelper, Action onLoadingFirstAsset)
         {
             this.Monitor = monitor ?? throw new ArgumentNullException(nameof(monitor));
             this.Reflection = reflection;
             this.JsonHelper = jsonHelper;
+            this.OnLoadingFirstAsset = onLoadingFirstAsset;
             this.FullRootDirectory = Path.Combine(Constants.ExecutionPath, rootDirectory);
             this.ContentManagers.Add(
-                this.MainContentManager = new GameContentManager("Game1.content", serviceProvider, rootDirectory, currentCulture, this, monitor, reflection, this.OnDisposing)
+                this.MainContentManager = new GameContentManager("Game1.content", serviceProvider, rootDirectory, currentCulture, this, monitor, reflection, this.OnDisposing, onLoadingFirstAsset)
             );
             this.CoreAssets = new CoreAssetPropagator(this.MainContentManager.AssertAndNormaliseAssetName, reflection, monitor);
         }
@@ -88,7 +92,7 @@ namespace StardewModdingAPI.Framework
         /// <param name="name">A name for the mod manager. Not guaranteed to be unique.</param>
         public GameContentManager CreateGameContentManager(string name)
         {
-            GameContentManager manager = new GameContentManager(name, this.MainContentManager.ServiceProvider, this.MainContentManager.RootDirectory, this.MainContentManager.CurrentCulture, this, this.Monitor, this.Reflection, this.OnDisposing);
+            GameContentManager manager = new GameContentManager(name, this.MainContentManager.ServiceProvider, this.MainContentManager.RootDirectory, this.MainContentManager.CurrentCulture, this, this.Monitor, this.Reflection, this.OnDisposing, this.OnLoadingFirstAsset);
             this.ContentManagers.Add(manager);
             return manager;
         }

@@ -89,6 +89,9 @@ namespace StardewModdingAPI.Framework
         /// <summary>Simplifies access to private game code.</summary>
         private readonly Reflector Reflection;
 
+        /// <summary>A callback to invoke the first time *any* game content manager loads an asset.</summary>
+        private readonly Action OnLoadingFirstAsset;
+
         /****
         ** Game state
         ****/
@@ -148,6 +151,7 @@ namespace StardewModdingAPI.Framework
         /// <param name="onGameExiting">A callback to invoke when the game exits.</param>
         internal SGame(IMonitor monitor, IMonitor monitorForGame, Reflector reflection, EventManager eventManager, JsonHelper jsonHelper, ModRegistry modRegistry, DeprecationManager deprecationManager, Action onLocaleChanged, Action onGameInitialised, Action onGameExiting)
         {
+            this.OnLoadingFirstAsset = SGame.ConstructorHack.OnLoadingFirstAsset;
             SGame.ConstructorHack = null;
 
             // check expectations
@@ -252,7 +256,7 @@ namespace StardewModdingAPI.Framework
             // NOTE: this method is called before the SGame constructor runs. Don't depend on anything being initialised at this point.
             if (this.ContentCore == null)
             {
-                this.ContentCore = new ContentCoordinator(serviceProvider, rootDirectory, Thread.CurrentThread.CurrentUICulture, SGame.ConstructorHack.Monitor, SGame.ConstructorHack.Reflection, SGame.ConstructorHack.JsonHelper);
+                this.ContentCore = new ContentCoordinator(serviceProvider, rootDirectory, Thread.CurrentThread.CurrentUICulture, SGame.ConstructorHack.Monitor, SGame.ConstructorHack.Reflection, SGame.ConstructorHack.JsonHelper, this.OnLoadingFirstAsset ?? SGame.ConstructorHack?.OnLoadingFirstAsset);
                 this.NextContentManagerIsMain = true;
                 return this.ContentCore.CreateGameContentManager("Game1._temporaryContent");
             }
@@ -1149,10 +1153,7 @@ namespace StardewModdingAPI.Framework
                 {
                     if (options.zoomLevel != 1f)
                     {
-                        if (toBuffer != null)
-                            base.GraphicsDevice.SetRenderTarget(toBuffer);
-                        else
-                            base.GraphicsDevice.SetRenderTarget(this.screen);
+                        base.GraphicsDevice.SetRenderTarget(this.screen);
                     }
                     if (this.IsSaving)
                     {
