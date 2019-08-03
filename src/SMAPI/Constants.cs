@@ -23,7 +23,7 @@ namespace StardewModdingAPI
         public static ISemanticVersion ApiVersion { get; } = new Toolkit.SemanticVersion("2.11.2");
 
         /// <summary>Android SMAPI's current semantic version.</summary>
-        public static ISemanticVersion AndroidApiVersion { get; } = new Toolkit.SemanticVersion("0.8.8");
+        public static ISemanticVersion AndroidApiVersion { get; } = new Toolkit.SemanticVersion("0.8.9-beta");
 
         /// <summary>The minimum supported version of Stardew Valley.</summary>
         public static ISemanticVersion MinimumGameVersion { get; } = new GameVersion("1.3.36");
@@ -118,7 +118,7 @@ namespace StardewModdingAPI
         internal static ISemanticVersion GameVersion { get; } = new GameVersion("1.3.36");
 
         /// <summary>The target game platform.</summary>
-        internal static Platform Platform { get; } = EnvironmentUtility.DetectPlatform();
+        internal static Platform Platform { get; } = Platform.Android;
 
         /// <summary>The game's assembly name.</summary>
         internal static string GameAssemblyName => Constants.Platform == Platform.Windows ? "Stardew Valley" : "StardewValley";
@@ -158,6 +158,7 @@ namespace StardewModdingAPI
             {
                 case Platform.Linux:
                 case Platform.Mac:
+                case Platform.Android:
                     removeAssemblyReferences = new[]
                     {
                         "Netcode",
