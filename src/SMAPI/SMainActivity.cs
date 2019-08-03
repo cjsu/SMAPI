@@ -91,11 +91,6 @@ namespace StardewModdingAPI
 
         public void OnCreatePartTwo()
         {
-            //typeof(MainActivity).GetMethod("SetZoomScaleAndMenuButtonScale", BindingFlags.Instance | BindingFlags.NonPublic)?.Invoke(this, null);
-            //typeof(MainActivity).GetMethod("SetSavesPath", BindingFlags.Instance | BindingFlags.NonPublic)?.Invoke(this, null);
-            //this.SetPaddingForMenus();
-            //Toast.MakeText(context: this, "Initializing SMAPI", ToastLength.Long).Show();
-
             new SGameConsole();
 
             Program.Main(null);
@@ -106,7 +101,6 @@ namespace StardewModdingAPI
             typeof(MainActivity).GetField("_game1", BindingFlags.Instance | BindingFlags.NonPublic)?.SetValue(this, this.core.GameInstance);
 
             this.SetContentView((View)this.core.GameInstance.Services.GetService(typeof(View)));
-            //this.core.GameInstance.Run();
             
             this.CheckUsingServerManagedPolicy();
         }
@@ -115,7 +109,8 @@ namespace StardewModdingAPI
         {
             if (!this.HasPermissions)
                 this.PromptForPermissions();
-            this.OnCreatePartTwo();
+            else
+                this.OnCreatePartTwo();
         }
 
         public new void PromptForPermissions()
@@ -125,41 +120,9 @@ namespace StardewModdingAPI
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
         {
-            if (permissions.Length == 0)
-            {
-                return;
-            }
-            string languageCode = Locale.Default.Language.Substring(0, 2);
-            int num = 0;
-            if (requestCode == 0)
-            {
-                for (int i = 0; i < grantResults.Length; i++)
-                {
-                    if (grantResults[i] == Permission.Granted)
-                    {
-                        num++;
-                    }
-                    else if (grantResults[i] == Permission.Denied)
-                    {
-                        try
-                        {
-                            if (ActivityCompat.ShouldShowRequestPermissionRationale(this, permissions[i]))
-                            {
-                                this.PromptForPermissions();
-                            }
-                        }
-                        catch (IllegalArgumentException exception)
-                        {
-                            this.Finish();
-                        }
-                        return;
-                    }
-                }
-            }
-            if (num == permissions.Length)
-            {
+            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            if (this.HasPermissions)
                 this.OnCreatePartTwo();
-            }
         }
 
 
@@ -207,6 +170,26 @@ namespace StardewModdingAPI
                     typeof(MainActivity).GetMethod("CheckToDownloadExpansion", BindingFlags.Instance | BindingFlags.NonPublic)?.Invoke(this, null);
                     break;
             }
+        }
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+        }
+
+        protected override void OnPause()
+        {
+            base.OnPause();
+        }
+
+        protected override void OnStop()
+        {
+            base.OnStop();
+        }
+
+        public override void OnWindowFocusChanged(bool hasFocus)
+        {
+            base.OnWindowFocusChanged(hasFocus);
         }
     }
 }
