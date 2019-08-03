@@ -44,11 +44,12 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
 
         private void VirtualToggleButtonPressed(object sender, ButtonPressedEventArgs e)
         {
-            if (!this.enabled && this.shouldTrigger())
+            Vector2 screenPixels = e.Cursor.ScreenPixels;
+            if (!this.enabled && this.shouldTrigger(screenPixels))
             {
                 this.hiddenKeys(true, false);
             }
-            else if (this.enabled && this.shouldTrigger())
+            else if (this.enabled && this.shouldTrigger(screenPixels))
             {
                 this.hiddenKeys(false, true);
                 if (Game1.activeClickableMenu is IClickableMenu menu)
@@ -67,23 +68,9 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
             }
         }
 
-        private bool shouldTrigger()
+        private bool shouldTrigger(Vector2 screenPixels)
         {
-            int nativeZoomLevel = (int)Game1.NativeZoomLevel;
-            int x1;
-            int y1;
-            if (nativeZoomLevel != 0)
-            {
-                x1 = Mouse.GetState().X / nativeZoomLevel;
-                y1 = Mouse.GetState().Y / nativeZoomLevel;
-            }
-            else
-            {
-                x1 = (int)((float)Mouse.GetState().X / Game1.NativeZoomLevel);
-                y1 = (int)((float)Mouse.GetState().Y / Game1.NativeZoomLevel);
-            }
-
-            if (this.virtualToggleButton.containsPoint(x1, y1))
+            if (this.virtualToggleButton.containsPoint((int)(screenPixels.X * Game1.options.zoomLevel), (int)(screenPixels.Y * Game1.options.zoomLevel)))
             {
                 Toolbar.toolbarPressed = true;
                 return true;

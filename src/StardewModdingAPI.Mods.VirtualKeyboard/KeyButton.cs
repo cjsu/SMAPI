@@ -72,23 +72,9 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
             this.Legacy_KeyReleased = this.legacyButtonReleased.GetType().GetMethod("Raise", BindingFlags.Public | BindingFlags.Instance);
         }
 
-        private bool shouldTrigger()
+        private bool shouldTrigger(Vector2 screenPixels)
         {
-            int nativeZoomLevel = (int)Game1.NativeZoomLevel;
-            int x1;
-            int y1;
-            if (nativeZoomLevel != 0)
-            {
-                x1 = Mouse.GetState().X / nativeZoomLevel;
-                y1 = Mouse.GetState().Y / nativeZoomLevel;
-            }
-            else
-            {
-                x1 = (int)((float)Mouse.GetState().X / Game1.NativeZoomLevel);
-                y1 = (int)((float)Mouse.GetState().Y / Game1.NativeZoomLevel);
-            }
-
-            if (this.buttonRectangle.Contains(x1, y1))
+            if (this.buttonRectangle.Contains(screenPixels.X * Game1.options.zoomLevel, screenPixels.Y * Game1.options.zoomLevel))
             {
                 return true;
             }
@@ -102,7 +88,8 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
                 return;
             }
 
-            if (this.shouldTrigger() && !this.hidden)
+            Vector2 screenPixels = e.Cursor.ScreenPixels;
+            if (this.shouldTrigger(screenPixels) && !this.hidden)
             {
                 object inputState = e.GetType().GetField("InputState", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(e);
 
@@ -129,7 +116,8 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
                 return;
             }
 
-            if (this.shouldTrigger())
+            Vector2 screenPixels = e.Cursor.ScreenPixels;
+            if (this.shouldTrigger(screenPixels))
             {
                 object inputState = e.GetType().GetField("InputState", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(e);
                 object buttonReleasedEventArgs = Activator.CreateInstance(typeof(ButtonReleasedEventArgs), BindingFlags.NonPublic | BindingFlags.Instance, null, new object[] { this.buttonKey, e.Cursor, inputState }, null);
