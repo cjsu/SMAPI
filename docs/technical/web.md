@@ -6,6 +6,7 @@ and update check API.
 ## Contents
 * [Overview](#overview)
   * [Log parser](#log-parser)
+  * [JSON validator](#json-validator)
   * [Web API](#web-api)
 * [For SMAPI developers](#for-smapi-developers)
   * [Local development](#local-development)
@@ -16,9 +17,41 @@ The `SMAPI.Web` project provides an API and web UI hosted at `*.smapi.io`.
 
 ### Log parser
 The log parser provides a web UI for uploading, parsing, and sharing SMAPI logs. The logs are
-persisted in a compressed form to Pastebin.
+persisted in a compressed form to Pastebin. The log parser lives at https://log.smapi.io.
 
-The log parser lives at https://log.smapi.io.
+### JSON validator
+The JSON validator provides a web UI for uploading and sharing JSON files, and validating them
+as plain JSON or against a predefined format like `manifest.json` or Content Patcher's
+`content.json`. The JSON validator lives at https://json.smapi.io.
+
+Schema files are defined in `wwwroot/schemas` using the [JSON Schema](https://json-schema.org/)
+format, with some special properties:
+* The root schema may have a `@documentationURL` field, which is the URL to the user-facing
+  documentation for the format (if any).
+* Any part of the schema can define an `@errorMessages` field, which specifies user-friendly errors
+  which override the auto-generated messages. These are indexed by error type. For example:
+  ```js
+  "pattern": "^[a-zA-Z0-9_.-]+\\.dll$",
+  "@errorMessages": {
+     "pattern": "Invalid value; must be a filename ending with .dll."
+  }
+  ```
+
+You can also reference these schemas in your JSON file directly using the `$schema` field, for
+text editors that support schema validation. For example:
+```js
+{
+   "$schema": "https://smapi.io/schemas/manifest.json",
+   "Name": "Some mod",
+   ...
+}
+```
+
+Current schemas:
+
+format | schema URL
+------ | ----------
+[SMAPI `manifest.json`](https://stardewvalleywiki.com/Modding:Modder_Guide/APIs/Manifest) | https://smapi.io/schemas/manifest.json
 
 ### Web API
 SMAPI provides a web API at `api.smapi.io` for use by SMAPI and external tools. The URL includes a

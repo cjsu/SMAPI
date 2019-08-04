@@ -33,6 +33,9 @@ namespace StardewModdingAPI.Web.ViewModels.JsonValidator
         /// <summary>An error which occurred while parsing the JSON.</summary>
         public string ParseError { get; set; }
 
+        /// <summary>A web URL to the user-facing format documentation.</summary>
+        public string FormatUrl { get; set; }
+
 
         /*********
         ** Public methods

@@ -3,6 +3,7 @@
     "$id": "https://smapi.io/schemas/manifest.json",
     "title": "SMAPI manifest",
     "description": "Manifest file for a SMAPI mod or content pack",
+    "@documentationUrl": "https://stardewvalleywiki.com/Modding:Modder_Guide/APIs/Manifest",
     "type": "object",
     "properties": {
         "Name": {
@@ -38,7 +39,10 @@
             "description": "The DLL filename SMAPI should load for this mod. Mutually exclusive with ContentPackFor.",
             "type": "string",
             "pattern": "^[a-zA-Z0-9_.-]+\\.dll$",
-            "examples": "LookupAnything.dll"
+            "examples": "LookupAnything.dll",
+            "@errorMessages": {
+                "pattern": "Invalid value; must be a filename ending with .dll."
+            }
         },
         "ContentPackFor": {
             "title": "Content pack for",
@@ -59,12 +63,17 @@
 
             "required": [ "UniqueID" ]
         },
+        "MinimumApiVersion": {
+            "title": "Minimum API version",
+            "description": "The minimum SMAPI version needed to use this mod. If a player tries to use the mod with an older SMAPI version, they'll see a friendly message saying they need to update SMAPI. This also serves as a proxy for the minimum game version, since SMAPI itself enforces a minimum game version.",
+            "$ref": "#/definitions/SemanticVersion"
+        },
         "Dependencies": {
             "title": "Mod dependencies",
             "description": "Specifies other mods to load before this mod. If a dependency is required and a player tries to use the mod without the dependency installed, the mod won't be loaded and they'll see a friendly message saying they need to install those.",
             "type": "array",
             "items": {
-                "type": "object", 
+                "type": "object",
                 "properties": {
                     "UniqueID": {
                         "title": "Dependency unique ID",
@@ -90,8 +99,26 @@
             "type": "array",
             "items": {
                 "type": "string",
-                "pattern": "^(Chucklefish:\\d+|Nexus:\\d+|GitHub:[A-Za-z0-9_]+/[A-Za-z0-9_]+|ModDrop:\\d+)$"
+                "pattern": "^(Chucklefish:\\d+|Nexus:\\d+|GitHub:[A-Za-z0-9_]+/[A-Za-z0-9_]+|ModDrop:\\d+)$",
+                "@errorMessages": {
+                    "pattern": "Invalid update key; see https://stardewvalleywiki.com/Modding:Modder_Guide/APIs/Manifest#Update_checks for more info."
+                }  
             }
+        }
+    },
+    "definitions": {
+        "SemanticVersion": {
+            "type": "string",
+            "pattern": "^(?>(?<major>0|[1-9]\\d*))\\.(?>(?<minor>0|[1-9]\\d*))(?>(?:\\.(?<patch>0|[1-9]\\d*))?)(?:-(?<prerelease>(?>[a-zA-Z0-9]+[\\-\\.]?)+))?$", // derived from SMAPI.Toolkit.SemanticVersion
+            "examples": [ "1.0.0", "1.0.1-beta.2" ],
+            "@errorMessages": {
+                "pattern": "Invalid semantic version; must be formatted like 1.2.0 or 1.2.0-prerelease.tags. See https://semver.org/ for more info."
+            }
+        },
+        "ModID": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9_.-]+$", // derived from SMAPI.Toolkit.Utilities.PathUtilities.IsSlug
+            "examples": [ "Pathoschild.LookupAnything" ]
         }
     },
 
@@ -104,17 +131,8 @@
             "required": [ "ContentPackFor" ]
         }
     ],
-
-    "definitions": {
-        "SemanticVersion": {
-            "type": "string",
-            "pattern": "(?>(?<major>0|[1-9]\\d*))\\.(?>(?<minor>0|[1-9]\\d*))(?>(?:\\.(?<patch>0|[1-9]\\d*))?)(?:-(?<prerelease>(?>[a-zA-Z0-9]+[\\-\\.]?)+))?", // derived from SMAPI.Toolkit.SemanticVersion
-            "examples": [ "1.0.0", "1.0.1-beta.2" ]
-        },
-        "ModID": {
-            "type": "string",
-            "pattern": "^[a-zA-Z0-9_.-]+$", // derived from SMAPI.Toolkit.Utilities.PathUtilities.IsSlug
-            "examples": [ "Pathoschild.LookupAnything" ]
-        }
+    "additionalProperties": false,
+    "@errorMessages": {
+        "oneOf": "Can't specify both EntryDll or ContentPackFor, they're mutually exclusive."
     }
 }

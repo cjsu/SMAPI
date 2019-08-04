@@ -95,6 +95,11 @@ else if (Model.PasteID != null)
             </div>
 
             <h2>Validation errors</h2>
+            @if (Model.FormatUrl != null)
+            {
+                <p>See <a href="@Model.FormatUrl">format documentation</a>.</p>
+            }
+
             @if (Model.Errors.Any())
             {
                 <table id="metadata" class="table">

@@ -113,6 +113,9 @@ namespace StardewModdingAPI.Web.Controllers
                 schema = JSchema.Parse(System.IO.File.ReadAllText(schemaFile.FullName));
             }
 
+            // get format doc URL
+            result.FormatUrl = this.GetExtensionField<string>(schema, "@documentationUrl");
+
             // validate JSON
             parsed.IsValid(schema, out IList<ValidationError> rawErrors);
             var errors = rawErrors
@@ -172,12 +175,21 @@ namespace StardewModdingAPI.Web.Controllers
         /// <param name="indent">The indentation level to apply for inner errors.</param>
         private string GetFlattenedError(ValidationError error, int indent = 0)
         {
+            // get override error
+            string message = this.GetOverrideError(error.Schema, error.ErrorType);
+            if (message != null)
+                return message;
+
             // get friendly representation of main error
-            string message = error.Message;
+            message = error.Message;
             switch (error.ErrorType)
             {
                 case ErrorType.Enum:
                     message = $"Invalid value. Found '{error.Value}', but expected one of '{string.Join("', '", error.Schema.Enum)}'.";
+                    break;
+
+                case ErrorType.Required:
+                    message = $"Missing required fields: {string.Join(", ", (List<string>)error.Value)}.";
                     break;
             }
 
@@ -215,6 +227,41 @@ namespace StardewModdingAPI.Web.Controllers
             }
 
             return null;
+        }
+
+        /// <summary>Get an override error from the JSON schema, if any.</summary>
+        /// <param name="schema">The schema or subschema that raised the error.</param>
+        /// <param name="errorType">The error type.</param>
+        private string GetOverrideError(JSchema schema, ErrorType errorType)
+        {
+            // get override errors
+            IDictionary<string, string> errors = this.GetExtensionField<Dictionary<string, string>>(schema, "@errorMessages");
+            if (errors == null)
+                return null;
+            errors = new Dictionary<string, string>(errors, StringComparer.InvariantCultureIgnoreCase);
+
+            // get matching error
+            return errors.TryGetValue(errorType.ToString(), out string errorPhrase)
+                ? errorPhrase
+                : null;
+        }
+
+        /// <summary>Get an extension field from a JSON schema.</summary>
+        /// <typeparam name="T">The field type.</typeparam>
+        /// <param name="schema">The schema whose extension fields to search.</param>
+        /// <param name="key">The case-insensitive field key.</param>
+        private T GetExtensionField<T>(JSchema schema, string key)
+        {
+            if (schema.ExtensionData != null)
+            {
+                foreach (var pair in schema.ExtensionData)
+                {
+                    if (pair.Key.Equals(key, StringComparison.InvariantCultureIgnoreCase))
+                        return pair.Value.ToObject<T>();
+                }
+            }
+
+            return default;
         }
     }
 }
