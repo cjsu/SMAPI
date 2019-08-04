@@ -20,6 +20,7 @@ using StardewModdingAPI.Web.Framework.Clients.GitHub;
 using StardewModdingAPI.Web.Framework.Clients.ModDrop;
 using StardewModdingAPI.Web.Framework.Clients.Nexus;
 using StardewModdingAPI.Web.Framework.Clients.Pastebin;
+using StardewModdingAPI.Web.Framework.Compression;
 using StardewModdingAPI.Web.Framework.ConfigModels;
 using StardewModdingAPI.Web.Framework.RewriteRules;
 
@@ -149,6 +150,9 @@ namespace StardewModdingAPI.Web
                     devKey: api.PastebinDevKey
                 ));
             }
+
+            // init helpers
+            services.AddSingleton<IGzipHelper>(new GzipHelper());
         }
 
         /// <summary>The method called by the runtime to configure the HTTP request pipeline.</summary>
@@ -199,7 +203,7 @@ namespace StardewModdingAPI.Web
             redirects.Add(new ConditionalRewriteSubdomainRule(
                 shouldRewrite: req =>
                     req.Host.Host != "localhost"
-                    && (req.Host.Host.StartsWith("api.") || req.Host.Host.StartsWith("log.") || req.Host.Host.StartsWith("mods."))
+                    && (req.Host.Host.StartsWith("api.") || req.Host.Host.StartsWith("json.") || req.Host.Host.StartsWith("log.") || req.Host.Host.StartsWith("mods."))
                     && !req.Path.StartsWithSegments("/content")
                     && !req.Path.StartsWithSegments("/favicon.ico")
             ));

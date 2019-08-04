@@ -23,7 +23,7 @@ smapi.logParser = function (data, sectionUrl) {
     }
 
     // set local time started
-    if(data)
+    if (data)
         data.localTimeStarted = ("0" + data.logStarted.getHours()).slice(-2) + ":" + ("0" + data.logStarted.getMinutes()).slice(-2);
 
     // init app
@@ -100,7 +100,7 @@ smapi.logParser = function (data, sectionUrl) {
                 updateModFilters();
             },
 
-            filtersAllow: function(modId, level) {
+            filtersAllow: function (modId, level) {
                 return this.showMods[modId] !== false && this.showLevels[level] !== false;
             },
 
@@ -121,16 +121,15 @@ smapi.logParser = function (data, sectionUrl) {
         var submit = $("#submit");
 
         // instruction OS chooser
-        var chooseSystem = function() {
+        var chooseSystem = function () {
             systemInstructions.hide();
             systemInstructions.filter("[data-os='" + $("input[name='os']:checked").val() + "']").show();
-        }
+        };
         systemOptions.on("click", chooseSystem);
         chooseSystem();
 
         // disable submit if it's empty
-        var toggleSubmit = function()
-        {
+        var toggleSubmit = function () {
             var hasText = !!input.val().trim();
             submit.prop("disabled", !hasText);
         }
@@ -139,18 +138,18 @@ smapi.logParser = function (data, sectionUrl) {
 
         // drag & drop file
         input.on({
-            'dragover dragenter': function(e) {
+            'dragover dragenter': function (e) {
                 e.preventDefault();
                 e.stopPropagation();
             },
-            'drop': function(e) {
+            'drop': function (e) {
                 var dataTransfer = e.originalEvent.dataTransfer;
                 if (dataTransfer && dataTransfer.files.length) {
                     e.preventDefault();
                     e.stopPropagation();
                     var file = dataTransfer.files[0];
                     var reader = new FileReader();
-                    reader.onload = $.proxy(function(file, $input, event) {
+                    reader.onload = $.proxy(function (file, $input, event) {
                         $input.val(event.target.result);
                         toggleSubmit();
                     }, this, file, $("#input"));

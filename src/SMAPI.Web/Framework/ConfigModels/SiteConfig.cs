@@ -12,6 +12,9 @@ namespace StardewModdingAPI.Web.Framework.ConfigModels
         /// <summary>The root URL for the log parser.</summary>
         public string LogParserUrl { get; set; }
 
+        /// <summary>The root URL for the JSON validator.</summary>
+        public string JsonValidatorUrl { get; set; }
+
         /// <summary>The root URL for the mod list.</summary>
         public string ModListUrl { get; set; }
 
