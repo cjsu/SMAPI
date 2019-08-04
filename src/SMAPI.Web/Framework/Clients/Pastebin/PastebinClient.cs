@@ -67,8 +67,9 @@ namespace StardewModdingAPI.Web.Framework.Clients.Pastebin
         }
 
         /// <summary>Save a paste to Pastebin.</summary>
+        /// <param name="name">The paste name.</param>
         /// <param name="content">The paste content.</param>
-        public async Task<SavePasteResult> PostAsync(string content)
+        public async Task<SavePasteResult> PostAsync(string name, string content)
         {
             try
             {
@@ -85,7 +86,7 @@ namespace StardewModdingAPI.Web.Framework.Clients.Pastebin
                         api_user_key = this.UserKey,
                         api_dev_key = this.DevKey,
                         api_paste_private = 1, // unlisted
-                        api_paste_name = $"SMAPI log {DateTime.UtcNow:s}",
+                        api_paste_name = name,
                         api_paste_expire_date = "N", // never expire
                         api_paste_code = content
                     }))

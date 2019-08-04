@@ -203,7 +203,7 @@ namespace StardewModdingAPI.Web
             redirects.Add(new ConditionalRewriteSubdomainRule(
                 shouldRewrite: req =>
                     req.Host.Host != "localhost"
-                    && (req.Host.Host.StartsWith("api.") || req.Host.Host.StartsWith("log.") || req.Host.Host.StartsWith("mods."))
+                    && (req.Host.Host.StartsWith("api.") || req.Host.Host.StartsWith("json.") || req.Host.Host.StartsWith("log.") || req.Host.Host.StartsWith("mods."))
                     && !req.Path.StartsWithSegments("/content")
                     && !req.Path.StartsWithSegments("/favicon.ico")
             ));

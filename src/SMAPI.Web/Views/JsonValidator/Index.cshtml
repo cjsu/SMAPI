@@ -1,0 +1,126 @@
+@using StardewModdingAPI.Web.ViewModels.JsonValidator
+@model JsonValidatorModel
+
+@{
+    ViewData["Title"] = "JSON validator";
+}
+
+@section Head {
+    @if (Model.PasteID != null)
+    {
+        <meta name="robots" content="noindex" />
+    }
+    <link rel="stylesheet" href="~/Content/css/json-validator.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tmont/sunlight@1.22.0/src/themes/sunlight.default.min.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/tmont/sunlight@1.22.0/src/sunlight.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/tmont/sunlight@1.22.0/src/plugins/sunlight-plugin.linenumbers.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/tmont/sunlight@1.22.0/src/lang/sunlight.javascript.min.js" crossorigin="anonymous"></script>
+    <script src="~/Content/js/json-validator.js"></script>
+    <script>
+        $(function () {
+            smapi.jsonValidator(@Json.Serialize(Model.SectionUrl), @Json.Serialize(Model.PasteID));
+        });
+    </script>
+}
+
+@* upload result banner *@
+@if (Model.UploadError != null)
+{
+    <div class="banner error">
+        <strong>Oops, the server ran into trouble saving that file.</strong><br />
+        <small>Error details: @Model.UploadError</small>
+    </div>
+}
+else if (Model.ParseError != null)
+{
+    <div class="banner error">
+        <strong>Oops, couldn't parse that JSON.</strong><br />
+        Share this link to let someone see this page: <code>@(new Uri(new Uri(Model.SectionUrl), Model.PasteID))</code><br />
+        (Or <a href="@Model.SectionUrl">validate a new file</a>.)<br />
+        <br />
+        <small v-pre>Error details: @Model.ParseError</small>
+    </div>
+}
+else if (Model.PasteID != null)
+{
+    <div class="banner success">
+        <strong>Share this link to let someone else see this page:</strong> <code>@(new Uri(new Uri(Model.SectionUrl), $"{Model.SchemaName}/{Model.PasteID}"))</code><br />
+        (Or <a href="@Model.SectionUrl">validate a new file</a>.)
+    </div>
+}
+
+@* upload new file *@
+@if (Model.Content == null)
+{
+    <h2>Upload a JSON file</h2>
+    <form action="@Model.SectionUrl" method="post">
+        <ol>
+            <li>
+                Choose the JSON format:<br />
+                <select id="format" name="SchemaName">
+                    @foreach (var pair in Model.SchemaFormats)
+                    {
+                        <option value="@pair.Key" selected="@(Model.SchemaName == pair.Key)">@pair.Value</option>
+                    }
+                </select>
+            </li>
+            <li>
+                Drag the file onto this textbox (or paste the text in):<br />
+                <textarea id="input" name="Content" placeholder="paste file here"></textarea>
+            </li>
+            <li>
+                Click this button:<br />
+                <input type="submit" id="submit" value="save file" />
+            </li>
+        </ol>
+    </form>
+}
+
+@* validation results *@
+@if (Model.Content != null)
+{
+    <div id="output">
+        @if (Model.UploadError == null)
+        {
+            <div>
+                Change JSON format:
+                <select id="format" name="format">
+                    @foreach (var pair in Model.SchemaFormats)
+                    {
+                        <option value="@pair.Key" selected="@(Model.SchemaName == pair.Key)">@pair.Value</option>
+                    }
+                </select>
+            </div>
+
+            <h2>Validation errors</h2>
+            @if (Model.Errors.Any())
+            {
+                <table id="metadata" class="table">
+                    <tr>
+                        <th>Line</th>
+                        <th>Field</th>
+                        <th>Error</th>
+                    </tr>
+
+                    @foreach (JsonValidatorErrorModel error in Model.Errors)
+                    {
+                        <tr>
+                            <td>@error.Line</td>
+                            <td>@error.Path</td>
+                            <td>@error.Message</td>
+                        </tr>
+                    }
+                </table>
+            }
+            else
+            {
+                <p>No errors found.</p>
+            }
+        }
+
+        <h2>Raw content</h2>
+        <pre class="sunlight-highlight-javascript">@Model.Content</pre>
+    </div>
+}

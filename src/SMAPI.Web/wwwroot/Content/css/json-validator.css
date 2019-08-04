@@ -1,0 +1,98 @@
+/*********
+** Main layout
+*********/
+#content {
+    max-width: 100%;
+}
+
+#output {
+    padding: 10px;
+    overflow: auto;
+}
+
+#output table td {
+    font-family: monospace;
+}
+
+#output table tr th,
+#output table tr td {
+    padding: 0 0.75rem;
+    white-space: pre-wrap;
+}
+
+
+/*********
+** Result banner
+*********/
+.banner {
+    border: 2px solid gray;
+    border-radius: 5px;
+    margin-top: 1em;
+    padding: 1em;
+}
+
+.banner.success {
+    border-color: green;
+    background: #CFC;
+}
+
+.banner.error {
+    border-color: red;
+    background: #FCC;
+}
+
+/*********
+** Validation results
+*********/
+.table {
+    border-bottom: 1px dashed #888888;
+    margin-bottom: 5px;
+}
+
+#metadata th, #metadata td {
+    text-align: left;
+    padding-right: 0.7em;
+}
+
+.table {
+    border: 1px solid #000000;
+    background: #ffffff;
+    border-radius: 5px;
+    border-spacing: 1px;
+    overflow: hidden;
+    cursor: default;
+    box-shadow: 1px 1px 1px 1px #dddddd;
+}
+
+.table tr {
+    background: #eee;
+}
+
+.table tr:nth-child(even) {
+    background: #fff;
+}
+
+/*********
+** Upload form
+*********/
+#input {
+    width: 100%;
+    height: 20em;
+    max-height: 70%;
+    margin: auto;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid #000088;
+    outline: none;
+    box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 192, .2);
+}
+
+#submit {
+    font-size: 1.5em;
+    border-radius: 5px;
+    outline: none;
+    box-shadow: inset 0 0 1px 1px rgba(0, 0, 0, .2);
+    cursor: pointer;
+    border: 1px solid #008800;
+    background-color: #cfc;
+}

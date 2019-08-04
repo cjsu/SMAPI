@@ -84,7 +84,7 @@ namespace StardewModdingAPI.Web.Controllers
 
             // upload log
             input = this.GzipHelper.CompressString(input);
-            SavePasteResult result = await this.Pastebin.PostAsync(input);
+            SavePasteResult result = await this.Pastebin.PostAsync($"SMAPI log {DateTime.UtcNow:s}", input);
 
             // handle errors
             if (!result.Success)
@@ -108,7 +108,5 @@ namespace StardewModdingAPI.Web.Controllers
             response.Content = this.GzipHelper.DecompressString(response.Content);
             return response;
         }
-
-
     }
 }
