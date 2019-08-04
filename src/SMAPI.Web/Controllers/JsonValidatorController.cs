@@ -97,6 +97,9 @@ namespace StardewModdingAPI.Web.Controllers
                 return this.View("Index", result.AddErrors(new JsonValidatorErrorModel(ex.LineNumber, ex.Path, ex.Message)));
             }
 
+            // format JSON
+            result.SetContent(parsed.ToString(Formatting.Indented));
+
             // skip if no schema selected
             if (schemaName == "none")
                 return this.View("Index", result);
