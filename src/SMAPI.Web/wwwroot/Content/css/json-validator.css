@@ -72,6 +72,10 @@
     background: #fff;
 }
 
+#output div.sunlight-line-highlight-active {
+    background-color: #eeeacc;
+}
+
 /*********
 ** Upload form
 *********/

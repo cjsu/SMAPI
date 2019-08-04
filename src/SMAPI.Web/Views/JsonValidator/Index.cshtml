@@ -107,7 +107,7 @@ else if (Model.PasteID != null)
                     @foreach (JsonValidatorErrorModel error in Model.Errors)
                     {
                         <tr>
-                            <td>@error.Line</td>
+                            <td><a href="#L@(error.Line)">@error.Line</a></td>
                             <td>@error.Path</td>
                             <td>@error.Message</td>
                         </tr>
@@ -121,6 +121,6 @@ else if (Model.PasteID != null)
         }
 
         <h2>Raw content</h2>
-        <pre class="sunlight-highlight-javascript">@Model.Content</pre>
+        <pre id="raw-content" class="sunlight-highlight-javascript">@Model.Content</pre>
     </div>
 }
