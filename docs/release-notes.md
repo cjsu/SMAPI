@@ -40,6 +40,10 @@ These changes have not been released yet.
   * Clicking a mod link now automatically adds it to the visible mods when the list is filtered.
   * Added metadata links and dev notes (if any) to advanced info.
 
+* For the JSON validator:
+  * Added JSON validator at [json.smapi.io](https://json.smapi.io), which lets you validate a JSON file against predefined mod formats.
+  * Added support for the `manifest.json` format.
+
 * For the log parser:
   * Added instructions for Android.
   * Fixed parse failing in some cases due to time format localisation.
