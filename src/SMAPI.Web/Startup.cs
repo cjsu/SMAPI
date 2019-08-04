@@ -20,6 +20,7 @@ using StardewModdingAPI.Web.Framework.Clients.GitHub;
 using StardewModdingAPI.Web.Framework.Clients.ModDrop;
 using StardewModdingAPI.Web.Framework.Clients.Nexus;
 using StardewModdingAPI.Web.Framework.Clients.Pastebin;
+using StardewModdingAPI.Web.Framework.Compression;
 using StardewModdingAPI.Web.Framework.ConfigModels;
 using StardewModdingAPI.Web.Framework.RewriteRules;
 
@@ -149,6 +150,9 @@ namespace StardewModdingAPI.Web
                     devKey: api.PastebinDevKey
                 ));
             }
+
+            // init helpers
+            services.AddSingleton<IGzipHelper>(new GzipHelper());
         }
 
         /// <summary>The method called by the runtime to configure the HTTP request pipeline.</summary>
