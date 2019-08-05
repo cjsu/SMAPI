@@ -23,7 +23,7 @@ namespace StardewModdingAPI
         public static ISemanticVersion ApiVersion { get; } = new Toolkit.SemanticVersion("2.11.2");
 
         /// <summary>Android SMAPI's current semantic version.</summary>
-        public static ISemanticVersion AndroidApiVersion { get; } = new Toolkit.SemanticVersion("0.8.9-beta");
+        public static ISemanticVersion AndroidApiVersion { get; } = new Toolkit.SemanticVersion("0.8.9");
 
         /// <summary>The minimum supported version of Stardew Valley.</summary>
         public static ISemanticVersion MinimumGameVersion { get; } = new GameVersion("1.3.36");
