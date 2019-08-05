@@ -529,7 +529,7 @@ namespace StardewModdingAPI.Framework
                 /*********
                 ** Locale changed events
                 *********/
-                if (this.Watchers.LocaleWatcher.IsChanged)
+                if (this.Watchers.LocaleWatcher.IsChanged || SGame.TicksElapsed == 0)
                 {
                     var was = this.Watchers.LocaleWatcher.PreviousValue;
                     var now = this.Watchers.LocaleWatcher.CurrentValue;
