@@ -134,6 +134,6 @@
     "additionalProperties": false,
     "@errorMessages": {
         "oneOf:valid against no schemas": "Missing required field: EntryDll or ContentPackFor.",
-        "oneOf:valid against more than one schema": "Can't specify both EntryDll or ContentPackFor, they're mutually exclusive."
+        "oneOf:valid against more than one schema": "Can't specify both EntryDll and ContentPackFor, they're mutually exclusive."
     }
 }

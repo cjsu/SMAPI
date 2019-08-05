@@ -91,7 +91,10 @@ namespace StardewModdingAPI.Web.Controllers
             JToken parsed;
             try
             {
-                parsed = JToken.Parse(paste.Content);
+                parsed = JToken.Parse(paste.Content, new JsonLoadSettings
+                {
+                    DuplicatePropertyNameHandling = DuplicatePropertyNameHandling.Error
+                });
             }
             catch (JsonReaderException ex)
             {
