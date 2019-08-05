@@ -29,11 +29,19 @@ format, with some special properties:
 * The root schema may have a `@documentationURL` field, which is the URL to the user-facing
   documentation for the format (if any).
 * Any part of the schema can define an `@errorMessages` field, which specifies user-friendly errors
-  which override the auto-generated messages. These are indexed by error type. For example:
+  which override the auto-generated messages. These can be indexed by error type:
   ```js
   "pattern": "^[a-zA-Z0-9_.-]+\\.dll$",
   "@errorMessages": {
      "pattern": "Invalid value; must be a filename ending with .dll."
+  }
+  ```
+  ...or by error type and a regular expression applied to the default message (not recommended
+  unless the previous form doesn't work, since it's more likely to break in future versions):
+  ```js
+  "@errorMessages": {
+     "oneOf:valid against no schemas": "Missing required field: EntryDll or ContentPackFor.",
+     "oneOf:valid against more than one schema": "Can't specify both EntryDll or ContentPackFor, they're mutually exclusive."
   }
   ```
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -176,7 +177,7 @@ namespace StardewModdingAPI.Web.Controllers
         private string GetFlattenedError(ValidationError error, int indent = 0)
         {
             // get override error
-            string message = this.GetOverrideError(error.Schema, error.ErrorType);
+            string message = this.GetOverrideError(error.Schema, error.ErrorType, error.Message);
             if (message != null)
                 return message;
 
@@ -232,7 +233,8 @@ namespace StardewModdingAPI.Web.Controllers
         /// <summary>Get an override error from the JSON schema, if any.</summary>
         /// <param name="schema">The schema or subschema that raised the error.</param>
         /// <param name="errorType">The error type.</param>
-        private string GetOverrideError(JSchema schema, ErrorType errorType)
+        /// <param name="message">The error message.</param>
+        private string GetOverrideError(JSchema schema, ErrorType errorType, string message)
         {
             // get override errors
             IDictionary<string, string> errors = this.GetExtensionField<Dictionary<string, string>>(schema, "@errorMessages");
@@ -240,10 +242,22 @@ namespace StardewModdingAPI.Web.Controllers
                 return null;
             errors = new Dictionary<string, string>(errors, StringComparer.InvariantCultureIgnoreCase);
 
-            // get matching error
-            return errors.TryGetValue(errorType.ToString(), out string errorPhrase)
-                ? errorPhrase
-                : null;
+            // match error by type and message
+            foreach (var pair in errors)
+            {
+                if (!pair.Key.Contains(":"))
+                    continue;
+
+                string[] parts = pair.Key.Split(':', 2);
+                if (parts[0].Equals(errorType.ToString(), StringComparison.InvariantCultureIgnoreCase) && Regex.IsMatch(message, parts[1]))
+                    return pair.Value;
+            }
+
+            // match by type
+            if (errors.TryGetValue(errorType.ToString(), out string error))
+                return error;
+
+            return null;
         }
 
         /// <summary>Get an extension field from a JSON schema.</summary>
