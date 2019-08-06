@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "https://smapi.io/schemas/content-patcher.json",
-    "title": "Content Patcher",
+    "title": "Content Patcher content pack",
     "description": "Content Patcher content file for mods",
     "type": "object",
     "definitions": {
