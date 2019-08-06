@@ -102,14 +102,21 @@
                 "pattern": "^(Chucklefish:\\d+|Nexus:\\d+|GitHub:[A-Za-z0-9_]+/[A-Za-z0-9_]+|ModDrop:\\d+)$",
                 "@errorMessages": {
                     "pattern": "Invalid update key; see https://stardewvalleywiki.com/Modding:Modder_Guide/APIs/Manifest#Update_checks for more info."
-                }  
+                }
             }
+        },
+        "$schema": {
+            "title": "Schema",
+            "description": "A reference to this JSON schema. Not part of the actual format, but useful for validation tools.",
+            "type": "string",
+            "const": "https://smapi.io/schemas/manifest.json"
         }
     },
     "definitions": {
         "SemanticVersion": {
             "type": "string",
-            "pattern": "^(?>(?<major>0|[1-9]\\d*))\\.(?>(?<minor>0|[1-9]\\d*))(?>(?:\\.(?<patch>0|[1-9]\\d*))?)(?:-(?<prerelease>(?>[a-zA-Z0-9]+[\\-\\.]?)+))?$", // derived from SMAPI.Toolkit.SemanticVersion
+            "pattern": "^(?>(?:0|[1-9]\\d*))\\.(?>(?:0|[1-9]\\d*))(?>(?:\\.(?:0|[1-9]\\d*))?)(?:-(?:(?>[a-zA-Z0-9]+[\\-\\.]?)+))?$",
+            "$comment": "derived from SMAPI.Toolkit.SemanticVersion",
             "examples": [ "1.0.0", "1.0.1-beta.2" ],
             "@errorMessages": {
                 "pattern": "Invalid semantic version; must be formatted like 1.2.0 or 1.2.0-prerelease.tags. See https://semver.org/ for more info."
@@ -117,7 +124,8 @@
         },
         "ModID": {
             "type": "string",
-            "pattern": "^[a-zA-Z0-9_.-]+$", // derived from SMAPI.Toolkit.Utilities.PathUtilities.IsSlug
+            "pattern": "^[a-zA-Z0-9_.-]+$",
+            "$comment": "derived from SMAPI.Toolkit.Utilities.PathUtilities.IsSlug",
             "examples": [ "Pathoschild.LookupAnything" ]
         }
     },
