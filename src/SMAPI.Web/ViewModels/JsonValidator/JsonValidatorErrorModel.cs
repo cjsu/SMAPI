@@ -1,3 +1,5 @@
+using Newtonsoft.Json.Schema;
+
 namespace StardewModdingAPI.Web.ViewModels.JsonValidator
 {
     /// <summary>The view model for a JSON validator error.</summary>
@@ -15,6 +17,9 @@ namespace StardewModdingAPI.Web.ViewModels.JsonValidator
         /// <summary>A human-readable description of the error.</summary>
         public string Message { get; set; }
 
+        /// <summary>The schema error type.</summary>
+        public ErrorType SchemaErrorType { get; set; }
+
 
         /*********
         ** Public methods
@@ -26,11 +31,13 @@ namespace StardewModdingAPI.Web.ViewModels.JsonValidator
         /// <param name="line">The line number on which the error occurred.</param>
         /// <param name="path">The field path in the JSON file where the error occurred.</param>
         /// <param name="message">A human-readable description of the error.</param>
-        public JsonValidatorErrorModel(int line, string path, string message)
+        /// <param name="schemaErrorType">The schema error type.</param>
+        public JsonValidatorErrorModel(int line, string path, string message, ErrorType schemaErrorType)
         {
             this.Line = line;
             this.Path = path;
             this.Message = message;
+            this.SchemaErrorType = schemaErrorType;
         }
     }
 }

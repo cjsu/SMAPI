@@ -99,7 +99,7 @@ namespace StardewModdingAPI.Web.Controllers
             }
             catch (JsonReaderException ex)
             {
-                return this.View("Index", result.AddErrors(new JsonValidatorErrorModel(ex.LineNumber, ex.Path, ex.Message)));
+                return this.View("Index", result.AddErrors(new JsonValidatorErrorModel(ex.LineNumber, ex.Path, ex.Message, ErrorType.None)));
             }
 
             // format JSON
@@ -124,7 +124,7 @@ namespace StardewModdingAPI.Web.Controllers
             // validate JSON
             parsed.IsValid(schema, out IList<ValidationError> rawErrors);
             var errors = rawErrors
-                .Select(error => new JsonValidatorErrorModel(error.LineNumber, error.Path, this.GetFlattenedError(error)))
+                .Select(error => new JsonValidatorErrorModel(error.LineNumber, error.Path, this.GetFlattenedError(error), error.ErrorType))
                 .ToArray();
             return this.View("Index", result.AddErrors(errors));
         }

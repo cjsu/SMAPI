@@ -111,7 +111,7 @@ else if (Model.PasteID != null)
 
                     @foreach (JsonValidatorErrorModel error in Model.Errors)
                     {
-                        <tr>
+                        <tr data-schema-error="@error.SchemaErrorType">
                             <td><a href="#L@(error.Line)">@error.Line</a></td>
                             <td>@error.Path</td>
                             <td>@error.Message</td>
