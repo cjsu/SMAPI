@@ -181,7 +181,7 @@ namespace StardewModdingAPI.Web.Controllers
         private string GetFlattenedError(ValidationError error, int indent = 0)
         {
             // get override error
-            string message = this.GetOverrideError(error.Schema, error.ErrorType, error.Message);
+            string message = this.GetOverrideError(error);
             if (message != null)
                 return message;
 
@@ -235,33 +235,37 @@ namespace StardewModdingAPI.Web.Controllers
         }
 
         /// <summary>Get an override error from the JSON schema, if any.</summary>
-        /// <param name="schema">The schema or subschema that raised the error.</param>
-        /// <param name="errorType">The error type.</param>
-        /// <param name="message">The error message.</param>
-        private string GetOverrideError(JSchema schema, ErrorType errorType, string message)
+        /// <param name="error">The schema validation error.</param>
+        private string GetOverrideError(ValidationError error)
         {
-            // get override errors
-            IDictionary<string, string> errors = this.GetExtensionField<Dictionary<string, string>>(schema, "@errorMessages");
-            if (errors == null)
-                return null;
-            errors = new Dictionary<string, string>(errors, StringComparer.InvariantCultureIgnoreCase);
-
-            // match error by type and message
-            foreach (var pair in errors)
+            string GetRawOverrideError()
             {
-                if (!pair.Key.Contains(":"))
-                    continue;
+                // get override errors
+                IDictionary<string, string> errors = this.GetExtensionField<Dictionary<string, string>>(error.Schema, "@errorMessages");
+                if (errors == null)
+                    return null;
+                errors = new Dictionary<string, string>(errors, StringComparer.InvariantCultureIgnoreCase);
 
-                string[] parts = pair.Key.Split(':', 2);
-                if (parts[0].Equals(errorType.ToString(), StringComparison.InvariantCultureIgnoreCase) && Regex.IsMatch(message, parts[1]))
-                    return pair.Value;
+                // match error by type and message
+                foreach (var pair in errors)
+                {
+                    if (!pair.Key.Contains(":"))
+                        continue;
+
+                    string[] parts = pair.Key.Split(':', 2);
+                    if (parts[0].Equals(error.ErrorType.ToString(), StringComparison.InvariantCultureIgnoreCase) && Regex.IsMatch(error.Message, parts[1]))
+                        return pair.Value;
+                }
+
+                // match by type
+                if (errors.TryGetValue(error.ErrorType.ToString(), out string message))
+                    return message;
+
+                return null;
             }
 
-            // match by type
-            if (errors.TryGetValue(errorType.ToString(), out string error))
-                return error;
-
-            return null;
+            return GetRawOverrideError()
+                ?.Replace("@value", this.FormatValue(error.Value));
         }
 
         /// <summary>Get an extension field from a JSON schema.</summary>
@@ -280,6 +284,20 @@ namespace StardewModdingAPI.Web.Controllers
             }
 
             return default;
+        }
+
+        /// <summary>Format a schema value for display.</summary>
+        /// <param name="value">The value to format.</param>
+        private string FormatValue(object value)
+        {
+            switch (value)
+            {
+                case List<string> list:
+                    return string.Join(", ", list);
+
+                default:
+                    return value?.ToString() ?? "null";
+            }
         }
     }
 }

@@ -44,6 +44,8 @@ format, with some special properties:
      "oneOf:valid against more than one schema": "Can't specify both EntryDll or ContentPackFor, they're mutually exclusive."
   }
   ```
+  Error messages can optionally include a `@value` token, which will be replaced with the error's
+  value field (which is usually the original field value).
 
 You can also reference these schemas in your JSON file directly using the `$schema` field, for
 text editors that support schema validation. For example:
