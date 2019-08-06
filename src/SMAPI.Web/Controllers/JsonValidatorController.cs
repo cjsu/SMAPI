@@ -213,7 +213,7 @@ namespace StardewModdingAPI.Web.Controllers
         private IEnumerable<JsonValidatorErrorModel> GetErrorModels(ValidationError error)
         {
             // skip through transparent errors
-            if (this.GetOverrideError(error) == this.TransparentToken && error.ChildErrors.Any())
+            if (this.IsTransparentError(error))
             {
                 foreach (var model in error.ChildErrors.SelectMany(this.GetErrorModels))
                     yield return model;
@@ -240,7 +240,7 @@ namespace StardewModdingAPI.Web.Controllers
                 return message;
 
             // skip through transparent errors
-            while (this.GetOverrideError(error) == this.TransparentToken && error.ChildErrors.Count == 1)
+            if (this.IsTransparentError(error))
                 error = error.ChildErrors[0];
 
             // get friendly representation of main error
@@ -264,6 +264,19 @@ namespace StardewModdingAPI.Web.Controllers
             foreach (ValidationError childError in error.ChildErrors)
                 message += "\n" + "".PadLeft(indent * 2, ' ') + $"==> {childError.Path}: " + this.FlattenErrorMessage(childError, indent + 1);
             return message;
+        }
+
+        /// <summary>Get whether a validation error should be omitted in favor of its child errors in user-facing error messages.</summary>
+        /// <param name="error">The error to check.</param>
+        private bool IsTransparentError(ValidationError error)
+        {
+            if (!error.ChildErrors.Any())
+                return false;
+
+            string @override = this.GetOverrideError(error);
+            return
+                @override == this.TransparentToken
+                || (error.ErrorType == ErrorType.Then && @override == null);
         }
 
         /// <summary>Get an override error from the JSON schema, if any.</summary>

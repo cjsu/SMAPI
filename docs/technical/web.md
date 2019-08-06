@@ -85,9 +85,7 @@ Error messages may contain special tokens:
   The child errors themselves may be marked `$transparent`, etc. If an error has no child errors,
   this override is ignored.
 
-Caveats:
-* To override an error from a `then` block, the `@errorMessages` must be inside the `then` block
-  instead of adjacent.
+  Validation errors for `then` blocks are transparent by default, unless overridden.
 
 </dd>
 </dl>

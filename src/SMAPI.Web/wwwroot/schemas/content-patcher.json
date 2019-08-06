@@ -273,9 +273,6 @@
                             "required": [ "FromFile" ],
                             "propertyNames": {
                                 "enum": [ "Action", "Target", "LogName", "Enabled", "When", "FromFile" ]
-                            },
-                            "@errorMessages": {
-                                "then": "$transparent"
                             }
                         }
                     },
@@ -289,9 +286,6 @@
                             "required": [ "FromFile" ],
                             "propertyNames": {
                                 "enum": [ "Action", "Target", "LogName", "Enabled", "When", "FromFile", "FromArea", "ToArea", "PatchMode" ]
-                            },
-                            "@errorMessages": {
-                                "then": "$transparent"
                             }
                         }
                     },
@@ -304,9 +298,6 @@
                         "then": {
                             "propertyNames": {
                                 "enum": [ "Action", "Target", "LogName", "Enabled", "When", "Fields", "Entries", "MoveEntries" ]
-                            },
-                            "@errorMessages": {
-                                "then": "$transparent"
                             }
                         }
                     },
