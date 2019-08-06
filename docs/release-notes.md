@@ -43,7 +43,8 @@ These changes have not been released yet.
 * For the JSON validator:
   * Added JSON validator at [json.smapi.io](https://json.smapi.io), which lets you validate a JSON file against predefined mod formats.
   * Added support for the `manifest.json` format.
-  * Added support for Content Patcher's `content.json` format (thanks to TehPers!).
+  * Added support for the Content Patcher format (thanks to TehPers!).
+  * Added support for referencing a schema in a JSON Schema-compatible text editor.
 
 * For the log parser:
   * Added instructions for Android.

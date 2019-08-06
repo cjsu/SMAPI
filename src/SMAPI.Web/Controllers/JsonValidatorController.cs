@@ -124,7 +124,7 @@ namespace StardewModdingAPI.Web.Controllers
             // validate JSON
             parsed.IsValid(schema, out IList<ValidationError> rawErrors);
             var errors = rawErrors
-                .Select(error => new JsonValidatorErrorModel(error.LineNumber, error.Path, this.GetFlattenedError(error), error.ErrorType))
+                .Select(this.GetErrorModel)
                 .ToArray();
             return this.View("Index", result.AddErrors(errors));
         }
@@ -175,35 +175,6 @@ namespace StardewModdingAPI.Web.Controllers
             return response;
         }
 
-        /// <summary>Get a flattened, human-readable message representing a schema validation error.</summary>
-        /// <param name="error">The error to represent.</param>
-        /// <param name="indent">The indentation level to apply for inner errors.</param>
-        private string GetFlattenedError(ValidationError error, int indent = 0)
-        {
-            // get override error
-            string message = this.GetOverrideError(error);
-            if (message != null)
-                return message;
-
-            // get friendly representation of main error
-            message = error.Message;
-            switch (error.ErrorType)
-            {
-                case ErrorType.Enum:
-                    message = $"Invalid value. Found '{error.Value}', but expected one of '{string.Join("', '", error.Schema.Enum)}'.";
-                    break;
-
-                case ErrorType.Required:
-                    message = $"Missing required fields: {string.Join(", ", (List<string>)error.Value)}.";
-                    break;
-            }
-
-            // add inner errors
-            foreach (ValidationError childError in error.ChildErrors)
-                message += "\n" + "".PadLeft(indent * 2, ' ') + $"==> {childError.Path}: " + this.GetFlattenedError(childError, indent + 1);
-            return message;
-        }
-
         /// <summary>Get a normalised schema name, or the <see cref="DefaultSchemaID"/> if blank.</summary>
         /// <param name="schemaName">The raw schema name to normalise.</param>
         private string NormaliseSchemaName(string schemaName)
@@ -234,6 +205,60 @@ namespace StardewModdingAPI.Web.Controllers
             return null;
         }
 
+        /// <summary>Get a flattened representation representation of a schema validation error and any child errors.</summary>
+        /// <param name="error">The error to represent.</param>
+        private JsonValidatorErrorModel GetErrorModel(ValidationError error)
+        {
+            // skip through transparent errors
+            while (this.GetOverrideError(error) == "$transparent" && error.ChildErrors.Count == 1)
+                error = error.ChildErrors[0];
+
+            // get message
+            string message = this.GetOverrideError(error);
+            if (message == null)
+                message = this.FlattenErrorMessage(error);
+
+            // build model
+            return new JsonValidatorErrorModel(error.LineNumber, error.Path, message, error.ErrorType);
+        }
+
+        /// <summary>Get a flattened, human-readable message for a schema validation error and any child errors.</summary>
+        /// <param name="error">The error to represent.</param>
+        /// <param name="indent">The indentation level to apply for inner errors.</param>
+        private string FlattenErrorMessage(ValidationError error, int indent = 0)
+        {
+            // get override
+            string message = this.GetOverrideError(error);
+            if (message != null)
+                return message;
+
+            // skip through transparent errors
+            while (this.GetOverrideError(error) == "$transparent" && error.ChildErrors.Count == 1)
+                error = error.ChildErrors[0];
+
+            // get friendly representation of main error
+            message = error.Message;
+            switch (error.ErrorType)
+            {
+                case ErrorType.Const:
+                    message = $"Invalid value. Found '{error.Value}', but expected '{error.Schema.Const}'.";
+                    break;
+
+                case ErrorType.Enum:
+                    message = $"Invalid value. Found '{error.Value}', but expected one of '{string.Join("', '", error.Schema.Enum)}'.";
+                    break;
+
+                case ErrorType.Required:
+                    message = $"Missing required fields: {string.Join(", ", (List<string>)error.Value)}.";
+                    break;
+            }
+
+            // add inner errors
+            foreach (ValidationError childError in error.ChildErrors)
+                message += "\n" + "".PadLeft(indent * 2, ' ') + $"==> {childError.Path}: " + this.FlattenErrorMessage(childError, indent + 1);
+            return message;
+        }
+
         /// <summary>Get an override error from the JSON schema, if any.</summary>
         /// <param name="error">The schema validation error.</param>
         private string GetOverrideError(ValidationError error)
@@ -254,12 +279,12 @@ namespace StardewModdingAPI.Web.Controllers
 
                     string[] parts = pair.Key.Split(':', 2);
                     if (parts[0].Equals(error.ErrorType.ToString(), StringComparison.InvariantCultureIgnoreCase) && Regex.IsMatch(error.Message, parts[1]))
-                        return pair.Value;
+                        return pair.Value?.Trim();
                 }
 
                 // match by type
                 if (errors.TryGetValue(error.ErrorType.ToString(), out string message))
-                    return message;
+                    return message?.Trim();
 
                 return null;
             }
