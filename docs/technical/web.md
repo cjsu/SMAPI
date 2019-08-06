@@ -61,10 +61,29 @@ against the error message (more fragile):
 ```
 
 Error messages may contain special tokens:
-* `@value` is replaced with the error's value field (which is usually the original field value, but
-  not always).
-* If the validation error has exactly one sub-error and the message is set to `$transparent`, the
-  sub-error will be displayed instead. (The sub-error itself may be set to `$transparent`, etc.)
+
+* The `@value` token is replaced with the error's value field. This is usually (but not always) the
+  original field value.
+* When an error has child errors, by default they're flattened into one message:
+  ```
+  line | field      | error
+  ---- | ---------- | -------------------------------------------------------------------------
+  4    | Changes[0] | JSON does not match schema from 'then'.
+       |            |   ==> Changes[0].ToArea.Y: Invalid type. Expected Integer but got String.
+       |            |   ==> Changes[0].ToArea: Missing required fields: Height.
+  ```
+
+  If you set the message for an error to `$transparent`, the parent error is omitted entirely and
+  the child errors are shown instead:
+  ```
+  line | field               | error
+  ---- | ------------------- | ----------------------------------------------
+  8    | Changes[0].ToArea.Y | Invalid type. Expected Integer but got String.
+  8    | Changes[0].ToArea   | Missing required fields: Height.
+  ```
+
+  The child errors themselves may be marked `$transparent`, etc. If an error has no child errors,
+  this override is ignored.
 
 Caveats:
 * To override an error from a `then` block, the `@errorMessages` must be inside the `then` block

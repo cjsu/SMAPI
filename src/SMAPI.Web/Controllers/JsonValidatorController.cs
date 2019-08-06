@@ -46,6 +46,9 @@ namespace StardewModdingAPI.Web.Controllers
         /// <summary>The schema ID to use if none was specified.</summary>
         private string DefaultSchemaID = "manifest";
 
+        /// <summary>A token in an error message which indicates that the child errors should be displayed instead.</summary>
+        private readonly string TransparentToken = "$transparent";
+
 
         /*********
         ** Public methods
@@ -124,7 +127,7 @@ namespace StardewModdingAPI.Web.Controllers
             // validate JSON
             parsed.IsValid(schema, out IList<ValidationError> rawErrors);
             var errors = rawErrors
-                .Select(this.GetErrorModel)
+                .SelectMany(this.GetErrorModels)
                 .ToArray();
             return this.View("Index", result.AddErrors(errors));
         }
@@ -205,21 +208,25 @@ namespace StardewModdingAPI.Web.Controllers
             return null;
         }
 
-        /// <summary>Get a flattened representation representation of a schema validation error and any child errors.</summary>
+        /// <summary>Get view models representing a schema validation error and any child errors.</summary>
         /// <param name="error">The error to represent.</param>
-        private JsonValidatorErrorModel GetErrorModel(ValidationError error)
+        private IEnumerable<JsonValidatorErrorModel> GetErrorModels(ValidationError error)
         {
             // skip through transparent errors
-            while (this.GetOverrideError(error) == "$transparent" && error.ChildErrors.Count == 1)
-                error = error.ChildErrors[0];
+            if (this.GetOverrideError(error) == this.TransparentToken && error.ChildErrors.Any())
+            {
+                foreach (var model in error.ChildErrors.SelectMany(this.GetErrorModels))
+                    yield return model;
+                yield break;
+            }
 
             // get message
             string message = this.GetOverrideError(error);
-            if (message == null)
+            if (message == null || message == this.TransparentToken)
                 message = this.FlattenErrorMessage(error);
 
             // build model
-            return new JsonValidatorErrorModel(error.LineNumber, error.Path, message, error.ErrorType);
+            yield return new JsonValidatorErrorModel(error.LineNumber, error.Path, message, error.ErrorType);
         }
 
         /// <summary>Get a flattened, human-readable message for a schema validation error and any child errors.</summary>
@@ -229,11 +236,11 @@ namespace StardewModdingAPI.Web.Controllers
         {
             // get override
             string message = this.GetOverrideError(error);
-            if (message != null)
+            if (message != null && message != this.TransparentToken)
                 return message;
 
             // skip through transparent errors
-            while (this.GetOverrideError(error) == "$transparent" && error.ChildErrors.Count == 1)
+            while (this.GetOverrideError(error) == this.TransparentToken && error.ChildErrors.Count == 1)
                 error = error.ChildErrors[0];
 
             // get friendly representation of main error
