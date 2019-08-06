@@ -3,6 +3,11 @@
 
 @{
     ViewData["Title"] = "JSON validator";
+
+    string curPageUrl = new Uri(new Uri(Model.SectionUrl), $"{Model.SchemaName}/{Model.PasteID}").ToString();
+    string newUploadUrl = Model.SchemaName != null
+        ? new Uri(new Uri(Model.SectionUrl), Model.SchemaName).ToString()
+        : Model.SectionUrl;
 }
 
 @section Head {
@@ -37,8 +42,8 @@ else if (Model.ParseError != null)
 {
     <div class="banner error">
         <strong>Oops, couldn't parse that JSON.</strong><br />
-        Share this link to let someone see this page: <code>@(new Uri(new Uri(Model.SectionUrl), Model.PasteID))</code><br />
-        (Or <a href="@Model.SectionUrl">validate a new file</a>.)<br />
+        Share this link to let someone see this page: <code>@curPageUrl</code><br />
+        (Or <a href="@newUploadUrl">validate a new file</a>.)<br />
         <br />
         <small v-pre>Error details: @Model.ParseError</small>
     </div>
@@ -46,8 +51,8 @@ else if (Model.ParseError != null)
 else if (Model.PasteID != null)
 {
     <div class="banner success">
-        <strong>Share this link to let someone else see this page:</strong> <code>@(new Uri(new Uri(Model.SectionUrl), $"{Model.SchemaName}/{Model.PasteID}"))</code><br />
-        (Or <a href="@Model.SectionUrl">validate a new file</a>.)
+        <strong>Share this link to let someone else see this page:</strong> <code>@curPageUrl</code><br />
+        (Or <a href="@newUploadUrl">validate a new file</a>.)
     </div>
 }
 
