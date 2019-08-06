@@ -101,7 +101,7 @@ text editors that support schema validation. For example:
 }
 ```
 
-Current schemas:
+Available schemas:
 
 format | schema URL
 ------ | ----------

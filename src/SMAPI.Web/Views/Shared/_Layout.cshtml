@@ -28,7 +28,7 @@
     </div>
     <div id="content-column">
         <div id="content">
-            <h1>@ViewData["Title"]</h1>
+            <h1>@(ViewData["ViewTitle"] ?? ViewData["Title"])</h1>
             @RenderBody()
         </div>
         <div id="footer">

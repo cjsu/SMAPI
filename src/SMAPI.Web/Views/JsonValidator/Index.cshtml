@@ -2,12 +2,22 @@
 @model JsonValidatorModel
 
 @{
-    ViewData["Title"] = "JSON validator";
-
+    // get view data
     string curPageUrl = new Uri(new Uri(Model.SectionUrl), $"{Model.SchemaName}/{Model.PasteID}").ToString();
-    string newUploadUrl = Model.SchemaName != null
-        ? new Uri(new Uri(Model.SectionUrl), Model.SchemaName).ToString()
-        : Model.SectionUrl;
+    string newUploadUrl = Model.SchemaName != null ? new Uri(new Uri(Model.SectionUrl), Model.SchemaName).ToString() : Model.SectionUrl;
+    string schemaDisplayName = null;
+    bool isValidSchema = Model.SchemaName != null && Model.SchemaFormats.TryGetValue(Model.SchemaName, out schemaDisplayName) && schemaDisplayName != "None";
+
+    // build title
+    ViewData["Title"] = "JSON validator";
+    @if (Model.PasteID != null)
+    {
+        ViewData["ViewTitle"] = ViewData["Title"];
+        ViewData["Title"] +=
+            " ("
+            + string.Join(", ", new[] { isValidSchema ? schemaDisplayName : null, Model.PasteID }.Where(p => p != null))
+            + ")";
+    }
 }
 
 @section Head {
@@ -130,7 +140,12 @@ else if (Model.PasteID != null)
             }
         }
 
-        <h2>Raw content</h2>
+        <h2>Content</h2>
         <pre id="raw-content" class="sunlight-highlight-javascript">@Model.Content</pre>
+
+        @if (isValidSchema)
+        {
+            <p class="footer-tip">(Tip: you can <a href="https://github.com/Pathoschild/SMAPI/blob/develop/docs/technical/web.md#using-a-schema-file-directly">validate directly in your text editor</a> if it supports JSON Schema.)</p>
+        }
     </div>
 }

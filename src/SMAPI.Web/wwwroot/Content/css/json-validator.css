@@ -76,6 +76,15 @@
     background-color: #eeeacc;
 }
 
+.footer-tip {
+    color: gray;
+    font-size: 0.9em;
+}
+
+.footer-tip a {
+    color: gray;
+}
+
 /*********
 ** Upload form
 *********/
