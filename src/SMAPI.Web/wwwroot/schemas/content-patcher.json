@@ -1,0 +1,358 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://raw.githubusercontent.com/Pathoschild/SMAPI/develop/src/SMAPI.Web/wwwroot/schemas/content-patcher.json",
+    "title": "Content Patcher",
+    "description": "Content Patcher content file for mods",
+    "type": "object",
+    "definitions": {
+        "Version": {
+            "type": "string",
+            "pattern": "\\d+\\.\\d+"
+        },
+        "Change": {
+            "properties": {
+                "Action": {
+                    "title": "Action",
+                    "description": "The kind of change to make.",
+                    "type": "string",
+                    "enum": ["Load", "EditImage", "EditData", "EditMap"]
+                },
+                "Target": {
+                    "title": "Target asset",
+                    "description": "The game asset you want to patch (or multiple comma-delimited assets). This is the file path inside your game's Content folder, without the file extension or language (like Animals/Dinosaur to edit Content/Animals/Dinosaur.xnb). This field supports tokens and capitalisation doesn't matter. Your changes are applied in all languages unless you specify a language condition.",
+                    "type": "string"
+                },
+                "LogName": {
+                    "title": "Patch log name",
+                    "description": "A name for this patch shown in log messages. This is very useful for understanding errors; if not specified, will default to a name like entry #14 (EditImage Animals/Dinosaurs).",
+                    "type": "string"
+                },
+                "Enabled": {
+                    "title": "Enabled",
+                    "description": "Whether to apply this patch. Default true. This fields supports immutable tokens (e.g. config tokens) if they return true/false.",
+                    "anyOf": [
+                        {
+                            "type": "string",
+                            "enum": ["true", "false"]
+                        },
+                        {
+                            "type": "string",
+                            "pattern": "\\{\\{[^{}]+\\}\\}"
+                        }
+                    ]
+                },
+                "When": {
+                    "title": "When",
+                    "description": "Only apply the patch if the given conditions match.",
+                    "$ref": "#/definitions/Condition"
+                }
+            },
+            "required": ["Action", "Target"],
+            "allOf": [
+                {
+                    "if": {
+                        "properties": {
+                            "Action": {
+                                "const": "Load"
+                            }
+                        }
+                    },
+                    "then": {
+                        "$ref": "#/definitions/LoadChange"
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "Action": {
+                                "const": "EditImage"
+                            }
+                        }
+                    },
+                    "then": {
+                        "$ref": "#/definitions/EditImageChange"
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "Action": {
+                                "const": "EditData"
+                            }
+                        }
+                    },
+                    "then": {
+                        "$ref": "#/definitions/EditDataChange"
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "Action": {
+                                "const": "EditMap"
+                            }
+                        }
+                    },
+                    "then": {
+                        "$ref": "#/definitions/EditMapChange"
+                    }
+                }
+            ]
+        },
+        "LoadChange": {
+            "properties": {
+                "FromFile": {
+                    "$ref": "#/definitions/FromFile"
+                }
+            },
+            "required": ["FromFile"]
+        },
+        "EditImageChange": {
+            "properties": {
+                "FromFile": {
+                    "$ref": "#/definitions/FromFile"
+                },
+                "FromArea": {
+                    "title": "Source area",
+                    "description": "The part of the source image to copy. Defaults to the whole source image.",
+                    "$ref": "#/definitions/Rectangle"
+                },
+                "ToArea": {
+                    "title": "Destination area",
+                    "description": "The part of the target image to replace. Defaults to the FromArea size starting from the top-left corner.",
+                    "$ref": "#/definitions/Rectangle"
+                },
+                "PatchMode": {
+                    "title": "Patch mode",
+                    "description": "How to apply FromArea to ToArea. Defaults to Replace.",
+                    "type": "string",
+                    "enum": ["Replace", "Overlay"]
+                }
+            },
+            "required": ["FromFile"]
+        },
+        "EditDataChange": {
+            "properties": {
+                "Fields": {
+                    "title": "Fields",
+                    "description": "The individual fields you want to change for existing entries. This field supports tokens in field keys and values. The key for each field is the field index (starting at zero) for a slash-delimited string, or the field name for an object.",
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "object"
+                    }
+                },
+                "Entries": {
+                    "title": "Entries",
+                    "description": "The entries in the data file you want to add, replace, or delete. If you only want to change a few fields, use Fields instead for best compatibility with other mods. To add an entry, just specify a key that doesn't exist; to delete an entry, set the value to null (like \"some key\": null). This field supports tokens in entry keys and values.\nCaution: some XNB files have extra fields at the end for translations; when adding or replacing an entry for all locales, make sure you include the extra fields to avoid errors for non-English players."
+                },
+                "MoveEntries": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "ID": {
+                                "title": "ID",
+                                "description": "The ID of the entry to move",
+                                "type": "string"
+                            }
+                        },
+                        "anyOf": [
+                            {
+                                "properties": {
+                                    "ID": {},
+                                    "BeforeID": {
+                                        "title": "Before ID",
+                                        "description": "Move entry so it's right before this ID",
+                                        "type": "string"
+                                    }
+                                },
+                                "required": ["ID", "BeforeID"],
+                                "additionalProperties": false
+                            },
+                            {
+                                "properties": {
+                                    "ID": {},
+                                    "AfterID": {
+                                        "title": "After ID",
+                                        "description": "Move entry so it's right after this ID",
+                                        "type": "string"
+                                    }
+                                },
+                                "required": ["ID", "AfterID"],
+                                "additionalProperties": false
+                            },
+                            {
+                                "properties": {
+                                    "ID": {},
+                                    "ToPosition": {
+                                        "title": "To position",
+                                        "description": "Move entry so it's right at this position",
+                                        "enum": ["Top", "Bottom"]
+                                    }
+                                },
+                                "required": ["ID", "ToPosition"],
+                                "additionalProperties": false
+                            }
+                        ],
+                        "required": ["ID"]
+                    }
+                }
+            }
+        },
+        "EditMapChange": {
+            "properties": {
+                "FromFile": {
+                    "description": "The relative path to the map in your content pack folder from which to copy (like assets/town.tbin). This can be a .tbin or .xnb file. This field supports tokens and capitalisation doesn't matter.\nContent Patcher will handle tilesheets referenced by the FromFile map for you if it's a .tbin file:\n - If a tilesheet isn't referenced by the target map, Content Patcher will add it for you (with a z_ ID prefix to avoid conflicts with hardcoded game logic). If the source map has a custom version of a tilesheet that's already referenced, it'll be added as a separate tilesheet only used by your tiles.\n - If you include the tilesheet file in your mod folder, Content Patcher will use that one automatically; otherwise it will be loaded from the game's Content/Maps folder.",
+                    "$ref": "#/definitions/FromFile"
+                },
+                "FromArea": {
+                    "title": "Source area",
+                    "description": "The part of the source map to copy. Defaults to the whole source map.",
+                    "$ref": "#/definitions/Rectangle"
+                },
+                "ToArea": {
+                    "title": "Target area",
+                    "description": "The part of the target map to replace.",
+                    "$ref": "#/definitions/Rectangle"
+                }
+            },
+            "required": ["FromFile", "ToArea"]
+        },
+        "Config": {
+            "type": "object",
+            "additionalProperties": {
+                "type": "object",
+                "properties": {
+                    "AllowValues": {
+                        "title": "Allowed values",
+                        "description": "The values the player can provide, as a comma-delimited string. If omitted, any value is allowed.\nTip: for a boolean flag, use \"true, false\".",
+                        "type": "string"
+                    },
+                    "AllowBlank": {
+                        "title": "Allow blank",
+                        "description": "Whether the field can be left blank. If false or omitted, blank fields will be replaced with the default value.",
+                        "type": "boolean"
+                    },
+                    "AllowMultiple": {
+                        "title": "Allow multiple values",
+                        "description": "Whether the player can specify multiple comma-delimited values. Default false.",
+                        "type": "boolean"
+                    },
+                    "Default": {
+                        "title": "Default value",
+                        "description": "The default values when the field is missing. Can contain multiple comma-delimited values if AllowMultiple is true. If omitted, blank fields are left blank.",
+                        "type": "string"
+                    }
+                },
+                "if": {
+                    "properties": {
+                        "AllowBlank": {
+                            "const": false
+                        }
+                    },
+                    "required": ["AllowBlank"]
+                },
+                "then": {
+                    "required": ["Default"]
+                }
+            }
+        },
+        "Condition": {
+            "type": "object",
+            "additionalProperties": {
+                "type": "string"
+            }
+        },
+        "DynamicToken": {
+            "type": "object",
+            "properties": {
+                "Name": {
+                    "title": "Name",
+                    "description": "The name of the token to use for tokens & condition.",
+                    "type": "string"
+                },
+                "Value": {
+                    "title": "Token value",
+                    "description": "The value(s) to set. This can be a comma-delimited value to give it multiple values. If any block for a token name has multiple values, it will only be usable in conditions. This field supports tokens, including dynamic tokens defined before this entry.",
+                    "type": "string"
+                },
+                "When": {
+                    "title": "When",
+                    "description": "Only set the value if the given conditions match. If not specified, always matches.",
+                    "$ref": "#/definitions/Condition"
+                }
+            },
+            "required": ["Name", "Value"]
+        },
+        "FromFile": {
+            "title": "Source file",
+            "description": "The relative file path in your content pack folder to load instead (like assets/dinosaur.png). This can be a .json (data), .png (image), .tbin (map), or .xnb file. This field supports tokens and capitalisation doesn't matter.",
+            "type": "string",
+            "pattern": ".*\\.(json|png|tbin|xnb)$|.*\\{\\{[^}]+}}$"
+        },
+        "Rectangle": {
+            "type": "object",
+            "properties": {
+                "X": {
+                    "title": "X-Coordinate",
+                    "description": "Location in pixels of the top-left of the rectangle",
+                    "type": "number",
+                    "multipleOf": 1
+                },
+                "Y": {
+                    "title": "Y-Coordinate",
+                    "description": "Location in pixels of the top-left of the rectangle",
+                    "type": "number",
+                    "multipleOf": 1
+                },
+                "Width": {
+                    "title": "Width",
+                    "description": "The width of the rectangle",
+                    "type": "number",
+                    "multipleOf": 1
+                },
+                "Height": {
+                    "title": "Height",
+                    "description": "The height of the rectangle",
+                    "type": "number",
+                    "multipleOf": 1
+                }
+            }
+        }
+    },
+    "properties": {
+        "Format": {
+            "title": "Format version",
+            "description": "The format version. You should always use the latest version to use the latest features and avoid obsolete behavior.",
+            "$ref": "#/definitions/Version"
+        },
+        "Changes": {
+            "title": "Changes",
+            "description": "The changes you want to make. Each entry is called a patch, and describes a specific action to perform: replace this file, copy this image into the file, etc. You can list any number of patches.",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Change"
+            }
+        },
+        "ConfigSchema": {
+            "title": "Config schema",
+            "description": "Defines the config.json format, to support more complex mods.",
+            "$ref": "#/definitions/Config"
+        },
+        "DynamicTokens": {
+            "title": "Dynamic tokens",
+            "description": "Custom tokens that you can use.",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/DynamicToken"
+            }
+        },
+        "$schema": {
+            "title": "Schema",
+            "description": "The schema this JSON should follow. Useful for JSON validation tools.",
+            "type": "string",
+            "format": "uri"
+        }
+    },
+    "required": ["Format", "Changes"]
+}
