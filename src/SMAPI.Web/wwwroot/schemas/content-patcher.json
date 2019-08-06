@@ -9,9 +9,12 @@
     "properties": {
         "Format": {
             "title": "Format version",
-            "description": "The format version. You should always use the latest version to use the latest features and avoid obsolete behavior.",
+            "description": "The format version. You should always use the latest version to enable the latest features and avoid obsolete behavior.",
             "type": "string",
-            "pattern": "\\d+\\.\\d+"
+            "const": "1.9",
+            "@errorMessages": {
+                "const": "Incorrect value '@value'. This should be set to the latest format version, currently '1.9'."
+            }
         },
         "ConfigSchema": {
             "title": "Config schema",
@@ -39,16 +42,26 @@
                         "title": "Default value",
                         "description": "The default values when the field is missing. Can contain multiple comma-delimited values if AllowMultiple is true. If omitted, blank fields are left blank.",
                         "type": "string"
-                    }
-                },
-                "if": {
-                    "properties": {
-                        "AllowBlank": { "const": false }
                     },
-                    "required": [ "AllowBlank" ]
+
+                    "additionalProperties": false
                 },
-                "then": {
-                    "required": [ "Default" ]
+                "allOf": [
+                    {
+                        "if": {
+                            "properties": {
+                                "AllowBlank": { "const": false }
+                            },
+                            "required": [ "AllowBlank" ]
+                        },
+                        "then": {
+                            "required": [ "Default" ]
+                        }
+                    }
+                ],
+
+                "@errorMessages": {
+                    "allOf": "If 'AllowBlank' is false, the 'Default' field is required."
                 }
             }
         },
@@ -61,7 +74,7 @@
                 "properties": {
                     "Name": {
                         "title": "Name",
-                        "description": "The name of the token to use for tokens & condition.",
+                        "description": "The name of the token to use for tokens & conditions.",
                         "type": "string"
                     },
                     "Value": {
@@ -75,7 +88,9 @@
                         "$ref": "#/definitions/Condition"
                     }
                 },
-                "required": [ "Name", "Value" ]
+
+                "required": [ "Name", "Value" ],
+                "additionalProperties": false
             }
         },
         "Changes": {
@@ -93,11 +108,17 @@
                     "Target": {
                         "title": "Target asset",
                         "description": "The game asset you want to patch (or multiple comma-delimited assets). This is the file path inside your game's Content folder, without the file extension or language (like Animals/Dinosaur to edit Content/Animals/Dinosaur.xnb). This field supports tokens and capitalisation doesn't matter. Your changes are applied in all languages unless you specify a language condition.",
-                        "type": "string"
+                        "type": "string",
+                        "not": {
+                            "pattern": "^ *[cC][oO][nN][tT][eE][nN][tT]/|\\.[xX][nN][bB] *$|\\.[a-zA-Z][a-zA-Z]-[a-zA-Z][a-zA-Z](?:.xnb)? *$"
+                        },
+                        "@errorMessages": {
+                            "not": "Invalid target; it shouldn't include the 'Content/' folder, '.xnb' extension, or locale code."
+                        }
                     },
                     "LogName": {
                         "title": "Patch log name",
-                        "description": "A name for this patch shown in log messages. This is very useful for understanding errors; if not specified, will default to a name like entry #14 (EditImage Animals/Dinosaurs).",
+                        "description": "A name for this patch shown in log messages. This is very useful for understanding errors; if not specified, will default to a name like 'entry #14 (EditImage Animals/Dinosaurs)'.",
                         "type": "string"
                     },
                     "Enabled": {
@@ -112,7 +133,128 @@
                                 "type": "string",
                                 "pattern": "\\{\\{[^{}]+\\}\\}"
                             }
-                        ]
+                        ],
+                        "@errorMessages": {
+                            "anyOf": "Invalid value; must be true, false, or a single token which evaluates to true or false."
+                        }
+                    },
+                    "FromFile": {
+                        "title": "Source file",
+                        "description": "The relative file path in your content pack folder to load instead (like 'assets/dinosaur.png'). This can be a .json (data), .png (image), .tbin (map), or .xnb file. This field supports tokens and capitalisation doesn't matter.",
+                        "type": "string",
+                        "allOf": [
+                            {
+                                "not": {
+                                    "pattern": "\b\\.\\.[/\\]"
+                                }
+                            },
+                            {
+                                "pattern": "\\.(json|png|tbin|xnb) *$"
+                            }
+                        ],
+                        "@errorMessages": {
+                            "allOf:indexes: 0": "Invalid value; must not contain directory climbing (like '../').",
+                            "allOf:indexes: 1": "Invalid value; must be a file path ending with .json, .png, .tbin, or .xnb."
+                        }
+                    },
+                    "FromArea": {
+                        "title": "Source area",
+                        "description": "The part of the source image to copy. Defaults to the whole source image.",
+                        "$ref": "#/definitions/Rectangle"
+                    },
+                    "ToArea": {
+                        "title": "Destination area",
+                        "description": "The part of the target image to replace. Defaults to the FromArea size starting from the top-left corner.",
+                        "$ref": "#/definitions/Rectangle"
+                    },
+                    "PatchMode": {
+                        "title": "Patch mode",
+                        "description": "How to apply FromArea to ToArea. Defaults to Replace.",
+                        "type": "string",
+                        "enum": [ "Replace", "Overlay" ],
+                        "default": "Replace"
+                    },
+                    "Fields": {
+                        "title": "Fields",
+                        "description": "The individual fields you want to change for existing entries. This field supports tokens in field keys and values. The key for each field is the field index (starting at zero) for a slash-delimited string, or the field name for an object.",
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "object"
+                        }
+                    },
+                    "Entries": {
+                        "title": "Entries",
+                        "description": "The entries in the data file you want to add, replace, or delete. If you only want to change a few fields, use Fields instead for best compatibility with other mods. To add an entry, just specify a key that doesn't exist; to delete an entry, set the value to null (like \"some key\": null). This field supports tokens in entry keys and values.\nCaution: some XNB files have extra fields at the end for translations; when adding or replacing an entry for all locales, make sure you include the extra fields to avoid errors for non-English players.",
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "object"
+                        }
+                    },
+                    "MoveEntries": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "ID": {
+                                    "title": "ID",
+                                    "description": "The ID of the entry to move",
+                                    "type": "string"
+                                },
+                                "BeforeID": {
+                                    "title": "Before ID",
+                                    "description": "Move entry so it's right before this ID",
+                                    "type": "string"
+                                },
+                                "AfterID": {
+                                    "title": "After ID",
+                                    "description": "Move entry so it's right after this ID",
+                                    "type": "string"
+                                },
+                                "ToPosition": {
+                                    "title": "To position",
+                                    "description": "Move entry so it's right at this position",
+                                    "enum": [ "Top", "Bottom" ]
+                                }
+                            },
+
+                            "anyOf": [
+                                {
+                                    "required": [ "BeforeID" ]
+                                },
+                                {
+                                    "required": [ "AfterID" ]
+                                },
+                                {
+                                    "required": [ "ToPosition" ]
+                                }
+                            ],
+
+                            "dependencies": {
+                                "BeforeID": {
+                                    "propertyNames": {
+                                        "enum": [ "ID", "BeforeID" ]
+                                    }
+                                },
+                                "AfterID": {
+                                    "propertyNames": {
+                                        "enum": [ "ID", "AfterID" ]
+                                    }
+                                },
+                                "ToPosition": {
+                                    "propertyNames": {
+                                        "enum": [ "ID", "ToPosition" ]
+                                    }
+                                }
+                            },
+
+                            "required": [ "ID" ],
+                            "@errorMessages": {
+                                "anyOf": "You must specify one of 'AfterID', 'BeforeID', or 'ToPosition'.",
+                                "dependencies:BeforeID": "If 'BeforeID' is specified, only 'ID' and 'BeforeID' fields are valid.",
+                                "dependencies:AfterID": "If 'AfterID' is specified, only 'ID' and 'AfterID' fields are valid.",
+                                "dependencies:ToPosition": "If 'ToPosition' is specified, only 'ID' and 'ToPosition' fields are valid."
+                            }
+                        }
                     },
                     "When": {
                         "title": "When",
@@ -120,7 +262,6 @@
                         "$ref": "#/definitions/Condition"
                     }
                 },
-                "required": [ "Action", "Target" ],
                 "allOf": [
                     {
                         "if": {
@@ -129,12 +270,13 @@
                             }
                         },
                         "then": {
-                            "properties": {
-                                "FromFile": {
-                                    "$ref": "#/definitions/FromFile"
-                                }
+                            "required": [ "FromFile" ],
+                            "propertyNames": {
+                                "enum": [ "Action", "Target", "LogName", "Enabled", "When", "FromFile" ]
                             },
-                            "required": [ "FromFile" ]
+                            "@errorMessages": {
+                                "then": "$transparent"
+                            }
                         }
                     },
                     {
@@ -144,28 +286,13 @@
                             }
                         },
                         "then": {
-                            "properties": {
-                                "FromFile": {
-                                    "$ref": "#/definitions/FromFile"
-                                },
-                                "FromArea": {
-                                    "title": "Source area",
-                                    "description": "The part of the source image to copy. Defaults to the whole source image.",
-                                    "$ref": "#/definitions/Rectangle"
-                                },
-                                "ToArea": {
-                                    "title": "Destination area",
-                                    "description": "The part of the target image to replace. Defaults to the FromArea size starting from the top-left corner.",
-                                    "$ref": "#/definitions/Rectangle"
-                                },
-                                "PatchMode": {
-                                    "title": "Patch mode",
-                                    "description": "How to apply FromArea to ToArea. Defaults to Replace.",
-                                    "type": "string",
-                                    "enum": [ "Replace", "Overlay" ]
-                                }
+                            "required": [ "FromFile" ],
+                            "propertyNames": {
+                                "enum": [ "Action", "Target", "LogName", "Enabled", "When", "FromFile", "FromArea", "ToArea", "PatchMode" ]
                             },
-                            "required": [ "FromFile" ]
+                            "@errorMessages": {
+                                "then": "$transparent"
+                            }
                         }
                     },
                     {
@@ -175,71 +302,11 @@
                             }
                         },
                         "then": {
-                            "properties": {
-                                "Fields": {
-                                    "title": "Fields",
-                                    "description": "The individual fields you want to change for existing entries. This field supports tokens in field keys and values. The key for each field is the field index (starting at zero) for a slash-delimited string, or the field name for an object.",
-                                    "type": "object",
-                                    "additionalProperties": {
-                                        "type": "object"
-                                    }
-                                },
-                                "Entries": {
-                                    "title": "Entries",
-                                    "description": "The entries in the data file you want to add, replace, or delete. If you only want to change a few fields, use Fields instead for best compatibility with other mods. To add an entry, just specify a key that doesn't exist; to delete an entry, set the value to null (like \"some key\": null). This field supports tokens in entry keys and values.\nCaution: some XNB files have extra fields at the end for translations; when adding or replacing an entry for all locales, make sure you include the extra fields to avoid errors for non-English players."
-                                },
-                                "MoveEntries": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "ID": {
-                                                "title": "ID",
-                                                "description": "The ID of the entry to move",
-                                                "type": "string"
-                                            }
-                                        },
-                                        "anyOf": [
-                                            {
-                                                "properties": {
-                                                    "ID": {},
-                                                    "BeforeID": {
-                                                        "title": "Before ID",
-                                                        "description": "Move entry so it's right before this ID",
-                                                        "type": "string"
-                                                    }
-                                                },
-                                                "required": [ "ID", "BeforeID" ],
-                                                "additionalProperties": false
-                                            },
-                                            {
-                                                "properties": {
-                                                    "ID": {},
-                                                    "AfterID": {
-                                                        "title": "After ID",
-                                                        "description": "Move entry so it's right after this ID",
-                                                        "type": "string"
-                                                    }
-                                                },
-                                                "required": [ "ID", "AfterID" ],
-                                                "additionalProperties": false
-                                            },
-                                            {
-                                                "properties": {
-                                                    "ID": {},
-                                                    "ToPosition": {
-                                                        "title": "To position",
-                                                        "description": "Move entry so it's right at this position",
-                                                        "enum": [ "Top", "Bottom" ]
-                                                    }
-                                                },
-                                                "required": [ "ID", "ToPosition" ],
-                                                "additionalProperties": false
-                                            }
-                                        ],
-                                        "required": [ "ID" ]
-                                    }
-                                }
+                            "propertyNames": {
+                                "enum": [ "Action", "Target", "LogName", "Enabled", "When", "Fields", "Entries", "MoveEntries" ]
+                            },
+                            "@errorMessages": {
+                                "then": "$transparent"
                             }
                         }
                     },
@@ -252,31 +319,34 @@
                         "then": {
                             "properties": {
                                 "FromFile": {
-                                    "description": "The relative path to the map in your content pack folder from which to copy (like assets/town.tbin). This can be a .tbin or .xnb file. This field supports tokens and capitalisation doesn't matter.\nContent Patcher will handle tilesheets referenced by the FromFile map for you if it's a .tbin file:\n - If a tilesheet isn't referenced by the target map, Content Patcher will add it for you (with a z_ ID prefix to avoid conflicts with hardcoded game logic). If the source map has a custom version of a tilesheet that's already referenced, it'll be added as a separate tilesheet only used by your tiles.\n - If you include the tilesheet file in your mod folder, Content Patcher will use that one automatically; otherwise it will be loaded from the game's Content/Maps folder.",
-                                    "$ref": "#/definitions/FromFile"
+                                    "description": "The relative path to the map in your content pack folder from which to copy (like assets/town.tbin). This can be a .tbin or .xnb file. This field supports tokens and capitalisation doesn't matter.\nContent Patcher will handle tilesheets referenced by the FromFile map for you if it's a .tbin file:\n - If a tilesheet isn't referenced by the target map, Content Patcher will add it for you (with a z_ ID prefix to avoid conflicts with hardcoded game logic). If the source map has a custom version of a tilesheet that's already referenced, it'll be added as a separate tilesheet only used by your tiles.\n - If you include the tilesheet file in your mod folder, Content Patcher will use that one automatically; otherwise it will be loaded from the game's Content/Maps folder."
                                 },
                                 "FromArea": {
-                                    "title": "Source area",
-                                    "description": "The part of the source map to copy. Defaults to the whole source map.",
-                                    "$ref": "#/definitions/Rectangle"
+                                    "description": "The part of the source map to copy. Defaults to the whole source map."
                                 },
                                 "ToArea": {
-                                    "title": "Target area",
-                                    "description": "The part of the target map to replace.",
-                                    "$ref": "#/definitions/Rectangle"
+                                    "description": "The part of the target map to replace."
                                 }
+                            },
+                            "propertyNames": {
+                                "enum": [ "Action", "Target", "LogName", "Enabled", "When", "FromFile", "FromArea", "ToArea" ]
                             },
                             "required": [ "FromFile", "ToArea" ]
                         }
                     }
-                ]
+                ],
+
+                "required": [ "Action", "Target" ],
+                "@errorMessages": {
+                    "allOf": "$transparent"
+                }
             }
         },
         "$schema": {
             "title": "Schema",
-            "description": "The schema this JSON should follow. Useful for JSON validation tools.",
+            "description": "A reference to this JSON schema. Not part of the actual format, but useful for validation tools.",
             "type": "string",
-            "format": "uri"
+            "const": "https://smapi.io/schemas/content-patcher.json"
         }
     },
     "definitions": {
@@ -286,42 +356,40 @@
                 "type": "string"
             }
         },
-        "FromFile": {
-            "title": "Source file",
-            "description": "The relative file path in your content pack folder to load instead (like assets/dinosaur.png). This can be a .json (data), .png (image), .tbin (map), or .xnb file. This field supports tokens and capitalisation doesn't matter.",
-            "type": "string",
-            "pattern": ".*\\.(json|png|tbin|xnb)$|.*\\{\\{[^}]+}}$"
-        },
         "Rectangle": {
             "type": "object",
             "properties": {
                 "X": {
                     "title": "X-Coordinate",
                     "description": "Location in pixels of the top-left of the rectangle",
-                    "type": "number",
-                    "multipleOf": 1
+                    "type": "integer",
+                    "minimum:": 0
                 },
                 "Y": {
                     "title": "Y-Coordinate",
                     "description": "Location in pixels of the top-left of the rectangle",
-                    "type": "number",
-                    "multipleOf": 1
+                    "type": "integer",
+                    "minimum:": 0
                 },
                 "Width": {
                     "title": "Width",
                     "description": "The width of the rectangle",
-                    "type": "number",
-                    "multipleOf": 1
+                    "type": "integer",
+                    "minimum:": 0
                 },
                 "Height": {
                     "title": "Height",
                     "description": "The height of the rectangle",
-                    "type": "number",
-                    "multipleOf": 1
+                    "type": "integer",
+                    "minimum:": 0
                 }
-            }
+            },
+
+            "required": [ "X", "Y", "Width", "Height" ],
+            "additionalProperties": false
         }
     },
 
-    "required": [ "Format", "Changes" ]
+    "required": [ "Format", "Changes" ],
+    "additionalProperties": false
 }
