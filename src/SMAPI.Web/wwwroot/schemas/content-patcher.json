@@ -3,6 +3,7 @@
     "$id": "https://smapi.io/schemas/content-patcher.json",
     "title": "Content Patcher content pack",
     "description": "Content Patcher content file for mods",
+    "@documentationUrl": "https://github.com/Pathoschild/StardewMods/tree/develop/ContentPatcher#readme",
     "type": "object",
     "definitions": {
         "Version": {
@@ -15,7 +16,7 @@
                     "title": "Action",
                     "description": "The kind of change to make.",
                     "type": "string",
-                    "enum": ["Load", "EditImage", "EditData", "EditMap"]
+                    "enum": [ "Load", "EditImage", "EditData", "EditMap" ]
                 },
                 "Target": {
                     "title": "Target asset",
@@ -33,7 +34,7 @@
                     "anyOf": [
                         {
                             "type": "string",
-                            "enum": ["true", "false"]
+                            "enum": [ "true", "false" ]
                         },
                         {
                             "type": "string",
@@ -47,7 +48,7 @@
                     "$ref": "#/definitions/Condition"
                 }
             },
-            "required": ["Action", "Target"],
+            "required": [ "Action", "Target" ],
             "allOf": [
                 {
                     "if": {
@@ -105,7 +106,7 @@
                     "$ref": "#/definitions/FromFile"
                 }
             },
-            "required": ["FromFile"]
+            "required": [ "FromFile" ]
         },
         "EditImageChange": {
             "properties": {
@@ -126,10 +127,10 @@
                     "title": "Patch mode",
                     "description": "How to apply FromArea to ToArea. Defaults to Replace.",
                     "type": "string",
-                    "enum": ["Replace", "Overlay"]
+                    "enum": [ "Replace", "Overlay" ]
                 }
             },
-            "required": ["FromFile"]
+            "required": [ "FromFile" ]
         },
         "EditDataChange": {
             "properties": {
@@ -166,7 +167,7 @@
                                         "type": "string"
                                     }
                                 },
-                                "required": ["ID", "BeforeID"],
+                                "required": [ "ID", "BeforeID" ],
                                 "additionalProperties": false
                             },
                             {
@@ -178,7 +179,7 @@
                                         "type": "string"
                                     }
                                 },
-                                "required": ["ID", "AfterID"],
+                                "required": [ "ID", "AfterID" ],
                                 "additionalProperties": false
                             },
                             {
@@ -187,14 +188,14 @@
                                     "ToPosition": {
                                         "title": "To position",
                                         "description": "Move entry so it's right at this position",
-                                        "enum": ["Top", "Bottom"]
+                                        "enum": [ "Top", "Bottom" ]
                                     }
                                 },
-                                "required": ["ID", "ToPosition"],
+                                "required": [ "ID", "ToPosition" ],
                                 "additionalProperties": false
                             }
                         ],
-                        "required": ["ID"]
+                        "required": [ "ID" ]
                     }
                 }
             }
@@ -216,7 +217,7 @@
                     "$ref": "#/definitions/Rectangle"
                 }
             },
-            "required": ["FromFile", "ToArea"]
+            "required": [ "FromFile", "ToArea" ]
         },
         "Config": {
             "type": "object",
@@ -250,10 +251,10 @@
                             "const": false
                         }
                     },
-                    "required": ["AllowBlank"]
+                    "required": [ "AllowBlank" ]
                 },
                 "then": {
-                    "required": ["Default"]
+                    "required": [ "Default" ]
                 }
             }
         },
@@ -282,7 +283,7 @@
                     "$ref": "#/definitions/Condition"
                 }
             },
-            "required": ["Name", "Value"]
+            "required": [ "Name", "Value" ]
         },
         "FromFile": {
             "title": "Source file",
@@ -354,5 +355,5 @@
             "format": "uri"
         }
     },
-    "required": ["Format", "Changes"]
+    "required": [ "Format", "Changes" ]
 }

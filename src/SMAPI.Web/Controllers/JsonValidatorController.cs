@@ -39,7 +39,8 @@ namespace StardewModdingAPI.Web.Controllers
         private readonly IDictionary<string, string> SchemaFormats = new Dictionary<string, string>
         {
             ["none"] = "None",
-            ["manifest"] = "Manifest"
+            ["manifest"] = "Manifest",
+            ["content-patcher"] = "Content Patcher"
         };
 
         /// <summary>The schema ID to use if none was specified.</summary>
