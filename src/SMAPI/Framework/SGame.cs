@@ -26,6 +26,8 @@ using StardewValley.Locations;
 using StardewValley.Menus;
 using StardewValley.Tools;
 using xTile.Dimensions;
+using xTile.Layers;
+using xTile.Tiles;
 
 namespace StardewModdingAPI.Framework
 {
@@ -1069,7 +1071,8 @@ namespace StardewModdingAPI.Framework
                                     }
                                 }
                             }
-                            Game1.currentLocation.Map.GetLayer("Buildings").Draw(Game1.mapDisplayDevice, Game1.viewport, Location.Origin, false, 4);
+                            Layer layer = Game1.currentLocation.Map.GetLayer("Buildings");
+                            layer.Draw(Game1.mapDisplayDevice, Game1.viewport, Location.Origin, false, 4);
                             Game1.mapDisplayDevice.EndScene();
                             Game1.spriteBatch.End();
                             Game1.spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend, SamplerState.PointClamp, (DepthStencilState)null, (RasterizerState)null);
@@ -1115,6 +1118,16 @@ namespace StardewModdingAPI.Framework
                             if (Game1.player.currentUpgrade != null && Game1.player.currentUpgrade.daysLeftTillUpgradeDone <= 3 && Game1.currentLocation.Name.Equals("Farm"))
                                 Game1.spriteBatch.Draw(Game1.player.currentUpgrade.workerTexture, Game1.GlobalToLocal(Game1.viewport, Game1.player.currentUpgrade.positionOfCarpenter), new Microsoft.Xna.Framework.Rectangle?(Game1.player.currentUpgrade.getSourceRectangle()), Color.White, 0.0f, Vector2.Zero, 1f, SpriteEffects.None, (float)(((double)Game1.player.currentUpgrade.positionOfCarpenter.Y + 48.0) / 10000.0));
                             Game1.currentLocation.draw(Game1.spriteBatch);
+                            foreach (Vector2 key in Game1.crabPotOverlayTiles.Keys)
+                            {
+                                Tile tile = layer.Tiles[(int)key.X, (int)key.Y];
+                                if (tile != null)
+                                {
+                                    Vector2 local = Game1.GlobalToLocal(Game1.viewport, key * 64f);
+                                    Location location = new Location((int)local.X, (int)local.Y);
+                                    Game1.mapDisplayDevice.DrawTile(tile, location, (float)(((double)key.Y * 64.0 - 1.0) / 10000.0));
+                                }
+                            }
                             if (Game1.eventUp && Game1.currentLocation.currentEvent != null)
                             {
                                 string messageToScreen = Game1.currentLocation.currentEvent.messageToScreen;
@@ -1170,7 +1183,8 @@ namespace StardewModdingAPI.Framework
                                 Game1.spriteBatch.Draw(Game1.littleEffect, new Microsoft.Xna.Framework.Rectangle((int)Game1.player.getLocalPosition(Game1.viewport).X - 2, (int)Game1.player.getLocalPosition(Game1.viewport).Y - (Game1.player.CurrentTool.Name.Equals("Watering Can") ? 0 : 64) - 2, (int)((double)Game1.toolHold % 600.0 * 0.0799999982118607) + 4, 12), Color.Black);
                                 Game1.spriteBatch.Draw(Game1.littleEffect, new Microsoft.Xna.Framework.Rectangle((int)Game1.player.getLocalPosition(Game1.viewport).X, (int)Game1.player.getLocalPosition(Game1.viewport).Y - (Game1.player.CurrentTool.Name.Equals("Watering Can") ? 0 : 64), (int)((double)Game1.toolHold % 600.0 * 0.0799999982118607), 8), color);
                             }
-                            if (Game1.isDebrisWeather && Game1.currentLocation.IsOutdoors && (!(bool)((NetFieldBase<bool, NetBool>)Game1.currentLocation.ignoreDebrisWeather) && !Game1.currentLocation.Name.Equals("Desert")) && Game1.viewport.X > -10)
+                            bool flag = Game1.viewport.X > -Game1.viewport.Width;
+                            if (((!Game1.isDebrisWeather || !Game1.currentLocation.IsOutdoors || (bool)((NetFieldBase<bool, NetBool>)Game1.currentLocation.ignoreDebrisWeather) ? 0 : (!Game1.currentLocation.Name.Equals("Desert") ? 1 : 0)) & (flag ? 1 : 0)) != 0)
                             {
                                 foreach (WeatherDebris weatherDebris in Game1.debrisWeather)
                                     weatherDebris.draw(Game1.spriteBatch);
