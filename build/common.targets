@@ -4,6 +4,9 @@
 
   <!--set properties -->
   <PropertyGroup>
+    <Version>3.0.0</Version>
+    <Product>SMAPI</Product>
+
     <AssemblySearchPaths>$(AssemblySearchPaths);{GAC}</AssemblySearchPaths>
     <DefineConstants Condition="$(OS) == 'Windows_NT'">$(DefineConstants);SMAPI_FOR_WINDOWS</DefineConstants>
   </PropertyGroup>

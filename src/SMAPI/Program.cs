@@ -3,12 +3,15 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Threading;
 #if SMAPI_FOR_WINDOWS
 #endif
 using StardewModdingAPI.Framework;
 using StardewModdingAPI.Toolkit.Utilities;
 
+[assembly: InternalsVisibleTo("SMAPI.Tests")]
+[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")] // Moq for unit testing
 namespace StardewModdingAPI
 {
     /// <summary>The main entry point for SMAPI, responsible for hooking into and launching the game.</summary>

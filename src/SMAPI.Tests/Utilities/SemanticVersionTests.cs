@@ -2,9 +2,10 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using StardewModdingAPI;
 using StardewModdingAPI.Framework;
 
-namespace StardewModdingAPI.Tests.Utilities
+namespace SMAPI.Tests.Utilities
 {
     /// <summary>Unit tests for <see cref="SemanticVersion"/>.</summary>
     [TestFixture]

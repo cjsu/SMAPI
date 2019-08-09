@@ -1,10 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>StardewModdingAPI.Mods.ConsoleCommands</RootNamespace>
     <AssemblyName>ConsoleCommands</AssemblyName>
+    <RootNamespace>StardewModdingAPI.Mods.ConsoleCommands</RootNamespace>
     <TargetFramework>net45</TargetFramework>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <LangVersion>latest</LangVersion>
     <OutputPath>$(SolutionDir)\..\bin\$(Configuration)\Mods\ConsoleCommands</OutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
@@ -61,12 +60,6 @@
       </ItemGroup>
     </Otherwise>
   </Choose>
-
-  <ItemGroup>
-    <Compile Include="..\..\build\GlobalAssemblyInfo.cs">
-      <Link>Properties\GlobalAssemblyInfo.cs</Link>
-    </Compile>
-  </ItemGroup>
 
   <ItemGroup>
     <None Update="manifest.json">

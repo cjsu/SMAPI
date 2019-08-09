@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
+using StardewModdingAPI;
 using StardewModdingAPI.Framework.ModHelpers;
 using StardewValley;
 
-namespace StardewModdingAPI.Tests.Core
+namespace SMAPI.Tests.Core
 {
     /// <summary>Unit tests for <see cref="TranslationHelper"/> and <see cref="Translation"/>.</summary>
     [TestFixture]

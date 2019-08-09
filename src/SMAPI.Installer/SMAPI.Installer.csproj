@@ -1,20 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <AssemblyName>SMAPI.Installer</AssemblyName>
     <RootNamespace>StardewModdingAPI.Installer</RootNamespace>
-    <AssemblyName>StardewModdingAPI.Installer</AssemblyName>
+    <Description>The SMAPI installer for players.</Description>
     <TargetFramework>net45</TargetFramework>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <LangVersion>latest</LangVersion>
     <OutputType>Exe</OutputType>
     <PlatformTarget>x86</PlatformTarget>
     <OutputPath>$(SolutionDir)\..\bin\$(Configuration)\Installer</OutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Include="..\..\build\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SMAPI.Toolkit\SMAPI.Toolkit.csproj" />

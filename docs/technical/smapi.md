@@ -50,7 +50,7 @@ argument | purpose
 
 ### Compile flags
 SMAPI uses a small number of conditional compilation constants, which you can set by editing the
-`<DefineConstants>` element in `StardewModdingAPI.csproj`. Supported constants:
+`<DefineConstants>` element in `SMAPI.csproj`. Supported constants:
 
 flag | purpose
 ---- | -------
@@ -71,17 +71,17 @@ your current OS automatically and load the correct references. Compile output wi
 
 ### Debugging a local build
 Rebuilding the solution in debug mode will copy the SMAPI files into your game folder. Starting
-the `StardewModdingAPI` project with debugging from Visual Studio (on Mac or Windows) will launch
-SMAPI with the debugger attached, so you can intercept errors and step through the code being
-executed. This doesn't work in MonoDevelop on Linux, unfortunately.
+the `SMAPI` project with debugging from Visual Studio (on Mac or Windows) will launch SMAPI with
+the debugger attached, so you can intercept errors and step through the code being executed. This
+doesn't work in MonoDevelop on Linux, unfortunately.
 
 ### Preparing a release
 To prepare a crossplatform SMAPI release, you'll need to compile it on two platforms. See
 [crossplatforming info](https://stardewvalleywiki.com/Modding:Modder_Guide/Test_and_Troubleshoot#Testing_on_all_platforms)
 on the wiki for the first-time setup.
 
-1. Update the version number in `GlobalAssemblyInfo.cs` and `Constants::Version`. Make sure you use a
-   [semantic version](https://semver.org). Recommended format:
+1. Update the version number in `.root/build/common.targets` and `Constants::Version`. Make sure
+  you use a [semantic version](https://semver.org). Recommended format:
 
    build type | format                   | example
    :--------- | :----------------------- | :------

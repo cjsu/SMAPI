@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using StardewModdingAPI.Toolkit.Utilities;
 
-namespace StardewModdingAPI.Tests.Toolkit
+namespace SMAPI.Tests.Toolkit
 {
     /// <summary>Unit tests for <see cref="PathUtilities"/>.</summary>
     [TestFixture]

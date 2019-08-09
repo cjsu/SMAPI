@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>StardewModdingAPI.Tests</RootNamespace>
-    <AssemblyName>StardewModdingAPI.Tests</AssemblyName>
+    <AssemblyName>SMAPI.Tests</AssemblyName>
+    <RootNamespace>SMAPI.Tests</RootNamespace>
     <TargetFramework>net45</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <LangVersion>latest</LangVersion>
@@ -26,12 +26,6 @@
       <HintPath>$(GamePath)\$(GameExecutableName).exe</HintPath>
       <Private>True</Private>
     </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="..\..\build\GlobalAssemblyInfo.cs">
-      <Link>Properties\GlobalAssemblyInfo.cs</Link>
-    </Compile>
   </ItemGroup>
 
   <ItemGroup>

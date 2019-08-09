@@ -5,13 +5,15 @@ using System.Linq;
 using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using StardewModdingAPI;
 using StardewModdingAPI.Framework;
 using StardewModdingAPI.Framework.ModLoading;
 using StardewModdingAPI.Toolkit;
 using StardewModdingAPI.Toolkit.Framework.ModData;
 using StardewModdingAPI.Toolkit.Serialization.Models;
+using SemanticVersion = StardewModdingAPI.SemanticVersion;
 
-namespace StardewModdingAPI.Tests.Core
+namespace SMAPI.Tests.Core
 {
     /// <summary>Unit tests for <see cref="ModResolver"/>.</summary>
     [TestFixture]

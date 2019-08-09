@@ -16,4 +16,6 @@
     <ProjectReference Include="..\SMAPI.ModBuildConfig.Analyzer\SMAPI.ModBuildConfig.Analyzer.csproj" />
   </ItemGroup>
 
+  <Import Project="..\..\build\common.targets" />
+
 </Project>

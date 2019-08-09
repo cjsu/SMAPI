@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using NUnit.Framework;
 using StardewModdingAPI.Utilities;
 
-namespace StardewModdingAPI.Tests.Utilities
+namespace SMAPI.Tests.Utilities
 {
     /// <summary>Unit tests for <see cref="SDate"/>.</summary>
     [TestFixture]

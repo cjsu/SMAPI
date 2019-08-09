@@ -44,7 +44,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{09CF91E5
 	ProjectSection(SolutionItems) = preProject
 		..\build\common.targets = ..\build\common.targets
 		..\build\find-game-folder.targets = ..\build\find-game-folder.targets
-		..\build\GlobalAssemblyInfo.cs = ..\build\GlobalAssemblyInfo.cs
 		..\build\prepare-install-package.targets = ..\build\prepare-install-package.targets
 		..\build\prepare-nuget-package.targets = ..\build\prepare-nuget-package.targets
 	EndProjectSection

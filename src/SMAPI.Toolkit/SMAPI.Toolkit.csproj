@@ -1,18 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <AssemblyName>SMAPI.Toolkit</AssemblyName>
+    <RootNamespace>StardewModdingAPI.Toolkit</RootNamespace>
+    <Description>A library which encapsulates mod-handling logic for mod managers and tools. Not intended for use by mods.</Description>
     <TargetFrameworks>net4.5;netstandard2.0</TargetFrameworks>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <OutputPath>..\..\bin\$(Configuration)\SMAPI.Toolkit</OutputPath>
     <DocumentationFile>..\..\bin\$(Configuration)\SMAPI.Toolkit\$(TargetFramework)\SMAPI.Toolkit.xml</DocumentationFile>
     <LangVersion>latest</LangVersion>
     <PlatformTarget Condition="'$(TargetFramework)' == 'net4.5'">x86</PlatformTarget>
     <RootNamespace>StardewModdingAPI.Toolkit</RootNamespace>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Include="..\..\build\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="HtmlAgilityPack" Version="1.11.9" />
