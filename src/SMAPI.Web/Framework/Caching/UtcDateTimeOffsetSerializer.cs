@@ -5,7 +5,7 @@ using MongoDB.Bson.Serialization.Serializers;
 
 namespace StardewModdingAPI.Web.Framework.Caching
 {
-    /// <summary>Serialises <see cref="DateTimeOffset"/> to a UTC date field instead of the default array.</summary>
+    /// <summary>Serializes <see cref="DateTimeOffset"/> to a UTC date field instead of the default array.</summary>
     public class UtcDateTimeOffsetSerializer : StructSerializerBase<DateTimeOffset>
     {
         /*********

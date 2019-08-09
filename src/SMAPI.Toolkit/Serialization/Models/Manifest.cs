@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using StardewModdingAPI.Toolkit.Serialisation.Converters;
+using StardewModdingAPI.Toolkit.Serialization.Converters;
 
-namespace StardewModdingAPI.Toolkit.Serialisation.Models
+namespace StardewModdingAPI.Toolkit.Serialization.Models
 {
     /// <summary>A manifest which describes a mod for SMAPI.</summary>
     public class Manifest : IManifest

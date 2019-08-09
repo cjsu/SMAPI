@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using StardewModdingAPI.Toolkit.Serialisation;
+using StardewModdingAPI.Toolkit.Serialization;
 using StardewModdingAPI.Toolkit.Utilities;
 using xTile;
 
@@ -63,14 +63,14 @@ namespace StardewModdingAPI.Framework
 
         /// <summary>Read a JSON file from the content pack folder.</summary>
         /// <typeparam name="TModel">The model type.</typeparam>
-        /// <param name="path">The file path relative to the contnet directory.</param>
-        /// <returns>Returns the deserialised model, or <c>null</c> if the file doesn't exist or is empty.</returns>
+        /// <param name="path">The file path relative to the content directory.</param>
+        /// <returns>Returns the deserialized model, or <c>null</c> if the file doesn't exist or is empty.</returns>
         /// <exception cref="InvalidOperationException">The <paramref name="path"/> is not relative or contains directory climbing (../).</exception>
         public TModel ReadJsonFile<TModel>(string path) where TModel : class
         {
             this.AssertRelativePath(path, nameof(this.ReadJsonFile));
 
-            path = Path.Combine(this.DirectoryPath, PathUtilities.NormalisePathSeparators(path));
+            path = Path.Combine(this.DirectoryPath, PathUtilities.NormalizePathSeparators(path));
             return this.JsonHelper.ReadJsonFileIfExists(path, out TModel model)
                 ? model
                 : null;
@@ -85,7 +85,7 @@ namespace StardewModdingAPI.Framework
         {
             this.AssertRelativePath(path, nameof(this.WriteJsonFile));
 
-            path = Path.Combine(this.DirectoryPath, PathUtilities.NormalisePathSeparators(path));
+            path = Path.Combine(this.DirectoryPath, PathUtilities.NormalizePathSeparators(path));
             this.JsonHelper.WriteJsonFile(path, data);
         }
 

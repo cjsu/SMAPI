@@ -67,7 +67,7 @@ namespace StardewModdingAPI.ModBuildConfig.Analyzer
         /*********
         ** Private methods
         *********/
-        /// <summary>Analyse a syntax node and add a diagnostic message if it references an obsolete field.</summary>
+        /// <summary>Analyze a syntax node and add a diagnostic message if it references an obsolete field.</summary>
         /// <param name="context">The analysis context.</param>
         private void AnalyzeObsoleteFields(SyntaxNodeAnalysisContext context)
         {

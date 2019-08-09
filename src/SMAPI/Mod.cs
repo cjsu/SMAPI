@@ -41,7 +41,7 @@ namespace StardewModdingAPI
         ** Private methods
         *********/
         /// <summary>Release or reset unmanaged resources when the game exits. There's no guarantee this will be called on every exit.</summary>
-        /// <param name="disposing">Whether the instance is being disposed explicitly rather than finalised. If this is false, the instance shouldn't dispose other objects since they may already be finalised.</param>
+        /// <param name="disposing">Whether the instance is being disposed explicitly rather than finalized. If this is false, the instance shouldn't dispose other objects since they may already be finalized.</param>
         protected virtual void Dispose(bool disposing) { }
 
         /// <summary>Destruct the instance.</summary>

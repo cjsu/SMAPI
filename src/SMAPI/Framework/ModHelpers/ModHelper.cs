@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using StardewModdingAPI.Events;
 using StardewModdingAPI.Framework.Input;
-using StardewModdingAPI.Toolkit.Serialisation;
+using StardewModdingAPI.Toolkit.Serialization;
 
 namespace StardewModdingAPI.Framework.ModHelpers
 {
@@ -73,7 +73,7 @@ namespace StardewModdingAPI.Framework.ModHelpers
             if (!Directory.Exists(modDirectory))
                 throw new InvalidOperationException("The specified mod directory does not exist.");
 
-            // initialise
+            // initialize
             this.DirectoryPath = modDirectory;
             this.Content = contentHelper ?? throw new ArgumentNullException(nameof(contentHelper));
             this.ContentPacks = contentPackHelper ?? throw new ArgumentNullException(nameof(contentPackHelper));

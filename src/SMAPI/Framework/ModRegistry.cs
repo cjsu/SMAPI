@@ -21,8 +21,8 @@ namespace StardewModdingAPI.Framework
         /// <summary>Whether all mod assemblies have been loaded.</summary>
         public bool AreAllModsLoaded { get; set; }
 
-        /// <summary>Whether all mods have been initialised and their <see cref="IMod.Entry"/> method called.</summary>
-        public bool AreAllModsInitialised { get; set; }
+        /// <summary>Whether all mods have been initialized and their <see cref="IMod.Entry"/> method called.</summary>
+        public bool AreAllModsInitialized { get; set; }
 
 
         /*********
@@ -62,7 +62,7 @@ namespace StardewModdingAPI.Framework
         /// <returns>Returns the matching mod's metadata, or <c>null</c> if not found.</returns>
         public IModMetadata Get(string uniqueID)
         {
-            // normalise search ID
+            // normalize search ID
             if (string.IsNullOrWhiteSpace(uniqueID))
                 return null;
             uniqueID = uniqueID.Trim();

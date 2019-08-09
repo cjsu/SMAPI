@@ -38,7 +38,7 @@ namespace StardewModdingAPI
         /*********
         ** Public methods
         *********/
-        /// <summary>Construct an isntance.</summary>
+        /// <summary>Construct an instance.</summary>
         /// <param name="modName">The name of the relevant mod for error messages.</param>
         /// <param name="locale">The locale for which the translation was fetched.</param>
         /// <param name="key">The translation key.</param>
@@ -46,7 +46,7 @@ namespace StardewModdingAPI
         internal Translation(string modName, string locale, string key, string text)
             : this(modName, locale, key, text, string.Format(Translation.PlaceholderText, key)) { }
 
-        /// <summary>Construct an isntance.</summary>
+        /// <summary>Construct an instance.</summary>
         /// <param name="modName">The name of the relevant mod for error messages.</param>
         /// <param name="locale">The locale for which the translation was fetched.</param>
         /// <param name="key">The translation key.</param>

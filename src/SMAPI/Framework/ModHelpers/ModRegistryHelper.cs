@@ -75,9 +75,9 @@ namespace StardewModdingAPI.Framework.ModHelpers
         public TInterface GetApi<TInterface>(string uniqueID) where TInterface : class
         {
             // validate
-            if (!this.Registry.AreAllModsInitialised)
+            if (!this.Registry.AreAllModsInitialized)
             {
-                this.Monitor.Log("Tried to access a mod-provided API before all mods were initialised.", LogLevel.Error);
+                this.Monitor.Log("Tried to access a mod-provided API before all mods were initialized.", LogLevel.Error);
                 return null;
             }
             if (!typeof(TInterface).IsInterface)

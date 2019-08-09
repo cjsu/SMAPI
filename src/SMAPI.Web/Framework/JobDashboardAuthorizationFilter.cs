@@ -2,7 +2,7 @@ using Hangfire.Dashboard;
 
 namespace StardewModdingAPI.Web.Framework
 {
-    /// <summary>Authorises requests to access the Hangfire job dashboard.</summary>
+    /// <summary>Authorizes requests to access the Hangfire job dashboard.</summary>
     internal class JobDashboardAuthorizationFilter : IDashboardAuthorizationFilter
     {
         /*********
@@ -15,7 +15,7 @@ namespace StardewModdingAPI.Web.Framework
         /*********
         ** Public methods
         *********/
-        /// <summary>Authorise a request.</summary>
+        /// <summary>Authorize a request.</summary>
         /// <param name="context">The dashboard context.</param>
         public bool Authorize(DashboardContext context)
         {

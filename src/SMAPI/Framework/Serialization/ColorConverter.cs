@@ -1,12 +1,12 @@
 using System;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json.Linq;
-using StardewModdingAPI.Toolkit.Serialisation;
-using StardewModdingAPI.Toolkit.Serialisation.Converters;
+using StardewModdingAPI.Toolkit.Serialization;
+using StardewModdingAPI.Toolkit.Serialization.Converters;
 
-namespace StardewModdingAPI.Framework.Serialisation
+namespace StardewModdingAPI.Framework.Serialization
 {
-    /// <summary>Handles deserialisation of <see cref="Color"/> for crossplatform compatibility.</summary>
+    /// <summary>Handles deserialization of <see cref="Color"/> for crossplatform compatibility.</summary>
     /// <remarks>
     /// - Linux/Mac format: { "B": 76, "G": 51, "R": 25, "A": 102 }
     /// - Windows format:   "26, 51, 76, 102"

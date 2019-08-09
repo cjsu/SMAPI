@@ -9,7 +9,7 @@ using StardewModdingAPI.Events;
 using StardewModdingAPI.Framework.Events;
 using StardewModdingAPI.Framework.Networking;
 using StardewModdingAPI.Framework.Reflection;
-using StardewModdingAPI.Toolkit.Serialisation;
+using StardewModdingAPI.Toolkit.Serialization;
 using StardewValley;
 using StardewValley.Network;
 using StardewValley.SDKs;
@@ -94,8 +94,8 @@ namespace StardewModdingAPI.Framework
             this.HostPeer = null;
         }
 
-        /// <summary>Initialise a client before the game connects to a remote server.</summary>
-        /// <param name="client">The client to initialise.</param>
+        /// <summary>Initialize a client before the game connects to a remote server.</summary>
+        /// <param name="client">The client to initialize.</param>
         public override Client InitClient(Client client)
         {
             switch (client)
@@ -118,8 +118,8 @@ namespace StardewModdingAPI.Framework
             }
         }
 
-        /// <summary>Initialise a server before the game connects to an incoming player.</summary>
-        /// <param name="server">The server to initialise.</param>
+        /// <summary>Initialize a server before the game connects to an incoming player.</summary>
+        /// <param name="server">The server to initialize.</param>
         public override Server InitServer(Server server)
         {
             switch (server)
@@ -423,7 +423,7 @@ namespace StardewModdingAPI.Framework
         private RemoteContextModel ReadContext(BinaryReader reader)
         {
             string data = reader.ReadString();
-            RemoteContextModel model = this.JsonHelper.Deserialise<RemoteContextModel>(data);
+            RemoteContextModel model = this.JsonHelper.Deserialize<RemoteContextModel>(data);
             return model.ApiVersion != null
                 ? model
                 : null; // no data available for unmodded players
@@ -435,7 +435,7 @@ namespace StardewModdingAPI.Framework
         {
             // parse message
             string json = message.Reader.ReadString();
-            ModMessageModel model = this.JsonHelper.Deserialise<ModMessageModel>(json);
+            ModMessageModel model = this.JsonHelper.Deserialize<ModMessageModel>(json);
             HashSet<long> playerIDs = new HashSet<long>(model.ToPlayerIDs ?? this.GetKnownPlayerIDs());
             if (this.LogNetworkTraffic)
                 this.Monitor.Log($"Received message: {json}.", LogLevel.Trace);
@@ -454,7 +454,7 @@ namespace StardewModdingAPI.Framework
                     {
                         newModel.ToPlayerIDs = new[] { peer.PlayerID };
                         this.Monitor.VerboseLog($"  Forwarding message to player {peer.PlayerID}.");
-                        peer.SendMessage(new OutgoingMessage((byte)MessageType.ModMessage, peer.PlayerID, this.JsonHelper.Serialise(newModel, Formatting.None)));
+                        peer.SendMessage(new OutgoingMessage((byte)MessageType.ModMessage, peer.PlayerID, this.JsonHelper.Serialize(newModel, Formatting.None)));
                     }
                 }
             }
@@ -488,7 +488,7 @@ namespace StardewModdingAPI.Framework
                     .ToArray()
             };
 
-            return new object[] { this.JsonHelper.Serialise(model, Formatting.None) };
+            return new object[] { this.JsonHelper.Serialize(model, Formatting.None) };
         }
 
         /// <summary>Get the fields to include in a context sync message sent to other players.</summary>
@@ -514,7 +514,7 @@ namespace StardewModdingAPI.Framework
                     .ToArray()
             };
 
-            return new object[] { this.JsonHelper.Serialise(model, Formatting.None) };
+            return new object[] { this.JsonHelper.Serialize(model, Formatting.None) };
         }
     }
 }

@@ -39,15 +39,15 @@ namespace StardewModdingAPI.Framework.ContentManagers
         /// <summary>Perform any cleanup needed when the locale changes.</summary>
         void OnLocaleChanged();
 
-        /// <summary>Normalise path separators in a file path. For asset keys, see <see cref="AssertAndNormaliseAssetName"/> instead.</summary>
-        /// <param name="path">The file path to normalise.</param>
+        /// <summary>Normalize path separators in a file path. For asset keys, see <see cref="AssertAndNormalizeAssetName"/> instead.</summary>
+        /// <param name="path">The file path to normalize.</param>
         [Pure]
-        string NormalisePathSeparators(string path);
+        string NormalizePathSeparators(string path);
 
-        /// <summary>Assert that the given key has a valid format and return a normalised form consistent with the underlying cache.</summary>
+        /// <summary>Assert that the given key has a valid format and return a normalized form consistent with the underlying cache.</summary>
         /// <param name="assetName">The asset key to check.</param>
         /// <exception cref="SContentLoadException">The asset key is empty or contains invalid characters.</exception>
-        string AssertAndNormaliseAssetName(string assetName);
+        string AssertAndNormalizeAssetName(string assetName);
 
         /// <summary>Get the current content locale.</summary>
         string GetLocale();

@@ -1,11 +1,11 @@
 using System;
 using StardewModdingAPI.Framework.Reflection;
-using StardewModdingAPI.Toolkit.Serialisation;
+using StardewModdingAPI.Toolkit.Serialization;
 using StardewValley;
 
 namespace StardewModdingAPI.Framework
 {
-    /// <summary>The static state to use while <see cref="Game1"/> is initialising, which happens before the <see cref="SGame"/> constructor runs.</summary>
+    /// <summary>The static state to use while <see cref="Game1"/> is initializing, which happens before the <see cref="SGame"/> constructor runs.</summary>
     internal class SGameConstructorHack
     {
         /*********

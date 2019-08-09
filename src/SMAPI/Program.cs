@@ -39,7 +39,7 @@ namespace StardewModdingAPI
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"SMAPI failed to initialise: {ex}");
+                Console.WriteLine($"SMAPI failed to initialize: {ex}");
                 Program.PressAnyKeyToExit(true);
             }
         }
@@ -108,7 +108,7 @@ namespace StardewModdingAPI
 
         }
 
-        /// <summary>Initialise SMAPI and launch the game.</summary>
+        /// <summary>Initialize SMAPI and launch the game.</summary>
         /// <param name="args">The command-line arguments.</param>
         /// <remarks>This method is separate from <see cref="Main"/> because that can't contain any references to assemblies loaded by <see cref="CurrentDomain_AssemblyResolve"/> (e.g. via <see cref="Constants"/>), or Mono will incorrectly show an assembly resolution error before assembly resolution is set up.</remarks>
         private static void Start(string[] args)

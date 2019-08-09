@@ -221,7 +221,7 @@ namespace StardewModdingAPI.Web.Framework.LogParsing
                     }
                 }
 
-                // finalise log
+                // finalize log
                 gameMod.Version = log.GameVersion;
                 log.Mods = new[] { gameMod, smapiMod }.Concat(mods.Values.OrderBy(p => p.Name)).ToArray();
                 return log;

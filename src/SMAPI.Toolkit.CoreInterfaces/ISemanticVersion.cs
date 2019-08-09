@@ -24,7 +24,7 @@ namespace StardewModdingAPI
         /*********
         ** Accessors
         *********/
-        /// <summary>Whether this is a pre-release version.</summary>
+        /// <summary>Whether this is a prerelease version.</summary>
         bool IsPrerelease();
 
         /// <summary>Get whether this version is older than the specified version.</summary>

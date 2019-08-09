@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using StardewModdingAPI.Framework.Exceptions;
 using StardewModdingAPI.Framework.Reflection;
-using StardewModdingAPI.Toolkit.Serialisation;
+using StardewModdingAPI.Toolkit.Serialization;
 using StardewModdingAPI.Toolkit.Utilities;
 using StardewValley;
 using xTile;
@@ -41,7 +41,7 @@ namespace StardewModdingAPI.Framework.ContentManagers
         /// <param name="gameContentManager">The game content manager used for map tilesheets not provided by the mod.</param>
         /// <param name="serviceProvider">The service provider to use to locate services.</param>
         /// <param name="rootDirectory">The root directory to search for content.</param>
-        /// <param name="currentCulture">The current culture for which to localise content.</param>
+        /// <param name="currentCulture">The current culture for which to localize content.</param>
         /// <param name="coordinator">The central coordinator which manages content managers.</param>
         /// <param name="monitor">Encapsulates monitoring and logging.</param>
         /// <param name="reflection">Simplifies access to private code.</param>
@@ -78,7 +78,7 @@ namespace StardewModdingAPI.Framework.ContentManagers
         /// <param name="useCache">Whether to read/write the loaded asset to the asset cache.</param>
         public override T Load<T>(string assetName, LanguageCode language, bool useCache)
         {
-            assetName = this.AssertAndNormaliseAssetName(assetName);
+            assetName = this.AssertAndNormalizeAssetName(assetName);
 
             // disable caching
             // This is necessary to avoid assets being shared between content managers, which can
@@ -91,7 +91,7 @@ namespace StardewModdingAPI.Framework.ContentManagers
             // disable language handling
             // Mod files don't support automatic translation logic, so this should never happen.
             if (language != this.DefaultLanguage)
-                throw new InvalidOperationException("Localised assets aren't supported by the mod content manager.");
+                throw new InvalidOperationException("Localized assets aren't supported by the mod content manager.");
 
             // resolve managed asset key
             {
@@ -121,7 +121,7 @@ namespace StardewModdingAPI.Framework.ContentManagers
                             T data = this.RawLoad<T>(assetName, useCache: false);
                             if (data is Map map)
                             {
-                                this.NormaliseTilesheetPaths(map);
+                                this.NormalizeTilesheetPaths(map);
                                 this.FixCustomTilesheetPaths(map, relativeMapPath: assetName);
                             }
                             return data;
@@ -161,7 +161,7 @@ namespace StardewModdingAPI.Framework.ContentManagers
                             // fetch & cache
                             FormatManager formatManager = FormatManager.Instance;
                             Map map = formatManager.LoadMap(file.FullName);
-                            this.NormaliseTilesheetPaths(map);
+                            this.NormalizeTilesheetPaths(map);
                             this.FixCustomTilesheetPaths(map, relativeMapPath: assetName);
                             return (T)(object)map;
                         }
@@ -199,10 +199,10 @@ namespace StardewModdingAPI.Framework.ContentManagers
         ** Private methods
         *********/
         /// <summary>Get whether an asset has already been loaded.</summary>
-        /// <param name="normalisedAssetName">The normalised asset name.</param>
-        protected override bool IsNormalisedKeyLoaded(string normalisedAssetName)
+        /// <param name="normalizedAssetName">The normalized asset name.</param>
+        protected override bool IsNormalizedKeyLoaded(string normalizedAssetName)
         {
-            return this.Cache.ContainsKey(normalisedAssetName);
+            return this.Cache.ContainsKey(normalizedAssetName);
         }
 
         /// <summary>Get a file from the mod folder.</summary>
@@ -245,12 +245,12 @@ namespace StardewModdingAPI.Framework.ContentManagers
             return texture;
         }
 
-        /// <summary>Normalise map tilesheet paths for the current platform.</summary>
+        /// <summary>Normalize map tilesheet paths for the current platform.</summary>
         /// <param name="map">The map whose tilesheets to fix.</param>
-        private void NormaliseTilesheetPaths(Map map)
+        private void NormalizeTilesheetPaths(Map map)
         {
             foreach (TileSheet tilesheet in map.TileSheets)
-                tilesheet.ImageSource = this.NormalisePathSeparators(tilesheet.ImageSource);
+                tilesheet.ImageSource = this.NormalizePathSeparators(tilesheet.ImageSource);
         }
 
         /// <summary>Fix custom map tilesheet paths so they can be found by the content manager.</summary>
@@ -258,7 +258,7 @@ namespace StardewModdingAPI.Framework.ContentManagers
         /// <param name="relativeMapPath">The relative map path within the mod folder.</param>
         /// <exception cref="ContentLoadException">A map tilesheet couldn't be resolved.</exception>
         /// <remarks>
-        /// The game's logic for tilesheets in <see cref="Game1.setGraphicsForSeason"/> is a bit specialised. It boils
+        /// The game's logic for tilesheets in <see cref="Game1.setGraphicsForSeason"/> is a bit specialized. It boils
         /// down to this:
         ///  * If the location is indoors or the desert, or the image source contains 'path' or 'object', it's loaded
         ///    as-is relative to the <c>Content</c> folder.
@@ -276,7 +276,7 @@ namespace StardewModdingAPI.Framework.ContentManagers
             // get map info
             if (!map.TileSheets.Any())
                 return;
-            relativeMapPath = this.AssertAndNormaliseAssetName(relativeMapPath); // Mono's Path.GetDirectoryName doesn't handle Windows dir separators
+            relativeMapPath = this.AssertAndNormalizeAssetName(relativeMapPath); // Mono's Path.GetDirectoryName doesn't handle Windows dir separators
             string relativeMapFolder = Path.GetDirectoryName(relativeMapPath) ?? ""; // folder path containing the map, relative to the mod folder
             bool isOutdoors = map.Properties.TryGetValue("Outdoors", out PropertyValue outdoorsProperty) && outdoorsProperty != null;
 

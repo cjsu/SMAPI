@@ -243,19 +243,19 @@ namespace StardewModdingAPI.Tests.Utilities
         }
 
         /****
-        ** Serialisable
+        ** Serializable
         ****/
         [Test(Description = "Assert that SemanticVersion can be round-tripped through JSON with no special configuration.")]
         [TestCase("1.0")]
-        public void Serialisable(string versionStr)
+        public void Serializable(string versionStr)
         {
             // act
             string json = JsonConvert.SerializeObject(new SemanticVersion(versionStr));
             SemanticVersion after = JsonConvert.DeserializeObject<SemanticVersion>(json);
 
             // assert
-            Assert.IsNotNull(after, "The semantic version after deserialisation is unexpectedly null.");
-            Assert.AreEqual(versionStr, after.ToString(), "The semantic version after deserialisation doesn't match the input version.");
+            Assert.IsNotNull(after, "The semantic version after deserialization is unexpectedly null.");
+            Assert.AreEqual(versionStr, after.ToString(), "The semantic version after deserialization doesn't match the input version.");
         }
 
         /****

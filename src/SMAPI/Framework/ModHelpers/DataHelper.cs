@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 using Newtonsoft.Json;
-using StardewModdingAPI.Toolkit.Serialisation;
+using StardewModdingAPI.Toolkit.Serialization;
 using StardewModdingAPI.Toolkit.Utilities;
 using StardewValley;
 
@@ -40,14 +40,14 @@ namespace StardewModdingAPI.Framework.ModHelpers
         /// <summary>Read data from a JSON file in the mod's folder.</summary>
         /// <typeparam name="TModel">The model type. This should be a plain class that has public properties for the data you want. The properties can be complex types.</typeparam>
         /// <param name="path">The file path relative to the mod folder.</param>
-        /// <returns>Returns the deserialised model, or <c>null</c> if the file doesn't exist or is empty.</returns>
+        /// <returns>Returns the deserialized model, or <c>null</c> if the file doesn't exist or is empty.</returns>
         /// <exception cref="InvalidOperationException">The <paramref name="path"/> is not relative or contains directory climbing (../).</exception>
         public TModel ReadJsonFile<TModel>(string path) where TModel : class
         {
             if (!PathUtilities.IsSafeRelativePath(path))
                 throw new InvalidOperationException($"You must call {nameof(IModHelper.Data)}.{nameof(this.ReadJsonFile)} with a relative path.");
 
-            path = Path.Combine(this.ModFolderPath, PathUtilities.NormalisePathSeparators(path));
+            path = Path.Combine(this.ModFolderPath, PathUtilities.NormalizePathSeparators(path));
             return this.JsonHelper.ReadJsonFileIfExists(path, out TModel data)
                 ? data
                 : null;
@@ -63,7 +63,7 @@ namespace StardewModdingAPI.Framework.ModHelpers
             if (!PathUtilities.IsSafeRelativePath(path))
                 throw new InvalidOperationException($"You must call {nameof(IMod.Helper)}.{nameof(IModHelper.Data)}.{nameof(this.WriteJsonFile)} with a relative path (without directory climbing).");
 
-            path = Path.Combine(this.ModFolderPath, PathUtilities.NormalisePathSeparators(path));
+            path = Path.Combine(this.ModFolderPath, PathUtilities.NormalizePathSeparators(path));
             this.JsonHelper.WriteJsonFile(path, data);
         }
 
@@ -83,7 +83,7 @@ namespace StardewModdingAPI.Framework.ModHelpers
                 throw new InvalidOperationException($"Can't use {nameof(IMod.Helper)}.{nameof(IModHelper.Data)}.{nameof(this.ReadSaveData)} because this isn't the main player. (Save files are stored on the main player's computer.)");
 
             return Game1.CustomData.TryGetValue(this.GetSaveFileKey(key), out string value)
-                ? this.JsonHelper.Deserialise<TModel>(value)
+                ? this.JsonHelper.Deserialize<TModel>(value)
                 : null;
         }
 
@@ -101,7 +101,7 @@ namespace StardewModdingAPI.Framework.ModHelpers
 
             string internalKey = this.GetSaveFileKey(key);
             if (data != null)
-                Game1.CustomData[internalKey] = this.JsonHelper.Serialise(data, Formatting.None);
+                Game1.CustomData[internalKey] = this.JsonHelper.Serialize(data, Formatting.None);
             else
                 Game1.CustomData.Remove(internalKey);
         }

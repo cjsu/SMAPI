@@ -39,7 +39,7 @@ namespace StardewModdingAPI.Web.Framework.ModRepositories
             {
                 var mod = await this.Client.GetModAsync(realID);
                 return mod != null
-                    ? new ModInfoModel(name: mod.Name, version: this.NormaliseVersion(mod.Version), url: mod.Url)
+                    ? new ModInfoModel(name: mod.Name, version: this.NormalizeVersion(mod.Version), url: mod.Url)
                     : new ModInfoModel().SetError(RemoteModStatus.DoesNotExist, "Found no Chucklefish mod with this ID.");
             }
             catch (Exception ex)

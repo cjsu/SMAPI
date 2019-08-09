@@ -126,7 +126,7 @@ namespace StardewModdingAPI.Internal.ConsoleWriting
                 case ConsoleColor.Black:
                 case ConsoleColor.Blue:
                 case ConsoleColor.DarkBlue:
-                case ConsoleColor.DarkMagenta: // Powershell
+                case ConsoleColor.DarkMagenta: // PowerShell
                 case ConsoleColor.DarkRed:
                 case ConsoleColor.Red:
                     return true;

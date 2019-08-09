@@ -21,7 +21,7 @@ namespace StardewModdingAPI.Events
         /// <summary>Events raised when something changes in the world.</summary>
         IWorldEvents World { get; }
 
-        /// <summary>Events serving specialised edge cases that shouldn't be used by most mods.</summary>
-        ISpecialisedEvents Specialised { get; }
+        /// <summary>Events serving specialized edge cases that shouldn't be used by most mods.</summary>
+        ISpecializedEvents Specialized { get; }
     }
 }

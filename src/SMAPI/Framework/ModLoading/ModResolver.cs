@@ -5,7 +5,7 @@ using System.Linq;
 using StardewModdingAPI.Toolkit;
 using StardewModdingAPI.Toolkit.Framework.ModData;
 using StardewModdingAPI.Toolkit.Framework.ModScanning;
-using StardewModdingAPI.Toolkit.Serialisation.Models;
+using StardewModdingAPI.Toolkit.Serialization.Models;
 using StardewModdingAPI.Toolkit.Utilities;
 
 namespace StardewModdingAPI.Framework.ModLoading
@@ -143,11 +143,11 @@ namespace StardewModdingAPI.Framework.ModLoading
                             continue;
                         }
 
-                        // invalid capitalisation
+                        // invalid capitalization
                         string actualFilename = new DirectoryInfo(mod.DirectoryPath).GetFiles(mod.Manifest.EntryDll).FirstOrDefault()?.Name;
                         if (actualFilename != mod.Manifest.EntryDll)
                         {
-                            mod.SetStatus(ModMetadataStatus.Failed, $"its {nameof(IManifest.EntryDll)} value '{mod.Manifest.EntryDll}' doesn't match the actual file capitalisation '{actualFilename}'. The capitalisation must match for crossplatform compatibility.");
+                            mod.SetStatus(ModMetadataStatus.Failed, $"its {nameof(IManifest.EntryDll)} value '{mod.Manifest.EntryDll}' doesn't match the actual file capitalization '{actualFilename}'. The capitalization must match for crossplatform compatibility.");
                             continue;
                         }
                     }
@@ -216,7 +216,7 @@ namespace StardewModdingAPI.Framework.ModLoading
         /// <param name="modDatabase">Handles access to SMAPI's internal mod metadata list.</param>
         public IEnumerable<IModMetadata> ProcessDependencies(IEnumerable<IModMetadata> mods, ModDatabase modDatabase)
         {
-            // initialise metadata
+            // initialize metadata
             mods = mods.ToArray();
             var sortedMods = new Stack<IModMetadata>();
             var states = mods.ToDictionary(mod => mod, mod => ModDependencyStatus.Queued);

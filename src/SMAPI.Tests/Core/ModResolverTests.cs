@@ -9,7 +9,7 @@ using StardewModdingAPI.Framework;
 using StardewModdingAPI.Framework.ModLoading;
 using StardewModdingAPI.Toolkit;
 using StardewModdingAPI.Toolkit.Framework.ModData;
-using StardewModdingAPI.Toolkit.Serialisation.Models;
+using StardewModdingAPI.Toolkit.Serialization.Models;
 
 namespace StardewModdingAPI.Tests.Core
 {
@@ -55,7 +55,7 @@ namespace StardewModdingAPI.Tests.Core
             Assert.IsNotNull(mod.Error, "The mod metadata did not have an error message set.");
         }
 
-        [Test(Description = "Assert that the resolver correctly reads manifest data from a randomised file.")]
+        [Test(Description = "Assert that the resolver correctly reads manifest data from a randomized file.")]
         public void ReadBasicManifest_CanReadFile()
         {
             // create manifest data
@@ -468,7 +468,7 @@ namespace StardewModdingAPI.Tests.Core
             return Path.Combine(Path.GetTempPath(), "smapi-unit-tests", Guid.NewGuid().ToString("N"));
         }
 
-        /// <summary>Get a randomised basic manifest.</summary>
+        /// <summary>Get a randomized basic manifest.</summary>
         /// <param name="id">The <see cref="IManifest.UniqueID"/> value, or <c>null</c> for a generated value.</param>
         /// <param name="name">The <see cref="IManifest.Name"/> value, or <c>null</c> for a generated value.</param>
         /// <param name="version">The <see cref="IManifest.Version"/> value, or <c>null</c> for a generated value.</param>
@@ -492,14 +492,14 @@ namespace StardewModdingAPI.Tests.Core
             };
         }
 
-        /// <summary>Get a randomised basic manifest.</summary>
+        /// <summary>Get a randomized basic manifest.</summary>
         /// <param name="uniqueID">The mod's name and unique ID.</param>
         private Mock<IModMetadata> GetMetadata(string uniqueID)
         {
             return this.GetMetadata(this.GetManifest(uniqueID, "1.0"));
         }
 
-        /// <summary>Get a randomised basic manifest.</summary>
+        /// <summary>Get a randomized basic manifest.</summary>
         /// <param name="uniqueID">The mod's name and unique ID.</param>
         /// <param name="dependencies">The dependencies this mod requires.</param>
         /// <param name="allowStatusChange">Whether the code being tested is allowed to change the mod status.</param>
@@ -509,7 +509,7 @@ namespace StardewModdingAPI.Tests.Core
             return this.GetMetadata(manifest, allowStatusChange);
         }
 
-        /// <summary>Get a randomised basic manifest.</summary>
+        /// <summary>Get a randomized basic manifest.</summary>
         /// <param name="manifest">The mod manifest.</param>
         /// <param name="allowStatusChange">Whether the code being tested is allowed to change the mod status.</param>
         private Mock<IModMetadata> GetMetadata(IManifest manifest, bool allowStatusChange = false)

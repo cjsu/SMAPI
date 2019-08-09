@@ -48,7 +48,7 @@ namespace StardewModdingAPI.Web.Framework.ModRepositories
                     return new ModInfoModel().SetError(remoteStatus, mod.Error);
                 }
 
-                return new ModInfoModel(name: mod.Name, version: this.NormaliseVersion(mod.Version), previewVersion: mod.LatestFileVersion?.ToString(), url: mod.Url);
+                return new ModInfoModel(name: mod.Name, version: this.NormalizeVersion(mod.Version), previewVersion: mod.LatestFileVersion?.ToString(), url: mod.Url);
             }
             catch (Exception ex)
             {

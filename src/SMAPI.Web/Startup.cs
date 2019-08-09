@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using Newtonsoft.Json;
-using StardewModdingAPI.Toolkit.Serialisation;
+using StardewModdingAPI.Toolkit.Serialization;
 using StardewModdingAPI.Web.Framework;
 using StardewModdingAPI.Web.Framework.Caching;
 using StardewModdingAPI.Web.Framework.Caching.Mods;

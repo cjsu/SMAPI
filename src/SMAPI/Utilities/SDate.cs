@@ -197,7 +197,7 @@ namespace StardewModdingAPI.Utilities
             if (year < 1)
                 throw new ArgumentException($"Invalid year '{year}', must be at least 1.");
 
-            // initialise
+            // initialize
             this.Day = day;
             this.Season = season;
             this.Year = year;
@@ -256,12 +256,12 @@ namespace StardewModdingAPI.Utilities
 
         /// <summary>Get a season index.</summary>
         /// <param name="season">The season name.</param>
-        /// <exception cref="InvalidOperationException">The current season wasn't recognised.</exception>
+        /// <exception cref="InvalidOperationException">The current season wasn't recognized.</exception>
         private int GetSeasonIndex(string season)
         {
             int index = Array.IndexOf(this.Seasons, season);
             if (index == -1)
-                throw new InvalidOperationException($"The season '{season}' wasn't recognised.");
+                throw new InvalidOperationException($"The season '{season}' wasn't recognized.");
             return index;
         }
     }

@@ -68,7 +68,7 @@ namespace StardewModdingAPI.Toolkit.Framework.ModData
         }
 
         /// <summary>Get a semantic local version for update checks.</summary>
-        /// <param name="version">The remote version to normalise.</param>
+        /// <param name="version">The remote version to normalize.</param>
         public ISemanticVersion GetLocalVersionForUpdateChecks(ISemanticVersion version)
         {
             return this.MapLocalVersions != null && this.MapLocalVersions.TryGetValue(version.ToString(), out string newVersion)
@@ -77,10 +77,10 @@ namespace StardewModdingAPI.Toolkit.Framework.ModData
         }
 
         /// <summary>Get a semantic remote version for update checks.</summary>
-        /// <param name="version">The remote version to normalise.</param>
+        /// <param name="version">The remote version to normalize.</param>
         public string GetRemoteVersionForUpdateChecks(string version)
         {
-            // normalise version if possible
+            // normalize version if possible
             if (SemanticVersion.TryParse(version, out ISemanticVersion parsed))
                 version = parsed.ToString();
 

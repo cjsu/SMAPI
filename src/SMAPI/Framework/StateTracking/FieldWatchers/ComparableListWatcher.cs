@@ -53,7 +53,7 @@ namespace StardewModdingAPI.Framework.StateTracking.FieldWatchers
         {
             this.AssertNotDisposed();
 
-            // optimise for zero items
+            // optimize for zero items
             if (this.CurrentValues.Count == 0)
             {
                 if (this.LastValues.Count > 0)

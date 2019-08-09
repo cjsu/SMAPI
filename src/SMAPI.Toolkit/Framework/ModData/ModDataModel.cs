@@ -112,8 +112,8 @@ namespace StardewModdingAPI.Toolkit.Framework.ModData
         /*********
         ** Private methods
         *********/
-        /// <summary>The method invoked after JSON deserialisation.</summary>
-        /// <param name="context">The deserialisation context.</param>
+        /// <summary>The method invoked after JSON deserialization.</summary>
+        /// <param name="context">The deserialization context.</param>
         [OnDeserialized]
         private void OnDeserialized(StreamingContext context)
         {

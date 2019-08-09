@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using StardewModdingAPI.Toolkit.Serialisation;
-using StardewModdingAPI.Toolkit.Serialisation.Models;
+using StardewModdingAPI.Toolkit.Serialization;
+using StardewModdingAPI.Toolkit.Serialization.Models;
 using StardewModdingAPI.Toolkit.Utilities;
 
 namespace StardewModdingAPI.ModBuildConfig.Framework

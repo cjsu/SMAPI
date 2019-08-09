@@ -24,13 +24,13 @@ using StardewModdingAPI.Framework.ModHelpers;
 using StardewModdingAPI.Framework.ModLoading;
 using StardewModdingAPI.Framework.Patching;
 using StardewModdingAPI.Framework.Reflection;
-using StardewModdingAPI.Framework.Serialisation;
+using StardewModdingAPI.Framework.Serialization;
 using StardewModdingAPI.Internal;
 using StardewModdingAPI.Patches;
 using StardewModdingAPI.Toolkit;
 using StardewModdingAPI.Toolkit.Framework.Clients.WebApi;
 using StardewModdingAPI.Toolkit.Framework.ModData;
-using StardewModdingAPI.Toolkit.Serialisation;
+using StardewModdingAPI.Toolkit.Serialization;
 using StardewModdingAPI.Toolkit.Utilities;
 using StardewValley;
 using Object = StardewValley.Object;
@@ -38,7 +38,7 @@ using ThreadState = System.Threading.ThreadState;
 
 namespace StardewModdingAPI.Framework
 {
-    /// <summary>The core class which initialises and manages SMAPI.</summary>
+    /// <summary>The core class which initializes and manages SMAPI.</summary>
     internal class SCore : IDisposable
     {
         /*********
@@ -56,7 +56,7 @@ namespace StardewModdingAPI.Framework
         /// <summary>The core logger and monitor on behalf of the game.</summary>
         private readonly Monitor MonitorForGame;
 
-        /// <summary>Tracks whether the game should exit immediately and any pending initialisation should be cancelled.</summary>
+        /// <summary>Tracks whether the game should exit immediately and any pending initialization should be cancelled.</summary>
         private readonly CancellationTokenSource CancellationToken = new CancellationTokenSource();
 
         /// <summary>Simplifies access to private game code.</summary>
@@ -72,7 +72,7 @@ namespace StardewModdingAPI.Framework
         private ContentCoordinator ContentCore => this.GameInstance.ContentCore;
 
         /// <summary>Tracks the installed mods.</summary>
-        /// <remarks>This is initialised after the game starts.</remarks>
+        /// <remarks>This is initialized after the game starts.</remarks>
         private readonly ModRegistry ModRegistry = new ModRegistry();
 
         /// <summary>Manages SMAPI events for mods.</summary>
@@ -120,7 +120,7 @@ namespace StardewModdingAPI.Framework
         ** Accessors
         *********/
         /// <summary>Manages deprecation warnings.</summary>
-        /// <remarks>This is initialised after the game starts. This is accessed directly because it's not part of the normal class model.</remarks>
+        /// <remarks>This is initialized after the game starts. This is accessed directly because it's not part of the normal class model.</remarks>
         internal static DeprecationManager DeprecationManager { get; private set; }
 
 
@@ -187,7 +187,7 @@ namespace StardewModdingAPI.Framework
         [HandleProcessCorruptedStateExceptions, SecurityCritical] // let try..catch handle corrupted state exceptions
         public void RunInteractively()
         {
-            // initialise SMAPI
+            // initialize SMAPI
             try
             {
                 JsonConverter[] converters = {
@@ -205,14 +205,14 @@ namespace StardewModdingAPI.Framework
 #endif
                 AppDomain.CurrentDomain.UnhandledException += (sender, e) => this.Monitor.Log($"Critical app domain exception: {e.ExceptionObject}", LogLevel.Error);
 
-                // add more leniant assembly resolvers
+                // add more lenient assembly resolvers
                 AppDomain.CurrentDomain.AssemblyResolve += (sender, e) => AssemblyLoader.ResolveAssembly(e.Name);
 
                 // hook locale event
                 LocalizedContentManager.OnLanguageChange += locale => this.OnLocaleChanged();
 
                 // override game
-                SGame.ConstructorHack = new SGameConstructorHack(this.Monitor, this.Reflection, this.Toolkit.JsonHelper, this.InitialiseBeforeFirstAssetLoaded);
+                SGame.ConstructorHack = new SGameConstructorHack(this.Monitor, this.Reflection, this.Toolkit.JsonHelper, this.InitializeBeforeFirstAssetLoaded);
                 this.GameInstance = new SGame(
                     monitor: this.Monitor,
                     monitorForGame: this.MonitorForGame,
@@ -221,7 +221,7 @@ namespace StardewModdingAPI.Framework
                     jsonHelper: this.Toolkit.JsonHelper,
                     modRegistry: this.ModRegistry,
                     deprecationManager: SCore.DeprecationManager,
-                    onGameInitialised: this.InitialiseAfterGameStart,
+                    onGameInitialized: this.InitializeAfterGameStart,
                     onGameExiting: this.Dispose,
                     cancellationToken: this.CancellationToken,
                     logNetworkTraffic: this.Settings.LogNetworkTraffic
@@ -262,7 +262,7 @@ namespace StardewModdingAPI.Framework
             }
             catch (Exception ex)
             {
-                this.Monitor.Log($"SMAPI failed to initialise: {ex.GetLogSummary()}", LogLevel.Error);
+                this.Monitor.Log($"SMAPI failed to initialize: {ex.GetLogSummary()}", LogLevel.Error);
                 this.PressAnyKeyToExit();
                 return;
             }
@@ -377,12 +377,12 @@ namespace StardewModdingAPI.Framework
         /*********
         ** Private methods
         *********/
-        /// <summary>Initialise mods before the first game asset is loaded. At this point the core content managers are loaded (so mods can load their own assets), but the game is mostly uninitialised.</summary>
-        private void InitialiseBeforeFirstAssetLoaded()
+        /// <summary>Initialize mods before the first game asset is loaded. At this point the core content managers are loaded (so mods can load their own assets), but the game is mostly uninitialized.</summary>
+        private void InitializeBeforeFirstAssetLoaded()
         {
             if (this.CancellationToken.IsCancellationRequested)
             {
-                this.Monitor.Log("SMAPI shutting down: aborting initialisation.", LogLevel.Warn);
+                this.Monitor.Log("SMAPI shutting down: aborting initialization.", LogLevel.Warn);
                 return;
             }
 
@@ -432,8 +432,8 @@ namespace StardewModdingAPI.Framework
             Console.Title = $"SMAPI {Constants.ApiVersion} - running Stardew Valley {Constants.GameVersion} with {modsLoaded} mods";
         }
 
-        /// <summary>Initialise SMAPI and mods after the game starts.</summary>
-        private void InitialiseAfterGameStart()
+        /// <summary>Initialize SMAPI and mods after the game starts.</summary>
+        private void InitializeAfterGameStart()
         {
             // validate XNB integrity
             if (!this.ValidateContentIntegrity())
@@ -696,7 +696,7 @@ namespace StardewModdingAPI.Framework
         /// <summary>Get whether a given version should be offered to the user as an update.</summary>
         /// <param name="currentVersion">The current semantic version.</param>
         /// <param name="newVersion">The target semantic version.</param>
-        /// <param name="useBetaChannel">Whether the user enabled the beta channel and should be offered pre-release updates.</param>
+        /// <param name="useBetaChannel">Whether the user enabled the beta channel and should be offered prerelease updates.</param>
         private bool IsValidUpdate(ISemanticVersion currentVersion, ISemanticVersion newVersion, bool useBetaChannel)
         {
             return
@@ -716,7 +716,7 @@ namespace StardewModdingAPI.Framework
             }
             catch (Exception ex)
             {
-                // note: this happens before this.Monitor is initialised
+                // note: this happens before this.Monitor is initialized
                 Console.WriteLine($"Couldn't create a path: {path}\n\n{ex.GetLogSummary()}");
             }
         }
@@ -795,10 +795,10 @@ namespace StardewModdingAPI.Framework
             // log mod warnings
             this.LogModWarnings(loaded, skippedMods);
 
-            // initialise translations
+            // initialize translations
             this.ReloadTranslations(loaded);
 
-            // initialise loaded non-content-pack mods
+            // initialize loaded non-content-pack mods
             foreach (IModMetadata metadata in loadedMods)
             {
                 // add interceptors
@@ -847,7 +847,7 @@ namespace StardewModdingAPI.Framework
             }
 
             // invalidate cache entries when needed
-            // (These listeners are registered after Entry to avoid repeatedly reloading assets as mods initialise.)
+            // (These listeners are registered after Entry to avoid repeatedly reloading assets as mods initialize.)
             foreach (IModMetadata metadata in loadedMods)
             {
                 if (metadata.Mod.Helper.Content is ContentHelper helper)
@@ -881,7 +881,7 @@ namespace StardewModdingAPI.Framework
             }
 
             // unlock mod integrations
-            this.ModRegistry.AreAllModsInitialised = true;
+            this.ModRegistry.AreAllModsInitialized = true;
         }
 
         /// <summary>Load a given mod.</summary>
@@ -924,7 +924,7 @@ namespace StardewModdingAPI.Framework
             }
 
             // validate dependencies
-            // Although dependences are validated before mods are loaded, a dependency may have failed to load.
+            // Although dependencies are validated before mods are loaded, a dependency may have failed to load.
             if (mod.Manifest.Dependencies?.Any() == true)
             {
                 foreach (IManifestDependency dependency in mod.Manifest.Dependencies.Where(p => p.IsRequired))
@@ -988,7 +988,7 @@ namespace StardewModdingAPI.Framework
                     return false;
                 }
 
-                // initialise mod
+                // initialize mod
                 try
                 {
                     // get mod instance
@@ -1045,7 +1045,7 @@ namespace StardewModdingAPI.Framework
                 }
                 catch (Exception ex)
                 {
-                    errorReasonPhrase = $"initialisation failed:\n{ex.GetLogSummary()}";
+                    errorReasonPhrase = $"initialization failed:\n{ex.GetLogSummary()}";
                     return false;
                 }
             }
@@ -1120,8 +1120,8 @@ namespace StardewModdingAPI.Framework
                     "These mods have broken code, but you configured SMAPI to load them anyway. This may cause bugs,",
                     "errors, or crashes in-game."
                 );
-                LogWarningGroup(ModWarning.ChangesSaveSerialiser, LogLevel.Warn, "Changed save serialiser",
-                    "These mods change the save serialiser. They may corrupt your save files, or make them unusable if",
+                LogWarningGroup(ModWarning.ChangesSaveSerializer, LogLevel.Warn, "Changed save serializer",
+                    "These mods change the save serializer. They may corrupt your save files, or make them unusable if",
                     "you uninstall these mods."
                 );
                 if (this.Settings.ParanoidWarnings)
@@ -1285,7 +1285,7 @@ namespace StardewModdingAPI.Framework
                     break;
 
                 default:
-                    throw new NotSupportedException($"Unrecognise core SMAPI command '{name}'.");
+                    throw new NotSupportedException($"Unrecognized core SMAPI command '{name}'.");
             }
         }
 

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using StardewModdingAPI.Toolkit.Serialisation;
-using StardewModdingAPI.Toolkit.Serialisation.Models;
+using StardewModdingAPI.Toolkit.Serialization;
+using StardewModdingAPI.Toolkit.Serialization.Models;
 
 namespace StardewModdingAPI.Toolkit.Framework.ModScanning
 {
@@ -118,7 +118,7 @@ namespace StardewModdingAPI.Toolkit.Framework.ModScanning
                 }
             }
 
-            // normalise display fields
+            // normalize display fields
             if (manifest != null)
             {
                 manifest.Name = this.StripNewlines(manifest.Name);

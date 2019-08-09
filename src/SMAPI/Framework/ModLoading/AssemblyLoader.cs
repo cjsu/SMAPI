@@ -317,7 +317,7 @@ namespace StardewModdingAPI.Framework.ModLoading
         }
 
         /// <summary>Process the result from an instruction handler.</summary>
-        /// <param name="mod">The mod being analysed.</param>
+        /// <param name="mod">The mod being analyzed.</param>
         /// <param name="handler">The instruction handler.</param>
         /// <param name="result">The result returned by the handler.</param>
         /// <param name="loggedMessages">The messages already logged for the current mod.</param>
@@ -341,9 +341,9 @@ namespace StardewModdingAPI.Framework.ModLoading
                     mod.SetWarning(ModWarning.PatchesGame);
                     break;
 
-                case InstructionHandleResult.DetectedSaveSerialiser:
-                    this.Monitor.LogOnce(loggedMessages, $"{logPrefix}Detected possible save serialiser change ({handler.NounPhrase}) in assembly {filename}.");
-                    mod.SetWarning(ModWarning.ChangesSaveSerialiser);
+                case InstructionHandleResult.DetectedSaveSerializer:
+                    this.Monitor.LogOnce(loggedMessages, $"{logPrefix}Detected possible save serializer change ({handler.NounPhrase}) in assembly {filename}.");
+                    mod.SetWarning(ModWarning.ChangesSaveSerializer);
                     break;
 
                 case InstructionHandleResult.DetectedUnvalidatedUpdateTick:
@@ -370,7 +370,7 @@ namespace StardewModdingAPI.Framework.ModLoading
                     break;
 
                 default:
-                    throw new NotSupportedException($"Unrecognised instruction handler result '{result}'.");
+                    throw new NotSupportedException($"Unrecognized instruction handler result '{result}'.");
             }
         }
 

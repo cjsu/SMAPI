@@ -1,12 +1,12 @@
 using System;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json.Linq;
-using StardewModdingAPI.Toolkit.Serialisation;
-using StardewModdingAPI.Toolkit.Serialisation.Converters;
+using StardewModdingAPI.Toolkit.Serialization;
+using StardewModdingAPI.Toolkit.Serialization.Converters;
 
-namespace StardewModdingAPI.Framework.Serialisation
+namespace StardewModdingAPI.Framework.Serialization
 {
-    /// <summary>Handles deserialisation of <see cref="PointConverter"/> for crossplatform compatibility.</summary>
+    /// <summary>Handles deserialization of <see cref="PointConverter"/> for crossplatform compatibility.</summary>
     /// <remarks>
     /// - Linux/Mac format: { "X": 1, "Y": 2 }
     /// - Windows format:   "1, 2"

@@ -24,13 +24,13 @@ namespace StardewModdingAPI.Framework.Content
         ** Public methods
         *********/
         /// <summary>Construct an instance.</summary>
-        /// <param name="locale">The content's locale code, if the content is localised.</param>
-        /// <param name="assetName">The normalised asset name being read.</param>
+        /// <param name="locale">The content's locale code, if the content is localized.</param>
+        /// <param name="assetName">The normalized asset name being read.</param>
         /// <param name="data">The content data being read.</param>
-        /// <param name="getNormalisedPath">Normalises an asset key to match the cache key.</param>
+        /// <param name="getNormalizedPath">Normalizes an asset key to match the cache key.</param>
         /// <param name="onDataReplaced">A callback to invoke when the data is replaced (if any).</param>
-        public AssetData(string locale, string assetName, TValue data, Func<string, string> getNormalisedPath, Action<TValue> onDataReplaced)
-            : base(locale, assetName, data.GetType(), getNormalisedPath)
+        public AssetData(string locale, string assetName, TValue data, Func<string, string> getNormalizedPath, Action<TValue> onDataReplaced)
+            : base(locale, assetName, data.GetType(), getNormalizedPath)
         {
             this.Data = data;
             this.OnDataReplaced = onDataReplaced;

@@ -199,7 +199,7 @@ namespace StardewModdingAPI.ModBuildConfig.Analyzer
         /*********
         ** Private methods
         *********/
-        /// <summary>Analyse a member access syntax node and add a diagnostic message if applicable.</summary>
+        /// <summary>Analyze a member access syntax node and add a diagnostic message if applicable.</summary>
         /// <param name="context">The analysis context.</param>
         /// <returns>Returns whether any warnings were added.</returns>
         private void AnalyzeMemberAccess(SyntaxNodeAnalysisContext context)
@@ -231,7 +231,7 @@ namespace StardewModdingAPI.ModBuildConfig.Analyzer
             });
         }
 
-        /// <summary>Analyse an explicit cast or 'x as y' node and add a diagnostic message if applicable.</summary>
+        /// <summary>Analyze an explicit cast or 'x as y' node and add a diagnostic message if applicable.</summary>
         /// <param name="context">The analysis context.</param>
         /// <returns>Returns whether any warnings were added.</returns>
         private void AnalyzeCast(SyntaxNodeAnalysisContext context)
@@ -248,7 +248,7 @@ namespace StardewModdingAPI.ModBuildConfig.Analyzer
             });
         }
 
-        /// <summary>Analyse a binary comparison syntax node and add a diagnostic message if applicable.</summary>
+        /// <summary>Analyze a binary comparison syntax node and add a diagnostic message if applicable.</summary>
         /// <param name="context">The analysis context.</param>
         /// <returns>Returns whether any warnings were added.</returns>
         private void AnalyzeBinaryComparison(SyntaxNodeAnalysisContext context)
@@ -288,7 +288,7 @@ namespace StardewModdingAPI.ModBuildConfig.Analyzer
         }
 
         /// <summary>Handle exceptions raised while analyzing a node.</summary>
-        /// <param name="node">The node being analysed.</param>
+        /// <param name="node">The node being analyzed.</param>
         /// <param name="action">The callback to invoke.</param>
         private void HandleErrors(SyntaxNode node, Action action)
         {

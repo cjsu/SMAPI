@@ -2,9 +2,9 @@ using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace StardewModdingAPI.Toolkit.Serialisation.Converters
+namespace StardewModdingAPI.Toolkit.Serialization.Converters
 {
-    /// <summary>Handles deserialisation of <see cref="ISemanticVersion"/>.</summary>
+    /// <summary>Handles deserialization of <see cref="ISemanticVersion"/>.</summary>
     internal class SemanticVersionConverter : JsonConverter
     {
         /*********

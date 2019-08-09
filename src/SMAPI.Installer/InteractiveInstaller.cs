@@ -106,7 +106,7 @@ namespace StardewModdingApi.Installer
         /// <summary>Run the install or uninstall script.</summary>
         /// <param name="args">The command line arguments.</param>
         /// <remarks>
-        /// Initialisation flow:
+        /// Initialization flow:
         ///     1. Collect information (mainly OS and install path) and validate it.
         ///     2. Ask the user whether to install or uninstall.
         ///
@@ -218,7 +218,7 @@ namespace StardewModdingApi.Installer
                 ****/
                 // get theme writers
                 var lightBackgroundWriter = new ColorfulConsoleWriter(EnvironmentUtility.DetectPlatform(), MonitorColorScheme.LightBackground);
-                var darkDarkgroundWriter = new ColorfulConsoleWriter(EnvironmentUtility.DetectPlatform(), MonitorColorScheme.DarkBackground);
+                var darkBackgroundWriter = new ColorfulConsoleWriter(EnvironmentUtility.DetectPlatform(), MonitorColorScheme.DarkBackground);
 
                 // print question
                 this.PrintPlain("Which text looks more readable?");
@@ -226,7 +226,7 @@ namespace StardewModdingApi.Installer
                 Console.Write("   [1] ");
                 lightBackgroundWriter.WriteLine("Dark text on light background", ConsoleLogLevel.Info);
                 Console.Write("   [2] ");
-                darkDarkgroundWriter.WriteLine("Light text on dark background", ConsoleLogLevel.Info);
+                darkBackgroundWriter.WriteLine("Light text on dark background", ConsoleLogLevel.Info);
                 Console.WriteLine();
 
                 // handle choice
@@ -239,7 +239,7 @@ namespace StardewModdingApi.Installer
                         break;
                     case "2":
                         scheme = MonitorColorScheme.DarkBackground;
-                        this.ConsoleWriter = darkDarkgroundWriter;
+                        this.ConsoleWriter = darkBackgroundWriter;
                         break;
                     default:
                         throw new InvalidOperationException($"Unexpected action key '{choice}'.");
@@ -646,7 +646,7 @@ namespace StardewModdingApi.Installer
 
         /// <summary>Delete a file or folder regardless of file permissions, and block until deletion completes.</summary>
         /// <param name="entry">The file or folder to reset.</param>
-        /// <remarks>This method is mirred from <c>FileUtilities.ForceDelete</c> in the toolkit.</remarks>
+        /// <remarks>This method is mirrored from <c>FileUtilities.ForceDelete</c> in the toolkit.</remarks>
         private void ForceDelete(FileSystemInfo entry)
         {
             // ignore if already deleted
@@ -762,7 +762,7 @@ namespace StardewModdingApi.Installer
                     continue;
                 }
 
-                // normalise path
+                // normalize path
                 if (platform == Platform.Windows)
                     path = path.Replace("\"", ""); // in Windows, quotes are used to escape spaces and aren't part of the file path
                 if (platform == Platform.Linux || platform == Platform.Mac)

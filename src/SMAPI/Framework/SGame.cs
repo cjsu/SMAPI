@@ -18,7 +18,7 @@ using StardewModdingAPI.Framework.Networking;
 using StardewModdingAPI.Framework.Reflection;
 using StardewModdingAPI.Framework.StateTracking.Snapshots;
 using StardewModdingAPI.Framework.Utilities;
-using StardewModdingAPI.Toolkit.Serialisation;
+using StardewModdingAPI.Toolkit.Serialization;
 using StardewValley;
 using StardewValley.BellsAndWhistles;
 using StardewValley.Events;
@@ -60,7 +60,7 @@ namespace StardewModdingAPI.Framework
         private readonly Countdown UpdateCrashTimer = new Countdown(60); // 60 ticks = roughly one second
 
         /// <summary>The number of ticks until SMAPI should notify mods that the game has loaded.</summary>
-        /// <remarks>Skipping a few frames ensures the game finishes initialising the world before mods try to change it.</remarks>
+        /// <remarks>Skipping a few frames ensures the game finishes initializing the world before mods try to change it.</remarks>
         private readonly Countdown AfterLoadTimer = new Countdown(5);
 
         /// <summary>Whether the game is saving and SMAPI has already raised <see cref="IGameLoopEvents.Saving"/>.</summary>
@@ -72,8 +72,8 @@ namespace StardewModdingAPI.Framework
         /// <summary>A callback to invoke the first time *any* game content manager loads an asset.</summary>
         private readonly Action OnLoadingFirstAsset;
 
-        /// <summary>A callback to invoke after the game finishes initialising.</summary>
-        private readonly Action OnGameInitialised;
+        /// <summary>A callback to invoke after the game finishes initializing.</summary>
+        private readonly Action OnGameInitialized;
 
         /// <summary>A callback to invoke when the game exits.</summary>
         private readonly Action OnGameExiting;
@@ -93,8 +93,8 @@ namespace StardewModdingAPI.Framework
         /// <summary>A snapshot of the current <see cref="Watchers"/> state.</summary>
         private WatcherSnapshot WatcherSnapshot = new WatcherSnapshot();
 
-        /// <summary>Whether post-game-startup initialisation has been performed.</summary>
-        private bool IsInitialised;
+        /// <summary>Whether post-game-startup initialization has been performed.</summary>
+        private bool IsInitialized;
 
         /// <summary>Whether the next content manager requested by the game will be for <see cref="Game1.content"/>.</summary>
         private bool NextContentManagerIsMain;
@@ -103,7 +103,7 @@ namespace StardewModdingAPI.Framework
         /*********
         ** Accessors
         *********/
-        /// <summary>Static state to use while <see cref="Game1"/> is initialising, which happens before the <see cref="SGame"/> constructor runs.</summary>
+        /// <summary>Static state to use while <see cref="Game1"/> is initializing, which happens before the <see cref="SGame"/> constructor runs.</summary>
         internal static SGameConstructorHack ConstructorHack { get; set; }
 
         /// <summary>The number of update ticks which have already executed. This is similar to <see cref="Game1.ticks"/>, but incremented more consistently for every tick.</summary>
@@ -137,18 +137,18 @@ namespace StardewModdingAPI.Framework
         /// <param name="jsonHelper">Encapsulates SMAPI's JSON file parsing.</param>
         /// <param name="modRegistry">Tracks the installed mods.</param>
         /// <param name="deprecationManager">Manages deprecation warnings.</param>
-        /// <param name="onGameInitialised">A callback to invoke after the game finishes initialising.</param>
+        /// <param name="onGameInitialized">A callback to invoke after the game finishes initializing.</param>
         /// <param name="onGameExiting">A callback to invoke when the game exits.</param>
         /// <param name="cancellationToken">Propagates notification that SMAPI should exit.</param>
         /// <param name="logNetworkTraffic">Whether to log network traffic.</param>
-        internal SGame(Monitor monitor, IMonitor monitorForGame, Reflector reflection, EventManager eventManager, JsonHelper jsonHelper, ModRegistry modRegistry, DeprecationManager deprecationManager, Action onGameInitialised, Action onGameExiting, CancellationTokenSource cancellationToken, bool logNetworkTraffic)
+        internal SGame(Monitor monitor, IMonitor monitorForGame, Reflector reflection, EventManager eventManager, JsonHelper jsonHelper, ModRegistry modRegistry, DeprecationManager deprecationManager, Action onGameInitialized, Action onGameExiting, CancellationTokenSource cancellationToken, bool logNetworkTraffic)
         {
             this.OnLoadingFirstAsset = SGame.ConstructorHack.OnLoadingFirstAsset;
             SGame.ConstructorHack = null;
 
             // check expectations
             if (this.ContentCore == null)
-                throw new InvalidOperationException($"The game didn't initialise its first content manager before SMAPI's {nameof(SGame)} constructor. This indicates an incompatible lifecycle change.");
+                throw new InvalidOperationException($"The game didn't initialize its first content manager before SMAPI's {nameof(SGame)} constructor. This indicates an incompatible lifecycle change.");
 
             // init XNA
             Game1.graphics.GraphicsProfile = GraphicsProfile.HiDef;
@@ -160,7 +160,7 @@ namespace StardewModdingAPI.Framework
             this.ModRegistry = modRegistry;
             this.Reflection = reflection;
             this.DeprecationManager = deprecationManager;
-            this.OnGameInitialised = onGameInitialised;
+            this.OnGameInitialized = onGameInitialized;
             this.OnGameExiting = onGameExiting;
             Game1.input = new SInputState();
             Game1.multiplayer = new SMultiplayer(monitor, eventManager, jsonHelper, modRegistry, reflection, this.OnModMessageReceived, logNetworkTraffic);
@@ -171,8 +171,8 @@ namespace StardewModdingAPI.Framework
             Game1.locations = new ObservableCollection<GameLocation>();
         }
 
-        /// <summary>Initialise just before the game's first update tick.</summary>
-        private void InitialiseAfterGameStarted()
+        /// <summary>Initialize just before the game's first update tick.</summary>
+        private void InitializeAfterGameStarted()
         {
             // set initial state
             this.Input.TrueUpdate();
@@ -181,7 +181,7 @@ namespace StardewModdingAPI.Framework
             this.Watchers = new WatcherCore(this.Input);
 
             // raise callback
-            this.OnGameInitialised();
+            this.OnGameInitialized();
         }
 
         /// <summary>Perform cleanup logic when the game exits.</summary>
@@ -238,8 +238,8 @@ namespace StardewModdingAPI.Framework
         /// <param name="rootDirectory">The root directory to search for content.</param>
         protected override LocalizedContentManager CreateContentManager(IServiceProvider serviceProvider, string rootDirectory)
         {
-            // Game1._temporaryContent initialising from SGame constructor
-            // NOTE: this method is called before the SGame constructor runs. Don't depend on anything being initialised at this point.
+            // Game1._temporaryContent initializing from SGame constructor
+            // NOTE: this method is called before the SGame constructor runs. Don't depend on anything being initialized at this point.
             if (this.ContentCore == null)
             {
                 this.ContentCore = new ContentCoordinator(serviceProvider, rootDirectory, Thread.CurrentThread.CurrentUICulture, SGame.ConstructorHack.Monitor, SGame.ConstructorHack.Reflection, SGame.ConstructorHack.JsonHelper, this.OnLoadingFirstAsset ?? SGame.ConstructorHack?.OnLoadingFirstAsset);
@@ -247,7 +247,7 @@ namespace StardewModdingAPI.Framework
                 return this.ContentCore.CreateGameContentManager("Game1._temporaryContent");
             }
 
-            // Game1.content initialising from LoadContent
+            // Game1.content initializing from LoadContent
             if (this.NextContentManagerIsMain)
             {
                 this.NextContentManagerIsMain = false;
@@ -269,12 +269,12 @@ namespace StardewModdingAPI.Framework
                 this.DeprecationManager.PrintQueued();
 
                 /*********
-                ** First-tick initialisation
+                ** First-tick initialization
                 *********/
-                if (!this.IsInitialised)
+                if (!this.IsInitialized)
                 {
-                    this.IsInitialised = true;
-                    this.InitialiseAfterGameStarted();
+                    this.IsInitialized = true;
+                    this.InitializeAfterGameStarted();
                 }
 
                 /*********
@@ -302,7 +302,7 @@ namespace StardewModdingAPI.Framework
                 bool saveParsed = false;
                 if (Game1.currentLoader != null)
                 {
-                    this.Monitor.Log("Game loader synchronising...", LogLevel.Trace);
+                    this.Monitor.Log("Game loader synchronizing...", LogLevel.Trace);
                     while (Game1.currentLoader?.MoveNext() == true)
                     {
                         // raise load stage changed
@@ -333,7 +333,7 @@ namespace StardewModdingAPI.Framework
                 }
                 if (Game1._newDayTask?.Status == TaskStatus.Created)
                 {
-                    this.Monitor.Log("New day task synchronising...", LogLevel.Trace);
+                    this.Monitor.Log("New day task synchronizing...", LogLevel.Trace);
                     Game1._newDayTask.RunSynchronously();
                     this.Monitor.Log("New day task done.", LogLevel.Trace);
                 }
@@ -346,7 +346,7 @@ namespace StardewModdingAPI.Framework
                 // Therefore we can just run Game1.Update here without raising any SMAPI events. There's
                 // a small chance that the task will finish after we defer but before the game checks,
                 // which means technically events should be raised, but the effects of missing one
-                // update tick are neglible and not worth the complications of bypassing Game1.Update.
+                // update tick are negligible and not worth the complications of bypassing Game1.Update.
                 if (Game1._newDayTask != null || Game1.gameMode == Game1.loadingMode)
                 {
                     events.UnvalidatedUpdateTicking.RaiseEmpty();
@@ -436,7 +436,7 @@ namespace StardewModdingAPI.Framework
                 }
                 else if (Context.IsSaveLoaded && this.AfterLoadTimer.Current > 0 && Game1.currentLocation != null)
                 {
-                    if (Game1.dayOfMonth != 0) // wait until new-game intro finishes (world not fully initialised yet)
+                    if (Game1.dayOfMonth != 0) // wait until new-game intro finishes (world not fully initialized yet)
                         this.AfterLoadTimer.Decrement();
                     Context.IsWorldReady = this.AfterLoadTimer.Current == 0;
                 }

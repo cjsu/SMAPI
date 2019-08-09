@@ -245,7 +245,7 @@ namespace StardewModdingAPI.Tests.Core
         [TestCase("{{value}}", "value")]
         [TestCase("{{VaLuE}}", "vAlUe")]
         [TestCase("{{VaLuE   }}", "   vAlUe")]
-        public void Translation_Tokens_KeysAreNormalised(string text, string key)
+        public void Translation_Tokens_KeysAreNormalized(string text, string key)
         {
             // arrange
             string value = Guid.NewGuid().ToString("N");

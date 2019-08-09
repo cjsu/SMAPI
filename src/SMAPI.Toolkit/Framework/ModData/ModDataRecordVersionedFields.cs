@@ -32,14 +32,14 @@ namespace StardewModdingAPI.Toolkit.Framework.ModData
         ** Public methods
         *********/
         /// <summary>Get a semantic local version for update checks.</summary>
-        /// <param name="version">The remote version to normalise.</param>
+        /// <param name="version">The remote version to normalize.</param>
         public ISemanticVersion GetLocalVersionForUpdateChecks(ISemanticVersion version)
         {
             return this.DataRecord.GetLocalVersionForUpdateChecks(version);
         }
 
         /// <summary>Get a semantic remote version for update checks.</summary>
-        /// <param name="version">The remote version to normalise.</param>
+        /// <param name="version">The remote version to normalize.</param>
         public ISemanticVersion GetRemoteVersionForUpdateChecks(ISemanticVersion version)
         {
             if (version == null)

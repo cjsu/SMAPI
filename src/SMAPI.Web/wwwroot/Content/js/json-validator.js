@@ -120,7 +120,7 @@ smapi.jsonValidator = function (sectionUrl, pasteID) {
     };
 
     /**
-     * Initialise the JSON validator page.
+     * Initialize the JSON validator page.
      */
     var init = function () {
         // set initial code formatting

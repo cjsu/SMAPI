@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using StardewModdingAPI.Toolkit.Serialisation.Converters;
+using StardewModdingAPI.Toolkit.Serialization.Converters;
 
-namespace StardewModdingAPI.Toolkit.Serialisation
+namespace StardewModdingAPI.Toolkit.Serialization
 {
     /// <summary>Encapsulates SMAPI's JSON file parsing.</summary>
     public class JsonHelper
@@ -13,7 +13,7 @@ namespace StardewModdingAPI.Toolkit.Serialisation
         /*********
         ** Accessors
         *********/
-        /// <summary>The JSON settings to use when serialising and deserialising files.</summary>
+        /// <summary>The JSON settings to use when serializing and deserializing files.</summary>
         public JsonSerializerSettings JsonSettings { get; } = new JsonSerializerSettings
         {
             Formatting = Formatting.Indented,
@@ -31,7 +31,7 @@ namespace StardewModdingAPI.Toolkit.Serialisation
         *********/
         /// <summary>Read a JSON file.</summary>
         /// <typeparam name="TModel">The model type.</typeparam>
-        /// <param name="fullPath">The absolete file path.</param>
+        /// <param name="fullPath">The absolute file path.</param>
         /// <param name="result">The parsed content model.</param>
         /// <returns>Returns false if the file doesn't exist, else true.</returns>
         /// <exception cref="ArgumentException">The given <paramref name="fullPath"/> is empty or invalid.</exception>
@@ -54,10 +54,10 @@ namespace StardewModdingAPI.Toolkit.Serialisation
                 return false;
             }
 
-            // deserialise model
+            // deserialize model
             try
             {
-                result = this.Deserialise<TModel>(json);
+                result = this.Deserialize<TModel>(json);
                 return true;
             }
             catch (Exception ex)
@@ -77,7 +77,7 @@ namespace StardewModdingAPI.Toolkit.Serialisation
 
         /// <summary>Save to a JSON file.</summary>
         /// <typeparam name="TModel">The model type.</typeparam>
-        /// <param name="fullPath">The absolete file path.</param>
+        /// <param name="fullPath">The absolute file path.</param>
         /// <param name="model">The model to save.</param>
         /// <exception cref="InvalidOperationException">The given path is empty or invalid.</exception>
         public void WriteJsonFile<TModel>(string fullPath, TModel model)
@@ -95,14 +95,14 @@ namespace StardewModdingAPI.Toolkit.Serialisation
                 Directory.CreateDirectory(dir);
 
             // write file
-            string json = this.Serialise(model);
+            string json = this.Serialize(model);
             File.WriteAllText(fullPath, json);
         }
 
         /// <summary>Deserialize JSON text if possible.</summary>
         /// <typeparam name="TModel">The model type.</typeparam>
         /// <param name="json">The raw JSON text.</param>
-        public TModel Deserialise<TModel>(string json)
+        public TModel Deserialize<TModel>(string json)
         {
             try
             {
@@ -126,9 +126,9 @@ namespace StardewModdingAPI.Toolkit.Serialisation
 
         /// <summary>Serialize a model to JSON text.</summary>
         /// <typeparam name="TModel">The model type.</typeparam>
-        /// <param name="model">The model to serialise.</param>
+        /// <param name="model">The model to serialize.</param>
         /// <param name="formatting">The formatting to apply.</param>
-        public string Serialise<TModel>(TModel model, Formatting formatting = Formatting.Indented)
+        public string Serialize<TModel>(TModel model, Formatting formatting = Formatting.Indented)
         {
             return JsonConvert.SerializeObject(model, formatting, this.JsonSettings);
         }

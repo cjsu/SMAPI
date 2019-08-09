@@ -73,7 +73,7 @@ namespace StardewModdingAPI.Framework.Events
         /// <summary>Raised after the game finishes writing data to the save file (except the initial save creation).</summary>
         public readonly ManagedEvent<SavedEventArgs> Saved;
 
-        /// <summary>Raised after the player loads a save slot and the world is initialised.</summary>
+        /// <summary>Raised after the player loads a save slot and the world is initialized.</summary>
         public readonly ManagedEvent<SaveLoadedEventArgs> SaveLoaded;
 
         /// <summary>Raised after the game begins a new day, including when loading a save.</summary>
@@ -152,15 +152,15 @@ namespace StardewModdingAPI.Framework.Events
         public readonly ManagedEvent<TerrainFeatureListChangedEventArgs> TerrainFeatureListChanged;
 
         /****
-        ** Specialised
+        ** Specialized
         ****/
-        /// <summary>Raised when the low-level stage in the game's loading process has changed. See notes on <see cref="ISpecialisedEvents.LoadStageChanged"/>.</summary>
+        /// <summary>Raised when the low-level stage in the game's loading process has changed. See notes on <see cref="ISpecializedEvents.LoadStageChanged"/>.</summary>
         public readonly ManagedEvent<LoadStageChangedEventArgs> LoadStageChanged;
 
-        /// <summary>Raised before the game performs its overall update tick (≈60 times per second). See notes on <see cref="ISpecialisedEvents.UnvalidatedUpdateTicking"/>.</summary>
+        /// <summary>Raised before the game performs its overall update tick (≈60 times per second). See notes on <see cref="ISpecializedEvents.UnvalidatedUpdateTicking"/>.</summary>
         public readonly ManagedEvent<UnvalidatedUpdateTickingEventArgs> UnvalidatedUpdateTicking;
 
-        /// <summary>Raised after the game performs its overall update tick (≈60 times per second). See notes on <see cref="ISpecialisedEvents.UnvalidatedUpdateTicked"/>.</summary>
+        /// <summary>Raised after the game performs its overall update tick (≈60 times per second). See notes on <see cref="ISpecializedEvents.UnvalidatedUpdateTicked"/>.</summary>
         public readonly ManagedEvent<UnvalidatedUpdateTickedEventArgs> UnvalidatedUpdateTicked;
 
 
@@ -172,7 +172,7 @@ namespace StardewModdingAPI.Framework.Events
         /// <param name="modRegistry">The mod registry with which to identify mods.</param>
         public EventManager(IMonitor monitor, ModRegistry modRegistry)
         {
-            // create shortcut initialisers
+            // create shortcut initializers
             ManagedEvent<TEventArgs> ManageEventOf<TEventArgs>(string typeName, string eventName) => new ManagedEvent<TEventArgs>($"{typeName}.{eventName}", monitor, modRegistry);
 
             // init events (new)
@@ -223,9 +223,9 @@ namespace StardewModdingAPI.Framework.Events
             this.ObjectListChanged = ManageEventOf<ObjectListChangedEventArgs>(nameof(IModEvents.World), nameof(IWorldEvents.ObjectListChanged));
             this.TerrainFeatureListChanged = ManageEventOf<TerrainFeatureListChangedEventArgs>(nameof(IModEvents.World), nameof(IWorldEvents.TerrainFeatureListChanged));
 
-            this.LoadStageChanged = ManageEventOf<LoadStageChangedEventArgs>(nameof(IModEvents.Specialised), nameof(ISpecialisedEvents.LoadStageChanged));
-            this.UnvalidatedUpdateTicking = ManageEventOf<UnvalidatedUpdateTickingEventArgs>(nameof(IModEvents.Specialised), nameof(ISpecialisedEvents.UnvalidatedUpdateTicking));
-            this.UnvalidatedUpdateTicked = ManageEventOf<UnvalidatedUpdateTickedEventArgs>(nameof(IModEvents.Specialised), nameof(ISpecialisedEvents.UnvalidatedUpdateTicked));
+            this.LoadStageChanged = ManageEventOf<LoadStageChangedEventArgs>(nameof(IModEvents.Specialized), nameof(ISpecializedEvents.LoadStageChanged));
+            this.UnvalidatedUpdateTicking = ManageEventOf<UnvalidatedUpdateTickingEventArgs>(nameof(IModEvents.Specialized), nameof(ISpecializedEvents.UnvalidatedUpdateTicking));
+            this.UnvalidatedUpdateTicked = ManageEventOf<UnvalidatedUpdateTickedEventArgs>(nameof(IModEvents.Specialized), nameof(ISpecializedEvents.UnvalidatedUpdateTicked));
         }
     }
 }

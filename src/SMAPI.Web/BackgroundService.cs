@@ -11,7 +11,7 @@ using StardewModdingAPI.Web.Framework.Caching.Wiki;
 namespace StardewModdingAPI.Web
 {
     /// <summary>A hosted service which runs background data updates.</summary>
-    /// <remarks>Task methods need to be static, since otherwise Hangfire will try to serialise the entire instance.</remarks>
+    /// <remarks>Task methods need to be static, since otherwise Hangfire will try to serialize the entire instance.</remarks>
     internal class BackgroundService : IHostedService, IDisposable
     {
         /*********
@@ -94,8 +94,8 @@ namespace StardewModdingAPI.Web
         /*********
         ** Private method
         *********/
-        /// <summary>Initialise the background service if it's not already initialised.</summary>
-        /// <exception cref="InvalidOperationException">The background service is already initialised.</exception>
+        /// <summary>Initialize the background service if it's not already initialized.</summary>
+        /// <exception cref="InvalidOperationException">The background service is already initialized.</exception>
         private void TryInit()
         {
             if (BackgroundService.JobServer != null)

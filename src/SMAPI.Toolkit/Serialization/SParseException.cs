@@ -1,6 +1,6 @@
 using System;
 
-namespace StardewModdingAPI.Toolkit.Serialisation
+namespace StardewModdingAPI.Toolkit.Serialization
 {
     /// <summary>A format exception which provides a user-facing error message.</summary>
     internal class SParseException : FormatException

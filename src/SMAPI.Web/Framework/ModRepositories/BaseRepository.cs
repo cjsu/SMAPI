@@ -34,9 +34,9 @@ namespace StardewModdingAPI.Web.Framework.ModRepositories
             this.VendorKey = vendorKey;
         }
 
-        /// <summary>Normalise a version string.</summary>
-        /// <param name="version">The version to normalise.</param>
-        protected string NormaliseVersion(string version)
+        /// <summary>Normalize a version string.</summary>
+        /// <param name="version">The version to normalize.</param>
+        protected string NormalizeVersion(string version)
         {
             if (string.IsNullOrWhiteSpace(version))
                 return null;

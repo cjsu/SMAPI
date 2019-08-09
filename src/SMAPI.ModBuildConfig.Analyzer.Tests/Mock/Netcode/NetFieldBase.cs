@@ -2,7 +2,7 @@
 namespace Netcode
 {
     /// <summary>A simplified version of Stardew Valley's <c>Netcode.NetFieldBase</c> for unit testing.</summary>
-    /// <typeparam name="T">The type of the synchronised value.</typeparam>
+    /// <typeparam name="T">The type of the synchronized value.</typeparam>
     /// <typeparam name="TSelf">The type of the current instance.</typeparam>
     public class NetFieldBase<T, TSelf> where TSelf : NetFieldBase<T, TSelf>
     {

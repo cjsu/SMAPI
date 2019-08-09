@@ -9,7 +9,7 @@ using StardewModdingAPI.Framework.Content;
 using StardewModdingAPI.Framework.ContentManagers;
 using StardewModdingAPI.Framework.Reflection;
 using StardewModdingAPI.Metadata;
-using StardewModdingAPI.Toolkit.Serialisation;
+using StardewModdingAPI.Toolkit.Serialization;
 using StardewModdingAPI.Toolkit.Utilities;
 using StardewValley;
 
@@ -74,7 +74,7 @@ namespace StardewModdingAPI.Framework
         /// <summary>Construct an instance.</summary>
         /// <param name="serviceProvider">The service provider to use to locate services.</param>
         /// <param name="rootDirectory">The root directory to search for content.</param>
-        /// <param name="currentCulture">The current culture for which to localise content.</param>
+        /// <param name="currentCulture">The current culture for which to localize content.</param>
         /// <param name="monitor">Encapsulates monitoring and logging.</param>
         /// <param name="reflection">Simplifies access to private code.</param>
         /// <param name="jsonHelper">Encapsulates SMAPI's JSON file parsing.</param>
@@ -89,7 +89,7 @@ namespace StardewModdingAPI.Framework
             this.ContentManagers.Add(
                 this.MainContentManager = new GameContentManager("Game1.content", serviceProvider, rootDirectory, currentCulture, this, monitor, reflection, this.OnDisposing, onLoadingFirstAsset)
             );
-            this.CoreAssets = new CoreAssetPropagator(this.MainContentManager.AssertAndNormaliseAssetName, reflection, monitor);
+            this.CoreAssets = new CoreAssetPropagator(this.MainContentManager.AssertAndNormalizeAssetName, reflection, monitor);
         }
 
         /// <summary>Get a new content manager which handles reading files from the game content folder with support for interception.</summary>
@@ -250,7 +250,7 @@ namespace StardewModdingAPI.Framework
             string locale = this.GetLocale();
             return this.InvalidateCache((assetName, type) =>
             {
-                IAssetInfo info = new AssetInfo(locale, assetName, type, this.MainContentManager.AssertAndNormaliseAssetName);
+                IAssetInfo info = new AssetInfo(locale, assetName, type, this.MainContentManager.AssertAndNormalizeAssetName);
                 return predicate(info);
             }, dispose);
         }

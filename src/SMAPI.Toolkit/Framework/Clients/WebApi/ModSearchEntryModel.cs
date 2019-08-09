@@ -19,7 +19,7 @@ namespace StardewModdingAPI.Toolkit.Framework.Clients.WebApi
         /// <summary>Construct an empty instance.</summary>
         public ModSearchEntryModel()
         {
-            // needed for JSON deserialising
+            // needed for JSON deserializing
         }
 
         /// <summary>Construct an instance.</summary>

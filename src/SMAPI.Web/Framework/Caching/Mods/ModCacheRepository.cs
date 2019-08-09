@@ -40,7 +40,7 @@ namespace StardewModdingAPI.Web.Framework.Caching.Mods
         public bool TryGetMod(ModRepositoryKey site, string id, out CachedMod mod, bool markRequested = true)
         {
             // get mod
-            id = this.NormaliseId(id);
+            id = this.NormalizeId(id);
             mod = this.Mods.Find(entry => entry.ID == id && entry.Site == site).FirstOrDefault();
             if (mod == null)
                 return false;
@@ -62,7 +62,7 @@ namespace StardewModdingAPI.Web.Framework.Caching.Mods
         /// <param name="cachedMod">The stored mod record.</param>
         public void SaveMod(ModRepositoryKey site, string id, ModInfoModel mod, out CachedMod cachedMod)
         {
-            id = this.NormaliseId(id);
+            id = this.NormalizeId(id);
 
             cachedMod = this.SaveMod(new CachedMod(site, id, mod));
         }
@@ -83,7 +83,7 @@ namespace StardewModdingAPI.Web.Framework.Caching.Mods
         /// <param name="mod">The mod data.</param>
         public CachedMod SaveMod(CachedMod mod)
         {
-            string id = this.NormaliseId(mod.ID);
+            string id = this.NormalizeId(mod.ID);
 
             this.Mods.ReplaceOne(
                 entry => entry.ID == id && entry.Site == mod.Site,
@@ -94,9 +94,9 @@ namespace StardewModdingAPI.Web.Framework.Caching.Mods
             return mod;
         }
 
-        /// <summary>Normalise a mod ID for case-insensitive search.</summary>
+        /// <summary>Normalize a mod ID for case-insensitive search.</summary>
         /// <param name="id">The mod ID.</param>
-        public string NormaliseId(string id)
+        public string NormalizeId(string id)
         {
             return id.Trim().ToLower();
         }

@@ -24,8 +24,8 @@ namespace StardewModdingAPI.Metadata
         /*********
         ** Fields
         *********/
-        /// <summary>Normalises an asset key to match the cache key.</summary>
-        private readonly Func<string, string> GetNormalisedPath;
+        /// <summary>Normalizes an asset key to match the cache key.</summary>
+        private readonly Func<string, string> GetNormalizedPath;
 
         /// <summary>Simplifies access to private game code.</summary>
         private readonly Reflector Reflection;
@@ -33,7 +33,7 @@ namespace StardewModdingAPI.Metadata
         /// <summary>Encapsulates monitoring and logging.</summary>
         private readonly IMonitor Monitor;
 
-        /// <summary>Optimised bucket categories for batch reloading assets.</summary>
+        /// <summary>Optimized bucket categories for batch reloading assets.</summary>
         private enum AssetBucket
         {
             /// <summary>NPC overworld sprites.</summary>
@@ -50,13 +50,13 @@ namespace StardewModdingAPI.Metadata
         /*********
         ** Public methods
         *********/
-        /// <summary>Initialise the core asset data.</summary>
-        /// <param name="getNormalisedPath">Normalises an asset key to match the cache key.</param>
+        /// <summary>Initialize the core asset data.</summary>
+        /// <param name="getNormalizedPath">Normalizes an asset key to match the cache key.</param>
         /// <param name="reflection">Simplifies access to private code.</param>
         /// <param name="monitor">Encapsulates monitoring and logging.</param>
-        public CoreAssetPropagator(Func<string, string> getNormalisedPath, Reflector reflection, IMonitor monitor)
+        public CoreAssetPropagator(Func<string, string> getNormalizedPath, Reflector reflection, IMonitor monitor)
         {
-            this.GetNormalisedPath = getNormalisedPath;
+            this.GetNormalizedPath = getNormalizedPath;
             this.Reflection = reflection;
             this.Monitor = monitor;
         }
@@ -67,7 +67,7 @@ namespace StardewModdingAPI.Metadata
         /// <returns>Returns the number of reloaded assets.</returns>
         public int Propagate(LocalizedContentManager content, IDictionary<string, Type> assets)
         {
-            // group into optimised lists
+            // group into optimized lists
             var buckets = assets.GroupBy(p =>
             {
                 if (this.IsInFolder(p.Key, "Characters") || this.IsInFolder(p.Key, "Characters\\Monsters"))
@@ -112,7 +112,7 @@ namespace StardewModdingAPI.Metadata
         /// <returns>Returns whether an asset was loaded. The return value may be true or false, or a non-null value for true.</returns>
         private bool PropagateOther(LocalizedContentManager content, string key, Type type)
         {
-            key = this.GetNormalisedPath(key);
+            key = this.GetNormalizedPath(key);
 
             /****
             ** Special case: current map tilesheet
@@ -123,7 +123,7 @@ namespace StardewModdingAPI.Metadata
             {
                 foreach (TileSheet tilesheet in Game1.currentLocation.map.TileSheets)
                 {
-                    if (this.GetNormalisedPath(tilesheet.ImageSource) == key)
+                    if (this.GetNormalizedPath(tilesheet.ImageSource) == key)
                         Game1.mapDisplayDevice.LoadTileSheet(tilesheet);
                 }
             }
@@ -136,7 +136,7 @@ namespace StardewModdingAPI.Metadata
                 bool anyChanged = false;
                 foreach (GameLocation location in this.GetLocations())
                 {
-                    if (!string.IsNullOrWhiteSpace(location.mapPath.Value) && this.GetNormalisedPath(location.mapPath.Value) == key)
+                    if (!string.IsNullOrWhiteSpace(location.mapPath.Value) && this.GetNormalizedPath(location.mapPath.Value) == key)
                     {
                         // general updates
                         location.reloadMap();
@@ -162,7 +162,7 @@ namespace StardewModdingAPI.Metadata
             ** Propagate by key
             ****/
             Reflector reflection = this.Reflection;
-            switch (key.ToLower().Replace("/", "\\")) // normalised key so we can compare statically
+            switch (key.ToLower().Replace("/", "\\")) // normalized key so we can compare statically
             {
                 /****
                 ** Animals
@@ -584,7 +584,7 @@ namespace StardewModdingAPI.Metadata
                     let locCritters = this.Reflection.GetField<List<Critter>>(location, "critters").GetValue()
                     where locCritters != null
                     from Critter critter in locCritters
-                    where this.GetNormalisedPath(critter.sprite.textureName) == key
+                    where this.GetNormalizedPath(critter.sprite.textureName) == key
                     select critter
                 )
                 .ToArray();
@@ -664,7 +664,7 @@ namespace StardewModdingAPI.Metadata
             // get NPCs
             HashSet<string> lookup = new HashSet<string>(keys, StringComparer.InvariantCultureIgnoreCase);
             NPC[] characters = this.GetCharacters()
-                .Where(npc => npc.Sprite != null && lookup.Contains(this.GetNormalisedPath(npc.Sprite.textureName.Value)))
+                .Where(npc => npc.Sprite != null && lookup.Contains(this.GetNormalizedPath(npc.Sprite.textureName.Value)))
                 .ToArray();
             if (!characters.Any())
                 return 0;
@@ -692,7 +692,7 @@ namespace StardewModdingAPI.Metadata
                 (
                     from npc in this.GetCharacters()
                     where npc.isVillager()
-                    let textureKey = this.GetNormalisedPath($"Portraits\\{this.getTextureName(npc)}")
+                    let textureKey = this.GetNormalizedPath($"Portraits\\{this.getTextureName(npc)}")
                     where lookup.Contains(textureKey)
                     select new { npc, textureKey }
                 )
@@ -852,17 +852,17 @@ namespace StardewModdingAPI.Metadata
             }
         }
 
-        /// <summary>Get whether a key starts with a substring after the substring is normalised.</summary>
+        /// <summary>Get whether a key starts with a substring after the substring is normalized.</summary>
         /// <param name="key">The key to check.</param>
-        /// <param name="rawSubstring">The substring to normalise and find.</param>
+        /// <param name="rawSubstring">The substring to normalize and find.</param>
         private bool KeyStartsWith(string key, string rawSubstring)
         {
-            return key.StartsWith(this.GetNormalisedPath(rawSubstring), StringComparison.InvariantCultureIgnoreCase);
+            return key.StartsWith(this.GetNormalizedPath(rawSubstring), StringComparison.InvariantCultureIgnoreCase);
         }
 
-        /// <summary>Get whether a normalised asset key is in the given folder.</summary>
-        /// <param name="key">The normalised asset key (like <c>Animals/cat</c>).</param>
-        /// <param name="folder">The key folder (like <c>Animals</c>); doesn't need to be normalised.</param>
+        /// <summary>Get whether a normalized asset key is in the given folder.</summary>
+        /// <param name="key">The normalized asset key (like <c>Animals/cat</c>).</param>
+        /// <param name="folder">The key folder (like <c>Animals</c>); doesn't need to be normalized.</param>
         /// <param name="allowSubfolders">Whether to return true if the key is inside a subfolder of the <paramref name="folder"/>.</param>
         private bool IsInFolder(string key, string folder, bool allowSubfolders = false)
         {

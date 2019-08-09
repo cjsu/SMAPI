@@ -65,7 +65,7 @@ namespace StardewModdingAPI.Web.Framework.ModRepositories
                 }
 
                 // return data
-                return result.SetVersions(version: this.NormaliseVersion(latest.Tag), previewVersion: this.NormaliseVersion(preview?.Tag));
+                return result.SetVersions(version: this.NormalizeVersion(latest.Tag), previewVersion: this.NormalizeVersion(preview?.Tag));
             }
             catch (Exception ex)
             {

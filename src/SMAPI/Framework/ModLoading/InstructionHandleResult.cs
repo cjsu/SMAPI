@@ -18,12 +18,12 @@ namespace StardewModdingAPI.Framework.ModLoading
         DetectedGamePatch,
 
         /// <summary>The instruction is compatible, but affects the save serializer in a way that may make saves unloadable without the mod.</summary>
-        DetectedSaveSerialiser,
+        DetectedSaveSerializer,
 
         /// <summary>The instruction is compatible, but uses the <c>dynamic</c> keyword which won't work on Linux/Mac.</summary>
         DetectedDynamic,
 
-        /// <summary>The instruction is compatible, but references <see cref="ISpecialisedEvents.UnvalidatedUpdateTicking"/> or <see cref="ISpecialisedEvents.UnvalidatedUpdateTicked"/> which may impact stability.</summary>
+        /// <summary>The instruction is compatible, but references <see cref="ISpecializedEvents.UnvalidatedUpdateTicking"/> or <see cref="ISpecializedEvents.UnvalidatedUpdateTicked"/> which may impact stability.</summary>
         DetectedUnvalidatedUpdateTick,
 
         /// <summary>The instruction accesses the filesystem directly.</summary>

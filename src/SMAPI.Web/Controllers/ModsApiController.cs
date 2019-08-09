@@ -120,7 +120,7 @@ namespace StardewModdingAPI.Web.Controllers
         /// <returns>Returns the mod data if found, else <c>null</c>.</returns>
         private async Task<ModEntryModel> GetModData(ModSearchEntryModel search, WikiModEntry[] wikiData, bool includeExtendedMetadata)
         {
-            // crossreference data
+            // cross-reference data
             ModDataRecord record = this.ModDatabase.Get(search.ID);
             WikiModEntry wikiEntry = wikiData.FirstOrDefault(entry => entry.ID.Contains(search.ID.Trim(), StringComparer.InvariantCultureIgnoreCase));
             UpdateKey[] updateKeys = this.GetUpdateKeys(search.UpdateKeys, record, wikiEntry).ToArray();

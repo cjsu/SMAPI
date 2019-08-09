@@ -8,7 +8,7 @@ using StardewModdingAPI.Toolkit.Framework.Clients.Wiki;
 using StardewModdingAPI.Toolkit.Framework.GameScanning;
 using StardewModdingAPI.Toolkit.Framework.ModData;
 using StardewModdingAPI.Toolkit.Framework.ModScanning;
-using StardewModdingAPI.Toolkit.Serialisation;
+using StardewModdingAPI.Toolkit.Serialization;
 
 namespace StardewModdingAPI.Toolkit
 {

@@ -81,7 +81,7 @@ namespace StardewModdingAPI.Web.ViewModels
                 .ToDictionary(group => group.Key, group => group.ToArray());
         }
 
-        /// <summary>Get a sanitised mod name that's safe to use in anchors, attributes, and URLs.</summary>
+        /// <summary>Get a sanitized mod name that's safe to use in anchors, attributes, and URLs.</summary>
         /// <param name="modName">The mod name.</param>
         public string GetSlug(string modName)
         {

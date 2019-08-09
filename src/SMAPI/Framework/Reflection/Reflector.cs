@@ -6,7 +6,7 @@ using System.Runtime.Caching;
 namespace StardewModdingAPI.Framework.Reflection
 {
     /// <summary>Provides helper methods for accessing inaccessible code.</summary>
-    /// <remarks>This implementation searches up the type hierarchy, and caches the reflected fields and methods with a sliding expiry (to optimise performance without unnecessary memory usage).</remarks>
+    /// <remarks>This implementation searches up the type hierarchy, and caches the reflected fields and methods with a sliding expiry (to optimize performance without unnecessary memory usage).</remarks>
     internal class Reflector
     {
         /*********

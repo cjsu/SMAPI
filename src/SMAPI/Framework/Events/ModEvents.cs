@@ -26,8 +26,8 @@ namespace StardewModdingAPI.Framework.Events
         /// <summary>Events raised when something changes in the world.</summary>
         public IWorldEvents World { get; }
 
-        /// <summary>Events serving specialised edge cases that shouldn't be used by most mods.</summary>
-        public ISpecialisedEvents Specialised { get; }
+        /// <summary>Events serving specialized edge cases that shouldn't be used by most mods.</summary>
+        public ISpecializedEvents Specialized { get; }
 
 
         /*********
@@ -44,7 +44,7 @@ namespace StardewModdingAPI.Framework.Events
             this.Multiplayer = new ModMultiplayerEvents(mod, eventManager);
             this.Player = new ModPlayerEvents(mod, eventManager);
             this.World = new ModWorldEvents(mod, eventManager);
-            this.Specialised = new ModSpecialisedEvents(mod, eventManager);
+            this.Specialized = new ModSpecializedEvents(mod, eventManager);
         }
     }
 }

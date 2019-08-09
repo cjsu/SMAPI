@@ -31,7 +31,7 @@ namespace StardewModdingAPI
         /// <summary>Read a JSON file from the content pack folder.</summary>
         /// <typeparam name="TModel">The model type. This should be a plain class that has public properties for the data you want. The properties can be complex types.</typeparam>
         /// <param name="path">The file path relative to the content pack directory.</param>
-        /// <returns>Returns the deserialised model, or <c>null</c> if the file doesn't exist or is empty.</returns>
+        /// <returns>Returns the deserialized model, or <c>null</c> if the file doesn't exist or is empty.</returns>
         /// <exception cref="InvalidOperationException">The <paramref name="path"/> is not relative or contains directory climbing (../).</exception>
         TModel ReadJsonFile<TModel>(string path) where TModel : class;
 

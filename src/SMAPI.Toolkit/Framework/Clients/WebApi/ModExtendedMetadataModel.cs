@@ -48,7 +48,7 @@ namespace StardewModdingAPI.Toolkit.Framework.Clients.WebApi
         [JsonConverter(typeof(StringEnumConverter))]
         public WikiCompatibilityStatus? CompatibilityStatus { get; set; }
 
-        /// <summary>The human-readable summary of the compatibility status or workaround, without HTML formatitng.</summary>
+        /// <summary>The human-readable summary of the compatibility status or workaround, without HTML formatting.</summary>
         public string CompatibilitySummary { get; set; }
 
         /// <summary>The game or SMAPI version which broke this mod, if applicable.</summary>
@@ -62,7 +62,7 @@ namespace StardewModdingAPI.Toolkit.Framework.Clients.WebApi
         [JsonConverter(typeof(StringEnumConverter))]
         public WikiCompatibilityStatus? BetaCompatibilityStatus { get; set; }
 
-        /// <summary>The human-readable summary of the compatibility status or workaround for the Stardew Valley beta (if any), without HTML formatitng.</summary>
+        /// <summary>The human-readable summary of the compatibility status or workaround for the Stardew Valley beta (if any), without HTML formatting.</summary>
         public string BetaCompatibilitySummary { get; set; }
 
         /// <summary>The beta game or SMAPI version which broke this mod, if applicable.</summary>

@@ -79,7 +79,7 @@ namespace StardewModdingAPI.Web.Controllers
         [Route("json/{schemaName}/{id}")]
         public async Task<ViewResult> Index(string schemaName = null, string id = null)
         {
-            schemaName = this.NormaliseSchemaName(schemaName);
+            schemaName = this.NormalizeSchemaName(schemaName);
 
             var result = new JsonValidatorModel(this.SectionUrl, id, schemaName, this.SchemaFormats);
             if (string.IsNullOrWhiteSpace(id))
@@ -143,8 +143,8 @@ namespace StardewModdingAPI.Web.Controllers
             if (request == null)
                 return this.View("Index", new JsonValidatorModel(this.SectionUrl, null, null, this.SchemaFormats).SetUploadError("The request seems to be invalid."));
 
-            // normalise schema name
-            string schemaName = this.NormaliseSchemaName(request.SchemaName);
+            // normalize schema name
+            string schemaName = this.NormalizeSchemaName(request.SchemaName);
 
             // get raw log text
             string input = request.Content;
@@ -178,9 +178,9 @@ namespace StardewModdingAPI.Web.Controllers
             return response;
         }
 
-        /// <summary>Get a normalised schema name, or the <see cref="DefaultSchemaID"/> if blank.</summary>
-        /// <param name="schemaName">The raw schema name to normalise.</param>
-        private string NormaliseSchemaName(string schemaName)
+        /// <summary>Get a normalized schema name, or the <see cref="DefaultSchemaID"/> if blank.</summary>
+        /// <param name="schemaName">The raw schema name to normalize.</param>
+        private string NormalizeSchemaName(string schemaName)
         {
             schemaName = schemaName?.Trim().ToLower();
             return !string.IsNullOrWhiteSpace(schemaName)
@@ -192,7 +192,7 @@ namespace StardewModdingAPI.Web.Controllers
         /// <param name="id">The schema ID.</param>
         private FileInfo FindSchemaFile(string id)
         {
-            // normalise ID
+            // normalize ID
             id = id?.Trim().ToLower();
             if (string.IsNullOrWhiteSpace(id))
                 return null;

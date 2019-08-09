@@ -18,7 +18,7 @@ namespace StardewModdingAPI.Framework
             ["1.04"] = "1.0.4",
             ["1.05"] = "1.0.5",
             ["1.051"] = "1.0.6-prerelease1", // not a very good mapping, but good enough for SMAPI's purposes.
-            ["1.051b"] = "1.0.6-prelease2",
+            ["1.051b"] = "1.0.6-prerelease2",
             ["1.06"] = "1.0.6",
             ["1.07"] = "1.0.7",
             ["1.07a"] = "1.0.8-prerelease1",
