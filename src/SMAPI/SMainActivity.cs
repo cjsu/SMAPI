@@ -18,15 +18,17 @@ using StardewValley;
 using Android.Widget;
 using System.Reflection;
 using Microsoft.Xna.Framework;
+using Android.Content.Res;
 
 namespace StardewModdingAPI
 {
-    [Activity(Label = "Stardew Valley", Icon = "@mipmap/ic_launcher", Theme = "@style/Theme.Splash", MainLauncher = true, AlwaysRetainTaskState = true, LaunchMode = LaunchMode.SingleInstance, ScreenOrientation = ScreenOrientation.SensorLandscape, ConfigurationChanges = (ConfigChanges.Keyboard | ConfigChanges.KeyboardHidden | ConfigChanges.Orientation | ConfigChanges.ScreenLayout | ConfigChanges.ScreenSize | ConfigChanges.UiMode))]
+    [Activity(Label = "SMAPI Stardew Valley", Icon = "@mipmap/ic_launcher", Theme = "@style/Theme.Splash", MainLauncher = true, AlwaysRetainTaskState = true, LaunchMode = LaunchMode.SingleInstance, ScreenOrientation = ScreenOrientation.SensorLandscape, ConfigurationChanges = (ConfigChanges.Keyboard | ConfigChanges.KeyboardHidden | ConfigChanges.Orientation | ConfigChanges.ScreenLayout | ConfigChanges.ScreenSize | ConfigChanges.UiMode))]
     public class SMainActivity: MainActivity, ILicenseCheckerCallback, IJavaObject, IDisposable
     {
         private SCore core;
         private LicenseChecker _licenseChecker;
         private PowerManager.WakeLock _wakeLock;
+        private ServerManagedPolicyExtended _serverManagedPolicyExtended;
         public new bool HasPermissions
         {
             get
@@ -128,7 +130,7 @@ namespace StardewModdingAPI
 
         private void CheckUsingServerManagedPolicy()
         {
-            byte[] salt = new byte[15]
+            this._serverManagedPolicyExtended = new ServerManagedPolicyExtended(this, new AESObfuscator(new byte[15]
             {
                 46,
                 65,
@@ -145,12 +147,8 @@ namespace StardewModdingAPI
                 77,
                 117,
                 36
-            };
-            string packageName = this.PackageName;
-            string @string = Settings.Secure.GetString(this.ContentResolver, "android_id");
-            AESObfuscator obfuscator = new AESObfuscator(salt, packageName, @string);
-            ServerManagedPolicy policy = new ServerManagedPolicy(this, obfuscator);
-            this._licenseChecker = new LicenseChecker(this, policy, "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAry4fecehDpCohQk4XhiIZX9ylIGUThWZxfN9qwvQyTh53hvnpQl/lCrjfflKoPz6gz5jJn6JI1PTnoBy/iXVx1+kbO99qBgJE2V8PS5pq+Usbeqqmqqzx4lEzhiYQ2um92v4qkldNYZFwbTODYPIMbSbaLm7eK9ZyemaRbg9ssAl4QYs0EVxzDK1DjuXilRk28WxiK3lNJTz4cT38bfs4q6Zvuk1vWUvnMqcxiugox6c/9j4zZS5C4+k+WY6mHjUMuwssjCY3G+aImWDSwnU3w9G41q8EoPvJ1049PIi7GJXErusTYZITmqfonyejmSFLPt8LHtux9AmJgFSrC3UhwIDAQAB");
+            }, this.PackageName, Settings.Secure.GetString(this.ContentResolver, "android_id")));
+            this._licenseChecker = new LicenseChecker(this, this._serverManagedPolicyExtended, "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAry4fecehDpCohQk4XhiIZX9ylIGUThWZxfN9qwvQyTh53hvnpQl/lCrjfflKoPz6gz5jJn6JI1PTnoBy/iXVx1+kbO99qBgJE2V8PS5pq+Usbeqqmqqzx4lEzhiYQ2um92v4qkldNYZFwbTODYPIMbSbaLm7eK9ZyemaRbg9ssAl4QYs0EVxzDK1DjuXilRk28WxiK3lNJTz4cT38bfs4q6Zvuk1vWUvnMqcxiugox6c/9j4zZS5C4+k+WY6mHjUMuwssjCY3G+aImWDSwnU3w9G41q8EoPvJ1049PIi7GJXErusTYZITmqfonyejmSFLPt8LHtux9AmJgFSrC3UhwIDAQAB");
             this._licenseChecker.CheckAccess(this);
         }
 
@@ -190,6 +188,11 @@ namespace StardewModdingAPI
         public override void OnWindowFocusChanged(bool hasFocus)
         {
             base.OnWindowFocusChanged(hasFocus);
+        }
+
+        public override void OnConfigurationChanged(Configuration newConfig)
+        {
+            base.OnConfigurationChanged(newConfig);
         }
     }
 }
