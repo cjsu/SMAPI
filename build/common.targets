@@ -53,7 +53,7 @@
   </PropertyGroup>
 
   <!-- launch SMAPI through Visual Studio -->
-  <PropertyGroup>
+  <PropertyGroup Condition="'$(MSBuildProjectName)' == 'SMAPI'">
     <StartAction>Program</StartAction>
     <StartProgram>$(GamePath)\StardewModdingAPI.exe</StartProgram>
     <StartWorkingDirectory>$(GamePath)</StartWorkingDirectory>
