@@ -40,35 +40,35 @@
       <HintPath>..\..\..\..\..\..\..\SteamLibrary\steamapps\common\Stardew Valley\smapi-internal\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="BmFont">
-      <HintPath>..\..\..\..\..\Downloads\Stardew-Valley-v1-25_mod\unknown\assemblies\BmFont.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\com.chucklefish.stardewvalley_1.322\assemblies\BmFont.dll</HintPath>
     </Reference>
     <Reference Include="Google.Android.Vending.Expansion.Downloader">
-      <HintPath>..\..\..\..\..\Downloads\Stardew-Valley-v1-25_mod\unknown\assemblies\Google.Android.Vending.Expansion.Downloader.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\com.chucklefish.stardewvalley_1.322\assemblies\Google.Android.Vending.Expansion.Downloader.dll</HintPath>
     </Reference>
     <Reference Include="Google.Android.Vending.Expansion.ZipFile">
-      <HintPath>..\..\..\..\..\Downloads\Stardew-Valley-v1-25_mod\unknown\assemblies\Google.Android.Vending.Expansion.ZipFile.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\com.chucklefish.stardewvalley_1.322\assemblies\Google.Android.Vending.Expansion.ZipFile.dll</HintPath>
     </Reference>
     <Reference Include="Google.Android.Vending.Licensing">
-      <HintPath>..\..\..\..\..\Downloads\Stardew-Valley-v1-25_mod\unknown\assemblies\Google.Android.Vending.Licensing.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\com.chucklefish.stardewvalley_1.322\assemblies\Google.Android.Vending.Licensing.dll</HintPath>
     </Reference>
     <Reference Include="Java.Interop" />
     <Reference Include="Microsoft.AppCenter">
-      <HintPath>..\..\..\..\..\Downloads\Stardew-Valley-v1-25_mod\unknown\assemblies\Microsoft.AppCenter.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\com.chucklefish.stardewvalley_1.322\assemblies\Microsoft.AppCenter.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AppCenter.Analytics">
-      <HintPath>..\..\..\..\..\Downloads\Stardew-Valley-v1-25_mod\unknown\assemblies\Microsoft.AppCenter.Analytics.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\com.chucklefish.stardewvalley_1.322\assemblies\Microsoft.AppCenter.Analytics.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AppCenter.Analytics.Android.Bindings">
-      <HintPath>..\..\..\..\..\Downloads\Stardew-Valley-v1-25_mod\unknown\assemblies\Microsoft.AppCenter.Analytics.Android.Bindings.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\com.chucklefish.stardewvalley_1.322\assemblies\Microsoft.AppCenter.Analytics.Android.Bindings.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AppCenter.Android.Bindings">
-      <HintPath>..\..\..\..\..\Downloads\Stardew-Valley-v1-25_mod\unknown\assemblies\Microsoft.AppCenter.Android.Bindings.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\com.chucklefish.stardewvalley_1.322\assemblies\Microsoft.AppCenter.Android.Bindings.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AppCenter.Crashes">
-      <HintPath>..\..\..\..\..\Downloads\Stardew-Valley-v1-25_mod\unknown\assemblies\Microsoft.AppCenter.Crashes.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\com.chucklefish.stardewvalley_1.322\assemblies\Microsoft.AppCenter.Crashes.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AppCenter.Crashes.Android.Bindings">
-      <HintPath>..\..\..\..\..\Downloads\Stardew-Valley-v1-25_mod\unknown\assemblies\Microsoft.AppCenter.Crashes.Android.Bindings.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\com.chucklefish.stardewvalley_1.322\assemblies\Microsoft.AppCenter.Crashes.Android.Bindings.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Mono.Android" />
@@ -77,7 +77,7 @@
     </Reference>
     <Reference Include="Mono.Security" />
     <Reference Include="MonoGame.Framework">
-      <HintPath>..\..\..\..\..\Downloads\Stardew-Valley-v1-25_mod\unknown\assemblies\MonoGame.Framework.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\com.chucklefish.stardewvalley_1.322\assemblies\MonoGame.Framework.dll</HintPath>
     </Reference>
     <Reference Include="MonoMod.RuntimeDetour">
       <HintPath>..\..\..\..\..\Downloads\MonoMod.RuntimeDetour.dll</HintPath>
@@ -87,7 +87,7 @@
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="StardewValley">
-      <HintPath>..\..\..\..\..\Downloads\com.chucklefish.stardewvalley_1.31\assemblies\StardewValley.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\com.chucklefish.stardewvalley_1.322\assemblies\StardewValley.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -95,11 +95,8 @@
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
-    <Reference Include="Xamarin.Android.Support.v4">
-      <HintPath>..\..\..\..\..\Downloads\Stardew-Valley-v1-25_mod\unknown\assemblies\Xamarin.Android.Support.v4.dll</HintPath>
-    </Reference>
     <Reference Include="xTile">
-      <HintPath>..\..\..\..\..\Downloads\Stardew-Valley-v1-25_mod\unknown\assemblies\xTile.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\com.chucklefish.stardewvalley_1.322\assemblies\xTile.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
