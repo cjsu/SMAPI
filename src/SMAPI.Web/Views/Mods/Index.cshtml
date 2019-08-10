@@ -1,7 +1,11 @@
+@using Humanizer
+@using Humanizer.Localisation
 @using Newtonsoft.Json
 @model StardewModdingAPI.Web.ViewModels.ModListModel
 @{
     ViewData["Title"] = "Mod compatibility";
+
+    TimeSpan staleAge = DateTimeOffset.UtcNow - Model.LastUpdated;
 }
 @section Head {
     <link rel="stylesheet" href="~/Content/css/mods.css?r=20190302" />
@@ -26,7 +30,7 @@ else
 {
     @if (Model.IsStale)
     {
-        <div class="error">Showing data from @(Math.Round((DateTimeOffset.UtcNow - Model.LastUpdated).TotalMinutes)) minutes ago. (Couldn't fetch newer data; the wiki API may be offline.)</div>
+        <div class="error">Showing data from @staleAge.Humanize(maxUnit: TimeUnit.Hour, minUnit: TimeUnit.Minute) ago. (Couldn't fetch newer data; the wiki API may be offline.)</div>
     }
 
     <div id="app">
