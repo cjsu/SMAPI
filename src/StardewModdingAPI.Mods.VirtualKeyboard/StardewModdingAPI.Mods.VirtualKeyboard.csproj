@@ -36,11 +36,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\Downloads\Stardew-Valley-v1-25_mod\unknown\assemblies\Mono.Android.dll</HintPath>
     </Reference>
-    <Reference Include="MonoGame.Framework">
-      <HintPath>..\..\..\..\..\Downloads\Stardew-Valley-v1-25_mod\unknown\assemblies\MonoGame.Framework.dll</HintPath>
+    <Reference Include="MonoGame.Framework, Version=3.7.1.189, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Downloads\com.chucklefish.stardewvalley_1.322\assemblies\MonoGame.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="StardewValley">
-      <HintPath>..\..\..\..\..\Downloads\Stardew-Valley-v1-25_mod\unknown\assemblies\StardewValley.dll</HintPath>
+    <Reference Include="StardewValley, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Downloads\com.chucklefish.stardewvalley_1.322\assemblies\StardewValley.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Private>True</Private>
