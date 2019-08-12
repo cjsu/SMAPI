@@ -77,6 +77,7 @@ namespace StardewModdingAPI.Web
         ** Tasks
         ****/
         /// <summary>Update the cached wiki metadata.</summary>
+        [AutomaticRetry(Attempts = 3, DelaysInSeconds = new[] { 30, 60, 120 })]
         public static async Task UpdateWikiAsync()
         {
             WikiModList wikiCompatList = await new ModToolkit().GetWikiCompatibilityListAsync();
