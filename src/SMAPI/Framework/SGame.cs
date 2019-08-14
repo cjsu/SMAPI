@@ -1096,6 +1096,7 @@ namespace StardewModdingAPI.Framework
                                 }
                                 foreach (Farmer farmerShadow in this._farmerShadows)
                                 {
+                                    float num1 = Math.Max(0.0001f, farmerShadow.getDrawLayer() + 0.00011f) - 0.0001f;
                                     if (!(bool)((NetFieldBase<bool, NetBool>)farmerShadow.swimming) && !farmerShadow.isRidingHorse() && (Game1.currentLocation != null && Game1.currentLocation.shouldShadowBeDrawnAboveBuildingsLayer(farmerShadow.getTileLocation())))
                                     {
                                         SpriteBatch spriteBatch = Game1.spriteBatch;
@@ -1108,8 +1109,9 @@ namespace StardewModdingAPI.Framework
                                         bounds = Game1.shadowTexture.Bounds;
                                         double y = (double)bounds.Center.Y;
                                         Vector2 origin = new Vector2((float)x, (float)y);
-                                        double num = 4.0 - (!farmerShadow.running && !farmerShadow.UsingTool || farmerShadow.FarmerSprite.currentAnimationIndex <= 1 ? 0.0 : (double)Math.Abs(FarmerRenderer.featureYOffsetPerFrame[farmerShadow.FarmerSprite.CurrentFrame]) * 0.5);
-                                        spriteBatch.Draw(shadowTexture, local, sourceRectangle, white, 0.0f, origin, (float)num, SpriteEffects.None, 0.0f);
+                                        double num2 = 4.0 - (!farmerShadow.running && !farmerShadow.UsingTool || farmerShadow.FarmerSprite.currentAnimationIndex <= 1 ? 0.0 : (double)Math.Abs(FarmerRenderer.featureYOffsetPerFrame[farmerShadow.FarmerSprite.CurrentFrame]) * 0.5);
+                                        double num3 = (double)num1;
+                                        spriteBatch.Draw(shadowTexture, local, sourceRectangle, white, 0.0f, origin, (float)num2, SpriteEffects.None, (float)num3);
                                     }
                                 }
                             }
