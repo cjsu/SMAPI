@@ -68,6 +68,7 @@ These changes have not been released yet.
   * Removed the `Monitor.ExitGameImmediately` method.
   * Updated dependencies (including Json.NET 11.0.2 → 12.0.2, Mono.Cecil 0.10.1 → 0.10.4).
   * Fixed issue where mod changes weren't tracked correctly for raising events in some cases. Events now reflect a frozen snapshot of the game state, and any mod changes are reflected in the next event tick.
+  * Fixed issue where, when a mod's `IAssetEditor` uses `asset.ReplaceWith` on a texture asset while playing in non-English, any changes from that point won't affect subsequent cached asset loads.
   * Fixed `LoadStageChanged` event not raising correct flags in some cases when creating a new save.
   * Fixed 'location list changed' verbose log not correctly listing changes.
   * Fixed mods able to directly load (and in some cases edit) a different mod's local assets using internal asset key forwarding.

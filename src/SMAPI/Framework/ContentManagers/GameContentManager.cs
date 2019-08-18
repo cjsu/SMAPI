@@ -184,10 +184,20 @@ namespace StardewModdingAPI.Framework.ContentManagers
                     return;
                 }
             }
+
+            // save to cache
+            // Note: even if the asset was loaded and cached right before this method was called,
+            // we need to fully re-inject it here for two reasons:
+            //   1. So we can look up an asset by its base or localized key (the game/XNA logic
+            //      only caches by the most specific key).
+            //   2. Because a mod asset loader/editor may have changed the asset in a way that
+            //      doesn't change the instance stored in the cache, e.g. using `asset.ReplaceWith`.
+            string keyWithLocale = $"{assetName}.{this.GetLocale(language)}";
             base.Inject(assetName, value, language);
+            if (this.Cache.ContainsKey(keyWithLocale))
+                base.Inject(keyWithLocale, value, language);
 
             // track whether the injected asset is translatable for is-loaded lookups
-            string keyWithLocale = $"{assetName}.{this.GetLocale(language)}";
             if (this.Cache.ContainsKey(keyWithLocale))
             {
                 this.IsLocalizableLookup[assetName] = true;
