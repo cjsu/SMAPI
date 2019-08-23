@@ -167,7 +167,7 @@ namespace StardewModdingAPI.Framework.ContentManagers
                         }
 
                     default:
-                        throw GetContentError($"unknown file extension '{file.Extension}'; must be one of '.png', '.tbin', or '.xnb'.");
+                        throw GetContentError($"unknown file extension '{file.Extension}'; must be one of '.json', '.png', '.tbin', or '.xnb'.");
                 }
             }
             catch (Exception ex) when (!(ex is SContentLoadException))
