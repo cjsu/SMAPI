@@ -23,6 +23,7 @@ using StardewModdingAPI.Web.Framework.Clients.Pastebin;
 using StardewModdingAPI.Web.Framework.Compression;
 using StardewModdingAPI.Web.Framework.ConfigModels;
 using StardewModdingAPI.Web.Framework.RewriteRules;
+using StardewModdingAPI.Web.Framework.UserAgentParsing;
 
 namespace StardewModdingAPI.Web
 {
@@ -172,6 +173,7 @@ namespace StardewModdingAPI.Web
                 )
                 .UseRewriter(this.GetRedirectRules())
                 .UseStaticFiles() // wwwroot folder
+                .UseClientPlatform()
                 .UseMvc();
 
             // enable Hangfire dashboard

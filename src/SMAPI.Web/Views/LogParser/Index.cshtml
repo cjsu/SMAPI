@@ -1,5 +1,6 @@
 @using Newtonsoft.Json
 @using StardewModdingAPI.Web.Framework.LogParsing.Models
+@using StardewModdingAPI.Web.Framework.UserAgentParsing
 @model StardewModdingAPI.Web.ViewModels.LogParserModel
 
 @{
@@ -67,10 +68,13 @@ else if (Model.ParsedLog?.IsValid == true)
     <h2>Where do I find my SMAPI log?</h2>
     <div>What system do you use?</div>
     <ul id="os-list">
-        <li><input type="radio" name="os" value="android" id="os-android" /> <label for="os-android">Android</label></li>
-        <li><input type="radio" name="os" value="linux" id="os-linux" /> <label for="os-linux">Linux</label></li>
-        <li><input type="radio" name="os" value="mac" id="os-mac" /> <label for="os-mac">Mac</label></li>
-        <li><input type="radio" name="os" value="windows" id="os-windows" /> <label for="os-windows">Windows</label></li>
+        @{
+            Platform? clientPlatform = Context.Items[ClientPlatformMiddleware.ClientPlatformKey] as Platform?;
+        }
+        <li><input type="radio" name="os" value="android" id="os-android" @(clientPlatform == Platform.Android ? "checked" : "")/> <label for="os-android">Android</label></li>
+        <li><input type="radio" name="os" value="linux" id="os-linux" @(clientPlatform == Platform.Linux ? "checked" : "")/> <label for="os-linux">Linux</label></li>
+        <li><input type="radio" name="os" value="mac" id="os-mac" @(clientPlatform == Platform.Mac ? "checked" : "")/> <label for="os-mac">Mac</label></li>
+        <li><input type="radio" name="os" value="windows" id="os-windows" @(clientPlatform == Platform.Windows ? "checked" : "")/> <label for="os-windows">Windows</label></li>
     </ul>
     <div data-os="android">
         On Android:
