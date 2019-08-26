@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 
-namespace StardewModdingAPI.Web.Framework.UserAgentParsing
+namespace StardewModdingAPI.Web.Framework.ClientPlatformDetection
 {
     /// <summary>Extension methods for the client platform middleware.</summary>
     internal static class ClientPlatformMiddlewareExtensions

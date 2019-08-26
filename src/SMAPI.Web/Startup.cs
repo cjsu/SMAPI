@@ -15,6 +15,7 @@ using StardewModdingAPI.Web.Framework;
 using StardewModdingAPI.Web.Framework.Caching;
 using StardewModdingAPI.Web.Framework.Caching.Mods;
 using StardewModdingAPI.Web.Framework.Caching.Wiki;
+using StardewModdingAPI.Web.Framework.ClientPlatformDetection;
 using StardewModdingAPI.Web.Framework.Clients.Chucklefish;
 using StardewModdingAPI.Web.Framework.Clients.GitHub;
 using StardewModdingAPI.Web.Framework.Clients.ModDrop;
@@ -23,7 +24,6 @@ using StardewModdingAPI.Web.Framework.Clients.Pastebin;
 using StardewModdingAPI.Web.Framework.Compression;
 using StardewModdingAPI.Web.Framework.ConfigModels;
 using StardewModdingAPI.Web.Framework.RewriteRules;
-using StardewModdingAPI.Web.Framework.UserAgentParsing;
 
 namespace StardewModdingAPI.Web
 {

@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-namespace StardewModdingAPI.Web.Framework.UserAgentParsing
+namespace StardewModdingAPI.Web.Framework.ClientPlatformDetection
 {
     /// <summary>Middleware that detects the client's platform.</summary>
     public class ClientPlatformMiddleware

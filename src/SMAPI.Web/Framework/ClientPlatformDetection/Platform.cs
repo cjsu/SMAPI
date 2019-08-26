@@ -1,4 +1,4 @@
-namespace StardewModdingAPI.Web.Framework.UserAgentParsing
+namespace StardewModdingAPI.Web.Framework.ClientPlatformDetection
 {
     /// <summary>A software platform.</summary>
     public enum Platform
