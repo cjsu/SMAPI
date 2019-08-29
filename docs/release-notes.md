@@ -12,9 +12,9 @@ These changes have not been released yet.
   * SMAPI now prevents more invalid dialogues from crashing the game.
   * Rewrote launch script on Linux to improve compatibility (thanks to kurumushi and toastal!).
   * Improved mod scanning:
-    * Now ignores metadata files/folders like `__MACOSX` and `__folder_managed_by_vortex`.
-    * Now ignores content files like `.txt` or `.png`, which avoids missing-manifest errors in some common cases.
-    * Now detects XNB mods more accurately, and consolidates multi-folder XNB mods.
+    * Now ignores metadata files and folders (like `__MACOSX` and `__folder_managed_by_vortex`) and content files (like `.txt` or `.png`), which avoids missing-manifest errors in some common cases.
+    * Now detects XNB mods more accurately, and consolidates multi-folder XNB mods in logged messages.
+    * Added trace logs for skipped loose files so it's easier to troubleshoot player logs.
   * Save Backup now works in the background, to avoid affecting startup time for players with a large number of saves.
   * Duplicate-mod errors now show the mod version in each folder.
   * Updated mod compatibility list.
