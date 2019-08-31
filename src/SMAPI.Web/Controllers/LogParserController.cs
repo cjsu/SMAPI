@@ -110,7 +110,7 @@ namespace StardewModdingAPI.Web.Controllers
             return response;
         }
 
-        /// <summary>Construct an instance.</summary>
+        /// <summary>Build a log parser model.</summary>
         /// <param name="pasteID">The paste ID.</param>
         /// <param name="uploadError">An error which occurred while uploading the log to Pastebin.</param>
         private LogParserModel GetModel(string pasteID, string uploadError = null)

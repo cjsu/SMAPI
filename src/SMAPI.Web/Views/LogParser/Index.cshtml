@@ -76,7 +76,7 @@ else if (Model.ParsedLog?.IsValid == true)
             </li>
         }
     </ul>
-    <div data-os="android">
+    <div data-os="@Platform.Android">
         On Android:
         <ol>
             <li>Open a file app (like My Files or MT Manager).</li>
@@ -85,7 +85,7 @@ else if (Model.ParsedLog?.IsValid == true)
             <li>The log file is <code>SMAPI-crash.txt</code> if it exists, otherwise <code>SMAPI-latest.txt</code>.</li>
         </ol>
     </div>
-    <div data-os="linux">
+    <div data-os="@Platform.Linux">
         On Linux:
         <ol>
             <li>Open the Files app.</li>
@@ -95,7 +95,7 @@ else if (Model.ParsedLog?.IsValid == true)
             <li>The log file is <code>SMAPI-crash.txt</code> if it exists, otherwise <code>SMAPI-latest.txt</code>.</li>
         </ol>
     </div>
-    <div data-os="mac">
+    <div data-os="@Platform.Mac">
         On Mac:
         <ol>
             <li>Open the Finder app.</li>
@@ -104,7 +104,7 @@ else if (Model.ParsedLog?.IsValid == true)
             <li>The log file is <code>SMAPI-crash.txt</code> if it exists, otherwise <code>SMAPI-latest.txt</code>.</li>
         </ol>
     </div>
-    <div data-os="windows">
+    <div data-os="@Platform.Windows">
         On Windows:
         <ol>
             <li>Press the <code>Windows</code> and <code>R</code> buttons at the same time.</li>
