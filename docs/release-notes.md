@@ -17,11 +17,12 @@ These changes have not been released yet.
     * Added trace logs for skipped loose files so it's easier to troubleshoot player logs.
   * Save Backup now works in the background, to avoid affecting startup time for players with a large number of saves.
   * Duplicate-mod errors now show the mod version in each folder.
-  * Updated mod compatibility list.
   * Improved update checks:
     * Update checks are now faster in some cases.
     * Fixed error if a Nexus mod is marked as adult content.
     * Fixed error if the Chucklefish page for an update key doesn't exist.
+  * Updated mod compatibility list.
+  * Updated SMAPI/game version map.
   * Fixed mods needing to load custom `Map` assets before the game accesses them (SMAPI will now do so automatically).
   * Fixed Save Backup not pruning old backups if they're uncompressed.
   * Fixed issues when a farmhand reconnects before the game notices they're disconnected.

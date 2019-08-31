@@ -111,6 +111,13 @@ namespace StardewModdingAPI
         {
             switch (version.ToString())
             {
+                case "1.3.36":
+                    return new SemanticVersion(2, 11, 2);
+
+                case "1.3.32":
+                case "1.3.33":
+                    return new SemanticVersion(2, 10, 2);
+
                 case "1.3.28":
                     return new SemanticVersion(2, 7, 0);
 
