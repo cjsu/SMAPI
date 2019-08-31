@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 #if SMAPI_FOR_WINDOWS
@@ -14,6 +15,9 @@ namespace StardewModdingAPI.Toolkit.Utilities
         /*********
         ** Fields
         *********/
+        /// <summary>The cached platform.</summary>
+        private static Platform? CachedPlatform;
+
         /// <summary>Get the OS name from the system uname command.</summary>
         /// <param name="buffer">The buffer to fill with the resulting string.</param>
         [DllImport("libc")]
@@ -26,19 +30,10 @@ namespace StardewModdingAPI.Toolkit.Utilities
         /// <summary>Detect the current OS.</summary>
         public static Platform DetectPlatform()
         {
-            switch (Environment.OSVersion.Platform)
-            {
-                case PlatformID.MacOSX:
-                    return Platform.Mac;
+            if (EnvironmentUtility.CachedPlatform == null)
+                EnvironmentUtility.CachedPlatform = EnvironmentUtility.DetectPlatformImpl();
 
-                case PlatformID.Unix:
-                    return EnvironmentUtility.IsRunningMac()
-                        ? Platform.Mac
-                        : Platform.Linux;
-
-                default:
-                    return Platform.Windows;
-            }
+            return EnvironmentUtility.CachedPlatform.Value;
         }
 
 
@@ -81,6 +76,55 @@ namespace StardewModdingAPI.Toolkit.Utilities
         /*********
         ** Private methods
         *********/
+        /// <summary>Detect the current OS.</summary>
+        private static Platform DetectPlatformImpl()
+        {
+            switch (Environment.OSVersion.Platform)
+            {
+                case PlatformID.MacOSX:
+                    return Platform.Mac;
+
+                case PlatformID.Unix when EnvironmentUtility.IsRunningAndroid():
+                    return Platform.Android;
+
+                case PlatformID.Unix when EnvironmentUtility.IsRunningMac():
+                    return Platform.Mac;
+
+                case PlatformID.Unix:
+                    return Platform.Linux;
+
+                default:
+                    return Platform.Windows;
+            }
+        }
+
+        /// <summary>Detect whether the code is running on Android.</summary>
+        /// <remarks>
+        /// This code is derived from https://stackoverflow.com/a/47521647/262123. It detects Android by calling the
+        /// <c>getprop</c> system command to check for an Android-specific property.
+        /// </remarks>
+        private static bool IsRunningAndroid()
+        {
+            using (Process process = new Process())
+            {
+                process.StartInfo.FileName = "getprop";
+                process.StartInfo.Arguments = "ro.build.user";
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.CreateNoWindow = true;
+                try
+                {
+                    process.Start();
+                    string output = process.StandardOutput.ReadToEnd();
+                    return !string.IsNullOrEmpty(output);
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
+
         /// <summary>Detect whether the code is running on Mac.</summary>
         /// <remarks>
         /// This code is derived from the Mono project (see System.Windows.Forms/System.Windows.Forms/XplatUI.cs). It detects Mac by calling the
