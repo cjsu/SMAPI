@@ -49,6 +49,7 @@ These changes have not been released yet.
 
 * For the log parser:
   * Added instructions for Android.
+  * The page now detects your OS and preselects the right instructions (thanks to danvolchek!).
   * Fixed parse failing in some cases due to time format localization.
 
 * For modders:
