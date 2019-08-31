@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using StardewModdingAPI.Toolkit.Utilities;
 
 namespace StardewModdingAPI.Web.Framework.ClientPlatformDetection
 {
