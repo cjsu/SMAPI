@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using StardewModdingAPI.Toolkit.Utilities;
 using StardewModdingAPI.Web.Framework.LogParsing.Models;
 
 namespace StardewModdingAPI.Web.ViewModels
@@ -24,6 +25,9 @@ namespace StardewModdingAPI.Web.ViewModels
         /// <summary>The paste ID.</summary>
         public string PasteID { get; set; }
 
+        /// <summary>The viewer's detected OS, if known.</summary>
+        public Platform? DetectedPlatform { get; set; }
+
         /// <summary>The parsed log info.</summary>
         public ParsedLog ParsedLog { get; set; }
 
@@ -46,24 +50,25 @@ namespace StardewModdingAPI.Web.ViewModels
         /// <summary>Construct an instance.</summary>
         /// <param name="sectionUrl">The root URL for the log parser controller.</param>
         /// <param name="pasteID">The paste ID.</param>
-        public LogParserModel(string sectionUrl, string pasteID)
+        /// <param name="platform">The viewer's detected OS, if known.</param>
+        public LogParserModel(string sectionUrl, string pasteID, Platform? platform)
         {
             this.SectionUrl = sectionUrl;
             this.PasteID = pasteID;
+            this.DetectedPlatform = platform;
             this.ParsedLog = null;
             this.ShowRaw = false;
         }
 
-        /// <summary>Construct an instance.</summary>
-        /// <param name="sectionUrl">The root URL for the log parser controller.</param>
-        /// <param name="pasteID">The paste ID.</param>
+        /// <summary>Set the log parser result.</summary>
         /// <param name="parsedLog">The parsed log info.</param>
         /// <param name="showRaw">Whether to show the raw unparsed log.</param>
-        public LogParserModel(string sectionUrl, string pasteID, ParsedLog parsedLog, bool showRaw)
-            : this(sectionUrl, pasteID)
+        public LogParserModel SetResult(ParsedLog parsedLog, bool showRaw)
         {
             this.ParsedLog = parsedLog;
             this.ShowRaw = showRaw;
+
+            return this;
         }
 
         /// <summary>Get all content packs in the log grouped by the mod they're for.</summary>
