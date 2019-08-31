@@ -15,7 +15,6 @@ using StardewModdingAPI.Web.Framework;
 using StardewModdingAPI.Web.Framework.Caching;
 using StardewModdingAPI.Web.Framework.Caching.Mods;
 using StardewModdingAPI.Web.Framework.Caching.Wiki;
-using StardewModdingAPI.Web.Framework.ClientPlatformDetection;
 using StardewModdingAPI.Web.Framework.Clients.Chucklefish;
 using StardewModdingAPI.Web.Framework.Clients.GitHub;
 using StardewModdingAPI.Web.Framework.Clients.ModDrop;
@@ -173,7 +172,6 @@ namespace StardewModdingAPI.Web
                 )
                 .UseRewriter(this.GetRedirectRules())
                 .UseStaticFiles() // wwwroot folder
-                .UseClientPlatform()
                 .UseMvc();
 
             // enable Hangfire dashboard

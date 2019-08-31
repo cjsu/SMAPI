@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using StardewModdingAPI.Toolkit.Utilities;
 using StardewModdingAPI.Web.Framework;
 using StardewModdingAPI.Web.Framework.Clients.Pastebin;
 using StardewModdingAPI.Web.Framework.Compression;
@@ -59,14 +60,14 @@ namespace StardewModdingAPI.Web.Controllers
         {
             // fresh page
             if (string.IsNullOrWhiteSpace(id))
-                return this.View("Index", new LogParserModel(this.Config.LogParserUrl, id));
+                return this.View("Index", this.GetModel(id));
 
             // log page
             PasteInfo paste = await this.GetAsync(id);
             ParsedLog log = paste.Success
                 ? new LogParser().Parse(paste.Content)
                 : new ParsedLog { IsValid = false, Error = "Pastebin error: " + paste.Error };
-            return this.View("Index", new LogParserModel(this.Config.LogParserUrl, id, log, raw));
+            return this.View("Index", this.GetModel(id).SetResult(log, raw));
         }
 
         /***
@@ -80,7 +81,7 @@ namespace StardewModdingAPI.Web.Controllers
             // get raw log text
             string input = this.Request.Form["input"].FirstOrDefault();
             if (string.IsNullOrWhiteSpace(input))
-                return this.View("Index", new LogParserModel(this.Config.LogParserUrl, null) { UploadError = "The log file seems to be empty." });
+                return this.View("Index", this.GetModel(null, uploadError: "The log file seems to be empty."));
 
             // upload log
             input = this.GzipHelper.CompressString(input);
@@ -88,7 +89,7 @@ namespace StardewModdingAPI.Web.Controllers
 
             // handle errors
             if (!result.Success)
-                return this.View("Index", new LogParserModel(this.Config.LogParserUrl, result.ID) { UploadError = $"Pastebin error: {result.Error ?? "unknown error"}" });
+                return this.View("Index", this.GetModel(result.ID, uploadError: $"Pastebin error: {result.Error ?? "unknown error"}"));
 
             // redirect to view
             UriBuilder uri = new UriBuilder(new Uri(this.Config.LogParserUrl));
@@ -107,6 +108,40 @@ namespace StardewModdingAPI.Web.Controllers
             PasteInfo response = await this.Pastebin.GetAsync(id);
             response.Content = this.GzipHelper.DecompressString(response.Content);
             return response;
+        }
+
+        /// <summary>Construct an instance.</summary>
+        /// <param name="pasteID">The paste ID.</param>
+        /// <param name="uploadError">An error which occurred while uploading the log to Pastebin.</param>
+        private LogParserModel GetModel(string pasteID, string uploadError = null)
+        {
+            string sectionUrl = this.Config.LogParserUrl;
+            Platform? platform = this.DetectClientPlatform();
+            return new LogParserModel(sectionUrl, pasteID, platform) { UploadError = uploadError };
+        }
+
+        /// <summary>Detect the viewer's OS.</summary>
+        /// <returns>Returns the viewer OS if known, else null.</returns>
+        private Platform? DetectClientPlatform()
+        {
+            string userAgent = this.Request.Headers["User-Agent"];
+            switch (userAgent)
+            {
+                case string ua when ua.Contains("Windows"):
+                    return Platform.Windows;
+
+                case string ua when ua.Contains("Android"): // check for Android before Linux because Android user agents also contain Linux
+                    return Platform.Android;
+
+                case string ua when ua.Contains("Linux"):
+                    return Platform.Linux;
+
+                case string ua when ua.Contains("Mac"):
+                    return Platform.Mac;
+
+                default:
+                    return null;
+            }
         }
     }
 }
