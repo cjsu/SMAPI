@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using StardewModdingAPI.Framework.StateTracking.FieldWatchers;
@@ -59,9 +58,7 @@ namespace StardewModdingAPI.Framework.StateTracking
             this.Location = location;
 
             // init watchers
-            this.BuildingsWatcher = location is BuildableGameLocation buildableLocation
-                ? WatcherFactory.ForNetCollection(buildableLocation.buildings)
-                : (ICollectionWatcher<Building>)WatcherFactory.ForObservableCollection(new ObservableCollection<Building>());
+            this.BuildingsWatcher = location is BuildableGameLocation buildableLocation ? WatcherFactory.ForNetCollection(buildableLocation.buildings) : WatcherFactory.ForImmutableCollection<Building>();
             this.DebrisWatcher = WatcherFactory.ForNetCollection(location.debris);
             this.LargeTerrainFeaturesWatcher = WatcherFactory.ForNetCollection(location.largeTerrainFeatures);
             this.NpcsWatcher = WatcherFactory.ForNetCollection(location.characters);

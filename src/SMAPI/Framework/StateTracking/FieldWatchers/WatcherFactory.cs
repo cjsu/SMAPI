@@ -12,10 +12,13 @@ namespace StardewModdingAPI.Framework.StateTracking.FieldWatchers
         /*********
         ** Public methods
         *********/
+        /****
+        ** Values
+        ****/
         /// <summary>Get a watcher which compares values using their <see cref="object.Equals(object)"/> method. This method should only be used when <see cref="ForEquatable{T}"/> won't work, since this doesn't validate whether they're comparable.</summary>
         /// <typeparam name="T">The value type.</typeparam>
         /// <param name="getValue">Get the current value.</param>
-        public static ComparableWatcher<T> ForGenericEquality<T>(Func<T> getValue) where T : struct
+        public static IValueWatcher<T> ForGenericEquality<T>(Func<T> getValue) where T : struct
         {
             return new ComparableWatcher<T>(getValue, new GenericEqualsComparer<T>());
         }
@@ -23,7 +26,7 @@ namespace StardewModdingAPI.Framework.StateTracking.FieldWatchers
         /// <summary>Get a watcher for an <see cref="IEquatable{T}"/> value.</summary>
         /// <typeparam name="T">The value type.</typeparam>
         /// <param name="getValue">Get the current value.</param>
-        public static ComparableWatcher<T> ForEquatable<T>(Func<T> getValue) where T : IEquatable<T>
+        public static IValueWatcher<T> ForEquatable<T>(Func<T> getValue) where T : IEquatable<T>
         {
             return new ComparableWatcher<T>(getValue, new EquatableComparer<T>());
         }
@@ -31,15 +34,27 @@ namespace StardewModdingAPI.Framework.StateTracking.FieldWatchers
         /// <summary>Get a watcher which detects when an object reference changes.</summary>
         /// <typeparam name="T">The value type.</typeparam>
         /// <param name="getValue">Get the current value.</param>
-        public static ComparableWatcher<T> ForReference<T>(Func<T> getValue)
+        public static IValueWatcher<T> ForReference<T>(Func<T> getValue)
         {
             return new ComparableWatcher<T>(getValue, new ObjectReferenceComparer<T>());
         }
 
+        /// <summary>Get a watcher for a net collection.</summary>
+        /// <typeparam name="T">The value type.</typeparam>
+        /// <typeparam name="TSelf">The net field instance type.</typeparam>
+        /// <param name="field">The net collection.</param>
+        public static IValueWatcher<T> ForNetValue<T, TSelf>(NetFieldBase<T, TSelf> field) where TSelf : NetFieldBase<T, TSelf>
+        {
+            return new NetValueWatcher<T, TSelf>(field);
+        }
+
+        /****
+        ** Collections
+        ****/
         /// <summary>Get a watcher which detects when an object reference in a collection changes.</summary>
         /// <typeparam name="T">The value type.</typeparam>
         /// <param name="collection">The observable collection.</param>
-        public static ComparableListWatcher<T> ForReferenceList<T>(ICollection<T> collection)
+        public static ICollectionWatcher<T> ForReferenceList<T>(ICollection<T> collection)
         {
             return new ComparableListWatcher<T>(collection, new ObjectReferenceComparer<T>());
         }
@@ -47,24 +62,22 @@ namespace StardewModdingAPI.Framework.StateTracking.FieldWatchers
         /// <summary>Get a watcher for an observable collection.</summary>
         /// <typeparam name="T">The value type.</typeparam>
         /// <param name="collection">The observable collection.</param>
-        public static ObservableCollectionWatcher<T> ForObservableCollection<T>(ObservableCollection<T> collection)
+        public static ICollectionWatcher<T> ForObservableCollection<T>(ObservableCollection<T> collection)
         {
             return new ObservableCollectionWatcher<T>(collection);
         }
 
-        /// <summary>Get a watcher for a net collection.</summary>
+        /// <summary>Get a watcher for a collection that never changes.</summary>
         /// <typeparam name="T">The value type.</typeparam>
-        /// <typeparam name="TSelf">The net field instance type.</typeparam>
-        /// <param name="field">The net collection.</param>
-        public static NetValueWatcher<T, TSelf> ForNetValue<T, TSelf>(NetFieldBase<T, TSelf> field) where TSelf : NetFieldBase<T, TSelf>
+        public static ICollectionWatcher<T> ForImmutableCollection<T>()
         {
-            return new NetValueWatcher<T, TSelf>(field);
+            return ImmutableCollectionWatcher<T>.Instance;
         }
 
         /// <summary>Get a watcher for a net collection.</summary>
         /// <typeparam name="T">The value type.</typeparam>
         /// <param name="collection">The net collection.</param>
-        public static NetCollectionWatcher<T> ForNetCollection<T>(NetCollection<T> collection) where T : class, INetObject<INetSerializable>
+        public static ICollectionWatcher<T> ForNetCollection<T>(NetCollection<T> collection) where T : class, INetObject<INetSerializable>
         {
             return new NetCollectionWatcher<T>(collection);
         }
