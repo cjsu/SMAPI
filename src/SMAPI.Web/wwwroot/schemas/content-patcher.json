@@ -344,7 +344,7 @@
         "Condition": {
             "type": "object",
             "additionalProperties": {
-                "type": "string"
+                "type": [ "boolean", "string" ]
             }
         },
         "Rectangle": {
