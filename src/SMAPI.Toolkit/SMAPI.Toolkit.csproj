@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.9" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.12" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="Pathoschild.Http.FluentClient" Version="3.3.1" />
     <PackageReference Include="System.Management" Version="4.5.0" Condition="'$(OS)' == 'Windows_NT'" />
