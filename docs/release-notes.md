@@ -18,7 +18,7 @@ For players:
 
 For modders:
 * **New event system.**  
-  SMAPI 3.0 removes the deprecated static events in favor of the new `helper.Events` API. The event engine has been rewritten to make events more efficient, add events that weren't possible before, make existing events more useful, and make event usage and behavior more consistent.
+  SMAPI 3.0 removes the deprecated static events in favor of the new `helper.Events` API. The event engine has been rewritten to make events more efficient, add events that weren't possible before, make existing events more useful, and make event usage and behavior more consistent. When a mod makes changes in an event handler, those changes are now also reflected in the next event raise.
 
 * **Improved mod build package.**  
   The [mod build package](https://www.nuget.org/packages/Pathoschild.Stardew.ModBuildConfig) has been improved to include the `assets` folder by default if present, support the new `.csproj` project format, enable mod `.pdb` files automatically (to provide line numbers in error messages), add optional Harmony support, and fix some bugs and edge cases. This also adds compatibility with SMAPI 3.0 and Stardew Valley 1.4, and drops support for older versions.
@@ -30,7 +30,7 @@ For modders:
   SMAPI now automatically detects when it's running on Android, and updates the `Constants.TargetPlatform` for mods to use.
 
 * **Improved asset propagation.**  
-  SMAPI now automatically propagates content changes for farm animal data, critter textures, and `DayTimeMoneyBox` buttons.
+  SMAPI now automatically propagates content changes for farm animal data, critter textures, and `DayTimeMoneyBox` buttons. It also sets the `Texture2D.Name` field to the loaded asset key for all image assets, so mods can check which asset a texture was loaded for.
 
 * **Breaking changes:**  
   See _[migrate to SMAPI 3.0](https://stardewvalleywiki.com/Modding:Migrate_to_SMAPI_3.0)_ for more info.
@@ -95,17 +95,19 @@ For modders:
   * Added `IContentPack.HasFile`, `Context.IsGameLaunched`, and `SemanticVersion.TryParse`.
   * Added separate `LogNetworkTraffic` option to make verbose logging less overwhelmingly verbose.
   * Added asset propagation for `Data\FarmAnimals`, critter textures, and `DayTimeMoneyBox` buttons.
+  * Added `Texture2D.Name` values set to the asset key.
   * `this.Monitor.Log` now defaults to the `Trace` log level instead of `Debug`.
   * `Constants.TargetPlatform` now returns `Android` when playing on an Android device.
   * Trace logs for a broken mod now list all detected issues (instead of the first one).
   * Trace logs when loading mods are now more clear.
   * Clarified update-check errors for mods with multiple update keys.
-  * Fixed custom maps loaded from `.xnb` files not having their tilesheet paths automatically adjusted.
-  * Fixed custom maps loaded from the mod folder with tilesheets in a subfolder not working crossplatform. All tilesheet paths are now normalized for the OS automatically.
   * Updated dependencies (including Json.NET 11.0.2 → 12.0.2 and Mono.Cecil 0.10.1 → 0.11).
 * Fixes:
+  * Fixed custom maps loaded from `.xnb` files not having their tilesheet paths automatically adjusted.
+  * Fixed custom maps loaded from the mod folder with tilesheets in a subfolder not working crossplatform. All tilesheet paths are now normalized for the OS automatically.
   * Fixed issue where mod changes weren't tracked correctly for raising events in some cases. Events now reflect a frozen snapshot of the game state, and any mod changes are reflected in the next event tick.
   * Fixed issue where, when a mod's `IAssetEditor` uses `asset.ReplaceWith` on a texture asset while playing in non-English, any changes from that point won't affect subsequent cached asset loads.
+  * Fixed asset propagation for NPC portraits resetting any unique portraits (e.g. Maru's hospital portrait) to the default.
   * Fixed `LoadStageChanged` event not raising correct flags in some cases when creating a new save.
   * Fixed 'location list changed' verbose log not correctly listing changes.
   * Fixed mods able to directly load (and in some cases edit) a different mod's local assets using internal asset key forwarding.

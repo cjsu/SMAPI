@@ -507,6 +507,7 @@ namespace StardewModdingAPI.Metadata
             // find matches
             TAnimal[] animals = this.GetCharacters()
                 .OfType<TAnimal>()
+                .Where(p => key == this.GetNormalizedPath(p.Sprite?.Texture?.Name))
                 .ToArray();
             if (!animals.Any())
                 return false;
@@ -587,7 +588,7 @@ namespace StardewModdingAPI.Metadata
                     let locCritters = this.Reflection.GetField<List<Critter>>(location, "critters").GetValue()
                     where locCritters != null
                     from Critter critter in locCritters
-                    where this.GetNormalizedPath(critter.sprite.textureName) == key
+                    where this.GetNormalizedPath(critter.sprite?.Texture?.Name) == key
                     select critter
                 )
                 .ToArray();
@@ -673,7 +674,7 @@ namespace StardewModdingAPI.Metadata
             // get NPCs
             HashSet<string> lookup = new HashSet<string>(keys, StringComparer.InvariantCultureIgnoreCase);
             NPC[] characters = this.GetCharacters()
-                .Where(npc => npc.Sprite != null && lookup.Contains(this.GetNormalizedPath(npc.Sprite.textureName.Value)))
+                .Where(npc => npc.Sprite != null && lookup.Contains(this.GetNormalizedPath(npc.Sprite?.Texture?.Name)))
                 .ToArray();
             if (!characters.Any())
                 return 0;
@@ -697,34 +698,21 @@ namespace StardewModdingAPI.Metadata
         {
             // get NPCs
             HashSet<string> lookup = new HashSet<string>(keys, StringComparer.InvariantCultureIgnoreCase);
-            var villagers =
-                (
-                    from npc in this.GetCharacters()
-                    where npc.isVillager()
-                    let textureKey = this.GetNormalizedPath($"Portraits\\{this.getTextureName(npc)}")
-                    where lookup.Contains(textureKey)
-                    select new { npc, textureKey }
-                )
+            var villagers = this
+                .GetCharacters()
+                .Where(npc => npc.isVillager() && lookup.Contains(this.GetNormalizedPath(npc.Portrait?.Name)))
                 .ToArray();
             if (!villagers.Any())
                 return 0;
 
             // update portrait
             int reloaded = 0;
-            foreach (var entry in villagers)
+            foreach (NPC npc in villagers)
             {
-                entry.npc.resetPortrait();
-                entry.npc.Portrait = content.Load<Texture2D>(entry.textureKey);
+                npc.Portrait = content.Load<Texture2D>(npc.Portrait.Name);
                 reloaded++;
             }
             return reloaded;
-        }
-
-        private string getTextureName(NPC npc)
-        {
-            string name = npc.Name;
-            string str = name == "Old Mariner" ? "Mariner" : (name == "Dwarf King" ? "DwarfKing" : (name == "Mister Qi" ? "MrQi" : (name == "???" ? "Monsters\\Shadow Guy" : name)));
-            return str;
         }
 
         /// <summary>Reload tree textures.</summary>

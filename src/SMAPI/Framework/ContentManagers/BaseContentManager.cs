@@ -6,6 +6,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using StardewModdingAPI.Framework.Content;
 using StardewModdingAPI.Framework.Exceptions;
 using StardewModdingAPI.Framework.Reflection;
@@ -264,6 +265,11 @@ namespace StardewModdingAPI.Framework.ContentManagers
         /// <param name="language">The language code for which to inject the asset.</param>
         protected virtual void Inject<T>(string assetName, T value, LanguageCode language)
         {
+            // track asset key
+            if (value is Texture2D texture)
+                texture.Name = assetName;
+
+            // cache asset
             assetName = this.AssertAndNormalizeAssetName(assetName);
             this.Cache[assetName] = value;
         }
