@@ -632,27 +632,18 @@ namespace StardewModdingAPI.Metadata
         /// <returns>Returns whether any NPCs were affected.</returns>
         private bool ReloadNpcDispositions(LocalizedContentManager content, string key)
         {
-            IDictionary<string, string> dispositions = content.Load<Dictionary<string, string>>(key);
+            IDictionary<string, string> data = content.Load<Dictionary<string, string>>(key);
+            bool changed = false;
             foreach (NPC character in this.GetCharacters())
             {
-                if (!character.isVillager() || !dispositions.ContainsKey(character.Name))
-                    continue;
-
-                NPC clone = new NPC(null, character.Position, character.DefaultMap, character.FacingDirection, character.Name, null, character.Portrait, eventActor: false);
-                character.Age = clone.Age;
-                character.Manners = clone.Manners;
-                character.SocialAnxiety = clone.SocialAnxiety;
-                character.Optimism = clone.Optimism;
-                character.Gender = clone.Gender;
-                character.datable.Value = clone.datable.Value;
-                character.homeRegion = clone.homeRegion;
-                character.Birthday_Season = clone.Birthday_Season;
-                character.Birthday_Day = clone.Birthday_Day;
-                character.id = clone.id;
-                character.displayName = clone.displayName;
+                if (character.isVillager() && data.ContainsKey(character.Name))
+                {
+                    character.reloadData();
+                    changed = true;
+                }
             }
 
-            return true;
+            return changed;
         }
 
         /// <summary>Reload the sprites for matching NPCs.</summary>
