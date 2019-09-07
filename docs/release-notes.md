@@ -58,7 +58,7 @@ These changes have not been released yet.
   * Added support for content pack translations.
   * Added fields and methods: `IContentPack.HasFile`, `Context.IsGameLaunched`, and `SemanticVersion.TryParse`.
   * Added separate `LogNetworkTraffic` option to make verbose logging less overwhelmingly verbose.
-  * Added asset propagation for critter textures and `DayTimeMoneyBox` buttons.
+  * Added asset propagation for `Data\FarmAnimals`, critter textures, and `DayTimeMoneyBox` buttons.
   * `this.Monitor.Log` now defaults to the `Trace` log level instead of `Debug`.
   * `Constants.TargetPlatform` now returns `Android` when playing on an Android device.
   * The installer now recognises custom game paths stored in `stardewvalley.targets`, if any.

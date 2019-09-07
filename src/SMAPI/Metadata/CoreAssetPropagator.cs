@@ -231,6 +231,9 @@ namespace StardewModdingAPI.Metadata
                     CraftingRecipe.craftingRecipes = content.Load<Dictionary<string, string>>(key);
                     return true;
 
+                case "data\\farmanimals": // FarmAnimal constructor
+                    return this.ReloadFarmAnimalData();
+
                 case "data\\npcdispositions": // NPC constructor
                     return this.ReloadNpcDispositions(content, key);
 
@@ -597,6 +600,21 @@ namespace StardewModdingAPI.Metadata
                 this.SetSpriteTexture(entry.sprite, texture);
 
             return critters.Length;
+        }
+
+        /// <summary>Reload the data for matching farm animals.</summary>
+        /// <returns>Returns whether any farm animals were affected.</returns>
+        /// <remarks>Derived from the <see cref="FarmAnimal"/> constructor.</remarks>
+        private bool ReloadFarmAnimalData()
+        {
+            bool changed = false;
+            foreach (FarmAnimal animal in this.GetFarmAnimals())
+            {
+                animal.reloadData();
+                changed = true;
+            }
+
+            return changed;
         }
 
         /// <summary>Reload the sprites for a fence type.</summary>
