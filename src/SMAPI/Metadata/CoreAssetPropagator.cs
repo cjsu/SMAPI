@@ -24,8 +24,8 @@ namespace StardewModdingAPI.Metadata
         /*********
         ** Fields
         *********/
-        /// <summary>Normalizes an asset key to match the cache key.</summary>
-        private readonly Func<string, string> GetNormalizedPath;
+        /// <summary>Normalizes an asset key to match the cache key and assert that it's valid.</summary>
+        private readonly Func<string, string> AssertAndNormalizeAssetName;
 
         /// <summary>Simplifies access to private game code.</summary>
         private readonly Reflector Reflection;
@@ -51,12 +51,12 @@ namespace StardewModdingAPI.Metadata
         ** Public methods
         *********/
         /// <summary>Initialize the core asset data.</summary>
-        /// <param name="getNormalizedPath">Normalizes an asset key to match the cache key.</param>
+        /// <param name="assertAndNormalizeAssetName">Normalizes an asset key to match the cache key and assert that it's valid.</param>
         /// <param name="reflection">Simplifies access to private code.</param>
         /// <param name="monitor">Encapsulates monitoring and logging.</param>
-        public CoreAssetPropagator(Func<string, string> getNormalizedPath, Reflector reflection, IMonitor monitor)
+        public CoreAssetPropagator(Func<string, string> assertAndNormalizeAssetName, Reflector reflection, IMonitor monitor)
         {
-            this.GetNormalizedPath = getNormalizedPath;
+            this.AssertAndNormalizeAssetName = assertAndNormalizeAssetName;
             this.Reflection = reflection;
             this.Monitor = monitor;
         }
@@ -112,7 +112,7 @@ namespace StardewModdingAPI.Metadata
         /// <returns>Returns whether an asset was loaded. The return value may be true or false, or a non-null value for true.</returns>
         private bool PropagateOther(LocalizedContentManager content, string key, Type type)
         {
-            key = this.GetNormalizedPath(key);
+            key = this.AssertAndNormalizeAssetName(key);
 
             /****
             ** Special case: current map tilesheet
@@ -123,7 +123,7 @@ namespace StardewModdingAPI.Metadata
             {
                 foreach (TileSheet tilesheet in Game1.currentLocation.map.TileSheets)
                 {
-                    if (this.GetNormalizedPath(tilesheet.ImageSource) == key)
+                    if (this.NormalizeAssetNameIgnoringEmpty(tilesheet.ImageSource) == key)
                         Game1.mapDisplayDevice.LoadTileSheet(tilesheet);
                 }
             }
@@ -136,7 +136,7 @@ namespace StardewModdingAPI.Metadata
                 bool anyChanged = false;
                 foreach (GameLocation location in this.GetLocations())
                 {
-                    if (!string.IsNullOrWhiteSpace(location.mapPath.Value) && this.GetNormalizedPath(location.mapPath.Value) == key)
+                    if (!string.IsNullOrWhiteSpace(location.mapPath.Value) && this.NormalizeAssetNameIgnoringEmpty(location.mapPath.Value) == key)
                     {
                         // general updates
                         location.reloadMap();
@@ -507,7 +507,7 @@ namespace StardewModdingAPI.Metadata
             // find matches
             TAnimal[] animals = this.GetCharacters()
                 .OfType<TAnimal>()
-                .Where(p => key == this.GetNormalizedPath(p.Sprite?.Texture?.Name))
+                .Where(p => key == this.NormalizeAssetNameIgnoringEmpty(p.Sprite?.Texture?.Name))
                 .ToArray();
             if (!animals.Any())
                 return false;
@@ -588,7 +588,7 @@ namespace StardewModdingAPI.Metadata
                     let locCritters = this.Reflection.GetField<List<Critter>>(location, "critters").GetValue()
                     where locCritters != null
                     from Critter critter in locCritters
-                    where this.GetNormalizedPath(critter.sprite?.Texture?.Name) == key
+                    where this.NormalizeAssetNameIgnoringEmpty(critter.sprite?.Texture?.Name) == key
                     select critter
                 )
                 .ToArray();
@@ -653,11 +653,11 @@ namespace StardewModdingAPI.Metadata
         {
             IDictionary<string, string> data = content.Load<Dictionary<string, string>>(key);
             bool changed = false;
-            foreach (NPC character in this.GetCharacters())
+            foreach (NPC npc in this.GetCharacters())
             {
-                if (character.isVillager() && data.ContainsKey(character.Name))
+                if (npc.isVillager() && data.ContainsKey(npc.Name))
                 {
-                    character.reloadData();
+                    npc.reloadData();
                     changed = true;
                 }
             }
@@ -674,7 +674,7 @@ namespace StardewModdingAPI.Metadata
             // get NPCs
             HashSet<string> lookup = new HashSet<string>(keys, StringComparer.InvariantCultureIgnoreCase);
             NPC[] characters = this.GetCharacters()
-                .Where(npc => npc.Sprite != null && lookup.Contains(this.GetNormalizedPath(npc.Sprite?.Texture?.Name)))
+                .Where(npc => npc.Sprite != null && lookup.Contains(this.NormalizeAssetNameIgnoringEmpty(npc.Sprite?.Texture?.Name)))
                 .ToArray();
             if (!characters.Any())
                 return 0;
@@ -700,7 +700,7 @@ namespace StardewModdingAPI.Metadata
             HashSet<string> lookup = new HashSet<string>(keys, StringComparer.InvariantCultureIgnoreCase);
             var villagers = this
                 .GetCharacters()
-                .Where(npc => npc.isVillager() && lookup.Contains(this.GetNormalizedPath(npc.Portrait?.Name)))
+                .Where(npc => npc.isVillager() && lookup.Contains(this.NormalizeAssetNameIgnoringEmpty(npc.Portrait?.Name)))
                 .ToArray();
             if (!villagers.Any())
                 return 0;
@@ -849,12 +849,25 @@ namespace StardewModdingAPI.Metadata
             }
         }
 
+        /// <summary>Normalize an asset key to match the cache key and assert that it's valid, but don't raise an error for null or empty values.</summary>
+        /// <param name="path">The asset key to normalize.</param>
+        private string NormalizeAssetNameIgnoringEmpty(string path)
+        {
+            if (string.IsNullOrWhiteSpace(path))
+                return null;
+
+            return this.AssertAndNormalizeAssetName(path);
+        }
+
         /// <summary>Get whether a key starts with a substring after the substring is normalized.</summary>
         /// <param name="key">The key to check.</param>
         /// <param name="rawSubstring">The substring to normalize and find.</param>
         private bool KeyStartsWith(string key, string rawSubstring)
         {
-            return key.StartsWith(this.GetNormalizedPath(rawSubstring), StringComparison.InvariantCultureIgnoreCase);
+            if (string.IsNullOrWhiteSpace(key) || string.IsNullOrWhiteSpace(rawSubstring))
+                return false;
+
+            return key.StartsWith(this.NormalizeAssetNameIgnoringEmpty(rawSubstring), StringComparison.InvariantCultureIgnoreCase);
         }
 
         /// <summary>Get whether a normalized asset key is in the given folder.</summary>
