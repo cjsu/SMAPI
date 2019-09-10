@@ -30,7 +30,7 @@ For modders:
   SMAPI now automatically detects when it's running on Android, and updates the `Constants.TargetPlatform` for mods to use.
 
 * **Improved asset propagation.**  
-  SMAPI now automatically propagates content changes for farm animal data, critter textures, and `DayTimeMoneyBox` buttons. It also sets the `Texture2D.Name` field to the loaded asset key for all image assets, so mods can check which asset a texture was loaded for.
+  SMAPI now automatically propagates asset changes for farm animal data, NPC default location data, critter textures, and `DayTimeMoneyBox` buttons. Every loaded texture now also has a `Name` field so mods can check which asset a texture was loaded for.
 
 * **Breaking changes:**  
   See _[migrate to SMAPI 3.0](https://stardewvalleywiki.com/Modding:Migrate_to_SMAPI_3.0)_ for more info.
@@ -108,6 +108,7 @@ For modders:
   * Fixed issue where mod changes weren't tracked correctly for raising events in some cases. Events now reflect a frozen snapshot of the game state, and any mod changes are reflected in the next event tick.
   * Fixed issue where, when a mod's `IAssetEditor` uses `asset.ReplaceWith` on a texture asset while playing in non-English, any changes from that point won't affect subsequent cached asset loads.
   * Fixed asset propagation for NPC portraits resetting any unique portraits (e.g. Maru's hospital portrait) to the default.
+  * Fixed changes to `Data\NPCDispositions` not always propagated correctly to existing NPCs.
   * Fixed `LoadStageChanged` event not raising correct flags in some cases when creating a new save.
   * Fixed 'location list changed' verbose log not correctly listing changes.
   * Fixed mods able to directly load (and in some cases edit) a different mod's local assets using internal asset key forwarding.
