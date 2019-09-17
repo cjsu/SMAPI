@@ -1,5 +1,4 @@
 using Android.App;
-using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 using Android.Provider;
@@ -7,17 +6,12 @@ using Android.Runtime;
 using Android.Support.V4.App;
 using Android.Support.V4.Content;
 using Android.Views;
-using Google.Android.Vending.Expansion.Downloader;
 using Google.Android.Vending.Licensing;
-using Java.Lang;
-using Java.Util;
 using System;
 using System.Collections.Generic;
 using StardewModdingAPI.Framework;
 using StardewValley;
-using Android.Widget;
 using System.Reflection;
-using Microsoft.Xna.Framework;
 using Android.Content.Res;
 
 namespace StardewModdingAPI

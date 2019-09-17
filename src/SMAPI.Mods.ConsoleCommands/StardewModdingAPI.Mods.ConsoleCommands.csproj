@@ -81,6 +81,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SMAPI\StardewModdingAPI.csproj">
+      <Project>{9898b56e-51eb-40cf-8b1f-aceb4b6397a7}</Project>
+      <Name>StardewModdingAPI</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\build\common.targets" />
 </Project>
