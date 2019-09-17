@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using StardewValley;
 
 namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.Player
@@ -60,12 +60,13 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.Player
             }
         }
 
+
         /// <summary>Perform any logic needed on update tick.</summary>
         /// <param name="monitor">Writes messages to the console and log file.</param>
         public override void Update(IMonitor monitor)
         {
             if (this.InfiniteMoney)
-                Game1.player.money = 999999;
+                Game1.player.Money = 999999;
         }
     }
 }
