@@ -5,20 +5,18 @@
   creates the build package in the bin\Packages folder.
   
   -->
-  <Target Name="AfterBuild">
+  <Target Name="PrepareInstaller" AfterTargets="AfterBuild">
     <PropertyGroup>
       <RootPath>$(SolutionDir)\..</RootPath>
       <CompiledRootPath>$(RootPath)\bin\$(Configuration)</CompiledRootPath>
       <CompiledSmapiPath>$(CompiledRootPath)\SMAPI</CompiledSmapiPath>
       <CompiledToolkitPath>$(CompiledRootPath)\SMAPI.Toolkit\net4.5</CompiledToolkitPath>
+      <CompiledModsPath>$(CompiledRootPath)\Mods</CompiledModsPath>
       <PackagePath>$(SolutionDir)\..\bin\SMAPI installer</PackagePath>
       <PackageDevPath>$(SolutionDir)\..\bin\SMAPI installer for developers</PackageDevPath>
       <PlatformName>windows</PlatformName>
       <PlatformName Condition="$(OS) != 'Windows_NT'">unix</PlatformName>
     </PropertyGroup>
-    <ItemGroup>
-      <CompiledMods Include="$(SolutionDir)\..\bin\$(Configuration)\Mods\**\*.*" />
-    </ItemGroup>
 
     <!-- reset package directory -->
     <RemoveDir Directories="$(PackagePath)" />
@@ -48,11 +46,18 @@
     <Copy SourceFiles="$(CompiledToolkitPath)\StardewModdingAPI.Toolkit.CoreInterfaces.dll" DestinationFolder="$(PackagePath)\bundle\smapi-internal" />
     <Copy SourceFiles="$(CompiledToolkitPath)\StardewModdingAPI.Toolkit.CoreInterfaces.pdb" DestinationFolder="$(PackagePath)\bundle\smapi-internal" />
     <Copy SourceFiles="$(CompiledToolkitPath)\StardewModdingAPI.Toolkit.CoreInterfaces.xml" DestinationFolder="$(PackagePath)\bundle\smapi-internal" />
-    <Copy SourceFiles="@(CompiledMods)" DestinationFolder="$(PackagePath)\bundle\Mods\%(RecursiveDir)" />
     <Copy Condition="$(OS) != 'Windows_NT'" SourceFiles="$(TargetDir)\unix-launcher.sh" DestinationFiles="$(PackagePath)\bundle\StardewModdingAPI" />
     <Copy Condition="$(OS) != 'Windows_NT'" SourceFiles="$(CompiledSmapiPath)\System.Numerics.dll" DestinationFolder="$(PackagePath)\bundle\smapi-internal" />
     <Copy Condition="$(OS) != 'Windows_NT'" SourceFiles="$(CompiledSmapiPath)\System.Runtime.Caching.dll" DestinationFolder="$(PackagePath)\bundle\smapi-internal" />
     <Copy Condition="$(OS) == 'Windows_NT'" SourceFiles="$(TargetDir)\windows-exe-config.xml" DestinationFiles="$(PackagePath)\bundle\StardewModdingAPI.exe.config" />
+
+    <!--copy bundled mods-->
+    <Copy SourceFiles="$(CompiledModsPath)\ConsoleCommands\ConsoleCommands.dll" DestinationFolder="$(PackagePath)\bundle\Mods\ConsoleCommands" />
+    <Copy SourceFiles="$(CompiledModsPath)\ConsoleCommands\ConsoleCommands.pdb" DestinationFolder="$(PackagePath)\bundle\Mods\ConsoleCommands" />
+    <Copy SourceFiles="$(CompiledModsPath)\ConsoleCommands\manifest.json" DestinationFolder="$(PackagePath)\bundle\Mods\ConsoleCommands" />
+    <Copy SourceFiles="$(CompiledModsPath)\SaveBackup\SaveBackup.dll" DestinationFolder="$(PackagePath)\bundle\Mods\SaveBackup" />
+    <Copy SourceFiles="$(CompiledModsPath)\SaveBackup\SaveBackup.pdb" DestinationFolder="$(PackagePath)\bundle\Mods\SaveBackup" />
+    <Copy SourceFiles="$(CompiledModsPath)\SaveBackup\manifest.json" DestinationFolder="$(PackagePath)\bundle\Mods\SaveBackup" />
 
     <!-- fix errors on Linux/Mac (sample: https://log.smapi.io/mMdFUpgB) -->
     <Copy Condition="$(OS) != 'Windows_NT'" SourceFiles="$(RootPath)\build\lib\System.Numerics.dll" DestinationFolder="$(PackagePath)\bundle\smapi-internal" />

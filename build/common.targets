@@ -39,6 +39,11 @@
   <Choose>
     <When Condition="'$(MSBuildProjectName)' == 'StardewModdingAPI' OR '$(MSBuildProjectName)' == 'StardewModdingAPI.Mods.ConsoleCommands' OR '$(MSBuildProjectName)' == 'StardewModdingAPI.Mods.SaveBackup' OR '$(MSBuildProjectName)' == 'StardewModdingAPI.Tests'">
       <!-- Windows -->
+      <PropertyGroup>
+        <!--recognise XNA Framework DLLs in the GAC-->
+        <AssemblySearchPaths>$(AssemblySearchPaths);{GAC}</AssemblySearchPaths>
+      </PropertyGroup>
+
       <ItemGroup Condition="$(OS) == 'Windows_NT'">
         <Reference  Include="Stardew Valley">
           <HintPath>$(GamePath)\Stardew Valley.exe</HintPath>
@@ -93,12 +98,12 @@
   </Choose>
 
   <!-- if game path is invalid, show one user-friendly error instead of a slew of reference errors -->
-  <Target Name="BeforeBuild">
+  <Target Name="ValidateInstallPath" AfterTargets="BeforeBuild">
     <Error Condition="!Exists('$(GamePath)')" Text="Failed to find the game install path automatically; edit the *.csproj file and manually add a &lt;GamePath&gt; setting with the full directory path containing the Stardew Valley executable." />
   </Target>
 
   <!-- copy files into game directory and enable debugging -->
-  <Target Name="AfterBuild">
+  <Target Name="CopySmapiFiles" AfterTargets="AfterBuild">
     <CallTarget Targets="CopySMAPI;CopyDefaultMods" />
   </Target>
   <Target Name="CopySMAPI" Condition="'$(MSBuildProjectName)' == 'StardewModdingAPI'">

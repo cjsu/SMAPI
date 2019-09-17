@@ -139,7 +139,7 @@ namespace StardewModdingAPI.Framework.ContentManagers
                         throw GetContentError($"can't read unpacked map file directly from the underlying content manager. It must be loaded through the mod's {typeof(IModHelper)}.{nameof(IModHelper.Content)} helper.");
 
                     default:
-                        throw GetContentError($"unknown file extension '{file.Extension}'; must be one of '.png', '.tbin', or '.xnb'.");
+                        throw GetContentError($"unknown file extension '{file.Extension}'; must be one of '.json', '.png', '.tbin', or '.xnb'.");
                 }
             }
             catch (Exception ex) when (!(ex is SContentLoadException))

@@ -78,7 +78,7 @@ namespace StardewModdingAPI.Framework
         /// <summary>Log a message for the player or developer.</summary>
         /// <param name="message">The message to log.</param>
         /// <param name="level">The log severity level.</param>
-        public void Log(string message, LogLevel level = LogLevel.Debug)
+        public void Log(string message, LogLevel level = LogLevel.Trace)
         {
             this.LogImpl(this.Source, message, (ConsoleLogLevel)level);
         }

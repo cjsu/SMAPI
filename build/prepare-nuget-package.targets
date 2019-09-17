@@ -5,7 +5,7 @@
   package files to the bin\Pathoschild.Stardew.ModBuildConfig folder.
   
   -->
-  <Target Name="AfterBuild">
+  <Target Name="PreparePackage" AfterTargets="AfterBuild">
     <PropertyGroup>
       <PackagePath>$(SolutionDir)\..\bin\Pathoschild.Stardew.ModBuildConfig</PackagePath>
     </PropertyGroup>

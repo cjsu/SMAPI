@@ -6,9 +6,9 @@
     ViewData["Title"] = "SMAPI";
 }
 @section Head {
-    <link rel="stylesheet" href="~/Content/css/index.css?r=20180615" />
+    <link rel="stylesheet" href="~/Content/css/index.css?r=20190620" />
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" crossorigin="anonymous"></script>
-    <script src="~/Content/js/index.js?r=20180615"></script>
+    <script src="~/Content/js/index.js?r=20190620"></script>
 }
 
 <p id="blurb">
@@ -79,27 +79,32 @@ else
     <p>See the <a href="https://github.com/Pathoschild/SMAPI/blob/develop/docs/release-notes.md#release-notes">release notes</a> and <a href="@SiteConfig.Value.ModListUrl">mod compatibility list</a> for more info.</p>
 }
 
-<h2 id="donate">Donate to support SMAPI ♥</h2>
+<h2 id="donate">Support SMAPI ♥</h2>
 <p>
     SMAPI is an open-source project by Pathoschild. It will always be free, but donations
     are much appreciated to help pay for development, server hosting, domain fees, coffee, etc.
 </p>
-<ul id="support-links">
-    <li><a href="https://www.paypal.me/pathoschild">Donate once</a></li>
+
+<ul id="donate-links">
     <li>
-        <a href="https://www.patreon.com/pathoschild">Donate $1 per month (or more)</a><br />
-        <small>
-            You can cancel anytime. You'll have access to all private posts with behind-the-scenes
-            info, upcoming features, and early previews of SMAPI updates. You can optionally
-            provide early feedback on SMAPI features to influence development. Donate $5/month and
-            you'll be publicly credited (with optional link) below!
-        </small>
+        <a href="https://www.patreon.com/pathoschild" class="donate-button">
+            <img src="Content/images/patreon.png" /> Become a patron
+        </a>
+    </li>
+    <li>
+        <a href="https://ko-fi.com/pathoschild" class="donate-button">
+            <img src="Content/images/ko-fi.png"/> Buy me a coffee
+        </a>
+    </li>
+    <li>
+        <a href="https://www.paypal.me/pathoschild" class="donate-button">
+            <img src="Content/images/paypal.png"/> Donate via PayPal
+        </a>
     </li>
 </ul>
 
 <p>
     Special thanks to
-    acerbicon,
     <a href="https://www.nexusmods.com/stardewvalley/users/31393530">ChefRude</a>,
     <a href="https://github.com/dittusch">dittusch</a>,
     hawkfalcon,
@@ -108,7 +113,7 @@ else
     <a href="https://www.nexusmods.com/users/12252523">Karmylla</a>,
     Pucklynn,
     Robby LaFarge,
-    and a few anonymous users for their ongoing support; you're awesome! 🏅
+    and a few anonymous users for their ongoing support on Patreon; you're awesome!
 </p>
 
 <h2 id="modcreators">For mod creators</h2>

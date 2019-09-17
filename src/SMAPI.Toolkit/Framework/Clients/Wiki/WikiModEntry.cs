@@ -42,12 +42,6 @@ namespace StardewModdingAPI.Toolkit.Framework.Clients.Wiki
         /// <summary>The mod's compatibility with the latest beta version of the game (if any).</summary>
         public WikiCompatibilityInfo BetaCompatibility { get; set; }
 
-        /// <summary>Whether the mod is ready for the upcoming SMAPI 3.0.</summary>
-        public WikiSmapi3Status Smapi3Status { get; set; }
-
-        /// <summary>A URL related to the <see cref="Smapi3Status"/>.</summary>
-        public string Smapi3Url { get; set; }
-
         /// <summary>Whether a Stardew Valley or SMAPI beta which affects mod compatibility is in progress. If this is true, <see cref="BetaCompatibility"/> should be used for beta versions of SMAPI instead of <see cref="Compatibility"/>.</summary>
         public bool HasBetaInfo => this.BetaCompatibility != null;
 

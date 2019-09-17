@@ -15,7 +15,7 @@ namespace StardewModdingAPI.Web.Framework.LogParsing
         ** Fields
         *********/
         /// <summary>A regex pattern matching the start of a SMAPI message.</summary>
-        private readonly Regex MessageHeaderPattern = new Regex(@"^\[(?<time>\d\d:\d\d:\d\d) (?<level>[a-z]+) +(?<modName>[^\]]+)\] ", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private readonly Regex MessageHeaderPattern = new Regex(@"^\[(?<time>\d\d[:\.]\d\d[:\.]\d\d) (?<level>[a-z]+) +(?<modName>[^\]]+)\] ", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         /// <summary>A regex pattern matching SMAPI's initial platform info message.</summary>
         private readonly Regex InfoLinePattern = new Regex(@"^SMAPI (?<apiVersion>.+) with Stardew Valley (?<gameVersion>.+) on (?<os>.+)", RegexOptions.Compiled | RegexOptions.IgnoreCase);

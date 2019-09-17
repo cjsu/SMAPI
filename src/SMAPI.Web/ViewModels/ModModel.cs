@@ -31,12 +31,6 @@ namespace StardewModdingAPI.Web.ViewModels
         /// <summary>The compatibility status for the beta version of the game.</summary>
         public ModCompatibilityModel BetaCompatibility { get; set; }
 
-        /// <summary>Whether the mod is ready for the upcoming SMAPI 3.0.</summary>
-        public string Smapi3Status { get; set; }
-
-        /// <summary>A URL related to the <see cref="Smapi3Status"/>.</summary>
-        public string Smapi3Url { get; set; }
-
         /// <summary>Links to the available mod pages.</summary>
         public ModLinkModel[] ModPages { get; set; }
 
@@ -65,8 +59,6 @@ namespace StardewModdingAPI.Web.ViewModels
             this.SourceUrl = this.GetSourceUrl(entry);
             this.Compatibility = new ModCompatibilityModel(entry.Compatibility);
             this.BetaCompatibility = entry.BetaCompatibility != null ? new ModCompatibilityModel(entry.BetaCompatibility) : null;
-            this.Smapi3Status = entry.Smapi3Status.ToString().ToLower();
-            this.Smapi3Url = entry.Smapi3Url;
             this.ModPages = this.GetModPageUrls(entry).ToArray();
             this.Warnings = entry.Warnings;
             this.Slug = entry.Anchor;

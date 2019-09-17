@@ -127,10 +127,6 @@ namespace StardewModdingAPI.Toolkit.Framework.Clients.Wiki
                     }
                 }
 
-                // parse SMAPI 3.0 readiness status
-                WikiSmapi3Status smapi3Status = this.GetAttributeAsEnum<WikiSmapi3Status>(node, "data-smapi-3-status") ?? WikiSmapi3Status.Unknown;
-                string smapi3Url = this.GetAttribute(node, "data-smapi-3-url");
-
                 // yield model
                 yield return new WikiModEntry
                 {
@@ -146,8 +142,6 @@ namespace StardewModdingAPI.Toolkit.Framework.Clients.Wiki
                     ContentPackFor = contentPackFor,
                     Compatibility = compatibility,
                     BetaCompatibility = betaCompatibility,
-                    Smapi3Status = smapi3Status,
-                    Smapi3Url = smapi3Url,
                     Warnings = warnings,
                     Anchor = anchor
                 };

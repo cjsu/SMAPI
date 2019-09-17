@@ -46,7 +46,7 @@ namespace StardewModdingAPI.Mods.SaveBackup
             }
             catch (Exception ex)
             {
-                this.Monitor.Log($"Error backing up saves: {ex}");
+                this.Monitor.Log($"Error backing up saves: {ex}", LogLevel.Error);
             }
         }
 
@@ -87,7 +87,7 @@ namespace StardewModdingAPI.Mods.SaveBackup
                             catch (Exception ex) when (ex is TypeLoadException || ex.InnerException is TypeLoadException)
                             {
                                 // create uncompressed backup if compression fails
-                                this.Monitor.Log("Couldn't zip the save backup, creating uncompressed backup instead.");
+                                this.Monitor.Log("Couldn't zip the save backup, creating uncompressed backup instead.", LogLevel.Debug);
                                 this.Monitor.Log(ex.ToString(), LogLevel.Trace);
                                 this.RecursiveCopy(new DirectoryInfo(Constants.SavesPath), fallbackDir, copyRoot: false);
                             }
@@ -137,7 +137,7 @@ namespace StardewModdingAPI.Mods.SaveBackup
                     }
                     catch (Exception ex)
                     {
-                        this.Monitor.Log($"Error deleting old save backup '{file.Name}': {ex}");
+                        this.Monitor.Log($"Error deleting old save backup '{file.Name}': {ex}", LogLevel.Error);
                     }
                 }
             }

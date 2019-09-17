@@ -106,7 +106,25 @@ h1 {
     padding-left: 1em;
 }
 
-#support-links li small {
-    display: block;
-    width: 50em;
+#donate-links li {
+    list-style: none;
+    margin-bottom: 5px;
+}
+
+#donate-links .donate-button {
+    display: inline-block;
+    min-width: 10em;
+    background: #2A413B;
+    padding: 6px 12px;
+    font-family: Quicksand, Helvetica, Century Gothic, sans-serif;
+    text-decoration: none;
+    font-weight: 700;
+    color: #FFF;
+    border-radius: 8px;
+}
+
+#donate-links .donate-button img {
+    vertical-align: middle;
+    max-height: 15px;
+    max-width: 15px;
 }

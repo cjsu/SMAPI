@@ -1,10 +1,29 @@
 # Release notes
-## 2.11.2
-Released 22 April 2019 for Stardew Valley 1.3.36.
+## 2.11.3
+Released 13 September 2019 for Stardew Valley 1.3.36.
 
 * For players:
-  * Fixed error when a custom map references certain vanilla tilesheets on MacOS.
-  * Fixed compatibility with Arch Linux.
+  * SMAPI now prevents invalid items from breaking menus on hover.
+  * SMAPI now prevents invalid event preconditions from crashing the game (thanks to berkayylmao!).
+  * SMAPI now prevents more invalid dialogue from crashing the game.
+  * Fixed errors during early startup not shown before exit.
+  * Fixed various error messages and inconsistent spelling.
+
+* For the web UI:
+  * When filtering the mod list, clicking a mod link now automatically adds it to the visible mods.
+  * Added log parser instructions for Android.
+  * Fixed log parser failing in some cases due to time format localisation.
+
+* For modders:
+  * `this.Monitor.Log` now defaults to the `Trace` log level instead of `Debug`. The change will only take effect when you recompile the mod.
+  * Fixed 'location list changed' verbose log not correctly listing changes.
+
+## 2.11.2
+Released 23 April 2019 for Stardew Valley 1.3.36.
+
+* For players:
+  * Fixed error when a custom map references certain vanilla tilesheets on Linux/Mac.
+  * Fixed compatibility with some Linux distros.
 
 ## 2.11.1
 Released 17 March 2019 for Stardew Valley 1.3.36.
@@ -15,8 +34,10 @@ Released 17 March 2019 for Stardew Valley 1.3.36.
   * Updated mod compatibility list.
   * Fixed `world_clear` console command removing chests edited to have a debris name.
 
-* For the web UI:
+* For modders:
   * Added support for suppressing false-positive warnings in rare cases.
+
+* For the web UI:
   * The log parser now collapses redundant sections by default.
   * Fixed log parser column resize bug.
 

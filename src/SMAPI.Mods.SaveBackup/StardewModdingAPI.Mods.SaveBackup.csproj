@@ -1,57 +1,35 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{E272EB5D-8C57-417E-8E60-C1079D3F53C4}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>StardewModdingAPI.Mods.SaveBackup</RootNamespace>
     <AssemblyName>SaveBackup</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
+    <TargetFramework>net45</TargetFramework>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <LangVersion>latest</LangVersion>
+    <OutputPath>$(SolutionDir)\..\bin\$(Configuration)\Mods\SaveBackup</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>$(SolutionDir)\..\bin\Debug\Mods\SaveBackup\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>$(SolutionDir)\..\bin\Release\Mods\SaveBackup\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
+    <ProjectReference Include="..\SMAPI\StardewModdingAPI.csproj">
+      <Private>False</Private>
+    </ProjectReference>
   </ItemGroup>
+
   <ItemGroup>
     <Compile Include="..\..\build\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ModEntry.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+
   <ItemGroup>
-    <None Include="manifest.json">
+    <None Update="manifest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\StardewModdingAPI.Toolkit.CoreInterfaces\StardewModdingAPI.Toolkit.CoreInterfaces.csproj">
-      <Project>{d5cfd923-37f1-4bc3-9be8-e506e202ac28}</Project>
-      <Name>StardewModdingAPI.Toolkit.CoreInterfaces</Name>
-      <Private>False</Private>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
+  <Import Project="..\SMAPI.Internal\SMAPI.Internal.projitems" Label="Shared" />
   <Import Project="..\..\build\common.targets" />
+
 </Project>

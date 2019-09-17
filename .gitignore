@@ -26,3 +26,6 @@ _ReSharper*/
 
 # sensitive files
 appsettings.Development.json
+
+# AWS generated files
+src/SMAPI.Web/aws-beanstalk-tools-defaults.json

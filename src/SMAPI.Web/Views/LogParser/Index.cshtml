@@ -17,10 +17,10 @@
     {
         <meta name="robots" content="noindex" />
     }
-    <link rel="stylesheet" href="~/Content/css/log-parser.css?r=20190314" />
+    <link rel="stylesheet" href="~/Content/css/log-parser.css?r=20190515" />
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" crossorigin="anonymous"></script>
-    <script src="~/Content/js/log-parser.js?r=20190310"></script>
+    <script src="~/Content/js/log-parser.js?r=20190515"></script>
     <script>
         $(function() {
             smapi.logParser({
@@ -67,10 +67,20 @@ else if (Model.ParsedLog?.IsValid == true)
     <h2>Where do I find my SMAPI log?</h2>
     <div>What system do you use?</div>
     <ul id="os-list">
+        <li><input type="radio" name="os" value="android" id="os-android" /> <label for="os-android">Android</label></li>
         <li><input type="radio" name="os" value="linux" id="os-linux" /> <label for="os-linux">Linux</label></li>
         <li><input type="radio" name="os" value="mac" id="os-mac" /> <label for="os-mac">Mac</label></li>
         <li><input type="radio" name="os" value="windows" id="os-windows" /> <label for="os-windows">Windows</label></li>
     </ul>
+    <div data-os="android">
+        On Android:
+        <ol>
+            <li>Open a file app (like My Files or MT Manager).</li>
+            <li>Find the <code>StardewValley</code> folder on your internal storage.</li>
+            <li>Open the <code>ErrorLogs</code> subfolder.</li>
+            <li>The log file is <code>SMAPI-crash.txt</code> if it exists, otherwise <code>SMAPI-latest.txt</code>.</li>
+        </ol>
+    </div>
     <div data-os="linux">
         On Linux:
         <ol>

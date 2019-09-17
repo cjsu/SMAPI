@@ -20,7 +20,7 @@ namespace StardewModdingAPI
         ** Public
         ****/
         /// <summary>SMAPI's current semantic version.</summary>
-        public static ISemanticVersion ApiVersion { get; } = new Toolkit.SemanticVersion("2.11.2");
+        public static ISemanticVersion ApiVersion { get; } = new Toolkit.SemanticVersion("2.11.3");
 
         /// <summary>Android SMAPI's current semantic version.</summary>
         public static ISemanticVersion AndroidApiVersion { get; } = new Toolkit.SemanticVersion("0.9.0");

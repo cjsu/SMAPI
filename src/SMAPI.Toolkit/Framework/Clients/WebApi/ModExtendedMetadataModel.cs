@@ -40,14 +40,6 @@ namespace StardewModdingAPI.Toolkit.Framework.Clients.WebApi
         /// <summary>The custom mod page URL (if applicable).</summary>
         public string CustomUrl { get; set; }
 
-        /****
-        ** SMAPI 3.0 readiness
-        ****/
-        /// <summary>Whether the mod is ready for the upcoming SMAPI 3.0.</summary>
-        public WikiSmapi3Status Smapi3Status { get; set; }
-
-        /// <summary>A URL related to the <see cref="Smapi3Status"/>.</summary>
-        public string Smapi3Url { get; set; }
 
         /****
         ** Stable compatibility
@@ -59,6 +51,9 @@ namespace StardewModdingAPI.Toolkit.Framework.Clients.WebApi
         /// <summary>The human-readable summary of the compatibility status or workaround, without HTML formatitng.</summary>
         public string CompatibilitySummary { get; set; }
 
+        /// <summary>The game or SMAPI version which broke this mod, if applicable.</summary>
+        public string BrokeIn { get; set; }
+
 
         /****
         ** Beta compatibility
@@ -69,6 +64,9 @@ namespace StardewModdingAPI.Toolkit.Framework.Clients.WebApi
 
         /// <summary>The human-readable summary of the compatibility status or workaround for the Stardew Valley beta (if any), without HTML formatitng.</summary>
         public string BetaCompatibilitySummary { get; set; }
+
+        /// <summary>The beta game or SMAPI version which broke this mod, if applicable.</summary>
+        public string BetaBrokeIn { get; set; }
 
 
         /*********
@@ -94,14 +92,13 @@ namespace StardewModdingAPI.Toolkit.Framework.Clients.WebApi
                 this.CustomSourceUrl = wiki.CustomSourceUrl;
                 this.CustomUrl = wiki.CustomUrl;
 
-                this.Smapi3Status = wiki.Smapi3Status;
-                this.Smapi3Url = wiki.Smapi3Url;
-
                 this.CompatibilityStatus = wiki.Compatibility.Status;
                 this.CompatibilitySummary = wiki.Compatibility.Summary;
+                this.BrokeIn = wiki.Compatibility.BrokeIn;
 
                 this.BetaCompatibilityStatus = wiki.BetaCompatibility?.Status;
                 this.BetaCompatibilitySummary = wiki.BetaCompatibility?.Summary;
+                this.BetaBrokeIn = wiki.BetaCompatibility?.BrokeIn;
             }
 
             // internal DB data

@@ -132,7 +132,7 @@ namespace StardewModdingAPI.Framework
                     else
                     {
                         this.Monitor.Log(message, level);
-                        this.Monitor.Log(warning.StackTrace);
+                        this.Monitor.Log(warning.StackTrace, LogLevel.Debug);
                     }
                 }
             }

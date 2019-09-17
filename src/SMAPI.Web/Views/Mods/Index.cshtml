@@ -18,18 +18,18 @@
     </script>
 }
 
-<div id="intro">
-    <p>This page shows all known SMAPI mods and (incompatible) content packs, whether they work with the latest versions of Stardew Valley and SMAPI, and how to fix them if not. If a mod doesn't work after following the instructions below, check <a href="https://stardewvalleywiki.com/Modding:Player_Guide/Troubleshooting">the troubleshooting guide</a> or <a href="https://stardewvalleywiki.com/Modding:Player_Guide/Troubleshooting#Ask_for_help">ask for help</a>.</p>
-
-    <p>The list is updated every few days (you can help <a href="https://stardewvalleywiki.com/Modding:Mod_compatibility">update it</a>!). It doesn't include XNB mods (see <a href="https://stardewvalleywiki.com/Modding:Using_XNB_mods"><em>using XNB mods</em> on the wiki</a> instead) or compatible content packs.</p>
-
-    @if (Model.BetaVersion != null)
-    {
-        <p id="beta-blurb"><strong>Note:</strong> "SDV beta only" means Stardew Valley @Model.BetaVersion-beta; if you didn't opt in to the beta, you have the stable version and can ignore that line. If a mod doesn't have a "SDV beta only" line, the compatibility applies to both versions of the game.</p>
-    }
-</div>
-
 <div id="app">
+    <div id="intro">
+        <p>This page shows all known SMAPI mods and (incompatible) content packs, whether they work with the latest versions of Stardew Valley and SMAPI, and how to fix them if not. If a mod doesn't work after following the instructions below, check <a href="https://stardewvalleywiki.com/Modding:Player_Guide/Troubleshooting">the troubleshooting guide</a> or <a href="https://stardewvalleywiki.com/Modding:Player_Guide/Troubleshooting#Ask_for_help">ask for help</a>.</p>
+
+        <p>The list is updated every few days (you can help <a href="https://stardewvalleywiki.com/Modding:Mod_compatibility">update it</a>!). It doesn't include XNB mods (see <a href="https://stardewvalleywiki.com/Modding:Using_XNB_mods"><em>using XNB mods</em> on the wiki</a> instead) or compatible content packs.</p>
+
+        @if (Model.BetaVersion != null)
+        {
+            <p id="beta-blurb" v-show="showAdvanced"><strong>Note:</strong> "SDV @Model.BetaVersion only" lines are for an unreleased version of the game, not the stable version most players have. If a mod doesn't have that line, the info applies to both versions of the game.</p>
+        }
+    </div>
+
     <div id="options">
         <div>
             <label for="search-box">Search: </label>
@@ -47,8 +47,7 @@
     </div>
     <div id="mod-count" v-show="showAdvanced">
         <div v-if="visibleStats.total > 0">
-            {{visibleStats.total}} mods shown ({{Math.round((visibleStats.compatible + visibleStats.workaround) / visibleStats.total * 100)}}% compatible or have a workaround, {{Math.round((visibleStats.soon + visibleStats.broken) / visibleStats.total * 100)}}% broken, {{Math.round(visibleStats.abandoned / visibleStats.total * 100)}}% obsolete).<br />
-            SMAPI 3.0 (upcoming): {{Math.round(visibleStats.smapi3_ok / visibleStats.total * 100)}}% ready, {{Math.round(visibleStats.smapi3_soon / visibleStats.total * 100)}}% soon, {{Math.round(visibleStats.smapi3_broken / visibleStats.total * 100)}}% broken, {{Math.round(visibleStats.smapi3_unknown / visibleStats.total * 100)}}% unknown.
+            {{visibleStats.total}} mods shown ({{Math.round((visibleStats.compatible + visibleStats.workaround) / visibleStats.total * 100)}}% compatible or have a workaround, {{Math.round((visibleStats.soon + visibleStats.broken) / visibleStats.total * 100)}}% broken, {{Math.round(visibleStats.abandoned / visibleStats.total * 100)}}% obsolete).
         </div>
         <span v-else>No matching mods found.</span>
     </div>
@@ -61,12 +60,11 @@
                 <th>compatibility</th>
                 <th v-show="showAdvanced">broke in</th>
                 <th v-show="showAdvanced">code</th>
-                <th><small><a href="http://smapi.io/3.0">3.0 ready</a></small></th>
                 <th>&nbsp;</th>
             </tr>
         </thead>
         <tbody>
-            <tr v-for="mod in mods" :key="mod.Name" v-bind:id="mod.Slug" :key="mod.Slug" v-bind:data-status="mod.LatestCompatibility.Status" v-show="mod.Visible">
+            <tr v-for="mod in mods" :key="mod.Name" v-bind:id="mod.Slug" :key="mod.Slug" v-bind:data-status="mod.Compatibility.Status" v-show="mod.Visible">
                 <td>
                     {{mod.Name}}
                     <small class="mod-alt-names" v-if="mod.AlternateNames">(aka {{mod.AlternateNames}})</small>
@@ -82,8 +80,8 @@
                 </td>
                 <td>
                     <div v-html="mod.Compatibility.Summary"></div>
-                    <div v-if="mod.BetaCompatibility">
-                        <strong v-if="mod.BetaCompatibility">SDV beta only:</strong>
+                    <div v-if="mod.BetaCompatibility" v-show="showAdvanced">
+                        <strong v-if="mod.BetaCompatibility">SDV @Model.BetaVersion only:</strong>
                         <span v-html="mod.BetaCompatibility.Summary"></span>
                     </div>
                     <div v-for="(warning, i) in mod.Warnings">⚠ {{warning}}</div>
@@ -92,12 +90,6 @@
                 <td v-show="showAdvanced">
                     <span v-if="mod.SourceUrl"><a v-bind:href="mod.SourceUrl">source</a></span>
                     <span v-else class="mod-closed-source">no source</span>
-                </td>
-                <td class="smapi-3-col">
-                    <small v-if="mod.LatestCompatibility.Status == 'ok' || mod.LatestCompatibility.Status == 'unofficial' || mod.LatestCompatibility.Status == 'optional' || mod.Smapi3Status == 'ok' || mod.Smapi3Status == 'soon' || mod.Smapi3Url">
-                        <a v-if="mod.Smapi3Url" v-bind:href="mod.Smapi3Url" v-bind:title="mod.Smapi3Tooltip">{{mod.Smapi3DisplayText}}</a>
-                        <span v-else v-bind:title="mod.Smapi3Tooltip">{{mod.Smapi3DisplayText}}</span>
-                    </small>
                 </td>
                 <td>
                     <small><a v-bind:href="'#' + mod.Slug">#</a></small>

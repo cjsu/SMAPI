@@ -13,13 +13,16 @@ namespace StardewModdingAPI.Patches
     internal class DialogueErrorPatch : IHarmonyPatch
     {
         /*********
-        ** Private methods
+        ** Fields
         *********/
         /// <summary>Writes messages to the console and log file on behalf of the game.</summary>
         private static IMonitor MonitorForGame;
 
         /// <summary>Simplifies access to private code.</summary>
         private static Reflector Reflection;
+
+        /// <summary>Whether the <see cref="NPC.CurrentDialogue"/> getter is currently being intercepted.</summary>
+        private static bool IsInterceptingCurrentDialogue;
 
 
         /*********
@@ -46,10 +49,14 @@ namespace StardewModdingAPI.Patches
         /// <param name="harmony">The Harmony instance.</param>
         public void Apply(HarmonyInstance harmony)
         {
-            ConstructorInfo constructor = AccessTools.Constructor(typeof(Dialogue), new[] { typeof(string), typeof(NPC) });
-            MethodInfo prefix = AccessTools.Method(this.GetType(), nameof(DialogueErrorPatch.Prefix));
-
-            harmony.Patch(constructor, new HarmonyMethod(prefix), null);
+            harmony.Patch(
+                original: AccessTools.Constructor(typeof(Dialogue), new[] { typeof(string), typeof(NPC) }),
+                prefix: new HarmonyMethod(this.GetType(), nameof(DialogueErrorPatch.Before_Dialogue_Constructor))
+            );
+            harmony.Patch(
+                original: AccessTools.Property(typeof(NPC), nameof(NPC.CurrentDialogue)).GetMethod,
+                prefix: new HarmonyMethod(this.GetType(), nameof(DialogueErrorPatch.Before_NPC_CurrentDialogue))
+            );
         }
 
 
@@ -63,7 +70,7 @@ namespace StardewModdingAPI.Patches
         /// <returns>Returns whether to execute the original method.</returns>
         /// <remarks>This method must be static for Harmony to work correctly. See the Harmony documentation before renaming arguments.</remarks>
         [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Argument names are defined by Harmony.")]
-        private static bool Prefix(Dialogue __instance, string masterDialogue, NPC speaker)
+        private static bool Before_Dialogue_Constructor(Dialogue __instance, string masterDialogue, NPC speaker)
         {
             // get private members
             bool nameArraysTranslated = DialogueErrorPatch.Reflection.GetField<bool>(typeof(Dialogue), "nameArraysTranslated").GetValue();
@@ -95,6 +102,36 @@ namespace StardewModdingAPI.Patches
             }
 
             return false;
+        }
+
+        /// <summary>The method to call instead of <see cref="NPC.CurrentDialogue"/>.</summary>
+        /// <param name="__instance">The instance being patched.</param>
+        /// <param name="__result">The return value of the original method.</param>
+        /// <param name="__originalMethod">The method being wrapped.</param>
+        /// <returns>Returns whether to execute the original method.</returns>
+        /// <remarks>This method must be static for Harmony to work correctly. See the Harmony documentation before renaming arguments.</remarks>
+        [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Argument names are defined by Harmony.")]
+        private static bool Before_NPC_CurrentDialogue(NPC __instance, ref Stack<Dialogue> __result, MethodInfo __originalMethod)
+        {
+            if (DialogueErrorPatch.IsInterceptingCurrentDialogue)
+                return true;
+
+            try
+            {
+                DialogueErrorPatch.IsInterceptingCurrentDialogue = true;
+                __result = (Stack<Dialogue>)__originalMethod.Invoke(__instance, new object[0]);
+                return false;
+            }
+            catch (TargetInvocationException ex)
+            {
+                DialogueErrorPatch.MonitorForGame.Log($"Failed loading current dialogue for NPC {__instance.Name}:\n{ex.InnerException ?? ex}", LogLevel.Error);
+                __result = new Stack<Dialogue>();
+                return false;
+            }
+            finally
+            {
+                DialogueErrorPatch.IsInterceptingCurrentDialogue = false;
+            }
         }
     }
 }

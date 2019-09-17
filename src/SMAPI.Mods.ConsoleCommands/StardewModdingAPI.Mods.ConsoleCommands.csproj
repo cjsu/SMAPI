@@ -1,92 +1,35 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{28480467-1A48-46A7-99F8-236D95225359}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>StardewModdingAPI.Mods.ConsoleCommands</RootNamespace>
     <AssemblyName>ConsoleCommands</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
+    <TargetFramework>net45</TargetFramework>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <LangVersion>latest</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>$(SolutionDir)\..\bin\Debug\Mods\ConsoleCommands\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
-    <Prefer32Bit>false</Prefer32Bit>
-    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>$(SolutionDir)\..\bin\Release\Mods\ConsoleCommands\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <OutputPath>$(SolutionDir)\..\bin\$(Configuration)\Mods\ConsoleCommands</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Xml" />
+    <ProjectReference Include="..\SMAPI\StardewModdingAPI.csproj">
+      <Private>False</Private>
+    </ProjectReference>
   </ItemGroup>
+
   <ItemGroup>
     <Compile Include="..\..\build\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Framework\Commands\ArgumentParser.cs" />
-    <Compile Include="Framework\Commands\Other\ShowDataFilesCommand.cs" />
-    <Compile Include="Framework\Commands\Other\ShowGameFilesCommand.cs" />
-    <Compile Include="Framework\Commands\Other\DebugCommand.cs" />
-    <Compile Include="Framework\Commands\Player\ListItemTypesCommand.cs" />
-    <Compile Include="Framework\Commands\Player\ListItemsCommand.cs" />
-    <Compile Include="Framework\Commands\Player\AddCommand.cs" />
-    <Compile Include="Framework\Commands\Player\SetStyleCommand.cs" />
-    <Compile Include="Framework\Commands\Player\SetColorCommand.cs" />
-    <Compile Include="Framework\Commands\Player\SetMaxHealthCommand.cs" />
-    <Compile Include="Framework\Commands\Player\SetMaxStaminaCommand.cs" />
-    <Compile Include="Framework\Commands\Player\SetHealthCommand.cs" />
-    <Compile Include="Framework\Commands\Player\SetImmunityCommand.cs" />
-    <Compile Include="Framework\Commands\Player\SetStaminaCommand.cs" />
-    <Compile Include="Framework\Commands\Player\SetNameCommand.cs" />
-    <Compile Include="Framework\Commands\Player\SetMoneyCommand.cs" />
-    <Compile Include="Framework\Commands\TrainerCommand.cs" />
-    <Compile Include="Framework\Commands\World\SetMineLevelCommand.cs" />
-    <Compile Include="Framework\Commands\World\DownMineLevelCommand.cs" />
-    <Compile Include="Framework\Commands\World\ClearCommand.cs" />
-    <Compile Include="Framework\Commands\World\SetYearCommand.cs" />
-    <Compile Include="Framework\Commands\World\SetSeasonCommand.cs" />
-    <Compile Include="Framework\Commands\World\SetDayCommand.cs" />
-    <Compile Include="Framework\Commands\World\SetTimeCommand.cs" />
-    <Compile Include="Framework\Commands\World\FreezeTimeCommand.cs" />
-    <Compile Include="Framework\ItemData\ItemType.cs" />
-    <Compile Include="Framework\Commands\ITrainerCommand.cs" />
-    <Compile Include="Framework\ItemData\SearchableItem.cs" />
-    <Compile Include="Framework\ItemRepository.cs" />
-    <Compile Include="ModEntry.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+
   <ItemGroup>
-    <None Include="manifest.json">
+    <None Update="manifest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SMAPI\StardewModdingAPI.csproj">
-      <Project>{9898b56e-51eb-40cf-8b1f-aceb4b6397a7}</Project>
-      <Name>StardewModdingAPI</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
+  <Import Project="..\SMAPI.Internal\SMAPI.Internal.projitems" Label="Shared" />
   <Import Project="..\..\build\common.targets" />
+
 </Project>
