@@ -23,6 +23,8 @@
     <ProjectReference Include="..\SMAPI.Toolkit.CoreInterfaces\StardewModdingAPI.Toolkit.CoreInterfaces.csproj" />
   </ItemGroup>
 
-  <Import Project="..\..\build\common.targets" />
+  <ItemGroup>
+    <Reference Include="System.Xml" />
+  </ItemGroup>
 
 </Project>

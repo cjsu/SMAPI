@@ -34,7 +34,7 @@
   <ItemGroup>
     <Reference Include="Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=84e04ff9cfb79065, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Downloads\Stardew-Valley-v1-25_mod\unknown\assemblies\Mono.Android.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\com.chucklefish.stardewvalley_1.322\assemblies\Mono.Android.dll</HintPath>
     </Reference>
     <Reference Include="MonoGame.Framework, Version=3.7.1.189, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -88,7 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SMAPI\StardewModdingAPI.csproj">
-      <Project>{9898b56e-51eb-40cf-8b1f-aceb4b6397a7}</Project>
+      <Project>{4de03d1e-af18-4f95-abcf-4bff2ba17c96}</Project>
       <Name>StardewModdingAPI</Name>
     </ProjectReference>
   </ItemGroup>

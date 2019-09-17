@@ -12,15 +12,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SMAPI\StardewModdingAPI.csproj">
-      <Private>False</Private>
-    </ProjectReference>
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Include="..\..\build\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SMAPI\StardewModdingAPI.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,6 +28,5 @@
   </ItemGroup>
 
   <Import Project="..\SMAPI.Internal\SMAPI.Internal.projitems" Label="Shared" />
-  <Import Project="..\..\build\common.targets" />
 
 </Project>

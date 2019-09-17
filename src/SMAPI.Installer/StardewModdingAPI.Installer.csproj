@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <RootNamespace>StardewModdingAPI.Installer</RootNamespace>
@@ -39,7 +39,6 @@
   </ItemGroup>
 
   <Import Project="..\SMAPI.Internal\SMAPI.Internal.projitems" Label="Shared" />
-  <Import Project="..\..\build\common.targets" />
   <Import Project="..\..\build\prepare-install-package.targets" />
 
 </Project>

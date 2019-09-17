@@ -29,6 +29,5 @@
   </ItemGroup>
 
   <Import Project="..\SMAPI.Internal\SMAPI.Internal.projitems" Label="Shared" />
-  <Import Project="..\..\build\common.targets" />
 
 </Project>

@@ -13,6 +13,4 @@
     <Compile Include="..\..\build\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
   </ItemGroup>
 
-  <Import Project="..\..\build\common.targets" />
-
 </Project>
