@@ -18,6 +18,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SMAPI.Toolkit.CoreInterfaces\StardewModdingAPI.Toolkit.CoreInterfaces.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="StardewModdingAPI">
       <HintPath>..\SMAPI\bin\Debug\StardewModdingAPI.dll</HintPath>
     </Reference>
