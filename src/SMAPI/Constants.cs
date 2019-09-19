@@ -23,7 +23,7 @@ namespace StardewModdingAPI
         public static ISemanticVersion ApiVersion { get; } = new Toolkit.SemanticVersion("2.11.3");
 
         /// <summary>Android SMAPI's current semantic version.</summary>
-        public static ISemanticVersion AndroidApiVersion { get; } = new Toolkit.SemanticVersion("0.9.0");
+        public static ISemanticVersion AndroidApiVersion { get; } = new Toolkit.SemanticVersion("0.9.1");
 
         /// <summary>The minimum supported version of Stardew Valley.</summary>
         public static ISemanticVersion MinimumGameVersion { get; } = new GameVersion("1.3.36");
@@ -32,7 +32,7 @@ namespace StardewModdingAPI
         public static ISemanticVersion MaximumGameVersion { get; } = new GameVersion("1.3.36");
 
         /// <summary>The target game platform.</summary>
-        public static GamePlatform TargetPlatform => (GamePlatform)Constants.Platform;
+        public static GamePlatform TargetPlatform = GamePlatform.Android;
 
         /// <summary>The path to the game folder.</summary>
         public static string ExecutionPath { get; } = Path.Combine(Android.OS.Environment.ExternalStorageDirectory.Path, "StardewValley/smapi-internal");
