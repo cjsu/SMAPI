@@ -12,6 +12,9 @@ namespace StardewModdingAPI
         Mac = Platform.Mac,
 
         /// <summary>The Windows version of the game.</summary>
-        Windows = Platform.Windows
+        Windows = Platform.Windows,
+
+        /// <summary>The Android version of the game.</summary>
+        Android = Platform.Android
     }
 }
