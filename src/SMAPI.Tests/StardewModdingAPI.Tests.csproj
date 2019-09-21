@@ -12,6 +12,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SMAPI.Toolkit.CoreInterfaces\StardewModdingAPI.Toolkit.CoreInterfaces.csproj" />
     <ProjectReference Include="..\SMAPI.Toolkit\StardewModdingAPI.Toolkit.csproj" />
+    <ProjectReference Include="..\SMAPI\StardewModdingAPI.csproj" />
   </ItemGroup>
 
   <ItemGroup>
