@@ -259,7 +259,7 @@ namespace StardewModdingAPI.Framework
                         }
                         catch (Exception ex)
                         {
-                            this.Monitor.Log($"SMAPI failed trying to track the crash details: {ex.GetLogSummary()}");
+                            this.Monitor.Log($"SMAPI failed trying to track the crash details: {ex.GetLogSummary()}", LogLevel.Error);
                         }
 
                         this.GameInstance.Exit();
@@ -584,7 +584,7 @@ namespace StardewModdingAPI.Framework
         {
             if (!this.Settings.CheckForUpdates)
                 return;
-            
+
             new Thread(() =>
             {
                 // create client
@@ -606,7 +606,7 @@ namespace StardewModdingAPI.Framework
                     if (latestStable == null && response.Errors.Any())
                     {
                         this.Monitor.Log("Couldn't check for a new version of SMAPI. This won't affect your game, but you may not be notified of new versions if this keeps happening.", LogLevel.Warn);
-                        this.Monitor.Log($"Error: {string.Join("\n", response.Errors)}");
+                        this.Monitor.Log($"Error: {string.Join("\n", response.Errors)}", LogLevel.Trace);
                     }
                     else if (this.IsValidUpdate(Constants.AndroidApiVersion, latestBeta, this.Settings.UseBetaChannel))
                     {
@@ -626,7 +626,7 @@ namespace StardewModdingAPI.Framework
                     this.Monitor.Log("Couldn't check for a new version of SMAPI. This won't affect your game, but you won't be notified of new versions if this keeps happening.", LogLevel.Warn);
                     this.Monitor.Log(ex is WebException && ex.InnerException == null
                         ? $"Error: {ex.Message}"
-                        : $"Error: {ex.GetLogSummary()}"
+                        : $"Error: {ex.GetLogSummary()}", LogLevel.Trace
                     );
                 }
 
@@ -719,7 +719,7 @@ namespace StardewModdingAPI.Framework
                         this.Monitor.Log("Couldn't check for new mod versions. This won't affect your game, but you won't be notified of mod updates if this keeps happening.", LogLevel.Warn);
                         this.Monitor.Log(ex is WebException && ex.InnerException == null
                             ? ex.Message
-                            : ex.ToString()
+                            : ex.ToString(), LogLevel.Trace
                         );
                     }
                 }

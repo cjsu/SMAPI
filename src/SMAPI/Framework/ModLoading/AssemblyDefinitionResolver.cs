@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Mono.Cecil;
 
@@ -12,6 +11,7 @@ namespace StardewModdingAPI.Framework.ModLoading
         *********/
         /// <summary>The known assemblies.</summary>
         private readonly IDictionary<string, AssemblyDefinition> Lookup = new Dictionary<string, AssemblyDefinition>();
+
 
         /*********
         ** Public methods
@@ -31,7 +31,6 @@ namespace StardewModdingAPI.Framework.ModLoading
         /// <summary>Resolve an assembly reference.</summary>
         /// <param name="name">The assembly name.</param>
         public override AssemblyDefinition Resolve(AssemblyNameReference name) => this.ResolveName(name.Name) ?? base.Resolve(name);
-        
 
         /// <summary>Resolve an assembly reference.</summary>
         /// <param name="name">The assembly name.</param>

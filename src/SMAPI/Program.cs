@@ -7,7 +7,6 @@ using System.Threading;
 #if SMAPI_FOR_WINDOWS
 #endif
 using StardewModdingAPI.Framework;
-using StardewModdingAPI.Framework.ModLoading;
 using StardewModdingAPI.Internal;
 
 namespace StardewModdingAPI
@@ -52,15 +51,13 @@ namespace StardewModdingAPI
                 foreach (FileInfo dll in new DirectoryInfo(Program.DllSearchPath).EnumerateFiles("*.dll"))
                 {
                     if (name.Name.Equals(AssemblyName.GetAssemblyName(dll.FullName).Name, StringComparison.InvariantCultureIgnoreCase))
-                    {
                         return Assembly.LoadFrom(dll.FullName);
-                    }
-                        
                 }
                 return null;
             }
             catch (Exception ex)
             {
+                //Console.WriteLine($"Error resolving assembly: {ex}");
                 return null;
             }
         }
