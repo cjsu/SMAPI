@@ -1,10 +1,9 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
+using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using StardewModdingAPI.Framework;
 using StardewModdingAPI.Internal.ConsoleWriting;
 using StardewValley;
@@ -24,7 +23,9 @@ namespace StardewModdingAPI
 
         private SpriteFont smallFont;
 
-        private  Vector2 size;
+        private TextBoxEvent textBoxEvent;
+
+        private Vector2 size;
 
         private bool scrolling = false;
 
@@ -35,13 +36,14 @@ namespace StardewModdingAPI
             this.textBox = new TextBox(null, null, Game1.dialogueFont, Game1.textColor)
             {
                 X = 0,
-                Y = 0,
-                Width = 1280,
-                Height = 320
+                Y = 100,
+                Width = IClickableMenu.viewport.Width,
+                Height = IClickableMenu.viewport.Height
             };
             this.scrollbox = new MobileScrollbox(0, 0, 1280, 320, this.consoleMessageQueue.Count, new Rectangle(0, 0, 1280, 320));
             this.textBoxBounds = new Rectangle(this.textBox.X, this.textBox.Y, this.textBox.Width, this.textBox.Height);
-            this.scrollbox.Bounds = this.textBoxBounds;   
+            this.scrollbox.Bounds = this.textBoxBounds;
+            this.textBoxEvent = new TextBoxEvent(this.textBoxEnter);
         }
 
         internal void InitializeContent(LocalizedContentManager content)
@@ -52,6 +54,8 @@ namespace StardewModdingAPI
 
         public void Show()
         {
+            if (this.upperRightCloseButton == null)
+                this.initializeUpperRightCloseButton();
             Game1.activeClickableMenu = this;
             this.isVisible = true;
         }
@@ -62,16 +66,28 @@ namespace StardewModdingAPI
             {
                 this.scrollbox.receiveLeftClick(x, y);
                 this.scrolling = this.scrollbox.panelScrolling;
-                typeof(TextBox).GetMethod("ShowAndroidKeyboard", BindingFlags.NonPublic | BindingFlags.Instance)?.Invoke(this.textBox, new object[] { });
+                this.textBox.Selected = true;
+                this.textBox.OnEnterPressed += this.textBoxEvent;
+
+                this.textBox.Update();
                 Game1.keyboardDispatcher.Subscriber = this.textBox;
-                SGame.instance.CommandQueue.Enqueue(this.textBox.Text);
-                this.textBox.Text = "";
+                this.textBoxEnter(this.textBox);
             }
-            else
+
+            if (this.upperRightCloseButton.bounds.Contains(x, y))
             {
-                Game1.activeClickableMenu = null;
                 this.isVisible = false;
+                Game1.activeClickableMenu = null;
+                Game1.playSound("bigDeSelect");
             }
+        }
+
+        public void textBoxEnter(TextBox text)
+        {
+            this.textBox.OnEnterPressed -= this.textBoxEvent;
+            string command = text.Text.Trim();
+
+            SGame.instance.CommandQueue.Enqueue(command);
         }
 
         public override void leftClickHeld(int x, int y)
@@ -115,7 +131,7 @@ namespace StardewModdingAPI
                     string text = log.Value;
                     if (text.Contains("\n"))
                     {
-                        text = text.Replace("\n", " ");
+                        text = text.Replace("\n", "");
                     }
                     switch (log.Key)
                     {
@@ -148,6 +164,9 @@ namespace StardewModdingAPI
                     y -= this.size.Y;
                 }
             }
+
+            if (Context.IsWorldReady)
+                this.upperRightCloseButton.draw(b);
         }
     }
 }
