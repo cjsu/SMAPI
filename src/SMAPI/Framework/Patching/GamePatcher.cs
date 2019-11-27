@@ -44,6 +44,11 @@ namespace StardewModdingAPI.Framework.Patching
                     this.Monitor.Log(ex.GetLogSummary(), LogLevel.Trace);
                 }
             }
+
+            //Keeping for reference
+            //if (Build.VERSION.SdkInt > BuildVersionCodes.LollipopMr1)
+            //{
+            //}
         }
     }
 }
