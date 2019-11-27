@@ -23,7 +23,7 @@ namespace StardewModdingAPI
         public static ISemanticVersion ApiVersion { get; } = new Toolkit.SemanticVersion("2.11.3");
 
         /// <summary>Android SMAPI's current semantic version.</summary>
-        public static ISemanticVersion AndroidApiVersion { get; } = new Toolkit.SemanticVersion("0.9.1");
+        public static ISemanticVersion AndroidApiVersion { get; } = new Toolkit.SemanticVersion("0.9.2");
 
         /// <summary>The minimum supported version of Stardew Valley.</summary>
         public static ISemanticVersion MinimumGameVersion { get; } = new GameVersion("1.3.36");
@@ -44,7 +44,7 @@ namespace StardewModdingAPI
         public static string LogDir { get; } = Path.Combine(Constants.DataPath, "ErrorLogs");
 
         /// <summary>The directory path where all saves are stored.</summary>
-        public static string SavesPath { get; } = Path.Combine(Constants.DataPath, "Saves");
+        public static string SavesPath { get; } = Constants.DataPath;
 
         /// <summary>The name of the current save folder (if save info is available, regardless of whether the save file exists yet).</summary>
         public static string SaveFolderName
