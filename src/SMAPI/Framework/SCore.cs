@@ -703,6 +703,8 @@ namespace StardewModdingAPI.Framework
                         {
                             this.Monitor.Newline();
                             this.Monitor.Log($"You can update {updates.Count} mod{(updates.Count != 1 ? "s" : "")}:", LogLevel.Alert);
+                            this.Monitor.Newline();
+                            this.Monitor.Log("WARNING: many mod updates are for Stardew Valley 1.4, which is not available on Android yet. Make sure to back up the previous mod version before attempting to install updates.", LogLevel.Alert);
                             foreach (var entry in updates)
                             {
                                 IModMetadata mod = entry.Item1;
