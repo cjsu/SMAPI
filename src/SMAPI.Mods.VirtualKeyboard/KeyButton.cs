@@ -76,6 +76,7 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
         {
             if (this.buttonRectangle.Contains(screenPixels.X * Game1.options.zoomLevel, screenPixels.Y * Game1.options.zoomLevel))
             {
+                Toolbar.toolbarPressed = true;
                 return true;
             }
             return false;

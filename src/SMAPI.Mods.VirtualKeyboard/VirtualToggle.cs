@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using StardewModdingAPI.Events;
 using StardewValley;
 using StardewValley.Menus;
@@ -55,6 +54,7 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
                 if (Game1.activeClickableMenu is IClickableMenu menu)
                 {
                     menu.exitThisMenu();
+                    Toolbar.toolbarPressed = true;
                 }
             }
         }
