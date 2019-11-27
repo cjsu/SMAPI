@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMAPI", "SMAPI\StardewModdingAPI.csproj", "{1298F2B2-57BD-4647-AF70-1FCBBEE500B6}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".root", ".root", "{86C452BE-D2D8-45B4-B63F-E329EB06CEDA}"
 	ProjectSection(SolutionItems) = preProject
 		..\.editorconfig = ..\.editorconfig
@@ -15,7 +13,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".root", ".root", "{86C452BE
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StardewModdingAPI.Installer", "SMAPI.Installer\StardewModdingAPI.Installer.csproj", "{0ED5EAD8-5D85-420D-8101-6D8CCCE29C9B}"
 	ProjectSection(ProjectDependencies) = postProject
-		{E4113F3E-3CAA-4288-9378-39A77BA625DB} = {E4113F3E-3CAA-4288-9378-39A77BA625DB}
 		{8C2CA4AB-BA8A-446A-B59E-9D6502E145F7} = {8C2CA4AB-BA8A-446A-B59E-9D6502E145F7}
 	EndProjectSection
 EndProject
@@ -54,10 +51,6 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "StardewModdingAPI.Internal"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StardewModdingAPI.Mods.ConsoleCommands", "SMAPI.Mods.ConsoleCommands\StardewModdingAPI.Mods.ConsoleCommands.csproj", "{8C2CA4AB-BA8A-446A-B59E-9D6502E145F7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StardewModdingAPI.Mods.SaveBackup", "SMAPI.Mods.SaveBackup\StardewModdingAPI.Mods.SaveBackup.csproj", "{E4113F3E-3CAA-4288-9378-39A77BA625DB}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StardewModdingAPI.Mods.VirtualKeyboard", "SMAPI.Mods.VirtualKeyboard\StardewModdingAPI.Mods.VirtualKeyboard.csproj", "{29CCE9C9-6811-415D-A681-A6D47073924D}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StardewModdingAPI.Toolkit", "SMAPI.Toolkit\StardewModdingAPI.Toolkit.csproj", "{EA5CFD2E-9453-4D29-B80F-8E0EA23F4AC6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StardewModdingAPI.Toolkit.CoreInterfaces", "SMAPI.Toolkit.CoreInterfaces\StardewModdingAPI.Toolkit.CoreInterfaces.csproj", "{D5CFD923-37F1-4BC3-9BE8-E506E202AC28}"
@@ -75,22 +68,24 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ISSUE_TEMPLATE", "ISSUE_TEM
 		..\.github\ISSUE_TEMPLATE\general.md = ..\.github\ISSUE_TEMPLATE\general.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StardewModdingAPI", "SMAPI\StardewModdingAPI.csproj", "{9EF11E43-1701-4396-8835-8392D57ABB70}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StardewModdingAPI.Mods.VirtualKeyboard", "SMAPI.Mods.VirtualKeyboard\StardewModdingAPI.Mods.VirtualKeyboard.csproj", "{29CCE9C9-6811-415D-A681-A6D47073924D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StardewModdingAPI.Mods.SaveBackup", "SMAPI.Mods.SaveBackup\StardewModdingAPI.Mods.SaveBackup.csproj", "{763B7343-E030-4061-A9AE-D933507E74BA}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		SMAPI.Internal\SMAPI.Internal.projitems*{0ED5EAD8-5D85-420D-8101-6D8CCCE29C9B}*SharedItemsImports = 4
-		SMAPI.Internal\SMAPI.Internal.projitems*{1298F2B2-57BD-4647-AF70-1FCBBEE500B6}*SharedItemsImports = 4
+		SMAPI.Internal\SMAPI.Internal.projitems*{0ed5ead8-5d85-420d-8101-6d8ccce29c9b}*SharedItemsImports = 4
 		SMAPI.Internal\SMAPI.Internal.projitems*{85208f8d-6fd1-4531-be05-7142490f59fe}*SharedItemsImports = 13
-		SMAPI.Internal\SMAPI.Internal.projitems*{C11D0AFB-2893-41A9-AD55-D002F032D6AD}*SharedItemsImports = 4
+		SMAPI.Internal\SMAPI.Internal.projitems*{9ef11e43-1701-4396-8835-8392d57abb70}*SharedItemsImports = 4
+		SMAPI.Internal\SMAPI.Internal.projitems*{c11d0afb-2893-41a9-ad55-d002f032d6ad}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1298F2B2-57BD-4647-AF70-1FCBBEE500B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1298F2B2-57BD-4647-AF70-1FCBBEE500B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1298F2B2-57BD-4647-AF70-1FCBBEE500B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1298F2B2-57BD-4647-AF70-1FCBBEE500B6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0ED5EAD8-5D85-420D-8101-6D8CCCE29C9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0ED5EAD8-5D85-420D-8101-6D8CCCE29C9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0ED5EAD8-5D85-420D-8101-6D8CCCE29C9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -115,10 +110,10 @@ Global
 		{0CF97929-B0D0-4D73-B7BF-4FF7191035F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0CF97929-B0D0-4D73-B7BF-4FF7191035F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0CF97929-B0D0-4D73-B7BF-4FF7191035F9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{29CCE9C9-6811-415D-A681-A6D47073924D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{29CCE9C9-6811-415D-A681-A6D47073924D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{29CCE9C9-6811-415D-A681-A6D47073924D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{29CCE9C9-6811-415D-A681-A6D47073924D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C2CA4AB-BA8A-446A-B59E-9D6502E145F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C2CA4AB-BA8A-446A-B59E-9D6502E145F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C2CA4AB-BA8A-446A-B59E-9D6502E145F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C2CA4AB-BA8A-446A-B59E-9D6502E145F7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EA5CFD2E-9453-4D29-B80F-8E0EA23F4AC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EA5CFD2E-9453-4D29-B80F-8E0EA23F4AC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA5CFD2E-9453-4D29-B80F-8E0EA23F4AC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -127,14 +122,18 @@ Global
 		{D5CFD923-37F1-4BC3-9BE8-E506E202AC28}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5CFD923-37F1-4BC3-9BE8-E506E202AC28}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5CFD923-37F1-4BC3-9BE8-E506E202AC28}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8C2CA4AB-BA8A-446A-B59E-9D6502E145F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8C2CA4AB-BA8A-446A-B59E-9D6502E145F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8C2CA4AB-BA8A-446A-B59E-9D6502E145F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8C2CA4AB-BA8A-446A-B59E-9D6502E145F7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E4113F3E-3CAA-4288-9378-39A77BA625DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E4113F3E-3CAA-4288-9378-39A77BA625DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E4113F3E-3CAA-4288-9378-39A77BA625DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E4113F3E-3CAA-4288-9378-39A77BA625DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EF11E43-1701-4396-8835-8392D57ABB70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EF11E43-1701-4396-8835-8392D57ABB70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EF11E43-1701-4396-8835-8392D57ABB70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EF11E43-1701-4396-8835-8392D57ABB70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29CCE9C9-6811-415D-A681-A6D47073924D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29CCE9C9-6811-415D-A681-A6D47073924D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29CCE9C9-6811-415D-A681-A6D47073924D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29CCE9C9-6811-415D-A681-A6D47073924D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{763B7343-E030-4061-A9AE-D933507E74BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{763B7343-E030-4061-A9AE-D933507E74BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{763B7343-E030-4061-A9AE-D933507E74BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{763B7343-E030-4061-A9AE-D933507E74BA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
