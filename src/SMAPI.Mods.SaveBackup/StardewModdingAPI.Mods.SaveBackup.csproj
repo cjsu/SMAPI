@@ -6,7 +6,7 @@
     <TargetFramework>net45</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <LangVersion>latest</LangVersion>
-    <OutputPath>$(SolutionDir)\..\bin\$(Configuration)\Mods\SaveBackup</OutputPath>
+    <OutputPath>C:\Users\Chris\source\repos\SMAPI\bin\Debug\Mods\SaveBackup\</OutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>

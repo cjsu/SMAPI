@@ -88,7 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SMAPI\StardewModdingAPI.csproj">
-      <Project>{4de03d1e-af18-4f95-abcf-4bff2ba17c96}</Project>
+      <Project>{9ef11e43-1701-4396-8835-8392d57abb70}</Project>
       <Name>StardewModdingAPI</Name>
     </ProjectReference>
   </ItemGroup>
