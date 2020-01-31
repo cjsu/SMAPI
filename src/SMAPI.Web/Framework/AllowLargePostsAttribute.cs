@@ -36,7 +36,7 @@ namespace StardewModdingAPI.Web.Framework
         }
 
         /// <summary>Called early in the filter pipeline to confirm request is authorized.</summary>
-        /// <param name="context">The authorisation filter context.</param>
+        /// <param name="context">The authorization filter context.</param>
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             IFeatureCollection features = context.HttpContext.Features;

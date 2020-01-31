@@ -28,6 +28,12 @@ namespace StardewModdingAPI.Toolkit.Framework.Clients.WebApi
         /// <summary>The mod ID in the Chucklefish mod repo.</summary>
         public int? ChucklefishID { get; set; }
 
+        /// <summary>The mod ID in the CurseForge mod repo.</summary>
+        public int? CurseForgeID { get; set; }
+
+        /// <summary>The mod key in the CurseForge mod repo (used in mod page URLs).</summary>
+        public string CurseForgeKey { get; set; }
+
         /// <summary>The mod ID in the ModDrop mod repo.</summary>
         public int? ModDropID { get; set; }
 
@@ -40,6 +46,17 @@ namespace StardewModdingAPI.Toolkit.Framework.Clients.WebApi
         /// <summary>The custom mod page URL (if applicable).</summary>
         public string CustomUrl { get; set; }
 
+        /// <summary>The main version.</summary>
+        public ModEntryVersionModel Main { get; set; }
+
+        /// <summary>The latest optional version, if newer than <see cref="Main"/>.</summary>
+        public ModEntryVersionModel Optional { get; set; }
+
+        /// <summary>The latest unofficial version, if newer than <see cref="Main"/> and <see cref="Optional"/>.</summary>
+        public ModEntryVersionModel Unofficial { get; set; }
+
+        /// <summary>The latest unofficial version for the current Stardew Valley or SMAPI beta, if any (see <see cref="HasBetaInfo"/>).</summary>
+        public ModEntryVersionModel UnofficialForBeta { get; set; }
 
         /****
         ** Stable compatibility
@@ -48,12 +65,11 @@ namespace StardewModdingAPI.Toolkit.Framework.Clients.WebApi
         [JsonConverter(typeof(StringEnumConverter))]
         public WikiCompatibilityStatus? CompatibilityStatus { get; set; }
 
-        /// <summary>The human-readable summary of the compatibility status or workaround, without HTML formatitng.</summary>
+        /// <summary>The human-readable summary of the compatibility status or workaround, without HTML formatting.</summary>
         public string CompatibilitySummary { get; set; }
 
         /// <summary>The game or SMAPI version which broke this mod, if applicable.</summary>
         public string BrokeIn { get; set; }
-
 
         /****
         ** Beta compatibility
@@ -62,7 +78,7 @@ namespace StardewModdingAPI.Toolkit.Framework.Clients.WebApi
         [JsonConverter(typeof(StringEnumConverter))]
         public WikiCompatibilityStatus? BetaCompatibilityStatus { get; set; }
 
-        /// <summary>The human-readable summary of the compatibility status or workaround for the Stardew Valley beta (if any), without HTML formatitng.</summary>
+        /// <summary>The human-readable summary of the compatibility status or workaround for the Stardew Valley beta (if any), without HTML formatting.</summary>
         public string BetaCompatibilitySummary { get; set; }
 
         /// <summary>The beta game or SMAPI version which broke this mod, if applicable.</summary>
@@ -78,8 +94,18 @@ namespace StardewModdingAPI.Toolkit.Framework.Clients.WebApi
         /// <summary>Construct an instance.</summary>
         /// <param name="wiki">The mod metadata from the wiki (if available).</param>
         /// <param name="db">The mod metadata from SMAPI's internal DB (if available).</param>
-        public ModExtendedMetadataModel(WikiModEntry wiki, ModDataRecord db)
+        /// <param name="main">The main version.</param>
+        /// <param name="optional">The latest optional version, if newer than <paramref name="main"/>.</param>
+        /// <param name="unofficial">The latest unofficial version, if newer than <paramref name="main"/> and <paramref name="optional"/>.</param>
+        /// <param name="unofficialForBeta">The latest unofficial version for the current Stardew Valley or SMAPI beta, if any.</param>
+        public ModExtendedMetadataModel(WikiModEntry wiki, ModDataRecord db, ModEntryVersionModel main, ModEntryVersionModel optional, ModEntryVersionModel unofficial, ModEntryVersionModel unofficialForBeta)
         {
+            // versions
+            this.Main = main;
+            this.Optional = optional;
+            this.Unofficial = unofficial;
+            this.UnofficialForBeta = unofficialForBeta;
+
             // wiki data
             if (wiki != null)
             {
@@ -87,6 +113,8 @@ namespace StardewModdingAPI.Toolkit.Framework.Clients.WebApi
                 this.Name = wiki.Name.FirstOrDefault();
                 this.NexusID = wiki.NexusID;
                 this.ChucklefishID = wiki.ChucklefishID;
+                this.CurseForgeID = wiki.CurseForgeID;
+                this.CurseForgeKey = wiki.CurseForgeKey;
                 this.ModDropID = wiki.ModDropID;
                 this.GitHubRepo = wiki.GitHubRepo;
                 this.CustomSourceUrl = wiki.CustomSourceUrl;

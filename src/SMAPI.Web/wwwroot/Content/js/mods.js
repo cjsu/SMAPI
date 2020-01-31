@@ -44,6 +44,7 @@ smapi.modList = function (mods, enableBeta) {
             download: {
                 value: {
                     chucklefish: { value: true, label: "Chucklefish" },
+                    curseforge: { value: true, label: "CurseForge" },
                     moddrop: { value: true, label: "ModDrop" },
                     nexus: { value: true, label: "Nexus" },
                     custom: { value: true }
@@ -180,6 +181,8 @@ smapi.modList = function (mods, enableBeta) {
 
                 if (!filters.download.value.chucklefish.value)
                     ignoreSites.push("Chucklefish");
+                if (!filters.download.value.curseforge.value)
+                    ignoreSites.push("CurseForge");
                 if (!filters.download.value.moddrop.value)
                     ignoreSites.push("ModDrop");
                 if (!filters.download.value.nexus.value)

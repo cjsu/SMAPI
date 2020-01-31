@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using Microsoft.Xna.Framework.Content;
 using StardewModdingAPI.Framework.Exceptions;
@@ -23,8 +22,8 @@ namespace StardewModdingAPI.Framework.ContentManagers
         /// <summary>The absolute path to the <see cref="ContentManager.RootDirectory"/>.</summary>
         string FullRootDirectory { get; }
 
-        /// <summary>Whether this content manager is for a mod folder.</summary>
-        bool IsModContentManager { get; }
+        /// <summary>Whether this content manager can be targeted by managed asset keys (e.g. to load assets from a mod folder).</summary>
+        bool IsNamespaced { get; }
 
 
         /*********
@@ -33,35 +32,22 @@ namespace StardewModdingAPI.Framework.ContentManagers
         /// <summary>Load an asset that has been processed by the content pipeline.</summary>
         /// <typeparam name="T">The type of asset to load.</typeparam>
         /// <param name="assetName">The asset path relative to the loader root directory, not including the <c>.xnb</c> extension.</param>
-        T Load<T>(string assetName);
-
-        /// <summary>Load an asset that has been processed by the content pipeline.</summary>
-        /// <typeparam name="T">The type of asset to load.</typeparam>
-        /// <param name="assetName">The asset path relative to the loader root directory, not including the <c>.xnb</c> extension.</param>
         /// <param name="language">The language code for which to load content.</param>
-        T Load<T>(string assetName, LocalizedContentManager.LanguageCode language);
+        /// <param name="useCache">Whether to read/write the loaded asset to the asset cache.</param>
+        T Load<T>(string assetName, LocalizedContentManager.LanguageCode language, bool useCache);
 
-        /// <summary>Inject an asset into the cache.</summary>
-        /// <typeparam name="T">The type of asset to inject.</typeparam>
-        /// <param name="assetName">The asset path relative to the loader root directory, not including the <c>.xnb</c> extension.</param>
-        /// <param name="value">The asset value.</param>
-        void Inject<T>(string assetName, T value);
+        /// <summary>Perform any cleanup needed when the locale changes.</summary>
+        void OnLocaleChanged();
 
-        /// <summary>Get a copy of the given asset if supported.</summary>
-        /// <typeparam name="T">The asset type.</typeparam>
-        /// <param name="asset">The asset to clone.</param>
-        T CloneIfPossible<T>(T asset);
-
-        /// <summary>Normalise path separators in a file path. For asset keys, see <see cref="AssertAndNormaliseAssetName"/> instead.</summary>
-        /// <param name="path">The file path to normalise.</param>
+        /// <summary>Normalize path separators in a file path. For asset keys, see <see cref="AssertAndNormalizeAssetName"/> instead.</summary>
+        /// <param name="path">The file path to normalize.</param>
         [Pure]
-        string NormalisePathSeparators(string path);
+        string NormalizePathSeparators(string path);
 
-        /// <summary>Assert that the given key has a valid format and return a normalised form consistent with the underlying cache.</summary>
+        /// <summary>Assert that the given key has a valid format and return a normalized form consistent with the underlying cache.</summary>
         /// <param name="assetName">The asset key to check.</param>
         /// <exception cref="SContentLoadException">The asset key is empty or contains invalid characters.</exception>
-        [SuppressMessage("ReSharper", "ParameterOnlyUsedForPreconditionCheck.Local", Justification = "Parameter is only used for assertion checks by design.")]
-        string AssertAndNormaliseAssetName(string assetName);
+        string AssertAndNormalizeAssetName(string assetName);
 
         /// <summary>Get the current content locale.</summary>
         string GetLocale();
@@ -80,7 +66,7 @@ namespace StardewModdingAPI.Framework.ContentManagers
         /// <summary>Purge matched assets from the cache.</summary>
         /// <param name="predicate">Matches the asset keys to invalidate.</param>
         /// <param name="dispose">Whether to dispose invalidated assets. This should only be <c>true</c> when they're being invalidated as part of a dispose, to avoid crashing the game.</param>
-        /// <returns>Returns the invalidated asset names and types.</returns>
-        IEnumerable<Tuple<string, Type>> InvalidateCache(Func<string, Type, bool> predicate, bool dispose = false);
+        /// <returns>Returns the invalidated asset names and instances.</returns>
+        IDictionary<string, object> InvalidateCache(Func<string, Type, bool> predicate, bool dispose = false);
     }
 }

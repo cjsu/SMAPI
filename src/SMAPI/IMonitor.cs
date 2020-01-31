@@ -6,9 +6,6 @@ namespace StardewModdingAPI
         /*********
         ** Accessors
         *********/
-        /// <summary>Whether SMAPI is aborting. Mods don't need to worry about this unless they have background tasks.</summary>
-        bool IsExiting { get; }
-
         /// <summary>Whether verbose logging is enabled. This enables more detailed diagnostic messages than are normally needed.</summary>
         bool IsVerbose { get; }
 
@@ -24,9 +21,5 @@ namespace StardewModdingAPI
         /// <summary>Log a message that only appears when <see cref="IsVerbose"/> is enabled.</summary>
         /// <param name="message">The message to log.</param>
         void VerboseLog(string message);
-
-        /// <summary>Immediately exit the game without saving. This should only be invoked when an irrecoverable fatal error happens that risks save corruption or game-breaking bugs.</summary>
-        /// <param name="reason">The reason for the shutdown.</param>
-        void ExitGameImmediately(string reason);
     }
 }

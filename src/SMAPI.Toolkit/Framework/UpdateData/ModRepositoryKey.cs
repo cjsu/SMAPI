@@ -9,6 +9,9 @@ namespace StardewModdingAPI.Toolkit.Framework.UpdateData
         /// <summary>The Chucklefish mod repository.</summary>
         Chucklefish,
 
+        /// <summary>The CurseForge mod repository.</summary>
+        CurseForge,
+
         /// <summary>A GitHub project containing releases.</summary>
         GitHub,
 

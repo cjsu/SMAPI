@@ -3,7 +3,7 @@ using StardewModdingAPI.Framework;
 
 namespace StardewModdingAPI.Events
 {
-    /// <summary>Event arguments for an <see cref="ISpecialisedEvents.UnvalidatedUpdateTicking"/> event.</summary>
+    /// <summary>Event arguments for an <see cref="ISpecializedEvents.UnvalidatedUpdateTicking"/> event.</summary>
     public class UnvalidatedUpdateTickingEventArgs : EventArgs
     {
         /*********

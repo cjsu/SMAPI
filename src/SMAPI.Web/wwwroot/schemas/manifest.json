@@ -1,0 +1,147 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://smapi.io/schemas/manifest.json",
+    "title": "SMAPI manifest",
+    "description": "Manifest file for a SMAPI mod or content pack",
+    "@documentationUrl": "https://stardewvalleywiki.com/Modding:Modder_Guide/APIs/Manifest",
+    "type": "object",
+    "properties": {
+        "Name": {
+            "title": "Mod name",
+            "description": "The mod's display name. SMAPI uses this in player messages, logs, and errors.",
+            "type": "string",
+            "examples": [ "Lookup Anything" ]
+        },
+        "Author": {
+            "title": "Mod author",
+            "description": "The name of the person who created the mod. Ideally this should include the username used to publish mods.",
+            "type": "string",
+            "examples": [ "Pathoschild" ]
+        },
+        "Version": {
+            "title": "Mod version",
+            "description": "The mod's semantic version. Make sure you update this for each release! SMAPI uses this for update checks, mod dependencies, and compatibility blacklists (if the mod breaks in a future version of the game).",
+            "$ref": "#/definitions/SemanticVersion"
+        },
+        "Description": {
+            "title": "Mod description",
+            "description": "A short explanation of what your mod does (one or two sentences), shown in the SMAPI log.",
+            "type": "string",
+            "examples": [ "View metadata about anything by pressing a button." ]
+        },
+        "UniqueID": {
+            "title": "Mod unique ID",
+            "description": "A unique identifier for your mod. The recommended format is \"Username.ModName\", with no spaces or special characters. SMAPI uses this for update checks, mod dependencies, and compatibility blacklists (if the mod breaks in a future version of the game). When another mod needs to reference this mod, it uses the unique ID.",
+            "$ref": "#/definitions/ModID"
+        },
+        "EntryDll": {
+            "title": "Mod entry DLL",
+            "description": "The DLL filename SMAPI should load for this mod. Mutually exclusive with ContentPackFor.",
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9_.-]+\\.dll$",
+            "examples": "LookupAnything.dll",
+            "@errorMessages": {
+                "pattern": "Invalid value; must be a filename ending with .dll."
+            }
+        },
+        "ContentPackFor": {
+            "title": "Content pack for",
+            "description": "Specifies the mod which can read this content pack.",
+            "type": "object",
+            "properties": {
+                "UniqueID": {
+                    "title": "Required unique ID",
+                    "description": "The unique ID of the mod which can read this content pack.",
+                    "$ref": "#/definitions/ModID"
+                },
+                "MinimumVersion": {
+                    "title": "Required minimum version",
+                    "description": "The minimum semantic version of the mod which can read this content pack, if applicable.",
+                    "$ref": "#/definitions/SemanticVersion"
+                }
+            },
+
+            "required": [ "UniqueID" ]
+        },
+        "MinimumApiVersion": {
+            "title": "Minimum API version",
+            "description": "The minimum SMAPI version needed to use this mod. If a player tries to use the mod with an older SMAPI version, they'll see a friendly message saying they need to update SMAPI. This also serves as a proxy for the minimum game version, since SMAPI itself enforces a minimum game version.",
+            "$ref": "#/definitions/SemanticVersion"
+        },
+        "Dependencies": {
+            "title": "Mod dependencies",
+            "description": "Specifies other mods to load before this mod. If a dependency is required and a player tries to use the mod without the dependency installed, the mod won't be loaded and they'll see a friendly message saying they need to install those.",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "UniqueID": {
+                        "title": "Dependency unique ID",
+                        "description": "The unique ID of the mod  to load first.",
+                        "$ref": "#/definitions/ModID"
+                    },
+                    "MinimumVersion": {
+                        "title": "Dependency minimum version",
+                        "description": "The minimum semantic version of the mod to load first, if applicable.",
+                        "$ref": "#/definitions/SemanticVersion"
+                    },
+                    "IsRequired": {
+                        "title": "Dependency is required",
+                        "description": "Whether the dependency is required. Default true if not specified."
+                    }
+                },
+                "required": [ "UniqueID" ]
+            }
+        },
+        "UpdateKeys": {
+            "title": "Mod update keys",
+            "description": "Specifies where SMAPI should check for mod updates, so it can alert the user with a link to your mod page. See https://stardewvalleywiki.com/Modding:Modder_Guide/APIs/Manifest#Update_checks for more info.",
+            "type": "array",
+            "items": {
+                "type": "string",
+                "pattern": "^(Chucklefish:\\d+|Nexus:\\d+|GitHub:[A-Za-z0-9_]+/[A-Za-z0-9_]+|ModDrop:\\d+)$",
+                "@errorMessages": {
+                    "pattern": "Invalid update key; see https://stardewvalleywiki.com/Modding:Modder_Guide/APIs/Manifest#Update_checks for more info."
+                }
+            }
+        },
+        "$schema": {
+            "title": "Schema",
+            "description": "A reference to this JSON schema. Not part of the actual format, but useful for validation tools.",
+            "type": "string",
+            "const": "https://smapi.io/schemas/manifest.json"
+        }
+    },
+    "definitions": {
+        "SemanticVersion": {
+            "type": "string",
+            "pattern": "^(?>(?:0|[1-9]\\d*))\\.(?>(?:0|[1-9]\\d*))(?>(?:\\.(?:0|[1-9]\\d*))?)(?:-(?:(?>[a-zA-Z0-9]+[\\-\\.]?)+))?$",
+            "$comment": "derived from SMAPI.Toolkit.SemanticVersion",
+            "examples": [ "1.0.0", "1.0.1-beta.2" ],
+            "@errorMessages": {
+                "pattern": "Invalid semantic version; must be formatted like 1.2.0 or 1.2.0-prerelease.tags. See https://semver.org/ for more info."
+            }
+        },
+        "ModID": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9_.-]+$",
+            "$comment": "derived from SMAPI.Toolkit.Utilities.PathUtilities.IsSlug",
+            "examples": [ "Pathoschild.LookupAnything" ]
+        }
+    },
+
+    "required": [ "Name", "Author", "Version", "Description", "UniqueID" ],
+    "oneOf": [
+        {
+            "required": [ "EntryDll" ]
+        },
+        {
+            "required": [ "ContentPackFor" ]
+        }
+    ],
+    "additionalProperties": false,
+    "@errorMessages": {
+        "oneOf:valid against no schemas": "Missing required field: EntryDll or ContentPackFor.",
+        "oneOf:valid against more than one schema": "Can't specify both EntryDll and ContentPackFor, they're mutually exclusive."
+    }
+}

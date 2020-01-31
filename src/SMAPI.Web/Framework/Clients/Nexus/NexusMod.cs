@@ -21,6 +21,10 @@ namespace StardewModdingAPI.Web.Framework.Clients.Nexus
         [JsonProperty("mod_page_uri")]
         public string Url { get; set; }
 
+        /// <summary>The mod's publication status.</summary>
+        [JsonIgnore]
+        public NexusModStatus Status { get; set; } = NexusModStatus.Ok;
+
         /// <summary>A user-friendly error which indicates why fetching the mod info failed (if applicable).</summary>
         [JsonIgnore]
         public string Error { get; set; }

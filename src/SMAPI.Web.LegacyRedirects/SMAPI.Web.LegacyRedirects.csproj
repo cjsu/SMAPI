@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="aws-beanstalk-tools-defaults.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.0.0" />
+    <PackageReference Include="Pathoschild.Http.FluentClient" Version="3.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SMAPI.Toolkit.CoreInterfaces\SMAPI.Toolkit.CoreInterfaces.csproj" />
+    <ProjectReference Include="..\SMAPI.Toolkit\SMAPI.Toolkit.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -10,9 +10,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)ConsoleWriting\ColorfulConsoleWriter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)EnvironmentUtility.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ConsoleWriting\LogLevel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ConsoleWriting\ColorSchemeConfig.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ConsoleWriting\ConsoleLogLevel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ConsoleWriting\MonitorColorScheme.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Platform.cs" />
   </ItemGroup>
 </Project>

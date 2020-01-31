@@ -73,7 +73,7 @@ namespace StardewModdingAPI.Framework.ModLoading.Finders
         ** Protected methods
         *********/
         /// <summary>Get whether a CIL instruction matches.</summary>
-        /// <param name="method">The method deifnition.</param>
+        /// <param name="method">The method definition.</param>
         protected bool IsMatch(MethodDefinition method)
         {
             if (this.IsMatch(method.ReturnType))

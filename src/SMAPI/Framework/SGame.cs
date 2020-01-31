@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,22 +10,21 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-#if !SMAPI_3_0_STRICT
-using Microsoft.Xna.Framework.Input;
-#endif
 using Netcode;
 using StardewModdingAPI.Enums;
 using StardewModdingAPI.Events;
+using StardewModdingAPI.Framework.Content;
 using StardewModdingAPI.Framework.Events;
 using StardewModdingAPI.Framework.Input;
 using StardewModdingAPI.Framework.Networking;
 using StardewModdingAPI.Framework.Reflection;
-using StardewModdingAPI.Framework.StateTracking;
+using StardewModdingAPI.Framework.StateTracking.Comparers;
+using StardewModdingAPI.Framework.StateTracking.Snapshots;
 using StardewModdingAPI.Framework.Utilities;
-using StardewModdingAPI.Toolkit.Serialisation;
+using StardewModdingAPI.Toolkit.Serialization;
 using StardewValley;
 using StardewValley.BellsAndWhistles;
-using StardewValley.Buildings;
+using StardewValley.Events;
 using StardewValley.Locations;
 using StardewValley.Menus;
 using StardewValley.Minigames;
@@ -34,6 +34,7 @@ using xTile.Dimensions;
 using xTile.Layers;
 using xTile.ObjectModel;
 using SObject = StardewValley.Object;
+using xTile.Tiles;
 
 namespace StardewModdingAPI.Framework
 {
@@ -47,7 +48,7 @@ namespace StardewModdingAPI.Framework
         ** SMAPI state
         ****/
         /// <summary>Encapsulates monitoring and logging for SMAPI.</summary>
-        private readonly IMonitor Monitor;
+        private readonly Monitor Monitor;
 
         /// <summary>Encapsulates monitoring and logging on the game's behalf.</summary>
         private readonly IMonitor MonitorForGame;
@@ -68,8 +69,11 @@ namespace StardewModdingAPI.Framework
         private readonly Countdown UpdateCrashTimer = new Countdown(60); // 60 ticks = roughly one second
 
         /// <summary>The number of ticks until SMAPI should notify mods that the game has loaded.</summary>
-        /// <remarks>Skipping a few frames ensures the game finishes initialising the world before mods try to change it.</remarks>
+        /// <remarks>Skipping a few frames ensures the game finishes initializing the world before mods try to change it.</remarks>
         private readonly Countdown AfterLoadTimer = new Countdown(5);
+
+        /// <summary>Whether custom content was removed from the save data to avoid a crash.</summary>
+        private bool IsSaveContentRemoved;
 
         /// <summary>Whether the game is saving and SMAPI has already raised <see cref="IGameLoopEvents.Saving"/>.</summary>
         private bool IsBetweenSaveEvents;
@@ -77,17 +81,23 @@ namespace StardewModdingAPI.Framework
         /// <summary>Whether the game is creating the save file and SMAPI has already raised <see cref="IGameLoopEvents.SaveCreating"/>.</summary>
         private bool IsBetweenCreateEvents;
 
-        /// <summary>A callback to invoke after the content language changes.</summary>
-        private readonly Action OnLocaleChanged;
+        /// <summary>A callback to invoke the first time *any* game content manager loads an asset.</summary>
+        private readonly Action OnLoadingFirstAsset;
 
-        /// <summary>A callback to invoke after the game finishes initialising.</summary>
-        private readonly Action OnGameInitialised;
+        /// <summary>A callback to invoke after the game finishes initializing.</summary>
+        private readonly Action OnGameInitialized;
 
         /// <summary>A callback to invoke when the game exits.</summary>
         private readonly Action OnGameExiting;
 
         /// <summary>Simplifies access to private game code.</summary>
         private readonly Reflector Reflection;
+
+        /// <summary>Encapsulates access to SMAPI core translations.</summary>
+        private readonly Translator Translator;
+
+        /// <summary>Propagates notification that SMAPI should exit.</summary>
+        private readonly CancellationTokenSource CancellationToken;
 
         /// <summary>A callback to invoke the first time *any* game content manager loads an asset.</summary>
         private readonly Action OnLoadingFirstAsset;
@@ -98,8 +108,11 @@ namespace StardewModdingAPI.Framework
         /// <summary>Monitors the entire game state for changes.</summary>
         private WatcherCore Watchers;
 
-        /// <summary>Whether post-game-startup initialisation has been performed.</summary>
-        private bool IsInitialised;
+        /// <summary>A snapshot of the current <see cref="Watchers"/> state.</summary>
+        private readonly WatcherSnapshot WatcherSnapshot = new WatcherSnapshot();
+
+        /// <summary>Whether post-game-startup initialization has been performed.</summary>
+        private bool IsInitialized;
 
         /// <summary>Whether the next content manager requested by the game will be for <see cref="Game1.content"/>.</summary>
         private bool NextContentManagerIsMain;
@@ -108,7 +121,7 @@ namespace StardewModdingAPI.Framework
         /*********
         ** Accessors
         *********/
-        /// <summary>Static state to use while <see cref="Game1"/> is initialising, which happens before the <see cref="SGame"/> constructor runs.</summary>
+        /// <summary>Static state to use while <see cref="Game1"/> is initializing, which happens before the <see cref="SGame"/> constructor runs.</summary>
         internal static SGameConstructorHack ConstructorHack { get; set; }
 
         /// <summary>The number of update ticks which have already executed. This is similar to <see cref="Game1.ticks"/>, but incremented more consistently for every tick.</summary>
@@ -131,6 +144,8 @@ namespace StardewModdingAPI.Framework
         public ConcurrentQueue<string> CommandQueue { get; } = new ConcurrentQueue<string>();
 
         public static SGame instance;
+        /// <summary>Asset interceptors added or removed since the last tick.</summary>
+        private readonly List<AssetInterceptorChange> ReloadAssetInterceptorsQueue = new List<AssetInterceptorChange>();
 
         public bool IsGameSuspended;
 
@@ -142,21 +157,23 @@ namespace StardewModdingAPI.Framework
         /// <param name="monitor">Encapsulates monitoring and logging for SMAPI.</param>
         /// <param name="monitorForGame">Encapsulates monitoring and logging on the game's behalf.</param>
         /// <param name="reflection">Simplifies access to private game code.</param>
+        /// <param name="translator">Encapsulates access to arbitrary translations.</param>
         /// <param name="eventManager">Manages SMAPI events for mods.</param>
         /// <param name="jsonHelper">Encapsulates SMAPI's JSON file parsing.</param>
         /// <param name="modRegistry">Tracks the installed mods.</param>
         /// <param name="deprecationManager">Manages deprecation warnings.</param>
-        /// <param name="onLocaleChanged">A callback to invoke after the content language changes.</param>
-        /// <param name="onGameInitialised">A callback to invoke after the game finishes initialising.</param>
+        /// <param name="onGameInitialized">A callback to invoke after the game finishes initializing.</param>
         /// <param name="onGameExiting">A callback to invoke when the game exits.</param>
-        internal SGame(IMonitor monitor, IMonitor monitorForGame, Reflector reflection, EventManager eventManager, JsonHelper jsonHelper, ModRegistry modRegistry, DeprecationManager deprecationManager, Action onLocaleChanged, Action onGameInitialised, Action onGameExiting)
+        /// <param name="cancellationToken">Propagates notification that SMAPI should exit.</param>
+        /// <param name="logNetworkTraffic">Whether to log network traffic.</param>
+        internal SGame(Monitor monitor, IMonitor monitorForGame, Reflector reflection, Translator translator, EventManager eventManager, JsonHelper jsonHelper, ModRegistry modRegistry, DeprecationManager deprecationManager, Action onGameInitialized, Action onGameExiting, CancellationTokenSource cancellationToken, bool logNetworkTraffic)
         {
             this.OnLoadingFirstAsset = SGame.ConstructorHack.OnLoadingFirstAsset;
             SGame.ConstructorHack = null;
 
             // check expectations
             if (this.ContentCore == null)
-                throw new InvalidOperationException($"The game didn't initialise its first content manager before SMAPI's {nameof(SGame)} constructor. This indicates an incompatible lifecycle change.");
+                throw new InvalidOperationException($"The game didn't initialize its first content manager before SMAPI's {nameof(SGame)} constructor. This indicates an incompatible lifecycle change.");
 
             // init XNA
             Game1.graphics.GraphicsProfile = GraphicsProfile.HiDef;
@@ -167,21 +184,22 @@ namespace StardewModdingAPI.Framework
             this.Events = eventManager;
             this.ModRegistry = modRegistry;
             this.Reflection = reflection;
+            this.Translator = translator;
             this.DeprecationManager = deprecationManager;
-            this.OnLocaleChanged = onLocaleChanged;
-            this.OnGameInitialised = onGameInitialised;
+            this.OnGameInitialized = onGameInitialized;
             this.OnGameExiting = onGameExiting;
             Game1.input = new SInputState();
-            Game1.multiplayer = new SMultiplayer(monitor, eventManager, jsonHelper, modRegistry, reflection, this.OnModMessageReceived);
+            Game1.multiplayer = new SMultiplayer(monitor, eventManager, jsonHelper, modRegistry, reflection, this.OnModMessageReceived, logNetworkTraffic);
             Game1.hooks = new SModHooks(this.OnNewDayAfterFade);
+            this.CancellationToken = cancellationToken;
 
             // init observables
             Game1.locations = new ObservableCollection<GameLocation>();
             SGame.instance = this;
         }
 
-        /// <summary>Initialise just before the game's first update tick.</summary>
-        private void InitialiseAfterGameStarted()
+        /// <summary>Initialize just before the game's first update tick.</summary>
+        private void InitializeAfterGameStarted()
         {
             // set initial state
             this.Input.TrueUpdate();
@@ -190,7 +208,7 @@ namespace StardewModdingAPI.Framework
             this.Watchers = new WatcherCore(this.Input);
 
             // raise callback
-            this.OnGameInitialised();
+            this.OnGameInitialized();
         }
 
         /// <summary>Perform cleanup logic when the game exits.</summary>
@@ -199,7 +217,7 @@ namespace StardewModdingAPI.Framework
         /// <remarks>This overrides the logic in <see cref="Game1.exitEvent"/> to let SMAPI clean up before exit.</remarks>
         protected override void OnExiting(object sender, EventArgs args)
         {
-            Game1.multiplayer.Disconnect();
+            Game1.multiplayer.Disconnect(StardewValley.Multiplayer.DisconnectType.ClosedGame);
             this.OnGameExiting?.Invoke();
         }
 
@@ -216,6 +234,12 @@ namespace StardewModdingAPI.Framework
             // raise events for applicable mods
             HashSet<string> modIDs = new HashSet<string>(message.ToModIDs ?? this.ModRegistry.GetAll().Select(p => p.Manifest.UniqueID), StringComparer.InvariantCultureIgnoreCase);
             this.Events.ModMessageReceived.RaiseForMods(new ModMessageReceivedEventArgs(message), mod => mod != null && modIDs.Contains(mod.Manifest.UniqueID));
+        }
+
+        /// <summary>A callback invoked when custom content is removed from the save data to avoid a crash.</summary>
+        internal void OnSaveContentRemoved()
+        {
+            this.IsSaveContentRemoved = true;
         }
 
         /// <summary>A callback invoked when the game's low-level load stage changes.</summary>
@@ -239,11 +263,24 @@ namespace StardewModdingAPI.Framework
             // raise events
             this.Events.LoadStageChanged.Raise(new LoadStageChangedEventArgs(oldStage, newStage));
             if (newStage == LoadStage.None)
-            {
                 this.Events.ReturnedToTitle.RaiseEmpty();
-#if !SMAPI_3_0_STRICT
-                this.Events.Legacy_AfterReturnToTitle.Raise();
-#endif
+        }
+
+        /// <summary>A callback invoked when a mod adds or removes an asset interceptor.</summary>
+        /// <param name="mod">The mod which added or removed interceptors.</param>
+        /// <param name="added">The added interceptors.</param>
+        /// <param name="removed">The removed interceptors.</param>
+        internal void OnAssetInterceptorsChanged(IModMetadata mod, IEnumerable added, IEnumerable removed)
+        {
+            if (added != null)
+            {
+                foreach (object instance in added)
+                    this.ReloadAssetInterceptorsQueue.Add(new AssetInterceptorChange(mod, instance, wasAdded: true));
+            }
+            if (removed != null)
+            {
+                foreach (object instance in removed)
+                    this.ReloadAssetInterceptorsQueue.Add(new AssetInterceptorChange(mod, instance, wasAdded: false));
             }
         }
 
@@ -252,8 +289,8 @@ namespace StardewModdingAPI.Framework
         /// <param name="rootDirectory">The root directory to search for content.</param>
         protected override LocalizedContentManager CreateContentManager(IServiceProvider serviceProvider, string rootDirectory)
         {
-            // Game1._temporaryContent initialising from SGame constructor
-            // NOTE: this method is called before the SGame constructor runs. Don't depend on anything being initialised at this point.
+            // Game1._temporaryContent initializing from SGame constructor
+            // NOTE: this method is called before the SGame constructor runs. Don't depend on anything being initialized at this point.
             if (this.ContentCore == null)
             {
                 this.ContentCore = new ContentCoordinator(serviceProvider, rootDirectory, Thread.CurrentThread.CurrentUICulture, SGame.ConstructorHack.Monitor, SGame.ConstructorHack.Reflection, SGame.ConstructorHack.JsonHelper, this.OnLoadingFirstAsset ?? SGame.ConstructorHack?.OnLoadingFirstAsset);
@@ -261,7 +298,7 @@ namespace StardewModdingAPI.Framework
                 return this.ContentCore.CreateGameContentManager("Game1._temporaryContent");
             }
 
-            // Game1.content initialising from LoadContent
+            // Game1.content initializing from LoadContent
             if (this.NextContentManagerIsMain)
             {
                 this.NextContentManagerIsMain = false;
@@ -298,17 +335,29 @@ namespace StardewModdingAPI.Framework
                 this.DeprecationManager.PrintQueued();
 
                 /*********
-                ** Special cases
+                ** First-tick initialization
                 *********/
-                // Perform first-tick initialisation.
-                if (!this.IsInitialised)
+                if (!this.IsInitialized)
                 {
-                    this.IsInitialised = true;
-                    this.InitialiseAfterGameStarted();
+                    this.IsInitialized = true;
+                    this.InitializeAfterGameStarted();
                 }
 
+                /*********
+                ** Update input
+                *********/
+                // This should *always* run, even when suppressing mod events, since the game uses
+                // this too. For example, doing this after mod event suppression would prevent the
+                // user from doing anything on the overnight shipping screen.
+                SInputState inputState = this.Input;
+                if (this.IsActive)
+                    inputState.TrueUpdate();
+
+                /*********
+                ** Special cases
+                *********/
                 // Abort if SMAPI is exiting.
-                if (this.Monitor.IsExiting)
+                if (this.CancellationToken.IsCancellationRequested)
                 {
                     this.Monitor.Log("SMAPI shutting down: aborting update.", LogLevel.Trace);
                     return;
@@ -319,7 +368,7 @@ namespace StardewModdingAPI.Framework
                 bool saveParsed = false;
                 if (Game1.currentLoader != null)
                 {
-                    //this.Monitor.Log("Game loader synchronising...", LogLevel.Trace);
+                    this.Monitor.Log("Game loader synchronizing...", LogLevel.Trace);
                     while (Game1.currentLoader?.MoveNext() == true)
                     {
                         // raise load stage changed
@@ -363,7 +412,7 @@ namespace StardewModdingAPI.Framework
                 }
                 if (Game1._newDayTask?.Status == TaskStatus.Created)
                 {
-                    this.Monitor.Log("New day task synchronising...", LogLevel.Trace);
+                    this.Monitor.Log("New day task synchronizing...", LogLevel.Trace);
                     Game1._newDayTask.RunSynchronously();
                     this.Monitor.Log("New day task done.", LogLevel.Trace);
                 }
@@ -376,17 +425,78 @@ namespace StardewModdingAPI.Framework
                 // Therefore we can just run Game1.Update here without raising any SMAPI events. There's
                 // a small chance that the task will finish after we defer but before the game checks,
                 // which means technically events should be raised, but the effects of missing one
-                // update tick are neglible and not worth the complications of bypassing Game1.Update.
+                // update tick are negligible and not worth the complications of bypassing Game1.Update.
                 if (Game1._newDayTask != null || Game1.gameMode == Game1.loadingMode)
                 {
                     events.UnvalidatedUpdateTicking.RaiseEmpty();
                     SGame.TicksElapsed++;
                     base.Update(gameTime);
                     events.UnvalidatedUpdateTicked.RaiseEmpty();
-#if !SMAPI_3_0_STRICT
-                    events.Legacy_UnvalidatedUpdateTick.Raise();
-#endif
                     return;
+                }
+
+                // Raise minimal events while saving.
+                // While the game is writing to the save file in the background, mods can unexpectedly
+                // fail since they don't have exclusive access to resources (e.g. collection changed
+                // during enumeration errors). To avoid problems, events are not invoked while a save
+                // is in progress. It's safe to raise SaveEvents.BeforeSave as soon as the menu is
+                // opened (since the save hasn't started yet), but all other events should be suppressed.
+                if (Context.IsSaving)
+                {
+                    // raise before-create
+                    if (!Context.IsWorldReady && !this.IsBetweenCreateEvents)
+                    {
+                        this.IsBetweenCreateEvents = true;
+                        this.Monitor.Log("Context: before save creation.", LogLevel.Trace);
+                        events.SaveCreating.RaiseEmpty();
+                    }
+
+                    // raise before-save
+                    if (Context.IsWorldReady && !this.IsBetweenSaveEvents)
+                    {
+                        this.IsBetweenSaveEvents = true;
+                        this.Monitor.Log("Context: before save.", LogLevel.Trace);
+                        events.Saving.RaiseEmpty();
+                    }
+
+                    // suppress non-save events
+                    events.UnvalidatedUpdateTicking.RaiseEmpty();
+                    SGame.TicksElapsed++;
+                    base.Update(gameTime);
+                    events.UnvalidatedUpdateTicked.RaiseEmpty();
+                    return;
+                }
+
+                /*********
+                ** Reload assets when interceptors are added/removed
+                *********/
+                if (this.ReloadAssetInterceptorsQueue.Any())
+                {
+                    // get unique interceptors
+                    AssetInterceptorChange[] interceptors = this.ReloadAssetInterceptorsQueue
+                        .GroupBy(p => p.Instance, new ObjectReferenceComparer<object>())
+                        .Select(p => p.First())
+                        .ToArray();
+                    this.ReloadAssetInterceptorsQueue.Clear();
+
+                    // log summary
+                    this.Monitor.Log("Invalidating cached assets for new editors & loaders...");
+                    this.Monitor.Log(
+                        "   changed: "
+                        + string.Join(", ",
+                            interceptors
+                                .GroupBy(p => p.Mod)
+                                .OrderBy(p => p.Key.DisplayName)
+                                .Select(modGroup =>
+                                    $"{modGroup.Key.DisplayName} ("
+                                    + string.Join(", ", modGroup.GroupBy(p => p.WasAdded).ToDictionary(p => p.Key, p => p.Count()).Select(p => $"{(p.Key ? "added" : "removed")} {p.Value}"))
+                                    + ")"
+                            )
+                        )
+                    );
+
+                    // reload affected assets
+                    this.ContentCore.InvalidateCache(asset => interceptors.Any(p => p.CanIntercept(asset)));
                 }
 
                 /*********
@@ -427,85 +537,6 @@ namespace StardewModdingAPI.Framework
                 }
 
                 /*********
-                ** Update input
-                *********/
-                // This should *always* run, even when suppressing mod events, since the game uses
-                // this too. For example, doing this after mod event suppression would prevent the
-                // user from doing anything on the overnight shipping screen.
-#if !SMAPI_3_0_STRICT
-                SInputState previousInputState = this.Input.Clone();
-#endif
-                SInputState inputState = this.Input;
-                if (this.IsActive)
-                    inputState.TrueUpdate();
-
-                /*********
-                ** Save events + suppress events during save
-                *********/
-                // While the game is writing to the save file in the background, mods can unexpectedly
-                // fail since they don't have exclusive access to resources (e.g. collection changed
-                // during enumeration errors). To avoid problems, events are not invoked while a save
-                // is in progress. It's safe to raise SaveEvents.BeforeSave as soon as the menu is
-                // opened (since the save hasn't started yet), but all other events should be suppressed.
-                if (Context.IsSaving)
-                {
-                    // raise before-create
-                    if (!Context.IsWorldReady && !this.IsBetweenCreateEvents)
-                    {
-                        this.IsBetweenCreateEvents = true;
-                        this.Monitor.Log("Context: before save creation.", LogLevel.Trace);
-                        events.SaveCreating.RaiseEmpty();
-#if !SMAPI_3_0_STRICT
-                        events.Legacy_BeforeCreateSave.Raise();
-#endif
-                    }
-
-                    // raise before-save
-                    if (Context.IsWorldReady && !this.IsBetweenSaveEvents)
-                    {
-                        this.IsBetweenSaveEvents = true;
-                        this.Monitor.Log("Context: before save.", LogLevel.Trace);
-                        events.Saving.RaiseEmpty();
-#if !SMAPI_3_0_STRICT
-                        events.Legacy_BeforeSave.Raise();
-#endif
-                    }
-
-                    // suppress non-save events
-                    events.UnvalidatedUpdateTicking.RaiseEmpty();
-                    SGame.TicksElapsed++;
-                    base.Update(gameTime);
-                    events.UnvalidatedUpdateTicked.RaiseEmpty();
-#if !SMAPI_3_0_STRICT
-                    events.Legacy_UnvalidatedUpdateTick.Raise();
-#endif
-                    return;
-                }
-                if (this.IsBetweenCreateEvents)
-                {
-                    // raise after-create
-                    this.IsBetweenCreateEvents = false;
-                    this.Monitor.Log($"Context: after save creation, starting {Game1.currentSeason} {Game1.dayOfMonth} Y{Game1.year}.", LogLevel.Trace);
-                    this.OnLoadStageChanged(LoadStage.CreatedSaveFile);
-                    events.SaveCreated.RaiseEmpty();
-#if !SMAPI_3_0_STRICT
-                    events.Legacy_AfterCreateSave.Raise();
-#endif
-                }
-                if (this.IsBetweenSaveEvents)
-                {
-                    // raise after-save
-                    this.IsBetweenSaveEvents = false;
-                    this.Monitor.Log($"Context: after save, starting {Game1.currentSeason} {Game1.dayOfMonth} Y{Game1.year}.", LogLevel.Trace);
-                    events.Saved.RaiseEmpty();
-                    events.DayStarted.RaiseEmpty();
-#if !SMAPI_3_0_STRICT
-                    events.Legacy_AfterSave.Raise();
-                    events.Legacy_AfterDayStarted.Raise();
-#endif
-                }
-
-                /*********
                 ** Update context
                 *********/
                 bool wasWorldReady = Context.IsWorldReady;
@@ -516,204 +547,153 @@ namespace StardewModdingAPI.Framework
                 }
                 else if (Context.IsSaveLoaded && this.AfterLoadTimer.Current > 0 && Game1.currentLocation != null)
                 {
-                    if (Game1.dayOfMonth != 0) // wait until new-game intro finishes (world not fully initialised yet)
+                    if (Game1.dayOfMonth != 0) // wait until new-game intro finishes (world not fully initialized yet)
                         this.AfterLoadTimer.Decrement();
                     Context.IsWorldReady = this.AfterLoadTimer.Current == 0;
                 }
 
                 /*********
                 ** Update watchers
+                **   (Watchers need to be updated, checked, and reset in one go so we can detect any changes mods make in event handlers.)
                 *********/
                 this.Watchers.Update();
+                this.WatcherSnapshot.Update(this.Watchers);
+                this.Watchers.Reset();
+                WatcherSnapshot state = this.WatcherSnapshot;
 
                 /*********
-                ** Locale changed events
+                ** Display in-game warnings
                 *********/
-                if (this.Watchers.LocaleWatcher.IsChanged || SGame.TicksElapsed == 0)
+                // save content removed
+                if (this.IsSaveContentRemoved && Context.IsWorldReady)
                 {
-                    var was = this.Watchers.LocaleWatcher.PreviousValue;
-                    var now = this.Watchers.LocaleWatcher.CurrentValue;
-
-                    this.Monitor.Log($"Context: locale set to {now}.", LogLevel.Trace);
-
-                    this.OnLocaleChanged();
-#if !SMAPI_3_0_STRICT
-                    events.Legacy_LocaleChanged.Raise(new EventArgsValueChanged<string>(was.ToString(), now.ToString()));
-#endif
-
-                    this.Watchers.LocaleWatcher.Reset();
+                    this.IsSaveContentRemoved = false;
+                    Game1.addHUDMessage(new HUDMessage(this.Translator.Get("warn.invalid-content-removed"), HUDMessage.error_type));
                 }
 
                 /*********
-                ** Load / return-to-title events
+                ** Pre-update events
                 *********/
-                if (wasWorldReady && !Context.IsWorldReady)
-                    this.OnLoadStageChanged(LoadStage.None);
-                else if (Context.IsWorldReady && Context.LoadStage != LoadStage.Ready)
                 {
-                    // print context
-                    string context = $"Context: loaded save '{Constants.SaveFolderName}', starting {Game1.currentSeason} {Game1.dayOfMonth} Y{Game1.year}, locale set to {this.ContentCore.Language}.";
-                    if (Context.IsMultiplayer)
+                    /*********
+                    ** Save created/loaded events
+                    *********/
+                    if (this.IsBetweenCreateEvents)
                     {
-                        int onlineCount = Game1.getOnlineFarmers().Count();
-                        context += $" {(Context.IsMainPlayer ? "Main player" : "Farmhand")} with {onlineCount} {(onlineCount == 1 ? "player" : "players")} online.";
+                        // raise after-create
+                        this.IsBetweenCreateEvents = false;
+                        this.Monitor.Log($"Context: after save creation, starting {Game1.currentSeason} {Game1.dayOfMonth} Y{Game1.year}.", LogLevel.Trace);
+                        this.OnLoadStageChanged(LoadStage.CreatedSaveFile);
+                        events.SaveCreated.RaiseEmpty();
                     }
-                    else
-                        context += " Single-player.";
-                    this.Monitor.Log(context, LogLevel.Trace);
-
-                    // raise events
-                    this.OnLoadStageChanged(LoadStage.Ready);
-                    events.SaveLoaded.RaiseEmpty();
-                    events.DayStarted.RaiseEmpty();
-#if !SMAPI_3_0_STRICT
-                    events.Legacy_AfterLoad.Raise();
-                    events.Legacy_AfterDayStarted.Raise();
-#endif
-                }
-
-                /*********
-                ** Window events
-                *********/
-                // Here we depend on the game's viewport instead of listening to the Window.Resize
-                // event because we need to notify mods after the game handles the resize, so the
-                // game's metadata (like Game1.viewport) are updated. That's a bit complicated
-                // since the game adds & removes its own handler on the fly.
-                if (this.Watchers.WindowSizeWatcher.IsChanged)
-                {
-                    if (this.Monitor.IsVerbose)
-                        this.Monitor.Log($"Events: window size changed to {this.Watchers.WindowSizeWatcher.CurrentValue}.", LogLevel.Trace);
-
-                    Point oldSize = this.Watchers.WindowSizeWatcher.PreviousValue;
-                    Point newSize = this.Watchers.WindowSizeWatcher.CurrentValue;
-
-                    events.WindowResized.Raise(new WindowResizedEventArgs(oldSize, newSize));
-#if !SMAPI_3_0_STRICT
-                    events.Legacy_Resize.Raise();
-#endif
-                    this.Watchers.WindowSizeWatcher.Reset();
-                }
-
-                /*********
-                ** Input events (if window has focus)
-                *********/
-                if (this.IsActive)
-                {
-                    // raise events
-                    bool isChatInput = Game1.IsChatting || (Context.IsMultiplayer && Context.IsWorldReady && Game1.activeClickableMenu == null && Game1.currentMinigame == null && inputState.IsAnyDown(Game1.options.chatButton));
-                    if (!isChatInput)
+                    if (this.IsBetweenSaveEvents)
                     {
-                        ICursorPosition cursor = this.Input.CursorPosition;
-
-                        // raise cursor moved event
-                        if (this.Watchers.CursorWatcher.IsChanged)
-                        {
-                            if (events.CursorMoved.HasListeners())
-                            {
-                                ICursorPosition was = this.Watchers.CursorWatcher.PreviousValue;
-                                ICursorPosition now = this.Watchers.CursorWatcher.CurrentValue;
-                                this.Watchers.CursorWatcher.Reset();
-
-                                events.CursorMoved.Raise(new CursorMovedEventArgs(was, now));
-                            }
-                            else
-                                this.Watchers.CursorWatcher.Reset();
-                        }
-
-                        // raise mouse wheel scrolled
-                        if (this.Watchers.MouseWheelScrollWatcher.IsChanged)
-                        {
-                            if (events.MouseWheelScrolled.HasListeners() || this.Monitor.IsVerbose)
-                            {
-                                int was = this.Watchers.MouseWheelScrollWatcher.PreviousValue;
-                                int now = this.Watchers.MouseWheelScrollWatcher.CurrentValue;
-                                this.Watchers.MouseWheelScrollWatcher.Reset();
-
-                                if (this.Monitor.IsVerbose)
-                                    this.Monitor.Log($"Events: mouse wheel scrolled to {now}.", LogLevel.Trace);
-                                events.MouseWheelScrolled.Raise(new MouseWheelScrolledEventArgs(cursor, was, now));
-                            }
-                            else
-                                this.Watchers.MouseWheelScrollWatcher.Reset();
-                        }
-
-                        // raise input button events
-                        foreach (var pair in inputState.ActiveButtons)
-                        {
-                            SButton button = pair.Key;
-                            InputStatus status = pair.Value;
-
-                            if (status == InputStatus.Pressed)
-                            {
-                                if (this.Monitor.IsVerbose)
-                                    this.Monitor.Log($"Events: button {button} pressed.", LogLevel.Trace);
-
-                                events.ButtonPressed.Raise(new ButtonPressedEventArgs(button, cursor, inputState));
-
-#if !SMAPI_3_0_STRICT
-                                // legacy events
-                                events.Legacy_ButtonPressed.Raise(new EventArgsInput(button, cursor, inputState.SuppressButtons));
-                                if (button.TryGetKeyboard(out Keys key))
-                                {
-                                    if (key != Keys.None)
-                                        events.Legacy_KeyPressed.Raise(new EventArgsKeyPressed(key));
-                                }
-                                else if (button.TryGetController(out Buttons controllerButton))
-                                {
-                                    if (controllerButton == Buttons.LeftTrigger || controllerButton == Buttons.RightTrigger)
-                                        events.Legacy_ControllerTriggerPressed.Raise(new EventArgsControllerTriggerPressed(PlayerIndex.One, controllerButton, controllerButton == Buttons.LeftTrigger ? inputState.RealController.Triggers.Left : inputState.RealController.Triggers.Right));
-                                    else
-                                        events.Legacy_ControllerButtonPressed.Raise(new EventArgsControllerButtonPressed(PlayerIndex.One, controllerButton));
-                                }
-#endif
-                            }
-                            else if (status == InputStatus.Released)
-                            {
-                                if (this.Monitor.IsVerbose)
-                                    this.Monitor.Log($"Events: button {button} released.", LogLevel.Trace);
-
-                                events.ButtonReleased.Raise(new ButtonReleasedEventArgs(button, cursor, inputState));
-
-#if !SMAPI_3_0_STRICT
-                                // legacy events
-                                events.Legacy_ButtonReleased.Raise(new EventArgsInput(button, cursor, inputState.SuppressButtons));
-                                if (button.TryGetKeyboard(out Keys key))
-                                {
-                                    if (key != Keys.None)
-                                        events.Legacy_KeyReleased.Raise(new EventArgsKeyPressed(key));
-                                }
-                                else if (button.TryGetController(out Buttons controllerButton))
-                                {
-                                    if (controllerButton == Buttons.LeftTrigger || controllerButton == Buttons.RightTrigger)
-                                        events.Legacy_ControllerTriggerReleased.Raise(new EventArgsControllerTriggerReleased(PlayerIndex.One, controllerButton, controllerButton == Buttons.LeftTrigger ? inputState.RealController.Triggers.Left : inputState.RealController.Triggers.Right));
-                                    else
-                                        events.Legacy_ControllerButtonReleased.Raise(new EventArgsControllerButtonReleased(PlayerIndex.One, controllerButton));
-                                }
-#endif
-                            }
-                        }
-
-#if !SMAPI_3_0_STRICT
-                        // raise legacy state-changed events
-                        if (inputState.RealKeyboard != previousInputState.RealKeyboard)
-                            events.Legacy_KeyboardChanged.Raise(new EventArgsKeyboardStateChanged(previousInputState.RealKeyboard, inputState.RealKeyboard));
-                        if (inputState.RealMouse != previousInputState.RealMouse)
-                            events.Legacy_MouseChanged.Raise(new EventArgsMouseStateChanged(previousInputState.RealMouse, inputState.RealMouse, new Point((int)previousInputState.CursorPosition.ScreenPixels.X, (int)previousInputState.CursorPosition.ScreenPixels.Y), new Point((int)inputState.CursorPosition.ScreenPixels.X, (int)inputState.CursorPosition.ScreenPixels.Y)));
-#endif
+                        // raise after-save
+                        this.IsBetweenSaveEvents = false;
+                        this.Monitor.Log($"Context: after save, starting {Game1.currentSeason} {Game1.dayOfMonth} Y{Game1.year}.", LogLevel.Trace);
+                        events.Saved.RaiseEmpty();
+                        events.DayStarted.RaiseEmpty();
                     }
-                }
 
-                /*********
-                ** Menu events
-                *********/
-                if (this.Watchers.ActiveMenuWatcher.IsChanged)
-                {
-                    IClickableMenu was = this.Watchers.ActiveMenuWatcher.PreviousValue;
-                    IClickableMenu now = this.Watchers.ActiveMenuWatcher.CurrentValue;
-                    this.Watchers.ActiveMenuWatcher.Reset(); // reset here so a mod changing the menu will be raised as a new event afterwards
+                    /*********
+                    ** Locale changed events
+                    *********/
+                    if (state.Locale.IsChanged)
+                        this.Monitor.Log($"Context: locale set to {state.Locale.New}.", LogLevel.Trace);
 
-                    if (this.Monitor.IsVerbose)
-                        this.Monitor.Log($"Context: menu changed from {was?.GetType().FullName ?? "none"} to {now?.GetType().FullName ?? "none"}.", LogLevel.Trace);
+                    /*********
+                    ** Load / return-to-title events
+                    *********/
+                    if (wasWorldReady && !Context.IsWorldReady)
+                        this.OnLoadStageChanged(LoadStage.None);
+                    else if (Context.IsWorldReady && Context.LoadStage != LoadStage.Ready)
+                    {
+                        // print context
+                        string context = $"Context: loaded save '{Constants.SaveFolderName}', starting {Game1.currentSeason} {Game1.dayOfMonth} Y{Game1.year}, locale set to {this.ContentCore.Language}.";
+                        if (Context.IsMultiplayer)
+                        {
+                            int onlineCount = Game1.getOnlineFarmers().Count();
+                            context += $" {(Context.IsMainPlayer ? "Main player" : "Farmhand")} with {onlineCount} {(onlineCount == 1 ? "player" : "players")} online.";
+                        }
+                        else
+                            context += " Single-player.";
+                        this.Monitor.Log(context, LogLevel.Trace);
+
+                        // raise events
+                        this.OnLoadStageChanged(LoadStage.Ready);
+                        events.SaveLoaded.RaiseEmpty();
+                        events.DayStarted.RaiseEmpty();
+                    }
+
+                    /*********
+                    ** Window events
+                    *********/
+                    // Here we depend on the game's viewport instead of listening to the Window.Resize
+                    // event because we need to notify mods after the game handles the resize, so the
+                    // game's metadata (like Game1.viewport) are updated. That's a bit complicated
+                    // since the game adds & removes its own handler on the fly.
+                    if (state.WindowSize.IsChanged)
+                    {
+                        if (this.Monitor.IsVerbose)
+                            this.Monitor.Log($"Events: window size changed to {state.WindowSize.New}.", LogLevel.Trace);
+
+                        events.WindowResized.Raise(new WindowResizedEventArgs(state.WindowSize.Old, state.WindowSize.New));
+                    }
+
+                    /*********
+                    ** Input events (if window has focus)
+                    *********/
+                    if (this.IsActive)
+                    {
+                        // raise events
+                        bool isChatInput = Game1.IsChatting || (Context.IsMultiplayer && Context.IsWorldReady && Game1.activeClickableMenu == null && Game1.currentMinigame == null && inputState.IsAnyDown(Game1.options.chatButton));
+                        if (!isChatInput)
+                        {
+                            ICursorPosition cursor = this.Input.CursorPosition;
+
+                            // raise cursor moved event
+                            if (state.Cursor.IsChanged)
+                                events.CursorMoved.Raise(new CursorMovedEventArgs(state.Cursor.Old, state.Cursor.New));
+
+                            // raise mouse wheel scrolled
+                            if (state.MouseWheelScroll.IsChanged)
+                            {
+                                if (this.Monitor.IsVerbose)
+                                    this.Monitor.Log($"Events: mouse wheel scrolled to {state.MouseWheelScroll.New}.", LogLevel.Trace);
+                                events.MouseWheelScrolled.Raise(new MouseWheelScrolledEventArgs(cursor, state.MouseWheelScroll.Old, state.MouseWheelScroll.New));
+                            }
+
+                            // raise input button events
+                            foreach (var pair in inputState.ActiveButtons)
+                            {
+                                SButton button = pair.Key;
+                                InputStatus status = pair.Value;
+
+                                if (status == InputStatus.Pressed)
+                                {
+                                    if (this.Monitor.IsVerbose)
+                                        this.Monitor.Log($"Events: button {button} pressed.", LogLevel.Trace);
+
+                                    events.ButtonPressed.Raise(new ButtonPressedEventArgs(button, cursor, inputState));
+                                }
+                                else if (status == InputStatus.Released)
+                                {
+                                    if (this.Monitor.IsVerbose)
+                                        this.Monitor.Log($"Events: button {button} released.", LogLevel.Trace);
+
+                                    events.ButtonReleased.Raise(new ButtonReleasedEventArgs(button, cursor, inputState));
+                                }
+                            }
+                        }
+                    }
+
+                    /*********
+                    ** Menu events
+                    *********/
+                    if (state.ActiveMenu.IsChanged)
+                    {
+                        if (this.Monitor.IsVerbose)
+                            this.Monitor.Log($"Context: menu changed from {state.ActiveMenu.Old?.GetType().FullName ?? "none"} to {state.ActiveMenu.New?.GetType().FullName ?? "none"}.", LogLevel.Trace);
 
                     // raise menu events
                     int forSaleCount = 0;
@@ -726,12 +706,6 @@ namespace StardewModdingAPI.Framework
                         forSaleCount = forSale.Count;
                     }
                     events.MenuChanged.Raise(new MenuChangedEventArgs(was, now));
-#if !SMAPI_3_0_STRICT
-                    if (now != null)
-                        events.Legacy_MenuChanged.Raise(new EventArgsClickableMenuChanged(was, now));
-                    else
-                        events.Legacy_MenuClosed.Raise(new EventArgsClickableMenuClosed(was));
-#endif
 
                     if (now is GameMenu gameMenu)
                     {
@@ -759,22 +733,18 @@ namespace StardewModdingAPI.Framework
                     }
                 }
 
-                /*********
-                ** World & player events
-                *********/
-                if (Context.IsWorldReady)
-                {
-                    bool raiseWorldEvents = !this.Watchers.SaveIdWatcher.IsChanged; // don't report changes from unloaded => loaded
-
-                    // raise location changes
-                    if (this.Watchers.LocationsWatcher.IsChanged)
+                    /*********
+                    ** World & player events
+                    *********/
+                    if (Context.IsWorldReady)
                     {
+                        bool raiseWorldEvents = !state.SaveID.IsChanged; // don't report changes from unloaded => loaded
+
                         // location list changes
-                        if (this.Watchers.LocationsWatcher.IsLocationListChanged)
+                        if (state.Locations.LocationList.IsChanged && (events.LocationListChanged.HasListeners() || this.Monitor.IsVerbose))
                         {
-                            GameLocation[] added = this.Watchers.LocationsWatcher.Added.ToArray();
-                            GameLocation[] removed = this.Watchers.LocationsWatcher.Removed.ToArray();
-                            this.Watchers.LocationsWatcher.ResetLocationList();
+                            var added = state.Locations.LocationList.Added.ToArray();
+                            var removed = state.Locations.LocationList.Removed.ToArray();
 
                             if (this.Monitor.IsVerbose)
                             {
@@ -784,224 +754,139 @@ namespace StardewModdingAPI.Framework
                             }
 
                             events.LocationListChanged.Raise(new LocationListChangedEventArgs(added, removed));
-#if !SMAPI_3_0_STRICT
-                            events.Legacy_LocationsChanged.Raise(new EventArgsLocationsChanged(added, removed));
-#endif
                         }
 
                         // raise location contents changed
                         if (raiseWorldEvents)
                         {
-                            foreach (LocationTracker watcher in this.Watchers.LocationsWatcher.Locations)
+                            foreach (LocationSnapshot locState in state.Locations.Locations)
                             {
-                                // buildings changed
-                                if (watcher.BuildingsWatcher.IsChanged)
-                                {
-                                    GameLocation location = watcher.Location;
-                                    Building[] added = watcher.BuildingsWatcher.Added.ToArray();
-                                    Building[] removed = watcher.BuildingsWatcher.Removed.ToArray();
-                                    watcher.BuildingsWatcher.Reset();
+                                var location = locState.Location;
 
-                                    events.BuildingListChanged.Raise(new BuildingListChangedEventArgs(location, added, removed));
-#if !SMAPI_3_0_STRICT
-                                    events.Legacy_BuildingsChanged.Raise(new EventArgsLocationBuildingsChanged(location, added, removed));
-#endif
-                                }
+                                // buildings changed
+                                if (locState.Buildings.IsChanged)
+                                    events.BuildingListChanged.Raise(new BuildingListChangedEventArgs(location, locState.Buildings.Added, locState.Buildings.Removed));
 
                                 // debris changed
-                                if (watcher.DebrisWatcher.IsChanged)
-                                {
-                                    GameLocation location = watcher.Location;
-                                    Debris[] added = watcher.DebrisWatcher.Added.ToArray();
-                                    Debris[] removed = watcher.DebrisWatcher.Removed.ToArray();
-                                    watcher.DebrisWatcher.Reset();
-
-                                    events.DebrisListChanged.Raise(new DebrisListChangedEventArgs(location, added, removed));
-                                }
+                                if (locState.Debris.IsChanged)
+                                    events.DebrisListChanged.Raise(new DebrisListChangedEventArgs(location, locState.Debris.Added, locState.Debris.Removed));
 
                                 // large terrain features changed
-                                if (watcher.LargeTerrainFeaturesWatcher.IsChanged)
-                                {
-                                    GameLocation location = watcher.Location;
-                                    LargeTerrainFeature[] added = watcher.LargeTerrainFeaturesWatcher.Added.ToArray();
-                                    LargeTerrainFeature[] removed = watcher.LargeTerrainFeaturesWatcher.Removed.ToArray();
-                                    watcher.LargeTerrainFeaturesWatcher.Reset();
-
-                                    events.LargeTerrainFeatureListChanged.Raise(new LargeTerrainFeatureListChangedEventArgs(location, added, removed));
-                                }
+                                if (locState.LargeTerrainFeatures.IsChanged)
+                                    events.LargeTerrainFeatureListChanged.Raise(new LargeTerrainFeatureListChangedEventArgs(location, locState.LargeTerrainFeatures.Added, locState.LargeTerrainFeatures.Removed));
 
                                 // NPCs changed
-                                if (watcher.NpcsWatcher.IsChanged)
-                                {
-                                    GameLocation location = watcher.Location;
-                                    NPC[] added = watcher.NpcsWatcher.Added.ToArray();
-                                    NPC[] removed = watcher.NpcsWatcher.Removed.ToArray();
-                                    watcher.NpcsWatcher.Reset();
-
-                                    events.NpcListChanged.Raise(new NpcListChangedEventArgs(location, added, removed));
-                                }
+                                if (locState.Npcs.IsChanged)
+                                    events.NpcListChanged.Raise(new NpcListChangedEventArgs(location, locState.Npcs.Added, locState.Npcs.Removed));
 
                                 // objects changed
-                                if (watcher.ObjectsWatcher.IsChanged)
-                                {
-                                    GameLocation location = watcher.Location;
-                                    KeyValuePair<Vector2, SObject>[] added = watcher.ObjectsWatcher.Added.ToArray();
-                                    KeyValuePair<Vector2, SObject>[] removed = watcher.ObjectsWatcher.Removed.ToArray();
-                                    watcher.ObjectsWatcher.Reset();
+                                if (locState.Objects.IsChanged)
+                                    events.ObjectListChanged.Raise(new ObjectListChangedEventArgs(location, locState.Objects.Added, locState.Objects.Removed));
 
-                                    events.ObjectListChanged.Raise(new ObjectListChangedEventArgs(location, added, removed));
-#if !SMAPI_3_0_STRICT
-                                    events.Legacy_ObjectsChanged.Raise(new EventArgsLocationObjectsChanged(location, added, removed));
-#endif
+                                // chest items changed
+                                if (events.ChestInventoryChanged.HasListeners())
+                                {
+                                    foreach (var pair in locState.ChestItems)
+                                    {
+                                        SnapshotItemListDiff diff = pair.Value;
+                                        events.ChestInventoryChanged.Raise(new ChestInventoryChangedEventArgs(pair.Key, location, added: diff.Added, removed: diff.Removed, quantityChanged: diff.QuantityChanged));
+                                    }
                                 }
 
                                 // terrain features changed
-                                if (watcher.TerrainFeaturesWatcher.IsChanged)
-                                {
-                                    GameLocation location = watcher.Location;
-                                    KeyValuePair<Vector2, TerrainFeature>[] added = watcher.TerrainFeaturesWatcher.Added.ToArray();
-                                    KeyValuePair<Vector2, TerrainFeature>[] removed = watcher.TerrainFeaturesWatcher.Removed.ToArray();
-                                    watcher.TerrainFeaturesWatcher.Reset();
-
-                                    events.TerrainFeatureListChanged.Raise(new TerrainFeatureListChangedEventArgs(location, added, removed));
-                                }
+                                if (locState.TerrainFeatures.IsChanged)
+                                    events.TerrainFeatureListChanged.Raise(new TerrainFeatureListChangedEventArgs(location, locState.TerrainFeatures.Added, locState.TerrainFeatures.Removed));
                             }
                         }
-                        else
-                            this.Watchers.LocationsWatcher.Reset();
+
+                        // raise time changed
+                        if (raiseWorldEvents && state.Time.IsChanged)
+                            events.TimeChanged.Raise(new TimeChangedEventArgs(state.Time.Old, state.Time.New));
+
+                        // raise player events
+                        if (raiseWorldEvents)
+                        {
+                            PlayerSnapshot playerState = state.CurrentPlayer;
+                            Farmer player = playerState.Player;
+
+                            // raise current location changed
+                            if (playerState.Location.IsChanged)
+                            {
+                                if (this.Monitor.IsVerbose)
+                                    this.Monitor.Log($"Context: set location to {playerState.Location.New}.", LogLevel.Trace);
+
+                                events.Warped.Raise(new WarpedEventArgs(player, playerState.Location.Old, playerState.Location.New));
+                            }
+
+                            // raise player leveled up a skill
+                            foreach (var pair in playerState.Skills)
+                            {
+                                if (!pair.Value.IsChanged)
+                                    continue;
+
+                                if (this.Monitor.IsVerbose)
+                                    this.Monitor.Log($"Events: player skill '{pair.Key}' changed from {pair.Value.Old} to {pair.Value.New}.", LogLevel.Trace);
+
+                                events.LevelChanged.Raise(new LevelChangedEventArgs(player, pair.Key, pair.Value.Old, pair.Value.New));
+                            }
+
+                            // raise player inventory changed
+                            if (playerState.Inventory.IsChanged)
+                            {
+                                var inventory = playerState.Inventory;
+
+                                if (this.Monitor.IsVerbose)
+                                    this.Monitor.Log("Events: player inventory changed.", LogLevel.Trace);
+                                events.InventoryChanged.Raise(new InventoryChangedEventArgs(player, added: inventory.Added, removed: inventory.Removed, quantityChanged: inventory.QuantityChanged));
+                            }
+                        }
                     }
 
-                    // raise time changed
-                    if (raiseWorldEvents && this.Watchers.TimeWatcher.IsChanged)
+                    /*********
+                    ** Game update
+                    *********/
+                    // game launched
+                    bool isFirstTick = SGame.TicksElapsed == 0;
+                    if (isFirstTick)
                     {
-                        int was = this.Watchers.TimeWatcher.PreviousValue;
-                        int now = this.Watchers.TimeWatcher.CurrentValue;
-                        this.Watchers.TimeWatcher.Reset();
-
-                        if (this.Monitor.IsVerbose)
-                            this.Monitor.Log($"Events: time changed from {was} to {now}.", LogLevel.Trace);
-
-                        events.TimeChanged.Raise(new TimeChangedEventArgs(was, now));
-#if !SMAPI_3_0_STRICT
-                        events.Legacy_TimeOfDayChanged.Raise(new EventArgsIntChanged(was, now));
-#endif
+                        Context.IsGameLaunched = true;
+                        events.GameLaunched.Raise(new GameLaunchedEventArgs());
                     }
-                    else
-                        this.Watchers.TimeWatcher.Reset();
 
-                    // raise player events
-                    if (raiseWorldEvents)
-                    {
-                        PlayerTracker playerTracker = this.Watchers.CurrentPlayerTracker;
-
-                        // raise current location changed
-                        if (playerTracker.TryGetNewLocation(out GameLocation newLocation))
-                        {
-                            if (this.Monitor.IsVerbose)
-                                this.Monitor.Log($"Context: set location to {newLocation.Name}.", LogLevel.Trace);
-
-                            GameLocation oldLocation = playerTracker.LocationWatcher.PreviousValue;
-                            events.Warped.Raise(new WarpedEventArgs(playerTracker.Player, oldLocation, newLocation));
-#if !SMAPI_3_0_STRICT
-                            events.Legacy_PlayerWarped.Raise(new EventArgsPlayerWarped(oldLocation, newLocation));
-#endif
-                        }
-
-                        // raise player leveled up a skill
-                        foreach (KeyValuePair<SkillType, IValueWatcher<int>> pair in playerTracker.GetChangedSkills())
-                        {
-                            if (this.Monitor.IsVerbose)
-                                this.Monitor.Log($"Events: player skill '{pair.Key}' changed from {pair.Value.PreviousValue} to {pair.Value.CurrentValue}.", LogLevel.Trace);
-
-                            events.LevelChanged.Raise(new LevelChangedEventArgs(playerTracker.Player, pair.Key, pair.Value.PreviousValue, pair.Value.CurrentValue));
-#if !SMAPI_3_0_STRICT
-                            events.Legacy_LeveledUp.Raise(new EventArgsLevelUp((EventArgsLevelUp.LevelType)pair.Key, pair.Value.CurrentValue));
-#endif
-                        }
-
-                        // raise player inventory changed
-                        ItemStackChange[] changedItems = playerTracker.GetInventoryChanges().ToArray();
-                        if (changedItems.Any())
-                        {
-                            if (this.Monitor.IsVerbose)
-                                this.Monitor.Log("Events: player inventory changed.", LogLevel.Trace);
-                            events.InventoryChanged.Raise(new InventoryChangedEventArgs(playerTracker.Player, changedItems));
-#if !SMAPI_3_0_STRICT
-                            events.Legacy_InventoryChanged.Raise(new EventArgsInventoryChanged(Game1.player.Items, changedItems));
-#endif
-                        }
-
-                        // raise mine level changed
-                        if (playerTracker.TryGetNewMineLevel(out int mineLevel))
-                        {
-                            if (this.Monitor.IsVerbose)
-                                this.Monitor.Log($"Context: mine level changed to {mineLevel}.", LogLevel.Trace);
-#if !SMAPI_3_0_STRICT
-                            events.Legacy_MineLevelChanged.Raise(new EventArgsMineLevelChanged(playerTracker.MineLevelWatcher.PreviousValue, mineLevel));
-#endif
-                        }
-                    }
-                    this.Watchers.CurrentPlayerTracker?.Reset();
+                    // preloaded
+                    if (Context.IsSaveLoaded && Context.LoadStage != LoadStage.Loaded && Context.LoadStage != LoadStage.Ready && Game1.dayOfMonth != 0)
+                        this.OnLoadStageChanged(LoadStage.Loaded);
                 }
-
-                // update save ID watcher
-                this.Watchers.SaveIdWatcher.Reset();
 
                 /*********
-                ** Game update
+                ** Game update tick
                 *********/
-                // game launched
-                bool isFirstTick = SGame.TicksElapsed == 0;
-                if (isFirstTick)
-                    events.GameLaunched.Raise(new GameLaunchedEventArgs());
-
-                // preloaded
-                if (Context.IsSaveLoaded && Context.LoadStage != LoadStage.Loaded && Context.LoadStage != LoadStage.Ready)
-                    this.OnLoadStageChanged(LoadStage.Loaded);
-
-                // update tick
-                bool isOneSecond = SGame.TicksElapsed % 60 == 0;
-                events.UnvalidatedUpdateTicking.RaiseEmpty();
-                events.UpdateTicking.RaiseEmpty();
-                if (isOneSecond)
-                    events.OneSecondUpdateTicking.RaiseEmpty();
-                try
                 {
-                    this.Input.UpdateSuppression();
-                    SGame.TicksElapsed++;
-                    base.Update(gameTime);
+                    bool isOneSecond = SGame.TicksElapsed % 60 == 0;
+                    events.UnvalidatedUpdateTicking.RaiseEmpty();
+                    events.UpdateTicking.RaiseEmpty();
+                    if (isOneSecond)
+                        events.OneSecondUpdateTicking.RaiseEmpty();
+                    try
+                    {
+                        this.Input.UpdateSuppression();
+                        SGame.TicksElapsed++;
+                        base.Update(gameTime);
+                    }
+                    catch (Exception ex)
+                    {
+                        this.MonitorForGame.Log($"An error occured in the base update loop: {ex.GetLogSummary()}", LogLevel.Error);
+                    }
+
+                    events.UnvalidatedUpdateTicked.RaiseEmpty();
+                    events.UpdateTicked.RaiseEmpty();
+                    if (isOneSecond)
+                        events.OneSecondUpdateTicked.RaiseEmpty();
                 }
-                catch (Exception ex)
-                {
-                    this.MonitorForGame.Log($"An error occured in the base update loop: {ex.GetLogSummary()}", LogLevel.Error);
-                }
-                events.UnvalidatedUpdateTicked.RaiseEmpty();
-                events.UpdateTicked.RaiseEmpty();
-                if (isOneSecond)
-                    events.OneSecondUpdateTicked.RaiseEmpty();
 
                 /*********
                 ** Update events
                 *********/
-#if !SMAPI_3_0_STRICT
-                events.Legacy_UnvalidatedUpdateTick.Raise();
-                if (isFirstTick)
-                    events.Legacy_FirstUpdateTick.Raise();
-                events.Legacy_UpdateTick.Raise();
-                if (SGame.TicksElapsed % 2 == 0)
-                    events.Legacy_SecondUpdateTick.Raise();
-                if (SGame.TicksElapsed % 4 == 0)
-                    events.Legacy_FourthUpdateTick.Raise();
-                if (SGame.TicksElapsed % 8 == 0)
-                    events.Legacy_EighthUpdateTick.Raise();
-                if (SGame.TicksElapsed % 15 == 0)
-                    events.Legacy_QuarterSecondTick.Raise();
-                if (SGame.TicksElapsed % 30 == 0)
-                    events.Legacy_HalfSecondTick.Raise();
-                if (SGame.TicksElapsed % 60 == 0)
-                    events.Legacy_OneSecondTick.Raise();
-#endif
-
                 this.UpdateCrashTimer.Reset();
             }
             catch (Exception ex)
@@ -1011,13 +896,15 @@ namespace StardewModdingAPI.Framework
 
                 // exit if irrecoverable
                 if (!this.UpdateCrashTimer.Decrement())
-                    this.Monitor.ExitGameImmediately("the game crashed when updating, and SMAPI was unable to recover the game.");
+                    this.ExitGameImmediately("The game crashed when updating, and SMAPI was unable to recover the game.");
             }
         }
 
         /// <summary>The method called to draw everything to the screen.</summary>
         /// <param name="gameTime">A snapshot of the game timing state.</param>
-        protected override void Draw(GameTime gameTime)
+        /// <param name="target_screen">The render target, if any.</param>
+        [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "copied from game code as-is")]
+        protected override void _draw(GameTime gameTime, RenderTarget2D target_screen)
         {
             Context.IsInDrawLoop = true;
             try
@@ -1066,7 +953,7 @@ namespace StardewModdingAPI.Framework
                 // exit if irrecoverable
                 if (!this.DrawCrashTimer.Decrement())
                 {
-                    this.Monitor.ExitGameImmediately("the game crashed when drawing, and SMAPI was unable to recover the game.");
+                    this.ExitGameImmediately("The game crashed when drawing, and SMAPI was unable to recover the game.");
                     return;
                 }
 
@@ -1089,8 +976,10 @@ namespace StardewModdingAPI.Framework
 
         /// <summary>Replicate the game's draw logic with some changes for SMAPI.</summary>
         /// <param name="gameTime">A snapshot of the game timing state.</param>
+        /// <param name="target_screen">The render target, if any.</param>
         /// <remarks>This implementation is identical to <see cref="Game1.Draw"/>, except for try..catch around menu draw code, private field references replaced by wrappers, and added events.</remarks>
         [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator", Justification = "copied from game code as-is")]
+        [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "copied from game code as-is")]
         [SuppressMessage("ReSharper", "LocalVariableHidesMember", Justification = "copied from game code as-is")]
         [SuppressMessage("ReSharper", "PossibleLossOfFraction", Justification = "copied from game code as-is")]
         [SuppressMessage("ReSharper", "RedundantArgumentDefaultValue", Justification = "copied from game code as-is")]
@@ -2126,23 +2015,12 @@ label_168:
             }
         }
 
-        /****
-        ** Methods
-        ****/
-#if !SMAPI_3_0_STRICT
-        /// <summary>Raise the <see cref="GraphicsEvents.OnPostRenderEvent"/> if there are any listeners.</summary>
-        /// <param name="needsNewBatch">Whether to create a new sprite batch.</param>
-        private void RaisePostRender(bool needsNewBatch = false)
+        /// <summary>Immediately exit the game without saving. This should only be invoked when an irrecoverable fatal error happens that risks save corruption or game-breaking bugs.</summary>
+        /// <param name="message">The fatal log message.</param>
+        private void ExitGameImmediately(string message)
         {
-            if (this.Events.Legacy_OnPostRenderEvent.HasListeners())
-            {
-                if (needsNewBatch)
-                    Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null);
-                this.Events.Legacy_OnPostRenderEvent.Raise();
-                if (needsNewBatch)
-                    Game1.spriteBatch.End();
-            }
+            this.Monitor.LogFatal(message);
+            this.CancellationToken.Cancel();
         }
-#endif
     }
 }

@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>SMAPI.Installer</AssemblyName>
+    <RootNamespace>StardewModdingAPI.Installer</RootNamespace>
+    <Description>The SMAPI installer for players.</Description>
+    <TargetFramework>net45</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <OutputType>Exe</OutputType>
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>$(SolutionDir)\..\bin\$(Configuration)\Installer</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SMAPI.Toolkit\SMAPI.Toolkit.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="README.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="windows-exe-config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="windows-install.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="unix-install.sh">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="unix-launcher.sh">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <Import Project="..\SMAPI.Internal\SMAPI.Internal.projitems" Label="Shared" />
+  <Import Project="..\..\build\prepare-install-package.targets" />
+
+</Project>

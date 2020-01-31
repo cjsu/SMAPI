@@ -9,7 +9,7 @@ namespace StardewModdingAPI.Web.Framework.Clients.Pastebin
         /// <summary>The fetched paste content (if <see cref="Success"/> is <c>true</c>).</summary>
         public string Content { get; set; }
 
-        /// <summary>The error message (if saving failed).</summary>
+        /// <summary>The error message if saving failed.</summary>
         public string Error { get; set; }
     }
 }

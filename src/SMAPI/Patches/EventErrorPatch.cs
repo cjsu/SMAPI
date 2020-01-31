@@ -7,6 +7,9 @@ using StardewValley;
 namespace StardewModdingAPI.Patches
 {
     /// <summary>A Harmony patch for the <see cref="Dialogue"/> constructor which intercepts invalid dialogue lines and logs an error instead of crashing.</summary>
+    /// <remarks>Patch methods must be static for Harmony to work correctly. See the Harmony documentation before renaming patch arguments.</remarks>
+    [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Argument names are defined by Harmony and methods are named for clarity.")]
+    [SuppressMessage("ReSharper", "IdentifierTypo", Justification = "Argument names are defined by Harmony and methods are named for clarity.")]
     internal class EventErrorPatch : IHarmonyPatch
     {
         /*********
@@ -23,7 +26,7 @@ namespace StardewModdingAPI.Patches
         ** Accessors
         *********/
         /// <summary>A unique name for this patch.</summary>
-        public string Name => $"{nameof(EventErrorPatch)}";
+        public string Name => nameof(EventErrorPatch);
 
 
         /*********
@@ -56,8 +59,6 @@ namespace StardewModdingAPI.Patches
         /// <param name="precondition">The precondition to be parsed.</param>
         /// <param name="__originalMethod">The method being wrapped.</param>
         /// <returns>Returns whether to execute the original method.</returns>
-        /// <remarks>This method must be static for Harmony to work correctly. See the Harmony documentation before renaming arguments.</remarks>
-        [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Argument names are defined by Harmony.")]
         private static bool Before_GameLocation_CheckEventPrecondition(GameLocation __instance, ref int __result, string precondition, MethodInfo __originalMethod)
         {
             if (EventErrorPatch.IsIntercepted)

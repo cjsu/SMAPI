@@ -1,7 +1,11 @@
+@using Humanizer
+@using Humanizer.Localisation
 @using Newtonsoft.Json
 @model StardewModdingAPI.Web.ViewModels.ModListModel
 @{
     ViewData["Title"] = "Mod compatibility";
+
+    TimeSpan staleAge = DateTimeOffset.UtcNow - Model.LastUpdated;
 }
 @section Head {
     <link rel="stylesheet" href="~/Content/css/mods.css?r=20190302" />
@@ -18,83 +22,104 @@
     </script>
 }
 
-<div id="app">
-    <div id="intro">
-        <p>This page shows all known SMAPI mods and (incompatible) content packs, whether they work with the latest versions of Stardew Valley and SMAPI, and how to fix them if not. If a mod doesn't work after following the instructions below, check <a href="https://stardewvalleywiki.com/Modding:Player_Guide/Troubleshooting">the troubleshooting guide</a> or <a href="https://stardewvalleywiki.com/Modding:Player_Guide/Troubleshooting#Ask_for_help">ask for help</a>.</p>
+@if (!Model.HasData)
+{
+    <div class="error">↻ The mod data hasn't been fetched yet; please try again in a few minutes.</div>
+}
+else
+{
+    @if (Model.IsStale)
+    {
+        <div class="error">Showing data from @staleAge.Humanize(maxUnit: TimeUnit.Hour, minUnit: TimeUnit.Minute) ago. (Couldn't fetch newer data; the wiki API may be offline.)</div>
+    }
 
-        <p>The list is updated every few days (you can help <a href="https://stardewvalleywiki.com/Modding:Mod_compatibility">update it</a>!). It doesn't include XNB mods (see <a href="https://stardewvalleywiki.com/Modding:Using_XNB_mods"><em>using XNB mods</em> on the wiki</a> instead) or compatible content packs.</p>
+    <div id="app">
+        <div id="intro">
+            <p>This page shows all known SMAPI mods and (incompatible) content packs, whether they work with the latest versions of Stardew Valley and SMAPI, and how to fix them if not. If a mod doesn't work after following the instructions below, check <a href="https://stardewvalleywiki.com/Modding:Player_Guide/Troubleshooting">the troubleshooting guide</a> or <a href="https://stardewvalleywiki.com/Modding:Player_Guide/Troubleshooting#Ask_for_help">ask for help</a>.</p>
 
-        @if (Model.BetaVersion != null)
-        {
-            <p id="beta-blurb" v-show="showAdvanced"><strong>Note:</strong> "SDV @Model.BetaVersion only" lines are for an unreleased version of the game, not the stable version most players have. If a mod doesn't have that line, the info applies to both versions of the game.</p>
-        }
-    </div>
+            <p>The list is updated every few days (you can help <a href="https://stardewvalleywiki.com/Modding:Mod_compatibility">update it</a>!). It doesn't include XNB mods (see <a href="https://stardewvalleywiki.com/Modding:Using_XNB_mods"><em>using XNB mods</em> on the wiki</a> instead) or compatible content packs.</p>
 
-    <div id="options">
-        <div>
-            <label for="search-box">Search: </label>
-            <input type="text" id="search-box" v-model="search" v-on:input="applyFilters" />
+            @if (Model.BetaVersion != null)
+            {
+                <p id="beta-blurb" v-show="showAdvanced"><strong>Note:</strong> "SDV @Model.BetaVersion only" lines are for an unreleased version of the game, not the stable version most players have. If a mod doesn't have that line, the info applies to both versions of the game.</p>
+            }
         </div>
-        <div id="filter-area">
-            <input type="checkbox" id="show-advanced" v-model="showAdvanced" />
-            <label for="show-advanced">show advanced info and options</label>
-            <div id="filters" v-show="showAdvanced">
-                <div v-for="(filterGroup, key) in filters">
-                    {{filterGroup.label}}: <span v-for="filter in filterGroup.value" v-bind:class="{ active: filter.value }"><input type="checkbox" v-bind:id="filter.id" v-model="filter.value" v-on:change="applyFilters" /> <label v-bind:for="filter.id">{{filter.label}}</label></span>
+
+        <div id="options">
+            <div>
+                <label for="search-box">Search: </label>
+                <input type="text" id="search-box" v-model="search" v-on:input="applyFilters" />
+            </div>
+            <div id="filter-area">
+                <input type="checkbox" id="show-advanced" v-model="showAdvanced" />
+                <label for="show-advanced">show advanced info and options</label>
+                <div id="filters" v-show="showAdvanced">
+                    <div v-for="(filterGroup, key) in filters">
+                        {{filterGroup.label}}: <span v-for="filter in filterGroup.value" v-bind:class="{ active: filter.value }"><input type="checkbox" v-bind:id="filter.id" v-model="filter.value" v-on:change="applyFilters" /> <label v-bind:for="filter.id">{{filter.label}}</label></span>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div id="mod-count" v-show="showAdvanced">
-        <div v-if="visibleStats.total > 0">
-            {{visibleStats.total}} mods shown ({{Math.round((visibleStats.compatible + visibleStats.workaround) / visibleStats.total * 100)}}% compatible or have a workaround, {{Math.round((visibleStats.soon + visibleStats.broken) / visibleStats.total * 100)}}% broken, {{Math.round(visibleStats.abandoned / visibleStats.total * 100)}}% obsolete).
+        <div id="mod-count" v-show="showAdvanced">
+            <div v-if="visibleStats.total > 0">
+                {{visibleStats.total}} mods shown ({{Math.round((visibleStats.compatible + visibleStats.workaround) / visibleStats.total * 100)}}% compatible or have a workaround, {{Math.round((visibleStats.soon + visibleStats.broken) / visibleStats.total * 100)}}% broken, {{Math.round(visibleStats.abandoned / visibleStats.total * 100)}}% obsolete).
+            </div>
+            <span v-else>No matching mods found.</span>
         </div>
-        <span v-else>No matching mods found.</span>
+        <table class="wikitable" id="mod-list">
+            <thead>
+                <tr>
+                    <th>mod name</th>
+                    <th>links</th>
+                    <th>author</th>
+                    <th>compatibility</th>
+                    <th v-show="showAdvanced">broke in</th>
+                    <th v-show="showAdvanced">code</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="mod in mods" :key="mod.Name" v-bind:id="mod.Slug" :key="mod.Slug" v-bind:data-status="mod.Compatibility.Status" v-show="mod.Visible">
+                    <td>
+                        {{mod.Name}}
+                        <small class="mod-alt-names" v-if="mod.AlternateNames">(aka {{mod.AlternateNames}})</small>
+                    </td>
+                    <td class="mod-page-links">
+                        <span v-for="(link, i) in mod.ModPages">
+                            <a v-bind:href="link.Url">{{link.Text}}</a>{{i < mod.ModPages.length - 1 ? ', ' : ''}}
+                        </span>
+                    </td>
+                    <td>
+                        {{mod.Author}}
+                        <small class="mod-alt-authors" v-if="mod.AlternateAuthors">(aka {{mod.AlternateAuthors}})</small>
+                    </td>
+                    <td>
+                        <div v-html="mod.Compatibility.Summary"></div>
+                        <div v-if="mod.BetaCompatibility" v-show="showAdvanced">
+                            <strong v-if="mod.BetaCompatibility">SDV @Model.BetaVersion only:</strong>
+                            <span v-html="mod.BetaCompatibility.Summary"></span>
+                        </div>
+                        <div v-for="(warning, i) in mod.Warnings">⚠ {{warning}}</div>
+                    </td>
+                    <td class="mod-broke-in" v-html="mod.LatestCompatibility.BrokeIn" v-show="showAdvanced"></td>
+                    <td v-show="showAdvanced">
+                        <span v-if="mod.SourceUrl"><a v-bind:href="mod.SourceUrl">source</a></span>
+                        <span v-else class="mod-closed-source">no source</span>
+                    </td>
+                    <td>
+                        <small>
+                            <a v-bind:href="'#' + mod.Slug">#</a>
+                            <span v-show="showAdvanced">
+                                <template v-for="(link, i) in mod.MetadataLinks">
+                                    <a v-bind:href="link.Item1">{{link.Item2}}</a>
+                                </template>
+
+                                <abbr v-bind:title="mod.DevNote" v-show="mod.DevNote">[dev note]</abbr>
+                            </span>
+                        </small>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-    <table class="wikitable" id="mod-list">
-        <thead>
-            <tr>
-                <th>mod name</th>
-                <th>links</th>
-                <th>author</th>
-                <th>compatibility</th>
-                <th v-show="showAdvanced">broke in</th>
-                <th v-show="showAdvanced">code</th>
-                <th>&nbsp;</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="mod in mods" :key="mod.Name" v-bind:id="mod.Slug" :key="mod.Slug" v-bind:data-status="mod.Compatibility.Status" v-show="mod.Visible">
-                <td>
-                    {{mod.Name}}
-                    <small class="mod-alt-names" v-if="mod.AlternateNames">(aka {{mod.AlternateNames}})</small>
-                </td>
-                <td class="mod-page-links">
-                    <span v-for="(link, i) in mod.ModPages">
-                        <a v-bind:href="link.Url">{{link.Text}}</a>{{i < mod.ModPages.length - 1 ? ', ' : ''}}
-                    </span>
-                </td>
-                <td>
-                    {{mod.Author}}
-                    <small class="mod-alt-authors" v-if="mod.AlternateAuthors">(aka {{mod.AlternateAuthors}})</small>
-                </td>
-                <td>
-                    <div v-html="mod.Compatibility.Summary"></div>
-                    <div v-if="mod.BetaCompatibility" v-show="showAdvanced">
-                        <strong v-if="mod.BetaCompatibility">SDV @Model.BetaVersion only:</strong>
-                        <span v-html="mod.BetaCompatibility.Summary"></span>
-                    </div>
-                    <div v-for="(warning, i) in mod.Warnings">⚠ {{warning}}</div>
-                </td>
-                <td class="mod-broke-in" v-html="mod.LatestCompatibility.BrokeIn" v-show="showAdvanced"></td>
-                <td v-show="showAdvanced">
-                    <span v-if="mod.SourceUrl"><a v-bind:href="mod.SourceUrl">source</a></span>
-                    <span v-else class="mod-closed-source">no source</span>
-                </td>
-                <td>
-                    <small><a v-bind:href="'#' + mod.Slug">#</a></small>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+}

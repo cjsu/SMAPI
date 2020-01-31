@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using StardewModdingAPI.Framework.Reflection;
 
 namespace StardewModdingAPI.Framework.ModHelpers
@@ -63,6 +62,14 @@ namespace StardewModdingAPI.Framework.ModHelpers
         /// <summary>Get the API provided by a mod, or <c>null</c> if it has none. This signature requires using the <see cref="IModHelper.Reflection"/> API to access the API's properties and methods.</summary>
         public object GetApi(string uniqueID)
         {
+            // validate ready
+            if (!this.Registry.AreAllModsInitialized)
+            {
+                this.Monitor.Log("Tried to access a mod-provided API before all mods were initialized.", LogLevel.Error);
+                return null;
+            }
+
+            // get raw API
             IModMetadata mod = this.Registry.Get(uniqueID);
             if (mod?.Api != null && this.AccessedModApis.Add(mod.Manifest.UniqueID))
                 this.Monitor.Log($"Accessed mod-provided API for {mod.DisplayName}.", LogLevel.Trace);
@@ -74,12 +81,12 @@ namespace StardewModdingAPI.Framework.ModHelpers
         /// <param name="uniqueID">The mod's unique ID.</param>
         public TInterface GetApi<TInterface>(string uniqueID) where TInterface : class
         {
-            // validate
-            if (!this.Registry.AreAllModsInitialised)
-            {
-                this.Monitor.Log("Tried to access a mod-provided API before all mods were initialised.", LogLevel.Error);
+            // get raw API
+            object api = this.GetApi(uniqueID);
+            if (api == null)
                 return null;
-            }
+
+            // validate mapping
             if (!typeof(TInterface).IsInterface)
             {
                 this.Monitor.Log($"Tried to map a mod-provided API to class '{typeof(TInterface).FullName}'; must be a public interface.", LogLevel.Error);
@@ -90,11 +97,6 @@ namespace StardewModdingAPI.Framework.ModHelpers
                 this.Monitor.Log($"Tried to map a mod-provided API to non-public interface '{typeof(TInterface).FullName}'; must be a public interface.", LogLevel.Error);
                 return null;
             }
-
-            // get raw API
-            object api = this.GetApi(uniqueID);
-            if (api == null)
-                return null;
 
             // get API of type
             if (api is TInterface castApi)

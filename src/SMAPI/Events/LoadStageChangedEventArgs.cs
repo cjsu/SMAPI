@@ -3,7 +3,7 @@ using StardewModdingAPI.Enums;
 
 namespace StardewModdingAPI.Events
 {
-    /// <summary>Event arguments for an <see cref="ISpecialisedEvents.LoadStageChanged"/> event.</summary>
+    /// <summary>Event arguments for an <see cref="ISpecializedEvents.LoadStageChanged"/> event.</summary>
     public class LoadStageChangedEventArgs : EventArgs
     {
         /*********

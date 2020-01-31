@@ -60,7 +60,7 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.World
             {
                 for (int i = 0; i > intervals; i--)
                 {
-                    Game1.timeOfDay = FromTimeSpan(ToTimeSpan(Game1.timeOfDay).Subtract(TimeSpan.FromMinutes(20))); // offset 20 mins so game updates to next interval
+                    Game1.timeOfDay = FromTimeSpan(ToTimeSpan(Game1.timeOfDay).Subtract(TimeSpan.FromMinutes(20))); // offset 20 minutes so game updates to next interval
                     Game1.performTenMinuteClockUpdate();
                 }
             }

@@ -65,6 +65,10 @@ namespace StardewModdingAPI.Framework.Reflection
             {
                 result = this.MethodInfo.Invoke(this.Parent, arguments);
             }
+            catch (TargetParameterCountException)
+            {
+                throw new Exception($"Couldn't invoke the {this.DisplayName} method: it expects {this.MethodInfo.GetParameters().Length} parameters, but {arguments.Length} were provided.");
+            }
             catch (Exception ex)
             {
                 throw new Exception($"Couldn't invoke the {this.DisplayName} method", ex);

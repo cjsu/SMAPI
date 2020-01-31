@@ -26,29 +26,5 @@ namespace StardewModdingAPI.Toolkit.Framework.ModData
 
         /// <summary>The upper version for which the <see cref="Status"/> applies (if any).</summary>
         public ISemanticVersion StatusUpperVersion { get; set; }
-
-
-        /*********
-        ** Public methods
-        *********/
-        /// <summary>Get a semantic local version for update checks.</summary>
-        /// <param name="version">The remote version to normalise.</param>
-        public ISemanticVersion GetLocalVersionForUpdateChecks(ISemanticVersion version)
-        {
-            return this.DataRecord.GetLocalVersionForUpdateChecks(version);
-        }
-
-        /// <summary>Get a semantic remote version for update checks.</summary>
-        /// <param name="version">The remote version to normalise.</param>
-        public ISemanticVersion GetRemoteVersionForUpdateChecks(ISemanticVersion version)
-        {
-            if (version == null)
-                return null;
-
-            string rawVersion = this.DataRecord.GetRemoteVersionForUpdateChecks(version.ToString());
-            return rawVersion != null
-                ? new SemanticVersion(rawVersion)
-                : version;
-        }
     }
 }

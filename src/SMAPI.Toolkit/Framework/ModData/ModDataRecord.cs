@@ -22,12 +22,6 @@ namespace StardewModdingAPI.Toolkit.Framework.ModData
         /// <summary>The mod warnings to suppress, even if they'd normally be shown.</summary>
         public ModWarning SuppressWarnings { get; set; }
 
-        /// <summary>Maps local versions to a semantic version for update checks.</summary>
-        public IDictionary<string, string> MapLocalVersions { get; }
-
-        /// <summary>Maps remote versions to a semantic version for update checks.</summary>
-        public IDictionary<string, string> MapRemoteVersions { get; }
-
         /// <summary>The versioned field data.</summary>
         public ModDataField[] Fields { get; }
 
@@ -44,8 +38,6 @@ namespace StardewModdingAPI.Toolkit.Framework.ModData
             this.ID = model.ID;
             this.FormerIDs = model.GetFormerIDs().ToArray();
             this.SuppressWarnings = model.SuppressWarnings;
-            this.MapLocalVersions = new Dictionary<string, string>(model.MapLocalVersions, StringComparer.InvariantCultureIgnoreCase);
-            this.MapRemoteVersions = new Dictionary<string, string>(model.MapRemoteVersions, StringComparer.InvariantCultureIgnoreCase);
             this.Fields = model.GetFields().ToArray();
         }
 
@@ -65,29 +57,6 @@ namespace StardewModdingAPI.Toolkit.Framework.ModData
             }
 
             return false;
-        }
-
-        /// <summary>Get a semantic local version for update checks.</summary>
-        /// <param name="version">The remote version to normalise.</param>
-        public ISemanticVersion GetLocalVersionForUpdateChecks(ISemanticVersion version)
-        {
-            return this.MapLocalVersions != null && this.MapLocalVersions.TryGetValue(version.ToString(), out string newVersion)
-                ? new SemanticVersion(newVersion)
-                : version;
-        }
-
-        /// <summary>Get a semantic remote version for update checks.</summary>
-        /// <param name="version">The remote version to normalise.</param>
-        public string GetRemoteVersionForUpdateChecks(string version)
-        {
-            // normalise version if possible
-            if (SemanticVersion.TryParse(version, out ISemanticVersion parsed))
-                version = parsed.ToString();
-
-            // fetch remote version
-            return this.MapRemoteVersions != null && this.MapRemoteVersions.TryGetValue(version, out string newVersion)
-                ? newVersion
-                : version;
         }
 
         /// <summary>Get the possible mod IDs.</summary>

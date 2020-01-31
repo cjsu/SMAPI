@@ -2,7 +2,7 @@ using StardewValley;
 
 namespace StardewModdingAPI.Framework.Networking
 {
-    /// <summary>Network message types recognised by SMAPI and Stardew Valley.</summary>
+    /// <summary>Network message types recognized by SMAPI and Stardew Valley.</summary>
     internal enum MessageType : byte
     {
         /*********

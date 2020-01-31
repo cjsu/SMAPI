@@ -117,6 +117,13 @@ namespace StardewModdingAPI.Framework.StateTracking
                 watcher.Reset();
         }
 
+        /// <summary>Get whether the given location is tracked.</summary>
+        /// <param name="location">The location to check.</param>
+        public bool HasLocationTracker(GameLocation location)
+        {
+            return this.LocationDict.ContainsKey(location);
+        }
+
         /// <summary>Stop watching the player fields and release all references.</summary>
         public void Dispose()
         {

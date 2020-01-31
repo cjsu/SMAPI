@@ -1,4 +1,216 @@
+&larr; [README](README.md)
+
 # Release notes
+## 3.1
+Released 05 January 2019 for Stardew Valley 1.4 or later.
+
+* For players:
+  * Added separate group in 'skipped mods' list for broken dependencies, so it's easier to see what to fix first.
+  * Added friendly log message for save file-not-found errors.
+  * Updated for gamepad modes in Stardew Valley 1.4.1.
+  * Improved performance in some cases.
+  * Fixed compatibility with Linux Mint 18 (thanks to techge!), Arch Linux, and Linux systems with libhybris-utils installed.
+  * Fixed memory leak when repeatedly loading a save and returning to title.
+  * Fixed memory leak when mods reload assets.
+  * Fixes for Console Commands mod:
+    * added new clothing items;
+    * fixed spawning new flooring and rings (thanks to Mizzion!);
+    * fixed spawning custom rings added by mods;
+    * Fixed errors when some item data is invalid.
+  * Updated translations. Thanks to L30Bola (added Portuguese), PlussRolf (added Spanish), and shirutan (added Japanese)!
+
+* For the web UI:
+  * Added option to edit & reupload in the JSON validator.
+  * File uploads are now stored in Azure storage instead of Pastebin, due to ongoing Pastebin perfomance issues.
+  * File uploads now expire after one month.
+  * Updated the JSON validator for Content Patcher 1.10 and 1.11.
+  * Fixed JSON validator no longer letting you change format when viewing a file.
+  * Fixed JSON validator for Content Patcher not requiring `Default` if `AllowBlank` was omitted.
+  * Fixed log parser not correctly handling content packs with no author (thanks to danvolchek!).
+  * Fixed main sidebar link pointing to wiki instead of home page.
+
+* For modders:
+  * Added `World.ChestInventoryChanged` event (thanks to collaboration with wartech0!).
+  * Added asset propagation for...
+    * grass textures;
+    * winter flooring textures;
+    * `Data\Bundles` changes (for added bundles only);
+    * `Characters\Farmer\farmer_girl_base_bald`.
+  * Added paranoid-mode warning for direct `Console` access.
+  * Improved error messages for `TargetParameterCountException` when using the reflection API.
+  * `helper.Read/WriteSaveData` can now be used while a save is being loaded (e.g. within a `Specialized.LoadStageChanged` event).
+  * Removed `DumpMetadata` option. It was only for specific debugging cases, but players would sometimes enable it incorrectly and then report crashes.
+  * Fixed private textures loaded from content packs not having their `Name` field set.
+
+* For SMAPI developers:
+  * You can now run local environments without configuring Amazon, Azure, MongoDB, and Pastebin accounts.
+
+## 3.0.1
+Released 02 December 2019 for Stardew Valley 1.4 or later.
+
+* For players:
+  * Updated for Stardew Valley 1.4.0.1.
+  * Improved compatibility with some Linux terminals (thanks to archification and DanielHeath!).
+  * Updated translations. Thanks to berkayylmao (added Turkish), feathershine (added Chinese), and Osiris901 (added Russian)!
+
+* For the web UI:
+  * Rebuilt web infrastructure to handle higher traffic.
+  * If a log can't be uploaded to Pastebin (e.g. due to rate limits), it's now uploaded to Amazon S3 instead. Logs uploaded to S3 expire after one month.
+  * Fixed JSON validator not letting you drag & drop a file.
+
+* For modders:
+  * `SemanticVersion` now supports [semver 2.0](https://semver.org/) build metadata.
+
+## 3.0
+Released 26 November 2019 for Stardew Valley 1.4.
+
+### Release highlights
+For players:
+* **Updated for Stardew Valley 1.4.**  
+  SMAPI 3.0 adds compatibility with the latest game version, and improves mod APIs for changes in
+  the game code.
+
+* **Improved performance.**  
+  SMAPI should have less impact on game performance and startup time for some players.
+
+* **Automatic save fixing and more error recovery.**  
+  SMAPI now detects and prevents more crashes due to game/mod bugs, and automatically fixes your
+  save if you remove some custom-content mods.
+
+* **Improved mod scanning.**  
+  SMAPI now supports some non-standard mod structures automatically, improves compatibility with
+  the Vortex mod manager, and improves various error/skip messages related to mod loading.
+
+* **Overhauled update checks.**  
+  SMAPI update checks are now handled entirely on the web server and support community-defined
+  version mappings. In particular, false update alerts due to author mistakes can now be solved by
+  the community for all players.
+
+* **Fixed many bugs and edge cases.**
+
+For modders:
+* **New event system.**  
+  SMAPI 3.0 removes the deprecated static events in favor of the new `helper.Events` API. The event
+  engine is rewritten to make events more efficient, add events that weren't possible before, make
+  existing events more useful, and make event usage and behavior more consistent. When a mod makes
+  changes in an event handler, those changes are now also reflected in the next event raise.
+
+* **Improved mod build package.**  
+  The [mod build package](https://www.nuget.org/packages/Pathoschild.Stardew.ModBuildConfig) now
+  includes the `assets` folder by default if present, supports the new `.csproj` project format,
+  enables mod `.pdb` files automatically (to provide line numbers in error messages), adds optional
+  Harmony support, and fixes some bugs and edge cases. This also adds compatibility with SMAPI 3.0
+  and Stardew Valley 1.4, and drops support for older versions.
+
+* **Mods loaded earlier.**  
+  SMAPI now loads mods much earlier, before the game is initialised. That lets mods do things that
+  were difficult before, like intercepting some core assets.
+
+* **Improved Android support.**  
+  SMAPI now automatically detects when it's running on Android, and updates `Constants.TargetPlatform`
+  so mods can adjust their logic if needed. The Save Backup mod is also now Android-compatible.
+
+* **Improved asset propagation.**  
+  SMAPI now automatically propagates asset changes for farm animal data, NPC default location data,
+  critter textures, and `DayTimeMoneyBox` buttons. Every loaded texture now also has a `Name` field
+  so mods can check which asset a texture was loaded for.
+
+* **Breaking changes:**  
+  See _[migrate to SMAPI 3.0](https://stardewvalleywiki.com/Modding:Migrate_to_SMAPI_3.0)_ and
+  _[migrate to Stardew Valley 1.4](https://stardewvalleywiki.com/Modding:Migrate_to_Stardew_Valley_1.4)_
+  for more info.
+
+### For players
+* Changes:
+  * Updated for Stardew Valley 1.4.
+  * Improved performance.
+  * Reworked update checks and added community-defined version mapping, to reduce false update alerts due to author mistakes.
+  * SMAPI now removes invalid locations/NPCs when loading a save to prevent crashes. A warning is shown in-game when this happens.
+  * Added update checks for CurseForge mods.
+  * Added support for editing console colors via `smapi-internal/config.json` (for players with unusual consoles).
+  * Added support for setting SMAPI CLI arguments as environment variables for Linux/macOS compatibility.
+  * Improved mod scanning:
+    * Now ignores metadata files/folders (like `__MACOSX` and `__folder_managed_by_vortex`) and content files (like `.txt` or `.png`), which avoids missing-manifest errors in some cases.
+    * Now detects XNB mods more accurately, and consolidates multi-folder XNB mods in logged messages.
+  * Improved launch script compatibility on Linux (thanks to kurumushi and toastal!).
+  * Made error messages more user-friendly in some cases.
+  * Save Backup now works in the background, to avoid affecting startup time for players with a large number of saves.
+  * The installer now recognises custom game paths stored in [`stardewvalley.targets`](http://smapi.io/package/custom-game-path).
+  * Duplicate-mod errors now show the mod version in each folder.
+  * Update checks are now faster in some cases.
+  * Updated mod compatibility list.
+  * Updated SMAPI/game version map.
+  * Updated translations. Thanks to eren-kemer (added German)!
+* Fixes:
+  * Fixed some assets not updated when you switch language to English.
+  * Fixed lag in some cases due to incorrect asset caching when playing in non-English.
+  * Fixed lag when a mod invalidates many NPC portraits/sprites at once.
+  * Fixed Console Commands not including upgraded tools in item commands.
+  * Fixed Console Commands' item commands failing if a mod adds invalid item data.
+  * Fixed Save Backup not pruning old backups if they're uncompressed.
+  * Fixed issues when a farmhand reconnects before the game notices they're disconnected.
+  * Fixed 'received message' logs shown in non-developer mode.
+  * Fixed various error messages and inconsistent spelling.
+  * Fixed update-check error if a Nexus mod is marked as adult content.
+  * Fixed update-check error if the Chucklefish page for an update key doesn't exist.
+
+### For the web UI
+* Mod compatibility list:
+  * Added support for CurseForge mods.
+  * Added metadata links and dev notes (if any) to advanced info.
+  * Now loads faster (since data is fetched in a background service).
+  * Now continues working with cached data when the wiki is offline.
+  * Clicking a mod link now automatically adds it to the visible mods if the list is filtered.
+
+* JSON validator:
+  * Added JSON validator at [smapi.io/json](https://smapi.io/json), which lets you validate a JSON file against predefined mod formats.
+  * Added support for the `manifest.json` format.
+  * Added support for the Content Patcher format (thanks to TehPers!).
+  * Added support for referencing a schema in a JSON Schema-compatible text editor.
+
+* For the log parser:
+  * Added instructions for Android.
+  * The page now detects your OS and preselects the right instructions (thanks to danvolchek!).
+
+### For modders
+* Breaking changes:
+  * Mods are now loaded much earlier in the game launch. This lets mods intercept any content asset, but the game is not fully initialized when `Entry` is called; use the `GameLaunched` event if you need to run code when the game is initialized.
+  * Removed all deprecated APIs.
+  * Removed unused APIs: `Monitor.ExitGameImmediately`, `Translation.ModName`, and `Translation.Assert`.
+  * Fixed `ICursorPosition.AbsolutePixels` not adjusted for zoom.
+  * `SemanticVersion` no longer omits `.0` patch numbers when formatting versions, for better [semver](https://semver.org/) conformity (e.g. `3.0` is now formatted as `3.0.0`).
+* Changes:
+  * Added support for content pack translations.
+  * Added `IContentPack.HasFile`, `Context.IsGameLaunched`, and `SemanticVersion.TryParse`.
+  * Added separate `LogNetworkTraffic` option to make verbose logging less overwhelmingly verbose.
+  * Added asset propagation for `Data\FarmAnimals`, critter textures, and `DayTimeMoneyBox` buttons.
+  * Added `Texture2D.Name` values set to the asset key.
+  * Added trace logs for skipped loose files in the `Mods` folder and custom SMAPI settings so it's easier to troubleshoot player logs.
+  * `Constants.TargetPlatform` now returns `Android` when playing on an Android device.
+  * Trace logs for a broken mod now list all detected issues (instead of the first one).
+  * Trace logs when loading mods are now more clear.
+  * Clarified update-check errors for mods with multiple update keys.
+  * Updated dependencies (including Json.NET 11.0.2 → 12.0.3 and Mono.Cecil 0.10.1 → 0.11.1).
+* Fixes:
+  * Fixed map reloads resetting tilesheet seasons.
+  * Fixed map reloads not updating door warps.
+  * Fixed outdoor tilesheets being seasonalised when added to an indoor location.
+  * Fixed mods needing to load custom `Map` assets before the game accesses them. SMAPI now does so automatically.
+  * Fixed custom maps loaded from `.xnb` files not having their tilesheet paths automatically adjusted.
+  * Fixed custom maps loaded from the mod folder with tilesheets in a subfolder not working crossplatform. All tilesheet paths are now normalized for the OS automatically.
+  * Fixed issue where mod changes weren't tracked correctly for raising events in some cases. Events now reflect a frozen snapshot of the game state, and any mod changes are reflected in the next event tick.
+  * Fixed issue where, when a mod's `IAssetEditor` uses `asset.ReplaceWith` on a texture asset while playing in non-English, any changes from that point forth wouldn't affect subsequent cached asset loads.
+  * Fixed asset propagation for NPC portraits resetting any unique portraits (e.g. Maru's hospital portrait) to the default.
+  * Fixed changes to `Data\NPCDispositions` not always propagated correctly to existing NPCs.
+  * Fixed `Rendering`/`Rendered` events not raised during minigames.
+  * Fixed `LoadStageChanged` event not raising correct flags in some cases when creating a new save.
+  * Fixed `GetApi` without an interface not checking if all mods are loaded.
+
+### For SMAPI maintainers
+* Added support for core translation files.
+* Migrated to new `.csproj` format.
+* Internal refactoring.
+
 ## 2.11.3
 Released 13 September 2019 for Stardew Valley 1.3.36.
 
@@ -12,11 +224,14 @@ Released 13 September 2019 for Stardew Valley 1.3.36.
 * For the web UI:
   * When filtering the mod list, clicking a mod link now automatically adds it to the visible mods.
   * Added log parser instructions for Android.
-  * Fixed log parser failing in some cases due to time format localisation.
+  * Fixed log parser failing in some cases due to time format localization.
 
 * For modders:
   * `this.Monitor.Log` now defaults to the `Trace` log level instead of `Debug`. The change will only take effect when you recompile the mod.
   * Fixed 'location list changed' verbose log not correctly listing changes.
+  * Fixed mods able to directly load (and in some cases edit) a different mod's local assets using internal asset key forwarding.
+  * Fixed changes to a map loaded by a mod being persisted across content managers.
+  * Fixed `SDate.AddDays` incorrectly changing year when the result is exactly winter 28.
 
 ## 2.11.2
 Released 23 April 2019 for Stardew Valley 1.3.36.
@@ -77,12 +292,12 @@ Released 09 January 2019 for Stardew Valley 1.3.32–33.
   * Added locale to context trace logs.
   * Fixed error loading custom map tilesheets in some cases.
   * Fixed error when swapping maps mid-session for a location with interior doors.
-  * Fixed `Constants.SaveFolderName` and `CurrentSavePath` not available during early load stages when using `Specialised.LoadStageChanged` event.
+  * Fixed `Constants.SaveFolderName` and `CurrentSavePath` not available during early load stages when using `Specialized.LoadStageChanged` event.
   * Fixed `LoadStage.SaveParsed` raised before the parsed save data is available.
   * Fixed 'unknown mod' deprecation warnings showing the wrong stack trace.
   * Fixed `e.Cursor` in input events showing wrong grab tile when player using a controller moves without moving the viewpoint.
-  * Fixed incorrect 'bypassed safety checks' warning for mods using the new `Specialised.LoadStageChanged` event in 2.10.
-  * Deprecated `EntryDll` values whose capitalisation don't match the actual file. (This works on Windows, but causes errors for Linux/Mac players.)
+  * Fixed incorrect 'bypassed safety checks' warning for mods using the new `Specialized.LoadStageChanged` event in 2.10.
+  * Deprecated `EntryDll` values whose capitalization don't match the actual file. (This works on Windows, but causes errors for Linux/Mac players.)
 
 ## 2.10.1
 Released 30 December 2018 for Stardew Valley 1.3.32–33.
@@ -99,9 +314,9 @@ Released 29 December 2018 for Stardew Valley 1.3.32–33.
   * Tweaked installer to reduce antivirus false positives.
 
 * For modders:
-  * Added [events](https://stardewvalleywiki.com/Modding:Modder_Guide/APIs/Events): `GameLoop.OneSecondUpdateTicking`, `GameLoop.OneSecondUpdateTicked`, and `Specialised.LoadStageChanged`.
+  * Added [events](https://stardewvalleywiki.com/Modding:Modder_Guide/APIs/Events): `GameLoop.OneSecondUpdateTicking`, `GameLoop.OneSecondUpdateTicked`, and `Specialized.LoadStageChanged`.
   * Added `e.IsCurrentLocation` event arg to `World` events.
-  * You can now use `helper.Data.Read/WriteSaveData` as soon as the save is loaded (instead of once the world is initialised).
+  * You can now use `helper.Data.Read/WriteSaveData` as soon as the save is loaded (instead of once the world is initialized).
   * Increased deprecation levels to _info_ for the upcoming SMAPI 3.0.
 
 * For the web UI:
@@ -211,7 +426,7 @@ Released 19 November 2018 for Stardew Valley 1.3.32.
   * Updated compatibility list.
 
 * For the web UI:
-  * Added a [mod compatibility page](https://mods.smapi.io) and [privacy page](https://smapi.io/privacy).
+  * Added a [mod compatibility page](https://smapi.io/mods) and [privacy page](https://smapi.io/privacy).
   * The log parser now has a separate filter for game messages.
   * The log parser now shows content pack authors (thanks to danvolchek!).
   * Tweaked log parser UI (thanks to danvolchek!).
@@ -274,7 +489,7 @@ Released 14 August 2018 for Stardew Valley 1.3.28.
     * dialogue;
     * map tilesheets.
   * Added `--mods-path` CLI command-line argument to switch between mod folders.
-  * All enums are now JSON-serialised by name instead of numeric value. (Previously only a few enums were serialised that way. JSON files which already have numeric enum values will still be parsed fine.)
+  * All enums are now JSON-serialized by name instead of numeric value. (Previously only a few enums were serialized that way. JSON files which already have numeric enum values will still be parsed fine.)
   * Fixed false compatibility error when constructing multidimensional arrays.
   * Fixed `.ToSButton()` methods not being public.
 
@@ -301,7 +516,7 @@ Released 01 August 2018 for Stardew Valley 1.3.27.
   * Improved the Console Commands mod:
     * Added `player_add name`, which adds items to your inventory by name instead of ID.
     * Fixed `world_setseason` not running season-change logic.
-    * Fixed `world_setseason` not normalising the season value.
+    * Fixed `world_setseason` not normalizing the season value.
     * Fixed `world_settime` sometimes breaking NPC schedules (e.g. so they stay in bed).
     * Removed the `player_setlevel` and `player_setspeed` commands, which weren't implemented in a useful way. Use a mod like CJB Cheats Menu if you need those.
   * Fixed `SEHException` errors for some players.
@@ -392,10 +607,10 @@ Released 11 April 2018 for Stardew Valley 1.2.30–1.2.33.
   * Fixed mod update alerts not shown if one mod has an invalid remote version.
   * Fixed SMAPI update alerts linking to the GitHub repository instead of [smapi.io](https://smapi.io).
   * Fixed SMAPI update alerts for draft releases.
-  * Fixed error when two content packs use different capitalisation for the same required mod ID.
+  * Fixed error when two content packs use different capitalization for the same required mod ID.
   * Fixed rare crash if the game duplicates an item.
 
-* For the [log parser](https://log.smapi.io):
+* For the [log parser](https://smapi.io/log):
   * Tweaked UI.
 
 ## 2.5.4
@@ -407,7 +622,7 @@ Released 26 March 2018 for Stardew Valley 1.2.30–1.2.33.
   * Fixed error when mods remove an asset editor/loader.
   * Fixed minimum game version incorrectly increased in SMAPI 2.5.3.
 
-* For the [log parser](https://log.smapi.io):
+* For the [log parser](https://smapi.io/log):
   * Fixed error when log text contains certain tokens.
 
 * For modders:
@@ -429,7 +644,7 @@ Released 13 March 2018 for Stardew Valley ~~1.2.30~~–1.2.33.
   * Fixed Linux ["magic number is wrong" errors](https://github.com/mono/mono/issues/6752) by changing default terminal order.
   * Updated compatibility list and added update checks for more mods.
 
-* For the [log parser](https://log.smapi.io):
+* For the [log parser](https://smapi.io/log):
   * Fixed incorrect filtering in some cases.
   * Fixed error if mods have duplicate names.
   * Fixed parse bugs if a mod has no author name.
@@ -443,7 +658,7 @@ Released 25 February 2018 for Stardew Valley 1.2.30–1.2.33.
 * For modders:
   * Fixed issue where replacing an asset through `asset.AsImage()` or `asset.AsDictionary()` didn't take effect.
 
-* For the [log parser](https://log.smapi.io):
+* For the [log parser](https://smapi.io/log):
   * Fixed blank page after uploading a log in some cases.
 
 ## 2.5.1
@@ -467,14 +682,14 @@ Released 24 February 2018 for Stardew Valley 1.2.30–1.2.33.
 * For modders:
   * Added support for content packs and new APIs to read them.
   * Added support for `ISemanticVersion` in JSON models.
-  * Added `SpecialisedEvents.UnvalidatedUpdateTick` event for specialised use cases.
-  * Added path normalising to `ReadJsonFile` and `WriteJsonFile` helpers (so no longer need `Path.Combine` with those).
+  * Added `SpecializedEvents.UnvalidatedUpdateTick` event for specialized use cases.
+  * Added path normalizing to `ReadJsonFile` and `WriteJsonFile` helpers (so no longer need `Path.Combine` with those).
   * Fixed deadlock in rare cases with asset loaders.
   * Fixed unhelpful error when a mod exposes a non-public API.
   * Fixed unhelpful error when a translation file has duplicate keys due to case-insensitivity.
   * Fixed some JSON field names being case-sensitive.
 
-* For the [log parser](https://log.smapi.io):
+* For the [log parser](https://smapi.io/log):
   * Added support for SMAPI 2.5 content packs.
   * Reduced download size when viewing a parsed log with repeated errors.
   * Improved parse error handling.
@@ -495,7 +710,7 @@ Released 24 January 2018 for Stardew Valley 1.2.30–1.2.33.
   * Fixed intermittent errors (e.g. 'collection has been modified') with some mods when loading a save.
   * Fixed compatibility with Linux Terminator terminal.
 
-* For the [log parser](https://log.smapi.io):
+* For the [log parser](https://smapi.io/log):
   * Fixed error parsing logs with zero installed mods.
 
 * For modders:
@@ -521,16 +736,16 @@ Released 26 December 2017 for Stardew Valley 1.2.30–1.2.33.
 
 * For modders:
   * **Added mod-provided APIs** to allow simple integrations between mods, even without direct assembly references.
-  * Added `GameEvents.FirstUpdateTick` event (called once after all mods are initialised).
+  * Added `GameEvents.FirstUpdateTick` event (called once after all mods are initialized).
   * Added `IsSuppressed` to input events so mods can optionally avoid handling keys another mod has already handled.
   * Added trace message for mods with no update keys.
   * Adjusted reflection API to match actual usage (e.g. renamed `GetPrivate*` to `Get*`), and deprecated previous methods.
-  * Fixed `GraphicsEvents.OnPostRenderEvent` not being raised in some specialised cases.
+  * Fixed `GraphicsEvents.OnPostRenderEvent` not being raised in some specialized cases.
   * Fixed reflection API error for properties missing a `get` and `set`.
   * Fixed issue where a mod could change the cursor position reported to other mods.
   * Updated compatibility list.
 
-* For the [log parser](https://log.smapi.io):
+* For the [log parser](https://smapi.io/log):
   * Fixed broken favicon.
 
 ## 2.2
@@ -544,13 +759,13 @@ Released 02 December 2017 for Stardew Valley 1.2.30–1.2.33.
   * Improved error when a mod has an invalid `EntryDLL` filename format.
   * Updated compatibility list.
 
-* For the [log parser](https://log.smapi.io):
+* For the [log parser](https://smapi.io/log):
   * Logs no longer expire after a week.
   * Fixed error when uploading very large logs.
   * Slightly improved the UI.
 
 * For modders:
-  * Added `helper.Content.NormaliseAssetName` method.
+  * Added `helper.Content.NormalizeAssetName` method.
   * Added `SDate.DaysSinceStart` property.
   * Fixed input events' `e.SuppressButton(button)` method ignoring specified button.
   * Fixed input events' `e.SuppressButton()` method not working with mouse buttons.
@@ -559,7 +774,7 @@ Released 02 December 2017 for Stardew Valley 1.2.30–1.2.33.
 Released 01 November 2017 for Stardew Valley 1.2.30–1.2.33.
 
 * For players:
-  * Added a [log parser](https://log.smapi.io) site.
+  * Added a [log parser](https://smapi.io/log) site.
   * Added better Steam instructions to the SMAPI installer.
   * Renamed the bundled _TrainerMod_ to _ConsoleCommands_ to make its purpose clearer.
   * Removed the game's test messages from the console log.
@@ -634,7 +849,7 @@ Released 14 October 2017 for Stardew Valley 1.2.30–1.2.33.
 
 * **Command-line install**
   For power users and mod managers, the SMAPI installer can now be scripted using command-line arguments
-  (see [technical docs](technical-docs.md#command-line-arguments)).
+  (see [technical docs](technical/smapi.md#command-line-arguments)).
 
 ### Change log
 For players:
@@ -705,7 +920,7 @@ For mod developers:
 * Added content helper properties for the game's current language.
 * Fixed `Context.IsPlayerFree` being false if the player is performing an action.
 * Fixed `GraphicsEvents.Resize` being raised before the game updates its window data.
-* Fixed `SemanticVersion` not being deserialisable through Json.NET.
+* Fixed `SemanticVersion` not being deserializable through Json.NET.
 * Fixed terminal not launching on Xfce Linux.
 
 For SMAPI developers:
@@ -776,7 +991,7 @@ For modders:
 * SMAPI now automatically fixes tilesheet references for maps loaded from the mod folder.  
   <small>_When loading a map from the mod folder, SMAPI will automatically use tilesheets relative to the map file if they exists. Otherwise it will default to tilesheets in the game content._</small>
 * Added `Context.IsPlayerFree` for mods that need to check if the player can act (i.e. save is loaded, no menu is displayed, no cutscene is in progress, etc).
-* Added `Context.IsInDrawLoop` for specialised mods.
+* Added `Context.IsInDrawLoop` for specialized mods.
 * Fixed `smapi-crash.txt` being copied from the default log even if a different path is specified with `--log-path`.
 * Fixed the content API not matching XNB filenames with two dots (like `a.b.xnb`) if you don't specify the `.xnb` extension.
 * Fixed `debug` command output not printed to console.
@@ -803,7 +1018,7 @@ For players:
 
 For mod developers:
 * Added a `Context.IsWorldReady` flag for mods to use.  
-  <small>_This indicates whether a save is loaded and the world is finished initialising, which starts at the same point that `SaveEvents.AfterLoad` and `TimeEvents.AfterDayStarted` are raised. This is mainly useful for events which can be raised before the world is loaded (like update tick)._</small>
+  <small>_This indicates whether a save is loaded and the world is finished initializing, which starts at the same point that `SaveEvents.AfterLoad` and `TimeEvents.AfterDayStarted` are raised. This is mainly useful for events which can be raised before the world is loaded (like update tick)._</small>
 * Added a `debug` console command which lets you run the game's debug commands (e.g. `debug warp FarmHouse 1 1` warps you to the farmhouse).
 * Added basic context info to logs to simplify troubleshooting.
 * Added a `Mod.Dispose` method which can be overriden to clean up before exit. This method isn't guaranteed to be called on every exit.
@@ -841,8 +1056,8 @@ For players:
 For mod developers:
 * Added a content API which loads custom textures/maps/data from the mod's folder (`.xnb` or `.png` format) or game content.
 * `Console.Out` messages are now written to the log file.
-* `Monitor.ExitGameImmediately` now aborts SMAPI initialisation and events more quickly.
-* Fixed value-changed events being raised when the player loads a save due to values being initialised.
+* `Monitor.ExitGameImmediately` now aborts SMAPI initialization and events more quickly.
+* Fixed value-changed events being raised when the player loads a save due to values being initialized.
 
 ## 1.10
 Released 24 April 2017 for Stardew Valley 1.2.26.
@@ -858,7 +1073,7 @@ For players:
   * Replaced `player_addmelee` with `player_addweapon` with support for non-melee weapons.
 
 For mod developers:
-* Mods are now initialised after the `Initialize`/`LoadContent` phase, which means the `GameEvents.Initialize` and `GameEvents.LoadContent` events are deprecated. You can move any logic in those methods to your mod's `Entry` method.
+* Mods are now initialized after the `Initialize`/`LoadContent` phase, which means the `GameEvents.Initialize` and `GameEvents.LoadContent` events are deprecated. You can move any logic in those methods to your mod's `Entry` method.
 * Added `IsBetween` and string overloads to the `ISemanticVersion` methods.
 * Fixed mouse-changed event never updating prior mouse position.
 * Fixed `monitor.ExitGameImmediately` not working correctly.
@@ -897,7 +1112,7 @@ For mod developers:
 * The SMAPI log now has a simpler filename.
 * The SMAPI log now shows the OS caption (like "Windows 10") instead of its internal version when available.
 * The SMAPI log now always uses `\r\n` line endings to simplify crossplatform viewing.
-* Fixed `SaveEvents.AfterLoad` being raised during the new-game intro before the player is initialised.
+* Fixed `SaveEvents.AfterLoad` being raised during the new-game intro before the player is initialized.
 * Fixed SMAPI not recognising `Mod` instances that don't subclass `Mod` directly.
 * Several obsolete APIs have been removed (see [migration guides](https://stardewvalleywiki.com/Modding:Index#Migration_guides)),
   and all _notice_-level deprecations have been increased to _info_.
@@ -942,7 +1157,7 @@ For mod developers:
 * Added a mod registry which provides metadata about loaded mods.
 * The `Entry(…)` method is now deferred until all mods are loaded.
 * Fixed `SaveEvents.BeforeSave` and `.AfterSave` not triggering on days when the player shipped something.
-* Fixed `PlayerEvents.LoadedGame` and `SaveEvents.AfterLoad` being fired before the world finishes initialising.
+* Fixed `PlayerEvents.LoadedGame` and `SaveEvents.AfterLoad` being fired before the world finishes initializing.
 * Fixed some `LocationEvents`, `PlayerEvents`, and `TimeEvents` being fired during game startup.
 * Increased deprecation levels for `SObject`, `LogWriter` (not `Log`), and `Mod.Entry(ModHelper)` (not `Mod.Entry(IModHelper)`) to _pending removal_. Increased deprecation levels for `Mod.PerSaveConfigFolder`, `Mod.PerSaveConfigPath`, and `Version.VersionString` to _info_.
 

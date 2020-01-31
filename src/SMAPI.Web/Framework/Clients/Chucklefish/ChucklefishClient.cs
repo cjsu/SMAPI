@@ -45,7 +45,7 @@ namespace StardewModdingAPI.Web.Framework.Clients.Chucklefish
                     .GetAsync(string.Format(this.ModPageUrlFormat, id))
                     .AsString();
             }
-            catch (ApiException ex) when (ex.Status == HttpStatusCode.NotFound)
+            catch (ApiException ex) when (ex.Status == HttpStatusCode.NotFound || ex.Status == HttpStatusCode.Forbidden)
             {
                 return null;
             }

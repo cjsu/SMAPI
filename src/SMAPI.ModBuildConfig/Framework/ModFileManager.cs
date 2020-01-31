@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using StardewModdingAPI.Toolkit.Serialisation;
-using StardewModdingAPI.Toolkit.Serialisation.Models;
+using StardewModdingAPI.Toolkit.Serialization;
+using StardewModdingAPI.Toolkit.Serialization.Models;
+using StardewModdingAPI.Toolkit.Utilities;
 
 namespace StardewModdingAPI.ModBuildConfig.Framework
 {
@@ -40,47 +41,14 @@ namespace StardewModdingAPI.ModBuildConfig.Framework
             if (!Directory.Exists(targetDir))
                 throw new UserErrorException("Could not create mod package because no build output was found.");
 
-            // project manifest
-            bool hasProjectManifest = false;
+            // collect files
+            foreach (Tuple<string, FileInfo> entry in this.GetPossibleFiles(projectDir, targetDir))
             {
-                FileInfo manifest = new FileInfo(Path.Combine(projectDir, "manifest.json"));
-                if (manifest.Exists)
-                {
-                    this.Files[this.ManifestFileName] = manifest;
-                    hasProjectManifest = true;
-                }
-            }
+                string relativePath = entry.Item1;
+                FileInfo file = entry.Item2;
 
-            // project i18n files
-            bool hasProjectTranslations = false;
-            DirectoryInfo translationsFolder = new DirectoryInfo(Path.Combine(projectDir, "i18n"));
-            if (translationsFolder.Exists)
-            {
-                foreach (FileInfo file in translationsFolder.EnumerateFiles())
-                    this.Files[Path.Combine("i18n", file.Name)] = file;
-                hasProjectTranslations = true;
-            }
-
-            // build output
-            DirectoryInfo buildFolder = new DirectoryInfo(targetDir);
-            foreach (FileInfo file in buildFolder.EnumerateFiles("*", SearchOption.AllDirectories))
-            {
-                // get relative paths
-                string relativePath = file.FullName.Replace(buildFolder.FullName, "");
-                string relativeDirPath = file.Directory.FullName.Replace(buildFolder.FullName, "");
-
-                // prefer project manifest/i18n files
-                if (hasProjectManifest && this.EqualsInvariant(relativePath, this.ManifestFileName))
-                    continue;
-                if (hasProjectTranslations && this.EqualsInvariant(relativeDirPath, "i18n"))
-                    continue;
-
-                // handle ignored files
-                if (this.ShouldIgnore(file, relativePath, ignoreFilePatterns))
-                    continue;
-
-                // add file
-                this.Files[relativePath] = file;
+                if (!this.ShouldIgnore(file, relativePath, ignoreFilePatterns))
+                    this.Files[relativePath] = file;
             }
 
             // check for required files
@@ -117,6 +85,67 @@ namespace StardewModdingAPI.ModBuildConfig.Framework
         /*********
         ** Private methods
         *********/
+        /// <summary>Get all files to include in the mod folder, not accounting for ignore patterns.</summary>
+        /// <param name="projectDir">The folder containing the project files.</param>
+        /// <param name="targetDir">The folder containing the build output.</param>
+        /// <returns>Returns tuples containing the relative path within the mod folder, and the file to copy to it.</returns>
+        private IEnumerable<Tuple<string, FileInfo>> GetPossibleFiles(string projectDir, string targetDir)
+        {
+            // project manifest
+            bool hasProjectManifest = false;
+            {
+                FileInfo manifest = new FileInfo(Path.Combine(projectDir, this.ManifestFileName));
+                if (manifest.Exists)
+                {
+                    yield return Tuple.Create(this.ManifestFileName, manifest);
+                    hasProjectManifest = true;
+                }
+            }
+
+            // project i18n files
+            bool hasProjectTranslations = false;
+            DirectoryInfo translationsFolder = new DirectoryInfo(Path.Combine(projectDir, "i18n"));
+            if (translationsFolder.Exists)
+            {
+                foreach (FileInfo file in translationsFolder.EnumerateFiles())
+                    yield return Tuple.Create(Path.Combine("i18n", file.Name), file);
+                hasProjectTranslations = true;
+            }
+
+            // project assets folder
+            bool hasAssetsFolder = false;
+            DirectoryInfo assetsFolder = new DirectoryInfo(Path.Combine(projectDir, "assets"));
+            if (assetsFolder.Exists)
+            {
+                foreach (FileInfo file in assetsFolder.EnumerateFiles("*", SearchOption.AllDirectories))
+                {
+                    string relativePath = PathUtilities.GetRelativePath(projectDir, file.FullName);
+                    yield return Tuple.Create(relativePath, file);
+                }
+                hasAssetsFolder = true;
+            }
+
+            // build output
+            DirectoryInfo buildFolder = new DirectoryInfo(targetDir);
+            foreach (FileInfo file in buildFolder.EnumerateFiles("*", SearchOption.AllDirectories))
+            {
+                // get path info
+                string relativePath = PathUtilities.GetRelativePath(buildFolder.FullName, file.FullName);
+                string[] segments = PathUtilities.GetSegments(relativePath);
+
+                // prefer project manifest/i18n/assets files
+                if (hasProjectManifest && this.EqualsInvariant(relativePath, this.ManifestFileName))
+                    continue;
+                if (hasProjectTranslations && this.EqualsInvariant(segments[0], "i18n"))
+                    continue;
+                if (hasAssetsFolder && this.EqualsInvariant(segments[0], "assets"))
+                    continue;
+
+                // add file
+                yield return Tuple.Create(relativePath, file);
+            }
+        }
+
         /// <summary>Get whether a build output file should be ignored.</summary>
         /// <param name="file">The file to check.</param>
         /// <param name="relativePath">The file's relative path in the package.</param>
@@ -129,6 +158,7 @@ namespace StardewModdingAPI.ModBuildConfig.Framework
 
                 // Json.NET (bundled into SMAPI)
                 || this.EqualsInvariant(file.Name, "Newtonsoft.Json.dll")
+                || this.EqualsInvariant(file.Name, "Newtonsoft.Json.pdb")
                 || this.EqualsInvariant(file.Name, "Newtonsoft.Json.xml")
 
                 // code analysis files
@@ -148,6 +178,8 @@ namespace StardewModdingAPI.ModBuildConfig.Framework
         /// <param name="other">The string to compare with.</param>
         private bool EqualsInvariant(string str, string other)
         {
+            if (str == null)
+                return other == null;
             return str.Equals(other, StringComparison.InvariantCultureIgnoreCase);
         }
     }

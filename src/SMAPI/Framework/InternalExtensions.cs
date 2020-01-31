@@ -55,7 +55,7 @@ namespace StardewModdingAPI.Framework
         ** Exceptions
         ****/
         /// <summary>Get a string representation of an exception suitable for writing to the error log.</summary>
-        /// <param name="exception">The error to summarise.</param>
+        /// <param name="exception">The error to summarize.</param>
         public static string GetLogSummary(this Exception exception)
         {
             switch (exception)

@@ -29,7 +29,7 @@ namespace StardewModdingAPI.Framework
         /// <exception cref="ArgumentException">There's already a command with that name.</exception>
         public void Add(IModMetadata mod, string name, string documentation, Action<string, string[]> callback, bool allowNullCallback = false)
         {
-            name = this.GetNormalisedName(name);
+            name = this.GetNormalizedName(name);
 
             // validate format
             if (string.IsNullOrWhiteSpace(name))
@@ -52,7 +52,7 @@ namespace StardewModdingAPI.Framework
         /// <returns>Returns the matching command, or <c>null</c> if not found.</returns>
         public Command Get(string name)
         {
-            name = this.GetNormalisedName(name);
+            name = this.GetNormalizedName(name);
             this.Commands.TryGetValue(name, out Command command);
             return command;
         }
@@ -84,7 +84,7 @@ namespace StardewModdingAPI.Framework
 
             // parse input
             args = this.ParseArgs(input);
-            name = this.GetNormalisedName(args[0]);
+            name = this.GetNormalizedName(args[0]);
             args = args.Skip(1).ToArray();
 
             // get command
@@ -97,8 +97,8 @@ namespace StardewModdingAPI.Framework
         /// <returns>Returns whether a matching command was triggered.</returns>
         public bool Trigger(string name, string[] arguments)
         {
-            // get normalised name
-            name = this.GetNormalisedName(name);
+            // get normalized name
+            name = this.GetNormalizedName(name);
             if (name == null)
                 return false;
 
@@ -140,9 +140,9 @@ namespace StardewModdingAPI.Framework
             return args.Where(item => !string.IsNullOrWhiteSpace(item)).ToArray();
         }
 
-        /// <summary>Get a normalised command name.</summary>
+        /// <summary>Get a normalized command name.</summary>
         /// <param name="name">The command name.</param>
-        private string GetNormalisedName(string name)
+        private string GetNormalizedName(string name)
         {
             name = name?.Trim().ToLower();
             return !string.IsNullOrWhiteSpace(name)

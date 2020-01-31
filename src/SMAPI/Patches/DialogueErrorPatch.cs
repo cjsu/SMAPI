@@ -10,6 +10,9 @@ using StardewValley;
 namespace StardewModdingAPI.Patches
 {
     /// <summary>A Harmony patch for the <see cref="Dialogue"/> constructor which intercepts invalid dialogue lines and logs an error instead of crashing.</summary>
+    /// <remarks>Patch methods must be static for Harmony to work correctly. See the Harmony documentation before renaming patch arguments.</remarks>
+    [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Argument names are defined by Harmony and methods are named for clarity.")]
+    [SuppressMessage("ReSharper", "IdentifierTypo", Justification = "Argument names are defined by Harmony and methods are named for clarity.")]
     internal class DialogueErrorPatch : IHarmonyPatch
     {
         /*********
@@ -29,7 +32,7 @@ namespace StardewModdingAPI.Patches
         ** Accessors
         *********/
         /// <summary>A unique name for this patch.</summary>
-        public string Name => $"{nameof(DialogueErrorPatch)}";
+        public string Name => nameof(DialogueErrorPatch);
 
 
         /*********
@@ -68,8 +71,6 @@ namespace StardewModdingAPI.Patches
         /// <param name="masterDialogue">The dialogue being parsed.</param>
         /// <param name="speaker">The NPC for which the dialogue is being parsed.</param>
         /// <returns>Returns whether to execute the original method.</returns>
-        /// <remarks>This method must be static for Harmony to work correctly. See the Harmony documentation before renaming arguments.</remarks>
-        [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Argument names are defined by Harmony.")]
         private static bool Before_Dialogue_Constructor(Dialogue __instance, string masterDialogue, NPC speaker)
         {
             // get private members
@@ -109,8 +110,6 @@ namespace StardewModdingAPI.Patches
         /// <param name="__result">The return value of the original method.</param>
         /// <param name="__originalMethod">The method being wrapped.</param>
         /// <returns>Returns whether to execute the original method.</returns>
-        /// <remarks>This method must be static for Harmony to work correctly. See the Harmony documentation before renaming arguments.</remarks>
-        [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Argument names are defined by Harmony.")]
         private static bool Before_NPC_CurrentDialogue(NPC __instance, ref Stack<Dialogue> __result, MethodInfo __originalMethod)
         {
             if (DialogueErrorPatch.IsInterceptingCurrentDialogue)

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Newtonsoft.Json;
-using StardewModdingAPI.Toolkit.Serialisation;
+using StardewModdingAPI.Toolkit.Serialization;
+using StardewModdingAPI.Toolkit.Utilities;
 
 namespace StardewModdingAPI.Toolkit.Framework.Clients.WebApi
 {
@@ -37,12 +38,15 @@ namespace StardewModdingAPI.Toolkit.Framework.Clients.WebApi
 
         /// <summary>Get metadata about a set of mods from the web API.</summary>
         /// <param name="mods">The mod keys for which to fetch the latest version.</param>
+        /// <param name="apiVersion">The SMAPI version installed by the player. If this is null, the API won't provide a recommended update.</param>
+        /// <param name="gameVersion">The Stardew Valley version installed by the player.</param>
+        /// <param name="platform">The OS on which the player plays.</param>
         /// <param name="includeExtendedMetadata">Whether to include extended metadata for each mod.</param>
-        public IDictionary<string, ModEntryModel> GetModInfo(ModSearchEntryModel[] mods, bool includeExtendedMetadata = false)
+        public IDictionary<string, ModEntryModel> GetModInfo(ModSearchEntryModel[] mods, ISemanticVersion apiVersion, ISemanticVersion gameVersion, Platform platform, bool includeExtendedMetadata = false)
         {
             return this.Post<ModSearchModel, ModEntryModel[]>(
                 $"v{this.Version}/mods",
-                new ModSearchModel(mods, includeExtendedMetadata)
+                new ModSearchModel(mods, apiVersion, gameVersion, platform, includeExtendedMetadata)
             ).ToDictionary(p => p.ID);
         }
 

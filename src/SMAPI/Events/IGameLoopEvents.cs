@@ -5,7 +5,7 @@ namespace StardewModdingAPI.Events
     /// <summary>Events linked to the game's update loop. The update loop runs roughly ≈60 times/second to run game logic like state changes, action handling, etc. These can be useful, but you should consider more semantic events like <see cref="IInputEvents"/> if possible.</summary>
     public interface IGameLoopEvents
     {
-        /// <summary>Raised after the game is launched, right before the first update tick. This happens once per game session (unrelated to loading saves). All mods are loaded and initialised at this point, so this is a good time to set up mod integrations.</summary>
+        /// <summary>Raised after the game is launched, right before the first update tick. This happens once per game session (unrelated to loading saves). All mods are loaded and initialized at this point, so this is a good time to set up mod integrations.</summary>
         event EventHandler<GameLaunchedEventArgs> GameLaunched;
 
         /// <summary>Raised before the game state is updated (≈60 times per second).</summary>
@@ -26,13 +26,13 @@ namespace StardewModdingAPI.Events
         /// <summary>Raised after the game finishes creating the save file.</summary>
         event EventHandler<SaveCreatedEventArgs> SaveCreated;
 
-        /// <summary>Raised before the game begins writes data to the save file (except the initial save creation).</summary>
+        /// <summary>Raised before the game begins writing data to the save file (except the initial save creation).</summary>
         event EventHandler<SavingEventArgs> Saving;
 
         /// <summary>Raised after the game finishes writing data to the save file (except the initial save creation).</summary>
         event EventHandler<SavedEventArgs> Saved;
 
-        /// <summary>Raised after the player loads a save slot and the world is initialised.</summary>
+        /// <summary>Raised after the player loads a save slot and the world is initialized.</summary>
         event EventHandler<SaveLoadedEventArgs> SaveLoaded;
 
         /// <summary>Raised after the game begins a new day (including when the player loads a save).</summary>

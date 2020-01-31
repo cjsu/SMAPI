@@ -8,10 +8,10 @@ namespace StardewModdingAPI.Framework
         /*********
         ** Accessors
         *********/
-        /// <summary>The pixel position relative to the top-left corner of the in-game map.</summary>
+        /// <summary>The pixel position relative to the top-left corner of the in-game map, adjusted for pixel zoom.</summary>
         public Vector2 AbsolutePixels { get; }
 
-        /// <summary>The pixel position relative to the top-left corner of the visible screen.</summary>
+        /// <summary>The pixel position relative to the top-left corner of the visible screen, adjusted for pixel zoom.</summary>
         public Vector2 ScreenPixels { get; }
 
         /// <summary>The tile position under the cursor relative to the top-left corner of the map.</summary>
@@ -25,8 +25,8 @@ namespace StardewModdingAPI.Framework
         ** Public methods
         *********/
         /// <summary>Construct an instance.</summary>
-        /// <param name="absolutePixels">The pixel position relative to the top-left corner of the in-game map.</param>
-        /// <param name="screenPixels">The pixel position relative to the top-left corner of the visible screen.</param>
+        /// <param name="absolutePixels">The pixel position relative to the top-left corner of the in-game map, adjusted for pixel zoom.</param>
+        /// <param name="screenPixels">The pixel position relative to the top-left corner of the visible screen, adjusted for pixel zoom.</param>
         /// <param name="tile">The tile position relative to the top-left corner of the map.</param>
         /// <param name="grabTile">The tile position that the game considers under the cursor for purposes of clicking actions.</param>
         public CursorPosition(Vector2 absolutePixels, Vector2 screenPixels, Vector2 tile, Vector2 grabTile)

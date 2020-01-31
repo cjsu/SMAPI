@@ -11,7 +11,7 @@ namespace StardewModdingAPI
         /// <summary>Get all content packs loaded for this mod.</summary>
         IEnumerable<IContentPack> GetOwned();
 
-        /// <summary>Create a temporary content pack to read files from a directory, using randomised manifest fields. Temporary content packs will not appear in the SMAPI log and update checks will not be performed.</summary>
+        /// <summary>Create a temporary content pack to read files from a directory, using randomized manifest fields. Temporary content packs will not appear in the SMAPI log and update checks will not be performed.</summary>
         /// <param name="directoryPath">The absolute directory path containing the content pack files.</param>
         IContentPack CreateFake(string directoryPath);
 

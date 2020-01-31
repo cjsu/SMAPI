@@ -96,7 +96,7 @@ namespace SMAPI.ModBuildConfig.Analyzer.Tests
             DiagnosticResult expected = new DiagnosticResult
             {
                 Id = "AvoidImplicitNetFieldCast",
-                Message = $"This implicitly converts '{expression}' from {fromType} to {toType}, but {fromType} has unintuitive implicit conversion rules. Consider comparing against the actual value instead to avoid bugs. See https://smapi.io/buildmsg/avoid-implicit-net-field-cast for details.",
+                Message = $"This implicitly converts '{expression}' from {fromType} to {toType}, but {fromType} has unintuitive implicit conversion rules. Consider comparing against the actual value instead to avoid bugs. See https://smapi.io/package/avoid-implicit-net-field-cast for details.",
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", NetFieldAnalyzerTests.SampleCodeLine, NetFieldAnalyzerTests.SampleCodeColumn + column) }
             };
@@ -138,7 +138,7 @@ namespace SMAPI.ModBuildConfig.Analyzer.Tests
             DiagnosticResult expected = new DiagnosticResult
             {
                 Id = "AvoidNetField",
-                Message = $"'{expression}' is a {netType} field; consider using the {suggestedProperty} property instead. See https://smapi.io/buildmsg/avoid-net-field for details.",
+                Message = $"'{expression}' is a {netType} field; consider using the {suggestedProperty} property instead. See https://smapi.io/package/avoid-net-field for details.",
                 Severity = DiagnosticSeverity.Warning,
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", NetFieldAnalyzerTests.SampleCodeLine, NetFieldAnalyzerTests.SampleCodeColumn + column) }
             };

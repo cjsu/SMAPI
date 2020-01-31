@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>SMAPI.ModBuildConfig</AssemblyName>
+    <RootNamespace>StardewModdingAPI.ModBuildConfig</RootNamespace>
+    <Version>3.0.0</Version>
+    <TargetFramework>net45</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <PlatformTarget>x86</PlatformTarget>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SMAPI.Toolkit\SMAPI.Toolkit.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\build\find-game-folder.targets" Link="build\find-game-folder.targets" />
+    <None Include="..\..\docs\technical\mod-package.md" Link="mod-build-config.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.Build" />
+    <Reference Include="Microsoft.Build.Framework" />
+    <Reference Include="Microsoft.Build.Utilities.v4.0" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Web.Extensions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\docs\technical\mod-package.md">
+      <Link>mod-package.md</Link>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="assets\nuget-icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <Import Project="..\SMAPI.Internal\SMAPI.Internal.projitems" Label="Shared" />
+  <Import Project="..\..\build\common.targets" />
+  <Import Project="..\..\build\prepare-nuget-package.targets" />
+
+</Project>

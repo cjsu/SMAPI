@@ -6,19 +6,13 @@ namespace StardewModdingAPI.Web.Framework.ConfigModels
         /*********
         ** Accessors
         *********/
-        /// <summary>The root URL for the app.</summary>
-        public string RootUrl { get; set; }
-
-        /// <summary>The root URL for the log parser.</summary>
-        public string LogParserUrl { get; set; }
-
-        /// <summary>The root URL for the mod list.</summary>
-        public string ModListUrl { get; set; }
-
         /// <summary>Whether to show SMAPI beta versions on the main page, if any.</summary>
         public bool BetaEnabled { get; set; }
 
         /// <summary>A short sentence shown under the beta download button, if any.</summary>
         public string BetaBlurb { get; set; }
+
+        /// <summary>A list of supports to credit on the main page, in Markdown format.</summary>
+        public string SupporterList { get; set; }
     }
 }

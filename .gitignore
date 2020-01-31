@@ -18,6 +18,9 @@ _ReSharper*/
 *.[Rr]e[Ss]harper
 *.DotSettings.user
 
+# Rider
+.idea/
+
 # NuGet packages
 *.nupkg
 **/packages/*
@@ -28,4 +31,7 @@ _ReSharper*/
 appsettings.Development.json
 
 # AWS generated files
-src/SMAPI.Web/aws-beanstalk-tools-defaults.json
+src/SMAPI.Web.LegacyRedirects/aws-beanstalk-tools-defaults.json
+
+# Azure generated files
+src/SMAPI.Web/Properties/PublishProfiles/*.pubxml

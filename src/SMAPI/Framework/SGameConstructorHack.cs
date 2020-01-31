@@ -1,11 +1,11 @@
 using System;
 using StardewModdingAPI.Framework.Reflection;
-using StardewModdingAPI.Toolkit.Serialisation;
+using StardewModdingAPI.Toolkit.Serialization;
 using StardewValley;
 
 namespace StardewModdingAPI.Framework
 {
-    /// <summary>The static state to use while <see cref="Game1"/> is initialising, which happens before the <see cref="SGame"/> constructor runs.</summary>
+    /// <summary>The static state to use while <see cref="Game1"/> is initializing, which happens before the <see cref="SGame"/> constructor runs.</summary>
     internal class SGameConstructorHack
     {
         /*********
@@ -31,6 +31,7 @@ namespace StardewModdingAPI.Framework
         /// <param name="monitor">Encapsulates monitoring and logging.</param>
         /// <param name="reflection">Simplifies access to private game code.</param>
         /// <param name="jsonHelper">Encapsulates SMAPI's JSON file parsing.</param>
+        /// <param name="onLoadingFirstAsset">A callback to invoke the first time *any* game content manager loads an asset.</param>
         public SGameConstructorHack(IMonitor monitor, Reflector reflection, JsonHelper jsonHelper, Action onLoadingFirstAsset)
         {
             this.Monitor = monitor;

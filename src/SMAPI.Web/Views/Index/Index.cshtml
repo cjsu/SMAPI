@@ -1,4 +1,6 @@
+@using Markdig
 @using Microsoft.Extensions.Options
+@using StardewModdingAPI.Web.Framework
 @using StardewModdingAPI.Web.Framework.ConfigModels
 @inject IOptions<SiteConfig> SiteConfig
 @model StardewModdingAPI.Web.ViewModels.IndexModel
@@ -44,15 +46,15 @@
     }
     <div><a href="https://stardewvalleywiki.com/Modding:Player_Guide" class="secondary-cta">Player guide</a></div>
     <div class="sublinks">
-        <a href="https://github.com/Pathoschild/SMAPI">source code</a> | <a href="@(new UriBuilder(SiteConfig.Value.RootUrl) { Path = "privacy" }.Uri)">privacy</a>
+        <a href="https://github.com/Pathoschild/SMAPI">source code</a> | <a href="@Url.PlainAction("Privacy", "Index")">privacy</a>
     </div>
     <img id="pufferchick" src="Content/images/pufferchick.png" />
 </div>
 
 <h2 id="help">Get help</h2>
 <ul>
-    <li><a href="@SiteConfig.Value.ModListUrl">Mod compatibility list</a></li>
-    <li>Get help <a href="https://stardewvalleywiki.com/Modding:Community#Discord">on Discord</a> or <a href="https://community.playstarbound.com/threads/smapi-stardew-modding-api.108375/">in the forums</a></li>
+    <li><a href="@Url.PlainAction("Index", "Mods")">Mod compatibility list</a></li>
+    <li>Get help <a href="https://smapi.io/community">on Discord or in the forums</a></li>
 </ul>
 
 @if (Model.BetaVersion == null)
@@ -61,7 +63,7 @@
     <div class="github-description">
         @Html.Raw(Markdig.Markdown.ToHtml(Model.StableVersion.Description))
     </div>
-    <p>See the <a href="https://github.com/Pathoschild/SMAPI/blob/develop/docs/release-notes.md#release-notes">release notes</a> and <a href="@SiteConfig.Value.ModListUrl">mod compatibility list</a> for more info.</p>
+    <p>See the <a href="https://github.com/Pathoschild/SMAPI/blob/develop/docs/release-notes.md#release-notes">release notes</a> and <a href="@Url.PlainAction("Index", "Mods")">mod compatibility list</a> for more info.</p>
 }
 else
 {
@@ -70,13 +72,13 @@ else
     <div class="github-description">
         @Html.Raw(Markdig.Markdown.ToHtml(Model.StableVersion.Description))
     </div>
-    <p>See the <a href="https://github.com/Pathoschild/SMAPI/blob/develop/docs/release-notes.md#release-notes">release notes</a> and <a href="@SiteConfig.Value.ModListUrl">mod compatibility list</a> for more info.</p>
+    <p>See the <a href="https://github.com/Pathoschild/SMAPI/blob/develop/docs/release-notes.md#release-notes">release notes</a> and <a href="@Url.PlainAction("Index", "Mods")">mod compatibility list</a> for more info.</p>
 
     <h3>SMAPI @Model.BetaVersion.Version?</h3>
     <div class="github-description">
         @Html.Raw(Markdig.Markdown.ToHtml(Model.BetaVersion.Description))
     </div>
-    <p>See the <a href="https://github.com/Pathoschild/SMAPI/blob/develop/docs/release-notes.md#release-notes">release notes</a> and <a href="@SiteConfig.Value.ModListUrl">mod compatibility list</a> for more info.</p>
+    <p>See the <a href="https://github.com/Pathoschild/SMAPI/blob/develop/docs/release-notes.md#release-notes">release notes</a> and <a href="@Url.PlainAction("Index", "Mods")">mod compatibility list</a> for more info.</p>
 }
 
 <h2 id="donate">Support SMAPI ♥</h2>
@@ -93,28 +95,22 @@ else
     </li>
     <li>
         <a href="https://ko-fi.com/pathoschild" class="donate-button">
-            <img src="Content/images/ko-fi.png"/> Buy me a coffee
+            <img src="Content/images/ko-fi.png" /> Buy me a coffee
         </a>
     </li>
     <li>
         <a href="https://www.paypal.me/pathoschild" class="donate-button">
-            <img src="Content/images/paypal.png"/> Donate via PayPal
+            <img src="Content/images/paypal.png" /> Donate via PayPal
         </a>
     </li>
 </ul>
 
-<p>
-    Special thanks to
-    <a href="https://www.nexusmods.com/stardewvalley/users/31393530">ChefRude</a>,
-    <a href="https://github.com/dittusch">dittusch</a>,
-    hawkfalcon,
-    <a href="https://twitter.com/iKeychain">iKeychain</a>,
-    jwdred,
-    <a href="https://www.nexusmods.com/users/12252523">Karmylla</a>,
-    Pucklynn,
-    Robby LaFarge,
-    and a few anonymous users for their ongoing support on Patreon; you're awesome!
-</p>
+@if (!string.IsNullOrWhiteSpace(Model.SupporterList))
+{
+    @Html.Raw(Markdig.Markdown.ToHtml(
+        $"Special thanks to {Model.SupporterList}, and a few anonymous users for their ongoing support on Patreon; you're awesome!"
+    ))
+}
 
 <h2 id="modcreators">For mod creators</h2>
 <ul>
@@ -124,5 +120,5 @@ else
         <li><a href="@Model.BetaVersion.DevDownloadUrl">SMAPI @Model.BetaVersion.Version for developers</a> (includes <a href="https://docs.microsoft.com/en-us/visualstudio/ide/using-intellisense">intellisense</a> and full console output)</li>
     }
     <li><a href="https://stardewvalleywiki.com/Modding:Index">Modding documentation</a></li>
-    <li>Need help? Come <a href="https://stardewvalleywiki.com/Modding:Community#Discord">chat on Discord</a>.</li>
+    <li>Need help? Come <a href="https://smapi.io/community">chat on Discord</a>.</li>
 </ul>

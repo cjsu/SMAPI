@@ -80,12 +80,14 @@ namespace StardewModdingAPI.Framework.Input
         {
             try
             {
+                float zoomMultiplier = (1f / Game1.options.zoomLevel);
+
                 // get new states
                 GamePadState realController = GamePad.GetState(PlayerIndex.One);
                 KeyboardState realKeyboard = Keyboard.GetState();
                 MouseState realMouse = Mouse.GetState();
                 var activeButtons = this.DeriveStatuses(this.ActiveButtons, realKeyboard, realMouse, realController);
-                Vector2 cursorAbsolutePos = new Vector2(realMouse.X + Game1.viewport.X, realMouse.Y + Game1.viewport.Y);
+                Vector2 cursorAbsolutePos = new Vector2((realMouse.X * zoomMultiplier) + Game1.viewport.X, (realMouse.Y * zoomMultiplier) + Game1.viewport.Y);
                 Vector2? playerTilePos = Context.IsPlayerFree ? Game1.player.getTileLocation() : (Vector2?)null;
 
                 // update real states
@@ -94,7 +96,10 @@ namespace StardewModdingAPI.Framework.Input
                 this.RealKeyboard = realKeyboard;
                 this.RealMouse = realMouse;
                 if (cursorAbsolutePos != this.CursorPositionImpl?.AbsolutePixels || playerTilePos != this.LastPlayerTile)
-                    this.CursorPositionImpl = this.GetCursorPosition(realMouse, cursorAbsolutePos);
+                {
+                    this.LastPlayerTile = playerTilePos;
+                    this.CursorPositionImpl = this.GetCursorPosition(realMouse, cursorAbsolutePos, zoomMultiplier);
+                }
 
                 // update suppressed states
                 this.SuppressButtons.RemoveWhere(p => !this.GetStatus(activeButtons, p).IsDown());
@@ -124,6 +129,9 @@ namespace StardewModdingAPI.Framework.Input
         [Obsolete("This method should only be called by the game itself.")]
         public override GamePadState GetGamePadState()
         {
+            if (Game1.options.gamepadMode == Options.GamepadModes.ForceOff)
+                return base.GetGamePadState();
+
             return this.ShouldSuppressNow()
                 ? this.SuppressedController
                 : this.RealController;
@@ -167,11 +175,11 @@ namespace StardewModdingAPI.Framework.Input
         *********/
         /// <summary>Get the current cursor position.</summary>
         /// <param name="mouseState">The current mouse state.</param>
-        /// <param name="absolutePixels">The absolute pixel position relative to the map.</param>
-        private CursorPosition GetCursorPosition(MouseState mouseState, Vector2 absolutePixels)
+        /// <param name="absolutePixels">The absolute pixel position relative to the map, adjusted for pixel zoom.</param>
+        /// <param name="zoomMultiplier">The multiplier applied to pixel coordinates to adjust them for pixel zoom.</param>
+        private CursorPosition GetCursorPosition(MouseState mouseState, Vector2 absolutePixels, float zoomMultiplier)
         {
-            Vector2 rawPixels = new Vector2(mouseState.X, mouseState.Y);
-            Vector2 screenPixels = rawPixels * new Vector2((float)1.0 / Game1.options.zoomLevel); // derived from Game1::getMouseX
+            Vector2 screenPixels = new Vector2(mouseState.X * zoomMultiplier, mouseState.Y * zoomMultiplier);
             Vector2 tile = new Vector2((int)((Game1.viewport.X + screenPixels.X) / Game1.tileSize), (int)((Game1.viewport.Y + screenPixels.Y) / Game1.tileSize));
             Vector2 grabTile = (Game1.mouseCursorTransparency > 0 && Utility.tileWithinRadiusOfPlayer((int)tile.X, (int)tile.Y, 1, Game1.player)) // derived from Game1.pressActionButton
                 ? tile

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using StardewModdingAPI.Toolkit.Framework.Clients.Wiki;
@@ -37,6 +38,12 @@ namespace StardewModdingAPI.Web.ViewModels
         /// <summary>The human-readable warnings for players about this mod.</summary>
         public string[] Warnings { get; set; }
 
+        /// <summary>Extra metadata links (usually for open pull requests).</summary>
+        public Tuple<Uri, string>[] MetadataLinks { get; set; }
+
+        /// <summary>Special notes intended for developers who maintain unofficial updates or submit pull requests. </summary>
+        public string DevNote { get; set; }
+
         /// <summary>A unique identifier for the mod that can be used in an anchor URL.</summary>
         public string Slug { get; set; }
 
@@ -61,6 +68,8 @@ namespace StardewModdingAPI.Web.ViewModels
             this.BetaCompatibility = entry.BetaCompatibility != null ? new ModCompatibilityModel(entry.BetaCompatibility) : null;
             this.ModPages = this.GetModPageUrls(entry).ToArray();
             this.Warnings = entry.Warnings;
+            this.MetadataLinks = entry.MetadataLinks;
+            this.DevNote = entry.DevNote;
             this.Slug = entry.Anchor;
         }
 
@@ -91,15 +100,20 @@ namespace StardewModdingAPI.Web.ViewModels
                 anyFound = true;
                 yield return new ModLinkModel($"https://www.nexusmods.com/stardewvalley/mods/{entry.NexusID}", "Nexus");
             }
-            if (entry.ChucklefishID.HasValue)
-            {
-                anyFound = true;
-                yield return new ModLinkModel($"https://community.playstarbound.com/resources/{entry.ChucklefishID}", "Chucklefish");
-            }
             if (entry.ModDropID.HasValue)
             {
                 anyFound = true;
                 yield return new ModLinkModel($"https://www.moddrop.com/sdv/mod/{entry.ModDropID}", "ModDrop");
+            }
+            if (!string.IsNullOrWhiteSpace(entry.CurseForgeKey))
+            {
+                anyFound = true;
+                yield return new ModLinkModel($"https://www.curseforge.com/stardewvalley/mods/{entry.CurseForgeKey}", "CurseForge");
+            }
+            if (entry.ChucklefishID.HasValue)
+            {
+                anyFound = true;
+                yield return new ModLinkModel($"https://community.playstarbound.com/resources/{entry.ChucklefishID}", "Chucklefish");
             }
 
             // fallback

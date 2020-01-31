@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using StardewValley;
 
 namespace StardewModdingAPI.Framework.ModHelpers
@@ -11,24 +9,18 @@ namespace StardewModdingAPI.Framework.ModHelpers
         /*********
         ** Fields
         *********/
-        /// <summary>The name of the relevant mod for error messages.</summary>
-        private readonly string ModName;
-
-        /// <summary>The translations for each locale.</summary>
-        private readonly IDictionary<string, IDictionary<string, string>> All = new Dictionary<string, IDictionary<string, string>>(StringComparer.InvariantCultureIgnoreCase);
-
-        /// <summary>The translations for the current locale, with locale fallback taken into account.</summary>
-        private IDictionary<string, Translation> ForLocale;
+        /// <summary>The underlying translation manager.</summary>
+        private readonly Translator Translator;
 
 
         /*********
         ** Accessors
         *********/
         /// <summary>The current locale.</summary>
-        public string Locale { get; private set; }
+        public string Locale => this.Translator.Locale;
 
         /// <summary>The game's current language code.</summary>
-        public LocalizedContentManager.LanguageCode LocaleEnum { get; private set; }
+        public LocalizedContentManager.LanguageCode LocaleEnum => this.Translator.LocaleEnum;
 
 
         /*********
@@ -36,31 +28,26 @@ namespace StardewModdingAPI.Framework.ModHelpers
         *********/
         /// <summary>Construct an instance.</summary>
         /// <param name="modID">The unique ID of the relevant mod.</param>
-        /// <param name="modName">The name of the relevant mod for error messages.</param>
         /// <param name="locale">The initial locale.</param>
         /// <param name="languageCode">The game's current language code.</param>
-        public TranslationHelper(string modID, string modName, string locale, LocalizedContentManager.LanguageCode languageCode)
+        public TranslationHelper(string modID, string locale, LocalizedContentManager.LanguageCode languageCode)
             : base(modID)
         {
-            // save data
-            this.ModName = modName;
-
-            // set locale
-            this.SetLocale(locale, languageCode);
+            this.Translator = new Translator();
+            this.Translator.SetLocale(locale, languageCode);
         }
 
         /// <summary>Get all translations for the current locale.</summary>
         public IEnumerable<Translation> GetTranslations()
         {
-            return this.ForLocale.Values.ToArray();
+            return this.Translator.GetTranslations();
         }
 
         /// <summary>Get a translation for the current locale.</summary>
         /// <param name="key">The translation key.</param>
         public Translation Get(string key)
         {
-            this.ForLocale.TryGetValue(key, out Translation translation);
-            return translation ?? new Translation(this.ModName, this.Locale, key, null);
+            return this.Translator.Get(key);
         }
 
         /// <summary>Get a translation for the current locale.</summary>
@@ -68,21 +55,14 @@ namespace StardewModdingAPI.Framework.ModHelpers
         /// <param name="tokens">An object containing token key/value pairs. This can be an anonymous object (like <c>new { value = 42, name = "Cranberries" }</c>), a dictionary, or a class instance.</param>
         public Translation Get(string key, object tokens)
         {
-            return this.Get(key).Tokens(tokens);
+            return this.Translator.Get(key, tokens);
         }
 
         /// <summary>Set the translations to use.</summary>
         /// <param name="translations">The translations to use.</param>
         internal TranslationHelper SetTranslations(IDictionary<string, IDictionary<string, string>> translations)
         {
-            // reset translations
-            this.All.Clear();
-            foreach (var pair in translations)
-                this.All[pair.Key] = new Dictionary<string, string>(pair.Value, StringComparer.InvariantCultureIgnoreCase);
-
-            // rebuild cache
-            this.SetLocale(this.Locale, this.LocaleEnum);
-
+            this.Translator.SetTranslations(translations);
             return this;
         }
 
@@ -91,50 +71,7 @@ namespace StardewModdingAPI.Framework.ModHelpers
         /// <param name="localeEnum">The game's current language code.</param>
         internal void SetLocale(string locale, LocalizedContentManager.LanguageCode localeEnum)
         {
-            this.Locale = locale.ToLower().Trim();
-            this.LocaleEnum = localeEnum;
-
-            this.ForLocale = new Dictionary<string, Translation>(StringComparer.InvariantCultureIgnoreCase);
-            foreach (string next in this.GetRelevantLocales(this.Locale))
-            {
-                // skip if locale not defined
-                if (!this.All.TryGetValue(next, out IDictionary<string, string> translations))
-                    continue;
-
-                // add missing translations
-                foreach (var pair in translations)
-                {
-                    if (!this.ForLocale.ContainsKey(pair.Key))
-                        this.ForLocale.Add(pair.Key, new Translation(this.ModName, this.Locale, pair.Key, pair.Value));
-                }
-            }
-        }
-
-
-        /*********
-        ** Private methods
-        *********/
-        /// <summary>Get the locales which can provide translations for the given locale, in precedence order.</summary>
-        /// <param name="locale">The locale for which to find valid locales.</param>
-        private IEnumerable<string> GetRelevantLocales(string locale)
-        {
-            // given locale
-            yield return locale;
-
-            // broader locales (like pt-BR => pt)
-            while (true)
-            {
-                int dashIndex = locale.LastIndexOf('-');
-                if (dashIndex <= 0)
-                    break;
-
-                locale = locale.Substring(0, dashIndex);
-                yield return locale;
-            }
-
-            // default
-            if (locale != "default")
-                yield return "default";
+            this.Translator.SetLocale(locale, localeEnum);
         }
     }
 }

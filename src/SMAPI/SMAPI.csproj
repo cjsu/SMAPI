@@ -1,0 +1,134 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>StardewModdingAPI</AssemblyName>
+    <RootNamespace>StardewModdingAPI</RootNamespace>
+    <Description>The modding API for Stardew Valley.</Description>
+    <TargetFramework>net45</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputType>Exe</OutputType>
+    <OutputPath>$(SolutionDir)\..\bin\$(Configuration)\SMAPI</OutputPath>
+    <DocumentationFile>$(SolutionDir)\..\bin\$(Configuration)\SMAPI\StardewModdingAPI.xml</DocumentationFile>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <LargeAddressAware Condition="'$(OS)' == 'Windows_NT'">true</LargeAddressAware>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="LargeAddressAware" Version="1.0.3" />
+    <PackageReference Include="Lib.Harmony" Version="1.2.0.1" />
+    <PackageReference Include="Mono.Cecil" Version="0.11.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="$(GameExecutableName)">
+      <HintPath>$(GamePath)\$(GameExecutableName).exe</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="StardewValley.GameData">
+      <HintPath>$(GamePath)\StardewValley.GameData.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Numerics">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Caching">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GalaxyCSharp">
+      <HintPath>$(GamePath)\GalaxyCSharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Lidgren.Network">
+      <HintPath>$(GamePath)\Lidgren.Network.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="xTile">
+      <HintPath>$(GamePath)\xTile.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+
+  <Choose>
+    <!-- Windows -->
+    <When Condition="$(OS) == 'Windows_NT'">
+      <ItemGroup>
+        <Reference Include="Netcode">
+          <HintPath>$(GamePath)\Netcode.dll</HintPath>
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.Xna.Framework.Xact, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="System.Windows.Forms" />
+      </ItemGroup>
+    </When>
+
+    <!-- Linux/Mac -->
+    <Otherwise>
+      <ItemGroup>
+        <Reference Include="MonoGame.Framework">
+          <HintPath>$(GamePath)\MonoGame.Framework.dll</HintPath>
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SMAPI.Toolkit.CoreInterfaces\SMAPI.Toolkit.CoreInterfaces.csproj" />
+    <ProjectReference Include="..\SMAPI.Toolkit\SMAPI.Toolkit.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="SMAPI.config.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\SMAPI.Web\wwwroot\SMAPI.metadata.json">
+      <Link>SMAPI.metadata.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Update="i18n\de.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="i18n\es.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="i18n\ja.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="i18n\default.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="i18n\pt.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="i18n\ru.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="i18n\tr.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="i18n\zh.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="steam_appid.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <Import Project="..\SMAPI.Internal\SMAPI.Internal.projitems" Label="Shared" />
+  <Import Project="..\..\build\common.targets" />
+
+</Project>

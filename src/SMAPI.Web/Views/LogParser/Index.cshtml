@@ -1,4 +1,7 @@
+@using Humanizer
 @using Newtonsoft.Json
+@using StardewModdingAPI.Toolkit.Utilities
+@using StardewModdingAPI.Web.Framework
 @using StardewModdingAPI.Web.Framework.LogParsing.Models
 @model StardewModdingAPI.Web.ViewModels.LogParserModel
 
@@ -10,6 +13,8 @@
         .Cast<LogLevel>()
         .ToDictionary(level => level.ToString().ToLower(), level => level != LogLevel.Trace);
     JsonSerializerSettings noFormatting = new JsonSerializerSettings { Formatting = Formatting.None };
+
+    string curPageUrl = this.Url.PlainAction("Index", "LogParser", new { id = Model.PasteID }, absoluteUrl: true);
 }
 
 @section Head {
@@ -17,7 +22,7 @@
     {
         <meta name="robots" content="noindex" />
     }
-    <link rel="stylesheet" href="~/Content/css/log-parser.css?r=20190515" />
+    <link rel="stylesheet" href="~/Content/css/log-parser.css?r=20191127" />
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" crossorigin="anonymous"></script>
     <script src="~/Content/js/log-parser.js?r=20190515"></script>
@@ -30,7 +35,7 @@
                 showSections: @Json.Serialize(Enum.GetNames(typeof(LogSection)).ToDictionary(section => section, section => false), noFormatting),
                 showLevels: @Json.Serialize(defaultFilters, noFormatting),
                 enableFilters: @Json.Serialize(!Model.ShowRaw)
-            }, '@Model.SectionUrl');
+            }, '@this.Url.PlainAction("Index", "LogParser", values: null)');
         });
     </script>
 }
@@ -47,8 +52,8 @@ else if (Model.ParseError != null)
 {
     <div class="banner error" v-pre>
         <strong>Oops, couldn't parse that log. (Make sure you upload the log file, not the console text.)</strong><br />
-        Share this URL when asking for help: <code>@(new Uri(new Uri(Model.SectionUrl), Model.PasteID))</code><br />
-        (Or <a href="@Model.SectionUrl">upload a new log</a>.)<br />
+        Share this URL when asking for help: <code>@curPageUrl</code><br />
+        (Or <a href="@this.Url.PlainAction("Index", "LogParser", values: null)">upload a new log</a>.)<br />
         <br />
         <small v-pre>Error details: @Model.ParseError</small>
     </div>
@@ -56,8 +61,24 @@ else if (Model.ParseError != null)
 else if (Model.ParsedLog?.IsValid == true)
 {
     <div class="banner success" v-pre>
-        <strong>Share this link to let someone else see the log:</strong> <code>@(new Uri(new Uri(Model.SectionUrl), Model.PasteID))</code><br />
-        (Or <a href="@Model.SectionUrl">upload a new log</a>.)
+        <strong>Share this link to let someone else see the log:</strong> <code>@curPageUrl</code><br />
+        (Or <a href="@this.Url.PlainAction("Index", "LogParser", values: null)">upload a new log</a>.)
+    </div>
+}
+
+@* save warnings *@
+@if (Model.UploadWarning != null || Model.Expiry != null)
+{
+    @if (Model.UploadWarning != null)
+    {
+        <text>⚠️ @Model.UploadWarning<br /></text>
+    }
+
+    <div class="save-metadata" v-pre>
+        @if (Model.Expiry != null)
+        {
+            <text>This log will expire in @((DateTime.UtcNow - Model.Expiry.Value).Humanize()).</text>
+        }
     </div>
 }
 
@@ -67,12 +88,15 @@ else if (Model.ParsedLog?.IsValid == true)
     <h2>Where do I find my SMAPI log?</h2>
     <div>What system do you use?</div>
     <ul id="os-list">
-        <li><input type="radio" name="os" value="android" id="os-android" /> <label for="os-android">Android</label></li>
-        <li><input type="radio" name="os" value="linux" id="os-linux" /> <label for="os-linux">Linux</label></li>
-        <li><input type="radio" name="os" value="mac" id="os-mac" /> <label for="os-mac">Mac</label></li>
-        <li><input type="radio" name="os" value="windows" id="os-windows" /> <label for="os-windows">Windows</label></li>
+        @foreach (Platform platform in new[] { Platform.Android, Platform.Linux, Platform.Mac, Platform.Windows })
+        {
+            <li>
+                <input type="radio" name="os" value="@platform" id="os-@platform" checked="@(Model.DetectedPlatform == platform)" />
+                <label for="os-@platform">@platform</label>
+            </li>
+        }
     </ul>
-    <div data-os="android">
+    <div data-os="@Platform.Android">
         On Android:
         <ol>
             <li>Open a file app (like My Files or MT Manager).</li>
@@ -81,7 +105,7 @@ else if (Model.ParsedLog?.IsValid == true)
             <li>The log file is <code>SMAPI-crash.txt</code> if it exists, otherwise <code>SMAPI-latest.txt</code>.</li>
         </ol>
     </div>
-    <div data-os="linux">
+    <div data-os="@Platform.Linux">
         On Linux:
         <ol>
             <li>Open the Files app.</li>
@@ -91,7 +115,7 @@ else if (Model.ParsedLog?.IsValid == true)
             <li>The log file is <code>SMAPI-crash.txt</code> if it exists, otherwise <code>SMAPI-latest.txt</code>.</li>
         </ol>
     </div>
-    <div data-os="mac">
+    <div data-os="@Platform.Mac">
         On Mac:
         <ol>
             <li>Open the Finder app.</li>
@@ -100,7 +124,7 @@ else if (Model.ParsedLog?.IsValid == true)
             <li>The log file is <code>SMAPI-crash.txt</code> if it exists, otherwise <code>SMAPI-latest.txt</code>.</li>
         </ol>
     </div>
-    <div data-os="windows">
+    <div data-os="@Platform.Windows">
         On Windows:
         <ol>
             <li>Press the <code>Windows</code> and <code>R</code> buttons at the same time.</li>
@@ -110,7 +134,7 @@ else if (Model.ParsedLog?.IsValid == true)
     </div>
 
     <h2>How do I share my log?</h2>
-    <form action="@Model.SectionUrl" method="post">
+    <form action="@this.Url.PlainAction("PostAsync", "LogParser")" method="post">
         <ol>
             <li>
                 Drag the file onto this textbox (or paste the text in):<br />
@@ -118,7 +142,7 @@ else if (Model.ParsedLog?.IsValid == true)
             </li>
             <li>
                 Click this button:<br />
-                <input type="submit" id="submit" value="save log" />
+                <input type="submit" id="submit" value="save & parse log" />
             </li>
             <li>On the new page, copy the URL and send it to the person helping you.</li>
         </ol>
@@ -147,7 +171,7 @@ else if (Model.ParsedLog?.IsValid == true)
                                         <div class="content-packs">
                                             @foreach (LogModInfo contentPack in contentPackList.Where(pack => pack.HasUpdate))
                                             {
-                                                <text>+ @contentPack.Name</text><br/>
+                                                <text>+ @contentPack.Name</text><br />
                                             }
                                         </div>
                                     }
@@ -169,7 +193,7 @@ else if (Model.ParsedLog?.IsValid == true)
                                         <div>
                                             @foreach (LogModInfo contentPack in contentPackList.Where(pack => pack.HasUpdate))
                                             {
-                                                <a href="@contentPack.UpdateLink" target="_blank">@contentPack.Version → @contentPack.UpdateVersion</a><br/>
+                                                <a href="@contentPack.UpdateLink" target="_blank">@contentPack.Version → @contentPack.UpdateVersion</a><br />
                                             }
                                         </div>
                                     }
@@ -276,10 +300,7 @@ else if (Model.ParsedLog?.IsValid == true)
                     string sectionFilter = message.Section != null && !message.IsStartOfSection ? $"&& sectionsAllow('{message.Section}')" : null; // filter the message by section if applicable
 
                     <tr class="mod @levelStr @sectionStartClass"
-                        @if (message.IsStartOfSection)
-                        {
-                            <text>v-on:click="toggleSection('@message.Section')"</text>
-                        }
+                        @if (message.IsStartOfSection) { <text> v-on:click="toggleSection('@message.Section')" </text>  }
                         v-show="filtersAllow('@Model.GetSlug(message.Mod)', '@levelStr') @sectionFilter">
                         <td v-pre>@message.Time</td>
                         <td v-pre>@message.Level.ToString().ToUpper()</td>
@@ -289,8 +310,12 @@ else if (Model.ParsedLog?.IsValid == true)
                             @if (message.IsStartOfSection)
                             {
                                 <span class="section-toggle-message">
-                                    <template v-if="sectionsAllow('@message.Section')">This section is shown. Click here to hide it.</template>
-                                    <template v-else>This section is hidden. Click here to show it.</template>
+                                    <template v-if="sectionsAllow('@message.Section')">
+                                        This section is shown. Click here to hide it.
+                                    </template>
+                                    <template v-else>
+                                        This section is hidden. Click here to show it.
+                                    </template>
                                 </span>
                             }
                         </td>
@@ -305,12 +330,12 @@ else if (Model.ParsedLog?.IsValid == true)
                 }
             </table>
 
-            <small><a href="@(new Uri(new Uri(Model.SectionUrl), Model.PasteID))?raw=true">view raw log</a></small>
+            <small><a href="@this.Url.PlainAction("Index", "LogParser", new { id = Model.PasteID, raw = true })">view raw log</a></small>
         }
         else
         {
             <pre v-pre>@Model.ParsedLog.RawText</pre>
-            <small><a href="@(new Uri(new Uri(Model.SectionUrl), Model.PasteID))">view parsed log</a></small>
+            <small><a href="@this.Url.PlainAction("Index", "LogParser", new { id = Model.PasteID })">view parsed log</a></small>
         }
     </div>
 }

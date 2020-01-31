@@ -5,13 +5,15 @@ using System.Linq;
 using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using StardewModdingAPI;
 using StardewModdingAPI.Framework;
 using StardewModdingAPI.Framework.ModLoading;
 using StardewModdingAPI.Toolkit;
 using StardewModdingAPI.Toolkit.Framework.ModData;
-using StardewModdingAPI.Toolkit.Serialisation.Models;
+using StardewModdingAPI.Toolkit.Serialization.Models;
+using SemanticVersion = StardewModdingAPI.SemanticVersion;
 
-namespace StardewModdingAPI.Tests.Core
+namespace SMAPI.Tests.Core
 {
     /// <summary>Unit tests for <see cref="ModResolver"/>.</summary>
     [TestFixture]
@@ -27,7 +29,7 @@ namespace StardewModdingAPI.Tests.Core
         public void ReadBasicManifest_NoMods_ReturnsEmptyList()
         {
             // arrange
-            string rootFolder = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N"));
+            string rootFolder = this.GetTempFolderPath();
             Directory.CreateDirectory(rootFolder);
 
             // act
@@ -41,7 +43,7 @@ namespace StardewModdingAPI.Tests.Core
         public void ReadBasicManifest_EmptyModFolder_ReturnsFailedManifest()
         {
             // arrange
-            string rootFolder = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N"));
+            string rootFolder = this.GetTempFolderPath();
             string modFolder = Path.Combine(rootFolder, Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(modFolder);
 
@@ -55,7 +57,7 @@ namespace StardewModdingAPI.Tests.Core
             Assert.IsNotNull(mod.Error, "The mod metadata did not have an error message set.");
         }
 
-        [Test(Description = "Assert that the resolver correctly reads manifest data from a randomised file.")]
+        [Test(Description = "Assert that the resolver correctly reads manifest data from a randomized file.")]
         public void ReadBasicManifest_CanReadFile()
         {
             // create manifest data
@@ -78,7 +80,7 @@ namespace StardewModdingAPI.Tests.Core
             };
 
             // write to filesystem
-            string rootFolder = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N"));
+            string rootFolder = this.GetTempFolderPath();
             string modFolder = Path.Combine(rootFolder, Guid.NewGuid().ToString("N"));
             string filename = Path.Combine(modFolder, "manifest.json");
             Directory.CreateDirectory(modFolder);
@@ -209,7 +211,7 @@ namespace StardewModdingAPI.Tests.Core
             IManifest manifest = this.GetManifest();
 
             // create DLL
-            string modFolder = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N"));
+            string modFolder = Path.Combine(this.GetTempFolderPath(), Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(modFolder);
             File.WriteAllText(Path.Combine(modFolder, manifest.EntryDll), "");
 
@@ -462,7 +464,13 @@ namespace StardewModdingAPI.Tests.Core
         /*********
         ** Private methods
         *********/
-        /// <summary>Get a randomised basic manifest.</summary>
+        /// <summary>Get a generated folder path in the temp folder. This folder isn't created automatically.</summary>
+        private string GetTempFolderPath()
+        {
+            return Path.Combine(Path.GetTempPath(), "smapi-unit-tests", Guid.NewGuid().ToString("N"));
+        }
+
+        /// <summary>Get a randomized basic manifest.</summary>
         /// <param name="id">The <see cref="IManifest.UniqueID"/> value, or <c>null</c> for a generated value.</param>
         /// <param name="name">The <see cref="IManifest.Name"/> value, or <c>null</c> for a generated value.</param>
         /// <param name="version">The <see cref="IManifest.Version"/> value, or <c>null</c> for a generated value.</param>
@@ -486,14 +494,14 @@ namespace StardewModdingAPI.Tests.Core
             };
         }
 
-        /// <summary>Get a randomised basic manifest.</summary>
+        /// <summary>Get a randomized basic manifest.</summary>
         /// <param name="uniqueID">The mod's name and unique ID.</param>
         private Mock<IModMetadata> GetMetadata(string uniqueID)
         {
             return this.GetMetadata(this.GetManifest(uniqueID, "1.0"));
         }
 
-        /// <summary>Get a randomised basic manifest.</summary>
+        /// <summary>Get a randomized basic manifest.</summary>
         /// <param name="uniqueID">The mod's name and unique ID.</param>
         /// <param name="dependencies">The dependencies this mod requires.</param>
         /// <param name="allowStatusChange">Whether the code being tested is allowed to change the mod status.</param>
@@ -503,7 +511,7 @@ namespace StardewModdingAPI.Tests.Core
             return this.GetMetadata(manifest, allowStatusChange);
         }
 
-        /// <summary>Get a randomised basic manifest.</summary>
+        /// <summary>Get a randomized basic manifest.</summary>
         /// <param name="manifest">The mod manifest.</param>
         /// <param name="allowStatusChange">Whether the code being tested is allowed to change the mod status.</param>
         private Mock<IModMetadata> GetMetadata(IManifest manifest, bool allowStatusChange = false)

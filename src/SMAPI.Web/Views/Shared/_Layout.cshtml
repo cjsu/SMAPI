@@ -1,4 +1,5 @@
 @using Microsoft.Extensions.Options
+@using StardewModdingAPI.Web.Framework
 @using StardewModdingAPI.Web.Framework.ConfigModels
 @inject IOptions<SiteConfig> SiteConfig
 
@@ -15,15 +16,20 @@
     <div id="sidebar">
         <h4>SMAPI</h4>
         <ul>
-            <li><a href="@SiteConfig.Value.RootUrl">About SMAPI</a></li>
-            <li><a href="@SiteConfig.Value.ModListUrl">Mod compatibility</a></li>
-            <li><a href="@SiteConfig.Value.LogParserUrl">Log parser</a></li>
-            <li><a href="https://stardewvalleywiki.com/Modding:Index">Docs</a></li>
+            <li><a href="@Url.PlainAction("Index", "Index")">About SMAPI</a></li>
+            <li><a href="https://stardewvalleywiki.com/Modding:Index">Modding docs</a></li>
+        </ul>
+
+        <h4>Tools</h4>
+        <ul>
+            <li><a href="@Url.PlainAction("Index", "Mods")">Mod compatibility</a></li>
+            <li><a href="@Url.PlainAction("Index", "LogParser", values: null)">Log parser</a></li>
+            <li><a href="@Url.PlainAction("Index", "JsonValidator", values: null)">JSON validator</a></li>
         </ul>
     </div>
     <div id="content-column">
         <div id="content">
-            <h1>@ViewData["Title"]</h1>
+            <h1>@(ViewData["ViewTitle"] ?? ViewData["Title"])</h1>
             @RenderBody()
         </div>
         <div id="footer">

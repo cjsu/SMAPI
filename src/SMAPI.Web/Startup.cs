@@ -1,21 +1,34 @@
+using System;
 using System.Collections.Generic;
+using Hangfire;
+using Hangfire.MemoryStorage;
+using Hangfire.Mongo;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Mongo2Go;
+using MongoDB.Bson.Serialization;
+using MongoDB.Driver;
 using Newtonsoft.Json;
-using StardewModdingAPI.Toolkit.Serialisation;
+using StardewModdingAPI.Toolkit.Serialization;
 using StardewModdingAPI.Web.Framework;
+using StardewModdingAPI.Web.Framework.Caching;
+using StardewModdingAPI.Web.Framework.Caching.Mods;
+using StardewModdingAPI.Web.Framework.Caching.Wiki;
 using StardewModdingAPI.Web.Framework.Clients.Chucklefish;
+using StardewModdingAPI.Web.Framework.Clients.CurseForge;
 using StardewModdingAPI.Web.Framework.Clients.GitHub;
 using StardewModdingAPI.Web.Framework.Clients.ModDrop;
 using StardewModdingAPI.Web.Framework.Clients.Nexus;
 using StardewModdingAPI.Web.Framework.Clients.Pastebin;
+using StardewModdingAPI.Web.Framework.Compression;
 using StardewModdingAPI.Web.Framework.ConfigModels;
 using StardewModdingAPI.Web.Framework.RewriteRules;
+using StardewModdingAPI.Web.Framework.Storage;
 
 namespace StardewModdingAPI.Web
 {
@@ -40,7 +53,7 @@ namespace StardewModdingAPI.Web
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .Add(new BeanstalkEnvPropsConfigProvider())
+                .AddEnvironmentVariables()
                 .Build();
         }
 
@@ -48,12 +61,16 @@ namespace StardewModdingAPI.Web
         /// <param name="services">The service injection container.</param>
         public void ConfigureServices(IServiceCollection services)
         {
-            // init configuration
+            // init basic services
             services
+                .Configure<ApiClientsConfig>(this.Configuration.GetSection("ApiClients"))
+                .Configure<BackgroundServicesConfig>(this.Configuration.GetSection("BackgroundServices"))
                 .Configure<ModCompatibilityListConfig>(this.Configuration.GetSection("ModCompatibilityList"))
                 .Configure<ModUpdateCheckConfig>(this.Configuration.GetSection("ModUpdateCheck"))
+                .Configure<MongoDbConfig>(this.Configuration.GetSection("MongoDB"))
                 .Configure<SiteConfig>(this.Configuration.GetSection("Site"))
                 .Configure<RouteOptions>(options => options.ConstraintMap.Add("semanticVersion", typeof(VersionConstraint)))
+                .AddLogging()
                 .AddMemoryCache()
                 .AddMvc()
                 .ConfigureApplicationPartManager(manager => manager.FeatureProviders.Add(new InternalControllerFeatureProvider()))
@@ -64,6 +81,54 @@ namespace StardewModdingAPI.Web
 
                     options.SerializerSettings.Formatting = Formatting.Indented;
                     options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                });
+            MongoDbConfig mongoConfig = this.Configuration.GetSection("MongoDB").Get<MongoDbConfig>();
+
+            // init background service
+            {
+                BackgroundServicesConfig config = this.Configuration.GetSection("BackgroundServices").Get<BackgroundServicesConfig>();
+                if (config.Enabled)
+                    services.AddHostedService<BackgroundService>();
+            }
+
+            // init MongoDB
+            services.AddSingleton<MongoDbRunner>(serv => !mongoConfig.IsConfigured()
+                ? MongoDbRunner.Start()
+                : throw new InvalidOperationException("The MongoDB connection is configured, so the local development version should not be used.")
+            );
+            services.AddSingleton<IMongoDatabase>(serv =>
+            {
+                // get connection string
+                string connectionString = mongoConfig.IsConfigured()
+                    ? mongoConfig.ConnectionString
+                    : serv.GetRequiredService<MongoDbRunner>().ConnectionString;
+
+                // get client
+                BsonSerializer.RegisterSerializer(new UtcDateTimeOffsetSerializer());
+                return new MongoClient(connectionString).GetDatabase(mongoConfig.Database);
+            });
+            services.AddSingleton<IModCacheRepository>(serv => new ModCacheRepository(serv.GetRequiredService<IMongoDatabase>()));
+            services.AddSingleton<IWikiCacheRepository>(serv => new WikiCacheRepository(serv.GetRequiredService<IMongoDatabase>()));
+
+            // init Hangfire
+            services
+                .AddHangfire(config =>
+                {
+                    config
+                        .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                        .UseSimpleAssemblyNameTypeSerializer()
+                        .UseRecommendedSerializerSettings();
+
+                    if (mongoConfig.IsConfigured())
+                    {
+                        config.UseMongoStorage(mongoConfig.ConnectionString, $"{mongoConfig.Database}-hangfire", new MongoStorageOptions
+                        {
+                            MigrationOptions = new MongoMigrationOptions(MongoMigrationStrategy.Drop),
+                            CheckConnection = false // error on startup takes down entire process
+                        });
+                    }
+                    else
+                        config.UseMemoryStorage();
                 });
 
             // init API clients
@@ -77,11 +142,13 @@ namespace StardewModdingAPI.Web
                     baseUrl: api.ChucklefishBaseUrl,
                     modPageUrlFormat: api.ChucklefishModPageUrlFormat
                 ));
+                services.AddSingleton<ICurseForgeClient>(new CurseForgeClient(
+                    userAgent: userAgent,
+                    apiUrl: api.CurseForgeBaseUrl
+                ));
 
                 services.AddSingleton<IGitHubClient>(new GitHubClient(
                     baseUrl: api.GitHubBaseUrl,
-                    stableReleaseUrlFormat: api.GitHubStableReleaseUrlFormat,
-                    anyReleaseUrlFormat: api.GitHubAnyReleaseUrlFormat,
                     userAgent: userAgent,
                     acceptHeader: api.GitHubAcceptHeader,
                     username: api.GitHubUsername,
@@ -94,44 +161,55 @@ namespace StardewModdingAPI.Web
                     modUrlFormat: api.ModDropModPageUrl
                 ));
 
-                services.AddSingleton<INexusClient>(new NexusWebScrapeClient(
-                    userAgent: userAgent,
-                    baseUrl: api.NexusBaseUrl,
-                    modUrlFormat: api.NexusModUrlFormat,
-                    modScrapeUrlFormat: api.NexusModScrapeUrlFormat
+                services.AddSingleton<INexusClient>(new NexusClient(
+                    webUserAgent: userAgent,
+                    webBaseUrl: api.NexusBaseUrl,
+                    webModUrlFormat: api.NexusModUrlFormat,
+                    webModScrapeUrlFormat: api.NexusModScrapeUrlFormat,
+                    apiAppVersion: version,
+                    apiKey: api.NexusApiKey
                 ));
 
                 services.AddSingleton<IPastebinClient>(new PastebinClient(
                     baseUrl: api.PastebinBaseUrl,
-                    userAgent: userAgent,
-                    userKey: api.PastebinUserKey,
-                    devKey: api.PastebinDevKey
+                    userAgent: userAgent
                 ));
             }
+
+            // init helpers
+            services
+                .AddSingleton<IGzipHelper>(new GzipHelper())
+                .AddSingleton<IStorageProvider>(serv => new StorageProvider(
+                    serv.GetRequiredService<IOptions<ApiClientsConfig>>(),
+                    serv.GetRequiredService<IPastebinClient>(),
+                    serv.GetRequiredService<IGzipHelper>()
+                ));
         }
 
         /// <summary>The method called by the runtime to configure the HTTP request pipeline.</summary>
         /// <param name="app">The application builder.</param>
         /// <param name="env">The hosting environment.</param>
-        /// <param name="loggerFactory">The logger factory.</param>
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            loggerFactory.AddConsole(this.Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
-
+            // basic config
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
-
             app
                 .UseCors(policy => policy
                     .AllowAnyHeader()
                     .AllowAnyMethod()
-                    .WithOrigins("https://smapi.io", "https://*.smapi.io", "https://*.edge.smapi.io")
-                    .SetIsOriginAllowedToAllowWildcardSubdomains()
+                    .WithOrigins("https://smapi.io")
                 )
                 .UseRewriter(this.GetRedirectRules())
                 .UseStaticFiles() // wwwroot folder
                 .UseMvc();
+
+            // enable Hangfire dashboard
+            app.UseHangfireDashboard("/tasks", new DashboardOptions
+            {
+                IsReadOnlyFunc = context => !JobDashboardAuthorizationFilter.IsLocalRequest(context),
+                Authorization = new[] { new JobDashboardAuthorizationFilter() }
+            });
         }
 
 
@@ -148,22 +226,13 @@ namespace StardewModdingAPI.Web
                 shouldRewrite: req =>
                     req.Host.Host != "localhost"
                     && !req.Path.StartsWithSegments("/api")
-                    && !req.Host.Host.StartsWith("api.")
-            ));
-
-            // convert subdomain.smapi.io => smapi.io/subdomain for routing
-            redirects.Add(new ConditionalRewriteSubdomainRule(
-                shouldRewrite: req =>
-                    req.Host.Host != "localhost"
-                    && (req.Host.Host.StartsWith("api.") || req.Host.Host.StartsWith("log.") || req.Host.Host.StartsWith("mods."))
-                    && !req.Path.StartsWithSegments("/content")
-                    && !req.Path.StartsWithSegments("/favicon.ico")
             ));
 
             // shortcut redirects
             redirects.Add(new RedirectToUrlRule(@"^/3\.0\.?$", "https://stardewvalleywiki.com/Modding:Migrate_to_SMAPI_3.0"));
-            redirects.Add(new RedirectToUrlRule(@"^/buildmsg(?:/?(.*))$", "https://github.com/Pathoschild/SMAPI/blob/develop/docs/mod-build-config.md#$1"));
-            redirects.Add(new RedirectToUrlRule(@"^/compat\.?$", "https://mods.smapi.io"));
+            redirects.Add(new RedirectToUrlRule(@"^/(?:buildmsg|package)(?:/?(.*))$", "https://github.com/Pathoschild/SMAPI/blob/develop/docs/technical/mod-package.md#$1")); // buildmsg deprecated, remove when SDV 1.4 is released
+            redirects.Add(new RedirectToUrlRule(@"^/community\.?$", "https://stardewvalleywiki.com/Modding:Community"));
+            redirects.Add(new RedirectToUrlRule(@"^/compat\.?$", "https://smapi.io/mods"));
             redirects.Add(new RedirectToUrlRule(@"^/docs\.?$", "https://stardewvalleywiki.com/Modding:Index"));
             redirects.Add(new RedirectToUrlRule(@"^/install\.?$", "https://stardewvalleywiki.com/Modding:Player_Guide/Getting_Started#Install_SMAPI"));
             redirects.Add(new RedirectToUrlRule(@"^/troubleshoot(.*)$", "https://stardewvalleywiki.com/Modding:Player_Guide/Troubleshooting$1"));

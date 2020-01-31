@@ -1,0 +1,73 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>ConsoleCommands</AssemblyName>
+    <RootNamespace>StardewModdingAPI.Mods.ConsoleCommands</RootNamespace>
+    <TargetFramework>net45</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <OutputPath>$(SolutionDir)\..\bin\$(Configuration)\Mods\ConsoleCommands</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SMAPI\SMAPI.csproj">
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="$(GameExecutableName)">
+      <HintPath>$(GamePath)\$(GameExecutableName).exe</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="StardewValley.GameData">
+      <HintPath>$(GamePath)\StardewValley.GameData.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+
+  <Choose>
+    <!-- Windows -->
+    <When Condition="$(OS) == 'Windows_NT'">
+      <ItemGroup>
+        <Reference Include="Netcode">
+          <HintPath>$(GamePath)\Netcode.dll</HintPath>
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.Xna.Framework.Xact, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </When>
+
+    <!-- Linux/Mac -->
+    <Otherwise>
+      <ItemGroup>
+        <Reference Include="MonoGame.Framework">
+          <HintPath>$(GamePath)\MonoGame.Framework.dll</HintPath>
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+
+  <ItemGroup>
+    <None Update="manifest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <Import Project="..\SMAPI.Internal\SMAPI.Internal.projitems" Label="Shared" />
+  <Import Project="..\..\build\common.targets" />
+
+</Project>

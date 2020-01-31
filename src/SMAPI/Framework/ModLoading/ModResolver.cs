@@ -5,7 +5,7 @@ using System.Linq;
 using StardewModdingAPI.Toolkit;
 using StardewModdingAPI.Toolkit.Framework.ModData;
 using StardewModdingAPI.Toolkit.Framework.ModScanning;
-using StardewModdingAPI.Toolkit.Serialisation.Models;
+using StardewModdingAPI.Toolkit.Serialization.Models;
 using StardewModdingAPI.Toolkit.Utilities;
 
 namespace StardewModdingAPI.Framework.ModLoading
@@ -38,13 +38,13 @@ namespace StardewModdingAPI.Framework.ModLoading
                 }
 
                 // build metadata
-                ModMetadataStatus status = folder.ManifestParseError == null || !folder.ShouldBeLoaded
+                bool shouldIgnore = folder.Type == ModType.Ignored;
+                ModMetadataStatus status = folder.ManifestParseError == ModParseError.None || shouldIgnore
                     ? ModMetadataStatus.Found
                     : ModMetadataStatus.Failed;
-                string relativePath = PathUtilities.GetRelativePath(rootPath, folder.Directory.FullName);
 
-                yield return new ModMetadata(folder.DisplayName, folder.Directory.FullName, relativePath, manifest, dataRecord, isIgnored: !folder.ShouldBeLoaded)
-                    .SetStatus(status, !folder.ShouldBeLoaded ? "disabled by dot convention" : folder.ManifestParseError);
+                yield return new ModMetadata(folder.DisplayName, folder.Directory.FullName, rootPath, manifest, dataRecord, isIgnored: shouldIgnore)
+                    .SetStatus(status, shouldIgnore ? "disabled by dot convention" : folder.ManifestParseErrorText);
             }
         }
 
@@ -87,7 +87,7 @@ namespace StardewModdingAPI.Framework.ModLoading
                                 updateUrls.Add(mod.DataRecord.AlternativeUrl);
 
                             // default update URL
-                            updateUrls.Add("https://mods.smapi.io");
+                            updateUrls.Add("https://smapi.io/mods");
 
                             // build error
                             string error = $"{reasonPhrase}. Please check for a ";
@@ -143,16 +143,12 @@ namespace StardewModdingAPI.Framework.ModLoading
                             continue;
                         }
 
-                        // invalid capitalisation
+                        // invalid capitalization
                         string actualFilename = new DirectoryInfo(mod.DirectoryPath).GetFiles(mod.Manifest.EntryDll).FirstOrDefault()?.Name;
                         if (actualFilename != mod.Manifest.EntryDll)
                         {
-#if SMAPI_3_0_STRICT
-                            mod.SetStatus(ModMetadataStatus.Failed, $"its {nameof(IManifest.EntryDll)} value '{mod.Manifest.EntryDll}' doesn't match the actual file capitalisation '{actualFilename}'. The capitalisation must match for crossplatform compatibility.");
+                            mod.SetStatus(ModMetadataStatus.Failed, $"its {nameof(IManifest.EntryDll)} value '{mod.Manifest.EntryDll}' doesn't match the actual file capitalization '{actualFilename}'. The capitalization must match for crossplatform compatibility.");
                             continue;
-#else
-                            SCore.DeprecationManager.Warn(mod.DisplayName, $"{nameof(IManifest.EntryDll)} value with case-insensitive capitalisation", "2.11", DeprecationLevel.PendingRemoval);
-#endif
                         }
                     }
 
@@ -202,7 +198,14 @@ namespace StardewModdingAPI.Framework.ModLoading
                     {
                         if (mod.Status == ModMetadataStatus.Failed)
                             continue; // don't replace metadata error
-                        mod.SetStatus(ModMetadataStatus.Failed, $"you have multiple copies of this mod installed ({string.Join(", ", group.Select(p => p.RelativeDirectoryPath).OrderBy(p => p))}).");
+
+                        string folderList = string.Join(", ",
+                            from entry in @group
+                            let relativePath = entry.GetRelativePathWithRoot()
+                            orderby relativePath
+                            select $"{relativePath} ({entry.Manifest.Version})"
+                        );
+                        mod.SetStatus(ModMetadataStatus.Failed, $"you have multiple copies of this mod installed. Found in folders: {folderList}.");
                     }
                 }
             }
@@ -213,7 +216,7 @@ namespace StardewModdingAPI.Framework.ModLoading
         /// <param name="modDatabase">Handles access to SMAPI's internal mod metadata list.</param>
         public IEnumerable<IModMetadata> ProcessDependencies(IEnumerable<IModMetadata> mods, ModDatabase modDatabase)
         {
-            // initialise metadata
+            // initialize metadata
             mods = mods.ToArray();
             var sortedMods = new Stack<IModMetadata>();
             var states = mods.ToDictionary(mod => mod, mod => ModDependencyStatus.Queued);

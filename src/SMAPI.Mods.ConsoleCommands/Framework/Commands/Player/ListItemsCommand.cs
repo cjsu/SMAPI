@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using StardewModdingAPI.Mods.ConsoleCommands.Framework.ItemData;
@@ -58,7 +58,7 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.Player
         /// <param name="searchWords">The search string to find.</param>
         private IEnumerable<SearchableItem> GetItems(string[] searchWords)
         {
-            // normalise search term
+            // normalize search term
             searchWords = searchWords?.Where(word => !string.IsNullOrWhiteSpace(word)).ToArray();
             if (searchWords?.Any() == false)
                 searchWords = null;

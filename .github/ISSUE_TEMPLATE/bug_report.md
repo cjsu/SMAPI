@@ -6,10 +6,8 @@ about: Report a problem with SMAPI.
 
 <!--
 
-Only report a bug here if you're sure it's a SMAPI bug! To request support instead, see:
-   - #modding on Discord: https://stardewvalleywiki.com/Modding:Community#Discord
-   - support forum thread: https://community.playstarbound.com/threads/108375
-   - Nexus mod page: https://www.nexusmods.com/stardewvalley/mods/2400
+Only report a bug here if you're sure it's a SMAPI bug!
+To request support instead, see https://smapi.io/community.
 
 Replace the instructions below with the bug details.
 
@@ -26,7 +24,7 @@ Exact steps which reproduce the bug, if possible. For example:
 4. Error occurs.
 
 **Log file**
-Upload your SMAPI log to https://log.smapi.io and post a link here.
+Upload your SMAPI log to https://smapi.io/log and post a link here.
 
 **Screenshots**
 If applicable, add screenshots to help explain your problem.

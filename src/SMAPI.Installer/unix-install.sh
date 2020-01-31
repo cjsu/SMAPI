@@ -12,6 +12,9 @@ elif type type >/dev/null 2>&1; then
     COMMAND="type"
 fi
 
+# if $TERM is not set to xterm, mono will bail out when attempting to write to the console.
+export TERM=xterm
+
 # validate Mono & run installer
 if $COMMAND mono >/dev/null 2>&1; then
     mono internal/unix-install.exe

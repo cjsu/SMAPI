@@ -33,6 +33,10 @@ namespace StardewModdingAPI.Framework.Networking
             this.OnProcessingMessage = onProcessingMessage;
         }
 
+
+        /*********
+        ** Protected methods
+        *********/
         /// <summary>Parse a data message from a client.</summary>
         /// <param name="rawMessage">The raw network message to parse.</param>
         [SuppressMessage("ReSharper", "AccessToDisposedClosure", Justification = "The callback is invoked synchronously.")]
@@ -55,7 +59,7 @@ namespace StardewModdingAPI.Framework.Networking
                         else if (message.MessageType == StardewValley.Multiplayer.playerIntroduction)
                         {
                             NetFarmerRoot farmer = this.Multiplayer.readFarmer(message.Reader);
-                            this.gameServer.checkFarmhandRequest("", farmer, msg => this.sendMessage(peer, msg), () => this.peers[farmer.Value.UniqueMultiplayerID] = peer);
+                            this.gameServer.checkFarmhandRequest("", this.getConnectionId(rawMessage.SenderConnection), farmer, msg => this.sendMessage(peer, msg), () => this.peers[farmer.Value.UniqueMultiplayerID] = peer);
                         }
                     });
                 }

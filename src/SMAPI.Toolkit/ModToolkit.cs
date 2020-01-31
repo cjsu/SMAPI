@@ -2,13 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using StardewModdingAPI.Toolkit.Framework.Clients.Wiki;
+using StardewModdingAPI.Toolkit.Framework.GameScanning;
 using StardewModdingAPI.Toolkit.Framework.ModData;
 using StardewModdingAPI.Toolkit.Framework.ModScanning;
-using StardewModdingAPI.Toolkit.Serialisation;
+using StardewModdingAPI.Toolkit.Serialization;
 
+[assembly: InternalsVisibleTo("StardewModdingAPI")]
+[assembly: InternalsVisibleTo("SMAPI.Web")]
 namespace StardewModdingAPI.Toolkit
 {
     /// <summary>A convenience wrapper for the various tools.</summary>
@@ -46,6 +50,13 @@ namespace StardewModdingAPI.Toolkit
             this.UserAgent = $"SMAPI Mod Handler Toolkit/{version}";
         }
 
+        /// <summary>Find valid Stardew Valley install folders.</summary>
+        /// <remarks>This checks default game locations, and on Windows checks the Windows registry for GOG/Steam install data. A folder is considered 'valid' if it contains the Stardew Valley executable for the current OS.</remarks>
+        public IEnumerable<DirectoryInfo> GetGameFolders()
+        {
+            return new GameScanner().Scan();
+        }
+
         /// <summary>Extract mod metadata from the wiki compatibility list.</summary>
         public async Task<WikiModList> GetWikiCompatibilityListAsync()
         {
@@ -67,6 +78,14 @@ namespace StardewModdingAPI.Toolkit
         public IEnumerable<ModFolder> GetModFolders(string rootPath)
         {
             return new ModScanner(this.JsonHelper).GetModFolders(rootPath);
+        }
+
+        /// <summary>Extract information about all mods in the given folder.</summary>
+        /// <param name="rootPath">The root folder containing mods. Only the <paramref name="modPath"/> will be searched, but this field allows it to be treated as a potential mod folder of its own.</param>
+        /// <param name="modPath">The mod path to search.</param>
+        public IEnumerable<ModFolder> GetModFolders(string rootPath, string modPath)
+        {
+            return new ModScanner(this.JsonHelper).GetModFolders(rootPath, modPath);
         }
 
         /// <summary>Get an update URL for an update key (if valid).</summary>

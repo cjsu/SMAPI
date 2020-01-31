@@ -1,0 +1,108 @@
+/*
+
+
+
+This file contains advanced configuration for SMAPI. You generally shouldn't change this file.
+The default values are mirrored in StardewModdingAPI.Framework.Models.SConfig to log custom changes.
+
+
+
+*/
+{
+    /**
+     * Whether SMAPI should log more information about the game context.
+     */
+    "VerboseLogging": false,
+
+    /**
+     * Whether SMAPI should check for newer versions of SMAPI and mods when you load the game. If new
+     * versions are available, an alert will be shown in the console. This doesn't affect the load
+     * time even if your connection is offline or slow, because it happens in the background.
+     */
+    "CheckForUpdates": true,
+
+    /**
+     * Whether to enable features intended for mod developers. Currently this only makes TRACE-level
+     * messages appear in the console.
+     */
+    "DeveloperMode": true,
+
+    /**
+     * Whether to add a section to the 'mod issues' list for mods which directly use potentially
+     * sensitive .NET APIs like file or shell access. Note that many mods do this legitimately as
+     * part of their normal functionality, so these warnings are meaningless without further
+     * investigation. When this is commented out, it'll be true for local debug builds and false
+     * otherwise.
+     */
+    //"ParanoidWarnings": true,
+
+    /**
+     * Whether SMAPI should show newer beta versions as an available update. When this is commented
+     * out, it'll be true if the current SMAPI version is beta, and false otherwise.
+     */
+    //"UseBetaChannel": true,
+
+    /**
+     * SMAPI's GitHub project name, used to perform update checks.
+     */
+    "GitHubProjectName": "Pathoschild/SMAPI",
+
+    /**
+     * The base URL for SMAPI's web API, used to perform update checks.
+     * Note: the protocol will be changed to http:// on Linux/Mac due to OpenSSL issues with the
+     * game's bundled Mono.
+     */
+    "WebApiBaseUrl": "https://smapi.io/api/",
+
+    /**
+     * Whether SMAPI should log network traffic (may be very verbose). Best combined with VerboseLogging, which includes network metadata.
+     */
+    "LogNetworkTraffic": false,
+
+    /**
+     * The colors to use for text written to the SMAPI console.
+     *
+     * The possible values for 'UseScheme' are:
+     *  - AutoDetect: SMAPI will assume a light background on Mac, and detect the background color
+     *    automatically on Linux or Windows.
+     *  - LightBackground: use darker text colors that look better on a white or light background.
+     *  - DarkBackground: use lighter text colors that look better on a black or dark background.
+     *
+     * For available color codes, see https://docs.microsoft.com/en-us/dotnet/api/system.consolecolor.
+     *
+     * (These values are synched with ColorfulConsoleWriter.GetDefaultColorSchemeConfig in the
+     * SMAPI code.)
+     */
+    "ConsoleColors": {
+        "UseScheme": "AutoDetect",
+
+        "Schemes": {
+            "DarkBackground": {
+                "Trace": "DarkGray",
+                "Debug": "DarkGray",
+                "Info": "White",
+                "Warn": "Yellow",
+                "Error": "Red",
+                "Alert": "Magenta",
+                "Success": "DarkGreen"
+            },
+            "LightBackground": {
+                "Trace": "DarkGray",
+                "Debug": "DarkGray",
+                "Info": "Black",
+                "Warn": "DarkYellow",
+                "Error": "Red",
+                "Alert": "DarkMagenta",
+                "Success": "DarkGreen"
+            }
+        }
+    },
+
+    /**
+     * The mod IDs SMAPI should ignore when performing update checks or validating update keys.
+     */
+    "SuppressUpdateChecks": [
+        "SMAPI.ConsoleCommands",
+        "SMAPI.SaveBackup"
+    ]
+}

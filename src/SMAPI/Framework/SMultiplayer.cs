@@ -9,7 +9,7 @@ using StardewModdingAPI.Events;
 using StardewModdingAPI.Framework.Events;
 using StardewModdingAPI.Framework.Networking;
 using StardewModdingAPI.Framework.Reflection;
-using StardewModdingAPI.Toolkit.Serialisation;
+using StardewModdingAPI.Toolkit.Serialization;
 using StardewValley;
 using StardewValley.Network;
 using StardewValley.SDKs;
@@ -51,6 +51,9 @@ namespace StardewModdingAPI.Framework
         /// <summary>A callback to invoke when a mod message is received.</summary>
         private readonly Action<ModMessageModel> OnModMessageReceived;
 
+        /// <summary>Whether to log network traffic.</summary>
+        private readonly bool LogNetworkTraffic;
+
 
         /*********
         ** Accessors
@@ -72,7 +75,8 @@ namespace StardewModdingAPI.Framework
         /// <param name="modRegistry">Tracks the installed mods.</param>
         /// <param name="reflection">Simplifies access to private code.</param>
         /// <param name="onModMessageReceived">A callback to invoke when a mod message is received.</param>
-        public SMultiplayer(IMonitor monitor, EventManager eventManager, JsonHelper jsonHelper, ModRegistry modRegistry, Reflector reflection, Action<ModMessageModel> onModMessageReceived)
+        /// <param name="logNetworkTraffic">Whether to log network traffic.</param>
+        public SMultiplayer(IMonitor monitor, EventManager eventManager, JsonHelper jsonHelper, ModRegistry modRegistry, Reflector reflection, Action<ModMessageModel> onModMessageReceived, bool logNetworkTraffic)
         {
             this.Monitor = monitor;
             this.EventManager = eventManager;
@@ -80,6 +84,7 @@ namespace StardewModdingAPI.Framework
             this.ModRegistry = modRegistry;
             this.Reflection = reflection;
             this.OnModMessageReceived = onModMessageReceived;
+            this.LogNetworkTraffic = logNetworkTraffic;
         }
 
         /// <summary>Perform cleanup needed when a multiplayer session ends.</summary>
@@ -89,26 +94,8 @@ namespace StardewModdingAPI.Framework
             this.HostPeer = null;
         }
 
-#if !SMAPI_3_0_STRICT
-        /// <summary>Handle sync messages from other players and perform other initial sync logic.</summary>
-        public override void UpdateEarly()
-        {
-            this.EventManager.Legacy_BeforeMainSync.Raise();
-            base.UpdateEarly();
-            this.EventManager.Legacy_AfterMainSync.Raise();
-        }
-
-        /// <summary>Broadcast sync messages to other players and perform other final sync logic.</summary>
-        public override void UpdateLate(bool forceSync = false)
-        {
-            this.EventManager.Legacy_BeforeMainBroadcast.Raise();
-            base.UpdateLate(forceSync);
-            this.EventManager.Legacy_AfterMainBroadcast.Raise();
-        }
-#endif
-
-        /// <summary>Initialise a client before the game connects to a remote server.</summary>
-        /// <param name="client">The client to initialise.</param>
+        /// <summary>Initialize a client before the game connects to a remote server.</summary>
+        /// <param name="client">The client to initialize.</param>
         public override Client InitClient(Client client)
         {
             switch (client)
@@ -131,8 +118,8 @@ namespace StardewModdingAPI.Framework
             }
         }
 
-        /// <summary>Initialise a server before the game connects to an incoming player.</summary>
-        /// <param name="server">The server to initialise.</param>
+        /// <summary>Initialize a server before the game connects to an incoming player.</summary>
+        /// <param name="server">The server to initialize.</param>
         public override Server InitServer(Server server)
         {
             switch (server)
@@ -161,7 +148,7 @@ namespace StardewModdingAPI.Framework
         /// <param name="resume">Resume sending the underlying message.</param>
         protected void OnClientSendingMessage(OutgoingMessage message, Action<OutgoingMessage> sendMessage, Action resume)
         {
-            if (this.Monitor.IsVerbose)
+            if (this.LogNetworkTraffic)
                 this.Monitor.Log($"CLIENT SEND {(MessageType)message.MessageType} {message.FarmerID}", LogLevel.Trace);
 
             switch (message.MessageType)
@@ -185,7 +172,7 @@ namespace StardewModdingAPI.Framework
         /// <param name="resume">Process the message using the game's default logic.</param>
         public void OnServerProcessingMessage(IncomingMessage message, Action<OutgoingMessage> sendMessage, Action resume)
         {
-            if (this.Monitor.IsVerbose)
+            if (this.LogNetworkTraffic)
                 this.Monitor.Log($"SERVER RECV {(MessageType)message.MessageType} {message.FarmerID}", LogLevel.Trace);
 
             switch (message.MessageType)
@@ -201,7 +188,8 @@ namespace StardewModdingAPI.Framework
                         MultiplayerPeer newPeer = new MultiplayerPeer(message.FarmerID, model, sendMessage, isHost: false);
                         if (this.Peers.ContainsKey(message.FarmerID))
                         {
-                            this.Monitor.Log($"Rejected mod context from farmhand {message.FarmerID}: already received context for that player.", LogLevel.Error);
+                            this.Monitor.Log($"Received mod context from farmhand {message.FarmerID}, but the game didn't see them disconnect. This may indicate issues with the network connection.", LogLevel.Info);
+                            this.Peers.Remove(message.FarmerID);
                             return;
                         }
                         this.AddPeer(newPeer, canBeHost: false, raiseEvent: false);
@@ -264,7 +252,7 @@ namespace StardewModdingAPI.Framework
         /// <returns>Returns whether the message was handled.</returns>
         public void OnClientProcessingMessage(IncomingMessage message, Action<OutgoingMessage> sendMessage, Action resume)
         {
-            if (this.Monitor.IsVerbose)
+            if (this.LogNetworkTraffic)
                 this.Monitor.Log($"CLIENT RECV {(MessageType)message.MessageType} {message.FarmerID}", LogLevel.Trace);
 
             switch (message.MessageType)
@@ -388,7 +376,7 @@ namespace StardewModdingAPI.Framework
             string data = JsonConvert.SerializeObject(model, Formatting.None);
 
             // log message
-            if (this.Monitor.IsVerbose)
+            if (this.LogNetworkTraffic)
                 this.Monitor.Log($"Broadcasting '{messageType}' message: {data}.", LogLevel.Trace);
 
             // send message
@@ -435,7 +423,7 @@ namespace StardewModdingAPI.Framework
         private RemoteContextModel ReadContext(BinaryReader reader)
         {
             string data = reader.ReadString();
-            RemoteContextModel model = this.JsonHelper.Deserialise<RemoteContextModel>(data);
+            RemoteContextModel model = this.JsonHelper.Deserialize<RemoteContextModel>(data);
             return model.ApiVersion != null
                 ? model
                 : null; // no data available for unmodded players
@@ -447,10 +435,10 @@ namespace StardewModdingAPI.Framework
         {
             // parse message
             string json = message.Reader.ReadString();
-            ModMessageModel model = this.JsonHelper.Deserialise<ModMessageModel>(json);
+            ModMessageModel model = this.JsonHelper.Deserialize<ModMessageModel>(json);
             HashSet<long> playerIDs = new HashSet<long>(model.ToPlayerIDs ?? this.GetKnownPlayerIDs());
-            if (this.Monitor.IsVerbose)
-                this.Monitor.Log($"Received message: {json}.");
+            if (this.LogNetworkTraffic)
+                this.Monitor.Log($"Received message: {json}.", LogLevel.Trace);
 
             // notify local mods
             if (playerIDs.Contains(Game1.player.UniqueMultiplayerID))
@@ -466,7 +454,7 @@ namespace StardewModdingAPI.Framework
                     {
                         newModel.ToPlayerIDs = new[] { peer.PlayerID };
                         this.Monitor.VerboseLog($"  Forwarding message to player {peer.PlayerID}.");
-                        peer.SendMessage(new OutgoingMessage((byte)MessageType.ModMessage, peer.PlayerID, this.JsonHelper.Serialise(newModel, Formatting.None)));
+                        peer.SendMessage(new OutgoingMessage((byte)MessageType.ModMessage, peer.PlayerID, this.JsonHelper.Serialize(newModel, Formatting.None)));
                     }
                 }
             }
@@ -500,7 +488,7 @@ namespace StardewModdingAPI.Framework
                     .ToArray()
             };
 
-            return new object[] { this.JsonHelper.Serialise(model, Formatting.None) };
+            return new object[] { this.JsonHelper.Serialize(model, Formatting.None) };
         }
 
         /// <summary>Get the fields to include in a context sync message sent to other players.</summary>
@@ -526,7 +514,7 @@ namespace StardewModdingAPI.Framework
                     .ToArray()
             };
 
-            return new object[] { this.JsonHelper.Serialise(model, Formatting.None) };
+            return new object[] { this.JsonHelper.Serialize(model, Formatting.None) };
         }
     }
 }

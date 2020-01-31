@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using StardewModdingAPI.Toolkit.Utilities;
 
 namespace StardewModdingAPI.Internal.ConsoleWriting
 {
@@ -21,11 +22,16 @@ namespace StardewModdingAPI.Internal.ConsoleWriting
         *********/
         /// <summary>Construct an instance.</summary>
         /// <param name="platform">The target platform.</param>
-        /// <param name="colorScheme">The console color scheme to use.</param>
-        public ColorfulConsoleWriter(Platform platform, MonitorColorScheme colorScheme)
+        public ColorfulConsoleWriter(Platform platform)
+            : this(platform, ColorfulConsoleWriter.GetDefaultColorSchemeConfig(MonitorColorScheme.AutoDetect)) { }
+
+        /// <summary>Construct an instance.</summary>
+        /// <param name="platform">The target platform.</param>
+        /// <param name="colorConfig">The colors to use for text written to the SMAPI console.</param>
+        public ColorfulConsoleWriter(Platform platform, ColorSchemeConfig colorConfig)
         {
             this.SupportsColor = this.TestColorSupport();
-            this.Colors = this.GetConsoleColorScheme(platform, colorScheme);
+            this.Colors = this.GetConsoleColorScheme(platform, colorConfig);
         }
 
         /// <summary>Write a message line to the log.</summary>
@@ -53,6 +59,40 @@ namespace StardewModdingAPI.Internal.ConsoleWriting
                 Console.WriteLine(message);
         }
 
+        /// <summary>Get the default color scheme config for cases where it's not configurable (e.g. the installer).</summary>
+        /// <param name="useScheme">The default color scheme ID to use, or <see cref="MonitorColorScheme.AutoDetect"/> to select one automatically.</param>
+        /// <remarks>The colors here should be kept in sync with the SMAPI config file.</remarks>
+        public static ColorSchemeConfig GetDefaultColorSchemeConfig(MonitorColorScheme useScheme)
+        {
+            return new ColorSchemeConfig
+            {
+                UseScheme = useScheme,
+                Schemes = new Dictionary<MonitorColorScheme, IDictionary<ConsoleLogLevel, ConsoleColor>>
+                {
+                    [MonitorColorScheme.DarkBackground] = new Dictionary<ConsoleLogLevel, ConsoleColor>
+                    {
+                        [ConsoleLogLevel.Trace] = ConsoleColor.DarkGray,
+                        [ConsoleLogLevel.Debug] = ConsoleColor.DarkGray,
+                        [ConsoleLogLevel.Info] = ConsoleColor.White,
+                        [ConsoleLogLevel.Warn] = ConsoleColor.Yellow,
+                        [ConsoleLogLevel.Error] = ConsoleColor.Red,
+                        [ConsoleLogLevel.Alert] = ConsoleColor.Magenta,
+                        [ConsoleLogLevel.Success] = ConsoleColor.DarkGreen
+                    },
+                    [MonitorColorScheme.LightBackground] = new Dictionary<ConsoleLogLevel, ConsoleColor>
+                    {
+                        [ConsoleLogLevel.Trace] = ConsoleColor.DarkGray,
+                        [ConsoleLogLevel.Debug] = ConsoleColor.DarkGray,
+                        [ConsoleLogLevel.Info] = ConsoleColor.Black,
+                        [ConsoleLogLevel.Warn] = ConsoleColor.DarkYellow,
+                        [ConsoleLogLevel.Error] = ConsoleColor.Red,
+                        [ConsoleLogLevel.Alert] = ConsoleColor.DarkMagenta,
+                        [ConsoleLogLevel.Success] = ConsoleColor.DarkGreen
+                    }
+                }
+            };
+        }
+
 
         /*********
         ** Private methods
@@ -73,47 +113,22 @@ namespace StardewModdingAPI.Internal.ConsoleWriting
 
         /// <summary>Get the color scheme to use for the current console.</summary>
         /// <param name="platform">The target platform.</param>
-        /// <param name="colorScheme">The console color scheme to use.</param>
-        private IDictionary<ConsoleLogLevel, ConsoleColor> GetConsoleColorScheme(Platform platform, MonitorColorScheme colorScheme)
+        /// <param name="colorConfig">The colors to use for text written to the SMAPI console.</param>
+        private IDictionary<ConsoleLogLevel, ConsoleColor> GetConsoleColorScheme(Platform platform, ColorSchemeConfig colorConfig)
         {
-            // auto detect color scheme
-            if (colorScheme == MonitorColorScheme.AutoDetect)
+            // get color scheme ID
+            MonitorColorScheme schemeID = colorConfig.UseScheme;
+            if (schemeID == MonitorColorScheme.AutoDetect)
             {
-                colorScheme = platform == Platform.Mac
+                schemeID = platform == Platform.Mac
                     ? MonitorColorScheme.LightBackground // MacOS doesn't provide console background color info, but it's usually white.
                     : ColorfulConsoleWriter.IsDark(Console.BackgroundColor) ? MonitorColorScheme.DarkBackground : MonitorColorScheme.LightBackground;
             }
 
             // get colors for scheme
-            switch (colorScheme)
-            {
-                case MonitorColorScheme.DarkBackground:
-                    return new Dictionary<ConsoleLogLevel, ConsoleColor>
-                    {
-                        [ConsoleLogLevel.Trace] = ConsoleColor.DarkGray,
-                        [ConsoleLogLevel.Debug] = ConsoleColor.DarkGray,
-                        [ConsoleLogLevel.Info] = ConsoleColor.White,
-                        [ConsoleLogLevel.Warn] = ConsoleColor.Yellow,
-                        [ConsoleLogLevel.Error] = ConsoleColor.Red,
-                        [ConsoleLogLevel.Alert] = ConsoleColor.Magenta,
-                        [ConsoleLogLevel.Success] = ConsoleColor.DarkGreen
-                    };
-
-                case MonitorColorScheme.LightBackground:
-                    return new Dictionary<ConsoleLogLevel, ConsoleColor>
-                    {
-                        [ConsoleLogLevel.Trace] = ConsoleColor.DarkGray,
-                        [ConsoleLogLevel.Debug] = ConsoleColor.DarkGray,
-                        [ConsoleLogLevel.Info] = ConsoleColor.Black,
-                        [ConsoleLogLevel.Warn] = ConsoleColor.DarkYellow,
-                        [ConsoleLogLevel.Error] = ConsoleColor.Red,
-                        [ConsoleLogLevel.Alert] = ConsoleColor.DarkMagenta,
-                        [ConsoleLogLevel.Success] = ConsoleColor.DarkGreen
-                    };
-
-                default:
-                    throw new NotSupportedException($"Unknown color scheme '{colorScheme}'.");
-            }
+            return colorConfig.Schemes.TryGetValue(schemeID, out IDictionary<ConsoleLogLevel, ConsoleColor> scheme)
+                ? scheme
+                : throw new NotSupportedException($"Unknown color scheme '{schemeID}'.");
         }
 
         /// <summary>Get whether a console color should be considered dark, which is subjectively defined as 'white looks better than black on this text'.</summary>
@@ -125,7 +140,7 @@ namespace StardewModdingAPI.Internal.ConsoleWriting
                 case ConsoleColor.Black:
                 case ConsoleColor.Blue:
                 case ConsoleColor.DarkBlue:
-                case ConsoleColor.DarkMagenta: // Powershell
+                case ConsoleColor.DarkMagenta: // PowerShell
                 case ConsoleColor.DarkRed:
                 case ConsoleColor.Red:
                     return true;

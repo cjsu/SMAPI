@@ -1,16 +1,12 @@
 using System;
-using System.IO;
-using System.IO.Compression;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
+using StardewModdingAPI.Toolkit.Utilities;
 using StardewModdingAPI.Web.Framework;
-using StardewModdingAPI.Web.Framework.Clients.Pastebin;
-using StardewModdingAPI.Web.Framework.ConfigModels;
 using StardewModdingAPI.Web.Framework.LogParsing;
 using StardewModdingAPI.Web.Framework.LogParsing.Models;
+using StardewModdingAPI.Web.Framework.Storage;
 using StardewModdingAPI.Web.ViewModels;
 
 namespace StardewModdingAPI.Web.Controllers
@@ -21,15 +17,8 @@ namespace StardewModdingAPI.Web.Controllers
         /*********
         ** Fields
         *********/
-        /// <summary>The site config settings.</summary>
-        private readonly SiteConfig Config;
-
-        /// <summary>The underlying Pastebin client.</summary>
-        private readonly IPastebinClient Pastebin;
-
-        /// <summary>The first bytes in a valid zip file.</summary>
-        /// <remarks>See <a href="https://en.wikipedia.org/wiki/Zip_(file_format)#File_headers"/>.</remarks>
-        private const uint GzipLeadBytes = 0x8b1f;
+        /// <summary>Provides access to raw data storage.</summary>
+        private readonly IStorageProvider Storage;
 
 
         /*********
@@ -39,19 +28,17 @@ namespace StardewModdingAPI.Web.Controllers
         ** Constructor
         ***/
         /// <summary>Construct an instance.</summary>
-        /// <param name="siteConfig">The context config settings.</param>
-        /// <param name="pastebin">The Pastebin API client.</param>
-        public LogParserController(IOptions<SiteConfig> siteConfig, IPastebinClient pastebin)
+        /// <param name="storage">Provides access to raw data storage.</param>
+        public LogParserController(IStorageProvider storage)
         {
-            this.Config = siteConfig.Value;
-            this.Pastebin = pastebin;
+            this.Storage = storage;
         }
 
         /***
         ** Web UI
         ***/
         /// <summary>Render the log parser UI.</summary>
-        /// <param name="id">The paste ID.</param>
+        /// <param name="id">The stored file ID.</param>
         /// <param name="raw">Whether to display the raw unparsed log.</param>
         [HttpGet]
         [Route("log")]
@@ -60,14 +47,15 @@ namespace StardewModdingAPI.Web.Controllers
         {
             // fresh page
             if (string.IsNullOrWhiteSpace(id))
-                return this.View("Index", new LogParserModel(this.Config.LogParserUrl, id));
+                return this.View("Index", this.GetModel(id));
 
             // log page
-            PasteInfo paste = await this.GetAsync(id);
-            ParsedLog log = paste.Success
-                ? new LogParser().Parse(paste.Content)
-                : new ParsedLog { IsValid = false, Error = "Pastebin error: " + paste.Error };
-            return this.View("Index", new LogParserModel(this.Config.LogParserUrl, id, log, raw));
+            StoredFileInfo file = await this.Storage.GetAsync(id);
+            ParsedLog log = file.Success
+                ? new LogParser().Parse(file.Content)
+                : new ParsedLog { IsValid = false, Error = file.Error };
+
+            return this.View("Index", this.GetModel(id, uploadWarning: file.Warning, expiry: file.Expiry).SetResult(log, raw));
         }
 
         /***
@@ -81,99 +69,59 @@ namespace StardewModdingAPI.Web.Controllers
             // get raw log text
             string input = this.Request.Form["input"].FirstOrDefault();
             if (string.IsNullOrWhiteSpace(input))
-                return this.View("Index", new LogParserModel(this.Config.LogParserUrl, null) { UploadError = "The log file seems to be empty." });
+                return this.View("Index", this.GetModel(null, uploadError: "The log file seems to be empty."));
 
             // upload log
-            input = this.CompressString(input);
-            SavePasteResult result = await this.Pastebin.PostAsync(input);
-
-            // handle errors
-            if (!result.Success)
-                return this.View("Index", new LogParserModel(this.Config.LogParserUrl, result.ID) { UploadError = $"Pastebin error: {result.Error ?? "unknown error"}" });
+            UploadResult uploadResult = await this.Storage.SaveAsync(input);
+            if (!uploadResult.Succeeded)
+                return this.View("Index", this.GetModel(null, uploadError: uploadResult.UploadError));
 
             // redirect to view
-            UriBuilder uri = new UriBuilder(new Uri(this.Config.LogParserUrl));
-            uri.Path = uri.Path.TrimEnd('/') + '/' + result.ID;
-            return this.Redirect(uri.Uri.ToString());
+            return this.Redirect(this.Url.PlainAction("Index", "LogParser", new { id = uploadResult.ID }));
         }
 
 
         /*********
         ** Private methods
         *********/
-        /// <summary>Fetch raw text from Pastebin.</summary>
-        /// <param name="id">The Pastebin paste ID.</param>
-        private async Task<PasteInfo> GetAsync(string id)
+        /// <summary>Build a log parser model.</summary>
+        /// <param name="pasteID">The stored file ID.</param>
+        /// <param name="expiry">When the uploaded file will no longer be available.</param>
+        /// <param name="uploadWarning">A non-blocking warning while uploading the log.</param>
+        /// <param name="uploadError">An error which occurred while uploading the log.</param>
+        private LogParserModel GetModel(string pasteID, DateTime? expiry = null, string uploadWarning = null, string uploadError = null)
         {
-            PasteInfo response = await this.Pastebin.GetAsync(id);
-            response.Content = this.DecompressString(response.Content);
-            return response;
+            Platform? platform = this.DetectClientPlatform();
+
+            return new LogParserModel(pasteID, platform)
+            {
+                UploadWarning = uploadWarning,
+                UploadError = uploadError,
+                Expiry = expiry
+            };
         }
 
-        /// <summary>Compress a string.</summary>
-        /// <param name="text">The text to compress.</param>
-        /// <remarks>Derived from <a href="https://stackoverflow.com/a/17993002/262123"/>.</remarks>
-        private string CompressString(string text)
+        /// <summary>Detect the viewer's OS.</summary>
+        /// <returns>Returns the viewer OS if known, else null.</returns>
+        private Platform? DetectClientPlatform()
         {
-            // get raw bytes
-            byte[] buffer = Encoding.UTF8.GetBytes(text);
-
-            // compressed
-            byte[] compressedData;
-            using (MemoryStream stream = new MemoryStream())
+            string userAgent = this.Request.Headers["User-Agent"];
+            switch (userAgent)
             {
-                using (GZipStream zipStream = new GZipStream(stream, CompressionLevel.Optimal, leaveOpen: true))
-                    zipStream.Write(buffer, 0, buffer.Length);
+                case string ua when ua.Contains("Windows"):
+                    return Platform.Windows;
 
-                stream.Position = 0;
-                compressedData = new byte[stream.Length];
-                stream.Read(compressedData, 0, compressedData.Length);
-            }
+                case string ua when ua.Contains("Android"): // check for Android before Linux because Android user agents also contain Linux
+                    return Platform.Android;
 
-            // prefix length
-            byte[] zipBuffer = new byte[compressedData.Length + 4];
-            Buffer.BlockCopy(compressedData, 0, zipBuffer, 4, compressedData.Length);
-            Buffer.BlockCopy(BitConverter.GetBytes(buffer.Length), 0, zipBuffer, 0, 4);
+                case string ua when ua.Contains("Linux"):
+                    return Platform.Linux;
 
-            // return string representation
-            return Convert.ToBase64String(zipBuffer);
-        }
+                case string ua when ua.Contains("Mac"):
+                    return Platform.Mac;
 
-        /// <summary>Decompress a string.</summary>
-        /// <param name="rawText">The compressed text.</param>
-        /// <remarks>Derived from <a href="https://stackoverflow.com/a/17993002/262123"/>.</remarks>
-        private string DecompressString(string rawText)
-        {
-            // get raw bytes
-            byte[] zipBuffer;
-            try
-            {
-                zipBuffer = Convert.FromBase64String(rawText);
-            }
-            catch
-            {
-                return rawText; // not valid base64, wasn't compressed by the log parser
-            }
-
-            // skip if not gzip
-            if (BitConverter.ToUInt16(zipBuffer, 4) != LogParserController.GzipLeadBytes)
-                return rawText;
-
-            // decompress
-            using (MemoryStream memoryStream = new MemoryStream())
-            {
-                // read length prefix
-                int dataLength = BitConverter.ToInt32(zipBuffer, 0);
-                memoryStream.Write(zipBuffer, 4, zipBuffer.Length - 4);
-
-                // read data
-                byte[] buffer = new byte[dataLength];
-                memoryStream.Position = 0;
-                using (GZipStream gZipStream = new GZipStream(memoryStream, CompressionMode.Decompress))
-                    gZipStream.Read(buffer, 0, buffer.Length);
-
-                // return original string
-                return Encoding.UTF8.GetString(buffer);
+                default:
+                    return null;
             }
         }
     }

@@ -15,30 +15,6 @@
     border: 3px solid darkgreen;
 }
 
-table.wikitable {
-    background-color:#f8f9fa;
-    color:#222;
-    border:1px solid #a2a9b1;
-    border-collapse:collapse
-}
-
-table.wikitable > tr > th,
-table.wikitable > tr > td,
-table.wikitable > * > tr > th,
-table.wikitable > * > tr > td {
-    border:1px solid #a2a9b1;
-    padding:0.2em 0.4em
-}
-
-table.wikitable > tr > th,
-table.wikitable > * > tr > th {
-    background-color:#eaecf0;
-}
-
-table.wikitable > caption {
-    font-weight:bold
-}
-
 #options {
     margin-bottom: 1em;
 }
@@ -71,6 +47,39 @@ table.wikitable > caption {
 #mod-count {
     font-size: 0.8em;
     opacity: 0.5;
+}
+
+div.error {
+    padding: 2em 0;
+    color: red;
+    font-weight: bold;
+}
+
+/*********
+** Mod list
+*********/
+table.wikitable {
+    background-color:#f8f9fa;
+    color:#222;
+    border:1px solid #a2a9b1;
+    border-collapse:collapse
+}
+
+table.wikitable > tr > th,
+table.wikitable > tr > td,
+table.wikitable > * > tr > th,
+table.wikitable > * > tr > td {
+    border:1px solid #a2a9b1;
+    padding:0.2em 0.4em
+}
+
+table.wikitable > tr > th,
+table.wikitable > * > tr > th {
+    background-color:#eaecf0;
+}
+
+table.wikitable > caption {
+    font-weight:bold
 }
 
 #mod-list {

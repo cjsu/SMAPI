@@ -17,20 +17,17 @@ namespace StardewModdingAPI
         /// <summary>The patch version for backwards-compatible bug fixes.</summary>
         int PatchVersion { get; }
 
-#if !SMAPI_3_0_STRICT
-        /// <summary>An optional build tag.</summary>
-        [Obsolete("Use " + nameof(ISemanticVersion.PrereleaseTag) + " instead")]
-        string Build { get; }
-#endif
-
         /// <summary>An optional prerelease tag.</summary>
         string PrereleaseTag { get; }
+
+        /// <summary>Optional build metadata. This is ignored when determining version precedence.</summary>
+        string BuildMetadata { get; }
 
 
         /*********
         ** Accessors
         *********/
-        /// <summary>Whether this is a pre-release version.</summary>
+        /// <summary>Whether this is a prerelease version.</summary>
         bool IsPrerelease();
 
         /// <summary>Get whether this version is older than the specified version.</summary>

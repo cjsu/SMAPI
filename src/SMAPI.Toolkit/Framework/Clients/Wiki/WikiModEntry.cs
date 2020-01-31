@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+
 namespace StardewModdingAPI.Toolkit.Framework.Clients.Wiki
 {
     /// <summary>A mod entry in the wiki list.</summary>
@@ -20,6 +23,12 @@ namespace StardewModdingAPI.Toolkit.Framework.Clients.Wiki
 
         /// <summary>The mod ID in the Chucklefish mod repo.</summary>
         public int? ChucklefishID { get; set; }
+
+        /// <summary>The mod ID in the CurseForge mod repo.</summary>
+        public int? CurseForgeID { get; set; }
+
+        /// <summary>The mod key in the CurseForge mod repo (used in mod page URLs).</summary>
+        public string CurseForgeKey { get; set; }
 
         /// <summary>The mod ID in the ModDrop mod repo.</summary>
         public int? ModDropID { get; set; }
@@ -47,6 +56,18 @@ namespace StardewModdingAPI.Toolkit.Framework.Clients.Wiki
 
         /// <summary>The human-readable warnings for players about this mod.</summary>
         public string[] Warnings { get; set; }
+
+        /// <summary>Extra metadata links (usually for open pull requests).</summary>
+        public Tuple<Uri, string>[] MetadataLinks { get; set; }
+
+        /// <summary>Special notes intended for developers who maintain unofficial updates or submit pull requests. </summary>
+        public string DevNote { get; set; }
+
+        /// <summary>Maps local versions to a semantic version for update checks.</summary>
+        public IDictionary<string, string> MapLocalVersions { get; set; }
+
+        /// <summary>Maps remote versions to a semantic version for update checks.</summary>
+        public IDictionary<string, string> MapRemoteVersions { get; set; }
 
         /// <summary>The link anchor for the mod entry in the wiki compatibility list.</summary>
         public string Anchor { get; set; }

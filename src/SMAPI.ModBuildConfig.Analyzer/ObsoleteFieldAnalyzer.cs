@@ -27,11 +27,11 @@ namespace StardewModdingAPI.ModBuildConfig.Analyzer
             ["AvoidObsoleteField"] = new DiagnosticDescriptor(
                 id: "AvoidObsoleteField",
                 title: "Reference to obsolete field",
-                messageFormat: "The '{0}' field is obsolete and should be replaced with '{1}'. See https://smapi.io/buildmsg/avoid-obsolete-field for details.",
+                messageFormat: "The '{0}' field is obsolete and should be replaced with '{1}'. See https://smapi.io/package/avoid-obsolete-field for details.",
                 category: "SMAPI.CommonErrors",
                 defaultSeverity: DiagnosticSeverity.Warning,
                 isEnabledByDefault: true,
-                helpLinkUri: "https://smapi.io/buildmsg/avoid-obsolete-field"
+                helpLinkUri: "https://smapi.io/package/avoid-obsolete-field"
             )
         };
 
@@ -67,7 +67,7 @@ namespace StardewModdingAPI.ModBuildConfig.Analyzer
         /*********
         ** Private methods
         *********/
-        /// <summary>Analyse a syntax node and add a diagnostic message if it references an obsolete field.</summary>
+        /// <summary>Analyze a syntax node and add a diagnostic message if it references an obsolete field.</summary>
         /// <param name="context">The analysis context.</param>
         private void AnalyzeObsoleteFields(SyntaxNodeAnalysisContext context)
         {

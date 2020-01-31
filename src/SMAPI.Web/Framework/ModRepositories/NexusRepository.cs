@@ -32,21 +32,27 @@ namespace StardewModdingAPI.Web.Framework.ModRepositories
         {
             // validate ID format
             if (!uint.TryParse(id, out uint nexusID))
-                return new ModInfoModel($"The value '{id}' isn't a valid Nexus mod ID, must be an integer ID.");
+                return new ModInfoModel().SetError(RemoteModStatus.DoesNotExist, $"The value '{id}' isn't a valid Nexus mod ID, must be an integer ID.");
 
             // fetch info
             try
             {
                 NexusMod mod = await this.Client.GetModAsync(nexusID);
                 if (mod == null)
-                    return new ModInfoModel("Found no mod with this ID.");
+                    return new ModInfoModel().SetError(RemoteModStatus.DoesNotExist, "Found no Nexus mod with this ID.");
                 if (mod.Error != null)
-                    return new ModInfoModel(mod.Error);
-                return new ModInfoModel(name: mod.Name, version: this.NormaliseVersion(mod.Version), previewVersion: mod.LatestFileVersion?.ToString(), url: mod.Url);
+                {
+                    RemoteModStatus remoteStatus = mod.Status == NexusModStatus.Hidden || mod.Status == NexusModStatus.NotPublished
+                        ? RemoteModStatus.DoesNotExist
+                        : RemoteModStatus.TemporaryError;
+                    return new ModInfoModel().SetError(remoteStatus, mod.Error);
+                }
+
+                return new ModInfoModel(name: mod.Name, version: this.NormalizeVersion(mod.Version), previewVersion: mod.LatestFileVersion?.ToString(), url: mod.Url);
             }
             catch (Exception ex)
             {
-                return new ModInfoModel(ex.ToString());
+                return new ModInfoModel().SetError(RemoteModStatus.TemporaryError, ex.ToString());
             }
         }
 

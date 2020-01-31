@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using StardewModdingAPI.Toolkit.Utilities;
 
-namespace StardewModdingAPI.Tests.Toolkit
+namespace SMAPI.Tests.Toolkit
 {
     /// <summary>Unit tests for <see cref="PathUtilities"/>.</summary>
     [TestFixture]
@@ -25,7 +25,7 @@ namespace StardewModdingAPI.Tests.Toolkit
             return string.Join("|", PathUtilities.GetSegments(path));
         }
 
-        [Test(Description = "Assert that NormalisePathSeparators returns the expected values.")]
+        [Test(Description = "Assert that NormalizePathSeparators returns the expected values.")]
 #if SMAPI_FOR_WINDOWS
         [TestCase("", ExpectedResult = "")]
         [TestCase("/", ExpectedResult = "")]
@@ -47,9 +47,9 @@ namespace StardewModdingAPI.Tests.Toolkit
         [TestCase("C:/boop", ExpectedResult = "C:/boop")]
         [TestCase(@"C:\usr\bin//.././boop.exe", ExpectedResult = "C:/usr/bin/.././boop.exe")]
 #endif
-        public string NormalisePathSeparators(string path)
+        public string NormalizePathSeparators(string path)
         {
-            return PathUtilities.NormalisePathSeparators(path);
+            return PathUtilities.NormalizePathSeparators(path);
         }
 
         [Test(Description = "Assert that GetRelativePath returns the expected values.")]

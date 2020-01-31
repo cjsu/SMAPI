@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using StardewModdingAPI.Framework.ModHelpers;
 using StardewModdingAPI.Framework.ModLoading;
 using StardewModdingAPI.Toolkit.Framework.Clients.WebApi;
 using StardewModdingAPI.Toolkit.Framework.ModData;
@@ -15,10 +16,13 @@ namespace StardewModdingAPI.Framework
         /// <summary>The mod's display name.</summary>
         string DisplayName { get; }
 
-        /// <summary>The mod's full directory path.</summary>
+        /// <summary>The root path containing mods.</summary>
+        string RootPath { get; }
+
+        /// <summary>The mod's full directory path within the <see cref="RootPath"/>.</summary>
         string DirectoryPath { get; }
 
-        /// <summary>The <see cref="DirectoryPath"/> relative to the game's Mods folder.</summary>
+        /// <summary>The <see cref="DirectoryPath"/> relative to the <see cref="RootPath"/>.</summary>
         string RelativeDirectoryPath { get; }
 
         /// <summary>Metadata about the mod from SMAPI's internal data (if any).</summary>
@@ -41,6 +45,9 @@ namespace StardewModdingAPI.Framework
 
         /// <summary>The content pack instance (if loaded and <see cref="IModInfo.IsContentPack"/> is true).</summary>
         IContentPack ContentPack { get; }
+
+        /// <summary>The translations for this mod (if loaded).</summary>
+        TranslationHelper Translations { get; }
 
         /// <summary>Writes messages to the console and log file as this mod.</summary>
         IMonitor Monitor { get; }
@@ -67,12 +74,14 @@ namespace StardewModdingAPI.Framework
 
         /// <summary>Set the mod instance.</summary>
         /// <param name="mod">The mod instance to set.</param>
-        IModMetadata SetMod(IMod mod);
+        /// <param name="translations">The translations for this mod (if loaded).</param>
+        IModMetadata SetMod(IMod mod, TranslationHelper translations);
 
         /// <summary>Set the mod instance.</summary>
         /// <param name="contentPack">The contentPack instance to set.</param>
         /// <param name="monitor">Writes messages to the console and log file.</param>
-        IModMetadata SetMod(IContentPack contentPack, IMonitor monitor);
+        /// <param name="translations">The translations for this mod (if loaded).</param>
+        IModMetadata SetMod(IContentPack contentPack, IMonitor monitor, TranslationHelper translations);
 
         /// <summary>Set the mod-provided API instance.</summary>
         /// <param name="api">The mod-provided API.</param>
@@ -96,11 +105,18 @@ namespace StardewModdingAPI.Framework
         /// <param name="validOnly">Only return valid update keys.</param>
         IEnumerable<UpdateKey> GetUpdateKeys(bool validOnly = true);
 
+        /// <summary>Get the mod IDs that must be installed to load this mod.</summary>
+        /// <param name="includeOptional">Whether to include optional dependencies.</param>
+        IEnumerable<string> GetRequiredModIds(bool includeOptional = false);
+
         /// <summary>Whether the mod has at least one valid update key set.</summary>
         bool HasValidUpdateKeys();
 
         /// <summary>Get whether the mod has a given warning and it hasn't been suppressed in the <see cref="DataRecord"/>.</summary>
         /// <param name="warning">The warning to check.</param>
         bool HasUnsuppressWarning(ModWarning warning);
+
+        /// <summary>Get a relative path which includes the root folder name.</summary>
+        string GetRelativePathWithRoot();
     }
 }

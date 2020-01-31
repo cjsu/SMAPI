@@ -1,0 +1,167 @@
+@using Humanizer
+@using StardewModdingAPI.Web.Framework
+@using StardewModdingAPI.Web.ViewModels.JsonValidator
+@model JsonValidatorModel
+
+@{
+    // get view data
+    string curPageUrl = this.Url.PlainAction("Index", "JsonValidator", new { schemaName = Model.SchemaName, id = Model.PasteID }, absoluteUrl: true);
+    string newUploadUrl = this.Url.PlainAction("Index", "JsonValidator", new { schemaName = Model.SchemaName });
+    string schemaDisplayName = null;
+    bool isValidSchema = Model.SchemaName != null && Model.SchemaFormats.TryGetValue(Model.SchemaName, out schemaDisplayName) && schemaDisplayName?.ToLower() != "none";
+    bool isEditView = Model.Content == null || Model.SchemaName?.ToLower() == "edit";
+
+    // build title
+    ViewData["Title"] = "JSON validator";
+    @if (Model.PasteID != null)
+    {
+        ViewData["ViewTitle"] = ViewData["Title"];
+        ViewData["Title"] +=
+            " ("
+            + string.Join(", ", new[] { isValidSchema ? schemaDisplayName : null, Model.PasteID }.Where(p => p != null))
+            + ")";
+    }
+}
+
+@section Head {
+    @if (Model.PasteID != null)
+    {
+        <meta name="robots" content="noindex" />
+    }
+    <link rel="stylesheet" href="~/Content/css/json-validator.css?r=20191204" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tmont/sunlight@1.22.0/src/themes/sunlight.default.min.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/tmont/sunlight@1.22.0/src/sunlight.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/tmont/sunlight@1.22.0/src/plugins/sunlight-plugin.linenumbers.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/tmont/sunlight@1.22.0/src/lang/sunlight.javascript.min.js" crossorigin="anonymous"></script>
+    <script src="~/Content/js/json-validator.js?r=20191204"></script>
+    <script>
+        $(function() {
+            smapi.jsonValidator(@Json.Serialize(this.Url.PlainAction("Index", "JsonValidator", new { schemaName = "$schemaName", id = "$id" })), @Json.Serialize(Model.PasteID));
+        });
+    </script>
+}
+
+@* upload result banner *@
+@if (Model.UploadError != null)
+{
+    <div class="banner error">
+        <strong>Oops, the server ran into trouble saving that file.</strong><br />
+        <small>Error details: @Model.UploadError</small>
+    </div>
+}
+else if (Model.ParseError != null)
+{
+    <div class="banner error">
+        <strong>Oops, couldn't parse that JSON.</strong><br />
+        Share this link to let someone see this page: <code>@curPageUrl</code><br />
+        (Or <a href="@newUploadUrl">validate a new file</a>.)<br />
+        <br />
+        <small v-pre>Error details: @Model.ParseError</small>
+    </div>
+}
+else if (!isEditView && Model.PasteID != null)
+{
+    <div class="banner success">
+        <strong>Share this link to let someone else see this page:</strong> <code>@curPageUrl</code><br />
+        (Or <a href="@newUploadUrl">validate a new file</a>.)
+    </div>
+}
+
+@* save warnings *@
+@if (Model.UploadWarning != null || Model.Expiry != null)
+{
+    <div class="save-metadata" v-pre>
+        @if (Model.Expiry != null)
+        {
+            <text>This JSON file will expire in @((DateTime.UtcNow - Model.Expiry.Value).Humanize()). </text>
+        }
+        <!--@Model.UploadWarning-->
+    </div>
+}
+
+@* upload new file *@
+@if (isEditView)
+{
+    <h2>Upload a JSON file</h2>
+    <form action="@this.Url.PlainAction("PostAsync", "JsonValidator")" method="post">
+        <ol>
+            <li>
+                Choose the JSON format:<br />
+                <select id="format" name="SchemaName">
+                    @foreach (var pair in Model.SchemaFormats)
+                    {
+                        <option value="@pair.Key" selected="@(Model.SchemaName == pair.Key)">@pair.Value</option>
+                    }
+                </select>
+            </li>
+            <li>
+                Drag the file onto this textbox (or paste the text in):<br />
+                <textarea id="input" name="Content" placeholder="paste file here">@Model.Content</textarea>
+            </li>
+            <li>
+                Click this button:<br />
+                <input type="submit" id="submit" value="save & validate file" />
+            </li>
+        </ol>
+    </form>
+}
+
+@* validation results *@
+@if (!isEditView)
+{
+    <div id="output">
+        @if (Model.UploadError == null)
+        {
+            <h2>Validation</h2>
+            <p>
+                @(Model.Errors.Any() ? "Oops, found some issues with your JSON." : "No errors found!")
+                @if (!isValidSchema)
+                {
+                    <text>(You have no schema selected, so only the basic JSON syntax was checked.)</text>
+                }
+                else if (Model.FormatUrl != null)
+                {
+                    <text>See <a href="@Model.FormatUrl">format documentation</a> for more info.</text>
+                }
+            </p>
+
+            @if (Model.Errors.Any())
+            {
+                <table id="metadata" class="table">
+                    <tr>
+                        <th>Line</th>
+                        <th>Field</th>
+                        <th>Error</th>
+                    </tr>
+
+                    @foreach (JsonValidatorErrorModel error in Model.Errors)
+                    {
+                        <tr data-schema-error="@error.SchemaErrorType">
+                            <td><a href="#L@(error.Line)">@error.Line</a></td>
+                            <td>@error.Path</td>
+                            <td>@error.Message</td>
+                        </tr>
+                    }
+                </table>
+            }
+        }
+
+        <h2>Content</h2>
+        <div>
+            You can change JSON format (<select id="format" name="format">
+                @foreach (var pair in Model.SchemaFormats)
+                {
+                    <option value="@pair.Key" selected="@(Model.SchemaName == pair.Key)">@pair.Value</option>
+                }
+            </select>) or <a href="@(this.Url.PlainAction("Index", "JsonValidator", new { id = this.Model.PasteID, schemaName = "edit" }))">edit this file</a>.
+        </div>
+        <pre id="raw-content" class="sunlight-highlight-javascript">@Model.Content</pre>
+
+        @if (isValidSchema)
+        {
+            <p class="footer-tip">(Tip: you can <a href="https://github.com/Pathoschild/SMAPI/blob/develop/docs/technical/web.md#using-a-schema-file-directly">validate directly in your text editor</a> if it supports JSON Schema.)</p>
+        }
+    </div>
+}

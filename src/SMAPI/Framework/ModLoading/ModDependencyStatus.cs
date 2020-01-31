@@ -1,4 +1,4 @@
-﻿namespace StardewModdingAPI.Framework.ModLoading
+namespace StardewModdingAPI.Framework.ModLoading
 {
     /// <summary>The status of a given mod in the dependency-sorting algorithm.</summary>
     internal enum ModDependencyStatus
@@ -6,7 +6,7 @@
         /// <summary>The mod hasn't been visited yet.</summary>
         Queued,
 
-        /// <summary>The mod is currently being analysed as part of a dependency chain.</summary>
+        /// <summary>The mod is currently being analyzed as part of a dependency chain.</summary>
         Checking,
 
         /// <summary>The mod has already been sorted.</summary>

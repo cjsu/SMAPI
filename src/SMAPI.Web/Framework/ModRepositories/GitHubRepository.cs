@@ -30,36 +30,46 @@ namespace StardewModdingAPI.Web.Framework.ModRepositories
         /// <param name="id">The mod ID in this repository.</param>
         public override async Task<ModInfoModel> GetModInfoAsync(string id)
         {
+            ModInfoModel result = new ModInfoModel().SetBasicInfo(id, $"https://github.com/{id}/releases");
+
             // validate ID format
             if (!id.Contains("/") || id.IndexOf("/", StringComparison.InvariantCultureIgnoreCase) != id.LastIndexOf("/", StringComparison.InvariantCultureIgnoreCase))
-                return new ModInfoModel($"The value '{id}' isn't a valid GitHub mod ID, must be a username and project name like 'Pathoschild/LookupAnything'.");
+                return result.SetError(RemoteModStatus.DoesNotExist, $"The value '{id}' isn't a valid GitHub mod ID, must be a username and project name like 'Pathoschild/LookupAnything'.");
 
             // fetch info
             try
             {
+                // fetch repo info
+                GitRepo repository = await this.Client.GetRepositoryAsync(id);
+                if (repository == null)
+                    return result.SetError(RemoteModStatus.DoesNotExist, "Found no GitHub repository for this ID.");
+                result
+                    .SetBasicInfo(repository.FullName, $"{repository.WebUrl}/releases")
+                    .SetLicense(url: repository.License?.Url, name: repository.License?.SpdxId ?? repository.License?.Name);
+
                 // get latest release (whether preview or stable)
                 GitRelease latest = await this.Client.GetLatestReleaseAsync(id, includePrerelease: true);
                 if (latest == null)
-                    return new ModInfoModel("Found no mod with this ID.");
+                    return result.SetError(RemoteModStatus.DoesNotExist, "Found no GitHub release for this ID.");
 
                 // split stable/prerelease if applicable
                 GitRelease preview = null;
                 if (latest.IsPrerelease)
                 {
-                    GitRelease result = await this.Client.GetLatestReleaseAsync(id, includePrerelease: false);
-                    if (result != null)
+                    GitRelease release = await this.Client.GetLatestReleaseAsync(id, includePrerelease: false);
+                    if (release != null)
                     {
                         preview = latest;
-                        latest = result;
+                        latest = release;
                     }
                 }
 
                 // return data
-                return new ModInfoModel(name: id, version: this.NormaliseVersion(latest.Tag), previewVersion: this.NormaliseVersion(preview?.Tag), url: $"https://github.com/{id}/releases");
+                return result.SetVersions(version: this.NormalizeVersion(latest.Tag), previewVersion: this.NormalizeVersion(preview?.Tag));
             }
             catch (Exception ex)
             {
-                return new ModInfoModel(ex.ToString());
+                return result.SetError(RemoteModStatus.TemporaryError, ex.ToString());
             }
         }
 

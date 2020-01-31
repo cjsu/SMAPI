@@ -3,8 +3,8 @@ using StardewModdingAPI.Events;
 
 namespace StardewModdingAPI.Framework.Events
 {
-    /// <summary>Events serving specialised edge cases that shouldn't be used by most mods.</summary>
-    internal class ModSpecialisedEvents : ModEventsBase, ISpecialisedEvents
+    /// <summary>Events serving specialized edge cases that shouldn't be used by most mods.</summary>
+    internal class ModSpecializedEvents : ModEventsBase, ISpecializedEvents
     {
         /*********
         ** Accessors
@@ -37,7 +37,7 @@ namespace StardewModdingAPI.Framework.Events
         /// <summary>Construct an instance.</summary>
         /// <param name="mod">The mod which uses this instance.</param>
         /// <param name="eventManager">The underlying event manager.</param>
-        internal ModSpecialisedEvents(IModMetadata mod, EventManager eventManager)
+        internal ModSpecializedEvents(IModMetadata mod, EventManager eventManager)
             : base(mod, eventManager) { }
     }
 }

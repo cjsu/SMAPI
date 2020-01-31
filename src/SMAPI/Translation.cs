@@ -15,9 +15,6 @@ namespace StardewModdingAPI
         /// <summary>The placeholder text when the translation is <c>null</c> or empty, where <c>{0}</c> is the translation key.</summary>
         internal const string PlaceholderText = "(no translation:{0})";
 
-        /// <summary>The name of the relevant mod for error messages.</summary>
-        private readonly string ModName;
-
         /// <summary>The locale for which the translation was fetched.</summary>
         private readonly string Locale;
 
@@ -38,37 +35,12 @@ namespace StardewModdingAPI
         /*********
         ** Public methods
         *********/
-        /// <summary>Construct an isntance.</summary>
-        /// <param name="modName">The name of the relevant mod for error messages.</param>
+        /// <summary>Construct an instance.</summary>
         /// <param name="locale">The locale for which the translation was fetched.</param>
         /// <param name="key">The translation key.</param>
         /// <param name="text">The underlying translation text.</param>
-        internal Translation(string modName, string locale, string key, string text)
-            : this(modName, locale, key, text, string.Format(Translation.PlaceholderText, key)) { }
-
-        /// <summary>Construct an isntance.</summary>
-        /// <param name="modName">The name of the relevant mod for error messages.</param>
-        /// <param name="locale">The locale for which the translation was fetched.</param>
-        /// <param name="key">The translation key.</param>
-        /// <param name="text">The underlying translation text.</param>
-        /// <param name="placeholder">The value to return if the translations is undefined.</param>
-        internal Translation(string modName, string locale, string key, string text, string placeholder)
-        {
-            this.ModName = modName;
-            this.Locale = locale;
-            this.Key = key;
-            this.Text = text;
-            this.Placeholder = placeholder;
-        }
-
-        /// <summary>Throw an exception if the translation text is <c>null</c> or empty.</summary>
-        /// <exception cref="KeyNotFoundException">There's no available translation matching the requested key and locale.</exception>
-        public Translation Assert()
-        {
-            if (!this.HasValue())
-                throw new KeyNotFoundException($"The '{this.ModName}' mod doesn't have a translation with key '{this.Key}' for the '{this.Locale}' locale or its fallbacks.");
-            return this;
-        }
+        internal Translation(string locale, string key, string text)
+            : this(locale, key, text, string.Format(Translation.PlaceholderText, key)) { }
 
         /// <summary>Replace the text if it's <c>null</c> or empty. If you set a <c>null</c> or empty value, the translation will show the fallback "no translation" placeholder (see <see cref="UsePlaceholder"/> if you want to disable that). Returns a new instance if changed.</summary>
         /// <param name="default">The default value.</param>
@@ -76,14 +48,14 @@ namespace StardewModdingAPI
         {
             return this.HasValue()
                 ? this
-                : new Translation(this.ModName, this.Locale, this.Key, @default);
+                : new Translation(this.Locale, this.Key, @default);
         }
 
         /// <summary>Whether to return a "no translation" placeholder if the translation is <c>null</c> or empty. Returns a new instance.</summary>
         /// <param name="use">Whether to return a placeholder.</param>
         public Translation UsePlaceholder(bool use)
         {
-            return new Translation(this.ModName, this.Locale, this.Key, this.Text, use ? string.Format(Translation.PlaceholderText, this.Key) : null);
+            return new Translation(this.Locale, this.Key, this.Text, use ? string.Format(Translation.PlaceholderText, this.Key) : null);
         }
 
         /// <summary>Replace tokens in the text like <c>{{value}}</c> with the given values. Returns a new instance.</summary>
@@ -127,7 +99,7 @@ namespace StardewModdingAPI
                     ? value
                     : match.Value;
             });
-            return new Translation(this.ModName, this.Locale, this.Key, text);
+            return new Translation(this.Locale, this.Key, text);
         }
 
         /// <summary>Get whether the translation has a defined value.</summary>
@@ -149,6 +121,23 @@ namespace StardewModdingAPI
         public static implicit operator string(Translation translation)
         {
             return translation?.ToString();
+        }
+
+
+        /*********
+        ** Private methods
+        *********/
+        /// <summary>Construct an instance.</summary>
+        /// <param name="locale">The locale for which the translation was fetched.</param>
+        /// <param name="key">The translation key.</param>
+        /// <param name="text">The underlying translation text.</param>
+        /// <param name="placeholder">The value to return if the translations is undefined.</param>
+        private Translation(string locale, string key, string text, string placeholder)
+        {
+            this.Locale = locale;
+            this.Key = key;
+            this.Text = text;
+            this.Placeholder = placeholder;
         }
     }
 }

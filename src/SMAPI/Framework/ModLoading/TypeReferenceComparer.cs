@@ -54,7 +54,7 @@ namespace StardewModdingAPI.Framework.ModLoading
         {
             bool HeuristicallyEquals(string typeNameA, string typeNameB, IDictionary<string, string> tokenMap)
             {
-                // analyse type names
+                // analyze type names
                 bool hasTokensA = typeNameA.Contains("!");
                 bool hasTokensB = typeNameB.Contains("!");
                 bool isTokenA = hasTokensA && typeNameA[0] == '!';

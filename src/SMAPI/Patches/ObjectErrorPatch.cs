@@ -8,13 +8,16 @@ using SObject = StardewValley.Object;
 namespace StardewModdingAPI.Patches
 {
     /// <summary>A Harmony patch for <see cref="SObject.getDescription"/> which intercepts crashes due to the item no longer existing.</summary>
+    /// <remarks>Patch methods must be static for Harmony to work correctly. See the Harmony documentation before renaming patch arguments.</remarks>
+    [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Argument names are defined by Harmony and methods are named for clarity.")]
+    [SuppressMessage("ReSharper", "IdentifierTypo", Justification = "Argument names are defined by Harmony and methods are named for clarity.")]
     internal class ObjectErrorPatch : IHarmonyPatch
     {
         /*********
         ** Accessors
         *********/
         /// <summary>A unique name for this patch.</summary>
-        public string Name => $"{nameof(ObjectErrorPatch)}";
+        public string Name => nameof(ObjectErrorPatch);
 
 
         /*********
@@ -45,8 +48,6 @@ namespace StardewModdingAPI.Patches
         /// <param name="__instance">The instance being patched.</param>
         /// <param name="__result">The patched method's return value.</param>
         /// <returns>Returns whether to execute the original method.</returns>
-        /// <remarks>This method must be static for Harmony to work correctly. See the Harmony documentation before renaming arguments.</remarks>
-        [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Argument names are defined by Harmony.")]
         private static bool Before_Object_GetDescription(SObject __instance, ref string __result)
         {
             // invalid bigcraftables crash instead of showing '???' like invalid non-bigcraftables
@@ -63,8 +64,6 @@ namespace StardewModdingAPI.Patches
         /// <param name="__instance">The instance being patched.</param>
         /// <param name="hoveredItem">The item for which to draw a tooltip.</param>
         /// <returns>Returns whether to execute the original method.</returns>
-        /// <remarks>This method must be static for Harmony to work correctly. See the Harmony documentation before renaming arguments.</remarks>
-        [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Argument names are defined by Harmony.")]
         private static bool Before_IClickableMenu_DrawTooltip(IClickableMenu __instance, Item hoveredItem)
         {
             // invalid edible item cause crash when drawing tooltips

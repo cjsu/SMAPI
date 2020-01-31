@@ -58,7 +58,7 @@ namespace StardewModdingAPI.Framework.Networking
                     {
                         NetFarmerRoot farmer = this.Multiplayer.readFarmer(message.Reader);
                         GalaxyID capturedPeer = new GalaxyID(peerID);
-                        this.gameServer.checkFarmhandRequest(Convert.ToString(peerID), farmer, msg => this.sendMessage(capturedPeer, msg), () => this.peers[farmer.Value.UniqueMultiplayerID] = capturedPeer.ToUint64());
+                        this.gameServer.checkFarmhandRequest(Convert.ToString(peerID), this.getConnectionId(peer), farmer, msg => this.sendMessage(capturedPeer, msg), () => this.peers[farmer.Value.UniqueMultiplayerID] = capturedPeer.ToUint64());
                     }
                 });
             }

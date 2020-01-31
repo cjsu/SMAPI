@@ -51,6 +51,13 @@ namespace StardewModdingAPI.Framework.Events
             remove => this.EventManager.ObjectListChanged.Remove(value);
         }
 
+        /// <summary>Raised after items are added or removed from a chest.</summary>
+        public event EventHandler<ChestInventoryChangedEventArgs> ChestInventoryChanged
+        {
+            add => this.EventManager.ChestInventoryChanged.Add(value);
+            remove => this.EventManager.ChestInventoryChanged.Remove(value);
+        }
+
         /// <summary>Raised after terrain features (like floors and trees) are added or removed in a location.</summary>
         public event EventHandler<TerrainFeatureListChangedEventArgs> TerrainFeatureListChanged
         {

@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using System.Threading;
 using StardewModdingAPI.Framework.Logging;
 using StardewModdingAPI.Internal.ConsoleWriting;
 
@@ -27,16 +26,10 @@ namespace StardewModdingAPI.Framework
         /// <summary>The maximum length of the <see cref="LogLevel"/> values.</summary>
         private static readonly int MaxLevelLength = (from level in Enum.GetValues(typeof(LogLevel)).Cast<LogLevel>() select level.ToString().Length).Max();
 
-        /// <summary>Propagates notification that SMAPI should exit.</summary>
-        private readonly CancellationTokenSource ExitTokenSource;
-
 
         /*********
         ** Accessors
         *********/
-        /// <summary>Whether SMAPI is aborting. Mods don't need to worry about this unless they have background tasks.</summary>
-        public bool IsExiting => this.ExitTokenSource.IsCancellationRequested;
-
         /// <summary>Whether verbose logging is enabled. This enables more detailed diagnostic messages than are normally needed.</summary>
         public bool IsVerbose { get; }
 
@@ -57,21 +50,19 @@ namespace StardewModdingAPI.Framework
         /// <param name="source">The name of the module which logs messages using this instance.</param>
         /// <param name="consoleInterceptor">Intercepts access to the console output.</param>
         /// <param name="logFile">The log file to which to write messages.</param>
-        /// <param name="exitTokenSource">Propagates notification that SMAPI should exit.</param>
-        /// <param name="colorScheme">The console color scheme to use.</param>
+        /// <param name="colorConfig">The colors to use for text written to the SMAPI console.</param>
         /// <param name="isVerbose">Whether verbose logging is enabled. This enables more detailed diagnostic messages than are normally needed.</param>
-        public Monitor(string source, ConsoleInterceptionManager consoleInterceptor, LogFileManager logFile, CancellationTokenSource exitTokenSource, MonitorColorScheme colorScheme, bool isVerbose)
+        public Monitor(string source, ConsoleInterceptionManager consoleInterceptor, LogFileManager logFile, ColorSchemeConfig colorConfig, bool isVerbose)
         {
             // validate
             if (string.IsNullOrWhiteSpace(source))
                 throw new ArgumentException("The log source cannot be empty.");
 
-            // initialise
+            // initialize
             this.Source = source;
             this.LogFile = logFile ?? throw new ArgumentNullException(nameof(logFile), "The log file manager cannot be null.");
-            this.ConsoleWriter = new ColorfulConsoleWriter(Constants.Platform, colorScheme);
+            this.ConsoleWriter = new ColorfulConsoleWriter(Constants.Platform, colorConfig);
             this.ConsoleInterceptor = consoleInterceptor;
-            this.ExitTokenSource = exitTokenSource;
             this.IsVerbose = isVerbose;
         }
 
@@ -91,20 +82,19 @@ namespace StardewModdingAPI.Framework
                 this.Log(message, LogLevel.Trace);
         }
 
-        /// <summary>Immediately exit the game without saving. This should only be invoked when an irrecoverable fatal error happens that risks save corruption or game-breaking bugs.</summary>
-        /// <param name="reason">The reason for the shutdown.</param>
-        public void ExitGameImmediately(string reason)
-        {
-            this.LogFatal($"{this.Source} requested an immediate game shutdown: {reason}");
-            this.ExitTokenSource.Cancel();
-        }
-
         /// <summary>Write a newline to the console and log file.</summary>
         internal void Newline()
         {
             if (this.WriteToConsole)
                 this.ConsoleInterceptor.ExclusiveWriteWithoutInterception(Console.WriteLine);
             this.LogFile.WriteLine("");
+        }
+
+        /// <summary>Log a fatal error message.</summary>
+        /// <param name="message">The message to log.</param>
+        internal void LogFatal(string message)
+        {
+            this.LogImpl(this.Source, message, ConsoleLogLevel.Critical);
         }
 
         /// <summary>Log console input from the user.</summary>
@@ -120,13 +110,6 @@ namespace StardewModdingAPI.Framework
         /*********
         ** Private methods
         *********/
-        /// <summary>Log a fatal error message.</summary>
-        /// <param name="message">The message to log.</param>
-        private void LogFatal(string message)
-        {
-            this.LogImpl(this.Source, message, ConsoleLogLevel.Critical);
-        }
-
         /// <summary>Write a message line to the log.</summary>
         /// <param name="source">The name of the mod logging the message.</param>
         /// <param name="message">The message to log.</param>

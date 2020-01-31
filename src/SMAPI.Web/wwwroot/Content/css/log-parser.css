@@ -47,6 +47,12 @@ table caption {
     background: #FCC;
 }
 
+.save-metadata {
+    margin-top: 1em;
+    font-size: 0.8em;
+    opacity: 0.3;
+}
+
 /*********
 ** Log metadata & filters
 *********/

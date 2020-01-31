@@ -17,14 +17,21 @@ namespace StardewModdingAPI
         /// <summary>The content pack's manifest.</summary>
         IManifest Manifest { get; }
 
+        /// <summary>Provides translations stored in the content pack's <c>i18n</c> folder. See <see cref="IModHelper.Translation"/> for more info.</summary>
+        ITranslationHelper Translation { get; }
+
 
         /*********
         ** Public methods
         *********/
+        /// <summary>Get whether a given file exists in the content pack.</summary>
+        /// <param name="path">The file path to check.</param>
+        bool HasFile(string path);
+
         /// <summary>Read a JSON file from the content pack folder.</summary>
         /// <typeparam name="TModel">The model type. This should be a plain class that has public properties for the data you want. The properties can be complex types.</typeparam>
         /// <param name="path">The file path relative to the content pack directory.</param>
-        /// <returns>Returns the deserialised model, or <c>null</c> if the file doesn't exist or is empty.</returns>
+        /// <returns>Returns the deserialized model, or <c>null</c> if the file doesn't exist or is empty.</returns>
         /// <exception cref="InvalidOperationException">The <paramref name="path"/> is not relative or contains directory climbing (../).</exception>
         TModel ReadJsonFile<TModel>(string path) where TModel : class;
 

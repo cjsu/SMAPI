@@ -2,20 +2,35 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>Pathoschild.Stardew.ModBuildConfig</id>
-    <version>2.2</version>
+    <version>3.0.0</version>
     <title>Build package for SMAPI mods</title>
     <authors>Pathoschild</authors>
     <owners>Pathoschild</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <licenseUrl>https://github.com/Pathoschild/SMAPI/blob/develop/LICENSE.txt</licenseUrl>
-    <projectUrl>https://github.com/Pathoschild/SMAPI/blob/develop/docs/mod-build-config.md#readme</projectUrl>
+    <license type="expression">MIT</license>
+    <repository type="git" url="https://github.com/Pathoschild/SMAPI" />
+    <projectUrl>https://smapi.io/package/readme</projectUrl>
+    <icon>images\icon.png</icon>
     <iconUrl>https://raw.githubusercontent.com/Pathoschild/SMAPI/develop/src/SMAPI.ModBuildConfig/assets/nuget-icon.png</iconUrl>
-    <description>Automates the build configuration for crossplatform Stardew Valley SMAPI mods. For Stardew Valley 1.3 or later.</description>
+    <description>Automates the build configuration for crossplatform Stardew Valley SMAPI mods. For SMAPI 3.0 or later.</description>
     <releaseNotes>
-      2.2:
-      - Added support for SMAPI 2.8+ (still compatible with earlier versions).
-      - Added default game paths for 32-bit Windows.
-      - Fixed valid manifests marked invalid in some cases.
+      3.0.0:
+      - Updated for SMAPI 3.0 and Stardew Valley 1.4.
+      - Added automatic support for 'assets' folders.
+      - Added $(GameExecutableName) MSBuild variable.
+      - Added support for projects using the simplified .csproj format.
+      - Added option to disable game debugging config.
+      - Added .pdb files to builds by default (to enable line numbers in error stack traces).
+      - Added optional Harmony reference.
+      - Fixed Newtonsoft.Json.pdb included in release zips when Json.NET is referenced directly.
+      - Fixed &lt;IgnoreModFilePatterns&gt; not working for i18n files.
+      - Dropped support for older versions of SMAPI and Visual Studio.
+      - Migrated package icon to NuGet's new format.
     </releaseNotes>
   </metadata>
+  <files>
+    <file src="analyzers\**" target="analyzers" />
+    <file src="build\**" target="build" />
+    <file src="images\**" target="images" />
+  </files>
 </package>

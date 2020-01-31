@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using StardewValley;
 
 namespace StardewModdingAPI.Events
@@ -14,13 +13,13 @@ namespace StardewModdingAPI.Events
         /// <summary>The player whose inventory changed.</summary>
         public Farmer Player { get; }
 
-        /// <summary>The added items.</summary>
+        /// <summary>The added item stacks.</summary>
         public IEnumerable<Item> Added { get; }
 
-        /// <summary>The removed items.</summary>
+        /// <summary>The removed item stacks.</summary>
         public IEnumerable<Item> Removed { get; }
 
-        /// <summary>The items whose stack sizes changed, with the relative change.</summary>
+        /// <summary>The item stacks whose size changed.</summary>
         public IEnumerable<ItemStackSizeChange> QuantityChanged { get; }
 
         /// <summary>Whether the affected player is the local one.</summary>
@@ -32,28 +31,15 @@ namespace StardewModdingAPI.Events
         *********/
         /// <summary>Construct an instance.</summary>
         /// <param name="player">The player whose inventory changed.</param>
-        /// <param name="changedItems">The inventory changes.</param>
-        internal InventoryChangedEventArgs(Farmer player, ItemStackChange[] changedItems)
+        /// <param name="added">The added item stacks.</param>
+        /// <param name="removed">The removed item stacks.</param>
+        /// <param name="quantityChanged">The item stacks whose size changed.</param>
+        internal InventoryChangedEventArgs(Farmer player, Item[] added, Item[] removed, ItemStackSizeChange[] quantityChanged)
         {
             this.Player = player;
-            this.Added = changedItems
-                .Where(n => n.ChangeType == ChangeType.Added)
-                .Select(p => p.Item)
-                .ToArray();
-
-            this.Removed = changedItems
-                .Where(n => n.ChangeType == ChangeType.Removed)
-                .Select(p => p.Item)
-                .ToArray();
-
-            this.QuantityChanged = changedItems
-                .Where(n => n.ChangeType == ChangeType.StackChange)
-                .Select(change => new ItemStackSizeChange(
-                    item: change.Item,
-                    oldSize: change.Item.Stack - change.StackChange,
-                    newSize: change.Item.Stack
-                ))
-                .ToArray();
+            this.Added = added;
+            this.Removed = removed;
+            this.QuantityChanged = quantityChanged;
         }
     }
 }

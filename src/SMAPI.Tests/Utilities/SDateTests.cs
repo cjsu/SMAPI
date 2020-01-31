@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using NUnit.Framework;
 using StardewModdingAPI.Utilities;
 
-namespace StardewModdingAPI.Tests.Utilities
+namespace SMAPI.Tests.Utilities
 {
     /// <summary>Unit tests for <see cref="SDate"/>.</summary>
     [TestFixture]
@@ -159,7 +159,7 @@ namespace StardewModdingAPI.Tests.Utilities
         [TestCase("15 summer Y1", -28, ExpectedResult = "15 spring Y1")] // negative season transition
         [TestCase("15 summer Y2", -28 * 4, ExpectedResult = "15 summer Y1")] // negative year transition
         [TestCase("01 spring Y3", -(28 * 7 + 17), ExpectedResult = "12 spring Y1")] // negative year transition
-        [TestCase("06 fall Y2", 50, ExpectedResult = "28 winter Y3")] // test for zero-index errors
+        [TestCase("06 fall Y2", 50, ExpectedResult = "28 winter Y2")] // test for zero-index errors
         [TestCase("06 fall Y2", 51, ExpectedResult = "01 spring Y3")] // test for zero-index errors
         public string AddDays(string dateStr, int addDays)
         {

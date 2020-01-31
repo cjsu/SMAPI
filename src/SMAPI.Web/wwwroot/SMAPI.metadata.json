@@ -1,0 +1,471 @@
+{
+    /**
+     * Metadata about some SMAPI mods used in compatibility, update, and dependency checks. This
+     * field shouldn't be edited by players in most cases.
+     *
+     * Standard fields
+     * ===============
+     * The predefined fields are documented below (only 'ID' is required). Each entry's key is the
+     * default display name for the mod if one isn't available (e.g. in dependency checks).
+     *
+     *   - ID: the mod's latest unique ID (if any).
+     *
+     *   - FormerIDs: uniquely identifies the mod across multiple versions, and supports matching
+     *     other fields if no ID was specified. This doesn't include the latest ID, if any. Multiple
+     *     variants can be separated with '|'.
+     *
+     * Versioned metadata
+     * ==================
+     * Each record can also specify extra metadata using the field keys below.
+     *
+     * Each key consists of a field name prefixed with any combination of version range and 'Default',
+     * separated by pipes (whitespace trimmed). For example, 'UpdateKey' will always override,
+     * 'Default | UpdateKey' will only override if the mod has no update keys, and
+     * '~1.1 | Default | Name' will do the same up to version 1.1.
+     *
+     * The version format is 'min~max' (where either side can be blank for unbounded), or a single
+     * version number.
+     *
+     * These are the valid field names:
+     *
+     *   - UpdateKey: the update key to set in the mod's manifest. This is used to enable update
+     *     checks for older mods that haven't been updated to use it yet.
+     *
+     *   - Status: overrides compatibility checks. The possible values are Obsolete (SMAPI won't load
+     *     it because the mod should no longer be used), AssumeBroken (SMAPI won't load it because
+     *     the specified version isn't compatible), or AssumeCompatible (SMAPI will try to load it
+     *     even if it detects incompatible code).
+     *
+     *     Note that this shouldn't be set to 'AssumeBroken' if SMAPI can detect the incompatibility
+     *     automatically, since that hides the details from trace logs.
+     *
+     *   - StatusReasonPhrase: a message to show to the player explaining why the mod can't be loaded
+     *     (if applicable). If blank, will default to a generic not-compatible message.
+     *
+     *   - AlternativeUrl: a URL where the player can find an unofficial update or alternative if the
+     *     mod is no longer compatible.
+     */
+    "ModData": {
+        /*********
+        ** Common dependencies for friendly errors
+        *********/
+        "Advanced Location Loader": {
+            "ID": "Entoarox.AdvancedLocationLoader",
+            "Default | UpdateKey": "Nexus:2270"
+        },
+
+        //"Content Patcher": {
+        //  "ID": "Pathoschild.ContentPatcher",
+        //  "Default | UpdateKey": "Nexus:1915"
+        //},
+
+        //"Custom Farming Redux": {
+        //  "ID": "Platonymous.CustomFarming",
+        //  "Default | UpdateKey": "Nexus:991"
+        //},
+
+        "Custom Shirts": {
+            "ID": "Platonymous.CustomShirts",
+            "Default | UpdateKey": "Nexus:2416"
+        },
+
+        "Entoarox Framework": {
+            "ID": "Entoarox.EntoaroxFramework",
+            "Default | UpdateKey": "Nexus:2269"
+        },
+
+        "JSON Assets": {
+            "ID": "spacechase0.JsonAssets",
+            "Default | UpdateKey": "Nexus:1720",
+            "1.3.1 | Status": "AssumeBroken" // causes runtime crashes
+        },
+
+        "Mail Framework": {
+            "ID": "DIGUS.MailFrameworkMod",
+            "Default | UpdateKey": "Nexus:1536"
+        },
+
+        "MTN": {
+            "ID": "SgtPickles.MTN",
+            "Default | UpdateKey": "Nexus:2256",
+            "~1.2.6 | Status": "AssumeBroken" // replaces Game1.multiplayer, which breaks SMAPI's multiplayer API.
+        },
+
+        "PyTK": {
+            "ID": "Platonymous.Toolkit",
+            "Default | UpdateKey": "Nexus:1726"
+        },
+
+        "Rubydew": {
+            "ID": "bwdy.rubydew",
+            "SuppressWarnings": "UsesDynamic", // mod explicitly loads DLLs for Linux/Mac compatibility
+            "Default | UpdateKey": "Nexus:3656"
+        },
+
+        "SpaceCore": {
+            "ID": "spacechase0.SpaceCore",
+            "Default | UpdateKey": "Nexus:1348"
+        },
+
+        "Stardust Core": {
+            "ID": "Omegasis.StardustCore",
+            "Default | UpdateKey": "Nexus:2341"
+        },
+
+        "TMX Loader": {
+            "ID": "Platonymous.TMXLoader",
+            "Default | UpdateKey": "Nexus:1820"
+        },
+
+        /*********
+        ** Obsolete
+        *********/
+        "Animal Mood Fix": {
+            "ID": "GPeters-AnimalMoodFix",
+            "~ | Status": "Obsolete",
+            "~ | StatusReasonPhrase": "the animal mood bugs were fixed in Stardew Valley 1.2."
+        },
+
+        "Bee House Flower Range Fix": {
+            "ID": "kirbylink.beehousefix",
+            "~ | Status": "Obsolete",
+            "~ | StatusReasonPhrase": "the bee house flower range was fixed in Stardew Valley 1.4." 
+        },
+
+        "Colored Chests": {
+            "ID": "4befde5c-731c-4853-8e4b-c5cdf946805f",
+            "~ | Status": "Obsolete",
+            "~ | StatusReasonPhrase": "colored chests were added in Stardew Valley 1.1."
+        },
+
+        "Modder Serialization Utility": {
+            "ID": "SerializerUtils-0-1",
+            "~ | Status": "Obsolete",
+            "~ | StatusReasonPhrase": "it's no longer maintained or used."
+        },
+
+        "No Debug Mode": {
+            "ID": "NoDebugMode",
+            "~ | Status": "Obsolete",
+            "~ | StatusReasonPhrase": "debug mode was removed in SMAPI 1.0."
+        },
+
+        /*********
+        ** Broke in SDV 1.4
+        *********/
+        "Fix Dice": {
+            "ID": "ashley.fixdice",
+            "~1.1.2 | Status": "AssumeBroken" // crashes game on startup
+        },
+
+        "Fix Dice": {
+            "ID": "ashley.fixdice",
+            "~1.1.2 | Status": "AssumeBroken" // crashes game on startup
+        },
+
+        "Grass Growth": {
+            "ID": "bcmpinc.GrassGrowth",
+            "~1.0 | Status": "AssumeBroken"
+        },
+
+        "Invite Code Mod": {
+            "ID": "KOREJJamJar.InviteCodeMod",
+            "~1.0.1 | Status": "AssumeBroken"
+        },
+
+        "Loved Labels": {
+            "ID": "Advize.LovedLabels",
+            "~2.2.1-unofficial.2-pathoschild | Status": "AssumeBroken"
+        },
+
+        "Neat Additions": {
+            "ID": "ilyaki.neatadditions",
+            "~1.0.3 | Status": "AssumeBroken"
+        },
+
+        "Remote Fridge Storage": {
+            "ID": "EternalSoap.RemoteFridgeStorage",
+            "~1.5 | Status": "AssumeBroken"
+        },
+
+        "Stack Everything": {
+            "ID": "cat.stackeverything",
+            "~2.15 | Status": "AssumeBroken"
+        },
+
+        "Yet Another Harvest With Scythe Mod": {
+            "ID": "bcmpinc.HarvestWithScythe",
+            "~1.1 | Status": "AssumeBroken"
+        },
+
+        /*********
+        ** Broke in SMAPI 3.0 (runtime errors due to lifecycle changes)
+        *********/
+        "Advancing Sprinklers": {
+            "ID": "warix3.advancingsprinklers",
+            "~1.0.0 | Status": "AssumeBroken"
+        },
+
+        "Arcade 2048": {
+            "ID": "Platonymous.2048",
+            "~1.0.6 | Status": "AssumeBroken" // possibly due to PyTK
+        },
+
+        "Arcade Snake": {
+            "ID": "Platonymous.Snake",
+            "~1.1.0 | Status": "AssumeBroken" // possibly due to PyTK
+        },
+
+        "Better Sprinklers": {
+            "ID": "Speeder.BetterSprinklers",
+            "~2.3.1-unofficial.7-pathoschild | Status": "AssumeBroken"
+        },
+
+        "Content Patcher": {
+            "ID": "Pathoschild.ContentPatcher",
+            "Default | UpdateKey": "Nexus:1915",
+            "~1.6.4 | Status": "AssumeBroken"
+        },
+
+        "Current Location (Vrakyas)": {
+            "ID": "Vrakyas.CurrentLocation",
+            "~1.5.4 | Status": "AssumeBroken"
+        },
+
+        "Custom Adventure Guild Challenges": {
+            "ID": "DefenTheNation.CustomGuildChallenges",
+            "~1.8 | Status": "AssumeBroken"
+        },
+
+        "Custom Farming Redux": {
+            "ID": "Platonymous.CustomFarming",
+            "Default | UpdateKey": "Nexus:991",
+            "~2.10.10 | Status": "AssumeBroken" // possibly due to PyTK
+        },
+
+        "Decrafting Mod": {
+            "ID": "MSCFC.DecraftingMod",
+            "~1.0 | Status": "AssumeBroken" // NRE in ModEntry
+        },
+
+        "JoJaBan - Arcade Sokoban": {
+            "ID": "Platonymous.JoJaBan",
+            "~0.4.3 | Status": "AssumeBroken" // possibly due to PyTK
+        },
+
+        "Level Extender": {
+            "ID": "DevinLematty.LevelExtender",
+            "~3.1 | Status": "AssumeBroken"
+        },
+
+        "Mod Update Menu": {
+            "ID": "cat.modupdatemenu",
+            "~1.4 | Status": "AssumeBroken"
+        },
+
+        "Quick Start": {
+            "ID": "WuestMan.QuickStart",
+            "~1.5 | Status": "AssumeBroken"
+        },
+
+        "Seed Bag": {
+            "ID": "Platonymous.SeedBag",
+            "~1.2.7 | Status": "AssumeBroken" // possibly due to PyTK
+        },
+
+        "Stardew Valley ESP": {
+            "ID": "reimu.sdv-helper",
+            "~1.1 | Status": "AssumeBroken"
+        },
+
+        "Underdark Krobus": {
+            "ID": "melnoelle.underdarkkrobus",
+            "~1.0.0 | Status": "AssumeBroken" // NRE in ModEntry
+        },
+
+        "Underdark Sewer": {
+            "ID": "melnoelle.underdarksewer",
+            "~1.1.0 | Status": "AssumeBroken" // NRE in ModEntry
+        },
+
+        /*********
+        ** Broke in SDV 1.3.36
+        *********/
+        "2cute FarmCave": {
+            "ID": "taintedwheat.2CuteFarmCave",
+            "Default | UpdateKey": "Nexus:843",
+            "~2.0 | Status": "AssumeBroken" // references deleted Content/Mine.xnb
+        },
+
+        "Ace's Expanded Caves - Default Cave": {
+            "ID": "Acerbicon.AECdefault",
+            "Default | UpdateKey": "Nexus:2131",
+            "~1.2.2  | Status": "AssumeBroken" // references deleted Content/Mine.xnb
+        },
+
+        "Ace's Expanded Caves - Desert Cave": {
+            "ID": "Acerbicon.AECdesert",
+            "Default | UpdateKey": "Nexus:2131",
+            "~1.2.2  | Status": "AssumeBroken" // references deleted Content/Mine.xnb
+        },
+
+        "Ace's Expanded Caves - Ice Cave": {
+            "ID": "Acerbicon.AECice",
+            "Default | UpdateKey": "Nexus:2131",
+            "~1.2.2  | Status": "AssumeBroken" // references deleted Content/Mine.xnb
+        },
+
+        "Ace's Expanded Caves - Lava Cave": {
+            "ID": "Acerbicon.AEClava",
+            "Default | UpdateKey": "Nexus:2131",
+            "~1.2.2  | Status": "AssumeBroken" // references deleted Content/Mine.xnb
+        },
+
+        "Ace's Expanded Caves - Slime Cave": {
+            "ID": "Acerbicon.AECslime",
+            "Default | UpdateKey": "Nexus:2131",
+            "~1.2.2  | Status": "AssumeBroken" // references deleted Content/Mine.xnb
+        },
+
+        "Green Pastures Farm": {
+            "ID": "bugbuddy.GreenPasturesFarm",
+            "Default | UpdateKey": "Nexus:2326",
+            "~1.0    | Status": "AssumeBroken" // references deleted Content/weapons.xnb
+        },
+
+        "Immersive Farm 2": {
+            "ID": "zander.immersivefarm2",
+            "~2.0.1 | Status": "AssumeBroken" // references deleted Content/Mine.xnb
+        },
+
+        "Karmylla's Immersive Map Edits": {
+            "ID": "Karmylla.ImmersiveMapEdits",
+            "Default | UpdateKey": "Nexus:1149",
+            "~2.4    | Status": "AssumeBroken" // references deleted Content/weapons.xnb
+        },
+
+        "Secret Gardens Greenhouse": {
+            "ID": "jessebot.secretgardens",
+            "Default | UpdateKey": "Nexus:3067",
+            "~2.0.1 | Status": "AssumeBroken" // references deleted Content/Mine.xnb
+        },
+
+        /*********
+        ** Broke circa SDV 1.3
+        *********/
+        "Canon-Friendly Dialogue Expansion": {
+            "ID": "gizzymo.canonfriendlyexpansion",
+            "~1.1.1 | Status": "AssumeBroken" // causes a save crash on certain dates
+        },
+
+        "Everytime Submarine": {
+            "ID": "MustafaDemirel.EverytimeSubmarine",
+            "~1.0.0 | Status": "AssumeBroken" // breaks player saves if their beach bridge is fixed
+        },
+
+        "Always Scroll Map": {
+            "ID": "bcmpinc.AlwaysScrollMap",
+            "~0.6 | Status": "AssumeBroken" // breaks newer versions of bcmpinc mods (per bcmpinc's request)
+        },
+
+        "Arcade Pong": {
+            "ID": "Platonymous.ArcadePong",
+            "~1.0.2 | Status": "AssumeBroken" // broke in SMAPI 2.6-beta.16 due to reflection into SMAPI internals
+        },
+
+        "BJS Night Sounds": {
+            "ID": "BunnyJumps.BJSNightSounds",
+            "~1.0.0 | Status": "AssumeBroken" // runtime errors with Harmony 1.2.0.1 in SMAPI 2.8+
+        },
+
+        "Craft Counter": {
+            "ID": "bcmpinc.CraftCounter",
+            "~0.6 | Status": "AssumeBroken" // breaks newer versions of bcmpinc mods (per bcmpinc's request)
+        },
+
+        "Fishing Adjust": {
+            "ID": "shuaiz.FishingAdjustMod",
+            "~2.0.1 | Status": "AssumeBroken" // Method not found: 'Void Harmony.HarmonyInstance.Patch(System.Reflection.MethodBase, Harmony.HarmonyMethod, Harmony.HarmonyMethod, Harmony.HarmonyMethod)'
+        },
+
+        "Fishing Automaton": {
+            "ID": "Drynwynn.FishingAutomaton",
+            "~1.1 | Status": "AssumeBroken" // runtime errors with Harmony 1.2.0.1 in SMAPI 2.8+
+        },
+
+        "Fix Animal Tools": {
+            "ID": "bcmpinc.FixAnimalTools",
+            "~0.6 | Status": "AssumeBroken" // breaks newer versions of bcmpinc mods (per bcmpinc's request)
+        },
+
+        "Fix Scythe Exp": {
+            "ID": "bcmpinc.FixScytheExp",
+            "~0.3 | Status": "AssumeBroken" // broke in 1.3: Exception from HarmonyInstance "bcmpinc.FixScytheExp" [...] Bad label content in ILGenerator.
+        },
+
+        "More Silo Storage": {
+            "ID": "OrneryWalrus.MoreSiloStorage",
+            "~1.0.1 | Status": "AssumeBroken" // broke in SDV 1.3
+        },
+
+        "Movement Speed": {
+            "ID": "bcmpinc.MovementSpeed",
+            "~0.6 | Status": "AssumeBroken" // breaks newer versions of bcmpinc mods (per bcmpinc's request)
+        },
+
+        "No Added Flying Mine Monsters": {
+            "ID": "Drynwynn.NoAddedFlyingMineMonsters",
+            "~1.1 | Status": "AssumeBroken" // runtime errors with Harmony 1.2.0.1 in SMAPI 2.8+
+        },
+
+        "Server Bookmarker": {
+            "ID": "Ilyaki.ServerBookmarker",
+            "~1.0.0 | Status": "AssumeBroken" // broke in Stardew Valley 1.3.29 (runtime errors)
+        },
+
+        "Skull Cave Saver": {
+            "ID": "cantorsdust.SkullCaveSaver",
+            "FormerIDs": "8ac06349-26f7-4394-806c-95d48fd35774 | community.SkullCaveSaver", // changed in 1.1 and 1.2.2
+            "1.3-beta | Status": "AssumeBroken" // doesn't work in multiplayer, no longer maintained
+        },
+
+        "Split Screen": {
+            "ID": "Ilyaki.SplitScreen",
+            "~3.0.1 | Status": "AssumeBroken" // broke in SMAPI 2.6-beta.16 due to reflection into SMAPI internals
+        },
+
+        "Stardew Hack": {
+            "ID": "bcmpinc.StardewHack",
+            "~0.6 | Status": "AssumeBroken" // breaks newer versions of bcmpinc mods (per bcmpinc's request)
+        },
+
+        "Stephan's Lots of Crops": {
+            "ID": "stephansstardewcrops",
+            "~1.1    | Status": "AssumeBroken" // broke in SDV 1.3 (overwrites vanilla items)
+        },
+
+        "Summit Reborn": {
+            "ID": "KoihimeNakamura.summitreborn",
+            "FormerIDs": "emissaryofinfinity.summitreborn", // changed in 1.0.2
+            "~1.0.2 | Status": "AssumeBroken" // broke in SDV 1.3 (runtime errors)
+        },
+
+        "Tilled Soil Decay": {
+            "ID": "bcmpinc.TilledSoilDecay",
+            "~0.6 | Status": "AssumeBroken" // breaks newer versions of bcmpinc mods (per bcmpinc's request)
+        },
+
+        "Tree Spread": {
+            "ID": "bcmpinc.TreeSpread",
+            "~0.6 | Status": "AssumeBroken" // breaks newer versions of bcmpinc mods (per bcmpinc's request)
+        },
+
+        /*********
+        ** Broke circa SDV 1.2
+        *********/
+        "Move Faster": {
+            "ID": "shuaiz.MoveFasterMod",
+            "~1.0.1   | Status": "AssumeBroken" // doesn't do anything as of SDV 1.2.33 (bad Harmony patch?)
+        }
+    }
+}

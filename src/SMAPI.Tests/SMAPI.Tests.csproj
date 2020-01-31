@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>SMAPI.Tests</AssemblyName>
+    <RootNamespace>SMAPI.Tests</RootNamespace>
+    <TargetFramework>net45</TargetFramework>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <LangVersion>latest</LangVersion>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SMAPI.Toolkit.CoreInterfaces\SMAPI.Toolkit.CoreInterfaces.csproj" />
+    <ProjectReference Include="..\SMAPI.Toolkit\SMAPI.Toolkit.csproj" />
+    <ProjectReference Include="..\SMAPI\SMAPI.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Moq" Version="4.13.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="NUnit" Version="3.12.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="$(GameExecutableName)">
+      <HintPath>$(GamePath)\$(GameExecutableName).exe</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+
+  <Import Project="..\..\build\common.targets" />
+
+</Project>

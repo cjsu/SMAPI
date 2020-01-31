@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using StardewValley;
 
 namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.Player
@@ -65,7 +65,7 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.Player
         public override void Update(IMonitor monitor)
         {
             if (this.InfiniteMoney)
-                Game1.player.money = 999999;
+                Game1.player.Money = 999999;
         }
     }
 }

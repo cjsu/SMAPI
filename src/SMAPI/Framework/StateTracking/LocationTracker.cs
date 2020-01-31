@@ -1,13 +1,13 @@
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using StardewModdingAPI.Framework.StateTracking.FieldWatchers;
 using StardewValley;
 using StardewValley.Buildings;
 using StardewValley.Locations;
+using StardewValley.Objects;
 using StardewValley.TerrainFeatures;
-using Object = StardewValley.Object;
+using SObject = StardewValley.Object;
 
 namespace StardewModdingAPI.Framework.StateTracking
 {
@@ -43,10 +43,13 @@ namespace StardewModdingAPI.Framework.StateTracking
         public ICollectionWatcher<NPC> NpcsWatcher { get; }
 
         /// <summary>Tracks added or removed objects.</summary>
-        public IDictionaryWatcher<Vector2, Object> ObjectsWatcher { get; }
+        public IDictionaryWatcher<Vector2, SObject> ObjectsWatcher { get; }
 
         /// <summary>Tracks added or removed terrain features.</summary>
         public IDictionaryWatcher<Vector2, TerrainFeature> TerrainFeaturesWatcher { get; }
+
+        /// <summary>Tracks items added or removed to chests.</summary>
+        public IDictionary<Vector2, ChestTracker> ChestWatchers { get; } = new Dictionary<Vector2, ChestTracker>();
 
 
         /*********
@@ -59,9 +62,7 @@ namespace StardewModdingAPI.Framework.StateTracking
             this.Location = location;
 
             // init watchers
-            this.BuildingsWatcher = location is BuildableGameLocation buildableLocation
-                ? WatcherFactory.ForNetCollection(buildableLocation.buildings)
-                : (ICollectionWatcher<Building>)WatcherFactory.ForObservableCollection(new ObservableCollection<Building>());
+            this.BuildingsWatcher = location is BuildableGameLocation buildableLocation ? WatcherFactory.ForNetCollection(buildableLocation.buildings) : WatcherFactory.ForImmutableCollection<Building>();
             this.DebrisWatcher = WatcherFactory.ForNetCollection(location.debris.debrisNetCollection);
             this.LargeTerrainFeaturesWatcher = WatcherFactory.ForNetCollection(location.largeTerrainFeatures);
             this.NpcsWatcher = WatcherFactory.ForNetCollection(location.characters);
@@ -77,13 +78,8 @@ namespace StardewModdingAPI.Framework.StateTracking
                 this.ObjectsWatcher,
                 this.TerrainFeaturesWatcher
             });
-        }
 
-        /// <summary>Stop watching the player fields and release all references.</summary>
-        public void Dispose()
-        {
-            foreach (IWatcher watcher in this.Watchers)
-                watcher.Dispose();
+            this.UpdateChestWatcherList(added: location.Objects.Pairs, removed: new KeyValuePair<Vector2, SObject>[0]);
         }
 
         /// <summary>Update the current value if needed.</summary>
@@ -91,6 +87,11 @@ namespace StardewModdingAPI.Framework.StateTracking
         {
             foreach (IWatcher watcher in this.Watchers)
                 watcher.Update();
+
+            this.UpdateChestWatcherList(added: this.ObjectsWatcher.Added, removed: this.ObjectsWatcher.Removed);
+
+            foreach (var watcher in this.ChestWatchers)
+                watcher.Value.Update();
         }
 
         /// <summary>Set the current value as the baseline.</summary>
@@ -98,6 +99,46 @@ namespace StardewModdingAPI.Framework.StateTracking
         {
             foreach (IWatcher watcher in this.Watchers)
                 watcher.Reset();
+
+            foreach (var watcher in this.ChestWatchers)
+                watcher.Value.Reset();
+        }
+
+        /// <summary>Stop watching the player fields and release all references.</summary>
+        public void Dispose()
+        {
+            foreach (IWatcher watcher in this.Watchers)
+                watcher.Dispose();
+
+            foreach (var watcher in this.ChestWatchers.Values)
+                watcher.Dispose();
+        }
+
+
+        /*********
+        ** Private methods
+        *********/
+        /// <summary>Update the watcher list for added or removed chests.</summary>
+        /// <param name="added">The objects added to the location.</param>
+        /// <param name="removed">The objects removed from the location.</param>
+        private void UpdateChestWatcherList(IEnumerable<KeyValuePair<Vector2, SObject>> added, IEnumerable<KeyValuePair<Vector2, SObject>> removed)
+        {
+            // remove unused watchers
+            foreach (KeyValuePair<Vector2, SObject> pair in removed)
+            {
+                if (pair.Value is Chest && this.ChestWatchers.TryGetValue(pair.Key, out ChestTracker watcher))
+                {
+                    watcher.Dispose();
+                    this.ChestWatchers.Remove(pair.Key);
+                }
+            }
+
+            // add new watchers
+            foreach (KeyValuePair<Vector2, SObject> pair in added)
+            {
+                if (pair.Value is Chest chest && !this.ChestWatchers.ContainsKey(pair.Key))
+                    this.ChestWatchers.Add(pair.Key, new ChestTracker(chest));
+            }
         }
     }
 }
