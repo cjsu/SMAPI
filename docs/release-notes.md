@@ -1,8 +1,49 @@
 &larr; [README](README.md)
 
 # Release notes
+## 3.2
+Released 01 February 2020 for Stardew Valley 1.4.1 or later.
+
+* For players:
+  * SMAPI now prevents crashes due to invalid schedule data.
+  * SMAPI now prevents crashes due to invalid building types.
+  * Added support for persistent `smapi-internal/config.json` overrides (see info in the file).
+  * Updated minimum game version (1.4 → 1.4.1).
+  * Fixed 'collection was modified' error when returning to title in rare cases.
+  * Fixed error when update-checking a mod with a Chucklefish page that has no version.
+  * Fixed rare error when building/demolishing buildings.
+  * Fixed SMAPI beta versions not showing update alert on next launch (thanks to danvolchek!).
+
+* For the Console Commands mod:
+  * Added `performance` command to track mod performance metrics. This is an advanced experimental feature. (Thanks to Drachenkätzchen!)
+  * Added `test_input` command to view button codes in the console.
+
+* For the Save Backup mod:
+  * Fixed extra files under `Saves` (e.g. manual backups) not being ignored.
+  * Fixed Android issue where game files were backed up.
+
+* For modders:
+  * Added support for `.tmx` map files. (Thanks to [Platonymous for the underlying library](https://github.com/Platonymous/TMXTile)!)
+  * Added special handling for `Vector2` values in `.json` files, so they work consistently crossplatform.
+  * Reworked the order that asset editors/loaders are called between multiple mods to support some framework mods like Content Patcher and Json Assets. Note that the order is undefined and should not be depended on.
+  * Fixed incorrect warning about mods adding invalid schedules in some cases. The validation was unreliable, and has been removed.
+  * Fixed asset propagation not updating other players' sprites.
+  * Fixed asset propagation for player sprites not updating recolor maps (e.g. sleeves).
+  * Fixed asset propagation for marriage dialogue.
+  * Fixed dialogue asset changes not correctly propagated until the next day.
+  * Fixed `helper.Data.Read`/`WriteGlobalData` using the `Saves` folder instead of the game's appdata folder. The installer will move existing folders automatically.
+  * Fixed issue where a mod which implemented `IAssetEditor`/`IAssetLoader` on its entry class could then remove itself from the editor/loader list.
+
+* For SMAPI/tool developers:
+  * Added internal performance monitoring (thanks to Drachenkätzchen!). This is disabled by default in the current version, but can be enabled using the `performance` console command.
+  * Added internal support for four-part versions to support SMAPI on Android.
+  * Rewrote `SemanticVersion` parsing.
+  * Updated links for the new r/SMAPI subreddit.
+  * The `/mods` web API endpoint now includes version mappings from the wiki.
+  * Dropped API support for the pre-3.0 update-check format.
+
 ## 3.1
-Released 05 January 2019 for Stardew Valley 1.4 or later.
+Released 05 January 2019 for Stardew Valley 1.4.1 or later.
 
 * For players:
   * Added separate group in 'skipped mods' list for broken dependencies, so it's easier to see what to fix first.
@@ -12,12 +53,13 @@ Released 05 January 2019 for Stardew Valley 1.4 or later.
   * Fixed compatibility with Linux Mint 18 (thanks to techge!), Arch Linux, and Linux systems with libhybris-utils installed.
   * Fixed memory leak when repeatedly loading a save and returning to title.
   * Fixed memory leak when mods reload assets.
-  * Fixes for Console Commands mod:
-    * added new clothing items;
-    * fixed spawning new flooring and rings (thanks to Mizzion!);
-    * fixed spawning custom rings added by mods;
-    * Fixed errors when some item data is invalid.
   * Updated translations. Thanks to L30Bola (added Portuguese), PlussRolf (added Spanish), and shirutan (added Japanese)!
+
+* For the Console Commands mod:
+  * Added new clothing items.
+  * Fixed spawning new flooring and rings (thanks to Mizzion!).
+  * Fixed spawning custom rings added by mods.
+  * Fixed errors when some item data is invalid.
 
 * For the web UI:
   * Added option to edit & reupload in the JSON validator.

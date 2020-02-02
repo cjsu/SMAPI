@@ -1,4 +1,3 @@
-@using Markdig
 @using Microsoft.Extensions.Options
 @using StardewModdingAPI.Web.Framework
 @using StardewModdingAPI.Web.Framework.ConfigModels
@@ -6,18 +5,22 @@
 @model StardewModdingAPI.Web.ViewModels.IndexModel
 @{
     ViewData["Title"] = "SMAPI";
+    ViewData["ViewTitle"] = string.Empty;
 }
 @section Head {
-    <link rel="stylesheet" href="~/Content/css/index.css?r=20190620" />
+    <link rel="stylesheet" href="~/Content/css/index.css?r=20200105" />
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" crossorigin="anonymous"></script>
-    <script src="~/Content/js/index.js?r=20190620"></script>
+    <script src="~/Content/js/index.js?r=20200105"></script>
 }
 
-<p id="blurb">
-    The mod loader for Stardew Valley. It works fine with GOG and Steam achievements, it's
-    compatible with Linux/Mac/Windows, you can uninstall it anytime, and there's a friendly
-    community if you need help. It's a cool pufferchick.
-</p>
+<h1>
+    SMAPI
+    <img id="pufferchick" src="Content/images/pufferchick.png" />
+</h1>
+<div id="blurb">
+    <p>The mod loader for Stardew Valley.</p>
+    <p>Compatible with GOG/Steam achievements and Linux/Mac/Windows, uninstall anytime, and there's a friendly community if you need help.</p>
+</div>
 
 <div id="call-to-action">
     <div class="cta-dropdown">
@@ -45,80 +48,84 @@
         </div><br />
     }
     <div><a href="https://stardewvalleywiki.com/Modding:Player_Guide" class="secondary-cta">Player guide</a></div>
-    <div class="sublinks">
-        <a href="https://github.com/Pathoschild/SMAPI">source code</a> | <a href="@Url.PlainAction("Privacy", "Index")">privacy</a>
-    </div>
-    <img id="pufferchick" src="Content/images/pufferchick.png" />
 </div>
 
-<h2 id="help">Get help</h2>
-<ul>
-    <li><a href="@Url.PlainAction("Index", "Mods")">Mod compatibility list</a></li>
-    <li>Get help <a href="https://smapi.io/community">on Discord or in the forums</a></li>
-</ul>
+<div class="area">
+    <h2 id="help">Get help</h2>
+    <ul>
+        <li><a href="https://smapi.io/community">Ask on Discord</a></li>
+        <li><a href="https://reddit.com/r/SMAPI">Ask on Reddit</a></li>
+        <li><a href="@Url.PlainAction("Index", "Mods")">Mod compatibility list</a></li>
+    </ul>
+    (Or join the community!)
+</div>
 
-@if (Model.BetaVersion == null)
-{
-    <h2 id="whatsnew">What's new in SMAPI @Model.StableVersion.Version?</h2>
-    <div class="github-description">
-        @Html.Raw(Markdig.Markdown.ToHtml(Model.StableVersion.Description))
-    </div>
-    <p>See the <a href="https://github.com/Pathoschild/SMAPI/blob/develop/docs/release-notes.md#release-notes">release notes</a> and <a href="@Url.PlainAction("Index", "Mods")">mod compatibility list</a> for more info.</p>
-}
-else
-{
-    <h2 id="whatsnew">What's new in...</h2>
-    <h3>SMAPI @Model.StableVersion.Version?</h3>
-    <div class="github-description">
-        @Html.Raw(Markdig.Markdown.ToHtml(Model.StableVersion.Description))
-    </div>
-    <p>See the <a href="https://github.com/Pathoschild/SMAPI/blob/develop/docs/release-notes.md#release-notes">release notes</a> and <a href="@Url.PlainAction("Index", "Mods")">mod compatibility list</a> for more info.</p>
-
-    <h3>SMAPI @Model.BetaVersion.Version?</h3>
-    <div class="github-description">
-        @Html.Raw(Markdig.Markdown.ToHtml(Model.BetaVersion.Description))
-    </div>
-    <p>See the <a href="https://github.com/Pathoschild/SMAPI/blob/develop/docs/release-notes.md#release-notes">release notes</a> and <a href="@Url.PlainAction("Index", "Mods")">mod compatibility list</a> for more info.</p>
-}
-
-<h2 id="donate">Support SMAPI ♥</h2>
-<p>
-    SMAPI is an open-source project by Pathoschild. It will always be free, but donations
-    are much appreciated to help pay for development, server hosting, domain fees, coffee, etc.
-</p>
-
-<ul id="donate-links">
-    <li>
-        <a href="https://www.patreon.com/pathoschild" class="donate-button">
-            <img src="Content/images/patreon.png" /> Become a patron
-        </a>
-    </li>
-    <li>
-        <a href="https://ko-fi.com/pathoschild" class="donate-button">
-            <img src="Content/images/ko-fi.png" /> Buy me a coffee
-        </a>
-    </li>
-    <li>
-        <a href="https://www.paypal.me/pathoschild" class="donate-button">
-            <img src="Content/images/paypal.png" /> Donate via PayPal
-        </a>
-    </li>
-</ul>
-
-@if (!string.IsNullOrWhiteSpace(Model.SupporterList))
-{
-    @Html.Raw(Markdig.Markdown.ToHtml(
-        $"Special thanks to {Model.SupporterList}, and a few anonymous users for their ongoing support on Patreon; you're awesome!"
-    ))
-}
-
-<h2 id="modcreators">For mod creators</h2>
-<ul>
-    <li><a href="@Model.StableVersion.DevDownloadUrl">SMAPI @Model.StableVersion.Version for developers</a> (includes <a href="https://docs.microsoft.com/en-us/visualstudio/ide/using-intellisense">intellisense</a> and full console output)</li>
-    @if (Model.BetaVersion != null)
+<div class="area">
+    @if (Model.BetaVersion == null)
     {
-        <li><a href="@Model.BetaVersion.DevDownloadUrl">SMAPI @Model.BetaVersion.Version for developers</a> (includes <a href="https://docs.microsoft.com/en-us/visualstudio/ide/using-intellisense">intellisense</a> and full console output)</li>
+        <h2 id="whatsnew">What's new</h2>
+        <div class="github-description">
+            @Html.Raw(Markdig.Markdown.ToHtml(Model.StableVersion.Description))
+        </div>
+        <p>See the <a href="https://github.com/Pathoschild/SMAPI/blob/develop/docs/release-notes.md#release-notes">release notes</a> and <a href="@Url.PlainAction("Index", "Mods")">mod compatibility list</a> for more info.</p>
     }
-    <li><a href="https://stardewvalleywiki.com/Modding:Index">Modding documentation</a></li>
-    <li>Need help? Come <a href="https://smapi.io/community">chat on Discord</a>.</li>
-</ul>
+    else
+    {
+        <h2 id="whatsnew">What's new in...</h2>
+        <h3>SMAPI @Model.StableVersion.Version?</h3>
+        <div class="github-description">
+            @Html.Raw(Markdig.Markdown.ToHtml(Model.StableVersion.Description))
+        </div>
+        <p>See the <a href="https://github.com/Pathoschild/SMAPI/blob/develop/docs/release-notes.md#release-notes">release notes</a> and <a href="@Url.PlainAction("Index", "Mods")">mod compatibility list</a> for more info.</p>
+
+        <h3>SMAPI @Model.BetaVersion.Version?</h3>
+        <div class="github-description">
+            @Html.Raw(Markdig.Markdown.ToHtml(Model.BetaVersion.Description))
+        </div>
+        <p>See the <a href="https://github.com/Pathoschild/SMAPI/blob/develop/docs/release-notes.md#release-notes">release notes</a> and <a href="@Url.PlainAction("Index", "Mods")">mod compatibility list</a> for more info.</p>
+    }
+</div>
+
+<div class="area">
+    <h2 id="donate">Support SMAPI ♥</h2>
+    <p>
+        SMAPI is an open-source project by Pathoschild. It will always be free, but donations
+        are much appreciated to help pay for development, server hosting, domain fees, coffee, etc.
+    </p>
+
+    <ul id="donate-links">
+        <li>
+            <a href="https://www.patreon.com/pathoschild" class="donate-button">
+                <img src="Content/images/patreon.png" /> Become a patron
+            </a>
+        </li>
+        <li>
+            <a href="https://ko-fi.com/pathoschild" class="donate-button">
+                <img src="Content/images/ko-fi.png" /> Buy me a coffee
+            </a>
+        </li>
+        <li>
+            <a href="https://www.paypal.me/pathoschild" class="donate-button">
+                <img src="Content/images/paypal.png" /> Donate via PayPal
+            </a>
+        </li>
+    </ul>
+
+    @if (!string.IsNullOrWhiteSpace(Model.SupporterList))
+    {
+        @Html.Raw(Markdig.Markdown.ToHtml(
+            $"Special thanks to {Model.SupporterList}, and a few anonymous users for their ongoing support on Patreon; you're awesome!"
+        ))
+    }
+</div>
+
+    <h2 id="modcreators">For mod creators</h2>
+    <ul>
+        <li><a href="@Model.StableVersion.DevDownloadUrl">SMAPI @Model.StableVersion.Version for developers</a> (includes <a href="https://docs.microsoft.com/en-us/visualstudio/ide/using-intellisense">intellisense</a> and full console output)</li>
+        @if (Model.BetaVersion != null)
+        {
+            <li><a href="@Model.BetaVersion.DevDownloadUrl">SMAPI @Model.BetaVersion.Version for developers</a> (includes <a href="https://docs.microsoft.com/en-us/visualstudio/ide/using-intellisense">intellisense</a> and full console output)</li>
+        }
+        <li><a href="https://stardewvalleywiki.com/Modding:Index">Modding documentation</a></li>
+        <li><a href="https://github.com/Pathoschild/SMAPI">Source code</a></li>
+    </ul>

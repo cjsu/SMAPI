@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Threading;
 using Microsoft.Xna.Framework.Graphics;
 using StardewModdingAPI.Framework.Events;
 using StardewModdingAPI.Framework.Reflection;
@@ -81,6 +82,75 @@ namespace StardewModdingAPI.Framework
             while (exception.InnerException != null)
                 exception = exception.InnerException;
             return exception;
+        }
+
+        /****
+        ** ReaderWriterLockSlim
+        ****/
+        /// <summary>Run code within a read lock.</summary>
+        /// <param name="lock">The lock to set.</param>
+        /// <param name="action">The action to perform.</param>
+        public static void InReadLock(this ReaderWriterLockSlim @lock, Action action)
+        {
+            @lock.EnterReadLock();
+            try
+            {
+                action();
+            }
+            finally
+            {
+                @lock.ExitReadLock();
+            }
+        }
+
+        /// <summary>Run code within a read lock.</summary>
+        /// <typeparam name="TReturn">The action's return value.</typeparam>
+        /// <param name="lock">The lock to set.</param>
+        /// <param name="action">The action to perform.</param>
+        public static TReturn InReadLock<TReturn>(this ReaderWriterLockSlim @lock, Func<TReturn> action)
+        {
+            @lock.EnterReadLock();
+            try
+            {
+                return action();
+            }
+            finally
+            {
+                @lock.ExitReadLock();
+            }
+        }
+
+        /// <summary>Run code within a write lock.</summary>
+        /// <param name="lock">The lock to set.</param>
+        /// <param name="action">The action to perform.</param>
+        public static void InWriteLock(this ReaderWriterLockSlim @lock, Action action)
+        {
+            @lock.EnterWriteLock();
+            try
+            {
+                action();
+            }
+            finally
+            {
+                @lock.ExitWriteLock();
+            }
+        }
+
+        /// <summary>Run code within a write lock.</summary>
+        /// <typeparam name="TReturn">The action's return value.</typeparam>
+        /// <param name="lock">The lock to set.</param>
+        /// <param name="action">The action to perform.</param>
+        public static TReturn InWriteLock<TReturn>(this ReaderWriterLockSlim @lock, Func<TReturn> action)
+        {
+            @lock.EnterWriteLock();
+            try
+            {
+                return action();
+            }
+            finally
+            {
+                @lock.ExitWriteLock();
+            }
         }
 
         /****

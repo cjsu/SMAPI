@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using StardewModdingAPI.Events;
 using StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands;
 
 namespace StardewModdingAPI.Mods.ConsoleCommands
@@ -13,6 +14,12 @@ namespace StardewModdingAPI.Mods.ConsoleCommands
         *********/
         /// <summary>The commands to handle.</summary>
         private ITrainerCommand[] Commands;
+
+        /// <summary>The commands which may need to handle update ticks.</summary>
+        private ITrainerCommand[] UpdateHandlers;
+
+        /// <summary>The commands which may need to handle input.</summary>
+        private ITrainerCommand[] InputHandlers;
 
 
         /*********
@@ -27,27 +34,35 @@ namespace StardewModdingAPI.Mods.ConsoleCommands
             foreach (ITrainerCommand command in this.Commands)
                 helper.ConsoleCommands.Add(command.Name, command.Description, (name, args) => this.HandleCommand(command, name, args));
 
+            // cache commands
+            this.InputHandlers = this.Commands.Where(p => p.MayNeedInput).ToArray();
+            this.UpdateHandlers = this.Commands.Where(p => p.MayNeedUpdate).ToArray();
+
             // hook events
             helper.Events.GameLoop.UpdateTicked += this.OnUpdateTicked;
+            helper.Events.Input.ButtonPressed += this.OnButtonPressed;
         }
 
 
         /*********
         ** Private methods
         *********/
+        /// <summary>The method invoked when a button is pressed.</summary>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="e">The event arguments.</param>
+        private void OnButtonPressed(object sender, ButtonPressedEventArgs e)
+        {
+            foreach (ITrainerCommand command in this.InputHandlers)
+                command.OnButtonPressed(this.Monitor, e.Button);
+        }
+
         /// <summary>The method invoked when the game updates its state.</summary>
         /// <param name="sender">The event sender.</param>
         /// <param name="e">The event arguments.</param>
         private void OnUpdateTicked(object sender, EventArgs e)
         {
-            if (!Context.IsWorldReady)
-                return;
-
-            foreach (ITrainerCommand command in this.Commands)
-            {
-                if (command.NeedsUpdate)
-                    command.Update(this.Monitor);
-            }
+            foreach (ITrainerCommand command in this.UpdateHandlers)
+                command.OnUpdated(this.Monitor);
         }
 
         /// <summary>Handle a console command.</summary>

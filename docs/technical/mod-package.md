@@ -287,7 +287,11 @@ That will create a `Pathoschild.Stardew.ModBuildConfig-<version>.nupkg` file in 
 which can be uploaded to NuGet or referenced directly.
 
 ## Release notes
-### Upcoming release
+### 3.1
+* Added support for semantic versioning 2.0.
+* `0Harmony.dll` is now ignored if the mod references Harmony directly (it's bundled with SMAPI).
+
+### 3.0
 * Updated for SMAPI 3.0 and Stardew Valley 1.4.
 * Added automatic support for `assets` folders.
 * Added `$(GameExecutableName)` MSBuild variable.
@@ -298,6 +302,7 @@ which can be uploaded to NuGet or referenced directly.
 * Fixed `Newtonsoft.Json.pdb` included in release zips when Json.NET is referenced directly.
 * Fixed `<IgnoreModFilePatterns>` not working for `i18n` files.
 * Dropped support for older versions of SMAPI and Visual Studio.
+* Migrated package icon to NuGet's new format.
 
 ### 2.2
 * Added support for SMAPI 2.8+ (still compatible with earlier versions).

@@ -61,5 +61,8 @@ namespace StardewModdingAPI
 
         /// <summary>Get a string representation of the version.</summary>
         string ToString();
+
+        /// <summary>Whether the version uses non-standard extensions, like four-part game versions on some platforms.</summary>
+        bool IsNonStandard();
     }
 }

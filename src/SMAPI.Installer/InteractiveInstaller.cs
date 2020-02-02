@@ -352,6 +352,12 @@ namespace StardewModdingApi.Installer
                 Console.WriteLine();
 
                 /****
+                ** Back up user settings
+                ****/
+                if (File.Exists(paths.ApiUserConfigPath))
+                    File.Copy(paths.ApiUserConfigPath, paths.BundleApiUserConfigPath);
+
+                /****
                 ** Always uninstall old files
                 ****/
                 // restore game launcher
@@ -371,6 +377,21 @@ namespace StardewModdingApi.Installer
                     this.PrintDebug(action == ScriptAction.Install ? "Removing previous SMAPI files..." : "Removing SMAPI files...");
                     foreach (string path in removePaths)
                         this.InteractivelyDelete(path);
+                }
+
+                // move global save data folder (changed in 3.2)
+                {
+                    string dataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "StardewValley");
+                    DirectoryInfo oldDir = new DirectoryInfo(Path.Combine(dataPath, "Saves", ".smapi"));
+                    DirectoryInfo newDir = new DirectoryInfo(Path.Combine(dataPath, ".smapi"));
+
+                    if (oldDir.Exists)
+                    {
+                        if (newDir.Exists)
+                            this.InteractivelyDelete(oldDir.FullName);
+                        else
+                            oldDir.MoveTo(newDir.FullName);
+                    }
                 }
 
                 /****

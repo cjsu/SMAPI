@@ -25,6 +25,7 @@ using StardewModdingAPI.Framework.Models;
 using StardewModdingAPI.Framework.ModHelpers;
 using StardewModdingAPI.Framework.ModLoading;
 using StardewModdingAPI.Framework.Patching;
+using StardewModdingAPI.Framework.PerformanceMonitoring;
 using StardewModdingAPI.Framework.Reflection;
 using StardewModdingAPI.Framework.Serialization;
 using StardewModdingAPI.Patches;
@@ -111,7 +112,7 @@ namespace StardewModdingAPI.Framework
                     "Oops! Steam achievements won't work because Steam isn't loaded. You can launch the game through Steam to fix that.",
 #endif
                 logLevel: LogLevel.Error
-            ), 
+            ),
 
             // save file not found error
             new ReplaceLogPattern(
@@ -135,6 +136,10 @@ namespace StardewModdingAPI.Framework
         /// <remarks>This is initialized after the game starts. This is accessed directly because it's not part of the normal class model.</remarks>
         internal static DeprecationManager DeprecationManager { get; private set; }
 
+        /// <summary>Manages performance counters.</summary>
+        /// <remarks>This is initialized after the game starts. This is non-private for use by Console Commands.</remarks>
+        internal static PerformanceMonitor PerformanceMonitor { get; private set; }
+
 
         /*********
         ** Public methods
@@ -155,6 +160,9 @@ namespace StardewModdingAPI.Framework
 
             // init basics
             this.Settings = JsonConvert.DeserializeObject<SConfig>(File.ReadAllText(Constants.ApiConfigPath));
+            if (File.Exists(Constants.ApiUserConfigPath))
+                JsonConvert.PopulateObject(File.ReadAllText(Constants.ApiUserConfigPath), this.Settings);
+
             this.LogFile = new LogFileManager(logPath);
             this.Monitor = new Monitor("SMAPI", this.ConsoleManager, this.LogFile, this.Settings.ConsoleColors, this.Settings.VerboseLogging)
             {
@@ -163,7 +171,11 @@ namespace StardewModdingAPI.Framework
                 ShowFullStampInConsole = this.Settings.DeveloperMode
             };
             this.MonitorForGame = this.GetSecondaryMonitor("game");
-            this.EventManager = new EventManager(this.Monitor, this.ModRegistry);
+
+            SCore.PerformanceMonitor = new PerformanceMonitor(this.Monitor);
+            this.EventManager = new EventManager(this.Monitor, this.ModRegistry, SCore.PerformanceMonitor);
+            SCore.PerformanceMonitor.InitializePerformanceCounterCollections(this.EventManager);
+
             SCore.DeprecationManager = new DeprecationManager(this.Monitor, this.ModRegistry);
 
             // redirect direct console output
@@ -196,7 +208,7 @@ namespace StardewModdingAPI.Framework
 #else
             if (Constants.Platform == Platform.Windows)
             {
-                this.Monitor.Log("Oops! You're running {Constants.Platform}, but this version of SMAPI is for Windows. Please reinstall SMAPI to fix this.", LogLevel.Error);
+                this.Monitor.Log($"Oops! You're running {Constants.Platform}, but this version of SMAPI is for Windows. Please reinstall SMAPI to fix this.", LogLevel.Error);
                 this.PressAnyKeyToExit();
                 return;
             }
@@ -226,7 +238,7 @@ namespace StardewModdingAPI.Framework
 #endif
                 AppDomain.CurrentDomain.UnhandledException += (sender, e) => this.Monitor.Log($"Critical app domain exception: {e.ExceptionObject}", LogLevel.Error);
 
-                // add more lenient assembly resolvers
+                // add more lenient assembly resolver
                 AppDomain.CurrentDomain.AssemblyResolve += (sender, e) => AssemblyLoader.ResolveAssembly(e.Name);
 
                 // hook locale event
@@ -243,6 +255,7 @@ namespace StardewModdingAPI.Framework
                     jsonHelper: this.Toolkit.JsonHelper,
                     modRegistry: this.ModRegistry,
                     deprecationManager: SCore.DeprecationManager,
+                    performanceMonitor: SCore.PerformanceMonitor,
                     onGameInitialized: this.InitializeAfterGameStart,
                     onGameExiting: this.Dispose,
                     cancellationToken: this.CancellationToken,
@@ -258,6 +271,7 @@ namespace StardewModdingAPI.Framework
                     new ObjectErrorPatch(),
                     new LoadContextPatch(this.Reflection, this.GameInstance.OnLoadStageChanged),
                     new LoadErrorPatch(this.Monitor, this.GameInstance.OnSaveContentRemoved),
+                    new ScheduleErrorPatch(this.MonitorForGame)
                     new SaveBackupPatch(this.EventManager)
                 );
 
@@ -313,7 +327,7 @@ namespace StardewModdingAPI.Framework
             // show details if game crashed during last session
             if (File.Exists(Constants.FatalCrashMarker))
             {
-                this.Monitor.Log("The game crashed last time you played. That can be due to bugs in the game, but if it happens repeatedly you can ask for help here: https://community.playstarbound.com/threads/108375/.", LogLevel.Error);
+                this.Monitor.Log("The game crashed last time you played. If it happens repeatedly, see 'get help' on https://smapi.io.", LogLevel.Error);
                 this.Monitor.Log("If you ask for help, make sure to share your SMAPI log: https://smapi.io/log.", LogLevel.Error);
                 this.Monitor.Log("Press any key to delete the crash data and continue playing.", LogLevel.Info);
                 //Console.ReadKey();
@@ -410,6 +424,17 @@ namespace StardewModdingAPI.Framework
             {
                 this.Monitor.Log("SMAPI shutting down: aborting initialization.", LogLevel.Warn);
                 return;
+            }
+
+            // init TMX support
+            try
+            {
+                xTile.Format.FormatManager.Instance.RegisterMapFormat(new TMXTile.TMXFormat(Game1.tileSize / Game1.pixelZoom, Game1.tileSize / Game1.pixelZoom, Game1.pixelZoom, Game1.pixelZoom));
+            }
+            catch (Exception ex)
+            {
+                this.Monitor.Log("SMAPI couldn't load TMX support. Some mods may not work correctly.", LogLevel.Warn);
+                this.Monitor.Log($"Technical details: {ex.GetLogSummary()}", LogLevel.Trace);
             }
 
             this.GameInstance.IsGameSuspended = true;
@@ -609,6 +634,8 @@ namespace StardewModdingAPI.Framework
                         this.Monitor.Log($"You can update SMAPI to {response.SuggestedUpdate.Version}: {Constants.HomePageUrl}", LogLevel.Alert);
                     else
                         this.Monitor.Log("   SMAPI okay.", LogLevel.Trace);
+
+                    updateFound = response.SuggestedUpdate?.Version;
 
                     // show errors
                     if (response.Errors.Any())
@@ -812,13 +839,13 @@ namespace StardewModdingAPI.Framework
                 {
                     // ReSharper disable SuspiciousTypeConversion.Global
                     if (metadata.Mod is IAssetEditor editor)
-                        helper.ObservableAssetEditors.Add(editor);
+                        this.ContentCore.Editors.Add(new ModLinked<IAssetEditor>(metadata, editor));
                     if (metadata.Mod is IAssetLoader loader)
-                        helper.ObservableAssetLoaders.Add(loader);
+                        this.ContentCore.Loaders.Add(new ModLinked<IAssetLoader>(metadata, loader));
                     // ReSharper restore SuspiciousTypeConversion.Global
 
-                    this.ContentCore.Editors[metadata] = helper.ObservableAssetEditors;
-                    this.ContentCore.Loaders[metadata] = helper.ObservableAssetLoaders;
+                    helper.ObservableAssetEditors.CollectionChanged += (sender, e) => this.OnInterceptorsChanged(metadata, e.NewItems?.Cast<IAssetEditor>(), e.OldItems?.Cast<IAssetEditor>(), this.ContentCore.Editors);
+                    helper.ObservableAssetLoaders.CollectionChanged += (sender, e) => this.OnInterceptorsChanged(metadata, e.NewItems?.Cast<IAssetLoader>(), e.OldItems?.Cast<IAssetLoader>(), this.ContentCore.Loaders);
                 }
 
                 // call entry method
@@ -865,6 +892,24 @@ namespace StardewModdingAPI.Framework
 
             // unlock mod integrations
             this.ModRegistry.AreAllModsInitialized = true;
+        }
+
+        /// <summary>Handle a mod adding or removing asset interceptors.</summary>
+        /// <typeparam name="T">The asset interceptor type (one of <see cref="IAssetEditor"/> or <see cref="IAssetLoader"/>).</typeparam>
+        /// <param name="mod">The mod metadata.</param>
+        /// <param name="added">The interceptors that were added.</param>
+        /// <param name="removed">The interceptors that were removed.</param>
+        /// <param name="list">The list to update.</param>
+        private void OnInterceptorsChanged<T>(IModMetadata mod, IEnumerable<T> added, IEnumerable<T> removed, IList<ModLinked<T>> list)
+        {
+            foreach (T interceptor in added ?? new T[0])
+                list.Add(new ModLinked<T>(mod, interceptor));
+
+            foreach (T interceptor in removed ?? new T[0])
+            {
+                foreach (ModLinked<T> entry in list.Where(p => p.Mod == mod && object.ReferenceEquals(p.Data, interceptor)).ToArray())
+                    list.Remove(entry);
+            }
         }
 
         /// <summary>Load a given mod.</summary>

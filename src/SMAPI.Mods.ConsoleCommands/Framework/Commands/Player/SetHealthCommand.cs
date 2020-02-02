@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using StardewValley;
 
 namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.Player
@@ -14,18 +14,11 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.Player
 
 
         /*********
-        ** Accessors
-        *********/
-        /// <summary>Whether the command needs to perform logic when the game updates.</summary>
-        public override bool NeedsUpdate => this.InfiniteHealth;
-
-
-        /*********
         ** Public methods
         *********/
         /// <summary>Construct an instance.</summary>
         public SetHealthCommand()
-            : base("player_sethealth", "Sets the player's health.\n\nUsage: player_sethealth [value]\n- value: an integer amount, or 'inf' for infinite health.") { }
+            : base("player_sethealth", "Sets the player's health.\n\nUsage: player_sethealth [value]\n- value: an integer amount, or 'inf' for infinite health.", mayNeedUpdate: true) { }
 
         /// <summary>Handle the command.</summary>
         /// <param name="monitor">Writes messages to the console and log file.</param>
@@ -62,9 +55,9 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.Player
 
         /// <summary>Perform any logic needed on update tick.</summary>
         /// <param name="monitor">Writes messages to the console and log file.</param>
-        public override void Update(IMonitor monitor)
+        public override void OnUpdated(IMonitor monitor)
         {
-            if (this.InfiniteHealth)
+            if (this.InfiniteHealth && Context.IsWorldReady)
                 Game1.player.health = Game1.player.maxHealth;
         }
     }

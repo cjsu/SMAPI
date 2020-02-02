@@ -102,6 +102,7 @@ namespace StardewModdingAPI.Toolkit.Framework.Clients.Wiki
                 string anchor = this.GetAttribute(node, "id");
                 string contentPackFor = this.GetAttribute(node, "data-content-pack-for");
                 string devNote = this.GetAttribute(node, "data-dev-note");
+                string pullRequestUrl = this.GetAttribute(node, "data-pr");
                 IDictionary<string, string> mapLocalVersions = this.GetAttributeAsVersionMapping(node, "data-map-local-versions");
                 IDictionary<string, string> mapRemoteVersions = this.GetAttributeAsVersionMapping(node, "data-map-remote-versions");
 
@@ -132,15 +133,6 @@ namespace StardewModdingAPI.Toolkit.Framework.Clients.Wiki
                     }
                 }
 
-                // parse links
-                List<Tuple<Uri, string>> metadataLinks = new List<Tuple<Uri, string>>();
-                foreach (HtmlNode linkElement in node.Descendants("td").Last().Descendants("a").Skip(1)) // skip anchor link
-                {
-                    string text = linkElement.InnerText.Trim();
-                    Uri url = new Uri(linkElement.GetAttributeValue("href", ""));
-                    metadataLinks.Add(Tuple.Create(url, text));
-                }
-
                 // yield model
                 yield return new WikiModEntry
                 {
@@ -159,7 +151,7 @@ namespace StardewModdingAPI.Toolkit.Framework.Clients.Wiki
                     Compatibility = compatibility,
                     BetaCompatibility = betaCompatibility,
                     Warnings = warnings,
-                    MetadataLinks = metadataLinks.ToArray(),
+                    PullRequestUrl = pullRequestUrl,
                     DevNote = devNote,
                     MapLocalVersions = mapLocalVersions,
                     MapRemoteVersions = mapRemoteVersions,

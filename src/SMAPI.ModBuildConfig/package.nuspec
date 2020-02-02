@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>Pathoschild.Stardew.ModBuildConfig</id>
-    <version>3.0.0</version>
+    <version>3.1.0</version>
     <title>Build package for SMAPI mods</title>
     <authors>Pathoschild</authors>
     <owners>Pathoschild</owners>
@@ -14,18 +14,9 @@
     <iconUrl>https://raw.githubusercontent.com/Pathoschild/SMAPI/develop/src/SMAPI.ModBuildConfig/assets/nuget-icon.png</iconUrl>
     <description>Automates the build configuration for crossplatform Stardew Valley SMAPI mods. For SMAPI 3.0 or later.</description>
     <releaseNotes>
-      3.0.0:
-      - Updated for SMAPI 3.0 and Stardew Valley 1.4.
-      - Added automatic support for 'assets' folders.
-      - Added $(GameExecutableName) MSBuild variable.
-      - Added support for projects using the simplified .csproj format.
-      - Added option to disable game debugging config.
-      - Added .pdb files to builds by default (to enable line numbers in error stack traces).
-      - Added optional Harmony reference.
-      - Fixed Newtonsoft.Json.pdb included in release zips when Json.NET is referenced directly.
-      - Fixed &lt;IgnoreModFilePatterns&gt; not working for i18n files.
-      - Dropped support for older versions of SMAPI and Visual Studio.
-      - Migrated package icon to NuGet's new format.
+      3.1.0:
+      - Added support for semantic versioning 2.0.
+      - 0Harmony.dll is now ignored if the mod references it directly (it's bundled with SMAPI).
     </releaseNotes>
   </metadata>
   <files>

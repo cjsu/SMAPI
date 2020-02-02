@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Harmony;
+using StardewModdingAPI.Framework.Exceptions;
 using StardewModdingAPI.Framework.Patching;
 using StardewValley;
+using StardewValley.Buildings;
 using StardewValley.Locations;
 
 namespace StardewModdingAPI.Patches
@@ -64,10 +66,24 @@ namespace StardewModdingAPI.Patches
         /// <returns>Returns whether to execute the original method.</returns>
         private static bool Before_SaveGame_LoadDataToLocations(List<GameLocation> gamelocations)
         {
+            bool removedAny =
+                LoadErrorPatch.RemoveInvalidLocations(gamelocations)
+                | LoadErrorPatch.RemoveBrokenBuildings(gamelocations)
+                | LoadErrorPatch.RemoveInvalidNpcs(gamelocations);
+
+            if (removedAny)
+                LoadErrorPatch.OnContentRemoved();
+
+            return true;
+        }
+
+        /// <summary>Remove locations which don't exist in-game.</summary>
+        /// <param name="locations">The current game locations.</param>
+        private static bool RemoveInvalidLocations(List<GameLocation> locations)
+        {
             bool removedAny = false;
 
-            // remove invalid locations
-            foreach (GameLocation location in gamelocations.ToArray())
+            foreach (GameLocation location in locations.ToArray())
             {
                 if (location is Cellar)
                     continue; // missing cellars will be added by the game code
@@ -75,23 +91,48 @@ namespace StardewModdingAPI.Patches
                 if (Game1.getLocationFromName(location.name) == null)
                 {
                     LoadErrorPatch.Monitor.Log($"Removed invalid location '{location.Name}' to avoid a crash when loading save '{Constants.SaveFolderName}'. (Did you remove a custom location mod?)", LogLevel.Warn);
-                    gamelocations.Remove(location);
+                    locations.Remove(location);
                     removedAny = true;
                 }
             }
 
-            // get building interiors
-            var interiors =
-                (
-                    from location in gamelocations.OfType<BuildableGameLocation>()
-                    from building in location.buildings
-                    where building.indoors.Value != null
-                    select building.indoors.Value
-                );
+            return removedAny;
+        }
 
-            // remove custom NPCs which no longer exist
+        /// <summary>Remove buildings which don't exist in the game data.</summary>
+        /// <param name="locations">The current game locations.</param>
+        private static bool RemoveBrokenBuildings(IEnumerable<GameLocation> locations)
+        {
+            bool removedAny = false;
+
+            foreach (BuildableGameLocation location in locations.OfType<BuildableGameLocation>())
+            {
+                foreach (Building building in location.buildings.ToArray())
+                {
+                    try
+                    {
+                        BluePrint _ = new BluePrint(building.buildingType.Value);
+                    }
+                    catch (SContentLoadException)
+                    {
+                        LoadErrorPatch.Monitor.Log($"Removed invalid building type '{building.buildingType.Value}' in {location.Name} ({building.tileX}, {building.tileY}) to avoid a crash when loading save '{Constants.SaveFolderName}'. (Did you remove a custom building mod?)", LogLevel.Warn);
+                        location.buildings.Remove(building);
+                        removedAny = true;
+                    }
+                }
+            }
+
+            return removedAny;
+        }
+
+        /// <summary>Remove NPCs which don't exist in the game data.</summary>
+        /// <param name="locations">The current game locations.</param>
+        private static bool RemoveInvalidNpcs(IEnumerable<GameLocation> locations)
+        {
+            bool removedAny = false;
+
             IDictionary<string, string> data = Game1.content.Load<Dictionary<string, string>>("Data\\NPCDispositions");
-            foreach (GameLocation location in gamelocations.Concat(interiors))
+            foreach (GameLocation location in LoadErrorPatch.GetAllLocations(locations))
             {
                 foreach (NPC npc in location.characters.ToArray())
                 {
@@ -103,7 +144,7 @@ namespace StardewModdingAPI.Patches
                         }
                         catch
                         {
-                            LoadErrorPatch.Monitor.Log($"Removed invalid villager '{npc.Name}' to avoid a crash when loading save '{Constants.SaveFolderName}'. (Did you remove a custom NPC mod?)", LogLevel.Warn);
+                            LoadErrorPatch.Monitor.Log($"Removed invalid villager '{npc.Name}' in {location.Name} ({npc.getTileLocation()}) to avoid a crash when loading save '{Constants.SaveFolderName}'. (Did you remove a custom NPC mod?)", LogLevel.Warn);
                             location.characters.Remove(npc);
                             removedAny = true;
                         }
@@ -111,10 +152,22 @@ namespace StardewModdingAPI.Patches
                 }
             }
 
-            if (removedAny)
-                LoadErrorPatch.OnContentRemoved();
+            return removedAny;
+        }
 
-            return true;
+        /// <summary>Get all locations, including building interiors.</summary>
+        /// <param name="locations">The main game locations.</param>
+        private static IEnumerable<GameLocation> GetAllLocations(IEnumerable<GameLocation> locations)
+        {
+            foreach (GameLocation location in locations)
+            {
+                yield return location;
+                if (location is BuildableGameLocation buildableLocation)
+                {
+                    foreach (GameLocation interior in buildableLocation.buildings.Select(p => p.indoors.Value).Where(p => p != null))
+                        yield return interior;
+                }
+            }
         }
     }
 }

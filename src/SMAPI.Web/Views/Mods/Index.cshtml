@@ -110,11 +110,8 @@ else
                         <small>
                             <a v-bind:href="'#' + mod.Slug">#</a>
                             <span v-show="showAdvanced">
-                                <template v-for="(link, i) in mod.MetadataLinks">
-                                    <a v-bind:href="link.Item1">{{link.Item2}}</a>
-                                </template>
-
-                                <abbr v-bind:title="mod.DevNote" v-show="mod.DevNote">[dev note]</abbr>
+                                <a v-bind:href="mod.PullRequestUrl" v-if="mod.PullRequestUrl">PR</a>
+                                <abbr v-bind:title="mod.DevNote" v-if="mod.DevNote">[dev note]</abbr>
                             </span>
                         </small>
                     </td>

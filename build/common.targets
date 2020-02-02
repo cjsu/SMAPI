@@ -4,7 +4,7 @@
 
   <!--set properties -->
   <PropertyGroup>
-    <Version>3.1.0</Version>
+    <Version>3.2.0</Version>
     <Product>SMAPI</Product>
 
     <AssemblySearchPaths>$(AssemblySearchPaths);{GAC}</AssemblySearchPaths>
@@ -31,8 +31,9 @@
     <Copy SourceFiles="$(TargetDir)\SMAPI.config.json" DestinationFiles="$(GamePath)\smapi-internal\config.json" />
     <Copy SourceFiles="$(TargetDir)\SMAPI.metadata.json" DestinationFiles="$(GamePath)\smapi-internal\metadata.json" />
     <Copy SourceFiles="$(TargetDir)\0Harmony.dll" DestinationFolder="$(GamePath)\smapi-internal" />
-    <Copy SourceFiles="$(TargetDir)\Newtonsoft.Json.dll" DestinationFolder="$(GamePath)\smapi-internal" />
     <Copy SourceFiles="$(TargetDir)\Mono.Cecil.dll" DestinationFolder="$(GamePath)\smapi-internal" />
+    <Copy SourceFiles="$(TargetDir)\Newtonsoft.Json.dll" DestinationFolder="$(GamePath)\smapi-internal" />
+    <Copy SourceFiles="$(TargetDir)\TMXTile.dll" DestinationFolder="$(GamePath)\smapi-internal" />
     <Copy SourceFiles="@(TranslationFiles)" DestinationFolder="$(GamePath)\smapi-internal\i18n" />
   </Target>
   <Target Name="CopyDefaultMods" Condition="'$(MSBuildProjectName)' == 'SMAPI.Mods.ConsoleCommands' OR '$(MSBuildProjectName)' == 'SMAPI.Mods.SaveBackup'">

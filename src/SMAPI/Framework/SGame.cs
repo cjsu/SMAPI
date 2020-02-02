@@ -17,6 +17,7 @@ using StardewModdingAPI.Framework.Content;
 using StardewModdingAPI.Framework.Events;
 using StardewModdingAPI.Framework.Input;
 using StardewModdingAPI.Framework.Networking;
+using StardewModdingAPI.Framework.PerformanceMonitoring;
 using StardewModdingAPI.Framework.Reflection;
 using StardewModdingAPI.Framework.StateTracking.Comparers;
 using StardewModdingAPI.Framework.StateTracking.Snapshots;
@@ -61,6 +62,9 @@ namespace StardewModdingAPI.Framework
 
         /// <summary>Manages deprecation warnings.</summary>
         private readonly DeprecationManager DeprecationManager;
+
+        /// <summary>Tracks performance metrics.</summary>
+        private readonly PerformanceMonitor PerformanceMonitor;
 
         /// <summary>The maximum number of consecutive attempts SMAPI should make to recover from a draw error.</summary>
         private readonly Countdown DrawCrashTimer = new Countdown(60); // 60 ticks = roughly one second
@@ -161,11 +165,12 @@ namespace StardewModdingAPI.Framework
         /// <param name="jsonHelper">Encapsulates SMAPI's JSON file parsing.</param>
         /// <param name="modRegistry">Tracks the installed mods.</param>
         /// <param name="deprecationManager">Manages deprecation warnings.</param>
+        /// <param name="performanceMonitor">Tracks performance metrics.</param>
         /// <param name="onGameInitialized">A callback to invoke after the game finishes initializing.</param>
         /// <param name="onGameExiting">A callback to invoke when the game exits.</param>
         /// <param name="cancellationToken">Propagates notification that SMAPI should exit.</param>
         /// <param name="logNetworkTraffic">Whether to log network traffic.</param>
-        internal SGame(Monitor monitor, IMonitor monitorForGame, Reflector reflection, Translator translator, EventManager eventManager, JsonHelper jsonHelper, ModRegistry modRegistry, DeprecationManager deprecationManager, Action onGameInitialized, Action onGameExiting, CancellationTokenSource cancellationToken, bool logNetworkTraffic)
+        internal SGame(Monitor monitor, IMonitor monitorForGame, Reflector reflection, Translator translator, EventManager eventManager, JsonHelper jsonHelper, ModRegistry modRegistry, DeprecationManager deprecationManager, PerformanceMonitor performanceMonitor, Action onGameInitialized, Action onGameExiting, CancellationTokenSource cancellationToken, bool logNetworkTraffic)
         {
             this.OnLoadingFirstAsset = SGame.ConstructorHack.OnLoadingFirstAsset;
             SGame.ConstructorHack = null;
@@ -185,6 +190,7 @@ namespace StardewModdingAPI.Framework
             this.Reflection = reflection;
             this.Translator = translator;
             this.DeprecationManager = deprecationManager;
+            this.PerformanceMonitor = performanceMonitor;
             this.OnGameInitialized = onGameInitialized;
             this.OnGameExiting = onGameExiting;
             Game1.input = new SInputState();
@@ -326,6 +332,7 @@ namespace StardewModdingAPI.Framework
             try
             {
                 this.DeprecationManager.PrintQueued();
+                this.PerformanceMonitor.PrintQueuedAlerts();
 
                 /*********
                 ** First-tick initialization
@@ -414,7 +421,7 @@ namespace StardewModdingAPI.Framework
                 // state while mods are running their code. This is risky, because data changes can
                 // conflict (e.g. collection changed during enumeration errors) and data may change
                 // unexpectedly from one mod instruction to the next.
-                // 
+                //
                 // Therefore we can just run Game1.Update here without raising any SMAPI events. There's
                 // a small chance that the task will finish after we defer but before the game checks,
                 // which means technically events should be raised, but the effects of missing one

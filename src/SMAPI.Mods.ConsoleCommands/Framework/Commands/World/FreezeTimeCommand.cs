@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using StardewValley;
 
 namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.World
@@ -17,18 +17,11 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.World
 
 
         /*********
-        ** Accessors
-        *********/
-        /// <summary>Whether the command needs to perform logic when the game updates.</summary>
-        public override bool NeedsUpdate => this.FreezeTime;
-
-
-        /*********
         ** Public methods
         *********/
         /// <summary>Construct an instance.</summary>
         public FreezeTimeCommand()
-            : base("world_freezetime", "Freezes or resumes time.\n\nUsage: world_freezetime [value]\n- value: one of 0 (resume), 1 (freeze), or blank (toggle).") { }
+            : base("world_freezetime", "Freezes or resumes time.\n\nUsage: world_freezetime [value]\n- value: one of 0 (resume), 1 (freeze), or blank (toggle).", mayNeedUpdate: true) { }
 
         /// <summary>Handle the command.</summary>
         /// <param name="monitor">Writes messages to the console and log file.</param>
@@ -57,9 +50,9 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.World
 
         /// <summary>Perform any logic needed on update tick.</summary>
         /// <param name="monitor">Writes messages to the console and log file.</param>
-        public override void Update(IMonitor monitor)
+        public override void OnUpdated(IMonitor monitor)
         {
-            if (this.FreezeTime)
+            if (this.FreezeTime && Context.IsWorldReady)
                 Game1.timeOfDay = FreezeTimeCommand.FrozenTime;
         }
     }

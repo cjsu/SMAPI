@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using StardewModdingAPI.Toolkit;
 using StardewModdingAPI.Web.Framework.LogParsing.Models;
 
 namespace StardewModdingAPI.Web.Framework.LogParsing
@@ -31,22 +30,22 @@ namespace StardewModdingAPI.Web.Framework.LogParsing
 
         /// <summary>A regex pattern matching an entry in SMAPI's mod list.</summary>
         /// <remarks>The author name and description are optional.</remarks>
-        private readonly Regex ModListEntryPattern = new Regex(@"^   (?<name>.+?) (?<version>" + SemanticVersion.UnboundedVersionPattern + @")(?: by (?<author>[^\|]+))?(?: \| (?<description>.+))?$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private readonly Regex ModListEntryPattern = new Regex(@"^   (?<name>.+?) (?<version>[^\s]+)(?: by (?<author>[^\|]+))?(?: \| (?<description>.+))?$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         /// <summary>A regex pattern matching the start of SMAPI's content pack list.</summary>
         private readonly Regex ContentPackListStartPattern = new Regex(@"^Loaded \d+ content packs:$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         /// <summary>A regex pattern matching an entry in SMAPI's content pack list.</summary>
-        private readonly Regex ContentPackListEntryPattern = new Regex(@"^   (?<name>.+?) (?<version>" + SemanticVersion.UnboundedVersionPattern + @")(?: by (?<author>[^\|]+))? \| for (?<for>[^\|]+)(?: \| (?<description>.+))?$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private readonly Regex ContentPackListEntryPattern = new Regex(@"^   (?<name>.+?) (?<version>[^\s]+)(?: by (?<author>[^\|]+))? \| for (?<for>[^\|]+)(?: \| (?<description>.+))?$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         /// <summary>A regex pattern matching the start of SMAPI's mod update list.</summary>
         private readonly Regex ModUpdateListStartPattern = new Regex(@"^You can update \d+ mods?:$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         /// <summary>A regex pattern matching an entry in SMAPI's mod update list.</summary>
-        private readonly Regex ModUpdateListEntryPattern = new Regex(@"^   (?<name>.+?) (?<version>" + SemanticVersion.UnboundedVersionPattern + @"): (?<link>.+)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private readonly Regex ModUpdateListEntryPattern = new Regex(@"^   (?<name>.+?) (?<version>[^\s]+): (?<link>.+)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         /// <summary>A regex pattern matching SMAPI's update line.</summary>
-        private readonly Regex SMAPIUpdatePattern = new Regex(@"^You can update SMAPI to (?<version>" + SemanticVersion.UnboundedVersionPattern + @"): (?<link>.+)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private readonly Regex SMAPIUpdatePattern = new Regex(@"^You can update SMAPI to (?<version>[^\s]+): (?<link>.+)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
 
         /*********

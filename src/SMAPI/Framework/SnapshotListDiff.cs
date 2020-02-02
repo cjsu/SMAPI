@@ -42,10 +42,12 @@ namespace StardewModdingAPI.Framework
             this.IsChanged = isChanged;
 
             this.RemovedImpl.Clear();
-            this.RemovedImpl.AddRange(removed);
+            if (removed != null)
+                this.RemovedImpl.AddRange(removed);
 
             this.AddedImpl.Clear();
-            this.AddedImpl.AddRange(added);
+            if (added != null)
+                this.AddedImpl.AddRange(added);
         }
 
         /// <summary>Update the snapshot.</summary>

@@ -21,10 +21,10 @@ namespace StardewModdingAPI.Framework.ContentManagers
         private readonly ContextHash<string> AssetsBeingLoaded = new ContextHash<string>();
 
         /// <summary>Interceptors which provide the initial versions of matching assets.</summary>
-        private IDictionary<IModMetadata, IList<IAssetLoader>> Loaders => this.Coordinator.Loaders;
+        private IList<ModLinked<IAssetLoader>> Loaders => this.Coordinator.Loaders;
 
         /// <summary>Interceptors which edit matching assets after they're loaded.</summary>
-        private IDictionary<IModMetadata, IList<IAssetEditor>> Editors => this.Coordinator.Editors;
+        private IList<ModLinked<IAssetEditor>> Editors => this.Coordinator.Editors;
 
         /// <summary>A lookup which indicates whether the asset is localizable (i.e. the filename contains the locale), if previously loaded.</summary>
         private readonly IDictionary<string, bool> IsLocalizableLookup;
@@ -278,16 +278,16 @@ namespace StardewModdingAPI.Framework.ContentManagers
         private IAssetData ApplyLoader<T>(IAssetInfo info)
         {
             // find matching loaders
-            var loaders = this.GetInterceptors(this.Loaders)
+            var loaders = this.Loaders
                 .Where(entry =>
                 {
                     try
                     {
-                        return entry.Value.CanLoad<T>(info);
+                        return entry.Data.CanLoad<T>(info);
                     }
                     catch (Exception ex)
                     {
-                        entry.Key.LogAsMod($"Mod failed when checking whether it could load asset '{info.AssetName}', and will be ignored. Error details:\n{ex.GetLogSummary()}", LogLevel.Error);
+                        entry.Mod.LogAsMod($"Mod failed when checking whether it could load asset '{info.AssetName}', and will be ignored. Error details:\n{ex.GetLogSummary()}", LogLevel.Error);
                         return false;
                     }
                 })
@@ -298,14 +298,14 @@ namespace StardewModdingAPI.Framework.ContentManagers
                 return null;
             if (loaders.Length > 1)
             {
-                string[] loaderNames = loaders.Select(p => p.Key.DisplayName).ToArray();
+                string[] loaderNames = loaders.Select(p => p.Mod.DisplayName).ToArray();
                 this.Monitor.Log($"Multiple mods want to provide the '{info.AssetName}' asset ({string.Join(", ", loaderNames)}), but an asset can't be loaded multiple times. SMAPI will use the default asset instead; uninstall one of the mods to fix this. (Message for modders: you should usually use {typeof(IAssetEditor)} instead to avoid conflicts.)", LogLevel.Warn);
                 return null;
             }
 
             // fetch asset from loader
-            IModMetadata mod = loaders[0].Key;
-            IAssetLoader loader = loaders[0].Value;
+            IModMetadata mod = loaders[0].Mod;
+            IAssetLoader loader = loaders[0].Data;
             T data;
             try
             {
@@ -338,11 +338,11 @@ namespace StardewModdingAPI.Framework.ContentManagers
             IAssetData GetNewData(object data) => new AssetDataForObject(info, data, this.AssertAndNormalizeAssetName);
 
             // edit asset
-            foreach (var entry in this.GetInterceptors(this.Editors))
+            foreach (var entry in this.Editors)
             {
                 // check for match
-                IModMetadata mod = entry.Key;
-                IAssetEditor editor = entry.Value;
+                IModMetadata mod = entry.Mod;
+                IAssetEditor editor = entry.Data;
                 try
                 {
                     if (!editor.CanEdit<T>(info))
@@ -381,20 +381,6 @@ namespace StardewModdingAPI.Framework.ContentManagers
 
             // return result
             return asset;
-        }
-
-        /// <summary>Get all registered interceptors from a list.</summary>
-        private IEnumerable<KeyValuePair<IModMetadata, T>> GetInterceptors<T>(IDictionary<IModMetadata, IList<T>> entries)
-        {
-            foreach (var entry in entries)
-            {
-                IModMetadata mod = entry.Key;
-                IList<T> interceptors = entry.Value;
-
-                // registered editors
-                foreach (T interceptor in interceptors)
-                    yield return new KeyValuePair<IModMetadata, T>(mod, interceptor);
-            }
         }
     }
 }

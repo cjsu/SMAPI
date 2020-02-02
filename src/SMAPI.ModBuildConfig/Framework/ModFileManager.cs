@@ -156,6 +156,9 @@ namespace StardewModdingAPI.ModBuildConfig.Framework
                 // release zips
                 this.EqualsInvariant(file.Extension, ".zip")
 
+                // Harmony (bundled into SMAPI)
+                || this.EqualsInvariant(file.Name, "0Harmony.dll")
+
                 // Json.NET (bundled into SMAPI)
                 || this.EqualsInvariant(file.Name, "Newtonsoft.Json.dll")
                 || this.EqualsInvariant(file.Name, "Newtonsoft.Json.pdb")

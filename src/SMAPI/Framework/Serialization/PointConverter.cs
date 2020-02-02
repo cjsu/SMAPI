@@ -6,7 +6,7 @@ using StardewModdingAPI.Toolkit.Serialization.Converters;
 
 namespace StardewModdingAPI.Framework.Serialization
 {
-    /// <summary>Handles deserialization of <see cref="PointConverter"/> for crossplatform compatibility.</summary>
+    /// <summary>Handles deserialization of <see cref="Point"/> for crossplatform compatibility.</summary>
     /// <remarks>
     /// - Linux/Mac format: { "X": 1, "Y": 2 }
     /// - Windows format:   "1, 2"

@@ -57,8 +57,8 @@ namespace StardewModdingAPI.Toolkit.Framework.Clients.Wiki
         /// <summary>The human-readable warnings for players about this mod.</summary>
         public string[] Warnings { get; set; }
 
-        /// <summary>Extra metadata links (usually for open pull requests).</summary>
-        public Tuple<Uri, string>[] MetadataLinks { get; set; }
+        /// <summary>The URL of the pull request which submits changes for an unofficial update to the author, if any.</summary>
+        public string PullRequestUrl { get; set; }
 
         /// <summary>Special notes intended for developers who maintain unofficial updates or submit pull requests. </summary>
         public string DevNote { get; set; }

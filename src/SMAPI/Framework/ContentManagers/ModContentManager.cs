@@ -160,6 +160,7 @@ namespace StardewModdingAPI.Framework.ContentManagers
 
                     // unpacked map
                     case ".tbin":
+                    case ".tmx":
                         {
                             // validate
                             if (typeof(T) != typeof(Map))

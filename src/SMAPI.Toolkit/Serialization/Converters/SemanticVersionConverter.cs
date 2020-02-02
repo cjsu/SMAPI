@@ -68,7 +68,7 @@ namespace StardewModdingAPI.Toolkit.Serialization.Converters
             int patch = obj.ValueIgnoreCase<int>(nameof(ISemanticVersion.PatchVersion));
             string prereleaseTag = obj.ValueIgnoreCase<string>(nameof(ISemanticVersion.PrereleaseTag));
 
-            return new SemanticVersion(major, minor, patch, prereleaseTag);
+            return new SemanticVersion(major, minor, patch, prereleaseTag: prereleaseTag);
         }
 
         /// <summary>Read a JSON string.</summary>

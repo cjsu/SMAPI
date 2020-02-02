@@ -59,7 +59,7 @@ namespace StardewModdingAPI.Web.Framework.Clients.Chucklefish
             string name = doc.DocumentNode.SelectSingleNode("//meta[@name='twitter:title']").Attributes["content"].Value;
             if (name.StartsWith("[SMAPI] "))
                 name = name.Substring("[SMAPI] ".Length);
-            string version = doc.DocumentNode.SelectSingleNode("//h1/span").InnerText;
+            string version = doc.DocumentNode.SelectSingleNode("//h1/span")?.InnerText;
 
             // create model
             return new ChucklefishMod

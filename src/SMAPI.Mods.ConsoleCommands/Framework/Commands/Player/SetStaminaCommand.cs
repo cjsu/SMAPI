@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using StardewValley;
 
 namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.Player
@@ -14,18 +14,11 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.Player
 
 
         /*********
-        ** Accessors
-        *********/
-        /// <summary>Whether the command needs to perform logic when the game updates.</summary>
-        public override bool NeedsUpdate => this.InfiniteStamina;
-
-
-        /*********
         ** Public methods
         *********/
         /// <summary>Construct an instance.</summary>
         public SetStaminaCommand()
-            : base("player_setstamina", "Sets the player's stamina.\n\nUsage: player_setstamina [value]\n- value: an integer amount, or 'inf' for infinite stamina.") { }
+            : base("player_setstamina", "Sets the player's stamina.\n\nUsage: player_setstamina [value]\n- value: an integer amount, or 'inf' for infinite stamina.", mayNeedUpdate: true) { }
 
         /// <summary>Handle the command.</summary>
         /// <param name="monitor">Writes messages to the console and log file.</param>
@@ -62,9 +55,9 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.Player
 
         /// <summary>Perform any logic needed on update tick.</summary>
         /// <param name="monitor">Writes messages to the console and log file.</param>
-        public override void Update(IMonitor monitor)
+        public override void OnUpdated(IMonitor monitor)
         {
-            if (this.InfiniteStamina)
+            if (this.InfiniteStamina && Context.IsWorldReady)
                 Game1.player.stamina = Game1.player.MaxStamina;
         }
     }

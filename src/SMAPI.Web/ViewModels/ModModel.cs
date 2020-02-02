@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using StardewModdingAPI.Toolkit.Framework.Clients.Wiki;
@@ -38,8 +37,8 @@ namespace StardewModdingAPI.Web.ViewModels
         /// <summary>The human-readable warnings for players about this mod.</summary>
         public string[] Warnings { get; set; }
 
-        /// <summary>Extra metadata links (usually for open pull requests).</summary>
-        public Tuple<Uri, string>[] MetadataLinks { get; set; }
+        /// <summary>The URL of the pull request which submits changes for an unofficial update to the author, if any.</summary>
+        public string PullRequestUrl { get; set; }
 
         /// <summary>Special notes intended for developers who maintain unofficial updates or submit pull requests. </summary>
         public string DevNote { get; set; }
@@ -68,7 +67,7 @@ namespace StardewModdingAPI.Web.ViewModels
             this.BetaCompatibility = entry.BetaCompatibility != null ? new ModCompatibilityModel(entry.BetaCompatibility) : null;
             this.ModPages = this.GetModPageUrls(entry).ToArray();
             this.Warnings = entry.Warnings;
-            this.MetadataLinks = entry.MetadataLinks;
+            this.PullRequestUrl = entry.PullRequestUrl;
             this.DevNote = entry.DevNote;
             this.Slug = entry.Anchor;
         }

@@ -21,12 +21,10 @@ h1 {
 #call-to-action a.main-cta,
 #call-to-action a.secondary-cta {
     box-shadow: #caefab 0 1px 0 0 inset;
-    background: linear-gradient(#77d42a 5%, #5cb811 100%) #77d42a;
     border-radius: 6px;
     border: 1px solid #268a16;
     display: inline-block;
     cursor: pointer;
-    color: #306108;
     font-weight: bold;
     margin-bottom: 1em;
     padding: 6px 24px;
@@ -34,10 +32,16 @@ h1 {
     text-shadow: #aade7c 0 1px 0;
 }
 
+#call-to-action a.main-cta {
+    background: linear-gradient(#77d42a 5%, #5cb811 75%) #77d42a;
+    font-size: 1.5em;
+    color: #306108;
+}
+
 #call-to-action a.secondary-cta {
     background: #768d87;
     border: 1px solid #566963;
-    color: #ffffff;
+    color: #eee;
     text-shadow: #2b665e 0 1px 0;
 }
 
@@ -101,9 +105,24 @@ h1 {
 /*********
 ** Subsections
 *********/
-.github-description {
-    border-left: 0.25em solid #dfe2e5;
-    padding-left: 1em;
+.area {
+    background: rgba(0, 170, 0, 0.2);
+    padding: 0 1em 1em 1em;
+    margin-bottom: 1em;
+}
+
+.area > ul,
+.area > div,
+.area > p {
+    margin-left: 3em;
+}
+
+.area > ul {
+    padding-left: 0;
+}
+
+.area > h2 {
+    border: 0;
 }
 
 #donate-links li {
@@ -114,12 +133,12 @@ h1 {
 #donate-links .donate-button {
     display: inline-block;
     min-width: 10em;
-    background: #2A413B;
+    background: #2a413b;
     padding: 6px 12px;
     font-family: Quicksand, Helvetica, Century Gothic, sans-serif;
     text-decoration: none;
     font-weight: 700;
-    color: #FFF;
+    color: #fff;
     border-radius: 8px;
 }
 

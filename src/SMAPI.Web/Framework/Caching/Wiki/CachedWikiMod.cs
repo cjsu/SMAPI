@@ -67,8 +67,8 @@ namespace StardewModdingAPI.Web.Framework.Caching.Wiki
         /// <summary>The human-readable warnings for players about this mod.</summary>
         public string[] Warnings { get; set; }
 
-        /// <summary>Extra metadata links (usually for open pull requests).</summary>
-        public Tuple<Uri, string>[] MetadataLinks { get; set; }
+        /// <summary>The URL of the pull request which submits changes for an unofficial update to the author, if any.</summary>
+        public string PullRequestUrl { get; set; }
 
         /// <summary>Special notes intended for developers who maintain unofficial updates or submit pull requests. </summary>
         public string DevNote { get; set; }
@@ -150,7 +150,7 @@ namespace StardewModdingAPI.Web.Framework.Caching.Wiki
             this.CustomSourceUrl = mod.CustomSourceUrl;
             this.CustomUrl = mod.CustomUrl;
             this.ContentPackFor = mod.ContentPackFor;
-            this.MetadataLinks = mod.MetadataLinks;
+            this.PullRequestUrl = mod.PullRequestUrl;
             this.Warnings = mod.Warnings;
             this.DevNote = mod.DevNote;
             this.Anchor = mod.Anchor;
@@ -192,7 +192,7 @@ namespace StardewModdingAPI.Web.Framework.Caching.Wiki
                 CustomUrl = this.CustomUrl,
                 ContentPackFor = this.ContentPackFor,
                 Warnings = this.Warnings,
-                MetadataLinks = this.MetadataLinks,
+                PullRequestUrl = this.PullRequestUrl,
                 DevNote = this.DevNote,
                 Anchor = this.Anchor,
 

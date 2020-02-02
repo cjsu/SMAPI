@@ -190,17 +190,9 @@ namespace StardewModdingAPI.Metadata
 
                 case "characters\\farmer\\farmer_base": // Farmer
                 case "characters\\farmer\\farmer_base_bald":
-                    if (Game1.player == null || !Game1.player.IsMale)
-                        return false;
-                    Game1.player.FarmerRenderer = new FarmerRenderer(key, Game1.player);
-                    return true;
-
-                case "characters\\farmer\\farmer_girl_base": // Farmer
+                case "characters\\farmer\\farmer_girl_base":
                 case "characters\\farmer\\farmer_girl_base_bald":
-                    if (Game1.player == null || Game1.player.IsMale)
-                        return false;
-                    Game1.player.FarmerRenderer = new FarmerRenderer(key, Game1.player);
-                    return true;
+                    return this.ReloadPlayerSprites(key);
 
                 case "characters\\farmer\\hairstyles": // Game1.LoadContent
                     FarmerRenderer.hairStylesTexture = content.Load<Texture2D>(key);
@@ -835,6 +827,27 @@ namespace StardewModdingAPI.Metadata
             }
         }
 
+        /// <summary>Reload the sprites for matching players.</summary>
+        /// <param name="key">The asset key to reload.</param>
+        private bool ReloadPlayerSprites(string key)
+        {
+            Farmer[] players =
+                (
+                    from player in Game1.getOnlineFarmers()
+                    where key == this.NormalizeAssetNameIgnoringEmpty(player.getTexture())
+                    select player
+                )
+                .ToArray();
+
+            foreach (Farmer player in players)
+            {
+                this.Reflection.GetField<Dictionary<string, Dictionary<int, List<int>>>>(typeof(FarmerRenderer), "_recolorOffsets").GetValue().Remove(player.getTexture());
+                player.FarmerRenderer.MarkSpriteDirty();
+            }
+
+            return players.Any();
+        }
+
         /// <summary>Reload tree textures.</summary>
         /// <param name="content">The content manager through which to reload the asset.</param>
         /// <param name="key">The asset key to reload.</param>
@@ -874,7 +887,11 @@ namespace StardewModdingAPI.Metadata
 
             // update dialogue
             foreach (NPC villager in villagers)
+            {
                 villager.resetSeasonalDialogue(); // doesn't only affect seasonal dialogue
+                villager.resetCurrentDialogue();
+            }
+
             return true;
         }
 
@@ -896,18 +913,16 @@ namespace StardewModdingAPI.Metadata
                 this.Reflection.GetField<bool>(villager, "_hasLoadedMasterScheduleData").SetValue(false);
                 this.Reflection.GetField<Dictionary<string, string>>(villager, "_masterScheduleData").SetValue(null);
                 villager.Schedule = villager.getSchedule(Game1.dayOfMonth);
-                if (villager.Schedule == null)
-                {
-                    this.Monitor.Log($"A mod set an invalid schedule for {villager.Name ?? key}, so the NPC may not behave correctly.", LogLevel.Warn);
-                    return true;
-                }
 
                 // switch to new schedule if needed
-                int lastScheduleTime = villager.Schedule.Keys.Where(p => p <= Game1.timeOfDay).OrderByDescending(p => p).FirstOrDefault();
-                if (lastScheduleTime != 0)
+                if (villager.Schedule != null)
                 {
-                    this.Reflection.GetField<int>(villager, "scheduleTimeToTry").SetValue(9999999); // use time that's passed in to checkSchedule
-                    villager.checkSchedule(lastScheduleTime);
+                    int lastScheduleTime = villager.Schedule.Keys.Where(p => p <= Game1.timeOfDay).OrderByDescending(p => p).FirstOrDefault();
+                    if (lastScheduleTime != 0)
+                    {
+                        villager.scheduleTimeToTry = NPC.NO_TRY; // use time that's passed in to checkSchedule
+                        villager.checkSchedule(lastScheduleTime);
+                    }
                 }
             }
             return true;

@@ -29,12 +29,15 @@
     </div>
     <div id="content-column">
         <div id="content">
-            <h1>@(ViewData["ViewTitle"] ?? ViewData["Title"])</h1>
+            @if (ViewData["ViewTitle"] != string.Empty)
+            {
+                <h1>@(ViewData["ViewTitle"] ?? ViewData["Title"])</h1>
+            }
             @RenderBody()
         </div>
         <div id="footer">
             <div id="license">
-                Hi! You can <a href="https://github.com/pathoschild/SMAPI" title="view source">view the source code</a> or <a href="https://github.com/pathoschild/SMAPI/issues" title="report issue">report a bug or suggestion</a>.
+                Hi! See the <a href="@Url.PlainAction("Privacy", "Index")">privacy page</a>, <a href="https://github.com/pathoschild/SMAPI" title="view source">SMAPI's source code</a>, or <a href="https://smapi.io/community" title="community pages">ask questions</a>.
             </div>
         </div>
     </div>

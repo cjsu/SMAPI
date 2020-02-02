@@ -55,7 +55,7 @@ namespace StardewModdingAPI.Toolkit.Framework.Clients.WebApi
         /// <summary>The latest unofficial version, if newer than <see cref="Main"/> and <see cref="Optional"/>.</summary>
         public ModEntryVersionModel Unofficial { get; set; }
 
-        /// <summary>The latest unofficial version for the current Stardew Valley or SMAPI beta, if any (see <see cref="HasBetaInfo"/>).</summary>
+        /// <summary>The latest unofficial version for the current Stardew Valley or SMAPI beta, if any.</summary>
         public ModEntryVersionModel UnofficialForBeta { get; set; }
 
         /****
@@ -83,6 +83,15 @@ namespace StardewModdingAPI.Toolkit.Framework.Clients.WebApi
 
         /// <summary>The beta game or SMAPI version which broke this mod, if applicable.</summary>
         public string BetaBrokeIn { get; set; }
+
+        /****
+        ** Version mappings
+        ****/
+        /// <summary>Maps local versions to a semantic version for update checks.</summary>
+        public IDictionary<string, string> MapLocalVersions { get; set; }
+
+        /// <summary>Maps remote versions to a semantic version for update checks.</summary>
+        public IDictionary<string, string> MapRemoteVersions { get; set; }
 
 
         /*********
@@ -127,13 +136,16 @@ namespace StardewModdingAPI.Toolkit.Framework.Clients.WebApi
                 this.BetaCompatibilityStatus = wiki.BetaCompatibility?.Status;
                 this.BetaCompatibilitySummary = wiki.BetaCompatibility?.Summary;
                 this.BetaBrokeIn = wiki.BetaCompatibility?.BrokeIn;
+
+                this.MapLocalVersions = wiki.MapLocalVersions;
+                this.MapRemoteVersions = wiki.MapRemoteVersions;
             }
 
             // internal DB data
             if (db != null)
             {
                 this.ID = this.ID.Union(db.FormerIDs).ToArray();
-                this.Name = this.Name ?? db.DisplayName;
+                this.Name ??= db.DisplayName;
             }
         }
 

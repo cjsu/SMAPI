@@ -94,8 +94,6 @@ namespace StardewModdingAPI.Web.Controllers
             if (model?.Mods == null)
                 return new ModEntryModel[0];
 
-            bool legacyMode = SemanticVersion.TryParse(version, out ISemanticVersion parsedVersion) && parsedVersion.IsOlderThan("3.0.0-beta.20191109");
-
             // fetch wiki data
             WikiModEntry[] wikiData = this.WikiCache.GetWikiMods().Select(p => p.GetModel()).ToArray();
             IDictionary<string, ModEntryModel> mods = new Dictionary<string, ModEntryModel>(StringComparer.CurrentCultureIgnoreCase);
@@ -104,19 +102,8 @@ namespace StardewModdingAPI.Web.Controllers
                 if (string.IsNullOrWhiteSpace(mod.ID))
                     continue;
 
-                ModEntryModel result = await this.GetModData(mod, wikiData, model.IncludeExtendedMetadata || legacyMode, model.ApiVersion);
-                if (legacyMode)
-                {
-                    result.Main = result.Metadata.Main;
-                    result.Optional = result.Metadata.Optional;
-                    result.Unofficial = result.Metadata.Unofficial;
-                    result.UnofficialForBeta = result.Metadata.UnofficialForBeta;
-                    result.HasBetaInfo = result.Metadata.BetaCompatibilityStatus != null;
-                    result.SuggestedUpdate = null;
-                    if (!model.IncludeExtendedMetadata)
-                        result.Metadata = null;
-                }
-                else if (!model.IncludeExtendedMetadata && (model.ApiVersion == null || mod.InstalledVersion == null))
+                ModEntryModel result = await this.GetModData(mod, wikiData, model.IncludeExtendedMetadata, model.ApiVersion);
+                if (!model.IncludeExtendedMetadata && (model.ApiVersion == null || mod.InstalledVersion == null))
                 {
                     var errors = new List<string>(result.Errors);
                     errors.Add($"This API can't suggest an update because {nameof(model.ApiVersion)} or {nameof(mod.InstalledVersion)} are null, and you didn't specify {nameof(model.IncludeExtendedMetadata)} to get other info. See the SMAPI technical docs for usage.");

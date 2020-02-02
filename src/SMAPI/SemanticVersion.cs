@@ -39,18 +39,36 @@ namespace StardewModdingAPI
         /// <param name="majorVersion">The major version incremented for major API changes.</param>
         /// <param name="minorVersion">The minor version incremented for backwards-compatible changes.</param>
         /// <param name="patchVersion">The patch version for backwards-compatible bug fixes.</param>
-        /// <param name="prerelease">An optional prerelease tag.</param>
-        /// <param name="build">Optional build metadata. This is ignored when determining version precedence.</param>
+        /// <param name="prereleaseTag">An optional prerelease tag.</param>
+        /// <param name="buildMetadata">Optional build metadata. This is ignored when determining version precedence.</param>
+        public SemanticVersion(int majorVersion, int minorVersion, int patchVersion, string prereleaseTag = null, string buildMetadata = null)
+            : this(majorVersion, minorVersion, patchVersion, 0, prereleaseTag, buildMetadata) { }
+
+        /// <summary>Construct an instance.</summary>
+        /// <param name="majorVersion">The major version incremented for major API changes.</param>
+        /// <param name="minorVersion">The minor version incremented for backwards-compatible changes.</param>
+        /// <param name="patchVersion">The patch version for backwards-compatible bug fixes.</param>
+        /// <param name="prereleaseTag">An optional prerelease tag.</param>
+        /// <param name="platformRelease">The platform-specific version (if applicable).</param>
+        /// <param name="buildMetadata">Optional build metadata. This is ignored when determining version precedence.</param>
         [JsonConstructor]
-        public SemanticVersion(int majorVersion, int minorVersion, int patchVersion, string prerelease = null, string build = null)
-            : this(new Toolkit.SemanticVersion(majorVersion, minorVersion, patchVersion, prerelease, build)) { }
+        internal SemanticVersion(int majorVersion, int minorVersion, int patchVersion, int platformRelease, string prereleaseTag = null, string buildMetadata = null)
+            : this(new Toolkit.SemanticVersion(majorVersion, minorVersion, patchVersion, platformRelease, prereleaseTag, buildMetadata)) { }
 
         /// <summary>Construct an instance.</summary>
         /// <param name="version">The semantic version string.</param>
         /// <exception cref="ArgumentNullException">The <paramref name="version"/> is null.</exception>
         /// <exception cref="FormatException">The <paramref name="version"/> is not a valid semantic version.</exception>
         public SemanticVersion(string version)
-            : this(new Toolkit.SemanticVersion(version)) { }
+            : this(version, allowNonStandard: false) { }
+
+        /// <summary>Construct an instance.</summary>
+        /// <param name="version">The semantic version string.</param>
+        /// <param name="allowNonStandard">Whether to recognize non-standard semver extensions.</param>
+        /// <exception cref="ArgumentNullException">The <paramref name="version"/> is null.</exception>
+        /// <exception cref="FormatException">The <paramref name="version"/> is not a valid semantic version.</exception>
+        internal SemanticVersion(string version, bool allowNonStandard)
+            : this(new Toolkit.SemanticVersion(version, allowNonStandard)) { }
 
         /// <summary>Construct an instance.</summary>
         /// <param name="version">The assembly version.</param>
@@ -139,6 +157,12 @@ namespace StardewModdingAPI
         public override string ToString()
         {
             return this.Version.ToString();
+        }
+
+        /// <summary>Whether the version uses non-standard extensions, like four-part game versions on some platforms.</summary>
+        public bool IsNonStandard()
+        {
+            return this.Version.IsNonStandard();
         }
 
         /// <summary>Parse a version string without throwing an exception if it fails.</summary>

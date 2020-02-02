@@ -8,7 +8,6 @@
     <LangVersion>latest</LangVersion>
     <OutputType>Exe</OutputType>
     <PlatformTarget>x86</PlatformTarget>
-    <OutputPath>$(SolutionDir)\..\bin\$(Configuration)\Installer</OutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
 
@@ -17,19 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="README.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="windows-exe-config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="windows-install.bat">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="unix-install.sh">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="unix-launcher.sh">
+    <None Update="assets\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

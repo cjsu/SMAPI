@@ -1,4 +1,3 @@
 GitHub issues are only used for SMAPI development tasks.
 
-To get help with SMAPI problems, [ask on Discord or in the forums](https://smapi.io/community)
-instead.
+To get help with SMAPI problems, see 'get help' on [the SMAPI website](https://smapi.io/) instead.

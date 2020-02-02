@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands
@@ -30,13 +31,6 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands
         /// <summary>Get the argument at the specified index in the list.</summary>
         /// <param name="index">The zero-based index of the element to get.</param>
         public string this[int index] => this.Args[index];
-
-        /// <summary>A method which parses a string argument into the given value.</summary>
-        /// <typeparam name="T">The expected argument type.</typeparam>
-        /// <param name="input">The argument to parse.</param>
-        /// <param name="output">The parsed value.</param>
-        /// <returns>Returns whether the argument was successfully parsed.</returns>
-        public delegate bool ParseDelegate<T>(string input, out T output);
 
 
         /*********
@@ -113,6 +107,38 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands
             return true;
         }
 
+        /// <summary>Try to read a decimal argument.</summary>
+        /// <param name="index">The argument index.</param>
+        /// <param name="name">The argument name for error messages.</param>
+        /// <param name="value">The parsed value.</param>
+        /// <param name="required">Whether to show an error if the argument is missing.</param>
+        /// <param name="min">The minimum value allowed.</param>
+        /// <param name="max">The maximum value allowed.</param>
+        public bool TryGetDecimal(int index, string name, out decimal value, bool required = true, decimal? min = null, decimal? max = null)
+        {
+            value = 0;
+
+            // get argument
+            if (!this.TryGet(index, name, out string raw, required))
+                return false;
+
+            // parse
+            if (!decimal.TryParse(raw, NumberStyles.Number, CultureInfo.InvariantCulture, out value))
+            {
+                this.LogDecimalFormatError(index, name, min, max);
+                return false;
+            }
+
+            // validate
+            if ((min.HasValue && value < min) || (max.HasValue && value > max))
+            {
+                this.LogDecimalFormatError(index, name, min, max);
+                return false;
+            }
+
+            return true;
+        }
+
         /// <summary>Returns an enumerator that iterates through the collection.</summary>
         /// <returns>An enumerator that can be used to iterate through the collection.</returns>
         public IEnumerator<string> GetEnumerator()
@@ -153,6 +179,23 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands
                 this.LogError($"Argument {index} ({name}) must be an integer and at most {max}.");
             else
                 this.LogError($"Argument {index} ({name}) must be an integer.");
+        }
+
+        /// <summary>Print an error for an invalid decimal argument.</summary>
+        /// <param name="index">The argument index.</param>
+        /// <param name="name">The argument name for error messages.</param>
+        /// <param name="min">The minimum value allowed.</param>
+        /// <param name="max">The maximum value allowed.</param>
+        private void LogDecimalFormatError(int index, string name, decimal? min, decimal? max)
+        {
+            if (min.HasValue && max.HasValue)
+                this.LogError($"Argument {index} ({name}) must be a decimal between {min} and {max}.");
+            else if (min.HasValue)
+                this.LogError($"Argument {index} ({name}) must be a decimal and at least {min}.");
+            else if (max.HasValue)
+                this.LogError($"Argument {index} ({name}) must be a decimal and at most {max}.");
+            else
+                this.LogError($"Argument {index} ({name}) must be a decimal.");
         }
     }
 }

@@ -199,7 +199,7 @@ namespace StardewModdingAPI.Mods.SaveBackup
         /// <param name="copyRoot">Whether to copy the root folder itself, or <c>false</c> to only copy its contents.</param>
         /// <param name="filter">A filter which matches the files or directories to copy, or <c>null</c> to copy everything.</param>
         /// <remarks>Derived from the SMAPI installer code.</remarks>
-        private void RecursiveCopy(FileSystemInfo source, DirectoryInfo targetFolder, Func<FileSystemInfo, bool> filter = null, bool copyRoot = true)
+        private void RecursiveCopy(FileSystemInfo source, DirectoryInfo targetFolder, Func<FileSystemInfo, bool> filter, bool copyRoot = true)
         {
             if (!targetFolder.Exists)
                 targetFolder.Create();
@@ -229,22 +229,16 @@ namespace StardewModdingAPI.Mods.SaveBackup
         /// <param name="entry">The current entry to check under <paramref name="savesFolder"/>.</param>
         private bool MatchSaveFolders(DirectoryInfo savesFolder, FileSystemInfo entry)
         {
-            this.Monitor.Log($"Checking {entry.FullName}...");
-
             // only need to filter top-level entries
             string parentPath = (entry as FileInfo)?.DirectoryName ?? (entry as DirectoryInfo)?.Parent?.FullName;
             if (parentPath != savesFolder.FullName)
-            {
-                this.Monitor.Log("   OK: not root path");
                 return true;
-            }
+
 
             // match folders with Name_ID format
-            bool include =
+            return
                 entry is DirectoryInfo
                 && ulong.TryParse(entry.Name.Split('_').Last(), out _);
-            this.Monitor.Log(include ? "   OK: name matches save folder format" : "   SKIP: not a save folder");
-            return include;
         }
     }
 }

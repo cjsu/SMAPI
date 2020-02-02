@@ -5,7 +5,6 @@
     <RootNamespace>StardewModdingAPI.Mods.ConsoleCommands</RootNamespace>
     <TargetFramework>net45</TargetFramework>
     <LangVersion>latest</LangVersion>
-    <OutputPath>$(SolutionDir)\..\bin\$(Configuration)\Mods\ConsoleCommands</OutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>

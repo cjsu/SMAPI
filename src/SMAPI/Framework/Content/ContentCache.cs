@@ -4,7 +4,6 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using StardewModdingAPI.Framework.Reflection;
-using StardewModdingAPI.Internal;
 using StardewModdingAPI.Toolkit.Utilities;
 using StardewValley;
 
