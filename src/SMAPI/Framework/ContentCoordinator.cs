@@ -48,9 +48,6 @@ namespace StardewModdingAPI.Framework
         /// <summary>Whether the content coordinator has been disposed.</summary>
         private bool IsDisposed;
 
-        /// <summary>A callback to invoke the first time *any* game content manager loads an asset.</summary>
-        private readonly Action OnLoadingFirstAsset;
-
 
         /*********
         ** Accessors

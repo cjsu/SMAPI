@@ -11,15 +11,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SMAPI\SMAPI.csproj">
-      <Private>False</Private>
-    </ProjectReference>
+    <ProjectReference Include="..\SMAPI.Toolkit.CoreInterfaces\SMAPI.Toolkit.CoreInterfaces.csproj" />
+    <ProjectReference Include="..\SMAPI.Toolkit\SMAPI.Toolkit.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Reference Include="$(GameExecutableName)">
       <HintPath>$(GamePath)\$(GameExecutableName).exe</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="StardewModdingAPI">
+      <HintPath>..\SMAPI\bin\Debug\StardewModdingAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="StardewValley">
+      <HintPath>..\..\..\..\..\Downloads\StardewValleyAndroidStuff\base_1.4.4.118\assemblies\StardewValley.dll</HintPath>
     </Reference>
   </ItemGroup>
 

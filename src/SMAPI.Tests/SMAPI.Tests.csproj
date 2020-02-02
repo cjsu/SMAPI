@@ -12,7 +12,6 @@
   <ItemGroup>
     <ProjectReference Include="..\SMAPI.Toolkit.CoreInterfaces\SMAPI.Toolkit.CoreInterfaces.csproj" />
     <ProjectReference Include="..\SMAPI.Toolkit\SMAPI.Toolkit.csproj" />
-    <ProjectReference Include="..\SMAPI\SMAPI.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -11,11 +11,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".root", ".root", "{86C452BE
 		..\LICENSE.txt = ..\LICENSE.txt
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StardewModdingAPI.Installer", "SMAPI.Installer\StardewModdingAPI.Installer.csproj", "{0ED5EAD8-5D85-420D-8101-6D8CCCE29C9B}"
-	ProjectSection(ProjectDependencies) = postProject
-		{8C2CA4AB-BA8A-446A-B59E-9D6502E145F7} = {8C2CA4AB-BA8A-446A-B59E-9D6502E145F7}
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ISSUE_TEMPLATE", "ISSUE_TEMPLATE", "{F4453AB6-D7D6-447F-A973-956CC777968F}"
 	ProjectSection(SolutionItems) = preProject
 		..\.github\ISSUE_TEMPLATE\bug_report.md = ..\.github\ISSUE_TEMPLATE\bug_report.md
@@ -45,24 +40,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "technical", "technical", "{
 		..\docs\technical\web.md = ..\docs\technical\web.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StardewModdingAPI.ModBuildConfig", "SMAPI.ModBuildConfig\StardewModdingAPI.ModBuildConfig.csproj", "{C11D0AFB-2893-41A9-AD55-D002F032D6AD}"
-	ProjectSection(ProjectDependencies) = postProject
-		{80AD8528-AA49-4731-B4A6-C691845815A1} = {80AD8528-AA49-4731-B4A6-C691845815A1}
-	EndProjectSection
-EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SMAPI.Internal", "SMAPI.Internal\SMAPI.Internal.shproj", "{85208F8D-6FD1-4531-BE05-7142490F59FE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMAPI.ModBuildConfig.Analyzer.Tests", "SMAPI.ModBuildConfig.Analyzer.Tests\SMAPI.ModBuildConfig.Analyzer.Tests.csproj", "{680B2641-81EA-467C-86A5-0E81CDC57ED0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMAPI.Tests", "SMAPI.Tests\SMAPI.Tests.csproj", "{AA95884B-7097-476E-92C8-D0500DE9D6D1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMAPI", "SMAPI\SMAPI.csproj", "{E6DA2198-7686-4F1D-B312-4A4DC70884C0}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMAPI.Installer", "SMAPI.Installer\SMAPI.Installer.csproj", "{0A9BB24F-15FF-4C26-B1A2-81F7AE316518}"
 	ProjectSection(ProjectDependencies) = postProject
 		{0634EA4C-3B8F-42DB-AEA6-CA9E4EF6E92F} = {0634EA4C-3B8F-42DB-AEA6-CA9E4EF6E92F}
 		{CD53AD6F-97F4-4872-A212-50C2A0FD3601} = {CD53AD6F-97F4-4872-A212-50C2A0FD3601}
-		{E6DA2198-7686-4F1D-B312-4A4DC70884C0} = {E6DA2198-7686-4F1D-B312-4A4DC70884C0}
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMAPI.ModBuildConfig", "SMAPI.ModBuildConfig\SMAPI.ModBuildConfig.csproj", "{1B3821E6-D030-402C-B3A1-7CA45C2800EA}"
@@ -81,12 +68,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMAPI.Web", "SMAPI.Web\SMAP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMAPI.Web.LegacyRedirects", "SMAPI.Web.LegacyRedirects\SMAPI.Web.LegacyRedirects.csproj", "{159AA5A5-35C2-488C-B23F-1613C80594AE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMAPI", "SMAPI\SMAPI.csproj", "{EBD13EAB-E70B-4D9F-92C2-C34A21E1FA32}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMAPI.Mods.VirtualKeyboard", "SMAPI.Mods.VirtualKeyboard\SMAPI.Mods.VirtualKeyboard.csproj", "{29CCE9C9-6811-415D-A681-A6D47073924D}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		SMAPI.Internal\SMAPI.Internal.projitems*{0ed5ead8-5d85-420d-8101-6d8ccce29c9b}*SharedItemsImports = 4
 		SMAPI.Internal\SMAPI.Internal.projitems*{85208f8d-6fd1-4531-be05-7142490f59fe}*SharedItemsImports = 13
-		SMAPI.Internal\SMAPI.Internal.projitems*{9ef11e43-1701-4396-8835-8392d57abb70}*SharedItemsImports = 4
-		SMAPI.Internal\SMAPI.Internal.projitems*{c11d0afb-2893-41a9-ad55-d002f032d6ad}*SharedItemsImports = 4
+		SMAPI.Internal\SMAPI.Internal.projitems*{ebd13eab-e70b-4d9f-92c2-c34a21e1fa32}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -101,10 +90,6 @@ Global
 		{AA95884B-7097-476E-92C8-D0500DE9D6D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA95884B-7097-476E-92C8-D0500DE9D6D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA95884B-7097-476E-92C8-D0500DE9D6D1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E6DA2198-7686-4F1D-B312-4A4DC70884C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E6DA2198-7686-4F1D-B312-4A4DC70884C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E6DA2198-7686-4F1D-B312-4A4DC70884C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E6DA2198-7686-4F1D-B312-4A4DC70884C0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0A9BB24F-15FF-4C26-B1A2-81F7AE316518}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0A9BB24F-15FF-4C26-B1A2-81F7AE316518}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A9BB24F-15FF-4C26-B1A2-81F7AE316518}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -141,19 +126,22 @@ Global
 		{159AA5A5-35C2-488C-B23F-1613C80594AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{159AA5A5-35C2-488C-B23F-1613C80594AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{159AA5A5-35C2-488C-B23F-1613C80594AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBD13EAB-E70B-4D9F-92C2-C34A21E1FA32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBD13EAB-E70B-4D9F-92C2-C34A21E1FA32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBD13EAB-E70B-4D9F-92C2-C34A21E1FA32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBD13EAB-E70B-4D9F-92C2-C34A21E1FA32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29CCE9C9-6811-415D-A681-A6D47073924D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29CCE9C9-6811-415D-A681-A6D47073924D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29CCE9C9-6811-415D-A681-A6D47073924D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29CCE9C9-6811-415D-A681-A6D47073924D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{4B1CEB70-F756-4A57-AAE8-8CD78C475F25} = {86C452BE-D2D8-45B4-B63F-E329EB06CEDA}
-		{F4453AB6-D7D6-447F-A973-956CC777968F} = {4B1CEB70-F756-4A57-AAE8-8CD78C475F25}
 		{09CF91E5-5BAB-4650-A200-E5EA9A633046} = {86C452BE-D2D8-45B4-B63F-E329EB06CEDA}
 		{EB35A917-67B9-4EFA-8DFC-4FB49B3949BB} = {86C452BE-D2D8-45B4-B63F-E329EB06CEDA}
 		{5947303D-3512-413A-9009-7AC43F5D3513} = {EB35A917-67B9-4EFA-8DFC-4FB49B3949BB}
-		{85208F8D-6FD1-4531-BE05-7142490F59FE} = {82D22ED7-A0A7-4D64-8E92-4B6A5E74ED11}
-		{680B2641-81EA-467C-86A5-0E81CDC57ED0} = {82D22ED7-A0A7-4D64-8E92-4B6A5E74ED11}
-		{AA95884B-7097-476E-92C8-D0500DE9D6D1} = {82D22ED7-A0A7-4D64-8E92-4B6A5E74ED11}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {70143042-A862-47A8-A677-7C819DDC90DC}

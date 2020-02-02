@@ -171,7 +171,7 @@ namespace StardewModdingAPI.Framework
                 this.ConsoleManager.OnMessageIntercepted += message => this.HandleConsoleMessage(this.MonitorForGame, message);
 
             // init logging
-            this.Monitor.Log($"SMAPI {Constants.ApiVersion} with Stardew Valley {Constants.GameVersion} on {Constants.Platform} ({EnvironmentUtility.GetFriendlyPlatformName(Constants.Platform)})", LogLevel.Info);
+            //this.Monitor.Log($"SMAPI {Constants.ApiVersion} with Stardew Valley {Constants.GameVersion} on {Constants.Platform} ({EnvironmentUtility.GetFriendlyPlatformName(Constants.Platform)})", LogLevel.Info);
             this.Monitor.Log($"MartyrPher's Android SMAPI Loader: {Constants.AndroidApiVersion} on Android: {Android.OS.Build.VERSION.Sdk}", LogLevel.Info);
             this.Monitor.Log($"Mods go here: {modsPath}");
             if (modsPath != Constants.DefaultModsPath)
@@ -213,6 +213,7 @@ namespace StardewModdingAPI.Framework
                 JsonConverter[] converters = {
                     new ColorConverter(),
                     new PointConverter(),
+                    new Vector2Converter(),
                     new RectangleConverter()
                 };
                 foreach (JsonConverter converter in converters)
@@ -248,17 +249,15 @@ namespace StardewModdingAPI.Framework
                     logNetworkTraffic: this.Settings.LogNetworkTraffic
                 );
                 this.Translator.SetLocale(this.GameInstance.ContentCore.GetLocale(), this.GameInstance.ContentCore.Language);
-                SGame.ConstructorHack = new SGameConstructorHack(this.Monitor, this.Reflection, this.Toolkit.JsonHelper, this.InitialiseBeforeFirstAssetLoaded);
-                this.GameInstance = new SGame(this.Monitor, this.MonitorForGame, this.Reflection, this.EventManager, this.Toolkit.JsonHelper, this.ModRegistry, SCore.DeprecationManager, this.OnLocaleChanged, this.InitialiseAfterGameStart, this.Dispose);
                 StardewValley.Program.gamePtr = this.GameInstance;
 
                 // apply game patches
                 new GamePatcher(this.Monitor).Apply(
                     new EventErrorPatch(this.MonitorForGame),
-                    new DialogueErrorPatch(this.MonitorForGame, this.Reflection),
+                    //new DialogueErrorPatch(this.MonitorForGame, this.Reflection),
                     new ObjectErrorPatch(),
                     new LoadContextPatch(this.Reflection, this.GameInstance.OnLoadStageChanged),
-                    new LoadErrorPatch(this.Monitor, this.GameInstance.OnSaveContentRemoved)
+                    new LoadErrorPatch(this.Monitor, this.GameInstance.OnSaveContentRemoved),
                     new SaveBackupPatch(this.EventManager)
                 );
 
@@ -289,7 +288,7 @@ namespace StardewModdingAPI.Framework
             catch (Exception ex)
             {
                 this.Monitor.Log($"SMAPI failed to initialize: {ex.GetLogSummary()}", LogLevel.Error);
-                this.PressAnyKeyToExit();
+                //this.PressAnyKeyToExit();
                 return;
             }
 
@@ -332,8 +331,8 @@ namespace StardewModdingAPI.Framework
             this.Monitor.VerboseLog("Verbose logging enabled.");
 
             // update window titles
-            this.GameInstance.Window.Title = $"Stardew Valley {Constants.GameVersion} - running SMAPI {Constants.ApiVersion}";
-            Console.Title = $"SMAPI {Constants.ApiVersion} - running Stardew Valley {Constants.GameVersion}";
+            //this.GameInstance.Window.Title = $"Stardew Valley {Constants.GameVersion} - running SMAPI {Constants.ApiVersion}";
+            //Console.Title = $"SMAPI {Constants.ApiVersion} - running Stardew Valley {Constants.GameVersion}";
 
             // start game
             this.Monitor.Log("Starting game...", LogLevel.Debug);
@@ -412,11 +411,6 @@ namespace StardewModdingAPI.Framework
                 this.Monitor.Log("SMAPI shutting down: aborting initialization.", LogLevel.Warn);
                 return;
             }
-            if (this.Monitor.IsExiting)
-            {
-                this.Monitor.Log("SMAPI shutting down: aborting initialisation.", LogLevel.Warn);
-                return;
-            }
 
             this.GameInstance.IsGameSuspended = true;
             new Thread(() =>
@@ -433,34 +427,43 @@ namespace StardewModdingAPI.Framework
                     this.Monitor.Log("Loading mod metadata...", LogLevel.Trace);
                     ModResolver resolver = new ModResolver();
 
-                // log loose files
-                {
-                    string[] looseFiles = new DirectoryInfo(this.ModsPath).GetFiles().Select(p => p.Name).ToArray();
-                    if (looseFiles.Any())
-                        this.Monitor.Log($"  Ignored loose files: {string.Join(", ", looseFiles.OrderBy(p => p, StringComparer.InvariantCultureIgnoreCase))}", LogLevel.Trace);
-                }
+                    // log loose files
+                    {
+                        string[] looseFiles = new DirectoryInfo(this.ModsPath).GetFiles().Select(p => p.Name).ToArray();
+                        if (looseFiles.Any())
+                            this.Monitor.Log($"  Ignored loose files: {string.Join(", ", looseFiles.OrderBy(p => p, StringComparer.InvariantCultureIgnoreCase))}", LogLevel.Trace);
+                    }
 
-                // load manifests
-                IModMetadata[] mods = resolver.ReadManifests(toolkit, this.ModsPath, modDatabase).ToArray();
+                    // load manifests
+                    IModMetadata[] mods = resolver.ReadManifests(toolkit, this.ModsPath, modDatabase).ToArray();
 
-                // filter out ignored mods
-                foreach (IModMetadata mod in mods.Where(p => p.IsIgnored))
-                    this.Monitor.Log($"  Skipped {mod.GetRelativePathWithRoot()} (folder name starts with a dot).", LogLevel.Trace);
-                mods = mods.Where(p => !p.IsIgnored).ToArray();
+                    // filter out ignored mods
+                    foreach (IModMetadata mod in mods.Where(p => p.IsIgnored))
+                        this.Monitor.Log($"  Skipped {mod.GetRelativePathWithRoot()} (folder name starts with a dot).", LogLevel.Trace);
+                    mods = mods.Where(p => !p.IsIgnored).ToArray();
 
                     // load mods
                     resolver.ValidateManifests(mods, Constants.ApiVersion, toolkit.GetUpdateUrl);
-                    mods = resolver.ProcessDependencies(mods, modDatabase).ToArray();
+                    //mods = resolver.ProcessDependencies(mods, modDatabase).ToArray();
                     this.LoadMods(mods, this.Toolkit.JsonHelper, this.ContentCore, modDatabase);
 
-                // check for updates
-                this.CheckForUpdatesAsync(mods);
-            }
+                    // check for updates
+                    this.CheckForUpdatesAsync(mods);
+                }
 
-            // update window titles
-            int modsLoaded = this.ModRegistry.GetAll().Count();
-            //this.GameInstance.Window.Title = $"Stardew Valley {Constants.GameVersion} - running SMAPI {Constants.ApiVersion} with {modsLoaded} mods";
-            //Console.Title = $"SMAPI {Constants.ApiVersion} - running Stardew Valley {Constants.GameVersion} with {modsLoaded} mods";
+                // prepare console since the console loop is disabled
+                this.Monitor.Log("Type 'help' for help, or 'help <cmd>' for a command's usage", LogLevel.Info);
+                this.GameInstance.CommandManager.Add(null, "help", "Lists command documentation.\n\nUsage: help\nLists all available commands.\n\nUsage: help <cmd>\n- cmd: The name of a command whose documentation to display.", this.HandleCommand);
+                this.GameInstance.CommandManager.Add(null, "reload_i18n", "Reloads translation files for all mods.\n\nUsage: reload_i18n", this.HandleCommand);
+
+                // update window titles
+                int modsLoaded = this.ModRegistry.GetAll().Count();
+                //this.GameInstance.Window.Title = $"Stardew Valley {Constants.GameVersion} - running SMAPI {Constants.ApiVersion} with {modsLoaded} mods";
+                //Console.Title = $"SMAPI {Constants.ApiVersion} - running Stardew Valley {Constants.GameVersion} with {modsLoaded} mods";
+
+                SGameConsole.Instance.isVisible = false;
+                this.GameInstance.IsGameSuspended = false;
+            }).Start();
         }
 
         /// <summary>Initialize SMAPI and mods after the game starts.</summary>

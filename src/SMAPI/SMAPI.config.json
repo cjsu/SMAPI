@@ -43,9 +43,9 @@ The default values are mirrored in StardewModdingAPI.Framework.Models.SConfig to
     //"UseBetaChannel": true,
 
     /**
-     * SMAPI's GitHub project name, used to perform update checks.
+     * SMAPI's Android Installer GitHub project name, used to perform update checks.
      */
-    "GitHubProjectName": "Pathoschild/SMAPI",
+    "GitHubProjectName": "MartyrPher/SMAPI-Android-Installer",
 
     /**
      * The base URL for SMAPI's web API, used to perform update checks.

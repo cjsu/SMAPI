@@ -99,8 +99,6 @@ namespace StardewModdingAPI.Framework
         /// <summary>Propagates notification that SMAPI should exit.</summary>
         private readonly CancellationTokenSource CancellationToken;
 
-        /// <summary>A callback to invoke the first time *any* game content manager loads an asset.</summary>
-        private readonly Action OnLoadingFirstAsset;
 
         /****
         ** Game state
@@ -144,6 +142,7 @@ namespace StardewModdingAPI.Framework
         public ConcurrentQueue<string> CommandQueue { get; } = new ConcurrentQueue<string>();
 
         public static SGame instance;
+
         /// <summary>Asset interceptors added or removed since the last tick.</summary>
         private readonly List<AssetInterceptorChange> ReloadAssetInterceptorsQueue = new List<AssetInterceptorChange>();
 
@@ -319,12 +318,6 @@ namespace StardewModdingAPI.Framework
                 if (!this.IsAfterInitialize)
                     this.IsAfterInitialize = true;
 
-                if (Game1.graphics.GraphicsDevice != null)
-                {
-                    this.Reflection.GetMethod(this, "_updateAudioEngine").Invoke();
-                    this.Reflection.GetMethod(this, "_updateOptionsAndToggleFullScreen").Invoke();
-                    this.Reflection.GetMethod(this, "_updateInput").Invoke();
-                }
                 return;
             }
 
@@ -368,7 +361,7 @@ namespace StardewModdingAPI.Framework
                 bool saveParsed = false;
                 if (Game1.currentLoader != null)
                 {
-                    this.Monitor.Log("Game loader synchronizing...", LogLevel.Trace);
+                    //this.Monitor.Log("Game loader synchronizing...", LogLevel.Trace);
                     while (Game1.currentLoader?.MoveNext() == true)
                     {
                         // raise load stage changed
@@ -692,45 +685,48 @@ namespace StardewModdingAPI.Framework
                     *********/
                     if (state.ActiveMenu.IsChanged)
                     {
+                        IClickableMenu was = this.Watchers.ActiveMenuWatcher.PreviousValue;
+                        IClickableMenu now = this.Watchers.ActiveMenuWatcher.CurrentValue;
+
                         if (this.Monitor.IsVerbose)
                             this.Monitor.Log($"Context: menu changed from {state.ActiveMenu.Old?.GetType().FullName ?? "none"} to {state.ActiveMenu.New?.GetType().FullName ?? "none"}.", LogLevel.Trace);
 
-                    // raise menu events
-                    int forSaleCount = 0;
-                    Dictionary<Item, int[]> itemPriceAndStock;
-                    List<Item> forSale;
-                    if (now is ShopMenu shop && !(was is ShopMenu))
-                    {
-                        itemPriceAndStock = this.Reflection.GetField<Dictionary<Item, int[]>>(shop, "itemPriceAndStock").GetValue();
-                        forSale = this.Reflection.GetField<List<Item>>(shop, "forSale").GetValue();
-                        forSaleCount = forSale.Count;
-                    }
-                    events.MenuChanged.Raise(new MenuChangedEventArgs(was, now));
-
-                    if (now is GameMenu gameMenu)
-                    {
-                        foreach (IClickableMenu menu in gameMenu.pages)
+                        // raise menu events
+                        int forSaleCount = 0;
+                        Dictionary<ISalable, int[]> itemPriceAndStock;
+                        List<Item> forSale;
+                        if (now is ShopMenu shop && !(was is ShopMenu))
                         {
-                            OptionsPage optionsPage = menu as OptionsPage;
-                            if (optionsPage != null)
+                            itemPriceAndStock = this.Reflection.GetField<Dictionary<ISalable, int[]>>(shop, "itemPriceAndStock").GetValue();
+                            forSale = this.Reflection.GetField<List<Item>>(shop, "forSale").GetValue();
+                            forSaleCount = forSale.Count;
+                        }
+                        events.MenuChanged.Raise(new MenuChangedEventArgs(was, now));
+
+                        if (now is GameMenu gameMenu)
+                        {
+                            foreach (IClickableMenu menu in gameMenu.pages)
                             {
-                                List<OptionsElement> options = this.Reflection.GetField<List<OptionsElement>>(optionsPage, "options").GetValue();
-                                options.Insert(0, new OptionsButton("Console", () => SGameConsole.Instance.Show()));
-                                this.Reflection.GetMethod(optionsPage, "updateContentPositions").Invoke();
+                                OptionsPage optionsPage = menu as OptionsPage;
+                                if (optionsPage != null)
+                                {
+                                    List<OptionsElement> options = this.Reflection.GetField<List<OptionsElement>>(optionsPage, "options").GetValue();
+                                    options.Insert(0, new OptionsButton("Console", () => SGameConsole.Instance.Show()));
+                                    this.Reflection.GetMethod(optionsPage, "updateContentPositions").Invoke();
+                                }
                             }
                         }
-                    }
-                    else if (now is ShopMenu shopMenu && !(was is ShopMenu))
-                    {
-                        itemPriceAndStock = this.Reflection.GetField<Dictionary<Item, int[]>>(shopMenu, "itemPriceAndStock").GetValue();
-                        forSale = this.Reflection.GetField<List<Item>>(shopMenu, "forSale").GetValue();
-                        if (forSaleCount != forSale.Count)
+                        else if (now is ShopMenu shopMenu && !(was is ShopMenu))
                         {
-                            Game1.activeClickableMenu = new ShopMenu(itemPriceAndStock,
-                                this.Reflection.GetField<int>(shopMenu, "currency").GetValue(),
-                                this.Reflection.GetField<string>(shopMenu, "personName").GetValue());
+                            itemPriceAndStock = this.Reflection.GetField<Dictionary<ISalable, int[]>>(shopMenu, "itemPriceAndStock").GetValue();
+                            forSale = this.Reflection.GetField<List<Item>>(shopMenu, "forSale").GetValue();
+                            if (forSaleCount != forSale.Count)
+                            {
+                                Game1.activeClickableMenu = new ShopMenu(itemPriceAndStock,
+                                    this.Reflection.GetField<int>(shopMenu, "currency").GetValue(),
+                                    this.Reflection.GetField<string>(shopMenu, "personName").GetValue());
+                            }
                         }
-                    }
                 }
 
                     /*********
@@ -904,7 +900,7 @@ namespace StardewModdingAPI.Framework
         /// <param name="gameTime">A snapshot of the game timing state.</param>
         /// <param name="target_screen">The render target, if any.</param>
         [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "copied from game code as-is")]
-        protected override void _draw(GameTime gameTime, RenderTarget2D target_screen)
+        protected override void _draw(GameTime gameTime, RenderTarget2D target_screen, RenderTarget2D toBuffer = null)
         {
             Context.IsInDrawLoop = true;
             try
@@ -942,7 +938,7 @@ namespace StardewModdingAPI.Framework
                     Game1.spriteBatch.End();
                     return;
                 }
-                this.DrawImpl(gameTime);
+                this.DrawImpl(gameTime, target_screen, toBuffer);
                 this.DrawCrashTimer.Reset();
             }
             catch (Exception ex)
@@ -988,7 +984,7 @@ namespace StardewModdingAPI.Framework
         [SuppressMessage("ReSharper", "RedundantTypeArgumentsOfMethod", Justification = "copied from game code as-is")]
         [SuppressMessage("SMAPI.CommonErrors", "AvoidNetField", Justification = "copied from game code as-is")]
         [SuppressMessage("SMAPI.CommonErrors", "AvoidImplicitNetFieldCast", Justification = "copied from game code as-is")]
-        private void DrawImpl(GameTime gameTime, RenderTarget2D toBuffer = null)
+        private void DrawImpl(GameTime gameTime, RenderTarget2D target_screen, RenderTarget2D toBuffer = null)
         {
             var events = this.Events;
             if (skipNextDrawCall)
@@ -1000,7 +996,6 @@ namespace StardewModdingAPI.Framework
                 IReflectedField<bool> _drawActiveClickableMenu = this.Reflection.GetField<bool>(this, "_drawActiveClickableMenu");
                 IReflectedField<string> _spriteBatchBeginNextID = this.Reflection.GetField<string>(typeof(Game1), "_spriteBatchBeginNextID");
                 IReflectedField<bool> _drawHUD = this.Reflection.GetField<bool>(this, "_drawHUD");
-                IReflectedField<Color> bgColor = this.Reflection.GetField<Color>(this, "bgColor");
                 IReflectedField<List<Farmer>> _farmerShadows = this.Reflection.GetField<List<Farmer>>(this, "_farmerShadows");
                 IReflectedField<StringBuilder> _debugStringBuilder = this.Reflection.GetField<StringBuilder>(typeof(Game1), "_debugStringBuilder");
                 IReflectedField<BlendState> lightingBlend = this.Reflection.GetField<BlendState>(this, "lightingBlend");
@@ -1026,27 +1021,23 @@ namespace StardewModdingAPI.Framework
 
                 _drawHUD.SetValue(false);
                 _drawActiveClickableMenu.SetValue(false);
+                Game1.showingHealthBar = false;
                 if (_newDayTask != null)
                 {
-                    base.GraphicsDevice.Clear(bgColor.GetValue());
-                    if (Game1.showInterDayScroll)
-                    {
-                        Matrix value = Matrix.CreateScale(1f);
-                        Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, new Matrix?(value));
-                        SpriteText.drawStringWithScrollCenteredAt(Game1.spriteBatch, Game1.content.LoadString("Strings\\UI:please_wait"), base.GraphicsDevice.Viewport.Width / 2, base.GraphicsDevice.Viewport.Height / 2, "", 1f, -1, 0, 0.088f, false);
-                        Game1.spriteBatch.End();
-                    }
-                    return;
+                    base.GraphicsDevice.Clear(Game1.bgColor);
+                    if (!Game1.showInterDayScroll)
+                        return;
+                    this.DrawSavingDotDotDot();
                 }
                 else
                 {
-                    if (options.zoomLevel != 1f)
+                    if (target_screen != null && toBuffer == null)
                     {
-                        base.GraphicsDevice.SetRenderTarget(this.screen);
+                        this.GraphicsDevice.SetRenderTarget(target_screen);
                     }
                     if (this.IsSaving)
                     {
-                        base.GraphicsDevice.Clear(bgColor.GetValue());
+                        base.GraphicsDevice.Clear(Game1.bgColor);
                         this.renderScreenBuffer(BlendState.Opaque, toBuffer);
                         if (activeClickableMenu != null)
                         {
@@ -1059,23 +1050,14 @@ namespace StardewModdingAPI.Framework
                                 try
                                 {
                                     events.RenderingActiveMenu.RaiseEmpty();
-#if !SMAPI_3_0_STRICT
-                                    events.Legacy_OnPreRenderGuiEvent.Raise();
-#endif
                                     Game1.activeClickableMenu.draw(Game1.spriteBatch);
                                     events.RenderedActiveMenu.RaiseEmpty();
-#if !SMAPI_3_0_STRICT
-                                    events.Legacy_OnPostRenderGuiEvent.Raise();
-#endif
                                 }
                                 catch (Exception ex)
                                 {
                                     this.Monitor.Log($"The {Game1.activeClickableMenu.GetType().FullName} menu crashed while drawing itself during save. SMAPI will force it to exit to avoid crashing the game.\n{ex.GetLogSummary()}", LogLevel.Error);
                                     Game1.activeClickableMenu.exitThisMenu();
                                 }
-#if !SMAPI_3_0_STRICT
-                                events.Legacy_OnPostRenderEvent.Raise();
-#endif
                                 _spriteBatchEnd.Invoke();
                                 RestoreViewportAndZoom();
                             }
@@ -1088,14 +1070,8 @@ namespace StardewModdingAPI.Framework
                                 try
                                 {
                                     events.RenderingActiveMenu.RaiseEmpty();
-#if !SMAPI_3_0_STRICT
-                                    events.Legacy_OnPreRenderGuiEvent.Raise();
-#endif
                                     Game1.activeClickableMenu.draw(Game1.spriteBatch);
                                     events.RenderedActiveMenu.RaiseEmpty();
-#if !SMAPI_3_0_STRICT
-                                    events.Legacy_OnPostRenderGuiEvent.Raise();
-#endif
                                 }
                                 catch (Exception ex)
                                 {
@@ -1103,9 +1079,6 @@ namespace StardewModdingAPI.Framework
                                     Game1.activeClickableMenu.exitThisMenu();
                                 }
                                 events.Rendered.RaiseEmpty();
-#if !SMAPI_3_0_STRICT
-                                events.Legacy_OnPostRenderEvent.Raise();
-#endif
 
                                 _spriteBatchEnd.Invoke();
                                 RestoreViewportAndZoom();
@@ -1124,8 +1097,8 @@ namespace StardewModdingAPI.Framework
                     }
                     else
                     {
-                        base.GraphicsDevice.Clear(bgColor.GetValue());
-                        if (activeClickableMenu != null && options.showMenuBackground && activeClickableMenu.showWithoutTransparencyIfOptionIsSet())
+                        base.GraphicsDevice.Clear(Game1.bgColor);
+                        if (activeClickableMenu != null && options.showMenuBackground && (activeClickableMenu.showWithoutTransparencyIfOptionIsSet() && !this.takingMapScreenshot))
                         {
                             Matrix value = Matrix.CreateScale(1f);
                             SetSpriteBatchBeginNextID("C");
@@ -1135,15 +1108,10 @@ namespace StardewModdingAPI.Framework
                             {
                                 Game1.activeClickableMenu.drawBackground(Game1.spriteBatch);
                                 events.RenderingActiveMenu.RaiseEmpty();
-#if !SMAPI_3_0_STRICT
-                                events.Legacy_OnPreRenderGuiEvent.Raise();
-#endif
+
                                 Game1.activeClickableMenu.drawBackground(Game1.spriteBatch);
                                 Game1.activeClickableMenu.draw(Game1.spriteBatch);
                                 events.RenderedActiveMenu.RaiseEmpty();
-#if !SMAPI_3_0_STRICT
-                                events.Legacy_OnPostRenderGuiEvent.Raise();
-#endif
                             }
                             catch (Exception ex)
                             {
@@ -1151,9 +1119,6 @@ namespace StardewModdingAPI.Framework
                                 Game1.activeClickableMenu.exitThisMenu();
                             }
                             events.Rendered.RaiseEmpty();
-#if !SMAPI_3_0_STRICT
-                            events.Legacy_OnPostRenderEvent.Raise();
-#endif
 
                             _spriteBatchEnd.Invoke();
                             this.drawOverlays(spriteBatch);
@@ -1199,9 +1164,6 @@ namespace StardewModdingAPI.Framework
                                 spriteBatch.DrawString(dialogueFont, content.LoadString("Strings\\StringsFromCSFiles:Game1.cs.3686"), new Vector2(16f, 32f), new Color(0, 255, 0));
                                 spriteBatch.DrawString(dialogueFont, parseText(errorMessage, dialogueFont, graphics.GraphicsDevice.Viewport.Width), new Vector2(16f, 48f), Color.White);
                                 events.Rendered.RaiseEmpty();
-#if !SMAPI_3_0_STRICT
-                                events.Legacy_OnPostRenderEvent.Raise();
-#endif
 
                                 _spriteBatchEnd.Invoke();
                                 return;
@@ -1217,7 +1179,7 @@ namespace StardewModdingAPI.Framework
                                     _spriteBatchEnd.Invoke();
                                 }
                                 this.drawOverlays(spriteBatch);
-                                this.renderScreenBuffer(BlendState.AlphaBlend, null);
+                                this.renderScreenBufferTargetScreen(target_screen);
                                 if (currentMinigame is FishingGame && activeClickableMenu != null)
                                 {
                                     SetSpriteBatchBeginNextID("A-A");
@@ -1264,14 +1226,8 @@ namespace StardewModdingAPI.Framework
                                     try
                                     {
                                         events.RenderingActiveMenu.RaiseEmpty();
-#if !SMAPI_3_0_STRICT
-                                        events.Legacy_OnPreRenderGuiEvent.Raise();
-#endif
                                         Game1.activeClickableMenu.draw(Game1.spriteBatch);
                                         events.RenderedActiveMenu.RaiseEmpty();
-#if !SMAPI_3_0_STRICT
-                                        events.Legacy_OnPostRenderGuiEvent.Raise();
-#endif
                                     }
                                     catch (Exception ex)
                                     {
@@ -1281,9 +1237,6 @@ namespace StardewModdingAPI.Framework
                                 }
 
                                 events.Rendered.RaiseEmpty();
-#if !SMAPI_3_0_STRICT
-                                events.Legacy_OnPostRenderEvent.Raise();
-#endif
 
                                 _spriteBatchEnd.Invoke();
                                 this.drawOverlays(spriteBatch);
@@ -1295,12 +1248,8 @@ namespace StardewModdingAPI.Framework
                                 DrawLoadingDotDotDot.Invoke(gameTime);
                                 events.Rendered.RaiseEmpty();
 
-#if !SMAPI_3_0_STRICT
-                                events.Legacy_OnPostRenderEvent.Raise();
-#endif
-
                                 this.drawOverlays(spriteBatch);
-                                this.renderScreenBuffer(BlendState.AlphaBlend, toBuffer);
+                                this.renderScreenBufferTargetScreen(target_screen);
                                 if (overlayMenu != null)
                                 {
                                     SetSpriteBatchBeginNextID("H");
@@ -1340,33 +1289,42 @@ namespace StardewModdingAPI.Framework
                                         if (++batchOpens == 1)
                                             events.Rendering.RaiseEmpty();
                                         spriteBatch.Draw(staminaRect, lightmap.Bounds, currentLocation.Name.StartsWith("UndergroundMine") ? mine.getLightingColor(gameTime) : (ambientLight.Equals(Color.White) || RainManager.Instance.isRaining && (bool)((NetFieldBase<bool, NetBool>)Game1.currentLocation.isOutdoors) ? Game1.outdoorLight : Game1.ambientLight));
-                                        for (int i = 0; i < currentLightSources.Count; i++)
+                                        foreach (LightSource currentLightSource in currentLightSources)
                                         {
-                                            if (Utility.isOnScreen((Vector2)((NetFieldBase<Vector2, NetVector2>)Game1.currentLightSources.ElementAt<LightSource>(i).position), (int)((double)(float)((NetFieldBase<float, NetFloat>)Game1.currentLightSources.ElementAt<LightSource>(i).radius) * 64.0 * 4.0)))
+                                            if (!RainManager.Instance.isRaining && !Game1.isDarkOut() || currentLightSource.lightContext.Value != LightSource.LightContext.WindowLight)
+                                            {
+                                                if (currentLightSource.PlayerID != 0L && currentLightSource.PlayerID != Game1.player.UniqueMultiplayerID)
+                                                {
+                                                    Farmer farmerMaybeOffline = Game1.getFarmerMaybeOffline(currentLightSource.PlayerID);
+                                                    if (farmerMaybeOffline == null || farmerMaybeOffline.currentLocation != null && farmerMaybeOffline.currentLocation.Name != Game1.currentLocation.Name || (bool) ((NetFieldBase<bool, NetBool>) farmerMaybeOffline.hidden))
+                                                        continue;
+                                                }
+                                            }
+                                            if (Utility.isOnScreen((Vector2)((NetFieldBase<Vector2, NetVector2>)currentLightSource.position), (int)((double)(float)((NetFieldBase<float, NetFloat>)currentLightSource.radius) * 64.0 * 4.0)))
                                             {
                                                 SpriteBatch spriteBatch = Game1.spriteBatch;
-                                                Texture2D lightTexture = Game1.currentLightSources.ElementAt<LightSource>(i).lightTexture;
-                                                Vector2 position = Game1.GlobalToLocal(Game1.viewport, (Vector2)((NetFieldBase<Vector2, NetVector2>)Game1.currentLightSources.ElementAt<LightSource>(i).position)) / (float)(Game1.options.lightingQuality / 2);
-                                                Microsoft.Xna.Framework.Rectangle? sourceRectangle = new Microsoft.Xna.Framework.Rectangle?(Game1.currentLightSources.ElementAt<LightSource>(i).lightTexture.Bounds);
-                                                Color color = (Color)((NetFieldBase<Color, NetColor>)Game1.currentLightSources.ElementAt<LightSource>(i).color);
-                                                Microsoft.Xna.Framework.Rectangle bounds = Game1.currentLightSources.ElementAt<LightSource>(i).lightTexture.Bounds;
+                                                Texture2D lightTexture = currentLightSource.lightTexture;
+                                                Vector2 position = Game1.GlobalToLocal(Game1.viewport, (Vector2)((NetFieldBase<Vector2, NetVector2>)currentLightSource.position)) / (float)(Game1.options.lightingQuality / 2);
+                                                Microsoft.Xna.Framework.Rectangle? sourceRectangle = new Microsoft.Xna.Framework.Rectangle?(currentLightSource.lightTexture.Bounds);
+                                                Color color = (Color)((NetFieldBase<Color, NetColor>)currentLightSource.color);
+                                                Microsoft.Xna.Framework.Rectangle bounds = currentLightSource.lightTexture.Bounds;
                                                 double x = (double)bounds.Center.X;
-                                                bounds = Game1.currentLightSources.ElementAt<LightSource>(i).lightTexture.Bounds;
+                                                bounds = currentLightSource.lightTexture.Bounds;
                                                 double y = (double)bounds.Center.Y;
                                                 Vector2 origin = new Vector2((float)x, (float)y);
-                                                double num = (double)(float)((NetFieldBase<float, NetFloat>)Game1.currentLightSources.ElementAt<LightSource>(i).radius) / (double)(Game1.options.lightingQuality / 2);
+                                                double num = (double)(float)((NetFieldBase<float, NetFloat>)currentLightSource.radius) / (double)(Game1.options.lightingQuality / 2);
 
                                                 spriteBatch.Draw(lightTexture, position, sourceRectangle, color, 0.0f, origin, (float) num, SpriteEffects.None, 0.9f);
                                             }
                                         }
                                         _spriteBatchEnd.Invoke();
-                                        base.GraphicsDevice.SetRenderTarget((options.zoomLevel == 1f) ? null : this.screen);
+                                        base.GraphicsDevice.SetRenderTarget(target_screen);
                                     }
                                     if (bloomDay && bloom != null)
                                     {
                                         bloom.BeginDraw();
                                     }
-                                    base.GraphicsDevice.Clear(bgColor.GetValue());
+                                    base.GraphicsDevice.Clear(Game1.bgColor);
                                     SetSpriteBatchBeginNextID("L");
                                     _spriteBatchBegin.Invoke(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, null);
                                     if (++batchOpens == 1)
@@ -1910,9 +1868,6 @@ label_168:
                                 {
                                     _drawActiveClickableMenu.SetValue(true);
                                     events.RenderingActiveMenu.RaiseEmpty();
-#if !SMAPI_3_0_STRICT
-                                    events.Legacy_OnPreRenderGuiEvent.Raise();
-#endif
                                     if (activeClickableMenu is CarpenterMenu)
                                     {
                                         ((CarpenterMenu)activeClickableMenu).DrawPlacementSquares(spriteBatch);
@@ -1926,9 +1881,6 @@ label_168:
                                         activeClickableMenu.draw(spriteBatch);
                                     }
                                     events.RenderedActiveMenu.RaiseEmpty();
-#if !SMAPI_3_0_STRICT
-                                    events.Legacy_OnPostRenderGuiEvent.Raise();
-#endif
                                 }
                                 else if (farmEvent != null)
                                 {
@@ -1940,9 +1892,6 @@ label_168:
                                     SpriteText.drawStringWithScrollBackground(spriteBatch, s, 96, 32);
                                 }
                                 events.Rendered.RaiseEmpty();
-#if !SMAPI_3_0_STRICT
-                                events.Legacy_OnPostRenderEvent.Raise();
-#endif
                                 _spriteBatchEnd.Invoke();
                                 this.drawOverlays(spriteBatch);
                                 this.renderScreenBuffer(BlendState.Opaque, toBuffer);
@@ -1952,9 +1901,6 @@ label_168:
                                     SetSpriteBatchBeginNextID("A-C");
                                     SpriteBatchBegin.Invoke(1f);
                                     events.RenderingHud.RaiseEmpty();
-#if !SMAPI_3_0_STRICT
-                                    events.Legacy_OnPreRenderHudEvent.Raise();
-#endif
                                     this.DrawHUD();
                                     if (currentLocation != null && !(activeClickableMenu is GameMenu) && !(activeClickableMenu is QuestLog))
                                     {
@@ -1962,9 +1908,6 @@ label_168:
                                     }
                                     DrawAfterMap.Invoke();
                                     events.RenderedHud.RaiseEmpty();
-#if !SMAPI_3_0_STRICT
-                                    events.Legacy_OnPostRenderHudEvent.Raise();
-#endif
                                     _spriteBatchEnd.Invoke();
                                     if (tutorialManager != null)
                                     {
@@ -1989,9 +1932,6 @@ label_168:
                                 }
                                 SpriteBatchBegin.Invoke(Game1.options.zoomLevel);
                                 events.Rendered.RaiseEmpty();
-#if !SMAPI_3_0_STRICT
-                                events.Legacy_OnPostRenderEvent.Raise();
-#endif
                                 _spriteBatchEnd.Invoke();
                                 if (_drawHUD.GetValue() && hudMessages.Count > 0 && (!eventUp || isFestival()))
                                 {

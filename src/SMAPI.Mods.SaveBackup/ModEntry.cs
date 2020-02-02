@@ -68,22 +68,21 @@ namespace StardewModdingAPI.Mods.SaveBackup
                 if (targetFile.Exists || fallbackDir.Exists)
                     return;
 
-                // back up saves
-                this.Monitor.Log($"Backing up saves to {targetFile.FullName}...", LogLevel.Trace);
-                if (!this.TryCompress(Constants.SavesPath, targetFile, out Exception compressError))
-                {
-                    // log error (expected on Android due to missing compression DLLs)
-                    if (Constants.TargetPlatform == GamePlatform.Android)
-                        this.Monitor.VerboseLog($"Compression isn't supported on Android:\n{compressError}");
-                    else
-                    {
-                        this.Monitor.Log("Couldn't zip the save backup, creating uncompressed backup instead.", LogLevel.Debug);
-                        this.Monitor.Log(compressError.ToString(), LogLevel.Trace);
-                    }
+                // copy saves to fallback directory (ignore non-save files/folders)
+                this.Monitor.Log($"Backing up saves to {fallbackDir.FullName}...", LogLevel.Trace);
+                DirectoryInfo savesDir = new DirectoryInfo(Constants.SavesPath);
+                this.RecursiveCopy(savesDir, fallbackDir, entry => this.MatchSaveFolders(savesDir, entry), copyRoot: false);
 
-                    // fallback to uncompressed
-                    this.RecursiveCopy(new DirectoryInfo(Constants.SavesPath), fallbackDir, copyRoot: false);
+                // compress backup if possible
+                this.Monitor.Log("Compressing backup if possible...", LogLevel.Trace);
+                if (!this.TryCompress(fallbackDir.FullName, targetFile, out Exception compressError))
+                {
+                    if (Constants.TargetPlatform != GamePlatform.Android) // expected to fail on Android
+                        this.Monitor.Log($"Couldn't compress backup, leaving it uncompressed.\n{compressError}", LogLevel.Trace);
                 }
+                else
+                    fallbackDir.Delete(recursive: true);
+
                 this.Monitor.Log("Backup done!", LogLevel.Trace);
             }
             catch (Exception ex)
@@ -198,11 +197,15 @@ namespace StardewModdingAPI.Mods.SaveBackup
         /// <param name="source">The file or folder to copy.</param>
         /// <param name="targetFolder">The folder to copy into.</param>
         /// <param name="copyRoot">Whether to copy the root folder itself, or <c>false</c> to only copy its contents.</param>
+        /// <param name="filter">A filter which matches the files or directories to copy, or <c>null</c> to copy everything.</param>
         /// <remarks>Derived from the SMAPI installer code.</remarks>
-        private void RecursiveCopy(FileSystemInfo source, DirectoryInfo targetFolder, bool copyRoot = true)
+        private void RecursiveCopy(FileSystemInfo source, DirectoryInfo targetFolder, Func<FileSystemInfo, bool> filter = null, bool copyRoot = true)
         {
             if (!targetFolder.Exists)
                 targetFolder.Create();
+
+            if (filter?.Invoke(source) == false)
+                return;
 
             switch (source)
             {
@@ -213,12 +216,35 @@ namespace StardewModdingAPI.Mods.SaveBackup
                 case DirectoryInfo sourceDir:
                     DirectoryInfo targetSubfolder = copyRoot ? new DirectoryInfo(Path.Combine(targetFolder.FullName, sourceDir.Name)) : targetFolder;
                     foreach (var entry in sourceDir.EnumerateFileSystemInfos())
-                        this.RecursiveCopy(entry, targetSubfolder);
+                        this.RecursiveCopy(entry, targetSubfolder, filter);
                     break;
 
                 default:
                     throw new NotSupportedException($"Unknown filesystem info type '{source.GetType().FullName}'.");
             }
+        }
+
+        /// <summary>A copy filter which matches save folders.</summary>
+        /// <param name="savesFolder">The folder containing save folders.</param>
+        /// <param name="entry">The current entry to check under <paramref name="savesFolder"/>.</param>
+        private bool MatchSaveFolders(DirectoryInfo savesFolder, FileSystemInfo entry)
+        {
+            this.Monitor.Log($"Checking {entry.FullName}...");
+
+            // only need to filter top-level entries
+            string parentPath = (entry as FileInfo)?.DirectoryName ?? (entry as DirectoryInfo)?.Parent?.FullName;
+            if (parentPath != savesFolder.FullName)
+            {
+                this.Monitor.Log("   OK: not root path");
+                return true;
+            }
+
+            // match folders with Name_ID format
+            bool include =
+                entry is DirectoryInfo
+                && ulong.TryParse(entry.Name.Split('_').Last(), out _);
+            this.Monitor.Log(include ? "   OK: name matches save folder format" : "   SKIP: not a save folder");
+            return include;
         }
     }
 }

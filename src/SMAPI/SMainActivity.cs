@@ -13,16 +13,18 @@ using StardewModdingAPI.Framework;
 using StardewValley;
 using System.Reflection;
 using Android.Content.Res;
+using Java.Interop;
 
 namespace StardewModdingAPI
 {
     [Activity(Label = "SMAPI Stardew Valley", Icon = "@mipmap/ic_launcher", Theme = "@style/Theme.Splash", MainLauncher = true, AlwaysRetainTaskState = true, LaunchMode = LaunchMode.SingleInstance, ScreenOrientation = ScreenOrientation.SensorLandscape, ConfigurationChanges = (ConfigChanges.Keyboard | ConfigChanges.KeyboardHidden | ConfigChanges.Orientation | ConfigChanges.ScreenLayout | ConfigChanges.ScreenSize | ConfigChanges.UiMode))]
-    public class SMainActivity: MainActivity, ILicenseCheckerCallback, IJavaObject, IDisposable
+    public class SMainActivity: MainActivity, ILicenseCheckerCallback, IJavaObject, IDisposable, IJavaPeerable
     {
         private SCore core;
         private LicenseChecker _licenseChecker;
         private PowerManager.WakeLock _wakeLock;
         private ServerManagedPolicyExtended _serverManagedPolicyExtended;
+
         public new bool HasPermissions
         {
             get
@@ -77,10 +79,6 @@ namespace StardewModdingAPI
             }
             this.Window.SetFlags(WindowManagerFlags.Fullscreen, WindowManagerFlags.Fullscreen);
             this.Window.SetFlags(WindowManagerFlags.KeepScreenOn, WindowManagerFlags.KeepScreenOn);
-            PowerManager powerManager = (PowerManager)this.GetSystemService("power");
-            this._wakeLock = powerManager.NewWakeLock(WakeLockFlags.Full, "StardewWakeLock");
-            this._wakeLock.Acquire();
-            typeof(MainActivity).GetField("_wakeLock", BindingFlags.Instance | BindingFlags.NonPublic)?.SetValue(this, this._wakeLock);
             base.OnCreate(bundle);
             this.CheckAppPermissions();
         }

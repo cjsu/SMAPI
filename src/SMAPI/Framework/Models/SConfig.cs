@@ -22,7 +22,7 @@ namespace StardewModdingAPI.Framework.Models
                 false,
 #endif
             [nameof(UseBetaChannel)] = Constants.ApiVersion.IsPrerelease(),
-            [nameof(GitHubProjectName)] = "Pathoschild/SMAPI",
+            [nameof(GitHubProjectName)] = "MartyrPher/SMAPI-Android-Installer",
             [nameof(WebApiBaseUrl)] = "https://smapi.io/api/",
             [nameof(VerboseLogging)] = false,
             [nameof(LogNetworkTraffic)] = false

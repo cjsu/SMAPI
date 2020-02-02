@@ -58,6 +58,7 @@ namespace StardewModdingAPI.Metadata
             yield return new MethodParentRewriter(typeof(FarmerRenderer), typeof(FarmerRendererMethods));
             yield return new MethodParentRewriter(typeof(SpriteText), typeof(SpriteTextMethods));
             yield return new MethodParentRewriter(typeof(NPC), typeof(NPCMethods));
+            yield return new MethodParentRewriter(typeof(Utility), typeof(UtilityMethods));
 
             //Constructor Rewrites
             yield return new MethodParentRewriter(typeof(HUDMessage), typeof(HUDMessageMethods));
@@ -69,7 +70,6 @@ namespace StardewModdingAPI.Metadata
 
             //Field Rewriters
             yield return new FieldReplaceRewriter(typeof(ItemGrabMenu), "context", "specialObject");
-            yield return new FieldReplaceRewriter(typeof(FarmerTeam), "demolishLock", "buildingLock");
 
             // rewrite for Stardew Valley 1.3
             yield return new StaticFieldToConstantRewriter<int>(typeof(Game1), "tileSize", Game1.tileSize);

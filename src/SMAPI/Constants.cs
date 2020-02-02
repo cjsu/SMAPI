@@ -23,7 +23,7 @@ namespace StardewModdingAPI
         public static ISemanticVersion ApiVersion { get; } = new Toolkit.SemanticVersion("3.1.0");
 
         /// <summary>Android SMAPI's current semantic version.</summary>
-        public static ISemanticVersion AndroidApiVersion { get; } = new Toolkit.SemanticVersion("0.9.2");
+        public static ISemanticVersion AndroidApiVersion { get; } = new Toolkit.SemanticVersion("3.1.0-experimental");
 
         /// <summary>The minimum supported version of Stardew Valley.</summary>
         public static ISemanticVersion MinimumGameVersion { get; } = new GameVersion("1.4.0");
@@ -164,8 +164,7 @@ namespace StardewModdingAPI
                         typeof(MonoMod.Utils.Platform).Assembly,
                         typeof(Harmony.HarmonyPatch).Assembly,
                         typeof(Mono.Cecil.MethodDefinition).Assembly,
-                        typeof(Microsoft.Xna.Framework.Vector2).Assembly,
-                        typeof(StardewModdingAPI.IManifest).Assembly
+                        typeof(StardewModdingAPI.IManifest).Assembly,
                     };
                     break;
 

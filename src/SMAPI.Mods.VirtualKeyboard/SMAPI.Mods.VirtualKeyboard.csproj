@@ -32,17 +32,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=84e04ff9cfb79065, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Downloads\com.chucklefish.stardewvalley_1.322\assemblies\Mono.Android.dll</HintPath>
+    <Reference Include="Mono.Android">
+      <HintPath>..\..\..\..\..\Downloads\StardewValleyAndroidStuff\base_1.4.4.118\assemblies\Mono.Android.dll</HintPath>
     </Reference>
     <Reference Include="MonoGame.Framework, Version=3.7.1.189, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Downloads\com.chucklefish.stardewvalley_1.322\assemblies\MonoGame.Framework.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\StardewValleyAndroidStuff\base_1.4.4.118\assemblies\MonoGame.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="StardewValley, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Downloads\com.chucklefish.stardewvalley_1.322\assemblies\StardewValley.dll</HintPath>
+    <Reference Include="StardewModdingAPI">
+      <HintPath>..\SMAPI\bin\Debug\StardewModdingAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="StardewValley">
+      <HintPath>..\..\..\..\..\Downloads\StardewValleyAndroidStuff\base_1.4.4.118\assemblies\StardewValley.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Private>True</Private>
@@ -87,9 +88,9 @@
     <Content Include="assets\togglebutton.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SMAPI\StardewModdingAPI.csproj">
-      <Project>{9ef11e43-1701-4396-8835-8392d57abb70}</Project>
-      <Name>StardewModdingAPI</Name>
+    <ProjectReference Include="..\SMAPI.Toolkit\SMAPI.Toolkit.csproj">
+      <Project>{08184f74-60ad-4eee-a78c-f4a35ade6246}</Project>
+      <Name>SMAPI.Toolkit</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

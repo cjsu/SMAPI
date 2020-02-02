@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -32,6 +34,9 @@ namespace StardewModdingAPI.Framework.ContentManagers
         /// <summary>The language code for language-agnostic mod assets.</summary>
         private readonly LanguageCode DefaultLanguage = Constants.DefaultLanguage;
 
+        /// <summary>Reflector used to access xnbs on Android.
+        private readonly Reflector Reflector;
+
 
         /*********
         ** Public methods
@@ -52,6 +57,7 @@ namespace StardewModdingAPI.Framework.ContentManagers
         {
             this.GameContentManager = gameContentManager;
             this.JsonHelper = jsonHelper;
+            this.Reflector = reflection;
         }
 
         /// <summary>Load an asset that has been processed by the content pipeline.</summary>
@@ -124,11 +130,9 @@ namespace StardewModdingAPI.Framework.ContentManagers
                             {
                                 this.NormalizeTilesheetPaths(map);
                                 this.FixCustomTilesheetPaths(map, relativeMapPath: assetName);
-                                break;
                             }
                         }
-                        return this.ModedLoad<T>(relativePath, language);
-                        break;
+                        return this.ModedLoad<T>(assetName, language);
 
                     // unpacked data
                     case ".json":

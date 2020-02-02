@@ -43,8 +43,8 @@ namespace StardewModdingAPI.Framework.StateTracking.FieldWatchers
         public NetListWatcher(NetList<TValue, NetRef<TValue>> field)
         {
             this.Field = field;
-            field.OnElementChanged += this.OnElementChanged;
-            field.OnArrayReplaced += this.OnArrayReplaced;
+            //field.OnElementChanged += this.OnElementChanged;
+            //field.OnArrayReplaced += this.OnArrayReplaced;
         }
 
         /// <summary>Set the current value as the baseline.</summary>
@@ -65,8 +65,8 @@ namespace StardewModdingAPI.Framework.StateTracking.FieldWatchers
         {
             if (!this.IsDisposed)
             {
-                this.Field.OnElementChanged -= this.OnElementChanged;
-                this.Field.OnArrayReplaced -= this.OnArrayReplaced;
+                //this.Field.OnElementChanged -= this.OnElementChanged;
+                //this.Field.OnArrayReplaced -= this.OnArrayReplaced;
             }
 
             base.Dispose();

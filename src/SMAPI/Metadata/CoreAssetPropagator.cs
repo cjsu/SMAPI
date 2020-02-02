@@ -424,7 +424,7 @@ namespace StardewModdingAPI.Metadata
                     return true;
 
                 case "tilesheets\\tools": // Game1.ResetToolSpriteSheet
-                    Game1.ResetToolSpriteSheet();
+                    Game1.toolSpriteSheet = content.Load<Texture2D>(key);
                     return true;
 
                 case "tilesheets\\weapons": // Game1.LoadContent
@@ -457,7 +457,7 @@ namespace StardewModdingAPI.Metadata
                     {
                         if (Game1.activeClickableMenu is TitleMenu titleMenu)
                         {
-                            titleMenu.cloudsTexture = content.Load<Texture2D>(key);
+                            this.Reflection.GetField<Texture2D>(titleMenu, "cloudsTexture").SetValue(content.Load<Texture2D>(key));
                             return true;
                         }
                     }
@@ -468,8 +468,8 @@ namespace StardewModdingAPI.Metadata
                         if (Game1.activeClickableMenu is TitleMenu titleMenu)
                         {
                             Texture2D texture = content.Load<Texture2D>(key);
-                            titleMenu.titleButtonsTexture = texture;
-                            foreach (TemporaryAnimatedSprite bird in titleMenu.birds)
+                            this.Reflection.GetField<Texture2D>(titleMenu, "titleButtonsTexture").SetValue(texture);
+                            foreach (TemporaryAnimatedSprite bird in this.Reflection.GetField<List<TemporaryAnimatedSprite>>(titleMenu, "birds").GetValue())
                                 bird.texture = texture;
                             return true;
                         }
@@ -906,7 +906,7 @@ namespace StardewModdingAPI.Metadata
                 int lastScheduleTime = villager.Schedule.Keys.Where(p => p <= Game1.timeOfDay).OrderByDescending(p => p).FirstOrDefault();
                 if (lastScheduleTime != 0)
                 {
-                    villager.scheduleTimeToTry = NPC.NO_TRY; // use time that's passed in to checkSchedule
+                    this.Reflection.GetField<int>(villager, "scheduleTimeToTry").SetValue(9999999); // use time that's passed in to checkSchedule
                     villager.checkSchedule(lastScheduleTime);
                 }
             }

@@ -62,14 +62,8 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
             this.buttonPressed = eventManager.GetType().GetField("ButtonPressed", BindingFlags.Public | BindingFlags.Instance).GetValue(eventManager);
             this.buttonReleased = eventManager.GetType().GetField("ButtonReleased", BindingFlags.Public | BindingFlags.Instance).GetValue(eventManager);
 
-            this.legacyButtonPressed = eventManager.GetType().GetField("Legacy_KeyPressed", BindingFlags.Public | BindingFlags.Instance).GetValue(eventManager);
-            this.legacyButtonReleased = eventManager.GetType().GetField("Legacy_KeyReleased", BindingFlags.Public | BindingFlags.Instance).GetValue(eventManager);
-
             this.RaiseButtonPressed = this.buttonPressed.GetType().GetMethod("Raise", BindingFlags.Public | BindingFlags.Instance);
             this.RaiseButtonReleased = this.buttonReleased.GetType().GetMethod("Raise", BindingFlags.Public | BindingFlags.Instance);
-
-            this.Legacy_KeyPressed = this.legacyButtonPressed.GetType().GetMethod("Raise", BindingFlags.Public | BindingFlags.Instance);
-            this.Legacy_KeyReleased = this.legacyButtonReleased.GetType().GetMethod("Raise", BindingFlags.Public | BindingFlags.Instance);
         }
 
         private bool shouldTrigger(Vector2 screenPixels)
@@ -95,13 +89,11 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
                 object inputState = e.GetType().GetField("InputState", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(e);
 
                 object buttonPressedEventArgs = Activator.CreateInstance(typeof(ButtonPressedEventArgs), BindingFlags.NonPublic | BindingFlags.Instance, null, new object[] { this.buttonKey, e.Cursor, inputState }, null);
-                EventArgsKeyPressed eventArgsKey = new EventArgsKeyPressed((Keys)this.buttonKey);
                 try
                 {
                     this.raisingPressed = true;
 
                     this.RaiseButtonPressed.Invoke(this.buttonPressed, new object[] { buttonPressedEventArgs });
-                    this.Legacy_KeyPressed.Invoke(this.legacyButtonPressed, new object[] { eventArgsKey });
                 }
                 finally
                 {
@@ -122,12 +114,10 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
             {
                 object inputState = e.GetType().GetField("InputState", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(e);
                 object buttonReleasedEventArgs = Activator.CreateInstance(typeof(ButtonReleasedEventArgs), BindingFlags.NonPublic | BindingFlags.Instance, null, new object[] { this.buttonKey, e.Cursor, inputState }, null);
-                EventArgsKeyPressed eventArgsKeyReleased = new EventArgsKeyPressed((Keys)this.buttonKey);
                 try
                 {
                     this.raisingReleased = true;
                     this.RaiseButtonReleased.Invoke(this.buttonReleased, new object[] { buttonReleasedEventArgs });
-                    this.Legacy_KeyReleased.Invoke(this.legacyButtonReleased, new object[] { eventArgsKeyReleased });
                 }
                 finally
                 {
