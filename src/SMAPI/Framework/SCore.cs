@@ -271,7 +271,7 @@ namespace StardewModdingAPI.Framework
                     new ObjectErrorPatch(),
                     new LoadContextPatch(this.Reflection, this.GameInstance.OnLoadStageChanged),
                     new LoadErrorPatch(this.Monitor, this.GameInstance.OnSaveContentRemoved),
-                    new ScheduleErrorPatch(this.MonitorForGame)
+                    new ScheduleErrorPatch(this.MonitorForGame),
                     new SaveBackupPatch(this.EventManager)
                 );
 
