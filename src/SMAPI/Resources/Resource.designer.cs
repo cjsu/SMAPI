@@ -2545,79 +2545,10 @@ namespace StardewModdingAPI
 			public static int hello = 2131361832;
 			
 			// aapt resource value: 0x7F0A0029
-			public static int kilobytes_per_second = 2131361833;
+			public static int search_menu_title = 2131361833;
 			
 			// aapt resource value: 0x7F0A002A
-			public static int notification_download_complete = 2131361834;
-			
-			// aapt resource value: 0x7F0A002B
-			public static int notification_download_failed = 2131361835;
-			
-			// aapt resource value: 0x7F0A002C
-			public static int search_menu_title = 2131361836;
-			
-			// aapt resource value: 0x7F0A002D
-			public static int state_completed = 2131361837;
-			
-			// aapt resource value: 0x7F0A002E
-			public static int state_connecting = 2131361838;
-			
-			// aapt resource value: 0x7F0A002F
-			public static int state_downloading = 2131361839;
-			
-			// aapt resource value: 0x7F0A0030
-			public static int state_failed = 2131361840;
-			
-			// aapt resource value: 0x7F0A0031
-			public static int state_failed_cancelled = 2131361841;
-			
-			// aapt resource value: 0x7F0A0032
-			public static int state_failed_fetching_url = 2131361842;
-			
-			// aapt resource value: 0x7F0A0033
-			public static int state_failed_sdcard_full = 2131361843;
-			
-			// aapt resource value: 0x7F0A0034
-			public static int state_failed_unlicensed = 2131361844;
-			
-			// aapt resource value: 0x7F0A0035
-			public static int state_fetching_url = 2131361845;
-			
-			// aapt resource value: 0x7F0A0036
-			public static int state_idle = 2131361846;
-			
-			// aapt resource value: 0x7F0A0037
-			public static int state_paused_by_request = 2131361847;
-			
-			// aapt resource value: 0x7F0A0038
-			public static int state_paused_network_setup_failure = 2131361848;
-			
-			// aapt resource value: 0x7F0A0039
-			public static int state_paused_network_unavailable = 2131361849;
-			
-			// aapt resource value: 0x7F0A003A
-			public static int state_paused_roaming = 2131361850;
-			
-			// aapt resource value: 0x7F0A003B
-			public static int state_paused_sdcard_unavailable = 2131361851;
-			
-			// aapt resource value: 0x7F0A003C
-			public static int state_paused_wifi_disabled = 2131361852;
-			
-			// aapt resource value: 0x7F0A003D
-			public static int state_paused_wifi_unavailable = 2131361853;
-			
-			// aapt resource value: 0x7F0A003E
-			public static int state_unknown = 2131361854;
-			
-			// aapt resource value: 0x7F0A003F
-			public static int status_bar_notification_info_overflow = 2131361855;
-			
-			// aapt resource value: 0x7F0A0040
-			public static int time_remaining = 2131361856;
-			
-			// aapt resource value: 0x7F0A0041
-			public static int time_remaining_notification = 2131361857;
+			public static int status_bar_notification_info_overflow = 2131361834;
 			
 			static String()
 			{

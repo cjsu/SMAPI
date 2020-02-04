@@ -26,11 +26,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AndroidKeyStore>false</AndroidKeyStore>
-    <AndroidSigningKeyStore>E:\workspace\C#\SMAPI\modloader.keystore</AndroidSigningKeyStore>
-    <AndroidSigningStorePass>ZaneYork</AndroidSigningStorePass>
-    <AndroidSigningKeyAlias>Zane</AndroidSigningKeyAlias>
-    <AndroidSigningKeyPass>ZaneYork</AndroidSigningKeyPass>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -42,43 +37,46 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
-      <HintPath>..\..\..\Downloads\libs\0Harmony.dll</HintPath>
+      <HintPath>..\..\..\..\..\AndroidStudioProjects\SMAPI Android Installer\app\src\main\assets\Stardew\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="Google.Android.Vending.Expansion.Downloader">
-      <HintPath>..\..\..\Downloads\StardewValleyAndroidStuff\base_1.4.4.118\assemblies\Google.Android.Vending.Expansion.Downloader.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\StardewValleyAndroidStuff\base_1.4.4.118\assemblies\Google.Android.Vending.Expansion.Downloader.dll</HintPath>
     </Reference>
     <Reference Include="Google.Android.Vending.Licensing">
-      <HintPath>..\..\..\Downloads\StardewValleyAndroidStuff\base_1.4.4.118\assemblies\Google.Android.Vending.Licensing.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\StardewValleyAndroidStuff\base_1.4.4.118\assemblies\Google.Android.Vending.Licensing.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Mono.Android" />
     <Reference Include="Mono.Cecil">
-      <HintPath>..\..\..\Downloads\libs\Mono.Cecil.dll</HintPath>
+      <HintPath>..\..\..\..\..\AndroidStudioProjects\SMAPI Android Installer\app\src\main\assets\Stardew\Mono.Cecil.dll</HintPath>
     </Reference>
     <Reference Include="MonoGame.Framework">
-      <HintPath>..\..\..\Downloads\StardewValleyAndroidStuff\base_1.4.4.118\assemblies\MonoGame.Framework.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\StardewValleyAndroidStuff\base_1.4.4.118\assemblies\MonoGame.Framework.dll</HintPath>
     </Reference>
     <Reference Include="MonoMod.RuntimeDetour">
-      <HintPath>..\..\..\Downloads\libs\MonoMod.RuntimeDetour.dll</HintPath>
+      <HintPath>..\..\..\..\..\AndroidStudioProjects\SMAPI Android Installer\app\src\main\assets\Stardew\MonoMod.RuntimeDetour.dll</HintPath>
     </Reference>
     <Reference Include="MonoMod.Utils">
-      <HintPath>..\..\..\Downloads\libs\MonoMod.Utils.dll</HintPath>
+      <HintPath>..\..\..\..\..\AndroidStudioProjects\SMAPI Android Installer\app\src\main\assets\Stardew\MonoMod.Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\..\..\..\..\SteamLibrary\steamapps\common\Stardew Valley\smapi-internal\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="StardewValley">
-      <HintPath>..\..\..\Downloads\StardewValleyAndroidStuff\base_1.4.4.118\assemblies\StardewValley.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\StardewValleyAndroidStuff\base_1.4.4.118\assemblies\StardewValley.dll</HintPath>
     </Reference>
     <Reference Include="StardewValley.GameData">
-      <HintPath>..\..\..\Downloads\StardewValleyAndroidStuff\base_1.4.4.118\assemblies\StardewValley.GameData.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\StardewValleyAndroidStuff\base_1.4.4.118\assemblies\StardewValley.GameData.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
-    <Reference Include="TMXTile">
-      <HintPath>..\..\..\Downloads\libs\TMXTile.dll</HintPath>
-    </Reference>
     <Reference Include="xTile">
-      <HintPath>..\..\..\Downloads\libs\xTile.dll</HintPath>
+      <HintPath>..\..\..\..\..\AndroidStudioProjects\SMAPI Android Installer\app\src\main\assets\Stardew\xTile.dll</HintPath>
+    </Reference>
+    <Reference Include="TMXTile">
+      <HintPath>..\..\..\..\..\AndroidStudioProjects\SMAPI Android Installer\app\src\main\assets\Stardew\TMXTile.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
