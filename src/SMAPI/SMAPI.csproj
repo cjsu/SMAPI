@@ -26,6 +26,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -34,6 +35,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
@@ -62,6 +64,9 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\..\..\..\..\..\SteamLibrary\steamapps\common\Stardew Valley\smapi-internal\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="SMAPI.Toolkit">
+      <HintPath>..\SMAPI.Toolkit\bin\Debug\net4.5\SMAPI.Toolkit.dll</HintPath>
+    </Reference>
     <Reference Include="StardewValley">
       <HintPath>..\..\..\..\..\Downloads\StardewValleyAndroidStuff\base_1.4.4.118\assemblies\StardewValley.dll</HintPath>
     </Reference>
@@ -72,6 +77,9 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
+    <Reference Include="TMXTile">
+      <HintPath>..\..\..\..\..\..\..\SteamLibrary\steamapps\common\Stardew Valley\smapi-internal\TMXTile.dll</HintPath>
+    </Reference>
     <Reference Include="xTile">
       <HintPath>..\..\..\..\..\AndroidStudioProjects\SMAPI Android Installer\app\src\main\assets\Stardew\xTile.dll</HintPath>
     </Reference>
@@ -157,6 +165,7 @@
     <Compile Include="Framework\DeprecationManager.cs" />
     <Compile Include="Framework\DeprecationWarning.cs" />
     <Compile Include="Framework\Events\EventManager.cs" />
+    <Compile Include="Framework\Events\IManagedEvent.cs" />
     <Compile Include="Framework\Events\ManagedEvent.cs" />
     <Compile Include="Framework\Events\ModDisplayEvents.cs" />
     <Compile Include="Framework\Events\ModEvents.cs" />
@@ -190,6 +199,7 @@
     <Compile Include="Framework\ModHelpers\MultiplayerHelper.cs" />
     <Compile Include="Framework\ModHelpers\ReflectionHelper.cs" />
     <Compile Include="Framework\ModHelpers\TranslationHelper.cs" />
+    <Compile Include="Framework\ModLinked.cs" />
     <Compile Include="Framework\ModLoading\AssemblyDefinitionResolver.cs" />
     <Compile Include="Framework\ModLoading\AssemblyLoader.cs" />
     <Compile Include="Framework\ModLoading\AssemblyLoadStatus.cs" />
@@ -228,6 +238,13 @@
     <Compile Include="Framework\Networking\RemoteContextModModel.cs" />
     <Compile Include="Framework\Patching\GamePatcher.cs" />
     <Compile Include="Framework\Patching\IHarmonyPatch.cs" />
+    <Compile Include="Framework\PerformanceMonitoring\AlertContext.cs" />
+    <Compile Include="Framework\PerformanceMonitoring\AlertEntry.cs" />
+    <Compile Include="Framework\PerformanceMonitoring\PeakEntry.cs" />
+    <Compile Include="Framework\PerformanceMonitoring\PerformanceCounter.cs" />
+    <Compile Include="Framework\PerformanceMonitoring\PerformanceCounterCollection.cs" />
+    <Compile Include="Framework\PerformanceMonitoring\PerformanceCounterEntry.cs" />
+    <Compile Include="Framework\PerformanceMonitoring\PerformanceMonitor.cs" />
     <Compile Include="Framework\Reflection\CacheEntry.cs" />
     <Compile Include="Framework\Reflection\InterfaceProxyBuilder.cs" />
     <Compile Include="Framework\Reflection\InterfaceProxyFactory.cs" />
@@ -331,6 +348,7 @@
     <Compile Include="Patches\LoadErrorPatch.cs" />
     <Compile Include="Patches\ObjectErrorPatch.cs" />
     <Compile Include="Patches\SaveBackupPatch.cs" />
+    <Compile Include="Patches\ScheduleErrorPatch.cs" />
     <Compile Include="PatchMode.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
@@ -371,10 +389,6 @@
     <ProjectReference Include="..\SMAPI.Toolkit.CoreInterfaces\SMAPI.Toolkit.CoreInterfaces.csproj">
       <Project>{ed8e41fa-ddfa-4a77-932e-9853d279a129}</Project>
       <Name>SMAPI.Toolkit.CoreInterfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SMAPI.Toolkit\SMAPI.Toolkit.csproj">
-      <Project>{08184f74-60ad-4eee-a78c-f4a35ade6246}</Project>
-      <Name>SMAPI.Toolkit</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="..\SMAPI.Internal\SMAPI.Internal.projitems" Label="Shared" />
