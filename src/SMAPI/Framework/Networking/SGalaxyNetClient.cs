@@ -1,8 +1,8 @@
+#if SMAPI_FOR_WINDOWS
 using System;
 using Galaxy.Api;
 using StardewValley.Network;
 using StardewValley.SDKs;
-
 namespace StardewModdingAPI.Framework.Networking
 {
     /// <summary>A multiplayer client used to connect to a hosted server. This is an implementation of <see cref="GalaxyNetClient"/> with callbacks for SMAPI functionality.</summary>
@@ -50,3 +50,4 @@ namespace StardewModdingAPI.Framework.Networking
         }
     }
 }
+#endif

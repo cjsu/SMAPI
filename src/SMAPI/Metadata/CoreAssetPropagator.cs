@@ -920,7 +920,8 @@ namespace StardewModdingAPI.Metadata
                     int lastScheduleTime = villager.Schedule.Keys.Where(p => p <= Game1.timeOfDay).OrderByDescending(p => p).FirstOrDefault();
                     if (lastScheduleTime != 0)
                     {
-                        villager.scheduleTimeToTry = NPC.NO_TRY; // use time that's passed in to checkSchedule
+                        //villager.scheduleTimeToTry = NPC.NO_TRY; // use time that's passed in to checkSchedule
+                        this.Reflection.GetField<int>(villager, "scheduleTimeToTry").SetValue(0x98967f);
                         villager.checkSchedule(lastScheduleTime);
                     }
                 }

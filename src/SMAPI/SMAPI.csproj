@@ -16,7 +16,7 @@
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
-    <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v10.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -26,6 +26,11 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AndroidKeyStore>false</AndroidKeyStore>
+    <AndroidSigningKeyStore>E:\workspace\C#\SMAPI\modloader.keystore</AndroidSigningKeyStore>
+    <AndroidSigningStorePass>ZaneYork</AndroidSigningStorePass>
+    <AndroidSigningKeyAlias>Zane</AndroidSigningKeyAlias>
+    <AndroidSigningKeyPass>ZaneYork</AndroidSigningKeyPass>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -69,6 +74,9 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
+    <Reference Include="TMXTile">
+      <HintPath>..\..\..\Downloads\libs\TMXTile.dll</HintPath>
+    </Reference>
     <Reference Include="xTile">
       <HintPath>..\..\..\Downloads\libs\xTile.dll</HintPath>
     </Reference>
@@ -154,6 +162,7 @@
     <Compile Include="Framework\DeprecationManager.cs" />
     <Compile Include="Framework\DeprecationWarning.cs" />
     <Compile Include="Framework\Events\EventManager.cs" />
+    <Compile Include="Framework\Events\IManagedEvent.cs" />
     <Compile Include="Framework\Events\ManagedEvent.cs" />
     <Compile Include="Framework\Events\ModDisplayEvents.cs" />
     <Compile Include="Framework\Events\ModEvents.cs" />
@@ -187,6 +196,7 @@
     <Compile Include="Framework\ModHelpers\MultiplayerHelper.cs" />
     <Compile Include="Framework\ModHelpers\ReflectionHelper.cs" />
     <Compile Include="Framework\ModHelpers\TranslationHelper.cs" />
+    <Compile Include="Framework\ModLinked.cs" />
     <Compile Include="Framework\ModLoading\AssemblyDefinitionResolver.cs" />
     <Compile Include="Framework\ModLoading\AssemblyLoader.cs" />
     <Compile Include="Framework\ModLoading\AssemblyLoadStatus.cs" />
@@ -223,8 +233,19 @@
     <Compile Include="Framework\Networking\MultiplayerPeerMod.cs" />
     <Compile Include="Framework\Networking\RemoteContextModel.cs" />
     <Compile Include="Framework\Networking\RemoteContextModModel.cs" />
+    <Compile Include="Framework\Networking\SGalaxyNetClient.cs" />
+    <Compile Include="Framework\Networking\SGalaxyNetServer.cs" />
+    <Compile Include="Framework\Networking\SLidgrenClient.cs" />
+    <Compile Include="Framework\Networking\SLidgrenServer.cs" />
     <Compile Include="Framework\Patching\GamePatcher.cs" />
     <Compile Include="Framework\Patching\IHarmonyPatch.cs" />
+    <Compile Include="Framework\PerformanceMonitoring\AlertContext.cs" />
+    <Compile Include="Framework\PerformanceMonitoring\AlertEntry.cs" />
+    <Compile Include="Framework\PerformanceMonitoring\PeakEntry.cs" />
+    <Compile Include="Framework\PerformanceMonitoring\PerformanceCounter.cs" />
+    <Compile Include="Framework\PerformanceMonitoring\PerformanceCounterCollection.cs" />
+    <Compile Include="Framework\PerformanceMonitoring\PerformanceCounterEntry.cs" />
+    <Compile Include="Framework\PerformanceMonitoring\PerformanceMonitor.cs" />
     <Compile Include="Framework\Reflection\CacheEntry.cs" />
     <Compile Include="Framework\Reflection\InterfaceProxyBuilder.cs" />
     <Compile Include="Framework\Reflection\InterfaceProxyFactory.cs" />
@@ -328,6 +349,7 @@
     <Compile Include="Patches\LoadErrorPatch.cs" />
     <Compile Include="Patches\ObjectErrorPatch.cs" />
     <Compile Include="Patches\SaveBackupPatch.cs" />
+    <Compile Include="Patches\ScheduleErrorPatch.cs" />
     <Compile Include="PatchMode.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
