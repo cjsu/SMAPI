@@ -353,11 +353,12 @@ namespace StardewModdingAPI.Metadata
 
                 case "loosesprites\\cursors": // Game1.LoadContent
                     Game1.mouseCursors = content.Load<Texture2D>(key);
-                    foreach (DayTimeMoneyBox menu in Game1.onScreenMenus.OfType<DayTimeMoneyBox>())
-                    {
-                        foreach (ClickableTextureComponent button in new[] { menu.questButton, menu.zoomInButton, menu.zoomOutButton })
-                            button.texture = Game1.mouseCursors;
-                    }
+                    //Game1.onScreenMenus is a List<T> instead of an IList<T>
+                    //foreach (DayTimeMoneyBox menu in Game1.onScreenMenus)
+                    //{
+                    //    foreach (ClickableTextureComponent button in new[] { menu.questButton, menu.zoomInButton, menu.zoomOutButton })
+                    //        button.texture = Game1.mouseCursors;
+                    //}
                     return true;
 
                 case "loosesprites\\cursors2": // Game1.LoadContent
@@ -920,7 +921,8 @@ namespace StardewModdingAPI.Metadata
                     int lastScheduleTime = villager.Schedule.Keys.Where(p => p <= Game1.timeOfDay).OrderByDescending(p => p).FirstOrDefault();
                     if (lastScheduleTime != 0)
                     {
-                        villager.scheduleTimeToTry = NPC.NO_TRY; // use time that's passed in to checkSchedule
+                        //villager.scheduleTimeToTry = NPC.NO_TRY; // use time that's passed in to checkSchedule
+                        this.Reflection.GetField<int>(villager, "scheduleTimeToTry").SetValue(9999999);
                         villager.checkSchedule(lastScheduleTime);
                     }
                 }
