@@ -5,7 +5,7 @@
     <RootNamespace>StardewModdingAPI.Mods.SaveBackup</RootNamespace>
     <TargetFramework>net45</TargetFramework>
     <LangVersion>latest</LangVersion>
-    <OutputPath>C:\Users\Chris\source\repos\SMAPI\bin\Debug\Mods\SaveBackup\</OutputPath>
+    <OutputPath></OutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>

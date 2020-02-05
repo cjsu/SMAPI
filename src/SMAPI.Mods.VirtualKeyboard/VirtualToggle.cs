@@ -13,11 +13,12 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
         private readonly IModHelper helper;
         private readonly IMonitor Monitor;
 
-        private bool enabled = false;
+        private int enabledStage = 0;
         private bool isDefault = true;
         private ClickableTextureComponent virtualToggleButton;
 
         private List<KeyButton> keyboard = new List<KeyButton>();
+        private List<KeyButton> keyboardExtend = new List<KeyButton>();
         private ModConfig modConfig;
         private Texture2D texture;
 
@@ -30,6 +31,8 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
             this.modConfig = helper.ReadConfig<ModConfig>();
             for (int i = 0; i < this.modConfig.buttons.Length; i++)
                 this.keyboard.Add(new KeyButton(helper, this.modConfig.buttons[i], this.Monitor));
+            for (int i = 0; i < this.modConfig.buttonsExtend.Length; i++)
+                this.keyboardExtend.Add(new KeyButton(helper, this.modConfig.buttonsExtend[i], this.Monitor));
 
             if (this.modConfig.vToggle.rectangle.X != 36 || this.modConfig.vToggle.rectangle.Y != 12)
                 this.isDefault = false;
@@ -44,27 +47,45 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
         private void VirtualToggleButtonPressed(object sender, ButtonPressedEventArgs e)
         {
             Vector2 screenPixels = e.Cursor.ScreenPixels;
-            if (!this.enabled && this.shouldTrigger(screenPixels))
+            if (this.shouldTrigger(screenPixels))
             {
-                this.hiddenKeys(true, false);
-            }
-            else if (this.enabled && this.shouldTrigger(screenPixels))
-            {
-                this.hiddenKeys(false, true);
-                if (Game1.activeClickableMenu is IClickableMenu menu)
+                switch (this.enabledStage)
                 {
-                    menu.exitThisMenu();
-                    Toolbar.toolbarPressed = true;
+                    case 0:
+                        foreach (var keys in this.keyboard)
+                        {
+                            keys.hidden = false;
+                        }
+                        foreach (var keys in this.keyboardExtend)
+                        {
+                            keys.hidden = true;
+                        }
+                        this.enabledStage = 1;
+                        break;
+                    case 1 when this.keyboardExtend.Count > 0:
+                        foreach (var keys in this.keyboardExtend)
+                        {
+                            keys.hidden = false;
+                        }
+                        this.enabledStage = 2;
+                        break;
+                    default:
+                        foreach (var keys in this.keyboard)
+                        {
+                            keys.hidden = true;
+                        }
+                        foreach (var keys in this.keyboardExtend)
+                        {
+                            keys.hidden = true;
+                        }
+                        this.enabledStage = 0;
+                        if (Game1.activeClickableMenu is IClickableMenu menu)
+                        {
+                            menu.exitThisMenu();
+                            Toolbar.toolbarPressed = true;
+                        }
+                        break;
                 }
-            }
-        }
-
-        private void hiddenKeys(bool enabled, bool hidden)
-        {
-            this.enabled = enabled;
-            foreach (var keys in this.keyboard)
-            {
-                keys.hidden = hidden;
             }
         }
 
@@ -104,12 +125,13 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
             }
 
             float scale = 1f;
-            if (!this.enabled)
+            if (this.enabledStage == 0)
             {
                 scale = 0.5f;
             }
-            if(!Game1.eventUp && Game1.activeClickableMenu is GameMenu == false && Game1.activeClickableMenu is ShopMenu == false)
-                this.virtualToggleButton.draw(Game1.spriteBatch, Color.White * scale, 0.000001f);
+            if (!Game1.eventUp && Game1.activeClickableMenu is GameMenu == false && Game1.activeClickableMenu is ShopMenu == false)
+                scale = 0.25f;
+            this.virtualToggleButton.draw(Game1.spriteBatch, Color.White * scale, 0.000001f);
         }
     }
 }

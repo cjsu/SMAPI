@@ -16,7 +16,7 @@
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
-    <TargetFrameworkVersion>v10.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -82,9 +82,6 @@
     </Reference>
     <Reference Include="xTile">
       <HintPath>..\..\..\..\..\AndroidStudioProjects\SMAPI Android Installer\app\src\main\assets\Stardew\xTile.dll</HintPath>
-    </Reference>
-    <Reference Include="TMXTile">
-      <HintPath>..\..\..\..\..\AndroidStudioProjects\SMAPI Android Installer\app\src\main\assets\Stardew\TMXTile.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -239,10 +236,6 @@
     <Compile Include="Framework\Networking\MultiplayerPeerMod.cs" />
     <Compile Include="Framework\Networking\RemoteContextModel.cs" />
     <Compile Include="Framework\Networking\RemoteContextModModel.cs" />
-    <Compile Include="Framework\Networking\SGalaxyNetClient.cs" />
-    <Compile Include="Framework\Networking\SGalaxyNetServer.cs" />
-    <Compile Include="Framework\Networking\SLidgrenClient.cs" />
-    <Compile Include="Framework\Networking\SLidgrenServer.cs" />
     <Compile Include="Framework\Patching\GamePatcher.cs" />
     <Compile Include="Framework\Patching\IHarmonyPatch.cs" />
     <Compile Include="Framework\PerformanceMonitoring\AlertContext.cs" />
