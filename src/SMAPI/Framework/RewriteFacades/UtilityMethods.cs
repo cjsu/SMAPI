@@ -16,5 +16,11 @@ namespace StardewModdingAPI.Framework.RewriteFacades
         {
             return getTrashReclamationPrice(item, player, -1);
         }
+
+        [SuppressMessage("ReSharper", "CS0109", Justification = "The 'new' modifier applies when compiled on Windows.")]
+        public static new int getRandomItemFromSeason(string season, int randomSeedAddition, bool forQuest, bool changeDaily = true)
+        {
+            return getRandomItemFromSeason(season, randomSeedAddition, forQuest);
+        }
     }
 }

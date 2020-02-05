@@ -5,7 +5,6 @@ using StardewValley;
 using StardewValley.Menus;
 using static StardewModdingAPI.Mods.VirtualKeyboard.ModConfig;
 using System.Reflection;
-using Microsoft.Xna.Framework.Input;
 
 namespace StardewModdingAPI.Mods.VirtualKeyboard
 {
@@ -17,13 +16,9 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
 
         private object buttonPressed;
         private object buttonReleased;
-        private object legacyButtonPressed;
-        private object legacyButtonReleased;
 
         private readonly MethodBase RaiseButtonPressed;
         private readonly MethodBase RaiseButtonReleased;
-        private readonly MethodBase Legacy_KeyPressed;
-        private readonly MethodBase Legacy_KeyReleased;
 
         private readonly SButton buttonKey;
         private readonly float transparency;
@@ -70,7 +65,8 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
         {
             if (this.buttonRectangle.Contains(screenPixels.X * Game1.options.zoomLevel, screenPixels.Y * Game1.options.zoomLevel))
             {
-                Toolbar.toolbarPressed = true;
+                if (!this.hidden)
+                    Toolbar.toolbarPressed = true;
                 return true;
             }
             return false;

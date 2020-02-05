@@ -183,8 +183,7 @@ namespace StardewModdingAPI.Framework
                 this.ConsoleManager.OnMessageIntercepted += message => this.HandleConsoleMessage(this.MonitorForGame, message);
 
             // init logging
-            //this.Monitor.Log($"SMAPI {Constants.ApiVersion} with Stardew Valley {Constants.GameVersion} on {Constants.Platform} ({EnvironmentUtility.GetFriendlyPlatformName(Constants.Platform)})", LogLevel.Info);
-            this.Monitor.Log($"MartyrPher's Android SMAPI Loader: {Constants.AndroidApiVersion} on Android: {Android.OS.Build.VERSION.Sdk}", LogLevel.Info);
+            this.Monitor.Log($"SMAPI {Constants.ApiVersion} with Stardew Valley {Constants.GameVersion} on {Constants.Platform}", LogLevel.Info); //({EnvironmentUtility.GetFriendlyPlatformName(Constants.Platform)})", LogLevel.Info);
             this.Monitor.Log($"Mods go here: {modsPath}");
             if (modsPath != Constants.DefaultModsPath)
                 this.Monitor.Log("(Using custom --mods-path argument.)", LogLevel.Trace);
@@ -267,7 +266,7 @@ namespace StardewModdingAPI.Framework
                 // apply game patches
                 new GamePatcher(this.Monitor).Apply(
                     new EventErrorPatch(this.MonitorForGame),
-                    //new DialogueErrorPatch(this.MonitorForGame, this.Reflection),
+                    new DialogueErrorPatch(this.MonitorForGame, this.Reflection),
                     new ObjectErrorPatch(),
                     new LoadContextPatch(this.Reflection, this.GameInstance.OnLoadStageChanged),
                     new LoadErrorPatch(this.Monitor, this.GameInstance.OnSaveContentRemoved),
@@ -340,8 +339,8 @@ namespace StardewModdingAPI.Framework
                 this.Monitor.Log($"You have SMAPI for developers, so the console will be much more verbose. You can disable developer mode by installing the non-developer version of SMAPI, or by editing {Constants.ApiConfigPath}.", LogLevel.Info);
             if (!this.Settings.CheckForUpdates)
                 this.Monitor.Log($"You configured SMAPI to not check for updates. Running an old version of SMAPI is not recommended. You can enable update checks by reinstalling SMAPI or editing {Constants.ApiConfigPath}.", LogLevel.Warn);
-            if (!this.Monitor.WriteToConsole)
-                this.Monitor.Log("Writing to the terminal is disabled because the --no-terminal argument was received. This usually means launching the terminal failed.", LogLevel.Warn);
+            //if (!this.Monitor.WriteToConsole)
+                //this.Monitor.Log("Writing to the terminal is disabled because the --no-terminal argument was received. This usually means launching the terminal failed.", LogLevel.Warn);
             this.Monitor.VerboseLog("Verbose logging enabled.");
 
             // update window titles
@@ -469,7 +468,7 @@ namespace StardewModdingAPI.Framework
 
                     // load mods
                     resolver.ValidateManifests(mods, Constants.ApiVersion, toolkit.GetUpdateUrl);
-                    //mods = resolver.ProcessDependencies(mods, modDatabase).ToArray();
+                    mods = resolver.ProcessDependencies(mods, modDatabase).ToArray();
                     this.LoadMods(mods, this.Toolkit.JsonHelper, this.ContentCore, modDatabase);
 
                     // check for updates
