@@ -1,4 +1,3 @@
-#if SMAPI_FOR_WINDOWS
 using System;
 using Galaxy.Api;
 using StardewValley.Network;
@@ -50,4 +49,3 @@ namespace StardewModdingAPI.Framework.Networking
         }
     }
 }
-#endif

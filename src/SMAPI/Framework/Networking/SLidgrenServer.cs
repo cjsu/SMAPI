@@ -1,4 +1,3 @@
-#if SMAPI_FOR_WINDOWS
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -68,4 +67,3 @@ namespace StardewModdingAPI.Framework.Networking
         }
     }
 }
-#endif
