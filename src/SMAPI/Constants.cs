@@ -29,7 +29,7 @@ namespace StardewModdingAPI
         public static ISemanticVersion MaximumGameVersion { get; } = null;
 
         /// <summary>The target game platform.</summary>
-        public static GamePlatform TargetPlatform = GamePlatform.Android;
+        public static GamePlatform TargetPlatform => GamePlatform.Android;
 
         /// <summary>The path to the game folder.</summary>
         public static string ExecutionPath { get; } = Path.Combine(Android.OS.Environment.ExternalStorageDirectory.Path, "StardewValley/smapi-internal");
