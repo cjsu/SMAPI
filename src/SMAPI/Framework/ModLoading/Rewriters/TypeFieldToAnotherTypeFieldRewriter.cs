@@ -87,9 +87,9 @@ namespace StardewModdingAPI.Framework.ModLoading.Rewriters
                 }
                 else if (this.RainDropFix && !this.UsingInstance)
                 {
-                    FieldReference field = module.ImportReference(this.ToType.GetField(this.FieldName));
+                    MethodReference getter = module.ImportReference(this.ToType.GetMethod($"get_{this.FieldName}"));
 
-                    cil.Replace(instruction, cil.Create(OpCodes.Ldsfld, field));
+                    cil.Replace(instruction, cil.Create(OpCodes.Call, getter));
                 }
                 else
                 {

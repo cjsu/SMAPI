@@ -38,14 +38,20 @@
     <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.Net.Compilers" Version="3.3.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="0Harmony">
       <HintPath>..\..\..\..\..\AndroidStudioProjects\SMAPI Android Installer\app\src\main\assets\Stardew\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="Google.Android.Vending.Expansion.Downloader">
-      <HintPath>..\..\..\..\..\Downloads\StardewValleyAndroidStuff\base_1.4.4.122\assemblies\Google.Android.Vending.Expansion.Downloader.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\StardewValleyAndroidStuff\base_1.4.4.128\assemblies\Google.Android.Vending.Expansion.Downloader.dll</HintPath>
     </Reference>
     <Reference Include="Google.Android.Vending.Licensing">
-      <HintPath>..\..\..\..\..\Downloads\StardewValleyAndroidStuff\base_1.4.4.122\assemblies\Google.Android.Vending.Licensing.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\StardewValleyAndroidStuff\base_1.4.4.128\assemblies\Google.Android.Vending.Licensing.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Mono.Android" />
@@ -53,7 +59,7 @@
       <HintPath>..\..\..\..\..\AndroidStudioProjects\SMAPI Android Installer\app\src\main\assets\Stardew\Mono.Cecil.dll</HintPath>
     </Reference>
     <Reference Include="MonoGame.Framework">
-      <HintPath>..\..\..\..\..\Downloads\StardewValleyAndroidStuff\base_1.4.4.122\assemblies\MonoGame.Framework.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\StardewValleyAndroidStuff\base_1.4.4.128\assemblies\MonoGame.Framework.dll</HintPath>
     </Reference>
     <Reference Include="MonoMod.RuntimeDetour">
       <HintPath>..\..\..\..\..\AndroidStudioProjects\SMAPI Android Installer\app\src\main\assets\Stardew\MonoMod.RuntimeDetour.dll</HintPath>
@@ -71,10 +77,10 @@
       <HintPath>..\SMAPI.Toolkit.CoreInterfaces\bin\Debug\net4.5\SMAPI.Toolkit.CoreInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="StardewValley">
-      <HintPath>..\..\..\..\..\Downloads\StardewValleyAndroidStuff\base_1.4.4.122\assemblies\StardewValley.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\StardewValleyAndroidStuff\base_1.4.4.128\assemblies\StardewValley.dll</HintPath>
     </Reference>
     <Reference Include="StardewValley.GameData">
-      <HintPath>..\..\..\..\..\Downloads\StardewValleyAndroidStuff\base_1.4.4.122\assemblies\StardewValley.GameData.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\StardewValleyAndroidStuff\base_1.4.4.128\assemblies\StardewValley.GameData.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -227,6 +233,7 @@
     <Compile Include="Framework\ModLoading\Rewriters\FieldReplaceRewriter.cs" />
     <Compile Include="Framework\ModLoading\Rewriters\FieldToPropertyRewriter.cs" />
     <Compile Include="Framework\ModLoading\Rewriters\MethodParentRewriter.cs" />
+    <Compile Include="Framework\ModLoading\Rewriters\PropertyToFieldRewriter.cs" />
     <Compile Include="Framework\ModLoading\Rewriters\StaticFieldToConstantRewriter.cs" />
     <Compile Include="Framework\ModLoading\Rewriters\TypeFieldToAnotherTypeFieldRewriter.cs" />
     <Compile Include="Framework\ModLoading\Rewriters\TypeReferenceRewriter.cs" />
