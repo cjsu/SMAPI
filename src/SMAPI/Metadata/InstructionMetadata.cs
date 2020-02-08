@@ -53,6 +53,15 @@ namespace StardewModdingAPI.Metadata
 
             yield return new PropertyToFieldRewriter(typeof(Game1), "toolSpriteSheet", "toolSpriteSheet");
 
+            // Accessibility fix
+            yield return new TypeFieldToAnotherTypeMethodRewriter(typeof(GameMenu), typeof(GameMenuMethods), "hoverText", "GetHoverText");
+            yield return new TypeFieldToAnotherTypeMethodRewriter(typeof(ShopMenu), typeof(ShopMenuMethods), "heldItem", "GetHeldItem");
+            yield return new TypeFieldToAnotherTypeMethodRewriter(typeof(ShopMenu), typeof(ShopMenuMethods), "hoveredItem", "GetHoveredItem");
+            yield return new TypeFieldToAnotherTypeMethodRewriter(typeof(ShopMenu), typeof(ShopMenuMethods), "hoverPrice", "GetHoverPrice");
+            yield return new TypeFieldToAnotherTypeMethodRewriter(typeof(ShopMenu), typeof(ShopMenuMethods), "hoverText", "GetHoverText");
+            yield return new TypeFieldToAnotherTypeMethodRewriter(typeof(ShopMenu), typeof(ShopMenuMethods), "categoriesToSellHere", "GetCategoriesToSellHere");
+            yield return new TypeFieldToAnotherTypeMethodRewriter(typeof(MenuWithInventory), typeof(MenuWithInventoryMethods), "trashCan", "GetTrashCan");
+
             //Method Rewrites
             yield return new MethodParentRewriter(typeof(Game1), typeof(Game1Methods));
             yield return new MethodParentRewriter(typeof(Farmer), typeof(FarmerMethods));
