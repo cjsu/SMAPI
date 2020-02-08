@@ -9,8 +9,8 @@ namespace StardewModdingAPI.Framework.RewriteFacades
 {
     public class Game1Methods : Game1
     {
-        public RainDrop[] rainDrops = (typeof(RainManager).GetField("_rainDropList", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(RainManager.Instance) as List<RainDrop>).ToArray();
-        public new IList<IClickableMenu> onScreenMenus = Game1.onScreenMenus;
+        public static RainDrop[] rainDrops => (typeof(RainManager).GetField("_rainDropList", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(RainManager.Instance) as List<RainDrop>).ToArray();
+        public static new IList<IClickableMenu> onScreenMenus => Game1.onScreenMenus;
 
         public static void updateDebrisWeatherForMovement(List<WeatherDebris> debris)
         {

@@ -1916,11 +1916,11 @@ label_168:
                                     DrawAfterMap.Invoke();
                                     events.RenderedHud.RaiseEmpty();
                                     _spriteBatchEnd.Invoke();
-                                    if (tutorialManager != null)
+                                    if (TutorialManager.Instance != null)
                                     {
                                         SetSpriteBatchBeginNextID("A-D");
                                         SpriteBatchBegin.Invoke(options.zoomLevel);
-                                        tutorialManager.draw(spriteBatch);
+                                        TutorialManager.Instance.draw(spriteBatch);
                                         _spriteBatchEnd.Invoke();
                                     }
                                     DrawToolbar.Invoke();
