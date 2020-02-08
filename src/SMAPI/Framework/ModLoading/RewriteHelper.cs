@@ -43,7 +43,7 @@ namespace StardewModdingAPI.Framework.ModLoading
         public static bool IsSameType(Type type, TypeReference reference)
         {
             // same namespace & name
-            if (type.Namespace != reference.Namespace || type.Name != reference.Name)
+            if ((type.Namespace != reference.Namespace || type.Name != reference.Name) && !(reference.Namespace == "" && reference.FullName.Replace("/", "+") == type.FullName))
                 return false;
 
             // same generic parameters

@@ -226,6 +226,7 @@
     <Compile Include="Framework\ModLoading\Rewriters\MethodParentRewriter.cs" />
     <Compile Include="Framework\ModLoading\Rewriters\PropertyToFieldRewriter.cs" />
     <Compile Include="Framework\ModLoading\Rewriters\StaticFieldToConstantRewriter.cs" />
+    <Compile Include="Framework\ModLoading\Rewriters\TypeFieldToAnotherTypeMethodRewriter.cs" />
     <Compile Include="Framework\ModLoading\Rewriters\TypeFieldToAnotherTypeFieldRewriter.cs" />
     <Compile Include="Framework\ModLoading\Rewriters\TypeReferenceRewriter.cs" />
     <Compile Include="Framework\ModLoading\TypeReferenceComparer.cs" />
@@ -255,12 +256,15 @@
     <Compile Include="Framework\Reflection\Reflector.cs" />
     <Compile Include="Framework\RequestExitDelegate.cs" />
     <Compile Include="Framework\RewriteFacades\DebrisMethods.cs" />
+    <Compile Include="Framework\RewriteFacades\GameMenuMethods.cs" />
+    <Compile Include="Framework\RewriteFacades\ShopMenuMethods.cs" />
     <Compile Include="Framework\RewriteFacades\FarmerMethods.cs" />
     <Compile Include="Framework\RewriteFacades\FarmerRenderMethods.cs" />
     <Compile Include="Framework\RewriteFacades\Game1Methods.cs" />
     <Compile Include="Framework\RewriteFacades\GameLocationMethods.cs" />
     <Compile Include="Framework\RewriteFacades\HUDMessageMethods.cs" />
     <Compile Include="Framework\RewriteFacades\IClickableMenuMethods.cs" />
+    <Compile Include="Framework\RewriteFacades\MenuWithInventoryMethods.cs" />
     <Compile Include="Framework\RewriteFacades\ItemGrabMenuMethods.cs" />
     <Compile Include="Framework\RewriteFacades\MapPageMethods.cs" />
     <Compile Include="Framework\RewriteFacades\NPCMethods.cs" />
