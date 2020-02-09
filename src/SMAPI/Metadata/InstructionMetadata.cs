@@ -54,13 +54,13 @@ namespace StardewModdingAPI.Metadata
             yield return new PropertyToFieldRewriter(typeof(Game1), "toolSpriteSheet", "toolSpriteSheet");
 
             // Accessibility fix
-            yield return new TypeFieldToAnotherTypeMethodRewriter(typeof(GameMenu), typeof(GameMenuMethods), "hoverText", "GetHoverText");
-            yield return new TypeFieldToAnotherTypeMethodRewriter(typeof(ShopMenu), typeof(ShopMenuMethods), "heldItem", "GetHeldItem");
-            yield return new TypeFieldToAnotherTypeMethodRewriter(typeof(ShopMenu), typeof(ShopMenuMethods), "hoveredItem", "GetHoveredItem");
-            yield return new TypeFieldToAnotherTypeMethodRewriter(typeof(ShopMenu), typeof(ShopMenuMethods), "hoverPrice", "GetHoverPrice");
-            yield return new TypeFieldToAnotherTypeMethodRewriter(typeof(ShopMenu), typeof(ShopMenuMethods), "hoverText", "GetHoverText");
-            yield return new TypeFieldToAnotherTypeMethodRewriter(typeof(ShopMenu), typeof(ShopMenuMethods), "categoriesToSellHere", "GetCategoriesToSellHere");
-            yield return new TypeFieldToAnotherTypeMethodRewriter(typeof(MenuWithInventory), typeof(MenuWithInventoryMethods), "trashCan", "GetTrashCan");
+            yield return new TypeFieldToAnotherTypePropertyRewriter(typeof(GameMenu), typeof(GameMenuMethods), "hoverText", "HoverTextProp");
+            yield return new TypeFieldToAnotherTypePropertyRewriter(typeof(ShopMenu), typeof(ShopMenuMethods), "heldItem", "HeldItemProp");
+            yield return new TypeFieldToAnotherTypePropertyRewriter(typeof(ShopMenu), typeof(ShopMenuMethods), "hoveredItem", "HoveredItemProp");
+            yield return new TypeFieldToAnotherTypePropertyRewriter(typeof(ShopMenu), typeof(ShopMenuMethods), "hoverPrice", "HoverPriceProp");
+            yield return new TypeFieldToAnotherTypePropertyRewriter(typeof(ShopMenu), typeof(ShopMenuMethods), "hoverText", "HoverTextProp");
+            yield return new TypeFieldToAnotherTypePropertyRewriter(typeof(ShopMenu), typeof(ShopMenuMethods), "categoriesToSellHere", "CategoriesToSellHereProp");
+            yield return new TypeFieldToAnotherTypePropertyRewriter(typeof(MenuWithInventory), typeof(MenuWithInventoryMethods), "trashCan", "TrashCanProp");
 
             //Method Rewrites
             yield return new MethodParentRewriter(typeof(Game1), typeof(Game1Methods));
