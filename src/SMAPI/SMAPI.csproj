@@ -235,7 +235,7 @@
     <Compile Include="Framework\ModLoading\Rewriters\MethodParentRewriter.cs" />
     <Compile Include="Framework\ModLoading\Rewriters\PropertyToFieldRewriter.cs" />
     <Compile Include="Framework\ModLoading\Rewriters\StaticFieldToConstantRewriter.cs" />
-    <Compile Include="Framework\ModLoading\Rewriters\TypeFieldToAnotherTypeMethodRewriter.cs" />
+    <Compile Include="Framework\ModLoading\Rewriters\TypeFieldToAnotherTypePropertyRewriter.cs" />
     <Compile Include="Framework\ModLoading\Rewriters\TypeFieldToAnotherTypeFieldRewriter.cs" />
     <Compile Include="Framework\ModLoading\Rewriters\TypeReferenceRewriter.cs" />
     <Compile Include="Framework\ModLoading\TypeReferenceComparer.cs" />
