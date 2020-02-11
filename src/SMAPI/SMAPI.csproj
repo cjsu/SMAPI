@@ -349,10 +349,12 @@
     <Compile Include="Mod.cs" />
     <Compile Include="Patches\DialogueErrorPatch.cs" />
     <Compile Include="Patches\EventErrorPatch.cs" />
+    <Compile Include="Patches\LinqEnumerablePatch.cs" />
     <Compile Include="Patches\LoadContextPatch.cs" />
     <Compile Include="Patches\LoadErrorPatch.cs" />
     <Compile Include="Patches\ObjectErrorPatch.cs" />
     <Compile Include="Patches\SaveBackupPatch.cs" />
+    <Compile Include="Patches\JunimoHarvesterPatch.cs" />
     <Compile Include="Patches\ScheduleErrorPatch.cs" />
     <Compile Include="PatchMode.cs" />
     <Compile Include="Program.cs" />
