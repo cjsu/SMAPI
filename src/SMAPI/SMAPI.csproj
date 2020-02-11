@@ -349,6 +349,7 @@
     <Compile Include="Mod.cs" />
     <Compile Include="Patches\DialogueErrorPatch.cs" />
     <Compile Include="Patches\EventErrorPatch.cs" />
+    <Compile Include="Patches\SpriteFontPatch.cs" />
     <Compile Include="Patches\LinqEnumerablePatch.cs" />
     <Compile Include="Patches\LoadContextPatch.cs" />
     <Compile Include="Patches\LoadErrorPatch.cs" />

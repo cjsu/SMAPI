@@ -101,6 +101,13 @@ namespace StardewModdingAPI.Framework.ModLoading.Finders
                     || this.IsMatch(fieldRef.FieldType); // field value is target class
             }
 
+            // type reference
+            TypeReference typeRef = RewriteHelper.AsTypeReference(instruction);
+            if (typeRef != null)
+            {
+                return this.IsMatch(typeRef); // ref on target class
+            }
+
             // method reference
             MethodReference methodRef = RewriteHelper.AsMethodReference(instruction);
             if (methodRef != null)

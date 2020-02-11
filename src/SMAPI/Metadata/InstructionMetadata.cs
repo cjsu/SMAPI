@@ -62,6 +62,9 @@ namespace StardewModdingAPI.Metadata
             yield return new TypeFieldToAnotherTypePropertyRewriter(typeof(ShopMenu), typeof(ShopMenuMethods), "categoriesToSellHere", "CategoriesToSellHereProp");
             yield return new TypeFieldToAnotherTypePropertyRewriter(typeof(MenuWithInventory), typeof(MenuWithInventoryMethods), "trashCan", "TrashCanProp");
 
+            // Rewrite Missing Type
+            yield return new TypeReferenceRewriter("StardewValley.Menus.CraftingPage", typeof(CraftingPageMobile));
+
             //Method Rewrites
             yield return new MethodParentRewriter(typeof(Game1), typeof(Game1Methods));
             yield return new MethodParentRewriter(typeof(Farmer), typeof(FarmerMethods));

@@ -28,6 +28,13 @@ namespace StardewModdingAPI.Framework.ModLoading
                 : null;
         }
 
+        /// <summary>Get the type reference from an instruction if it matches.</summary>
+        /// <param name="instruction">The IL instruction.</param>
+        public static TypeReference AsTypeReference(Instruction instruction)
+        {
+            return instruction.OpCode == OpCodes.Isinst ? (TypeReference)instruction.Operand : null;
+        }
+
         /// <summary>Get the method reference from an instruction if it matches.</summary>
         /// <param name="instruction">The IL instruction.</param>
         public static MethodReference AsMethodReference(Instruction instruction)
