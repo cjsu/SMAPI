@@ -53,7 +53,19 @@ namespace StardewModdingAPI.Toolkit.Utilities
             }
             catch { }
 #endif
-            return (platform == Platform.Mac ? "MacOS " : "") + Environment.OSVersion;
+
+            string name = Environment.OSVersion.ToString();
+            switch (platform)
+            {
+                case Platform.Android:
+                    name = $"Android {name}";
+                    break;
+
+                case Platform.Mac:
+                    name = $"MacOS {name}";
+                    break;
+            }
+            return name;
         }
 
         /// <summary>Get the name of the Stardew Valley executable.</summary>

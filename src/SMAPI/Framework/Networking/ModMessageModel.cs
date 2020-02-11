@@ -21,7 +21,7 @@ namespace StardewModdingAPI.Framework.Networking
         /****
         ** Destination
         ****/
-        /// <summary>The players who should receive the message, or <c>null</c> for all players.</summary>
+        /// <summary>The players who should receive the message.</summary>
         public long[] ToPlayerIDs { get; set; }
 
         /// <summary>The mods which should receive the message, or <c>null</c> for all mods.</summary>

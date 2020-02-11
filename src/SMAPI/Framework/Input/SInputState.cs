@@ -169,6 +169,13 @@ namespace StardewModdingAPI.Framework.Input
             return buttons.Any(button => this.IsDown(button.ToSButton()));
         }
 
+        /// <summary>Get the status of a button.</summary>
+        /// <param name="button">The button to check.</param>
+        public InputStatus GetStatus(SButton button)
+        {
+            return this.GetStatus(this.ActiveButtons, button);
+        }
+
 
         /*********
         ** Private methods

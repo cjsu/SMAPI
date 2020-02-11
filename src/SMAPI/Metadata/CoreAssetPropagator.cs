@@ -887,10 +887,17 @@ namespace StardewModdingAPI.Metadata
                 return false;
 
             // update dialogue
+            // Note that marriage dialogue isn't reloaded after reset, but it doesn't need to be
+            // propagated anyway since marriage dialogue keys can't be added/removed and the field
+            // doesn't store the text itself.
             foreach (NPC villager in villagers)
             {
+                MarriageDialogueReference[] marriageDialogue = villager.currentMarriageDialogue.ToArray();
+
                 villager.resetSeasonalDialogue(); // doesn't only affect seasonal dialogue
                 villager.resetCurrentDialogue();
+
+                villager.currentMarriageDialogue.Set(marriageDialogue);
             }
 
             return true;

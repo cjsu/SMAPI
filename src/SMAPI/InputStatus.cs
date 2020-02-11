@@ -1,7 +1,7 @@
-namespace StardewModdingAPI.Framework.Input
+namespace StardewModdingAPI
 {
     /// <summary>The input status for a button during an update frame.</summary>
-    internal enum InputStatus
+    public enum InputStatus
     {
         /// <summary>The button was neither pressed, held, nor released.</summary>
         None,
