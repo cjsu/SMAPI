@@ -271,7 +271,9 @@ namespace StardewModdingAPI.Framework
                     new LoadContextPatch(this.Reflection, this.GameInstance.OnLoadStageChanged),
                     new LoadErrorPatch(this.Monitor, this.GameInstance.OnSaveContentRemoved),
                     new ScheduleErrorPatch(this.MonitorForGame),
-                    new SaveBackupPatch(this.EventManager)
+                    new SaveBackupPatch(this.EventManager),
+                    new JunimoHarvesterPatch(this.Monitor),
+                    new LinqEnumerablePatch(this.Monitor)
                 );
 
                 // add exit handler
