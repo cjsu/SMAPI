@@ -19,6 +19,11 @@ namespace StardewModdingAPI.Framework.RewriteFacades
             drawString(b, s, x - SpriteText.getWidthOfString(s) / 2, y, characterPosition, width, height, alpha, layerDepth, junimoText, -1, "", color);
         }
 
+        public static void drawStringWithScrollBackground(SpriteBatch b, string s, int x, int y, string placeHolderWidthText = "", float alpha = 1f, int color = -1, SpriteText.ScrollTextAlignment scroll_text_alignment = SpriteText.ScrollTextAlignment.Left)
+        {
+            SpriteText.drawString(b, s, x, y, 999999, -1, 999999, alpha, 0.88f, false, 0, placeHolderWidthText, color, scroll_text_alignment);
+        }
+
         public static void drawStringWithScrollBackground(SpriteBatch b, string s, int x, int y, string placeHolderWidthText, float alpha, int color)
         {
             drawStringWithScrollBackground(b, s, x, y, placeHolderWidthText, alpha, color, 0.088f);
