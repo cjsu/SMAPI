@@ -61,6 +61,7 @@ namespace StardewModdingAPI.Metadata
             yield return new TypeFieldToAnotherTypePropertyRewriter(typeof(ShopMenu), typeof(ShopMenuMethods), "hoverText", "HoverTextProp");
             yield return new TypeFieldToAnotherTypePropertyRewriter(typeof(ShopMenu), typeof(ShopMenuMethods), "categoriesToSellHere", "CategoriesToSellHereProp");
             yield return new TypeFieldToAnotherTypePropertyRewriter(typeof(MenuWithInventory), typeof(MenuWithInventoryMethods), "trashCan", "TrashCanProp");
+            yield return new TypeFieldToAnotherTypePropertyRewriter(typeof(ItemGrabMenu), typeof(ItemGrabMenuMethods), "fillStacksButton", "FillStacksButtonProp");
 
             // Rewrite Missing Type
             yield return new TypeReferenceRewriter("StardewValley.Menus.CraftingPage", typeof(CraftingPageMobile));
@@ -81,6 +82,11 @@ namespace StardewModdingAPI.Metadata
             yield return new MethodParentRewriter(typeof(ItemGrabMenu), typeof(ItemGrabMenuMethods));
             yield return new MethodParentRewriter(typeof(WeatherDebris), typeof(WeatherDebrisMethods));
             yield return new MethodParentRewriter(typeof(Debris), typeof(DebrisMethods));
+            yield return new MethodParentRewriter(typeof(DiscreteColorPicker), typeof(DiscreteColorPickerMethods));
+            yield return new MethodParentRewriter(typeof(InventoryMenu), typeof(InventoryMenuMethods));
+            yield return new MethodParentRewriter(typeof(MenuWithInventory), typeof(MenuWithInventoryMethods));
+            yield return new MethodParentRewriter(typeof(GameMenu), typeof(GameMenuMethods));
+            yield return new MethodParentRewriter(typeof(CraftingPageMobile), typeof(CraftingPageMobileMethods));
 
             //Field Rewriters
             yield return new FieldReplaceRewriter(typeof(ItemGrabMenu), "context", "specialObject");

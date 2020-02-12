@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using StardewValley;
 using StardewValley.Menus;
 
@@ -22,6 +23,14 @@ namespace StardewModdingAPI.Framework.RewriteFacades
             set
             {
             }
+        }
+        public MenuWithInventoryMethods(InventoryMenu.highlightThisItem highlighterMethod = null, bool okButton = false, bool trashCan = false, int inventoryXOffset = 0, int  inventoryYOffset = 0, int menuOffsetHack = 0) : base(highlighterMethod, okButton, trashCan, inventoryXOffset, inventoryYOffset)
+        {
+        }
+        public virtual void draw(SpriteBatch b, bool drawUpperPortion = true, bool drawDescriptionArea = true, int red = -1, int green = -1, int blue = -1)
+        {
+            base.draw(b);
+            base.draw(b, red, green, blue);
         }
     }
 }

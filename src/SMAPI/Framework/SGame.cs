@@ -699,15 +699,6 @@ namespace StardewModdingAPI.Framework
                             this.Monitor.Log($"Context: menu changed from {state.ActiveMenu.Old?.GetType().FullName ?? "none"} to {state.ActiveMenu.New?.GetType().FullName ?? "none"}.", LogLevel.Trace);
 
                         // raise menu events
-                        int forSaleCount = 0;
-                        Dictionary<ISalable, int[]> itemPriceAndStock;
-                        List<Item> forSale;
-                        if (now is ShopMenu shop && !(was is ShopMenu))
-                        {
-                            itemPriceAndStock = this.Reflection.GetField<Dictionary<ISalable, int[]>>(shop, "itemPriceAndStock").GetValue();
-                            forSale = this.Reflection.GetField<List<Item>>(shop, "forSale").GetValue();
-                            forSaleCount = forSale.Count;
-                        }
                         events.MenuChanged.Raise(new MenuChangedEventArgs(was, now));
 
                         if (now is GameMenu gameMenu)
@@ -723,15 +714,16 @@ namespace StardewModdingAPI.Framework
                                 }
                             }
                         }
-                        else if (now is ShopMenu shopMenu && !(was is ShopMenu))
+                        else if (now is ShopMenu shopMenu)
                         {
-                            itemPriceAndStock = this.Reflection.GetField<Dictionary<ISalable, int[]>>(shopMenu, "itemPriceAndStock").GetValue();
-                            forSale = this.Reflection.GetField<List<Item>>(shopMenu, "forSale").GetValue();
-                            if (forSaleCount != forSale.Count)
+                            Dictionary<ISalable, int[]> itemPriceAndStock = this.Reflection.GetField<Dictionary<ISalable, int[]>>(shopMenu, "itemPriceAndStock").GetValue();
+                            if (shopMenu.forSaleButtons.Count < itemPriceAndStock.Keys.Select(item => item.Name).Distinct().Count())
                             {
+                                this.Monitor.Log($"Shop Menu Pop");
                                 Game1.activeClickableMenu = new ShopMenu(itemPriceAndStock,
                                     this.Reflection.GetField<int>(shopMenu, "currency").GetValue(),
-                                    this.Reflection.GetField<string>(shopMenu, "personName").GetValue());
+                                    this.Reflection.GetField<string>(shopMenu, "personName").GetValue(),
+                                    shopMenu.onPurchase, shopMenu.onSell, shopMenu.storeContext);
                             }
                         }
                 }

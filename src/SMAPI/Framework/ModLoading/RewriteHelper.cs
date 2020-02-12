@@ -23,7 +23,7 @@ namespace StardewModdingAPI.Framework.ModLoading
         /// <param name="instruction">The IL instruction.</param>
         public static FieldReference AsFieldReference(Instruction instruction)
         {
-            return instruction.OpCode == OpCodes.Ldfld || instruction.OpCode == OpCodes.Ldsfld || instruction.OpCode == OpCodes.Stfld || instruction.OpCode == OpCodes.Stsfld
+            return instruction.OpCode == OpCodes.Ldfld || instruction.OpCode == OpCodes.Ldsfld || instruction.OpCode == OpCodes.Stfld || instruction.OpCode == OpCodes.Stsfld || (instruction.OpCode == OpCodes.Ldtoken && instruction.Operand is FieldReference)
                 ? (FieldReference)instruction.Operand
                 : null;
         }
@@ -32,14 +32,14 @@ namespace StardewModdingAPI.Framework.ModLoading
         /// <param name="instruction">The IL instruction.</param>
         public static TypeReference AsTypeReference(Instruction instruction)
         {
-            return instruction.OpCode == OpCodes.Isinst ? (TypeReference)instruction.Operand : null;
+            return instruction.OpCode == OpCodes.Isinst || (instruction.OpCode == OpCodes.Ldtoken && instruction.Operand is TypeReference) ? (TypeReference)instruction.Operand : null;
         }
 
         /// <summary>Get the method reference from an instruction if it matches.</summary>
         /// <param name="instruction">The IL instruction.</param>
         public static MethodReference AsMethodReference(Instruction instruction)
         {
-            return instruction.OpCode == OpCodes.Call || instruction.OpCode == OpCodes.Callvirt || instruction.OpCode == OpCodes.Newobj
+            return instruction.OpCode == OpCodes.Call || instruction.OpCode == OpCodes.Callvirt || instruction.OpCode == OpCodes.Newobj || (instruction.OpCode == OpCodes.Ldtoken && instruction.Operand is MethodReference)
                 ? (MethodReference)instruction.Operand
                 : null;
         }
