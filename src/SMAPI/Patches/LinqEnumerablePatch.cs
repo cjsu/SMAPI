@@ -61,6 +61,11 @@ namespace StardewModdingAPI.Patches
                 original: methodInfo,
                 prefix: new HarmonyMethod(this.GetType(), nameof(LinqEnumerablePatch.Before_LinqEnumerablePatch_Any))
             );
+            methodInfo = AccessTools.FirstMethod(typeof(System.Linq.Enumerable), method => method.Name == "TryGetFirst" && method.GetParameters().Length == 3).MakeGenericMethod(new Type[] { typeof(Item) });
+            harmony.Patch(
+                original: methodInfo,
+                prefix: new HarmonyMethod(this.GetType(), nameof(LinqEnumerablePatch.Before_LinqEnumerablePatch_TryGetFirst))
+            );
         }
 
 
@@ -71,7 +76,7 @@ namespace StardewModdingAPI.Patches
         /// <param name="__instance">The instance being patched.</param>
         /// <param name="__originalMethod">The method being wrapped.</param>
         /// <returns>Returns whether to execute the original method.</returns>
-        private static bool Before_LinqEnumerablePatch_FirstOrDefault(IEnumerable<Item> source, Func<Item, bool> predicate, ref Item __result)
+        private static bool Before_LinqEnumerablePatch_FirstOrDefault(IEnumerable<object> source, Func<object, bool> predicate, ref object __result)
         {
             if (source == null)
             {
@@ -81,22 +86,40 @@ namespace StardewModdingAPI.Patches
             {
                 throw new ArgumentNullException("predicate");
             }
-            foreach (Item local in source)
+            foreach (object local in source)
             {
-                try
+                if (local == null)
                 {
+                    try
+                    {
+                        if (predicate(local))
+                        {
+                            __result = local;
+                            return false;
+                        }
+                    }
+                    catch
+                    {
+                        continue;
+                    }
+                }
+                else
+                {
+                    if (!(local is StardewValley.Item))
+                    {
+                        return true;
+                    }
                     if (predicate(local))
                     {
                         __result = local;
                         return false;
                     }
                 }
-                catch { }
             }
             __result = default(Item);
             return false;
         }
-        private static bool Before_LinqEnumerablePatch_Any(IEnumerable<Item> source, Func<Item, bool> predicate, ref Item __result)
+        private static bool Before_LinqEnumerablePatch_Any(IEnumerable<object> source, Func<object, bool> predicate, ref object __result)
         {
             if (source == null)
             {
@@ -106,19 +129,83 @@ namespace StardewModdingAPI.Patches
             {
                 throw new ArgumentNullException("predicate");
             }
-            foreach (Item local in source)
+            foreach (object local in source)
             {
-                try
+                if (local == null)
                 {
+                    try
+                    {
+                        if (predicate(local))
+                        {
+                            __result = local;
+                            return false;
+                        }
+                    }
+                    catch
+                    {
+                        continue;
+                    }
+                }
+                else
+                {
+                    if (!(local is StardewValley.Item))
+                    {
+                        return true;
+                    }
                     if (predicate(local))
                     {
                         __result = local;
                         return false;
                     }
                 }
-                catch { }
             }
             __result = null;
+            return false;
+        }
+        private static bool Before_LinqEnumerablePatch_TryGetFirst(IEnumerable<object> source, Func<object, bool> predicate, ref bool found, ref object __result, MethodBase __originalMethod)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException("source");
+            }
+            if (predicate == null)
+            {
+                throw new ArgumentNullException("predicate");
+            }
+            foreach (object local in source)
+            {
+                if (local == null)
+                {
+                    try
+                    {
+                        if (predicate(local))
+                        {
+                            __result = local;
+                            found = true;
+                            return false;
+                        }
+                    }
+                    catch
+                    {
+                        continue;
+                    }
+                }
+                else
+                {
+                    if (!(local is StardewValley.Item))
+                    {
+                        return true;
+                    }
+                    if (predicate(local))
+                    {
+                        __result = local;
+                        found = true;
+                        return false;
+                    }
+                }
+            }
+            found = false;
+            __result = default(Item);
             return false;
         }
     }
