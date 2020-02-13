@@ -39,3 +39,6 @@ src/SMAPI.Web/Properties/PublishProfiles/*.pubxml
 # Loader Game Asserts
 src/Loader/Assets/Content/
 src/Loader/libs/
+
+# VSHistory
+**/.vshistory/
