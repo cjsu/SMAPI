@@ -692,8 +692,8 @@ namespace StardewModdingAPI.Framework
                     *********/
                     if (state.ActiveMenu.IsChanged)
                     {
-                        IClickableMenu was = this.Watchers.ActiveMenuWatcher.PreviousValue;
-                        IClickableMenu now = this.Watchers.ActiveMenuWatcher.CurrentValue;
+                        IClickableMenu was = state.ActiveMenu.Old;
+                        IClickableMenu now = state.ActiveMenu.New;
 
                         if (this.Monitor.IsVerbose)
                             this.Monitor.Log($"Context: menu changed from {state.ActiveMenu.Old?.GetType().FullName ?? "none"} to {state.ActiveMenu.New?.GetType().FullName ?? "none"}.", LogLevel.Trace);
