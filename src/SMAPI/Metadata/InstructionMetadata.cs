@@ -43,9 +43,13 @@ namespace StardewModdingAPI.Metadata
             // rewrite for crossplatform compatibility
             yield return new MethodParentRewriter(typeof(SpriteBatch), typeof(SpriteBatchMethods), onlyIfPlatformChanged: true);
 
-            //isRaining and isDebrisWeather fix 75% done.
-            yield return new TypeFieldToAnotherTypeFieldRewriter(typeof(Game1), typeof(RainManager), "isRaining", "Instance", this.Monitor);
-            yield return new TypeFieldToAnotherTypeFieldRewriter(typeof(Game1), typeof(WeatherDebrisManager), "isDebrisWeather", "Instance", this.Monitor);
+            //isRaining and isDebrisWeather fix done.
+            yield return new TypeFieldToAnotherTypePropertyRewriter(typeof(Game1), typeof(Game1Methods), "isRaining", "IsRainingProp");
+            yield return new TypeFieldToAnotherTypePropertyRewriter(typeof(Game1), typeof(Game1Methods), "isDebrisWeather", "IsDebrisWeatherProp");
+
+            // Cause of System.Security.VerificationException : Invalid instruction target
+            //yield return new TypeFieldToAnotherTypeFieldRewriter(typeof(Game1), typeof(RainManager), "isRaining", "Instance", this.Monitor);
+            //yield return new TypeFieldToAnotherTypeFieldRewriter(typeof(Game1), typeof(WeatherDebrisManager), "isDebrisWeather", "Instance", this.Monitor);
             yield return new TypeFieldToAnotherTypeFieldRewriter(typeof(GameLocation), typeof(DebrisManager), "debris", "Instance", this.Monitor, "debrisNetCollection", false);
             yield return new TypeFieldToAnotherTypeFieldRewriter(typeof(Game1), typeof(WeatherDebrisManager), "debrisWeather", "Instance", this.Monitor, "weatherDebrisList");
             yield return new TypeFieldToAnotherTypeFieldRewriter(typeof(Game1), typeof(Game1Methods), "rainDrops", "Instance", this.Monitor, null, false, true);
