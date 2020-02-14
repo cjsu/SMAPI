@@ -18,5 +18,51 @@ namespace StardewModdingAPI.Framework.RewriteFacades
         {
             return base.rightClick(x, y, toAddTo, playSound);
         }
+
+        public List<ClickableComponent> GetBorder(BorderSide side)
+        {
+            List<ClickableComponent> clickableComponentList = new List<ClickableComponent>();
+            int num = this.capacity / this.rows;
+            switch (side)
+            {
+                case BorderSide.Top:
+                    for (int index = 0; index < this.inventory.Count; ++index)
+                    {
+                        if (index < num)
+                            clickableComponentList.Add(this.inventory[index]);
+                    }
+                    break;
+                case BorderSide.Left:
+                    for (int index = 0; index < this.inventory.Count; ++index)
+                    {
+                        if (index % num == 0)
+                            clickableComponentList.Add(this.inventory[index]);
+                    }
+                    break;
+                case BorderSide.Right:
+                    for (int index = 0; index < this.inventory.Count; ++index)
+                    {
+                        if (index % num == num - 1)
+                            clickableComponentList.Add(this.inventory[index]);
+                    }
+                    break;
+                case BorderSide.Bottom:
+                    for (int index = 0; index < this.inventory.Count; ++index)
+                    {
+                        if (index >= this.actualInventory.Count - num)
+                            clickableComponentList.Add(this.inventory[index]);
+                    }
+                    break;
+            }
+            return clickableComponentList;
+        }
+
+        public enum BorderSide
+        {
+            Top,
+            Left,
+            Right,
+            Bottom,
+        }
     }
 }
