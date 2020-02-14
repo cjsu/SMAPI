@@ -24,7 +24,7 @@
       <HintPath>..\SMAPI\bin\Debug\StardewModdingAPI.dll</HintPath>
     </Reference>
     <Reference Include="StardewValley">
-      <HintPath>..\..\..\..\..\Downloads\StardewValleyAndroidStuff\base_1.4.4.118\assemblies\StardewValley.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\StardewValleyAndroidStuff\base_1.4.5.136\assemblies\StardewValley.dll</HintPath>
     </Reference>
   </ItemGroup>
 
