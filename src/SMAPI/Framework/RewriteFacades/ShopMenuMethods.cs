@@ -63,6 +63,18 @@ namespace StardewModdingAPI.Framework.RewriteFacades
                 typeof(ShopMenu).GetField("categoriesToSellHere", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).SetValue(this, value);
             }
         }
+        public Dictionary<ISalable, int[]> ItemPriceAndStockProp
+        {
+            get
+            {
+                return (Dictionary<ISalable, int[]>)typeof(ShopMenu).GetField("itemPriceAndStock", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).GetValue(this);
+            }
+            set
+            {
+                typeof(ShopMenu).GetField("itemPriceAndStock", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).SetValue(this, value);
+            }
+        }
+
         public ShopMenuMethods(Dictionary<ISalable, int[]> itemPriceAndStock, int currency = 0, string who = null, Func<ISalable, Farmer, int, bool> on_purchase = null, Func<ISalable, bool> on_sell = null, string context = null) : base(itemPriceAndStock, currency, who, on_purchase, on_sell, context)
         {
         }

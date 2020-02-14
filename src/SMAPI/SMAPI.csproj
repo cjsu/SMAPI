@@ -265,6 +265,7 @@
     <Compile Include="Framework\RewriteFacades\InventoryMenuMethods.cs" />
     <Compile Include="Framework\RewriteFacades\DiscreteColorPickerMethods.cs" />
     <Compile Include="Framework\RewriteFacades\CraftingPageMobileMethods.cs" />
+    <Compile Include="Framework\RewriteFacades\DialogueBoxMethods.cs" />
     <Compile Include="Framework\RewriteFacades\ShopMenuMethods.cs" />
     <Compile Include="Framework\RewriteFacades\FarmerMethods.cs" />
     <Compile Include="Framework\RewriteFacades\FarmerRenderMethods.cs" />

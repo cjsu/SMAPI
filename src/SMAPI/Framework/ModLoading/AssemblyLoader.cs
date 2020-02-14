@@ -110,13 +110,30 @@ namespace StardewModdingAPI.Framework.ModLoading
                 // detect broken assembly reference
                 foreach (AssemblyNameReference reference in assembly.Definition.MainModule.AssemblyReferences)
                 {
-                    if (!(reference.Name.StartsWith("System.") || reference.Name.Equals("System")) && !this.IsAssemblyLoaded(reference))
+                    try {
+                        if (!this.IsAssemblyLoaded(reference))
+                        {
+                            this.Monitor.LogOnce(loggedMessages, $"      Broken code in {assembly.File.Name}: reference to missing assembly '{reference.FullName}'.");
+                            if (!assumeCompatible)
+                                throw new IncompatibleInstructionException($"Found a reference to missing assembly '{reference.FullName}' while loading assembly {assembly.File.Name}.");
+                            mod.SetWarning(ModWarning.BrokenCodeLoaded);
+                            break;
+                        }
+                    }
+                    catch
                     {
-                        this.Monitor.LogOnce(loggedMessages, $"      Broken code in {assembly.File.Name}: reference to missing assembly '{reference.FullName}'.");
-                        if (!assumeCompatible)
-                            throw new IncompatibleInstructionException($"Found a reference to missing assembly '{reference.FullName}' while loading assembly {assembly.File.Name}.");
-                        mod.SetWarning(ModWarning.BrokenCodeLoaded);
-                        break;
+                        if (!reference.Name.StartsWith("System."))
+                        {
+                            this.Monitor.LogOnce(loggedMessages, $"      Broken code in {assembly.File.Name}: reference to missing assembly '{reference.FullName}'.");
+                            if (!assumeCompatible)
+                                throw new IncompatibleInstructionException($"Found a reference to missing assembly '{reference.FullName}' while loading assembly {assembly.File.Name}.");
+                            mod.SetWarning(ModWarning.BrokenCodeLoaded);
+                            break;
+                        }
+                        else
+                        {
+                            this.Monitor.LogOnce(loggedMessages, $"      Probably broken code in {assembly.File.Name}: reference to missing assembly '{reference.FullName}'.");
+                        }
                     }
                 }
 
