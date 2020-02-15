@@ -65,6 +65,7 @@ namespace StardewModdingAPI.Metadata
             yield return new TypeFieldToAnotherTypePropertyRewriter(typeof(ShopMenu), typeof(ShopMenuMethods), "hoverText", "HoverTextProp");
             yield return new TypeFieldToAnotherTypePropertyRewriter(typeof(ShopMenu), typeof(ShopMenuMethods), "categoriesToSellHere", "CategoriesToSellHereProp");
             yield return new TypeFieldToAnotherTypePropertyRewriter(typeof(ShopMenu), typeof(ShopMenuMethods), "itemPriceAndStock", "ItemPriceAndStockProp");
+            yield return new TypeFieldToAnotherTypePropertyRewriter(typeof(ShopMenu), typeof(ShopMenuMethods), "forSale", "ForSaleProp");
             yield return new TypeFieldToAnotherTypePropertyRewriter(typeof(MenuWithInventory), typeof(MenuWithInventoryMethods), "trashCan", "TrashCanProp");
             yield return new TypeFieldToAnotherTypePropertyRewriter(typeof(ItemGrabMenu), typeof(ItemGrabMenuMethods), "fillStacksButton", "FillStacksButtonProp");
 
@@ -80,6 +81,7 @@ namespace StardewModdingAPI.Metadata
             yield return new MethodParentRewriter(typeof(SpriteText), typeof(SpriteTextMethods));
             yield return new MethodParentRewriter(typeof(NPC), typeof(NPCMethods));
             yield return new MethodParentRewriter(typeof(Utility), typeof(UtilityMethods));
+            yield return new MethodParentRewriter(typeof(DayTimeMoneyBox), typeof(DayTimeMoneyBoxMethods));
 
             //Constructor Rewrites
             yield return new MethodParentRewriter(typeof(HUDMessage), typeof(HUDMessageMethods));
