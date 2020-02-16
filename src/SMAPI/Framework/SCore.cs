@@ -273,7 +273,6 @@ namespace StardewModdingAPI.Framework
                     new ScheduleErrorPatch(this.MonitorForGame),
                     new SaveBackupPatch(this.EventManager),
                     new JunimoHarvesterPatch(this.Monitor),
-                    new LinqEnumerablePatch(this.Monitor),
                     new SpriteFontPatch(this.Monitor)
                 );
 
