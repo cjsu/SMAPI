@@ -262,6 +262,7 @@
     <Compile Include="Framework\RewriteFacades\CraftingPageMobileMethods.cs" />
     <Compile Include="Framework\RewriteFacades\DialogueBoxMethods.cs" />
     <Compile Include="Framework\RewriteFacades\DayTimeMoneyBoxMethods.cs" />
+    <Compile Include="Framework\RewriteFacades\AnimalQueryMenuMethods.cs" />
     <Compile Include="Framework\RewriteFacades\ShopMenuMethods.cs" />
     <Compile Include="Framework\RewriteFacades\FarmerMethods.cs" />
     <Compile Include="Framework\RewriteFacades\FarmerRenderMethods.cs" />
