@@ -24,6 +24,18 @@ namespace StardewModdingAPI.Framework.RewriteFacades
             }
         }
 
+        public static bool IsSnowingProp
+        {
+            get
+            {
+                return WeatherDebrisManager.Instance.isSnowing;
+            }
+            set
+            {
+                WeatherDebrisManager.Instance.isSnowing = value;
+            }
+        }
+
         public static bool IsDebrisWeatherProp
         {
             get

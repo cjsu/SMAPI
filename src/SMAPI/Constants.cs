@@ -95,7 +95,7 @@ namespace StardewModdingAPI
         internal static string ModsPath { get; set; }
 
         /// <summary>The game's current semantic version.</summary>
-        internal static ISemanticVersion GameVersion { get; } = new GameVersion("1.4.5.137");
+        internal static ISemanticVersion GameVersion { get; } = new GameVersion("1.4.5.138");
 
         /// <summary>The target game platform.</summary>
         internal static Platform Platform { get; } = Platform.Android;
