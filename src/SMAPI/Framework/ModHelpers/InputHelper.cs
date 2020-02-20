@@ -51,11 +51,11 @@ namespace StardewModdingAPI.Framework.ModHelpers
             this.InputState.SuppressButtons.Add(button);
         }
 
-        /// <summary>Get the status of a button.</summary>
+        /// <summary>Get the state of a button.</summary>
         /// <param name="button">The button to check.</param>
-        public InputStatus GetStatus(SButton button)
+        public SButtonState GetState(SButton button)
         {
-            return this.InputState.GetStatus(button);
+            return this.InputState.GetState(button);
         }
     }
 }

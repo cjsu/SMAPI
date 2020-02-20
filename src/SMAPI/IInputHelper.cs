@@ -18,8 +18,8 @@ namespace StardewModdingAPI
         /// <param name="button">The button to suppress.</param>
         void Suppress(SButton button);
 
-        /// <summary>Get the status of a button.</summary>
+        /// <summary>Get the state of a button.</summary>
         /// <param name="button">The button to check.</param>
-        InputStatus GetStatus(SButton button);
+        SButtonState GetState(SButton button);
     }
 }

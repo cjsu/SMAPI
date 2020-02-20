@@ -102,7 +102,7 @@ smapi.modList = function (mods, enableBeta) {
     app = new Vue({
         el: "#app",
         data: data,
-        mounted: function() {
+        mounted: function () {
             // enable table sorting
             $("#mod-list").tablesorter({
                 cssHeader: "header",
@@ -115,11 +115,7 @@ smapi.modList = function (mods, enableBeta) {
                 $("#search-box").focus();
 
             // jump to anchor (since table is added after page load)
-            if (location.hash) {
-                var row = $(location.hash).get(0);
-                if (row)
-                    row.scrollIntoView();
-            }
+            this.fixHashPosition();
         },
         methods: {
             /**
@@ -144,6 +140,18 @@ smapi.modList = function (mods, enableBeta) {
                 }
             },
 
+            /**
+             * Fix the window position for the current hash.
+             */
+            fixHashPosition: function () {
+                if (!location.hash)
+                    return;
+
+                var row = $(location.hash);
+                var target = row.prev().get(0) || row.get(0);
+                if (target)
+                    target.scrollIntoView();
+            },
 
             /**
              * Get whether a mod matches the current filters.
@@ -151,7 +159,7 @@ smapi.modList = function (mods, enableBeta) {
              * @param {string[]} searchWords The search words to match.
              * @returns {bool} Whether the mod matches the filters.
              */
-            matchesFilters: function(mod, searchWords) {
+            matchesFilters: function (mod, searchWords) {
                 var filters = data.filters;
 
                 // check hash
@@ -249,7 +257,9 @@ smapi.modList = function (mods, enableBeta) {
         }
     });
     app.applyFilters();
+    app.fixHashPosition();
     window.addEventListener("hashchange", function () {
         app.applyFilters();
+        app.fixHashPosition();
     });
 };

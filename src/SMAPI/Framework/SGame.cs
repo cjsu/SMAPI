@@ -667,16 +667,16 @@ namespace StardewModdingAPI.Framework
                             foreach (var pair in inputState.ActiveButtons)
                             {
                                 SButton button = pair.Key;
-                                InputStatus status = pair.Value;
+                                SButtonState status = pair.Value;
 
-                                if (status == InputStatus.Pressed)
+                                if (status == SButtonState.Pressed)
                                 {
                                     if (this.Monitor.IsVerbose)
                                         this.Monitor.Log($"Events: button {button} pressed.", LogLevel.Trace);
 
                                     events.ButtonPressed.Raise(new ButtonPressedEventArgs(button, cursor, inputState));
                                 }
-                                else if (status == InputStatus.Released)
+                                else if (status == SButtonState.Released)
                                 {
                                     if (this.Monitor.IsVerbose)
                                         this.Monitor.Log($"Events: button {button} released.", LogLevel.Trace);

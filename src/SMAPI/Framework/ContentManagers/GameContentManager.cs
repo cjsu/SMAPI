@@ -2,12 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using StardewModdingAPI.Framework.Content;
 using StardewModdingAPI.Framework.Exceptions;
 using StardewModdingAPI.Framework.Reflection;
 using StardewModdingAPI.Framework.Utilities;
 using StardewValley;
+using xTile;
 
 namespace StardewModdingAPI.Framework.ContentManagers
 {
@@ -336,6 +339,20 @@ namespace StardewModdingAPI.Framework.ContentManagers
         private IAssetData ApplyEditors<T>(IAssetInfo info, IAssetData asset)
         {
             IAssetData GetNewData(object data) => new AssetDataForObject(info, data, this.AssertAndNormalizeAssetName);
+
+            // special case: if the asset was loaded with a more general type like 'object', call editors with the actual type instead.
+            {
+                Type actualType = asset.Data.GetType();
+                Type actualOpenType = actualType.IsGenericType ? actualType.GetGenericTypeDefinition() : null;
+
+                if (typeof(T) != actualType && (actualOpenType == typeof(Dictionary<,>) || actualOpenType == typeof(List<>) || actualType == typeof(Texture2D) || actualType == typeof(Map)))
+                {
+                    return (IAssetData)this.GetType()
+                        .GetMethod(nameof(this.ApplyEditors), BindingFlags.NonPublic | BindingFlags.Instance)
+                        .MakeGenericMethod(actualType)
+                        .Invoke(this, new object[] { info, asset });
+                }
+            }
 
             // edit asset
             foreach (var entry in this.Editors)
