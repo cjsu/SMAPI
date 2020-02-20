@@ -1009,6 +1009,7 @@ namespace StardewModdingAPI.Framework
                 IReflectedMethod DrawAfterMap = this.Reflection.GetMethod(this, "DrawAfterMap", new Type[] { });
                 IReflectedMethod DrawToolbar = this.Reflection.GetMethod(this, "DrawToolbar", new Type[] { });
                 IReflectedMethod DrawVirtualJoypad = this.Reflection.GetMethod(this, "DrawVirtualJoypad", new Type[] { });
+                IReflectedMethod DrawMenuMouseCursor = this.Reflection.GetMethod(this, "DrawMenuMouseCursor", new Type[] { });
                 IReflectedMethod DrawFadeToBlackFullScreenRect = this.Reflection.GetMethod(this, "DrawFadeToBlackFullScreenRect", new Type[] { });
                 IReflectedMethod DrawChatBox = this.Reflection.GetMethod(this, "DrawChatBox", new Type[] { });
                 IReflectedMethod DrawDialogueBoxForPinchZoom = this.Reflection.GetMethod(this, "DrawDialogueBoxForPinchZoom", new Type[] { });
@@ -1083,16 +1084,14 @@ namespace StardewModdingAPI.Framework
                                 RestoreViewportAndZoom();
                             }
                         }
-                        if (overlayMenu != null)
-                        {
-                            BackupViewportAndZoom(false);
-                            SetSpriteBatchBeginNextID("B");
-                            _spriteBatchBegin.Invoke(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, null);
-                            overlayMenu.draw(spriteBatch);
-                            _spriteBatchEnd.Invoke();
-                            RestoreViewportAndZoom();
-                        }
-                        return;
+                        if (overlayMenu == null)
+                            return;
+                        BackupViewportAndZoom(false);
+                        SetSpriteBatchBeginNextID("B");
+                        _spriteBatchBegin.Invoke(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, null);
+                        overlayMenu.draw(spriteBatch);
+                        _spriteBatchEnd.Invoke();
+                        RestoreViewportAndZoom();
                     }
                     else
                     {
@@ -1179,39 +1178,35 @@ namespace StardewModdingAPI.Framework
                                 }
                                 this.drawOverlays(spriteBatch);
                                 this.renderScreenBufferTargetScreen(target_screen);
-                                if (currentMinigame is FishingGame && activeClickableMenu != null)
+                                switch (Game1.currentMinigame)
                                 {
-                                    SetSpriteBatchBeginNextID("A-A");
-                                    SpriteBatchBegin.Invoke(1f);
-                                    activeClickableMenu.draw(spriteBatch);
-                                    _spriteBatchEnd.Invoke();
-                                    this.drawOverlays(spriteBatch);
-                                }
-                                else
-                                {
-                                    if (!(currentMinigame is FantasyBoardGame) || activeClickableMenu == null)
-                                    {
-                                        return;
-                                    }
-                                    if (IsActiveClickableMenuNativeScaled)
-                                    {
-                                        BackupViewportAndZoom(true);
-                                        SetSpriteBatchBeginNextID("A1");
-                                        SpriteBatchBegin.Invoke(NativeZoomLevel);
-                                        activeClickableMenu.draw(spriteBatch);
-                                        _spriteBatchEnd.Invoke();
-                                        RestoreViewportAndZoom();
-                                    }
-                                    else
-                                    {
-                                        BackupViewportAndZoom(false);
-                                        SetSpriteBatchBeginNextID("A2");
+                                    case FishingGame _ when Game1.activeClickableMenu != null:
+                                        Game1.SetSpriteBatchBeginNextID("A-A");
                                         SpriteBatchBegin.Invoke(1f);
-                                        activeClickableMenu.draw(spriteBatch);
+                                        Game1.activeClickableMenu.draw(Game1.spriteBatch);
                                         _spriteBatchEnd.Invoke();
-                                        RestoreViewportAndZoom();
-                                    }
+                                        this.drawOverlays(Game1.spriteBatch, true);
+                                        break;
+                                    case FantasyBoardGame _ when Game1.activeClickableMenu != null:
+                                        if (Game1.IsActiveClickableMenuNativeScaled)
+                                        {
+                                            Game1.BackupViewportAndZoom(true);
+                                            Game1.SetSpriteBatchBeginNextID("A1");
+                                            SpriteBatchBegin.Invoke(Game1.NativeZoomLevel);
+                                            Game1.activeClickableMenu.draw(Game1.spriteBatch);
+                                            _spriteBatchEnd.Invoke();
+                                            Game1.RestoreViewportAndZoom();
+                                            break;
+                                        }
+                                        Game1.BackupViewportAndZoom(false);
+                                        Game1.SetSpriteBatchBeginNextID("A2");
+                                        SpriteBatchBegin.Invoke(1f);
+                                        Game1.activeClickableMenu.draw(Game1.spriteBatch);
+                                        _spriteBatchEnd.Invoke();
+                                        Game1.RestoreViewportAndZoom();
+                                        break;
                                 }
+                                DrawVirtualJoypad.Invoke();
                             }
                             else if (showingEndOfNightStuff)
                             {
@@ -1885,6 +1880,8 @@ label_168:
                                 {
                                     farmEvent.drawAboveEverything(spriteBatch);
                                 }
+                                if (Game1.emoteMenu != null && !this.takingMapScreenshot)
+                                    Game1.emoteMenu.draw(Game1.spriteBatch);
                                 if (HostPaused)
                                 {
                                     string s = content.LoadString("Strings\\StringsFromCSFiles:DayTimeMoneyBox.cs.10378");
@@ -1916,8 +1913,10 @@ label_168:
                                         _spriteBatchEnd.Invoke();
                                     }
                                     DrawToolbar.Invoke();
-                                    DrawVirtualJoypad.Invoke();
+                                    DrawMenuMouseCursor.Invoke();
                                 }
+                                if (_drawHUD.GetValue() || Game1.player.CanMove)
+                                    DrawVirtualJoypad.Invoke();
                                 DrawFadeToBlackFullScreenRect.Invoke();
                                 SetSpriteBatchBeginNextID("A-E");
                                 SpriteBatchBegin.Invoke(1f);
