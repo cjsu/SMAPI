@@ -1240,7 +1240,9 @@ namespace StardewModdingAPI.Framework
                             {
                                 events.Rendering.RaiseEmpty();
                                 DrawLoadingDotDotDot.Invoke(gameTime);
+                                SpriteBatchBegin.Invoke(NativeZoomLevel);
                                 events.Rendered.RaiseEmpty();
+                                _spriteBatchEnd.Invoke();
 
                                 this.drawOverlays(spriteBatch);
                                 this.renderScreenBufferTargetScreen(target_screen);
