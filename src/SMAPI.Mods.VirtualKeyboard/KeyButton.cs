@@ -7,6 +7,8 @@ using StardewValley.Menus;
 using System.Reflection;
 using Microsoft.Xna.Framework.Input;
 using static StardewModdingAPI.Mods.VirtualKeyboard.ModConfig;
+using System.Threading.Tasks;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace StardewModdingAPI.Mods.VirtualKeyboard
 {
@@ -48,7 +50,7 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
             }
             this.transparency = buttonDefine.transparency;
 
-            helper.Events.Display.RenderingHud += this.OnRenderingHud;
+            helper.Events.Display.Rendered += this.OnRendered;
             helper.Events.Input.ButtonReleased += this.EventInputButtonReleased;
             helper.Events.Input.ButtonPressed += this.EventInputButtonPressed;
 
@@ -118,22 +120,18 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
             {
                 if (this.buttonKey == SButton.RightWindows)
                 {
-                    Game1.activeClickableMenu = new NamingMenu(command =>
-                    {
+                    KeyboardInput.Show("Command", "", "", false).ContinueWith<string>(delegate (Task<string> s) {
+                        string command;
+                        command = s.Result;
                         if (command.Length > 0)
                         {
                             object score = this.GetSCore(this.helper);
                             object sgame = score.GetType().GetField("GameInstance", BindingFlags.Public | BindingFlags.Instance)?.GetValue(score);
                             ConcurrentQueue<string> commandQueue = sgame.GetType().GetProperty("CommandQueue", BindingFlags.Public | BindingFlags.Instance)?.GetValue(sgame) as ConcurrentQueue<string>;
                             commandQueue?.Enqueue(command);
-                            Game1.activeClickableMenu.exitThisMenu();
                         }
-
-                    }, "Command", "")
-                    {
-                        randomButton = new ClickableTextureComponent(new Rectangle(-100, -100, 0, 0),
-                            Game1.mobileSpriteSheet, new Rectangle(87, 22, 20, 20), 4f, false)
-                    };
+                        return command;
+                    });
                     return;
                 }
                 if (this.buttonKey == SButton.RightControl)
@@ -158,7 +156,7 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
         /// <summary>Raised before drawing the HUD (item toolbar, clock, etc) to the screen.</summary>
         /// <param name="sender">The event sender.</param>
         /// <param name="e">The event arguments.</param>
-        private void OnRenderingHud(object sender, EventArgs e)
+        private void OnRendered(object sender, EventArgs e)
         {
             if (!this.hidden)
             {
@@ -167,7 +165,22 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
                 {
                     scale *= 0.5f;
                 }
-                IClickableMenu.drawButtonWithText(Game1.spriteBatch, Game1.smallFont, this.alias, this.buttonRectangle.X, this.buttonRectangle.Y, this.buttonRectangle.Width, this.buttonRectangle.Height, Color.BurlyWood * scale);
+                System.Reflection.FieldInfo matrixField = Game1.spriteBatch.GetType().GetField("_matrix", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                object originMatrix = matrixField.GetValue(Game1.spriteBatch);
+                Game1.spriteBatch.End();
+                Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, Microsoft.Xna.Framework.Matrix.CreateScale(1f));
+                IClickableMenu.drawTextureBoxWithIconAndText(Game1.spriteBatch, Game1.smallFont, Game1.mouseCursors, new Rectangle(0x100, 0x100, 10, 10), null, new Rectangle(0, 0, 1, 1),
+                    this.alias, this.buttonRectangle.X, this.buttonRectangle.Y, this.buttonRectangle.Width, this.buttonRectangle.Height, Color.BurlyWood * scale, 4f,
+                    true, false, true, false, false, false, false); // Remove bold to fix the text position issue
+                Game1.spriteBatch.End();
+                if(originMatrix != null)
+                {
+                    Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, (Matrix)originMatrix);
+                }
+                else
+                {
+                    Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
+                }
             }
         }
     }

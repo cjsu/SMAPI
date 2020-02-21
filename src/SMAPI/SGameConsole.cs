@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using StardewModdingAPI.Framework;
 using StardewModdingAPI.Internal.ConsoleWriting;
 using StardewValley;
@@ -64,12 +66,12 @@ namespace StardewModdingAPI
             }
             else if (this.commandButton.bounds.Contains(x, y))
             {
-                Game1.activeClickableMenu = new NamingMenu(this.textBoxEnter, "Command", "")
-                {
-                    randomButton = new ClickableTextureComponent(new Rectangle(-100, -100, 0, 0), Game1.mobileSpriteSheet, new Rectangle(87, 22, 20, 20), 4f, false)
-                };
-                this.isVisible = false;
-                Game1.playSound("bigDeSelect");
+                KeyboardInput.Show("Command", "", "", false).ContinueWith<string>(delegate (Task<string> s) {
+                    string str;
+                    str = s.Result;
+                    this.textBoxEnter(str);
+                    return str;
+                });
             }
             else
             {
@@ -88,14 +90,14 @@ namespace StardewModdingAPI
                 if (command.EndsWith(";"))
                 {
                     command = command.TrimEnd(';');
+                    this.isVisible = false;
+                    Game1.activeClickableMenu = null;
+                    Game1.playSound("bigDeSelect");
                     SGame.instance.CommandQueue.Enqueue(command);
-                    this.exitThisMenu();
                     return;
                 }
                 SGame.instance.CommandQueue.Enqueue(command);
             }
-            this.isVisible = true;
-            Game1.activeClickableMenu = this;
         }
 
         public override void leftClickHeld(int x, int y)

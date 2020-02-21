@@ -1887,7 +1887,6 @@ label_168:
                                     string s = content.LoadString("Strings\\StringsFromCSFiles:DayTimeMoneyBox.cs.10378");
                                     SpriteText.drawStringWithScrollBackground(spriteBatch, s, 96, 32);
                                 }
-                                events.Rendered.RaiseEmpty();
                                 _spriteBatchEnd.Invoke();
                                 this.drawOverlays(spriteBatch);
                                 this.renderScreenBuffer(BlendState.Opaque, toBuffer);
@@ -1927,10 +1926,19 @@ label_168:
                                     DrawDialogueBoxForPinchZoom.Invoke();
                                     DrawUnscaledActiveClickableMenuForPinchZoom.Invoke();
                                     DrawNativeScaledActiveClickableMenuForPinchZoom.Invoke();
+                                    if(IsActiveClickableMenuNativeScaled)
+                                        SpriteBatchBegin.Invoke(NativeZoomLevel);
+                                    else
+                                        SpriteBatchBegin.Invoke(1f);
+                                    events.Rendered.RaiseEmpty();
+                                    _spriteBatchEnd.Invoke();
                                 }
-                                SpriteBatchBegin.Invoke(Game1.options.zoomLevel);
-                                events.Rendered.RaiseEmpty();
-                                _spriteBatchEnd.Invoke();
+                                else
+                                {
+                                    SpriteBatchBegin.Invoke(1f);
+                                    events.Rendered.RaiseEmpty();
+                                    _spriteBatchEnd.Invoke();
+                                }
                                 if (_drawHUD.GetValue() && hudMessages.Count > 0 && (!eventUp || isFestival()))
                                 {
                                     SetSpriteBatchBeginNextID("A-F");

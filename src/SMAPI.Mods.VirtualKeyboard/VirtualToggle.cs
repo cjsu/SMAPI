@@ -40,7 +40,7 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
             this.virtualToggleButton = new ClickableTextureComponent(new Rectangle(Game1.toolbarPaddingX + 64, 12, 128, 128), this.texture, new Rectangle(0, 0, 16, 16), 5.75f, false);
             helper.WriteConfig(this.modConfig);
 
-            this.helper.Events.Display.RenderingHud += this.OnRenderingHUD;
+            this.helper.Events.Display.Rendered += this.OnRendered;
             this.helper.Events.Input.ButtonPressed += this.VirtualToggleButtonPressed;
         }
 
@@ -99,7 +99,7 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
             return false;
         }
 
-        private void OnRenderingHUD(object sender, EventArgs e)
+        private void OnRendered(object sender, EventArgs e)
         {
             if (this.isDefault)
             {
@@ -131,7 +131,21 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
             }
             if (!Game1.eventUp && Game1.activeClickableMenu is GameMenu == false && Game1.activeClickableMenu is ShopMenu == false)
                 scale = 0.25f;
+
+            System.Reflection.FieldInfo matrixField = Game1.spriteBatch.GetType().GetField("_matrix", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            object originMatrix = matrixField.GetValue(Game1.spriteBatch);
+            Game1.spriteBatch.End();
+            Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, Microsoft.Xna.Framework.Matrix.CreateScale(1f));
             this.virtualToggleButton.draw(Game1.spriteBatch, Color.White * scale, 0.000001f);
+            Game1.spriteBatch.End();
+            if (originMatrix != null)
+            {
+                Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, (Matrix)originMatrix);
+            }
+            else
+            {
+                Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
+            }
         }
     }
 }
