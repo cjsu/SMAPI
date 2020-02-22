@@ -253,8 +253,8 @@ namespace StardewModdingAPI.Framework.ContentManagers
             texture.GetData(data);
             for (int i = 0; i < data.Length; i++)
             {
-                if (data[i].A == 0)
-                    continue; // no need to change fully transparent pixels
+                if (data[i].A == byte.MinValue || data[i].A == byte.MaxValue)
+                    continue; // no need to change fully transparent/opaque pixels
 
                 data[i] = Color.FromNonPremultiplied(data[i].ToVector4());
             }

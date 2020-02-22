@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using StardewValley;
 
 namespace StardewModdingAPI.Framework.Content
 {
@@ -101,6 +102,22 @@ namespace StardewModdingAPI.Framework.Content
 
             // patch target texture
             target.SetData(0, targetArea, sourceData, 0, pixelCount);
+        }
+
+        /// <summary>Extend the image if needed to fit the given size. Note that this is an expensive operation, creates a new texture instance, and that extending a spritesheet horizontally may cause game errors or bugs.</summary>
+        /// <param name="minWidth">The minimum texture width.</param>
+        /// <param name="minHeight">The minimum texture height.</param>
+        /// <returns>Whether the texture was resized.</returns>
+        public bool ExtendImage(int minWidth, int minHeight)
+        {
+            if (this.Data.Width >= minWidth && this.Data.Height >= minHeight)
+                return false;
+
+            Texture2D original = this.Data;
+            Texture2D texture = new Texture2D(Game1.graphics.GraphicsDevice, Math.Max(original.Width, minWidth), Math.Max(original.Height, minHeight));
+            this.ReplaceWith(texture);
+            this.PatchImage(original);
+            return true;
         }
     }
 }

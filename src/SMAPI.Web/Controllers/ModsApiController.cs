@@ -296,7 +296,7 @@ namespace StardewModdingAPI.Web.Controllers
                 {
                     if (result.Version == null)
                         result.SetError(RemoteModStatus.InvalidData, $"The update key '{updateKey}' matches a mod with no version number.");
-                    else if (!this.TryParseVersion(result.Version, allowNonStandardVersions, out _))
+                    else if (!SemanticVersion.TryParse(result.Version, allowNonStandardVersions, out _))
                         result.SetError(RemoteModStatus.InvalidData, $"The update key '{updateKey}' matches a mod with invalid semantic version '{result.Version}'.");
                 }
 
@@ -360,11 +360,11 @@ namespace StardewModdingAPI.Web.Controllers
         {
             // try mapped version
             string rawNewVersion = this.GetRawMappedVersion(version, map, allowNonStandard);
-            if (this.TryParseVersion(rawNewVersion, allowNonStandard, out ISemanticVersion parsedNew))
+            if (SemanticVersion.TryParse(rawNewVersion, allowNonStandard, out ISemanticVersion parsedNew))
                 return parsedNew;
 
             // return original version
-            return this.TryParseVersion(version, allowNonStandard, out ISemanticVersion parsedOld)
+            return SemanticVersion.TryParse(version, allowNonStandard, out ISemanticVersion parsedOld)
                 ? parsedOld
                 : null;
         }
@@ -383,31 +383,19 @@ namespace StardewModdingAPI.Web.Controllers
                 return map[version];
 
             // match parsed version
-            if (this.TryParseVersion(version, allowNonStandard, out ISemanticVersion parsed))
+            if (SemanticVersion.TryParse(version, allowNonStandard, out ISemanticVersion parsed))
             {
                 if (map.ContainsKey(parsed.ToString()))
                     return map[parsed.ToString()];
 
                 foreach (var pair in map)
                 {
-                    if (this.TryParseVersion(pair.Key, allowNonStandard, out ISemanticVersion target) && parsed.Equals(target) && this.TryParseVersion(pair.Value, allowNonStandard, out ISemanticVersion newVersion))
+                    if (SemanticVersion.TryParse(pair.Key, allowNonStandard, out ISemanticVersion target) && parsed.Equals(target) && SemanticVersion.TryParse(pair.Value, allowNonStandard, out ISemanticVersion newVersion))
                         return newVersion.ToString();
                 }
             }
 
             return version;
-        }
-
-        /// <summary>Try to parse a version string.</summary>
-        /// <param name="version">The version string.</param>
-        /// <param name="allowNonStandard">Whether to allow non-standard versions.</param>
-        /// <param name="parsed">The parsed representation.</param>
-        /// <returns>Returns whether parsing the version succeeded.</returns>
-        public bool TryParseVersion(string version, bool allowNonStandard, out ISemanticVersion parsed)
-        {
-            return allowNonStandard
-                ? SemanticVersion.TryParseNonStandard(version, out parsed)
-                : SemanticVersion.TryParse(version, out parsed);
         }
     }
 }
