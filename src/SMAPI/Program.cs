@@ -38,7 +38,7 @@ namespace StardewModdingAPI
             {
                 AppDomain.CurrentDomain.AssemblyResolve += Program.CurrentDomain_AssemblyResolve;
                 //Program.AssertGamePresent();
-                //Program.AssertGameVersion();
+                Program.AssertGameVersion();
                 //Program.Start(args);
             }
             catch (BadImageFormatException ex) when (ex.FileName == "StardewValley")
