@@ -1931,13 +1931,13 @@ label_168:
                                     if(IsActiveClickableMenuNativeScaled)
                                         SpriteBatchBegin.Invoke(NativeZoomLevel);
                                     else
-                                        SpriteBatchBegin.Invoke(1f);
+                                        SpriteBatchBegin.Invoke(Game1.options.zoomLevel);
                                     events.Rendered.RaiseEmpty();
                                     _spriteBatchEnd.Invoke();
                                 }
                                 else
                                 {
-                                    SpriteBatchBegin.Invoke(1f);
+                                    SpriteBatchBegin.Invoke(Game1.options.zoomLevel);
                                     events.Rendered.RaiseEmpty();
                                     _spriteBatchEnd.Invoke();
                                 }
