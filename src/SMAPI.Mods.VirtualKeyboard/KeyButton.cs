@@ -27,6 +27,7 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
         private readonly SButton buttonKey;
         private readonly float transparency;
         private readonly string alias;
+        private readonly string command;
         public bool hidden;
         private bool raisingPressed = false;
         private bool raisingReleased = false;
@@ -43,6 +44,7 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
                 this.alias = this.buttonKey.ToString();
             else
                 this.alias = buttonDefine.alias;
+            this.command = buttonDefine.command;
 
             if (buttonDefine.transparency <= 0.01f || buttonDefine.transparency > 1f)
             {
@@ -125,10 +127,7 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
                         command = s.Result;
                         if (command.Length > 0)
                         {
-                            object score = this.GetSCore(this.helper);
-                            object sgame = score.GetType().GetField("GameInstance", BindingFlags.Public | BindingFlags.Instance)?.GetValue(score);
-                            ConcurrentQueue<string> commandQueue = sgame.GetType().GetProperty("CommandQueue", BindingFlags.Public | BindingFlags.Instance)?.GetValue(sgame) as ConcurrentQueue<string>;
-                            commandQueue?.Enqueue(command);
+                            this.SendCommand(command);
                         }
                         return command;
                     });
@@ -137,6 +136,11 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
                 if (this.buttonKey == SButton.RightControl)
                 {
                     SGameConsole.Instance.Show();
+                    return;
+                }
+                if (!string.IsNullOrEmpty(this.command))
+                {
+                    this.SendCommand(this.command);
                     return;
                 }
                 object inputState = e.GetType().GetField("InputState", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(e);
@@ -151,6 +155,14 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
                     this.raisingReleased = false;
                 }
             }
+        }
+
+        private void SendCommand(string command)
+        {
+            object score = this.GetSCore(this.helper);
+            object sgame = score.GetType().GetField("GameInstance", BindingFlags.Public | BindingFlags.Instance)?.GetValue(score);
+            ConcurrentQueue<string> commandQueue = sgame.GetType().GetProperty("CommandQueue", BindingFlags.Public | BindingFlags.Instance)?.GetValue(sgame) as ConcurrentQueue<string>;
+            commandQueue?.Enqueue(command);
         }
 
         /// <summary>Raised before drawing the HUD (item toolbar, clock, etc) to the screen.</summary>

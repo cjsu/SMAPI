@@ -11,20 +11,23 @@ namespace StardewModdingAPI.Mods.VirtualKeyboard
         };
         public VirtualButton[] buttonsExtend { get; set; } = new VirtualButton[] {
             new VirtualButton(SButton.MouseRight, new Rect(190, 170, 162, 90), 0.5f, "RightMouse"),
-            new VirtualButton(SButton.RightWindows, new Rect(360, 170, 162, 90), 0.5f, "Command"),
-            new VirtualButton(SButton.RightControl, new Rect(530, 170, 162, 90), 0.5f, "Console")
+            new VirtualButton(SButton.None, new Rect(360, 170, 92, 90), 0.5f, "Zoom", "zoom 1.0"),
+            new VirtualButton(SButton.RightWindows, new Rect(460, 170, 162, 90), 0.5f, "Command"),
+            new VirtualButton(SButton.RightControl, new Rect(630, 170, 162, 90), 0.5f, "Console")
         };
         internal class VirtualButton {
             public SButton key;
             public Rect rectangle;
             public float transparency;
             public string alias;
-            public VirtualButton(SButton key, Rect rectangle, float transparency, string alias = null)
+            public string command;
+            public VirtualButton(SButton key, Rect rectangle, float transparency, string alias = null, string command = null)
             {
                 this.key = key;
                 this.rectangle = rectangle;
                 this.transparency = transparency;
                 this.alias = alias;
+                this.command = command;
             }
         }
         internal class Toggle
