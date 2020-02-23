@@ -4,7 +4,7 @@
 
   <!--set properties -->
   <PropertyGroup>
-    <Version>3.2.0</Version>
+    <Version>3.3.2</Version>
     <Product>SMAPI</Product>
 
     <AssemblySearchPaths>$(AssemblySearchPaths);{GAC}</AssemblySearchPaths>

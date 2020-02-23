@@ -1,12 +1,26 @@
 &larr; [README](README.md)
 
 # Release notes
-## Upcoming release
+## 3.3.2
+Released 22 February 2020 for Stardew Valley 1.4.1 or later.
+
+* Fixed mods receiving their own message broadcasts.
+
+## 3.3.1
+Released 22 February 2020 for Stardew Valley 1.4.1 or later.
+
+* Fixed errors with custom spouse room mods in SMAPI 3.3.
+
+## 3.3
+Released 22 February 2020 for Stardew Valley 1.4.1 or later.
+
 * For players:
-  * Improved performance for mods which load a large number of images.
+  * Improved performance for mods which load many images.
   * Reduced network traffic for mod broadcasts to players who can't process them.
   * Fixed update-check errors for recent versions of SMAPI on Android.
+  * Updated draw logic to match recent game updates.
   * Updated compatibility list.
+  * Updated SMAPI/game version map.
   * Updated translations. Thanks to xCarloC (added Italian)!
 
 * For the Save Backup mod:
@@ -17,16 +31,18 @@
   * Added support for [message sending](https://stardewvalleywiki.com/Modding:Modder_Guide/APIs/Integrations#Message_sending) to mods on the current computer (in addition to remote computers).
   * Added `ExtendImage` method to content API when editing files to resize textures.
   * Added `helper.Input.GetState` to get the low-level state of a button.
-  * **[Breaking change]** Map tilesheets are no loaded from `Content` if they can't be found in `Content/Maps`. This reflects an upcoming change in the game to delete map tilesheets under `Content`.
+  * **[Breaking change]** Map tilesheets are no loaded from `Content` if they can't be found in `Content/Maps`. This reflects an upcoming change in the game to delete duplicate map tilesheets under `Content`. Most mods should be unaffected.
   * Improved map tilesheet errors so they provide more info.
+  * When mods load an asset using a more general type like `content.Load<object>`, SMAPI now calls `IAssetEditor` instances with the actual asset type instead of the specified one.
+  * Updated dependencies (including Mono.Cecil 0.11.1 → 0.11.2).
   * Fixed dialogue propagation clearing marriage dialogue.
-  * Fixed issue where SMAPI didn't call `IAssetEditor` with the actual type if a mod loaded an asset using `content.Load<object>`.
 
 * For the web UI:
   * Updated the JSON validator and Content Patcher schema for `.tmx` support.
   * The mod compatibility page now has a sticky table header.
 
 * For SMAPI/tool developers:
+  * Improved support for four-part versions to support SMAPI on Android.
   * The SMAPI log now prefixes the OS name with `Android` on Android.
 
 ## 3.2

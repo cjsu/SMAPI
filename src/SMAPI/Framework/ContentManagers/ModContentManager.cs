@@ -367,14 +367,23 @@ namespace StardewModdingAPI.Framework.ContentManagers
             }
 
             // get from game assets
+            // Map tilesheet keys shouldn't include the "Maps/" prefix (the game will add it automatically) or ".png" extension.
             {
-                string contentKey = Path.Combine("Maps", relativePath);
-                if (contentKey.EndsWith(".png"))
+                string contentKey = relativePath;
+                foreach (char separator in PathUtilities.PossiblePathSeparators)
+                {
+                    if (contentKey.StartsWith($"Maps{separator}"))
+                    {
+                        contentKey = contentKey.Substring(5);
+                        break;
+                    }
+                }
+                if (contentKey.EndsWith(".png", StringComparison.InvariantCultureIgnoreCase))
                     contentKey = contentKey.Substring(0, contentKey.Length - 4);
 
                 try
                 {
-                    this.GameContentManager.Load<Texture2D>(contentKey, this.Language, useCache: true); // no need to bypass cache here, since we're not storing the asset
+                    this.GameContentManager.Load<Texture2D>(Path.Combine("Maps", contentKey), this.Language, useCache: true); // no need to bypass cache here, since we're not storing the asset
                     assetName = contentKey;
                     return true;
                 }
