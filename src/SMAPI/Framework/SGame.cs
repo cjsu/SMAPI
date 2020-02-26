@@ -1240,7 +1240,7 @@ namespace StardewModdingAPI.Framework
                             {
                                 events.Rendering.RaiseEmpty();
                                 DrawLoadingDotDotDot.Invoke(gameTime);
-                                SpriteBatchBegin.Invoke(NativeZoomLevel);
+                                SpriteBatchBegin.Invoke(Game1.options.zoomLevel);
                                 events.Rendered.RaiseEmpty();
                                 _spriteBatchEnd.Invoke();
 
@@ -1642,10 +1642,7 @@ label_168:
                                         spriteBatch.Draw(littleEffect, new Microsoft.Xna.Framework.Rectangle((int)player.getLocalPosition(Game1.viewport).X - 2, (int)player.getLocalPosition(Game1.viewport).Y - ((!player.CurrentTool.Name.Equals("Watering Can")) ? 64 : 0) - 2, (int)(toolHold % 600f * 0.08f) + 4, 12), Color.Black);
                                         spriteBatch.Draw(littleEffect, new Microsoft.Xna.Framework.Rectangle((int)player.getLocalPosition(Game1.viewport).X, (int)player.getLocalPosition(Game1.viewport).Y - ((!player.CurrentTool.Name.Equals("Watering Can")) ? 64 : 0), (int)(toolHold % 600f * 0.08f), 8), color);
                                     }
-                                    if (WeatherDebrisManager.Instance.isDebrisWeather && currentLocation.IsOutdoors && !currentLocation.ignoreDebrisWeather && !currentLocation.Name.Equals("Desert"))
-                                    {
-                                        WeatherDebrisManager.Instance.Draw(spriteBatch);
-                                    }
+                                    this.drawWeather(gameTime, target_screen);
                                     if (farmEvent != null)
                                     {
                                         farmEvent.draw(spriteBatch);
