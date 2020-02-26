@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using Android.App;
 #if SMAPI_FOR_WINDOWS
 #endif
 using StardewModdingAPI.Framework;
@@ -38,25 +39,44 @@ namespace StardewModdingAPI
             {
                 AppDomain.CurrentDomain.AssemblyResolve += Program.CurrentDomain_AssemblyResolve;
                 //Program.AssertGamePresent();
-                Program.AssertGameVersion();
+                //Program.AssertGameVersion();
+                Program.AssertAndroidGameVersion();
                 //Program.Start(args);
             }
             catch (BadImageFormatException ex) when (ex.FileName == "StardewValley")
             {
                 string executableName = Program.GetExecutableAssemblyName();
-                Console.WriteLine($"SMAPI failed to initialize because your game's {executableName}.exe seems to be invalid.\nThis may be a pirated version which modified the executable in an incompatible way; if so, you can try a different download or buy a legitimate version.\n\nTechnical details:\n{ex}");
+                AlertAndroidMessage($"SMAPI failed to initialize because your game's {executableName}.exe seems to be invalid.\nThis may be a pirated version which modified the executable in an incompatible way; if so, you can try a different download or buy a legitimate version.\n\nTechnical details:\n{ex}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"SMAPI failed to initialize: {ex}");
-                Program.PressAnyKeyToExit(true);
+                AlertAndroidMessage($"SMAPI failed to initialize: {ex}");
             }
         }
-
 
         /*********
         ** Private methods
         *********/
+        private static void AssertAndroidGameVersion()
+        {
+            if (Constants.GameVersion.IsOlderThan(Constants.MinimumGameVersion))
+            {
+                AlertAndroidMessage($"Oops! You're running Stardew Valley {Constants.GameVersion}, but the oldest supported version is {Constants.MinimumGameVersion}. Please update your game before using SMAPI.");
+            }
+        }
+
+        private static void AlertAndroidMessage(string message)
+        {
+            Dialog dialog = new AlertDialog.Builder(SMainActivity.Instance)
+                .SetMessage(message)
+                .SetCancelable(false)
+                .SetPositiveButton("OK", (senderAlert, arg) => { SMainActivity.Instance.Finish(); }).Create();
+            if (!SMainActivity.Instance.IsFinishing)
+            {
+                dialog.Show();
+            };
+        }
+
         /// <summary>Method called when assembly resolution fails, which may return a manually resolved assembly.</summary>
         /// <param name="sender">The event sender.</param>
         /// <param name="e">The event arguments.</param>

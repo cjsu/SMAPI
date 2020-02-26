@@ -26,6 +26,8 @@ namespace StardewModdingAPI
         private PowerManager.WakeLock _wakeLock;
         private ServerManagedPolicyExtended _serverManagedPolicyExtended;
 
+        public static SMainActivity Instance;
+
         public new bool HasPermissions
         {
             get
@@ -81,9 +83,14 @@ namespace StardewModdingAPI
             this.Window.SetFlags(WindowManagerFlags.Fullscreen, WindowManagerFlags.Fullscreen);
             this.Window.SetFlags(WindowManagerFlags.KeepScreenOn, WindowManagerFlags.KeepScreenOn);
 
+            Instance = this;
             Program.Main(null);
             // this patch should apply much earlier
-            AppCenterReportPatch.ApplyPatch();
+            try
+            {
+                AppCenterReportPatch.ApplyPatch();
+            }
+            catch { }
             base.OnCreate(bundle);
             this.CheckAppPermissions();
         }
