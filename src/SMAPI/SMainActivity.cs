@@ -14,6 +14,7 @@ using StardewValley;
 using System.Reflection;
 using Android.Content.Res;
 using Java.Interop;
+using StardewModdingAPI.Patches;
 
 namespace StardewModdingAPI
 {
@@ -79,6 +80,10 @@ namespace StardewModdingAPI
             }
             this.Window.SetFlags(WindowManagerFlags.Fullscreen, WindowManagerFlags.Fullscreen);
             this.Window.SetFlags(WindowManagerFlags.KeepScreenOn, WindowManagerFlags.KeepScreenOn);
+
+            Program.Main(null);
+            // this patch should apply much earlier
+            AppCenterReportPatch.ApplyPatch();
             base.OnCreate(bundle);
             this.CheckAppPermissions();
         }
@@ -86,8 +91,6 @@ namespace StardewModdingAPI
         public void OnCreatePartTwo()
         {
             new SGameConsole();
-
-            Program.Main(null);
 
             this.core = new SCore(System.IO.Path.Combine(Android.OS.Environment.ExternalStorageDirectory.Path, "StardewValley/Mods"), false);
             this.core.RunInteractively();

@@ -361,6 +361,7 @@
     <Compile Include="Metadata\CoreAssetPropagator.cs" />
     <Compile Include="Metadata\InstructionMetadata.cs" />
     <Compile Include="Mod.cs" />
+    <Compile Include="Patches\AppCenterReportPatch.cs" />
     <Compile Include="Patches\DialogueErrorPatch.cs" />
     <Compile Include="Patches\EventErrorPatch.cs" />
     <Compile Include="Patches\SpriteFontPatch.cs" />

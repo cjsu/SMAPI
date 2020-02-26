@@ -29,7 +29,10 @@ namespace StardewModdingAPI.Framework.Patching
         /// <param name="patches">The patches to apply.</param>
         public void Apply(params IHarmonyPatch[] patches)
         {
-            HarmonyDetourBridge.Init();
+            if (!HarmonyDetourBridge.Initialized)
+            {
+                HarmonyDetourBridge.Init();
+            }
 
             HarmonyInstance harmony = HarmonyInstance.Create("io.smapi");
             foreach (IHarmonyPatch patch in patches)
