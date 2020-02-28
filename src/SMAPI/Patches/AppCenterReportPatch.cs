@@ -1,16 +1,12 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Reflection;
 using System.Reflection.Emit;
 using Android.OS;
 using Harmony;
-using Microsoft.Xna.Framework;
 using MonoMod.RuntimeDetour;
 using StardewModdingAPI.Framework.Patching;
 using StardewValley;
-using StardewValley.Buildings;
-using StardewValley.Characters;
 
 namespace StardewModdingAPI.Patches
 {

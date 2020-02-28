@@ -1098,16 +1098,14 @@ namespace StardewModdingAPI.Framework
                         base.GraphicsDevice.Clear(Game1.bgColor);
                         if (activeClickableMenu != null && options.showMenuBackground && (activeClickableMenu.showWithoutTransparencyIfOptionIsSet() && !this.takingMapScreenshot))
                         {
-                            Matrix value = Matrix.CreateScale(1f);
+                            Matrix scale = Matrix.CreateScale(1f);
                             SetSpriteBatchBeginNextID("C");
-                            _spriteBatchBegin.Invoke(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, value);
+                            _spriteBatchBegin.Invoke(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, scale);
                             events.Rendering.RaiseEmpty();
                             try
                             {
                                 Game1.activeClickableMenu.drawBackground(Game1.spriteBatch);
                                 events.RenderingActiveMenu.RaiseEmpty();
-
-                                Game1.activeClickableMenu.drawBackground(Game1.spriteBatch);
                                 Game1.activeClickableMenu.draw(Game1.spriteBatch);
                                 events.RenderedActiveMenu.RaiseEmpty();
                             }
@@ -1119,16 +1117,14 @@ namespace StardewModdingAPI.Framework
                             events.Rendered.RaiseEmpty();
 
                             _spriteBatchEnd.Invoke();
-                            this.drawOverlays(spriteBatch);
-                            this.renderScreenBuffer(BlendState.AlphaBlend, toBuffer);
-                            if (overlayMenu != null)
-                            {
-                                SetSpriteBatchBeginNextID("D");
-                                _spriteBatchBegin.Invoke(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, null);
-                                overlayMenu.draw(spriteBatch);
-                                _spriteBatchEnd.Invoke();
-                            }
-                            return;
+                            this.drawOverlays(spriteBatch, true);
+                            this.renderScreenBufferTargetScreen(target_screen);
+                            if (overlayMenu == null)
+                                return;
+                            SetSpriteBatchBeginNextID("D");
+                            _spriteBatchBegin.Invoke(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, new Matrix?());
+                            overlayMenu.draw(spriteBatch);
+                            _spriteBatchEnd.Invoke();
                         }
                         else
                         {
@@ -1137,7 +1133,7 @@ namespace StardewModdingAPI.Framework
                                 if (!SeenConcernedApeLogo)
                                 {
                                     SetSpriteBatchBeginNextID("E");
-                                    _spriteBatchBegin.Invoke(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, null);
+                                    _spriteBatchBegin.Invoke(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, new Matrix?());
                                     if (logoFadeTimer < 5000)
                                     {
                                         spriteBatch.Draw(staminaRect, new Microsoft.Xna.Framework.Rectangle(0, 0, Game1.viewport.Width, Game1.viewport.Height), Color.White);
@@ -1156,7 +1152,7 @@ namespace StardewModdingAPI.Framework
                             if (gameMode == (byte)11)
                             {
                                 SetSpriteBatchBeginNextID("F");
-                                _spriteBatchBegin.Invoke(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, null);
+                                _spriteBatchBegin.Invoke(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, new Matrix?());
                                 events.Rendering.RaiseEmpty();
                                 spriteBatch.DrawString(dialogueFont, content.LoadString("Strings\\StringsFromCSFiles:Game1.cs.3685"), new Vector2(16f, 16f), Color.HotPink);
                                 spriteBatch.DrawString(dialogueFont, content.LoadString("Strings\\StringsFromCSFiles:Game1.cs.3686"), new Vector2(16f, 32f), new Color(0, 255, 0));
@@ -1172,11 +1168,11 @@ namespace StardewModdingAPI.Framework
                                 if (globalFade && !menuUp && (!nameSelectUp || messagePause))
                                 {
                                     SetSpriteBatchBeginNextID("G");
-                                    _spriteBatchBegin.Invoke(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, null);
+                                    _spriteBatchBegin.Invoke(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, new Matrix?());
                                     spriteBatch.Draw(fadeToBlackRect, graphics.GraphicsDevice.Viewport.Bounds, Color.Black * ((gameMode == 0) ? (1f - fadeToBlackAlpha) : fadeToBlackAlpha));
                                     _spriteBatchEnd.Invoke();
                                 }
-                                this.drawOverlays(spriteBatch);
+                                this.drawOverlays(spriteBatch, true);
                                 this.renderScreenBufferTargetScreen(target_screen);
                                 switch (Game1.currentMinigame)
                                 {
@@ -1233,14 +1229,16 @@ namespace StardewModdingAPI.Framework
                                 events.Rendered.RaiseEmpty();
 
                                 _spriteBatchEnd.Invoke();
-                                this.drawOverlays(spriteBatch);
+                                this.drawOverlays(spriteBatch, true);
                                 RestoreViewportAndZoom();
                             }
                             else if (gameMode == (byte)6 || gameMode == (byte)3 && currentLocation == null)
                             {
+                                SpriteBatchBegin.Invoke(1f);
                                 events.Rendering.RaiseEmpty();
+                                _spriteBatchEnd.Invoke();
                                 DrawLoadingDotDotDot.Invoke(gameTime);
-                                SpriteBatchBegin.Invoke(Game1.options.zoomLevel);
+                                SpriteBatchBegin.Invoke(1f);
                                 events.Rendered.RaiseEmpty();
                                 _spriteBatchEnd.Invoke();
 
@@ -1249,7 +1247,7 @@ namespace StardewModdingAPI.Framework
                                 if (overlayMenu != null)
                                 {
                                     SetSpriteBatchBeginNextID("H");
-                                    _spriteBatchBegin.Invoke(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, null);
+                                    _spriteBatchBegin.Invoke(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, new Matrix?());
                                     overlayMenu.draw(spriteBatch);
                                     _spriteBatchEnd.Invoke();
                                 }
@@ -1263,14 +1261,14 @@ namespace StardewModdingAPI.Framework
                                 if (gameMode == (byte) 0)
                                 {
                                     SetSpriteBatchBeginNextID("I");
-                                    _spriteBatchBegin.Invoke(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, null);
+                                    _spriteBatchBegin.Invoke(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, new Matrix?());
                                     if(++batchOpens == 1)
                                         events.Rendering.RaiseEmpty();
                                 }
                                 else if (!drawGame)
                                 {
                                     SetSpriteBatchBeginNextID("J");
-                                    _spriteBatchBegin.Invoke(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, null, null);
+                                    _spriteBatchBegin.Invoke(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, null, new Matrix?());
                                     if (++batchOpens == 1)
                                         events.Rendering.RaiseEmpty();
                                 }
@@ -1281,7 +1279,7 @@ namespace StardewModdingAPI.Framework
                                         base.GraphicsDevice.SetRenderTarget(lightmap);
                                         base.GraphicsDevice.Clear(Color.White * 0f);
                                         SetSpriteBatchBeginNextID("K");
-                                        _spriteBatchBegin.Invoke(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, null, null);
+                                        _spriteBatchBegin.Invoke(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, null, new Matrix?());
                                         if (++batchOpens == 1)
                                             events.Rendering.RaiseEmpty();
                                         spriteBatch.Draw(staminaRect, lightmap.Bounds, currentLocation.Name.StartsWith("UndergroundMine") ? mine.getLightingColor(gameTime) : (ambientLight.Equals(Color.White) || RainManager.Instance.isRaining && (bool)((NetFieldBase<bool, NetBool>)Game1.currentLocation.isOutdoors) ? Game1.outdoorLight : Game1.ambientLight));
@@ -1322,7 +1320,7 @@ namespace StardewModdingAPI.Framework
                                     }
                                     base.GraphicsDevice.Clear(Game1.bgColor);
                                     SetSpriteBatchBeginNextID("L");
-                                    _spriteBatchBegin.Invoke(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, null);
+                                    _spriteBatchBegin.Invoke(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, new Matrix?());
                                     if (++batchOpens == 1)
                                         events.Rendering.RaiseEmpty();
                                     events.RenderingWorld.RaiseEmpty();
@@ -1340,7 +1338,7 @@ namespace StardewModdingAPI.Framework
                                         {
                                             currentLocation.Map.GetLayer("Back").Draw(mapDisplayDevice, Game1.viewport, Location.Origin, wrapAround: false, 4);
                                             _spriteBatchBeginNextID.SetValue("L4");
-                                        }           
+                                        }
                                     }
                                     catch (KeyNotFoundException exception)
                                     {
@@ -1391,9 +1389,38 @@ namespace StardewModdingAPI.Framework
                                             _spriteBatchBeginNextID.SetValue("L15");
                                             foreach (NPC character in currentLocation.characters)
                                             {
-                                                if (!character.swimming && !character.HideShadow && !character.IsInvisible && !currentLocation.shouldShadowBeDrawnAboveBuildingsLayer(character.getTileLocation()))
+                                                try
                                                 {
-                                                    spriteBatch.Draw(shadowTexture, GlobalToLocal(Game1.viewport, character.Position + new Vector2((float)(character.Sprite.SpriteWidth * 4) / 2f, character.GetBoundingBox().Height + ((!character.IsMonster) ? 12 : 0))), shadowTexture.Bounds, Color.White, 0f, new Vector2(shadowTexture.Bounds.Center.X, shadowTexture.Bounds.Center.Y), (4f + (float)character.yJumpOffset / 40f) * (float)character.scale, SpriteEffects.None, System.Math.Max(0f, (float)character.getStandingY() / 10000f) - 1E-06f);
+                                                    if (!character.swimming && !character.HideShadow && !character.IsInvisible && !currentLocation.shouldShadowBeDrawnAboveBuildingsLayer(character.getTileLocation()))
+                                                    {
+                                                        spriteBatch.Draw(shadowTexture, GlobalToLocal(Game1.viewport, character.Position + new Vector2((float)(character.Sprite.SpriteWidth * 4) / 2f, character.GetBoundingBox().Height + ((!character.IsMonster) ? 12 : 0))), shadowTexture.Bounds, Color.White, 0f, new Vector2(shadowTexture.Bounds.Center.X, shadowTexture.Bounds.Center.Y), (4f + (float)character.yJumpOffset / 40f) * (float)character.scale, SpriteEffects.None, System.Math.Max(0f, (float)character.getStandingY() / 10000f) - 1E-06f);
+                                                    }
+                                                }
+                                                catch (System.Exception ex)
+                                                {
+                                                    Dictionary<string, string> dictionary1 = new Dictionary<string, string>();
+                                                    if (character != null)
+                                                    {
+                                                        dictionary1["name"] = (string)(NetFieldBase<string, NetString>)character.name;
+                                                        dictionary1["Sprite"] = (character.Sprite != null).ToString();
+                                                        Dictionary<string, string> dictionary2 = dictionary1;
+                                                        character.GetBoundingBox();
+                                                        bool flag = true;
+                                                        string str1 = flag.ToString();
+                                                        dictionary2["BoundingBox"] = str1;
+                                                        Dictionary<string, string> dictionary3 = dictionary1;
+                                                        flag = true;
+                                                        string str2 = flag.ToString();
+                                                        dictionary3["shadowTexture.Bounds"] = str2;
+                                                        Dictionary<string, string> dictionary4 = dictionary1;
+                                                        flag = Game1.currentLocation != null;
+                                                        string str3 = flag.ToString();
+                                                        dictionary4["currentLocation"] = str3;
+                                                    }
+                                                    Dictionary<string, string> dictionary5 = dictionary1;
+                                                    // Ignored
+                                                    //ErrorAttachmentLog[] errorAttachmentLogArray = Array.Empty<ErrorAttachmentLog>();
+                                                    //Microsoft.AppCenter.Crashes.Crashes.TrackError(ex, (IDictionary<string, string>)dictionary5, errorAttachmentLogArray);
                                                 }
                                             }
                                             _spriteBatchBeginNextID.SetValue("L16");
@@ -1413,7 +1440,7 @@ namespace StardewModdingAPI.Framework
                                         _spriteBatchBeginNextID.SetValue("L19");
                                         foreach (Farmer farmerShadow in _farmerShadows.GetValue())
                                         {
-                                            if (!farmerShadow.swimming && !farmerShadow.isRidingHorse() && (currentLocation == null || !currentLocation.shouldShadowBeDrawnAboveBuildingsLayer(farmerShadow.getTileLocation())))
+                                            if (!Game1.multiplayer.isDisconnecting(farmerShadow.UniqueMultiplayerID) && !farmerShadow.swimming && !farmerShadow.isRidingHorse() && (currentLocation == null || !currentLocation.shouldShadowBeDrawnAboveBuildingsLayer(farmerShadow.getTileLocation())))
                                             {
                                                 SpriteBatch spriteBatch = Game1.spriteBatch;
                                                 Texture2D shadowTexture = Game1.shadowTexture;
@@ -1454,7 +1481,7 @@ namespace StardewModdingAPI.Framework
                                     _spriteBatchEnd.Invoke();
                                     _spriteBatchBeginNextID.SetValue("L25");
                                     SetSpriteBatchBeginNextID("M");
-                                    _spriteBatchBegin.Invoke(SpriteSortMode.FrontToBack, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, null);
+                                    _spriteBatchBegin.Invoke(SpriteSortMode.FrontToBack, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, new Matrix?());
                                     _spriteBatchBeginNextID.SetValue("M1");
                                     if (!currentLocation.shouldHideCharacters())
                                     {
@@ -1520,6 +1547,20 @@ namespace StardewModdingAPI.Framework
                                     }
                                     _spriteBatchBeginNextID.SetValue("M15");
                                     currentLocation.draw(spriteBatch);
+                                    using (Dictionary<Vector2, int>.KeyCollection.Enumerator enumerator = Game1.crabPotOverlayTiles.Keys.GetEnumerator())
+                                    {
+                                        while (enumerator.MoveNext())
+                                        {
+                                            Vector2 current = enumerator.Current;
+                                            Tile tile = Game1.currentLocation.Map.GetLayer("Buildings").Tiles[(int)current.X, (int)current.Y];
+                                            if (tile != null)
+                                            {
+                                                Vector2 local = Game1.GlobalToLocal(Game1.viewport, current * 64f);
+                                                Location location = new Location((int)local.X, (int)local.Y);
+                                                Game1.mapDisplayDevice.DrawTile(tile, location, (float)((current.Y * 64.0 - 1.0) / 10000.0));
+                                            }
+                                        }
+                                    }
                                     _spriteBatchBeginNextID.SetValue("M16");
                                     if (player.ActiveObject == null && (player.UsingTool || pickingTool) && player.CurrentTool != null && (!player.CurrentTool.Name.Equals("Seeds") || pickingTool))
                                     {
@@ -1578,12 +1619,12 @@ namespace StardewModdingAPI.Framework
                                     _spriteBatchBeginNextID.SetValue("M36");
                                     _spriteBatchEnd.Invoke();
                                     SetSpriteBatchBeginNextID("N");
-                                    _spriteBatchBegin.Invoke(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, null);
+                                    _spriteBatchBegin.Invoke(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, new Matrix?());
                                     if (displayFarmer && player.ActiveObject != null && (bool)player.ActiveObject.bigCraftable && this.checkBigCraftableBoundariesForFrontLayer() && currentLocation.Map.GetLayer("Front").PickTile(new Location(player.getStandingX(), player.getStandingY()), Game1.viewport.Size) == null)
                                     {
                                         drawPlayerHeldObject(player);
                                     }
-                                    else if (displayFarmer && player.ActiveObject != null && ((currentLocation.Map.GetLayer("Front").PickTile(new Location((int)player.Position.X, (int)player.Position.Y - 38), Game1.viewport.Size) != null && !currentLocation.Map.GetLayer("Front").PickTile(new Location((int)player.Position.X, (int)player.Position.Y - 38), Game1.viewport.Size).TileIndexProperties.ContainsKey("FrontAlways")) || (currentLocation.Map.GetLayer("Front").PickTile(new Location(player.GetBoundingBox().Right, (int)player.Position.Y - 38), Game1.viewport.Size) != null && !currentLocation.Map.GetLayer("Front").PickTile(new Location(player.GetBoundingBox().Right, (int)player.Position.Y - 38), Game1.viewport.Size).TileIndexProperties.ContainsKey("FrontAlways"))))
+                                    else if (displayFarmer && player.ActiveObject != null)
                                     {
                                         if (Game1.currentLocation.Map.GetLayer("Front").PickTile(new Location((int)Game1.player.Position.X, (int)Game1.player.Position.Y - 38), Game1.viewport.Size) == null || ((IDictionary<string, PropertyValue>)Game1.currentLocation.Map.GetLayer("Front").PickTile(new Location((int)Game1.player.Position.X, (int)Game1.player.Position.Y - 38), Game1.viewport.Size).TileIndexProperties).ContainsKey("FrontAlways"))
                                         {
@@ -1660,13 +1701,9 @@ label_168:
                                     {
                                         player.CurrentTool.draw(spriteBatch);
                                     }
-                                    if (RainManager.Instance.isRaining && currentLocation.IsOutdoors && !currentLocation.Name.Equals("Desert") && !(currentLocation is Summit) && (!eventUp || currentLocation.isTileOnMap(new Vector2(Game1.viewport.X / 64, Game1.viewport.Y / 64))))
-                                    {
-                                        RainManager.Instance.Draw(spriteBatch);
-                                    }
                                     _spriteBatchEnd.Invoke();
                                     SetSpriteBatchBeginNextID("O");
-                                    _spriteBatchBegin.Invoke(SpriteSortMode.FrontToBack, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, null);
+                                    _spriteBatchBegin.Invoke(SpriteSortMode.FrontToBack, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, new Matrix?());
                                     if (eventUp && currentLocation.currentEvent != null)
                                     {
                                         currentLocation.currentEvent.drawAboveAlwaysFrontLayer(spriteBatch);
@@ -1692,7 +1729,7 @@ label_168:
                                     if (drawLighting)
                                     {
                                         SetSpriteBatchBeginNextID("P");
-                                        _spriteBatchBegin.Invoke(SpriteSortMode.Deferred, lightingBlend.GetValue(), SamplerState.LinearClamp, null, null, null, null);
+                                        _spriteBatchBegin.Invoke(SpriteSortMode.Deferred, lightingBlend.GetValue(), SamplerState.LinearClamp, null, null, null, new Matrix?());
                                         spriteBatch.Draw(lightmap, Vector2.Zero, lightmap.Bounds, Color.White, 0f, Vector2.Zero, options.lightingQuality / 2, SpriteEffects.None, 1f);
                                         if (RainManager.Instance.isRaining && (bool)currentLocation.isOutdoors && !(currentLocation is Desert))
                                         {
@@ -1701,7 +1738,7 @@ label_168:
                                         _spriteBatchEnd.Invoke();
                                     }
                                     SetSpriteBatchBeginNextID("Q");
-                                    _spriteBatchBegin.Invoke(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, null);
+                                    _spriteBatchBegin.Invoke(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, new Matrix?());
                                     events.RenderedWorld.RaiseEmpty();
                                     if (drawGrid)
                                     {
@@ -1752,10 +1789,11 @@ label_168:
                                                 break;
                                         }
                                     }
-                                    if ((displayHUD || eventUp) && currentBillboard == 0 && gameMode == 3 && !freezeControls && !panMode && !HostPaused)
+                                    if (Game1.currentBillboard != 0 && !this.takingMapScreenshot)
+                                        this.drawBillboard();
+                                    if ((Game1.displayHUD || Game1.eventUp) && (Game1.currentBillboard == 0 && Game1.gameMode == (byte)3) && (!Game1.freezeControls && !Game1.panMode && !Game1.HostPaused))
                                     {
-                                        _drawHUD.SetValue(true);
-                                        if (isOutdoorMapSmallerThanViewport())
+                                        if (!Game1.eventUp && Game1.farmEvent == null && (Game1.currentBillboard == 0 && Game1.gameMode == (byte)3) && (!this.takingMapScreenshot && Game1.isOutdoorMapSmallerThanViewport()))
                                         {
                                             SpriteBatch spriteBatch1 = Game1.spriteBatch;
                                             Texture2D fadeToBlackRect1 = Game1.fadeToBlackRect;
@@ -1776,6 +1814,9 @@ label_168:
                                             Color black2 = Color.Black;
                                             spriteBatch2.Draw(fadeToBlackRect2, destinationRectangle2, black2);
                                         }
+                                        _drawHUD.SetValue(false);
+                                        if ((Game1.displayHUD || Game1.eventUp) && (Game1.currentBillboard == 0 && Game1.gameMode == (byte)3) && (!Game1.freezeControls && !Game1.panMode && (!Game1.HostPaused && !this.takingMapScreenshot)))
+                                            _drawHUD.SetValue(true);
                                         DrawGreenPlacementBounds.Invoke();
                                     }
                                 }
@@ -1787,7 +1828,7 @@ label_168:
                                 {
                                     this.drawDialogueBox();
                                 }
-                                if (progressBar)
+                                if (progressBar && !this.takingMapScreenshot)
                                 {
                                     SpriteBatch spriteBatch1 = Game1.spriteBatch;
                                     Texture2D fadeToBlackRect = Game1.fadeToBlackRect;
@@ -1817,13 +1858,16 @@ label_168:
                                     Color color = Color.Blue * 0.2f;
                                     spriteBatch.Draw(staminaRect, bounds, color);
                                 }
-                                if ((messagePause || globalFade) && dialogueUp)
+                                if ((messagePause || globalFade) && (dialogueUp && !this.takingMapScreenshot))
                                 {
                                     this.drawDialogueBox();
                                 }
-                                foreach (TemporaryAnimatedSprite screenOverlayTempSprite in screenOverlayTempSprites)
+                                if (!this.takingMapScreenshot)
                                 {
-                                    screenOverlayTempSprite.draw(spriteBatch, localPosition: true, 0, 0, 1f);
+                                    foreach (TemporaryAnimatedSprite screenOverlayTempSprite in screenOverlayTempSprites)
+                                    {
+                                        screenOverlayTempSprite.draw(spriteBatch, localPosition: true, 0, 0, 1f);
+                                    }
                                 }
                                 if (debugMode)
                                 {
@@ -1849,11 +1893,15 @@ label_168:
                                     debugStringBuilder.Append(",");
                                     debugStringBuilder.Append(getMouseY());
                                     debugStringBuilder.Append(System.Environment.NewLine);
+                                    debugStringBuilder.Append(" mouseWorldPosition: ");
+                                    debugStringBuilder.Append(Game1.getMouseX() + Game1.viewport.X);
+                                    debugStringBuilder.Append(",");
+                                    debugStringBuilder.Append(Game1.getMouseY() + Game1.viewport.Y);
                                     debugStringBuilder.Append("debugOutput: ");
                                     debugStringBuilder.Append(debugOutput);
                                     spriteBatch.DrawString(smallFont, debugStringBuilder, new Vector2(base.GraphicsDevice.Viewport.GetTitleSafeArea().X, base.GraphicsDevice.Viewport.GetTitleSafeArea().Y + smallFont.LineSpacing * 8), Color.Red, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.09999999f);
                                 }
-                                if (showKeyHelp)
+                                if (showKeyHelp && !this.takingMapScreenshot)
                                 {
                                     spriteBatch.DrawString(smallFont, keyHelpString, new Vector2(64f, (float)(Game1.viewport.Height - 64 - (dialogueUp ? (192 + (isQuestion ? (questionChoices.Count * 64) : 0)) : 0)) - smallFont.MeasureString(keyHelpString).Y), Color.LightGray, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.9999999f);
                                 }
@@ -1884,10 +1932,10 @@ label_168:
                                 if (HostPaused)
                                 {
                                     string s = content.LoadString("Strings\\StringsFromCSFiles:DayTimeMoneyBox.cs.10378");
-                                    SpriteText.drawStringWithScrollBackground(spriteBatch, s, 96, 32);
+                                    SpriteText.drawStringWithScrollCenteredAt(spriteBatch, s, 96, 32, "", 1f, -1, 0, 0.0088f, false);
                                 }
                                 _spriteBatchEnd.Invoke();
-                                this.drawOverlays(spriteBatch);
+                                this.drawOverlays(spriteBatch, false);
                                 this.renderScreenBuffer(BlendState.Opaque, toBuffer);
                                 if (_drawHUD.GetValue())
                                 {
@@ -1896,12 +1944,20 @@ label_168:
                                     SpriteBatchBegin.Invoke(1f);
                                     events.RenderingHud.RaiseEmpty();
                                     this.DrawHUD();
-                                    if (currentLocation != null && !(activeClickableMenu is GameMenu) && !(activeClickableMenu is QuestLog))
+                                    events.RenderedHud.RaiseEmpty();
+                                    if (Game1.currentLocation != null)
                                     {
-                                        currentLocation.drawAboveAlwaysFrontLayerText(spriteBatch);
+                                        switch (Game1.activeClickableMenu)
+                                        {
+                                            case GameMenu _:
+                                            case QuestLog _:
+                                                break;
+                                            default:
+                                                Game1.currentLocation.drawAboveAlwaysFrontLayerText(spriteBatch);
+                                                break;
+                                        }
                                     }
                                     DrawAfterMap.Invoke();
-                                    events.RenderedHud.RaiseEmpty();
                                     _spriteBatchEnd.Invoke();
                                     if (TutorialManager.Instance != null)
                                     {
@@ -1945,12 +2001,20 @@ label_168:
                                     DrawHUDMessages.Invoke();
                                     _spriteBatchEnd.Invoke();
                                 }
-                                if (CurrentEvent != null && CurrentEvent.skippable && (activeClickableMenu == null || (activeClickableMenu != null && !(activeClickableMenu is MenuWithInventory))))
+                                if (CurrentEvent != null && CurrentEvent.skippable && !CurrentEvent.skipped)
                                 {
-                                    SetSpriteBatchBeginNextID("A-G");
-                                    SpriteBatchBegin.Invoke(NativeZoomLevel);
-                                    CurrentEvent.DrawSkipButton(spriteBatch);
-                                    _spriteBatchEnd.Invoke();
+                                    switch (activeClickableMenu)
+                                    {
+                                        case null:
+                                        case MenuWithInventory _:
+                                            break;
+                                        default:
+                                            SetSpriteBatchBeginNextID("A-G");
+                                            SpriteBatchBegin.Invoke(NativeZoomLevel);
+                                            CurrentEvent.DrawSkipButton(spriteBatch);
+                                            _spriteBatchEnd.Invoke();
+                                            break;
+                                    }
                                 }
                                 DrawTutorialUI.Invoke();
                             }

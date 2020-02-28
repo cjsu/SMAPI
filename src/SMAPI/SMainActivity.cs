@@ -15,6 +15,10 @@ using System.Reflection;
 using Android.Content.Res;
 using Java.Interop;
 using StardewModdingAPI.Patches;
+using System.Threading;
+using System.Linq;
+using System.IO;
+using File = Java.IO.File;
 
 namespace StardewModdingAPI
 {
@@ -84,6 +88,16 @@ namespace StardewModdingAPI
             this.Window.SetFlags(WindowManagerFlags.KeepScreenOn, WindowManagerFlags.KeepScreenOn);
 
             Instance = this;
+            try
+            {
+                File errorLog = this.FilesDir.ListFiles().FirstOrDefault(f => f.IsDirectory && f.Name == "error")?.ListFiles().FirstOrDefault(f => f.Name.EndsWith(".dat"));
+                if (errorLog != null)
+                {
+                    string errorLogPath = Path.Combine(this.ExternalCacheDir.AbsolutePath, "error.dat");
+                    SAlertDialogUtil.AlertMessage(System.IO.File.ReadAllText(errorLog.AbsolutePath), "Crash Detected");
+                }
+            }
+            catch { }
             Program.Main(null);
             // this patch should apply much earlier
             try
@@ -95,18 +109,29 @@ namespace StardewModdingAPI
             this.CheckAppPermissions();
         }
 
-        public void OnCreatePartTwo()
+        public void OnCreatePartTwo(int retry = 0)
         {
-            new SGameConsole();
+            try
+            {
+                new SGameConsole();
 
-            this.core = new SCore(System.IO.Path.Combine(Android.OS.Environment.ExternalStorageDirectory.Path, "StardewValley/Mods"), false);
-            this.core.RunInteractively();
+                this.core = new SCore(System.IO.Path.Combine(Android.OS.Environment.ExternalStorageDirectory.Path, "StardewValley/Mods"), false);
+                this.core.RunInteractively();
 
-            typeof(MainActivity).GetField("_game1", BindingFlags.Instance | BindingFlags.NonPublic)?.SetValue(this, this.core.GameInstance);
+                typeof(MainActivity).GetField("_game1", BindingFlags.Instance | BindingFlags.NonPublic)?.SetValue(this, this.core.GameInstance);
 
-            this.SetContentView((View)this.core.GameInstance.Services.GetService(typeof(View)));
-            
-            this.CheckUsingServerManagedPolicy();
+                this.SetContentView((View)this.core.GameInstance.Services.GetService(typeof(View)));
+
+                this.CheckUsingServerManagedPolicy();
+            }
+            catch when (retry < 3)
+            {
+                new Thread(() =>
+                {
+                    Thread.Sleep(100);
+                    Instance.OnCreatePartTwo(retry + 1);
+                }).Start();
+            }
         }
 
         public new void CheckAppPermissions()

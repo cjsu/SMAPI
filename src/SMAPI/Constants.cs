@@ -62,7 +62,7 @@ namespace StardewModdingAPI
         internal static readonly string InternalFilesPath = Program.DllSearchPath;
 
         /// <summary>The app secret from AppCenter.</summary>
-        internal static readonly object MicrosoftAppSecret = "79411636-0bc5-41cc-9889-43a4bca83b9d";
+        internal static readonly string MicrosoftAppSecret = "79411636-0bc5-41cc-9889-43a4bca83b9d";
 
         /// <summary>The file path for the SMAPI configuration file.</summary>
         internal static string ApiConfigPath => Path.Combine(Constants.InternalFilesPath, "config.json");

@@ -46,11 +46,13 @@ namespace StardewModdingAPI
             catch (BadImageFormatException ex) when (ex.FileName == "StardewValley")
             {
                 string executableName = Program.GetExecutableAssemblyName();
-                AlertAndroidMessage($"SMAPI failed to initialize because your game's {executableName}.exe seems to be invalid.\nThis may be a pirated version which modified the executable in an incompatible way; if so, you can try a different download or buy a legitimate version.\n\nTechnical details:\n{ex}");
+                SAlertDialogUtil.AlertMessage($"SMAPI failed to initialize because your game's {executableName}.exe seems to be invalid.\nThis may be a pirated version which modified the executable in an incompatible way; if so, you can try a different download or buy a legitimate version.\n\nTechnical details:\n{ex}");
+                SMainActivity.Instance.Finish();
             }
             catch (Exception ex)
             {
-                AlertAndroidMessage($"SMAPI failed to initialize: {ex}");
+                SAlertDialogUtil.AlertMessage($"SMAPI failed to initialize: {ex}");
+                SMainActivity.Instance.Finish();
             }
         }
 
@@ -61,20 +63,9 @@ namespace StardewModdingAPI
         {
             if (Constants.GameVersion.IsOlderThan(Constants.MinimumGameVersion))
             {
-                AlertAndroidMessage($"Oops! You're running Stardew Valley {Constants.GameVersion}, but the oldest supported version is {Constants.MinimumGameVersion}. Please update your game before using SMAPI.");
+                SAlertDialogUtil.AlertMessage($"Oops! You're running Stardew Valley {Constants.GameVersion}, but the oldest supported version is {Constants.MinimumGameVersion}. Please update your game before using SMAPI.");
+                SMainActivity.Instance.Finish();
             }
-        }
-
-        private static void AlertAndroidMessage(string message)
-        {
-            Dialog dialog = new AlertDialog.Builder(SMainActivity.Instance)
-                .SetMessage(message)
-                .SetCancelable(false)
-                .SetPositiveButton("OK", (senderAlert, arg) => { SMainActivity.Instance.Finish(); }).Create();
-            if (!SMainActivity.Instance.IsFinishing)
-            {
-                dialog.Show();
-            };
         }
 
         /// <summary>Method called when assembly resolution fails, which may return a manually resolved assembly.</summary>
