@@ -726,7 +726,7 @@ namespace StardewModdingAPI.Framework
                                     shopMenu.onPurchase, shopMenu.onSell, shopMenu.storeContext);
                             }
                         }
-                }
+                    }
 
                     /*********
                     ** World & player events
@@ -809,7 +809,11 @@ namespace StardewModdingAPI.Framework
                             {
                                 if (this.Monitor.IsVerbose)
                                     this.Monitor.Log($"Context: set location to {playerState.Location.New}.", LogLevel.Trace);
-
+                                // Fix tapToMove null pointer error
+                                if (playerState.Location.New.tapToMove == null && playerState.Location.New.map != null)
+                                {
+                                    playerState.Location.New.tapToMove = new StardewValley.Mobile.TapToMove(playerState.Location.New);
+                                }
                                 events.Warped.Raise(new WarpedEventArgs(player, playerState.Location.Old, playerState.Location.New));
                             }
 
