@@ -245,7 +245,7 @@ namespace StardewModdingAPI.Framework.ContentManagers
             // though the XNA documentation explicitly says otherwise. That's a glitch in MonoGame
             // fixed in newer versions, but the game uses a bundled version that will always be
             // affected. See https://github.com/MonoGame/MonoGame/issues/4820 for more info.
-            if (Constants.TargetPlatform != GamePlatform.Windows)
+            if (Constants.TargetPlatform != GamePlatform.Windows && Constants.TargetPlatform != GamePlatform.Android)
                 return texture;
 
             // premultiply pixels
