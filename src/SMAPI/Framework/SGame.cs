@@ -36,6 +36,7 @@ using xTile.Layers;
 using xTile.ObjectModel;
 using SObject = StardewValley.Object;
 using xTile.Tiles;
+using Microsoft.AppCenter.Crashes;
 
 namespace StardewModdingAPI.Framework
 {
@@ -1422,9 +1423,8 @@ namespace StardewModdingAPI.Framework
                                                         dictionary4["currentLocation"] = str3;
                                                     }
                                                     Dictionary<string, string> dictionary5 = dictionary1;
-                                                    // Ignored
-                                                    //ErrorAttachmentLog[] errorAttachmentLogArray = Array.Empty<ErrorAttachmentLog>();
-                                                    //Microsoft.AppCenter.Crashes.Crashes.TrackError(ex, (IDictionary<string, string>)dictionary5, errorAttachmentLogArray);
+                                                    ErrorAttachmentLog[] errorAttachmentLogArray = Array.Empty<ErrorAttachmentLog>();
+                                                    Microsoft.AppCenter.Crashes.Crashes.TrackError(ex, (IDictionary<string, string>)dictionary5, errorAttachmentLogArray);
                                                 }
                                             }
                                             _spriteBatchBeginNextID.SetValue("L16");

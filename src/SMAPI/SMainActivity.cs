@@ -19,6 +19,7 @@ using System.Threading;
 using System.Linq;
 using System.IO;
 using File = Java.IO.File;
+using Microsoft.AppCenter;
 
 namespace StardewModdingAPI
 {
@@ -96,13 +97,8 @@ namespace StardewModdingAPI
                     string errorLogPath = Path.Combine(this.ExternalCacheDir.AbsolutePath, "error.dat");
                     SAlertDialogUtil.AlertMessage(System.IO.File.ReadAllText(errorLog.AbsolutePath), "Crash Detected");
                 }
-            }
-            catch { }
-            Program.Main(null);
-            // this patch should apply much earlier
-            try
-            {
-                AppCenterReportPatch.ApplyPatch();
+                Type[] services = new Type[] { typeof(Microsoft.AppCenter.Analytics.Analytics), typeof(Microsoft.AppCenter.Crashes.Crashes) };
+                AppCenter.Start(Constants.MicrosoftAppSecret, services);
             }
             catch { }
             base.OnCreate(bundle);
@@ -114,6 +110,8 @@ namespace StardewModdingAPI
             try
             {
                 new SGameConsole();
+
+                Program.Main(null);
 
                 this.core = new SCore(System.IO.Path.Combine(Android.OS.Environment.ExternalStorageDirectory.Path, "StardewValley/Mods"), false);
                 this.core.RunInteractively();
