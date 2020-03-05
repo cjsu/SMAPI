@@ -112,7 +112,7 @@
             "Default | UpdateKey": "Nexus:2341"
         },
 
-        "TMX Loader": {
+        "TMXL Map Toolkit": {
             "ID": "Platonymous.TMXLoader",
             "Default | UpdateKey": "Nexus:1820"
         },
@@ -129,7 +129,7 @@
         "Bee House Flower Range Fix": {
             "ID": "kirbylink.beehousefix",
             "~ | Status": "Obsolete",
-            "~ | StatusReasonPhrase": "the bee house flower range was fixed in Stardew Valley 1.4." 
+            "~ | StatusReasonPhrase": "the bee house flower range was fixed in Stardew Valley 1.4."
         },
 
         "Colored Chests": {
@@ -153,9 +153,9 @@
         /*********
         ** Broke in SDV 1.4
         *********/
-        "Fix Dice": {
-            "ID": "ashley.fixdice",
-            "~1.1.2 | Status": "AssumeBroken" // crashes game on startup
+        "Auto Quality Patch": {
+            "ID": "SilentOak.AutoQualityPatch",
+            "~2.1.3-unofficial.7 | Status": "AssumeBroken" // runtime errors
         },
 
         "Fix Dice": {

@@ -41,11 +41,8 @@ namespace StardewModdingAPI.Web.Controllers
         /// <summary>The cache in which to store mod data.</summary>
         private readonly IModCacheRepository ModCache;
 
-        /// <summary>The number of minutes successful update checks should be cached before refetching them.</summary>
-        private readonly int SuccessCacheMinutes;
-
-        /// <summary>The number of minutes failed update checks should be cached before refetching them.</summary>
-        private readonly int ErrorCacheMinutes;
+        /// <summary>The config settings for mod update checks.</summary>
+        private readonly IOptions<ModUpdateCheckConfig> Config;
 
         /// <summary>The internal mod metadata list.</summary>
         private readonly ModDatabase ModDatabase;
@@ -58,21 +55,19 @@ namespace StardewModdingAPI.Web.Controllers
         /// <param name="environment">The web hosting environment.</param>
         /// <param name="wikiCache">The cache in which to store wiki data.</param>
         /// <param name="modCache">The cache in which to store mod metadata.</param>
-        /// <param name="configProvider">The config settings for mod update checks.</param>
+        /// <param name="config">The config settings for mod update checks.</param>
         /// <param name="chucklefish">The Chucklefish API client.</param>
         /// <param name="curseForge">The CurseForge API client.</param>
         /// <param name="github">The GitHub API client.</param>
         /// <param name="modDrop">The ModDrop API client.</param>
         /// <param name="nexus">The Nexus API client.</param>
-        public ModsApiController(IHostingEnvironment environment, IWikiCacheRepository wikiCache, IModCacheRepository modCache, IOptions<ModUpdateCheckConfig> configProvider, IChucklefishClient chucklefish, ICurseForgeClient curseForge, IGitHubClient github, IModDropClient modDrop, INexusClient nexus)
+        public ModsApiController(IHostingEnvironment environment, IWikiCacheRepository wikiCache, IModCacheRepository modCache, IOptions<ModUpdateCheckConfig> config, IChucklefishClient chucklefish, ICurseForgeClient curseForge, IGitHubClient github, IModDropClient modDrop, INexusClient nexus)
         {
             this.ModDatabase = new ModToolkit().GetModDatabase(Path.Combine(environment.WebRootPath, "SMAPI.metadata.json"));
-            ModUpdateCheckConfig config = configProvider.Value;
 
             this.WikiCache = wikiCache;
             this.ModCache = modCache;
-            this.SuccessCacheMinutes = config.SuccessCacheMinutes;
-            this.ErrorCacheMinutes = config.ErrorCacheMinutes;
+            this.Config = config;
             this.Repositories =
                 new IModRepository[]
                 {
@@ -133,6 +128,8 @@ namespace StardewModdingAPI.Web.Controllers
             ModDataRecord record = this.ModDatabase.Get(search.ID);
             WikiModEntry wikiEntry = wikiData.FirstOrDefault(entry => entry.ID.Contains(search.ID.Trim(), StringComparer.InvariantCultureIgnoreCase));
             UpdateKey[] updateKeys = this.GetUpdateKeys(search.UpdateKeys, record, wikiEntry).ToArray();
+            ModOverrideConfig overrides = this.Config.Value.ModOverrides.FirstOrDefault(p => p.ID.Equals(search.ID?.Trim(), StringComparison.InvariantCultureIgnoreCase));
+            bool allowNonStandardVersions = overrides?.AllowNonStandardVersions ?? false;
 
             // get latest versions
             ModEntryModel result = new ModEntryModel { ID = search.ID };
@@ -151,7 +148,7 @@ namespace StardewModdingAPI.Web.Controllers
                 }
 
                 // fetch data
-                ModInfoModel data = await this.GetInfoForUpdateKeyAsync(updateKey);
+                ModInfoModel data = await this.GetInfoForUpdateKeyAsync(updateKey, allowNonStandardVersions);
                 if (data.Error != null)
                 {
                     errors.Add(data.Error);
@@ -161,7 +158,7 @@ namespace StardewModdingAPI.Web.Controllers
                 // handle main version
                 if (data.Version != null)
                 {
-                    ISemanticVersion version = this.GetMappedVersion(data.Version, wikiEntry?.MapRemoteVersions);
+                    ISemanticVersion version = this.GetMappedVersion(data.Version, wikiEntry?.MapRemoteVersions, allowNonStandardVersions);
                     if (version == null)
                     {
                         errors.Add($"The update key '{updateKey}' matches a mod with invalid semantic version '{data.Version}'.");
@@ -175,7 +172,7 @@ namespace StardewModdingAPI.Web.Controllers
                 // handle optional version
                 if (data.PreviewVersion != null)
                 {
-                    ISemanticVersion version = this.GetMappedVersion(data.PreviewVersion, wikiEntry?.MapRemoteVersions);
+                    ISemanticVersion version = this.GetMappedVersion(data.PreviewVersion, wikiEntry?.MapRemoteVersions, allowNonStandardVersions);
                     if (version == null)
                     {
                         errors.Add($"The update key '{updateKey}' matches a mod with invalid optional semantic version '{data.PreviewVersion}'.");
@@ -215,16 +212,16 @@ namespace StardewModdingAPI.Web.Controllers
             }
 
             // special cases
-            if (result.ID == "Pathoschild.SMAPI")
+            if (overrides?.SetUrl != null)
             {
                 if (main != null)
-                    main.Url = "https://smapi.io/";
+                    main.Url = overrides.SetUrl;
                 if (optional != null)
-                    optional.Url = "https://smapi.io/";
+                    optional.Url = overrides.SetUrl;
             }
 
             // get recommended update (if any)
-            ISemanticVersion installedVersion = this.GetMappedVersion(search.InstalledVersion?.ToString(), wikiEntry?.MapLocalVersions);
+            ISemanticVersion installedVersion = this.GetMappedVersion(search.InstalledVersion?.ToString(), wikiEntry?.MapLocalVersions, allowNonStandard: allowNonStandardVersions);
             if (apiVersion != null && installedVersion != null)
             {
                 // get newer versions
@@ -283,10 +280,11 @@ namespace StardewModdingAPI.Web.Controllers
 
         /// <summary>Get the mod info for an update key.</summary>
         /// <param name="updateKey">The namespaced update key.</param>
-        private async Task<ModInfoModel> GetInfoForUpdateKeyAsync(UpdateKey updateKey)
+        /// <param name="allowNonStandardVersions">Whether to allow non-standard versions.</param>
+        private async Task<ModInfoModel> GetInfoForUpdateKeyAsync(UpdateKey updateKey, bool allowNonStandardVersions)
         {
             // get mod
-            if (!this.ModCache.TryGetMod(updateKey.Repository, updateKey.ID, out CachedMod mod) || this.ModCache.IsStale(mod.LastUpdated, mod.FetchStatus == RemoteModStatus.TemporaryError ? this.ErrorCacheMinutes : this.SuccessCacheMinutes))
+            if (!this.ModCache.TryGetMod(updateKey.Repository, updateKey.ID, out CachedMod mod) || this.ModCache.IsStale(mod.LastUpdated, mod.FetchStatus == RemoteModStatus.TemporaryError ? this.Config.Value.ErrorCacheMinutes : this.Config.Value.SuccessCacheMinutes))
             {
                 // get site
                 if (!this.Repositories.TryGetValue(updateKey.Repository, out IModRepository repository))
@@ -298,7 +296,7 @@ namespace StardewModdingAPI.Web.Controllers
                 {
                     if (result.Version == null)
                         result.SetError(RemoteModStatus.InvalidData, $"The update key '{updateKey}' matches a mod with no version number.");
-                    else if (!SemanticVersion.TryParse(result.Version, out _))
+                    else if (!SemanticVersion.TryParse(result.Version, allowNonStandardVersions, out _))
                         result.SetError(RemoteModStatus.InvalidData, $"The update key '{updateKey}' matches a mod with invalid semantic version '{result.Version}'.");
                 }
 
@@ -357,15 +355,16 @@ namespace StardewModdingAPI.Web.Controllers
         /// <summary>Get a semantic local version for update checks.</summary>
         /// <param name="version">The version to parse.</param>
         /// <param name="map">A map of version replacements.</param>
-        private ISemanticVersion GetMappedVersion(string version, IDictionary<string, string> map)
+        /// <param name="allowNonStandard">Whether to allow non-standard versions.</param>
+        private ISemanticVersion GetMappedVersion(string version, IDictionary<string, string> map, bool allowNonStandard)
         {
             // try mapped version
-            string rawNewVersion = this.GetRawMappedVersion(version, map);
-            if (SemanticVersion.TryParse(rawNewVersion, out ISemanticVersion parsedNew))
+            string rawNewVersion = this.GetRawMappedVersion(version, map, allowNonStandard);
+            if (SemanticVersion.TryParse(rawNewVersion, allowNonStandard, out ISemanticVersion parsedNew))
                 return parsedNew;
 
             // return original version
-            return SemanticVersion.TryParse(version, out ISemanticVersion parsedOld)
+            return SemanticVersion.TryParse(version, allowNonStandard, out ISemanticVersion parsedOld)
                 ? parsedOld
                 : null;
         }
@@ -373,7 +372,8 @@ namespace StardewModdingAPI.Web.Controllers
         /// <summary>Get a semantic local version for update checks.</summary>
         /// <param name="version">The version to map.</param>
         /// <param name="map">A map of version replacements.</param>
-        private string GetRawMappedVersion(string version, IDictionary<string, string> map)
+        /// <param name="allowNonStandard">Whether to allow non-standard versions.</param>
+        private string GetRawMappedVersion(string version, IDictionary<string, string> map, bool allowNonStandard)
         {
             if (version == null || map == null || !map.Any())
                 return version;
@@ -383,14 +383,14 @@ namespace StardewModdingAPI.Web.Controllers
                 return map[version];
 
             // match parsed version
-            if (SemanticVersion.TryParse(version, out ISemanticVersion parsed))
+            if (SemanticVersion.TryParse(version, allowNonStandard, out ISemanticVersion parsed))
             {
                 if (map.ContainsKey(parsed.ToString()))
                     return map[parsed.ToString()];
 
                 foreach (var pair in map)
                 {
-                    if (SemanticVersion.TryParse(pair.Key, out ISemanticVersion target) && parsed.Equals(target) && SemanticVersion.TryParse(pair.Value, out ISemanticVersion newVersion))
+                    if (SemanticVersion.TryParse(pair.Key, allowNonStandard, out ISemanticVersion target) && parsed.Equals(target) && SemanticVersion.TryParse(pair.Value, allowNonStandard, out ISemanticVersion newVersion))
                         return newVersion.ToString();
                 }
             }

@@ -28,14 +28,16 @@
     {
         <meta name="robots" content="noindex" />
     }
-    <link rel="stylesheet" href="~/Content/css/json-validator.css?r=20191204" />
+    <link rel="stylesheet" href="~/Content/css/file-upload.css?r=202002" />
+    <link rel="stylesheet" href="~/Content/css/json-validator.css?r=202002" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tmont/sunlight@1.22.0/src/themes/sunlight.default.min.css" />
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/gh/tmont/sunlight@1.22.0/src/sunlight.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/gh/tmont/sunlight@1.22.0/src/plugins/sunlight-plugin.linenumbers.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/gh/tmont/sunlight@1.22.0/src/lang/sunlight.javascript.min.js" crossorigin="anonymous"></script>
-    <script src="~/Content/js/json-validator.js?r=20191204"></script>
+    <script src="~/Content/js/file-upload.js?r=202002"></script>
+    <script src="~/Content/js/json-validator.js?r=202002"></script>
     <script>
         $(function() {
             smapi.jsonValidator(@Json.Serialize(this.Url.PlainAction("Index", "JsonValidator", new { schemaName = "$schemaName", id = "$id" })), @Json.Serialize(Model.PasteID));
@@ -86,6 +88,7 @@ else if (!isEditView && Model.PasteID != null)
 {
     <h2>Upload a JSON file</h2>
     <form action="@this.Url.PlainAction("PostAsync", "JsonValidator")" method="post">
+        <input id="inputFile" type="file" />
         <ol>
             <li>
                 Choose the JSON format:<br />
@@ -97,7 +100,7 @@ else if (!isEditView && Model.PasteID != null)
                 </select>
             </li>
             <li>
-                Drag the file onto this textbox (or paste the text in):<br />
+                Drag the file onto this textbox <small>(or <a href="#" id="choose-file-link">choose a file</a>)</small>:<br />
                 <textarea id="input" name="Content" placeholder="paste file here">@Model.Content</textarea>
             </li>
             <li>

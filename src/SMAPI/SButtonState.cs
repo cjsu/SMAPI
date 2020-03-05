@@ -1,7 +1,7 @@
-namespace StardewModdingAPI.Framework.Input
+namespace StardewModdingAPI
 {
-    /// <summary>The input status for a button during an update frame.</summary>
-    internal enum InputStatus
+    /// <summary>The input state for a button during an update frame.</summary>
+    public enum SButtonState
     {
         /// <summary>The button was neither pressed, held, nor released.</summary>
         None,
@@ -16,14 +16,14 @@ namespace StardewModdingAPI.Framework.Input
         Released
     }
 
-    /// <summary>Extension methods for <see cref="InputStatus"/>.</summary>
+    /// <summary>Extension methods for <see cref="SButtonState"/>.</summary>
     internal static class InputStatusExtensions
     {
         /// <summary>Whether the button was pressed or held.</summary>
-        /// <param name="status">The button status.</param>
-        public static bool IsDown(this InputStatus status)
+        /// <param name="state">The button state.</param>
+        public static bool IsDown(this SButtonState state)
         {
-            return status == InputStatus.Held || status == InputStatus.Pressed;
+            return state == SButtonState.Held || state == SButtonState.Pressed;
         }
     }
 }

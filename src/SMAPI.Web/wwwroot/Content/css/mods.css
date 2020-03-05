@@ -86,6 +86,11 @@ table.wikitable > caption {
     font-size: 0.9em;
 }
 
+#mod-list thead tr {
+    position: sticky;
+    top: 0;
+}
+
 #mod-list th.header {
     background-repeat: no-repeat;
     background-position: center right;

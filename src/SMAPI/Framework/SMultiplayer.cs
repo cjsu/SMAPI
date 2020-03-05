@@ -338,30 +338,49 @@ namespace StardewModdingAPI.Framework
         /// <param name="toPlayerIDs">The <see cref="Farmer.UniqueMultiplayerID" /> values for the players who should receive the message, or <c>null</c> for all players. If you don't need to broadcast to all players, specifying player IDs is recommended to reduce latency.</param>
         public void BroadcastModMessage<TMessage>(TMessage message, string messageType, string fromModID, string[] toModIDs, long[] toPlayerIDs)
         {
-            // validate
+            // validate input
             if (message == null)
                 throw new ArgumentNullException(nameof(message));
             if (string.IsNullOrWhiteSpace(messageType))
                 throw new ArgumentNullException(nameof(messageType));
             if (string.IsNullOrWhiteSpace(fromModID))
                 throw new ArgumentNullException(nameof(fromModID));
-            if (!this.Peers.Any())
+
+            // get target players
+            long curPlayerId = Game1.player.UniqueMultiplayerID;
+            bool sendToSelf = false;
+            List<MultiplayerPeer> sendToPeers = new List<MultiplayerPeer>();
+            if (toPlayerIDs == null)
             {
-                this.Monitor.VerboseLog($"Ignored '{messageType}' broadcast from mod {fromModID}: not connected to any players.");
-                return;
+                sendToSelf = true;
+                sendToPeers.AddRange(this.Peers.Values);
+            }
+            else
+            {
+                foreach (long id in toPlayerIDs.Distinct())
+                {
+                    if (id == curPlayerId)
+                        sendToSelf = true;
+                    else if (this.Peers.TryGetValue(id, out MultiplayerPeer peer) && peer.HasSmapi)
+                        sendToPeers.Add(peer);
+                }
             }
 
-            // filter player IDs
-            HashSet<long> playerIDs = null;
-            if (toPlayerIDs != null && toPlayerIDs.Any())
+            // filter by mod ID
+            if (toModIDs != null)
             {
-                playerIDs = new HashSet<long>(toPlayerIDs);
-                playerIDs.RemoveWhere(id => !this.Peers.ContainsKey(id));
-                if (!playerIDs.Any())
-                {
-                    this.Monitor.VerboseLog($"Ignored '{messageType}' broadcast from mod {fromModID}: none of the specified player IDs are connected.");
-                    return;
-                }
+                HashSet<string> sendToMods = new HashSet<string>(toModIDs, StringComparer.InvariantCultureIgnoreCase);
+                if (sendToSelf && toModIDs.All(id => this.ModRegistry.Get(id) == null))
+                    sendToSelf = false;
+
+                sendToPeers.RemoveAll(peer => peer.Mods.All(mod => !sendToMods.Contains(mod.ID)));
+            }
+
+            // validate recipients
+            if (!sendToSelf && !sendToPeers.Any())
+            {
+                this.Monitor.VerboseLog($"Ignored '{messageType}' broadcast from mod {fromModID}: none of the specified player IDs can receive this message.");
+                return;
             }
 
             // get data to send
@@ -369,33 +388,44 @@ namespace StardewModdingAPI.Framework
                 fromPlayerID: Game1.player.UniqueMultiplayerID,
                 fromModID: fromModID,
                 toModIDs: toModIDs,
-                toPlayerIDs: playerIDs?.ToArray(),
+                toPlayerIDs: sendToPeers.Select(p => p.PlayerID).ToArray(),
                 type: messageType,
                 data: JToken.FromObject(message)
             );
             string data = JsonConvert.SerializeObject(model, Formatting.None);
 
-            // log message
-            if (this.LogNetworkTraffic)
-                this.Monitor.Log($"Broadcasting '{messageType}' message: {data}.", LogLevel.Trace);
-
-            // send message
-            if (Context.IsMainPlayer)
+            // send self-message
+            if (sendToSelf)
             {
-                foreach (MultiplayerPeer peer in this.Peers.Values)
+                if (this.LogNetworkTraffic)
+                    this.Monitor.Log($"Broadcasting '{messageType}' message to self: {data}.", LogLevel.Trace);
+
+                this.OnModMessageReceived(model);
+            }
+
+            // send message to peers
+            if (sendToPeers.Any())
+            {
+                if (Context.IsMainPlayer)
                 {
-                    if (playerIDs == null || playerIDs.Contains(peer.PlayerID))
+                    foreach (MultiplayerPeer peer in sendToPeers)
                     {
-                        model.ToPlayerIDs = new[] { peer.PlayerID };
+                        if (this.LogNetworkTraffic)
+                            this.Monitor.Log($"Broadcasting '{messageType}' message to farmhand {peer.PlayerID}: {data}.", LogLevel.Trace);
+
                         peer.SendMessage(new OutgoingMessage((byte)MessageType.ModMessage, peer.PlayerID, data));
                     }
                 }
-            }
-            else if (this.HostPeer != null && this.HostPeer.HasSmapi)
-                this.HostPeer.SendMessage(new OutgoingMessage((byte)MessageType.ModMessage, this.HostPeer.PlayerID, data));
-            else
-                this.Monitor.VerboseLog("  Can't send message because no valid connections were found.");
+                else if (this.HostPeer?.HasSmapi == true)
+                {
+                    if (this.LogNetworkTraffic)
+                        this.Monitor.Log($"Broadcasting '{messageType}' message to host {this.HostPeer.PlayerID}: {data}.", LogLevel.Trace);
 
+                    this.HostPeer.SendMessage(new OutgoingMessage((byte)MessageType.ModMessage, this.HostPeer.PlayerID, data));
+                }
+                else
+                    this.Monitor.VerboseLog("  Can't send message because no valid connections were found.");
+            }
         }
 
 

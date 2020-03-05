@@ -236,8 +236,12 @@ namespace StardewModdingAPI.Framework
         /// <param name="message">The message to deliver to applicable mods.</param>
         private void OnModMessageReceived(ModMessageModel message)
         {
-            // raise events for applicable mods
+            // get mod IDs to notify
             HashSet<string> modIDs = new HashSet<string>(message.ToModIDs ?? this.ModRegistry.GetAll().Select(p => p.Manifest.UniqueID), StringComparer.InvariantCultureIgnoreCase);
+            if (message.FromPlayerID == Game1.player?.UniqueMultiplayerID)
+                modIDs.Remove(message.FromModID); // don't send a broadcast back to the sender
+
+            // raise events
             this.Events.ModMessageReceived.RaiseForMods(new ModMessageReceivedEventArgs(message), mod => mod != null && modIDs.Contains(mod.Manifest.UniqueID));
         }
 
@@ -667,16 +671,16 @@ namespace StardewModdingAPI.Framework
                             foreach (var pair in inputState.ActiveButtons)
                             {
                                 SButton button = pair.Key;
-                                InputStatus status = pair.Value;
+                                SButtonState status = pair.Value;
 
-                                if (status == InputStatus.Pressed)
+                                if (status == SButtonState.Pressed)
                                 {
                                     if (this.Monitor.IsVerbose)
                                         this.Monitor.Log($"Events: button {button} pressed.", LogLevel.Trace);
 
                                     events.ButtonPressed.Raise(new ButtonPressedEventArgs(button, cursor, inputState));
                                 }
-                                else if (status == InputStatus.Released)
+                                else if (status == SButtonState.Released)
                                 {
                                     if (this.Monitor.IsVerbose)
                                         this.Monitor.Log($"Events: button {button} released.", LogLevel.Trace);

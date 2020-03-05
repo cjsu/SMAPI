@@ -28,7 +28,7 @@ namespace StardewModdingAPI.Web.Framework
             return
                 values.TryGetValue(routeKey, out object routeValue)
                 && routeValue is string routeStr
-                && SemanticVersion.TryParseNonStandard(routeStr, out _);
+                && SemanticVersion.TryParse(routeStr, allowNonStandard: true, out _);
         }
     }
 }

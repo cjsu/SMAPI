@@ -142,7 +142,7 @@
                     },
                     "FromFile": {
                         "title": "Source file",
-                        "description": "The relative file path in your content pack folder to load instead (like 'assets/dinosaur.png'). This can be a .json (data), .png (image), .tbin (map), or .xnb file. This field supports tokens and capitalization doesn't matter.",
+                        "description": "The relative file path in your content pack folder to load instead (like 'assets/dinosaur.png'). This can be a .json (data), .png (image), .tbin or .tmx (map), or .xnb file. This field supports tokens and capitalization doesn't matter.",
                         "type": "string",
                         "allOf": [
                             {
@@ -151,12 +151,12 @@
                                 }
                             },
                             {
-                                "pattern": "\\.(json|png|tbin|xnb) *$"
+                                "pattern": "\\.(json|png|tbin|tmx|xnb) *$"
                             }
                         ],
                         "@errorMessages": {
                             "allOf:indexes: 0": "Invalid value; must not contain directory climbing (like '../').",
-                            "allOf:indexes: 1": "Invalid value; must be a file path ending with .json, .png, .tbin, or .xnb."
+                            "allOf:indexes: 1": "Invalid value; must be a file path ending with .json, .png, .tbin, .tmx, or .xnb."
                         }
                     },
                     "FromArea": {
@@ -325,7 +325,7 @@
                         "then": {
                             "properties": {
                                 "FromFile": {
-                                    "description": "The relative path to the map in your content pack folder from which to copy (like assets/town.tbin). This can be a .tbin or .xnb file. This field supports tokens and capitalization doesn't matter.\nContent Patcher will handle tilesheets referenced by the FromFile map for you:\n - If a tilesheet isn't referenced by the target map, Content Patcher will add it for you (with a z_ ID prefix to avoid conflicts with hardcoded game logic). If the source map has a custom version of a tilesheet that's already referenced, it'll be added as a separate tilesheet only used by your tiles.\n - If you include the tilesheet file in your mod folder, Content Patcher will use that one automatically; otherwise it will be loaded from the game's Content/Maps folder."
+                                    "description": "The relative path to the map in your content pack folder from which to copy (like assets/town.tbin). This can be a .tbin, .tmx, or .xnb file. This field supports tokens and capitalization doesn't matter.\nContent Patcher will handle tilesheets referenced by the FromFile map for you:\n - If a tilesheet isn't referenced by the target map, Content Patcher will add it for you (with a z_ ID prefix to avoid conflicts with hardcoded game logic). If the source map has a custom version of a tilesheet that's already referenced, it'll be added as a separate tilesheet only used by your tiles.\n - If you include the tilesheet file in your mod folder, Content Patcher will use that one automatically; otherwise it will be loaded from the game's Content/Maps folder."
                                 },
                                 "FromArea": {
                                     "description": "The part of the source map to copy. Defaults to the whole source map."

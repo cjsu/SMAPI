@@ -8,11 +8,11 @@
     TimeSpan staleAge = DateTimeOffset.UtcNow - Model.LastUpdated;
 }
 @section Head {
-    <link rel="stylesheet" href="~/Content/css/mods.css?r=20190302" />
+    <link rel="stylesheet" href="~/Content/css/mods.css?r=20200218" />
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/tablesorter@2.31.0/dist/js/jquery.tablesorter.combined.min.js" crossorigin="anonymous"></script>
-    <script src="~/Content/js/mods.js?r=20190302"></script>
+    <script src="~/Content/js/mods.js?r=20200218"></script>
     <script>
         $(function() {
             var data = @Json.Serialize(Model.Mods, new JsonSerializerSettings { Formatting = Formatting.None });

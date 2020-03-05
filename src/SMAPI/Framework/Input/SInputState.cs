@@ -49,7 +49,7 @@ namespace StardewModdingAPI.Framework.Input
         public ICursorPosition CursorPosition => this.CursorPositionImpl;
 
         /// <summary>The buttons which were pressed, held, or released.</summary>
-        public IDictionary<SButton, InputStatus> ActiveButtons { get; private set; } = new Dictionary<SButton, InputStatus>();
+        public IDictionary<SButton, SButtonState> ActiveButtons { get; private set; } = new Dictionary<SButton, SButtonState>();
 
         /// <summary>The buttons to suppress when the game next handles input. Each button is suppressed until it's released.</summary>
         public HashSet<SButton> SuppressButtons { get; } = new HashSet<SButton>();
@@ -75,7 +75,7 @@ namespace StardewModdingAPI.Framework.Input
         [Obsolete("This method should only be called by the game itself.")]
         public override void Update() { }
 
-        /// <summary>Update the current button statuses for the given tick.</summary>
+        /// <summary>Update the current button states for the given tick.</summary>
         public void TrueUpdate()
         {
             try
@@ -86,7 +86,7 @@ namespace StardewModdingAPI.Framework.Input
                 GamePadState realController = GamePad.GetState(PlayerIndex.One);
                 KeyboardState realKeyboard = Keyboard.GetState();
                 MouseState realMouse = Mouse.GetState();
-                var activeButtons = this.DeriveStatuses(this.ActiveButtons, realKeyboard, realMouse, realController);
+                var activeButtons = this.DeriveStates(this.ActiveButtons, realKeyboard, realMouse, realController);
                 Vector2 cursorAbsolutePos = new Vector2((realMouse.X * zoomMultiplier) + Game1.viewport.X, (realMouse.Y * zoomMultiplier) + Game1.viewport.Y);
                 Vector2? playerTilePos = Context.IsPlayerFree ? Game1.player.getTileLocation() : (Vector2?)null;
 
@@ -102,7 +102,7 @@ namespace StardewModdingAPI.Framework.Input
                 }
 
                 // update suppressed states
-                this.SuppressButtons.RemoveWhere(p => !this.GetStatus(activeButtons, p).IsDown());
+                this.SuppressButtons.RemoveWhere(p => !this.GetState(activeButtons, p).IsDown());
                 this.UpdateSuppression();
             }
             catch (InvalidOperationException)
@@ -159,7 +159,7 @@ namespace StardewModdingAPI.Framework.Input
         /// <param name="button">The button to check.</param>
         public bool IsDown(SButton button)
         {
-            return this.GetStatus(this.ActiveButtons, button).IsDown();
+            return this.GetState(this.ActiveButtons, button).IsDown();
         }
 
         /// <summary>Get whether any of the given buttons were pressed or held.</summary>
@@ -167,6 +167,13 @@ namespace StardewModdingAPI.Framework.Input
         public bool IsAnyDown(InputButton[] buttons)
         {
             return buttons.Any(button => this.IsDown(button.ToSButton()));
+        }
+
+        /// <summary>Get the state of a button.</summary>
+        /// <param name="button">The button to check.</param>
+        public SButtonState GetState(SButton button)
+        {
+            return this.GetState(this.ActiveButtons, button);
         }
 
 
@@ -198,7 +205,7 @@ namespace StardewModdingAPI.Framework.Input
         /// <param name="keyboardState">The game's keyboard state for the current tick.</param>
         /// <param name="mouseState">The game's mouse state for the current tick.</param>
         /// <param name="gamePadState">The game's controller state for the current tick.</param>
-        private void SuppressGivenStates(IDictionary<SButton, InputStatus> activeButtons, ref KeyboardState keyboardState, ref MouseState mouseState, ref GamePadState gamePadState)
+        private void SuppressGivenStates(IDictionary<SButton, SButtonState> activeButtons, ref KeyboardState keyboardState, ref MouseState mouseState, ref GamePadState gamePadState)
         {
             if (this.SuppressButtons.Count == 0)
                 return;
@@ -245,48 +252,48 @@ namespace StardewModdingAPI.Framework.Input
             }
         }
 
-        /// <summary>Get the status of all pressed or released buttons relative to their previous status.</summary>
-        /// <param name="previousStatuses">The previous button statuses.</param>
+        /// <summary>Get the state of all pressed or released buttons relative to their previous state.</summary>
+        /// <param name="previousStates">The previous button states.</param>
         /// <param name="keyboard">The keyboard state.</param>
         /// <param name="mouse">The mouse state.</param>
         /// <param name="controller">The controller state.</param>
-        private IDictionary<SButton, InputStatus> DeriveStatuses(IDictionary<SButton, InputStatus> previousStatuses, KeyboardState keyboard, MouseState mouse, GamePadState controller)
+        private IDictionary<SButton, SButtonState> DeriveStates(IDictionary<SButton, SButtonState> previousStates, KeyboardState keyboard, MouseState mouse, GamePadState controller)
         {
-            IDictionary<SButton, InputStatus> activeButtons = new Dictionary<SButton, InputStatus>();
+            IDictionary<SButton, SButtonState> activeButtons = new Dictionary<SButton, SButtonState>();
 
             // handle pressed keys
             SButton[] down = this.GetPressedButtons(keyboard, mouse, controller).ToArray();
             foreach (SButton button in down)
-                activeButtons[button] = this.DeriveStatus(this.GetStatus(previousStatuses, button), isDown: true);
+                activeButtons[button] = this.DeriveState(this.GetState(previousStates, button), isDown: true);
 
             // handle released keys
-            foreach (KeyValuePair<SButton, InputStatus> prev in previousStatuses)
+            foreach (KeyValuePair<SButton, SButtonState> prev in previousStates)
             {
                 if (prev.Value.IsDown() && !activeButtons.ContainsKey(prev.Key))
-                    activeButtons[prev.Key] = InputStatus.Released;
+                    activeButtons[prev.Key] = SButtonState.Released;
             }
 
             return activeButtons;
         }
 
-        /// <summary>Get the status of a button relative to its previous status.</summary>
-        /// <param name="oldStatus">The previous button status.</param>
+        /// <summary>Get the state of a button relative to its previous state.</summary>
+        /// <param name="oldState">The previous button state.</param>
         /// <param name="isDown">Whether the button is currently down.</param>
-        private InputStatus DeriveStatus(InputStatus oldStatus, bool isDown)
+        private SButtonState DeriveState(SButtonState oldState, bool isDown)
         {
-            if (isDown && oldStatus.IsDown())
-                return InputStatus.Held;
+            if (isDown && oldState.IsDown())
+                return SButtonState.Held;
             if (isDown)
-                return InputStatus.Pressed;
-            return InputStatus.Released;
+                return SButtonState.Pressed;
+            return SButtonState.Released;
         }
 
-        /// <summary>Get the status of a button.</summary>
+        /// <summary>Get the state of a button.</summary>
         /// <param name="activeButtons">The current button states to check.</param>
         /// <param name="button">The button to check.</param>
-        private InputStatus GetStatus(IDictionary<SButton, InputStatus> activeButtons, SButton button)
+        private SButtonState GetState(IDictionary<SButton, SButtonState> activeButtons, SButton button)
         {
-            return activeButtons.TryGetValue(button, out InputStatus status) ? status : InputStatus.None;
+            return activeButtons.TryGetValue(button, out SButtonState state) ? state : SButtonState.None;
         }
 
         /// <summary>Get the buttons pressed in the given stats.</summary>

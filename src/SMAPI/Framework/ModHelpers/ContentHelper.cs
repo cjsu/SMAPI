@@ -32,7 +32,7 @@ namespace StardewModdingAPI.Framework.ModHelpers
         /// <summary>The friendly mod name for use in errors.</summary>
         private readonly string ModName;
 
-        /// <summary>Encapsulates monitoring and logging for a given module.</summary>
+        /// <summary>Encapsulates monitoring and logging.</summary>
         private readonly IMonitor Monitor;
 
 
@@ -70,9 +70,11 @@ namespace StardewModdingAPI.Framework.ModHelpers
         public ContentHelper(ContentCoordinator contentCore, string modFolderPath, string modID, string modName, IMonitor monitor)
             : base(modID)
         {
+            string managedAssetPrefix = contentCore.GetManagedAssetPrefix(modID);
+
             this.ContentCore = contentCore;
-            this.GameContentManager = contentCore.CreateGameContentManager(this.ContentCore.GetManagedAssetPrefix(modID) + ".content");
-            this.ModContentManager = contentCore.CreateModContentManager(this.ContentCore.GetManagedAssetPrefix(modID), modFolderPath, this.GameContentManager);
+            this.GameContentManager = contentCore.CreateGameContentManager(managedAssetPrefix + ".content");
+            this.ModContentManager = contentCore.CreateModContentManager(managedAssetPrefix, modName, modFolderPath, this.GameContentManager);
             this.ModName = modName;
             this.Monitor = monitor;
         }

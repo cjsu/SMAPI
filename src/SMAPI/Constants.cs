@@ -20,7 +20,7 @@ namespace StardewModdingAPI
         ** Public
         ****/
         /// <summary>SMAPI's current semantic version.</summary>
-        public static ISemanticVersion ApiVersion { get; } = new Toolkit.SemanticVersion("3.2.0.4", allowNonStandard: true);
+        public static ISemanticVersion ApiVersion { get; } = new Toolkit.SemanticVersion("3.3.2.0", allowNonStandard: true);
 
         /// <summary>The minimum supported version of Stardew Valley.</summary>
         public static ISemanticVersion MinimumGameVersion { get; } = new GameVersion("1.4.1");
@@ -115,26 +115,59 @@ namespace StardewModdingAPI
         /// <returns>Returns the compatible SMAPI version, or <c>null</c> if none was found.</returns>
         internal static ISemanticVersion GetCompatibleApiVersion(ISemanticVersion version)
         {
+            // This covers all officially supported public game updates. It might seem like version
+            // ranges would be better, but the given SMAPI versions may not be compatible with
+            // intermediate unlisted versions (e.g. private beta updates).
+            // 
+            // Nonstandard versions are normalized by GameVersion (e.g. 1.07 => 1.0.7).
             switch (version.ToString())
             {
-                case "1.3.36":
-                    return new SemanticVersion(2, 11, 2);
+                case "1.4.1":
+                case "1.4.0":
+                    return new SemanticVersion("3.0.1");
 
-                case "1.3.32":
+                case "1.3.36":
+                    return new SemanticVersion("2.11.2");
+
                 case "1.3.33":
-                    return new SemanticVersion(2, 10, 2);
+                case "1.3.32":
+                    return new SemanticVersion("2.10.2");
 
                 case "1.3.28":
-                    return new SemanticVersion(2, 7, 0);
+                    return new SemanticVersion("2.7.0");
 
-                case "1.2.30":
-                case "1.2.31":
-                case "1.2.32":
                 case "1.2.33":
-                    return new SemanticVersion(2, 5, 5);
-            }
+                case "1.2.32":
+                case "1.2.31":
+                case "1.2.30":
+                    return new SemanticVersion("2.5.5");
 
-            return null;
+                case "1.2.29":
+                case "1.2.28":
+                case "1.2.27":
+                case "1.2.26":
+                    return new SemanticVersion("1.13.1");
+
+                case "1.1.1":
+                case "1.1.0":
+                    return new SemanticVersion("1.9.0");
+
+                case "1.0.7.1":
+                case "1.0.7":
+                case "1.0.6":
+                case "1.0.5.2":
+                case "1.0.5.1":
+                case "1.0.5":
+                case "1.0.4":
+                case "1.0.3":
+                case "1.0.2":
+                case "1.0.1":
+                case "1.0.0":
+                    return new SemanticVersion("0.40.0");
+
+                default:
+                    return null;
+            }
         }
 
         /// <summary>Get metadata for mapping assemblies to the current platform.</summary>

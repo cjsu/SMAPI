@@ -192,8 +192,7 @@ namespace StardewModdingAPI.Web
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             // basic config
-            if (env.IsDevelopment())
-                app.UseDeveloperExceptionPage();
+            app.UseDeveloperExceptionPage();
             app
                 .UseCors(policy => policy
                     .AllowAnyHeader()
