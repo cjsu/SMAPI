@@ -29,6 +29,8 @@ namespace StardewModdingAPI.Framework.Patching
         /// <param name="patches">The patches to apply.</param>
         public void Apply(params IHarmonyPatch[] patches)
         {
+            if (Build.VERSION.SdkInt < BuildVersionCodes.M)
+                return;
             if (!HarmonyDetourBridge.Initialized)
             {
                 HarmonyDetourBridge.Init();
