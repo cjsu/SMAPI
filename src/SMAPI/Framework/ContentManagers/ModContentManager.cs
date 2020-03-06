@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -35,6 +37,9 @@ namespace StardewModdingAPI.Framework.ContentManagers
         /// <summary>The language code for language-agnostic mod assets.</summary>
         private readonly LanguageCode DefaultLanguage = Constants.DefaultLanguage;
 
+        /// <summary>Reflector used to access xnbs on Android.
+        private readonly Reflector Reflector;
+
 
         /*********
         ** Public methods
@@ -57,6 +62,7 @@ namespace StardewModdingAPI.Framework.ContentManagers
             this.GameContentManager = gameContentManager;
             this.JsonHelper = jsonHelper;
             this.ModName = modName;
+            this.Reflector = reflection;
         }
 
         /// <summary>Load an asset that has been processed by the content pipeline.</summary>
@@ -131,7 +137,7 @@ namespace StardewModdingAPI.Framework.ContentManagers
                                 this.FixCustomTilesheetPaths(map, relativeMapPath: assetName);
                             }
                         }
-                        break;
+                        return this.ModedLoad<T>(assetName, language);
 
                     // unpacked data
                     case ".json":
@@ -418,5 +424,97 @@ namespace StardewModdingAPI.Framework.ContentManagers
             // get file
             return new FileInfo(path).Exists;
         }
+
+        public T ModedLoad<T>(string assetName, LanguageCode language)
+        {
+            if (language != LanguageCode.en)
+            {
+                string key = assetName + "." + this.LanguageCodeString(language);
+                Dictionary<string, bool> _localizedAsset = this.Reflector.GetField<Dictionary<string, bool>>(this, "_localizedAsset").GetValue();
+                if (!_localizedAsset.TryGetValue(key, out bool flag) | flag)
+                {
+                    try
+                    {
+                        _localizedAsset[key] = true;
+                        return this.ModedLoad<T>(key);
+                    }
+                    catch (ContentLoadException)
+                    {
+                        _localizedAsset[key] = false;
+                    }
+                }
+            }
+            return this.ModedLoad<T>(assetName);
+        }
+
+        public T ModedLoad<T>(string assetName)
+        {
+            if (string.IsNullOrEmpty(assetName))
+            {
+                throw new ArgumentNullException("assetName");
+            }
+            T local = default(T);
+            string key = assetName.Replace('\\', '/');
+            Dictionary<string, object> loadedAssets = this.Reflector.GetField<Dictionary<string, object>>(this, "loadedAssets").GetValue();
+            if (loadedAssets.TryGetValue(key, out object obj2) && (obj2 is T))
+            {
+                return (T)obj2;
+            }
+            local = this.ReadAsset<T>(assetName, null);
+            loadedAssets[key] = local;
+            return local;
+        }
+
+        protected override Stream OpenStream(string assetName)
+        {
+            Stream stream;
+            try
+            {
+                stream = new FileStream(Path.Combine(this.RootDirectory, assetName) + ".xnb", FileMode.Open, FileAccess.Read);
+                MemoryStream destination = new MemoryStream();
+                stream.CopyTo(destination);
+                destination.Seek(0L, SeekOrigin.Begin);
+                stream.Close();
+                stream = destination;
+            }
+            catch (Exception exception3)
+            {
+                throw new ContentLoadException("Opening stream error.", exception3);
+            }
+            return stream;
+        }
+        protected new T ReadAsset<T>(string assetName, Action<IDisposable> recordDisposableObject)
+        {
+            if (string.IsNullOrEmpty(assetName))
+            {
+                throw new ArgumentNullException("assetName");
+            }
+            ;
+            string str = assetName;
+            object obj2 = null;
+            if (this.Reflector.GetField<IGraphicsDeviceService>(this, "graphicsDeviceService").GetValue() == null)
+            {
+                this.Reflector.GetField<IGraphicsDeviceService>(this, "graphicsDeviceService").SetValue(this.ServiceProvider.GetService(typeof(IGraphicsDeviceService)) as IGraphicsDeviceService);
+            }
+            Stream input = this.OpenStream(assetName);
+            using (BinaryReader reader = new BinaryReader(input))
+            {
+                using (ContentReader reader2 = this.Reflector.GetMethod(this, "GetContentReaderFromXnb").Invoke<ContentReader>(assetName, input, reader, recordDisposableObject))
+                {
+                    MethodInfo method = reader2.GetType().GetMethod("ReadAsset", BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.NonPublic, null, new Type[] { }, new ParameterModifier[] { });
+                    obj2 = method.MakeGenericMethod(new Type[] { typeof(T) }).Invoke(reader2, null);
+                    if (obj2 is GraphicsResource graphics)
+                    {
+                        graphics.Name = str;
+                    }
+                }
+            }
+            if (obj2 == null)
+            {
+                throw new Exception("Could not load " + str + " asset!");
+            }
+            return (T)obj2;
+        }
+
     }
 }

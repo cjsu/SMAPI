@@ -22,10 +22,13 @@
     {
         <meta name="robots" content="noindex" />
     }
-    <link rel="stylesheet" href="~/Content/css/log-parser.css?r=20191127" />
+    <link rel="stylesheet" href="~/Content/css/file-upload.css?r=202002" />
+    <link rel="stylesheet" href="~/Content/css/log-parser.css?r=202002" />
+
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" crossorigin="anonymous"></script>
-    <script src="~/Content/js/log-parser.js?r=20190515"></script>
+    <script src="~/Content/js/file-upload.js?r=202002"></script>
+    <script src="~/Content/js/log-parser.js?r=202002"></script>
     <script>
         $(function() {
             smapi.logParser({
@@ -135,9 +138,10 @@ else if (Model.ParsedLog?.IsValid == true)
 
     <h2>How do I share my log?</h2>
     <form action="@this.Url.PlainAction("PostAsync", "LogParser")" method="post">
+        <input id="inputFile" type="file" />
         <ol>
             <li>
-                Drag the file onto this textbox (or paste the text in):<br />
+                Drag the file onto this textbox <small>(or <a href="#" id="choose-file-link">choose a file</a>)</small>:<br />
                 <textarea id="input" name="input" placeholder="paste log here"></textarea>
             </li>
             <li>
@@ -300,7 +304,7 @@ else if (Model.ParsedLog?.IsValid == true)
                     string sectionFilter = message.Section != null && !message.IsStartOfSection ? $"&& sectionsAllow('{message.Section}')" : null; // filter the message by section if applicable
 
                     <tr class="mod @levelStr @sectionStartClass"
-                        @if (message.IsStartOfSection) { <text> v-on:click="toggleSection('@message.Section')" </text>  }
+                        @if (message.IsStartOfSection) { <text> v-on:click="toggleSection('@message.Section')" </text> }
                         v-show="filtersAllow('@Model.GetSlug(message.Mod)', '@levelStr') @sectionFilter">
                         <td v-pre>@message.Time</td>
                         <td v-pre>@message.Level.ToString().ToUpper()</td>

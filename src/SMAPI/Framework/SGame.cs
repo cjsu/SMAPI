@@ -237,8 +237,12 @@ namespace StardewModdingAPI.Framework
         /// <param name="message">The message to deliver to applicable mods.</param>
         private void OnModMessageReceived(ModMessageModel message)
         {
-            // raise events for applicable mods
+            // get mod IDs to notify
             HashSet<string> modIDs = new HashSet<string>(message.ToModIDs ?? this.ModRegistry.GetAll().Select(p => p.Manifest.UniqueID), StringComparer.InvariantCultureIgnoreCase);
+            if (message.FromPlayerID == Game1.player?.UniqueMultiplayerID)
+                modIDs.Remove(message.FromModID); // don't send a broadcast back to the sender
+
+            // raise events
             this.Events.ModMessageReceived.RaiseForMods(new ModMessageReceivedEventArgs(message), mod => mod != null && modIDs.Contains(mod.Manifest.UniqueID));
         }
 
@@ -727,7 +731,7 @@ namespace StardewModdingAPI.Framework
                                     shopMenu.onPurchase, shopMenu.onSell, shopMenu.storeContext);
                             }
                         }
-                    }
+                }
 
                     /*********
                     ** World & player events

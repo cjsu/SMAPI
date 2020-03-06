@@ -1,6 +1,10 @@
 &larr; [README](README.md)
 
 # Release notes
+## Upcoming release
+* For the web UI:
+  * Added option to upload files using a file picker.
+
 ## 3.3.2
 Released 22 February 2020 for Stardew Valley 1.4.1 or later.
 
@@ -27,6 +31,10 @@ Released 22 February 2020 for Stardew Valley 1.4.1 or later.
   * Fixed warning on MacOS when you have no saves yet.
   * Reduced log messages.
 
+* For the web UI:
+  * Updated the JSON validator and Content Patcher schema for `.tmx` support.
+  * The mod compatibility page now has a sticky table header.
+
 * For modders:
   * Added support for [message sending](https://stardewvalleywiki.com/Modding:Modder_Guide/APIs/Integrations#Message_sending) to mods on the current computer (in addition to remote computers).
   * Added `ExtendImage` method to content API when editing files to resize textures.
@@ -36,10 +44,6 @@ Released 22 February 2020 for Stardew Valley 1.4.1 or later.
   * When mods load an asset using a more general type like `content.Load<object>`, SMAPI now calls `IAssetEditor` instances with the actual asset type instead of the specified one.
   * Updated dependencies (including Mono.Cecil 0.11.1 → 0.11.2).
   * Fixed dialogue propagation clearing marriage dialogue.
-
-* For the web UI:
-  * Updated the JSON validator and Content Patcher schema for `.tmx` support.
-  * The mod compatibility page now has a sticky table header.
 
 * For SMAPI/tool developers:
   * Improved support for four-part versions to support SMAPI on Android.

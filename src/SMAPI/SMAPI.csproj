@@ -57,10 +57,10 @@
       <HintPath>..\..\..\..\..\AndroidStudioProjects\SMAPI Android Installer\app\src\main\assets\Stardew\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="Google.Android.Vending.Expansion.Downloader">
-      <HintPath>..\..\..\..\..\Downloads\StardewValleyAndroidStuff\base_1.4.5.142\assemblies\Google.Android.Vending.Expansion.Downloader.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\StardewValleyAndroidStuff\base_1.4.5.139\assemblies\Google.Android.Vending.Expansion.Downloader.dll</HintPath>
     </Reference>
     <Reference Include="Google.Android.Vending.Licensing">
-      <HintPath>..\..\..\..\..\Downloads\StardewValleyAndroidStuff\base_1.4.5.142\assemblies\Google.Android.Vending.Licensing.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\StardewValleyAndroidStuff\base_1.4.5.139\assemblies\Google.Android.Vending.Licensing.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Mono.Android" />
@@ -68,7 +68,7 @@
       <HintPath>..\..\..\..\..\AndroidStudioProjects\SMAPI Android Installer\app\src\main\assets\Stardew\Mono.Cecil.dll</HintPath>
     </Reference>
     <Reference Include="MonoGame.Framework">
-      <HintPath>..\..\..\..\..\Downloads\StardewValleyAndroidStuff\base_1.4.5.142\assemblies\MonoGame.Framework.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\StardewValleyAndroidStuff\base_1.4.5.139\assemblies\MonoGame.Framework.dll</HintPath>
     </Reference>
     <Reference Include="MonoMod.RuntimeDetour">
       <HintPath>..\..\..\..\..\AndroidStudioProjects\SMAPI Android Installer\app\src\main\assets\Stardew\MonoMod.RuntimeDetour.dll</HintPath>
@@ -86,10 +86,10 @@
       <HintPath>..\SMAPI.Toolkit.CoreInterfaces\bin\Debug\net4.5\SMAPI.Toolkit.CoreInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="StardewValley">
-      <HintPath>..\..\..\..\..\Downloads\StardewValleyAndroidStuff\base_1.4.5.142\assemblies\StardewValley.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\StardewValleyAndroidStuff\base_1.4.5.139\assemblies\StardewValley.dll</HintPath>
     </Reference>
     <Reference Include="StardewValley.GameData">
-      <HintPath>..\..\..\..\..\Downloads\StardewValleyAndroidStuff\base_1.4.5.142\assemblies\StardewValley.GameData.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\StardewValleyAndroidStuff\base_1.4.5.139\assemblies\StardewValley.GameData.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -200,6 +200,7 @@
     <Compile Include="Framework\IModMetadata.cs" />
     <Compile Include="Framework\Input\GamePadStateBuilder.cs" />
     <Compile Include="Framework\Input\SInputState.cs" />
+    <Compile Include="Framework\Input\InputStatus.cs" />
     <Compile Include="Framework\InternalExtensions.cs" />
     <Compile Include="Framework\Logging\ConsoleInterceptionManager.cs" />
     <Compile Include="Framework\Logging\InterceptingTextWriter.cs" />
@@ -385,7 +386,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SAlertDialogUtil.cs" />
     <Compile Include="SButton.cs" />
-    <Compile Include="SButtonState.cs" />
     <Compile Include="SemanticVersion.cs" />
     <Compile Include="SGameConsole.cs" />
     <Compile Include="SMainActivity.cs" />
