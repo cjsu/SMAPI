@@ -5,8 +5,10 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using StardewModdingAPI.Framework.Content;
 using StardewModdingAPI.Framework.Exceptions;
 using StardewModdingAPI.Framework.Reflection;
+using StardewModdingAPI.Framework.Utilities;
 using StardewModdingAPI.Toolkit.Serialization;
 using StardewModdingAPI.Toolkit.Utilities;
 using StardewValley;
@@ -25,6 +27,9 @@ namespace StardewModdingAPI.Framework.ContentManagers
         *********/
         /// <summary>Encapsulates SMAPI's JSON file parsing.</summary>
         private readonly JsonHelper JsonHelper;
+
+        /// <summary>The assets currently being intercepted by <see cref="IAssetLoader"/> instances. This is used to prevent infinite loops when a loader loads a new asset.</summary>
+        private readonly ContextHash<string> AssetsBeingLoaded = new ContextHash<string>();
 
         /// <summary>The mod display name to show in errors.</summary>
         private readonly string ModName;
@@ -188,6 +193,40 @@ namespace StardewModdingAPI.Framework.ContentManagers
             // track & return asset
             this.TrackAsset(assetName, asset, language, useCache);
             return asset;
+        }
+
+        /// <summary>Load an asset that has been processed by the content pipeline with asset edits.</summary>
+        /// <typeparam name="T">The type of asset to load.</typeparam>
+        /// <param name="assetName">The asset path relative to the loader root directory, not including the <c>.xnb</c> extension.</param>
+        /// <param name="modID">Mod ID which requests load and apply editors for this asset</param>
+        /// <param name="language">The language code for which to load content.</param>
+        /// <param name="useCache">Whether to read/write the loaded asset to the asset cache.</param>
+        public T LoadWithEdits<T>(string assetName, string modID, LanguageCode language, bool useCache)
+        {
+            T data;
+            if (this.AssetsBeingLoaded.Contains(assetName))
+            {
+                this.Monitor.Log($"Broke loop while loading asset '{assetName}'.", LogLevel.Warn);
+                this.Monitor.Log($"Bypassing mod loaders for this asset. Stack trace:\n{Environment.StackTrace}", LogLevel.Trace);
+                data = this.Load<T>(assetName, Constants.DefaultLanguage, useCache);
+            }
+            else
+            {
+                data = this.AssetsBeingLoaded.Track(assetName, () =>
+                {
+                    string locale = this.GetLocale(language);
+                    IAssetInfo info = new AssetInfo(locale, this.AssertAndNormalizeAssetName($"SMAPI/{modID}/{assetName}"), typeof(T), this.AssertAndNormalizeAssetName);
+                    IAssetData asset =
+                        this.ApplyLoader<T>(info)
+                        ?? new AssetDataForObject(info, this.Load<T>(assetName, Constants.DefaultLanguage, useCache), this.AssertAndNormalizeAssetName);
+                    asset = this.ApplyEditors<T>(info, asset);
+                    return (T)asset.Data;
+                });
+            }
+
+            // update cache & return data
+            this.TrackAsset(assetName, data, language, useCache);
+            return data;
         }
 
         /// <summary>Create a new content manager for temporary use.</summary>

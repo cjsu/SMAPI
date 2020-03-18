@@ -5,12 +5,14 @@ using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using StardewModdingAPI.Framework.Content;
 using StardewModdingAPI.Framework.Exceptions;
 using StardewModdingAPI.Framework.Reflection;
 using StardewValley;
+using xTile;
 
 namespace StardewModdingAPI.Framework.ContentManagers
 {
@@ -44,6 +46,12 @@ namespace StardewModdingAPI.Framework.ContentManagers
         /// <summary>The disposable assets tracked by the base content manager.</summary>
         /// <remarks>This should be kept empty to avoid keeping disposable assets referenced forever, which prevents garbage collection when they're unused. Disposable assets are tracked by <see cref="Disposables"/> instead, which avoids a hard reference.</remarks>
         private readonly List<IDisposable> BaseDisposableReferences;
+
+        /// <summary>Interceptors which provide the initial versions of matching assets.</summary>
+        private IList<ModLinked<IAssetLoader>> Loaders => this.Coordinator.Loaders;
+
+        /// <summary>Interceptors which edit matching assets after they're loaded.</summary>
+        private IList<ModLinked<IAssetEditor>> Editors => this.Coordinator.Editors;
 
 
         /*********
@@ -311,6 +319,131 @@ namespace StardewModdingAPI.Framework.ContentManagers
             // handle simple key
             assetName = cacheKey;
             localeCode = null;
+        }
+
+        /// <summary>Load the initial asset from the registered <see cref="Loaders"/>.</summary>
+        /// <param name="info">The basic asset metadata.</param>
+        /// <returns>Returns the loaded asset metadata, or <c>null</c> if no loader matched.</returns>
+        protected IAssetData ApplyLoader<T>(IAssetInfo info)
+        {
+            // find matching loaders
+            var loaders = this.Loaders
+                .Where(entry =>
+                {
+                    try
+                    {
+                        return entry.Data.CanLoad<T>(info);
+                    }
+                    catch (Exception ex)
+                    {
+                        entry.Mod.LogAsMod($"Mod failed when checking whether it could load asset '{info.AssetName}', and will be ignored. Error details:\n{ex.GetLogSummary()}", LogLevel.Error);
+                        return false;
+                    }
+                })
+                .ToArray();
+
+            // validate loaders
+            if (!loaders.Any())
+                return null;
+            if (loaders.Length > 1)
+            {
+                string[] loaderNames = loaders.Select(p => p.Mod.DisplayName).ToArray();
+                this.Monitor.Log($"Multiple mods want to provide the '{info.AssetName}' asset ({string.Join(", ", loaderNames)}), but an asset can't be loaded multiple times. SMAPI will use the default asset instead; uninstall one of the mods to fix this. (Message for modders: you should usually use {typeof(IAssetEditor)} instead to avoid conflicts.)", LogLevel.Warn);
+                return null;
+            }
+
+            // fetch asset from loader
+            IModMetadata mod = loaders[0].Mod;
+            IAssetLoader loader = loaders[0].Data;
+            T data;
+            try
+            {
+                data = loader.Load<T>(info);
+                this.Monitor.Log($"{mod.DisplayName} loaded asset '{info.AssetName}'.", LogLevel.Trace);
+            }
+            catch (Exception ex)
+            {
+                mod.LogAsMod($"Mod crashed when loading asset '{info.AssetName}'. SMAPI will use the default asset instead. Error details:\n{ex.GetLogSummary()}", LogLevel.Error);
+                return null;
+            }
+
+            // validate asset
+            if (data == null)
+            {
+                mod.LogAsMod($"Mod incorrectly set asset '{info.AssetName}' to a null value; ignoring override.", LogLevel.Error);
+                return null;
+            }
+
+            // return matched asset
+            return new AssetDataForObject(info, data, this.AssertAndNormalizeAssetName);
+        }
+
+        /// <summary>Apply any <see cref="Editors"/> to a loaded asset.</summary>
+        /// <typeparam name="T">The asset type.</typeparam>
+        /// <param name="info">The basic asset metadata.</param>
+        /// <param name="asset">The loaded asset.</param>
+        protected IAssetData ApplyEditors<T>(IAssetInfo info, IAssetData asset)
+        {
+            IAssetData GetNewData(object data) => new AssetDataForObject(info, data, this.AssertAndNormalizeAssetName);
+
+            // special case: if the asset was loaded with a more general type like 'object', call editors with the actual type instead.
+            {
+                Type actualType = asset.Data.GetType();
+                Type actualOpenType = actualType.IsGenericType ? actualType.GetGenericTypeDefinition() : null;
+
+                if (typeof(T) != actualType && (actualOpenType == typeof(Dictionary<,>) || actualOpenType == typeof(List<>) || actualType == typeof(Texture2D) || actualType == typeof(Map)))
+                {
+                    return (IAssetData)this.GetType()
+                        .GetMethod(nameof(this.ApplyEditors), BindingFlags.NonPublic | BindingFlags.Instance)
+                        .MakeGenericMethod(actualType)
+                        .Invoke(this, new object[] { info, asset });
+                }
+            }
+
+            // edit asset
+            foreach (var entry in this.Editors)
+            {
+                // check for match
+                IModMetadata mod = entry.Mod;
+                IAssetEditor editor = entry.Data;
+                try
+                {
+                    if (!editor.CanEdit<T>(info))
+                        continue;
+                }
+                catch (Exception ex)
+                {
+                    mod.LogAsMod($"Mod crashed when checking whether it could edit asset '{info.AssetName}', and will be ignored. Error details:\n{ex.GetLogSummary()}", LogLevel.Error);
+                    continue;
+                }
+
+                // try edit
+                object prevAsset = asset.Data;
+                try
+                {
+                    editor.Edit<T>(asset);
+                    this.Monitor.Log($"{mod.DisplayName} edited {info.AssetName}.", LogLevel.Trace);
+                }
+                catch (Exception ex)
+                {
+                    mod.LogAsMod($"Mod crashed when editing asset '{info.AssetName}', which may cause errors in-game. Error details:\n{ex.GetLogSummary()}", LogLevel.Error);
+                }
+
+                // validate edit
+                if (asset.Data == null)
+                {
+                    mod.LogAsMod($"Mod incorrectly set asset '{info.AssetName}' to a null value; ignoring override.", LogLevel.Warn);
+                    asset = GetNewData(prevAsset);
+                }
+                else if (!(asset.Data is T))
+                {
+                    mod.LogAsMod($"Mod incorrectly set asset '{asset.AssetName}' to incompatible type '{asset.Data.GetType()}', expected '{typeof(T)}'; ignoring override.", LogLevel.Warn);
+                    asset = GetNewData(prevAsset);
+                }
+            }
+
+            // return result
+            return asset;
         }
 
         /// <summary>Get whether an asset has already been loaded.</summary>
