@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Xml.Serialization;
 using BmFont;
 using Harmony;
 using Microsoft.Xna.Framework;
@@ -139,13 +140,21 @@ namespace StardewModdingAPI.Framework.ContentManagers
 
                     case ".fnt":
                         {
-                            if (typeof(T) != typeof(FontFile))
-                                throw GetContentError($"can't read file with extension '{file.Extension}' as type '{typeof(T)}'; must be type '{typeof(FontFile)}'.");
+                            if (typeof(T) == typeof(FontFile))
+                            {
+                                FontFile font = FontLoader.Parse(File.ReadAllText(file.FullName));
+                                this.NormalizeFontPagePaths(font);
+                                this.FixCustomFontPagePaths(font, relativeFontPath: assetName);
+                                asset = (T)(object)font;
+                            }else if(typeof(T) == typeof(XmlSource))
+                            {
+                                XmlSerializer xmlSerializer = new XmlSerializer(typeof(FontFile));
 
-                            FontFile font = FontLoader.Parse(File.ReadAllText(file.FullName));
-                            this.NormalizeFontPagePaths(font);
-                            this.FixCustomFontPagePaths(font, relativeFontPath: assetName);
-                            asset = (T)(object)font;
+                                using (StringReader textReader = new StringReader(File.ReadAllText(file.FullName)))
+                                    asset = (T)(object)xmlSerializer.Deserialize(textReader);
+                            }
+                            else
+                                throw GetContentError($"can't read file with extension '{file.Extension}' as type '{typeof(T)}'; must be type '{typeof(XmlSource)}' or '{typeof(FontFile)}'.");
                         }
                         break;
 
