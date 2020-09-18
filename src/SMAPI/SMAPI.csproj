@@ -28,6 +28,7 @@
     <Reference Include="GalaxyCSharp" HintPath="$(GamePath)\GalaxyCSharp.dll" Private="False" />
     <Reference Include="Lidgren.Network" HintPath="$(GamePath)\Lidgren.Network.dll" Private="False" />
     <Reference Include="xTile" HintPath="$(GamePath)\xTile.dll" Private="False" />
+    <Reference Include="BmFont" HintPath="$(GamePath)\BmFont.dll" Private="False" />
   </ItemGroup>
 
   <Choose>

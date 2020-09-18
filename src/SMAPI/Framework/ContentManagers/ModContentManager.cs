@@ -1,12 +1,16 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using BmFont;
+using Harmony;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using StardewModdingAPI.Framework.Exceptions;
 using StardewModdingAPI.Framework.Reflection;
+using StardewModdingAPI.Framework.Serialization;
 using StardewModdingAPI.Toolkit.Serialization;
 using StardewModdingAPI.Toolkit.Utilities;
 using StardewValley;
@@ -133,10 +137,73 @@ namespace StardewModdingAPI.Framework.ContentManagers
                         }
                         break;
 
+                    case ".fnt":
+                        {
+                            if (typeof(T) != typeof(FontFile))
+                                throw GetContentError($"can't read file with extension '{file.Extension}' as type '{typeof(T)}'; must be type '{typeof(FontFile)}'.");
+
+                            FontFile font = FontLoader.Parse(File.ReadAllText(file.FullName));
+                            this.NormalizeFontPagePaths(font);
+                            this.FixCustomFontPagePaths(font, relativeFontPath: assetName);
+                            asset = (T)(object)font;
+                        }
+                        break;
+
                     // unpacked data
                     case ".json":
                         {
-                            if (!this.JsonHelper.ReadJsonFileIfExists(file.FullName, out asset))
+                            // unpacked spritefont
+                            if (typeof(T) == typeof(SpriteFont))
+                            {
+                                if (this.JsonHelper.ReadJsonFileIfExists(file.FullName, out SpriteFontData data))
+                                {
+                                    string fontFolder = Path.GetDirectoryName(file.FullName) ?? "";
+                                    string fontTextureFileName = $"{Path.GetFileNameWithoutExtension(file.FullName)}.png";
+                                    string fontTextureFilePath = Path.Combine(fontFolder, fontTextureFileName);
+
+                                    if (File.Exists(fontTextureFilePath))
+                                    {
+                                        using FileStream stream = File.OpenRead(fontTextureFilePath);
+
+                                        Texture2D texture = Texture2D.FromStream(Game1.graphics.GraphicsDevice, stream);
+                                        texture = this.PremultiplyTransparency(texture);
+
+                                        object[] parameter = new object[]{
+                                                        texture,
+                                                        data.Glyphs.Values
+                                                        .OrderBy(g => data.Characters.IndexOf(g.Character))
+                                                        .Select(g => g.BoundsInTexture).ToList(),
+                                                        data.Glyphs.Values
+                                                        .OrderBy(g => data.Characters.IndexOf(g.Character))
+                                                        .Select(g => g.Cropping).ToList(),
+                                                        data.Characters,
+                                                        data.LineSpacing,
+                                                        data.Spacing,
+                                                        data.Glyphs.Values
+                                                        .OrderBy(g => data.Characters.IndexOf(g.Character))
+                                                        .Select(g => new Vector3(g.LeftSideBearing, g.Width, g.RightSideBearing)).ToList(),
+                                                        data.DefaultCharacter
+                                                        };
+
+                                        asset = (T)AccessTools.Constructor(
+                                                  typeof(SpriteFont), new[] {
+                                              typeof(Texture2D),
+                                              typeof(List<Rectangle>),
+                                              typeof(List<Rectangle>),
+                                              typeof(List<char>),
+                                              typeof(int),
+                                              typeof(float),
+                                              typeof(List<Vector3>),
+                                              typeof(char?)}
+                                                  ).Invoke(parameter);
+                                    }
+                                    else
+                                        throw GetContentError($"the SpriteFont is missing it's texture at '{fontTextureFilePath}'");
+                                }
+                                else
+                                    throw GetContentError("the JSON file is invalid.");
+                            }
+                            else if (!this.JsonHelper.ReadJsonFileIfExists(file.FullName, out asset))
                                 throw GetContentError("the JSON file is invalid."); // should never happen since we check for file existence above
                         }
                         break;
@@ -265,6 +332,52 @@ namespace StardewModdingAPI.Framework.ContentManagers
                 tilesheet.ImageSource = this.NormalizePathSeparators(tilesheet.ImageSource);
         }
 
+        /// <summary>Normalize font page paths for the current platform.</summary>
+        /// <param name="font">The font whose pages to fix.</param>
+        private void NormalizeFontPagePaths(FontFile font)
+        {
+            foreach (FontPage page in font.Pages)
+                page.File = this.NormalizePathSeparators(page.File);
+        }
+
+        /// <summary>Fix custom map tilesheet paths so they can be found by the content manager.</summary>
+        /// <param name="font">The font whose pages to fix.</param>
+        /// <param name="relativeFontPath">The relative font path within the mod folder.</param>
+        /// <exception cref="ContentLoadException">A map tilesheet couldn't be resolved.</exception>
+        private void FixCustomFontPagePaths(FontFile font, string relativeFontPath)
+        {
+            // get font info
+            if (!font.Pages.Any())
+                return;
+
+            relativeFontPath = this.AssertAndNormalizeAssetName(relativeFontPath); // Mono's Path.GetDirectoryName doesn't handle Windows dir separators
+            string relativeFontFolder = Path.GetDirectoryName(relativeFontPath) ?? ""; // folder path containing the map, relative to the mod folder
+
+            // fix fontpages
+            foreach (FontPage page in font.Pages)
+            {
+                string imageSource = page.File;
+                string errorPrefix = $"{this.ModName} loaded font '{relativeFontPath}' with invalid font page path '{imageSource}'.";
+
+                // validate font path
+                if (Path.IsPathRooted(imageSource) || PathUtilities.GetSegments(imageSource).Contains(".."))
+                    throw new SContentLoadException($"{errorPrefix} Font page paths must be a relative path without directory climbing (../).");
+
+                // load best match
+                try
+                {
+                    if (!this.TryGetFontPageAssetName(relativeFontFolder, imageSource, out string assetName, out string error))
+                        throw new SContentLoadException($"{errorPrefix} {error}");
+
+                    page.File = assetName;
+                }
+                catch (Exception ex) when (!(ex is SContentLoadException))
+                {
+                    throw new SContentLoadException($"{errorPrefix} The font page couldn't be loaded.", ex);
+                }
+            }
+        }
+
         /// <summary>Fix custom map tilesheet paths so they can be found by the content manager.</summary>
         /// <param name="map">The map whose tilesheets to fix.</param>
         /// <param name="relativeMapPath">The relative map path within the mod folder.</param>
@@ -315,6 +428,39 @@ namespace StardewModdingAPI.Framework.ContentManagers
                     throw new SContentLoadException($"{errorPrefix} The tilesheet couldn't be loaded.", ex);
                 }
             }
+        }
+
+        /// <summary>Get the actual asset name for a font page.</summary>
+        /// <param name="modRelativeFontFolder">The folder path containing the font, relative to the mod folder.</param>
+        /// <param name="originalPath">The font path to load.</param>
+        /// <param name="assetName">The found asset name.</param>
+        /// <param name="error">A message indicating why the file couldn't be loaded.</param>
+        /// <returns>Returns whether the asset name was found.</returns>
+        private bool TryGetFontPageAssetName(string modRelativeFontFolder, string originalPath, out string assetName, out string error)
+        {
+            assetName = null;
+            error = null;
+
+            // nothing to do
+            if (string.IsNullOrWhiteSpace(originalPath))
+            {
+                assetName = originalPath;
+                return true;
+            }
+
+            // get relative to font file
+            {
+                string localKey = Path.Combine(modRelativeFontFolder, originalPath);
+                if (this.GetModFile(localKey).Exists)
+                {
+                    assetName = this.GetInternalAssetKey(localKey);
+                    return true;
+                }
+            }
+
+            // not found
+            error = "The pagefile couldn't be found relative to the font file.";
+            return false;
         }
 
         /// <summary>Get the actual asset name for a tilesheet.</summary>
