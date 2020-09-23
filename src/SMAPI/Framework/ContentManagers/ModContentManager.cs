@@ -186,6 +186,8 @@ namespace StardewModdingAPI.Framework.ContentManagers
                         {
                             if (typeof(T) == typeof(string))
                                 asset = (T)(object)File.ReadAllText(file.FullName);
+                            else if (typeof(T) == typeof(string[]))
+                                asset = (T)(object)File.ReadAllLines(file.FullName);
                             else if (typeof(T) == typeof(byte[]))
                                 asset = (T)(object)File.ReadAllBytes(file.FullName);
                             else
