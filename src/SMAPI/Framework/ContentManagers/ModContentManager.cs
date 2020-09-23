@@ -174,8 +174,24 @@ namespace StardewModdingAPI.Framework.ContentManagers
                         }
                         break;
 
+                    case ".fnt":
+                    case ".xml":
+                        {
+                            using (StringReader textReader = new StringReader(File.ReadAllText(file.FullName)))
+                                asset = (T)(object)new System.Xml.Serialization.XmlSerializer(typeof(T)).Deserialize(textReader);
+                        }
+                        break;
+
                     default:
-                        throw GetContentError($"unknown file extension '{file.Extension}'; must be one of '.json', '.png', '.tbin', or '.xnb'.");
+                        {
+                            if (typeof(T) == typeof(string))
+                                asset = (T)(object)File.ReadAllText(file.FullName);
+                            else if (typeof(T) == typeof(byte[]))
+                                asset = (T)(object)File.ReadAllBytes(file.FullName);
+                            else
+                                throw GetContentError($"unknown file extension '{file.Extension}'; must be one of '.json', '.png', '.tbin', or '.xnb'.");
+                            break;
+                        }
                 }
             }
             catch (Exception ex) when (!(ex is SContentLoadException))
