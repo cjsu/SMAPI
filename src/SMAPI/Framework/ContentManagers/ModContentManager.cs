@@ -189,7 +189,7 @@ namespace StardewModdingAPI.Framework.ContentManagers
                             else if (typeof(T) == typeof(byte[]))
                                 asset = (T)(object)File.ReadAllBytes(file.FullName);
                             else
-                                throw GetContentError($"unknown file extension '{file.Extension}'; must be one of '.json', '.png', '.tbin', or '.xnb'.");
+                                throw GetContentError($"unknown file extension '{file.Extension}'; must be one of '.json', '.png', '.tbin', '.fnt', '.xml' or '.xnb'.");
                             break;
                         }
                 }
