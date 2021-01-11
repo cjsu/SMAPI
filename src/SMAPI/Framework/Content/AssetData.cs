@@ -7,7 +7,7 @@ namespace StardewModdingAPI.Framework.Content
     internal class AssetData<TValue> : AssetInfo, IAssetData<TValue>
     {
         /*********
-        ** Properties
+        ** Fields
         *********/
         /// <summary>A callback to invoke when the data is replaced (if any).</summary>
         private readonly Action<TValue> OnDataReplaced;
@@ -16,7 +16,7 @@ namespace StardewModdingAPI.Framework.Content
         /*********
         ** Accessors
         *********/
-        /// <summary>The content data being read.</summary>
+        /// <inheritdoc />
         public TValue Data { get; protected set; }
 
 
@@ -24,22 +24,19 @@ namespace StardewModdingAPI.Framework.Content
         ** Public methods
         *********/
         /// <summary>Construct an instance.</summary>
-        /// <param name="locale">The content's locale code, if the content is localised.</param>
-        /// <param name="assetName">The normalised asset name being read.</param>
+        /// <param name="locale">The content's locale code, if the content is localized.</param>
+        /// <param name="assetName">The normalized asset name being read.</param>
         /// <param name="data">The content data being read.</param>
-        /// <param name="getNormalisedPath">Normalises an asset key to match the cache key.</param>
+        /// <param name="getNormalizedPath">Normalizes an asset key to match the cache key.</param>
         /// <param name="onDataReplaced">A callback to invoke when the data is replaced (if any).</param>
-        public AssetData(string locale, string assetName, TValue data, Func<string, string> getNormalisedPath, Action<TValue> onDataReplaced)
-            : base(locale, assetName, data.GetType(), getNormalisedPath)
+        public AssetData(string locale, string assetName, TValue data, Func<string, string> getNormalizedPath, Action<TValue> onDataReplaced)
+            : base(locale, assetName, data.GetType(), getNormalizedPath)
         {
             this.Data = data;
             this.OnDataReplaced = onDataReplaced;
         }
 
-        /// <summary>Replace the entire content value with the given value. This is generally not recommended, since it may break compatibility with other mods or different versions of the game.</summary>
-        /// <param name="value">The new content value.</param>
-        /// <exception cref="ArgumentNullException">The <paramref name="value"/> is null.</exception>
-        /// <exception cref="InvalidCastException">The <paramref name="value"/>'s type is not compatible with the loaded asset's type.</exception>
+        /// <inheritdoc />
         public void ReplaceWith(TValue value)
         {
             if (value == null)

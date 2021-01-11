@@ -1,5 +1,7 @@
 using System;
 using System.Linq;
+using Newtonsoft.Json;
+using StardewModdingAPI.Framework;
 using StardewValley;
 
 namespace StardewModdingAPI.Utilities
@@ -8,7 +10,7 @@ namespace StardewModdingAPI.Utilities
     public class SDate : IEquatable<SDate>
     {
         /*********
-        ** Properties
+        ** Fields
         *********/
         /// <summary>The internal season names in order.</summary>
         private readonly string[] Seasons = { "spring", "summer", "fall", "winter" };
@@ -18,6 +20,9 @@ namespace StardewModdingAPI.Utilities
 
         /// <summary>The number of days in a season.</summary>
         private readonly int DaysInSeason = 28;
+
+        /// <summary>The core SMAPI translations.</summary>
+        internal static Translator Translations;
 
 
         /*********
@@ -29,13 +34,20 @@ namespace StardewModdingAPI.Utilities
         /// <summary>The season name.</summary>
         public string Season { get; }
 
+        /// <summary>The index of the season (where 0 is spring, 1 is summer, 2 is fall, and 3 is winter).</summary>
+        /// <remarks>This is used in some game calculations (e.g. seasonal game sprites) and methods (e.g. <see cref="Utility.getSeasonNameFromNumber"/>).</remarks>
+        [JsonIgnore]
+        public int SeasonIndex { get; }
+
         /// <summary>The year.</summary>
         public int Year { get; }
 
         /// <summary>The day of week.</summary>
+        [JsonIgnore]
         public DayOfWeek DayOfWeek { get; }
 
         /// <summary>The number of days since the game began (starting at 1 for the first day of spring in Y1).</summary>
+        [JsonIgnore]
         public int DaysSinceStart { get; }
 
 
@@ -54,6 +66,7 @@ namespace StardewModdingAPI.Utilities
         /// <param name="season">The season name.</param>
         /// <param name="year">The year.</param>
         /// <exception cref="ArgumentException">One of the arguments has an invalid value (like day 35).</exception>
+        [JsonConstructor]
         public SDate(int day, string season, int year)
             : this(day, season, year, allowDayZero: false) { }
 
@@ -61,6 +74,30 @@ namespace StardewModdingAPI.Utilities
         public static SDate Now()
         {
             return new SDate(Game1.dayOfMonth, Game1.currentSeason, Game1.year, allowDayZero: true);
+        }
+
+        /// <summary>Get a date from the number of days after 0 spring Y1.</summary>
+        /// <param name="daysSinceStart">The number of days since 0 spring Y1.</param>
+        public static SDate FromDaysSinceStart(int daysSinceStart)
+        {
+            try
+            {
+                return new SDate(0, "spring", 1, allowDayZero: true).AddDays(daysSinceStart);
+            }
+            catch (ArithmeticException)
+            {
+                throw new ArgumentException($"Invalid daysSinceStart '{daysSinceStart}', must be at least 1.");
+            }
+        }
+
+        /// <summary>Get a date from a game date instance.</summary>
+        /// <param name="date">The world date.</param>
+        public static SDate From(WorldDate date)
+        {
+            if (date == null)
+                return null;
+
+            return new SDate(date.DayOfMonth, date.Season, date.Year, allowDayZero: true);
         }
 
         /// <summary>Get a new date with the given number of days added.</summary>
@@ -86,16 +123,44 @@ namespace StardewModdingAPI.Utilities
             seasonIndex %= 4;
 
             // get year
-            int year = hashCode / (this.Seasons.Length * this.DaysInSeason) + 1;
+            int year = (int)Math.Ceiling(hashCode / (this.Seasons.Length * this.DaysInSeason * 1m));
 
             // create date
             return new SDate(day, this.Seasons[seasonIndex], year);
         }
 
-        /// <summary>Get a string representation of the date. This is mainly intended for debugging or console messages.</summary>
+        /// <summary>Get a game date representation of the date.</summary>
+        public WorldDate ToWorldDate()
+        {
+            return new WorldDate(this.Year, this.Season, this.Day);
+        }
+
+        /// <summary>Get an untranslated string representation of the date. This is mainly intended for debugging or console messages.</summary>
         public override string ToString()
         {
             return $"{this.Day:00} {this.Season} Y{this.Year}";
+        }
+
+        /// <summary>Get a translated string representation of the date in the current game locale.</summary>
+        /// <param name="withYear">Whether to get a string which includes the year number.</param>
+        public string ToLocaleString(bool withYear = true)
+        {
+            // get fallback translation from game
+            string fallback = Utility.getDateStringFor(this.Day, this.SeasonIndex, this.Year);
+            if (SDate.Translations == null)
+                return fallback;
+
+            // get short format
+            string seasonName = Utility.getSeasonNameFromNumber(this.SeasonIndex);
+            return SDate.Translations
+                .Get(withYear ? "generic.date-with-year" : "generic.date", new
+                {
+                    day = this.Day,
+                    year = this.Year,
+                    season = seasonName,
+                    seasonLowercase = seasonName?.ToLower()
+                })
+                .Default(fallback);
         }
 
         /****
@@ -192,18 +257,18 @@ namespace StardewModdingAPI.Utilities
                 throw new ArgumentException($"Unknown season '{season}', must be one of [{string.Join(", ", this.Seasons)}].");
             if (day < 0 || day > this.DaysInSeason)
                 throw new ArgumentException($"Invalid day '{day}', must be a value from 1 to {this.DaysInSeason}.");
-            if(day == 0 && !(allowDayZero && this.IsDayZero(day, season, year)))
+            if (day == 0 && !(allowDayZero && this.IsDayZero(day, season, year)))
                 throw new ArgumentException($"Invalid day '{day}', must be a value from 1 to {this.DaysInSeason}.");
             if (year < 1)
                 throw new ArgumentException($"Invalid year '{year}', must be at least 1.");
 
-            // initialise
+            // initialize
             this.Day = day;
             this.Season = season;
+            this.SeasonIndex = this.GetSeasonIndex(season);
             this.Year = year;
             this.DayOfWeek = this.GetDayOfWeek(day);
             this.DaysSinceStart = this.GetDaysSinceStart(day, season, year);
-
         }
 
         /// <summary>Get whether a date represents 0 spring Y1, which is the date during the in-game intro.</summary>
@@ -256,12 +321,12 @@ namespace StardewModdingAPI.Utilities
 
         /// <summary>Get a season index.</summary>
         /// <param name="season">The season name.</param>
-        /// <exception cref="InvalidOperationException">The current season wasn't recognised.</exception>
+        /// <exception cref="InvalidOperationException">The current season wasn't recognized.</exception>
         private int GetSeasonIndex(string season)
         {
             int index = Array.IndexOf(this.Seasons, season);
             if (index == -1)
-                throw new InvalidOperationException($"The season '{season}' wasn't recognised.");
+                throw new InvalidOperationException($"The season '{season}' wasn't recognized.");
             return index;
         }
     }

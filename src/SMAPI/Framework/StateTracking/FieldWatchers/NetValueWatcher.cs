@@ -3,13 +3,15 @@ using Netcode;
 namespace StardewModdingAPI.Framework.StateTracking.FieldWatchers
 {
     /// <summary>A watcher which detects changes to a net value field.</summary>
-    internal class NetValueWatcher<T, TSelf> : BaseDisposableWatcher, IValueWatcher<T> where TSelf : NetFieldBase<T, TSelf>
+    /// <typeparam name="TValue">The value type wrapped by the net field.</typeparam>
+    /// <typeparam name="TNetField">The net field type.</typeparam>
+    internal class NetValueWatcher<TValue, TNetField> : BaseDisposableWatcher, IValueWatcher<TValue> where TNetField : NetFieldBase<TValue, TNetField>
     {
         /*********
-        ** Properties
+        ** Fields
         *********/
         /// <summary>The field being watched.</summary>
-        private readonly NetFieldBase<T, TSelf> Field;
+        private readonly NetFieldBase<TValue, TNetField> Field;
 
 
         /*********
@@ -19,10 +21,10 @@ namespace StardewModdingAPI.Framework.StateTracking.FieldWatchers
         public bool IsChanged { get; private set; }
 
         /// <summary>The field value at the last reset.</summary>
-        public T PreviousValue { get; private set; }
+        public TValue PreviousValue { get; private set; }
 
         /// <summary>The latest value.</summary>
-        public T CurrentValue { get; private set; }
+        public TValue CurrentValue { get; private set; }
 
 
         /*********
@@ -30,7 +32,7 @@ namespace StardewModdingAPI.Framework.StateTracking.FieldWatchers
         *********/
         /// <summary>Construct an instance.</summary>
         /// <param name="field">The field to watch.</param>
-        public NetValueWatcher(NetFieldBase<T, TSelf> field)
+        public NetValueWatcher(NetFieldBase<TValue, TNetField> field)
         {
             this.Field = field;
             this.PreviousValue = field.Value;
@@ -74,7 +76,7 @@ namespace StardewModdingAPI.Framework.StateTracking.FieldWatchers
         /// <param name="field">The field being watched.</param>
         /// <param name="oldValue">The old field value.</param>
         /// <param name="newValue">The new field value.</param>
-        private void OnValueChanged(TSelf field, T oldValue, T newValue)
+        private void OnValueChanged(TNetField field, TValue oldValue, TValue newValue)
         {
             this.CurrentValue = newValue;
             this.IsChanged = true;

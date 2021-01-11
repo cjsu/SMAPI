@@ -9,7 +9,7 @@ namespace StardewModdingAPI.Framework.Reflection
     internal class InterfaceProxyFactory
     {
         /*********
-        ** Properties
+        ** Fields
         *********/
         /// <summary>The CLR module in which to create proxy classes.</summary>
         private readonly ModuleBuilder ModuleBuilder;

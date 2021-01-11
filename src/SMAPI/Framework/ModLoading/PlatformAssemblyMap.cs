@@ -1,13 +1,14 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Mono.Cecil;
-using StardewModdingAPI.Common;
+using StardewModdingAPI.Toolkit.Utilities;
 
 namespace StardewModdingAPI.Framework.ModLoading
 {
     /// <summary>Metadata for mapping assemblies to the current <see cref="Platform"/>.</summary>
-    internal class PlatformAssemblyMap
+    internal class PlatformAssemblyMap : IDisposable
     {
         /*********
         ** Accessors
@@ -50,7 +51,14 @@ namespace StardewModdingAPI.Framework.ModLoading
             // cache assembly metadata
             this.Targets = targetAssemblies;
             this.TargetReferences = this.Targets.ToDictionary(assembly => assembly, assembly => AssemblyNameReference.Parse(assembly.FullName));
-            this.TargetModules = this.Targets.ToDictionary(assembly => assembly, assembly => ModuleDefinition.ReadModule(assembly.Modules.Single().FullyQualifiedName));
+            this.TargetModules = this.Targets.ToDictionary(assembly => assembly, assembly => ModuleDefinition.ReadModule(assembly.Modules.Single().FullyQualifiedName, new ReaderParameters { InMemory = true }));
+        }
+
+        /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
+        public void Dispose()
+        {
+            foreach (ModuleDefinition module in this.TargetModules.Values)
+                module.Dispose();
         }
     }
 }

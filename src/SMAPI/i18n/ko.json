@@ -1,0 +1,9 @@
+{
+    // error messages
+    "warn.invalid-content-removed": "충돌을 방지하기 위해 잘못된 컨텐츠가 제거되었습니다 (자세한 내용은 SMAPI 콘솔 참조).",
+
+    // short date format for SDate
+    // tokens: {{day}} (like 15), {{season}} (like Spring), {{seasonLowercase}} (like spring), {{year}} (like 2)
+    "generic.date": "{{season}} {{day}}",
+    "generic.date-with-year": "{{year}} 학년 {{season}} {{day}}"
+}

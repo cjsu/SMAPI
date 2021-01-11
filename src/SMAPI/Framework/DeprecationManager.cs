@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace StardewModdingAPI.Framework
 {
@@ -7,16 +8,19 @@ namespace StardewModdingAPI.Framework
     internal class DeprecationManager
     {
         /*********
-        ** Properties
+        ** Fields
         *********/
         /// <summary>The deprecations which have already been logged (as 'mod name::noun phrase::version').</summary>
-        private readonly HashSet<string> LoggedDeprecations = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
+        private readonly HashSet<string> LoggedDeprecations = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>Encapsulates monitoring and logging for a given module.</summary>
         private readonly IMonitor Monitor;
 
         /// <summary>Tracks the installed mods.</summary>
         private readonly ModRegistry ModRegistry;
+
+        /// <summary>The queued deprecation warnings to display.</summary>
+        private readonly IList<DeprecationWarning> QueuedWarnings = new List<DeprecationWarning>();
 
 
         /*********
@@ -31,13 +35,17 @@ namespace StardewModdingAPI.Framework
             this.ModRegistry = modRegistry;
         }
 
-        /// <summary>Log a deprecation warning.</summary>
-        /// <param name="nounPhrase">A noun phrase describing what is deprecated.</param>
-        /// <param name="version">The SMAPI version which deprecated it.</param>
-        /// <param name="severity">How deprecated the code is.</param>
-        public void Warn(string nounPhrase, string version, DeprecationLevel severity)
+        /// <summary>Get the source name for a mod from its unique ID.</summary>
+        public string GetSourceNameFromStack()
         {
-            this.Warn(this.ModRegistry.GetFromStack()?.DisplayName, nounPhrase, version, severity);
+            return this.ModRegistry.GetFromStack()?.DisplayName;
+        }
+
+        /// <summary>Get the source name for a mod from its unique ID.</summary>
+        /// <param name="modId">The mod's unique ID.</param>
+        public string GetSourceName(string modId)
+        {
+            return this.ModRegistry.Get(modId)?.DisplayName;
         }
 
         /// <summary>Log a deprecation warning.</summary>
@@ -48,49 +56,74 @@ namespace StardewModdingAPI.Framework
         public void Warn(string source, string nounPhrase, string version, DeprecationLevel severity)
         {
             // ignore if already warned
-            if (!this.MarkWarned(source ?? "<unknown>", nounPhrase, version))
+            if (!this.MarkWarned(source ?? this.GetSourceNameFromStack() ?? "<unknown>", nounPhrase, version))
                 return;
 
-            // build message
-            string message = $"{source ?? "An unknown mod"} uses deprecated code ({nounPhrase} is deprecated since SMAPI {version}).";
-            if (source == null)
-                message += $"{Environment.NewLine}{Environment.StackTrace}";
-
-            // log message
-            switch (severity)
-            {
-                case DeprecationLevel.Notice:
-                    this.Monitor.Log(message, LogLevel.Trace);
-                    break;
-
-                case DeprecationLevel.Info:
-                    this.Monitor.Log(message, LogLevel.Debug);
-                    break;
-
-                case DeprecationLevel.PendingRemoval:
-                    this.Monitor.Log(message, LogLevel.Warn);
-                    break;
-
-                default:
-                    throw new NotSupportedException($"Unknown deprecation level '{severity}'");
-            }
+            // queue warning
+            this.QueuedWarnings.Add(new DeprecationWarning(source, nounPhrase, version, severity, Environment.StackTrace));
         }
 
-        /// <summary>Mark a deprecation warning as already logged.</summary>
-        /// <param name="nounPhrase">A noun phrase describing what is deprecated (e.g. "the Extensions.AsInt32 method").</param>
+        /// <summary>A placeholder method used to track deprecated code for which a separate warning will be shown.</summary>
         /// <param name="version">The SMAPI version which deprecated it.</param>
-        /// <returns>Returns whether the deprecation was successfully marked as warned. Returns <c>false</c> if it was already marked.</returns>
-        public bool MarkWarned(string nounPhrase, string version)
+        /// <param name="severity">How deprecated the code is.</param>
+        public void PlaceholderWarn(string version, DeprecationLevel severity) { }
+
+        /// <summary>Print any queued messages.</summary>
+        public void PrintQueued()
         {
-            return this.MarkWarned(this.ModRegistry.GetFromStack()?.DisplayName, nounPhrase, version);
+            foreach (DeprecationWarning warning in this.QueuedWarnings.OrderBy(p => p.ModName).ThenBy(p => p.NounPhrase))
+            {
+                // build message
+                string message = $"{warning.ModName} uses deprecated code ({warning.NounPhrase} is deprecated since SMAPI {warning.Version}).";
+
+                // get log level
+                LogLevel level;
+                switch (warning.Level)
+                {
+                    case DeprecationLevel.Notice:
+                        level = LogLevel.Trace;
+                        break;
+
+                    case DeprecationLevel.Info:
+                        level = LogLevel.Debug;
+                        break;
+
+                    case DeprecationLevel.PendingRemoval:
+                        level = LogLevel.Warn;
+                        break;
+
+                    default:
+                        throw new NotSupportedException($"Unknown deprecation level '{warning.Level}'.");
+                }
+
+                // log message
+                if (warning.ModName != null)
+                    this.Monitor.Log(message, level);
+                else
+                {
+                    if (level == LogLevel.Trace)
+                        this.Monitor.Log($"{message}\n{warning.StackTrace}", level);
+                    else
+                    {
+                        this.Monitor.Log(message, level);
+                        this.Monitor.Log(warning.StackTrace, LogLevel.Debug);
+                    }
+                }
+            }
+
+            this.QueuedWarnings.Clear();
         }
 
+
+        /*********
+        ** Private methods
+        *********/
         /// <summary>Mark a deprecation warning as already logged.</summary>
         /// <param name="source">The friendly name of the assembly which used the deprecated code.</param>
         /// <param name="nounPhrase">A noun phrase describing what is deprecated (e.g. "the Extensions.AsInt32 method").</param>
         /// <param name="version">The SMAPI version which deprecated it.</param>
         /// <returns>Returns whether the deprecation was successfully marked as warned. Returns <c>false</c> if it was already marked.</returns>
-        public bool MarkWarned(string source, string nounPhrase, string version)
+        private bool MarkWarned(string source, string nounPhrase, string version)
         {
             if (string.IsNullOrWhiteSpace(source))
                 throw new InvalidOperationException("The deprecation source cannot be empty.");

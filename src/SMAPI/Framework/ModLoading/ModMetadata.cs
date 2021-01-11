@@ -1,6 +1,12 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using StardewModdingAPI.Framework.ModData;
+using StardewModdingAPI.Framework.ModHelpers;
+using StardewModdingAPI.Toolkit.Framework.Clients.WebApi;
+using StardewModdingAPI.Toolkit.Framework.ModData;
+using StardewModdingAPI.Toolkit.Framework.UpdateData;
+using StardewModdingAPI.Toolkit.Utilities;
 
 namespace StardewModdingAPI.Framework.ModLoading
 {
@@ -10,37 +16,61 @@ namespace StardewModdingAPI.Framework.ModLoading
         /*********
         ** Accessors
         *********/
-        /// <summary>The mod's display name.</summary>
+        /// <inheritdoc />
         public string DisplayName { get; }
 
-        /// <summary>The mod's full directory path.</summary>
+        /// <inheritdoc />
+        public string RootPath { get; }
+
+        /// <inheritdoc />
         public string DirectoryPath { get; }
 
-        /// <summary>The mod manifest.</summary>
+        /// <inheritdoc />
+        public string RelativeDirectoryPath { get; }
+
+        /// <inheritdoc />
         public IManifest Manifest { get; }
 
-        /// <summary>Metadata about the mod from SMAPI's internal data (if any).</summary>
-        public ParsedModDataRecord DataRecord { get; }
+        /// <inheritdoc />
+        public ModDataRecordVersionedFields DataRecord { get; }
 
-        /// <summary>The metadata resolution status.</summary>
+        /// <inheritdoc />
         public ModMetadataStatus Status { get; private set; }
 
-        /// <summary>The reason the metadata is invalid, if any.</summary>
+        /// <inheritdoc />
+        public ModFailReason? FailReason { get; private set; }
+
+        /// <inheritdoc />
+        public ModWarning Warnings { get; private set; }
+
+        /// <inheritdoc />
         public string Error { get; private set; }
 
-        /// <summary>The mod instance (if loaded and <see cref="IsContentPack"/> is false).</summary>
+        /// <inheritdoc />
+        public string ErrorDetails { get; private set; }
+
+        /// <inheritdoc />
+        public bool IsIgnored { get; }
+
+        /// <inheritdoc />
         public IMod Mod { get; private set; }
 
-        /// <summary>The content pack instance (if loaded and <see cref="IsContentPack"/> is true).</summary>
+        /// <inheritdoc />
         public IContentPack ContentPack { get; private set; }
 
-        /// <summary>Writes messages to the console and log file as this mod.</summary>
+        /// <inheritdoc />
+        public TranslationHelper Translations { get; private set; }
+
+        /// <inheritdoc />
         public IMonitor Monitor { get; private set; }
 
-        /// <summary>The mod-provided API (if any).</summary>
+        /// <inheritdoc />
         public object Api { get; private set; }
 
-        /// <summary>Whether the mod is a content pack.</summary>
+        /// <inheritdoc />
+        public ModEntryModel UpdateCheckData { get; private set; }
+
+        /// <inheritdoc />
         public bool IsContentPack => this.Manifest?.ContentPackFor != null;
 
 
@@ -49,74 +79,158 @@ namespace StardewModdingAPI.Framework.ModLoading
         *********/
         /// <summary>Construct an instance.</summary>
         /// <param name="displayName">The mod's display name.</param>
-        /// <param name="directoryPath">The mod's full directory path.</param>
+        /// <param name="directoryPath">The mod's full directory path within the <paramref name="rootPath"/>.</param>
+        /// <param name="rootPath">The root path containing mods.</param>
         /// <param name="manifest">The mod manifest.</param>
         /// <param name="dataRecord">Metadata about the mod from SMAPI's internal data (if any).</param>
-        public ModMetadata(string displayName, string directoryPath, IManifest manifest, ParsedModDataRecord dataRecord)
+        /// <param name="isIgnored">Whether the mod folder should be ignored. This should be <c>true</c> if it was found within a folder whose name starts with a dot.</param>
+        public ModMetadata(string displayName, string directoryPath, string rootPath, IManifest manifest, ModDataRecordVersionedFields dataRecord, bool isIgnored)
         {
             this.DisplayName = displayName;
             this.DirectoryPath = directoryPath;
+            this.RootPath = rootPath;
+            this.RelativeDirectoryPath = PathUtilities.GetRelativePath(this.RootPath, this.DirectoryPath);
             this.Manifest = manifest;
             this.DataRecord = dataRecord;
+            this.IsIgnored = isIgnored;
         }
 
-        /// <summary>Set the mod status.</summary>
-        /// <param name="status">The metadata resolution status.</param>
-        /// <param name="error">The reason the metadata is invalid, if any.</param>
-        /// <returns>Return the instance for chaining.</returns>
-        public IModMetadata SetStatus(ModMetadataStatus status, string error = null)
+        /// <inheritdoc />
+        public IModMetadata SetStatusFound()
         {
-            this.Status = status;
-            this.Error = error;
+            this.SetStatus(ModMetadataStatus.Found, ModFailReason.Incompatible, null);
+            this.FailReason = null;
             return this;
         }
 
-        /// <summary>Set the mod instance.</summary>
-        /// <param name="mod">The mod instance to set.</param>
-        public IModMetadata SetMod(IMod mod)
+        /// <inheritdoc />
+        public IModMetadata SetStatus(ModMetadataStatus status, ModFailReason reason, string error, string errorDetails = null)
+        {
+            this.Status = status;
+            this.FailReason = reason;
+            this.Error = error;
+            this.ErrorDetails = errorDetails;
+            return this;
+        }
+
+        /// <inheritdoc />
+        public IModMetadata SetWarning(ModWarning warning)
+        {
+            this.Warnings |= warning;
+            return this;
+        }
+
+        /// <inheritdoc />
+        public IModMetadata SetMod(IMod mod, TranslationHelper translations)
         {
             if (this.ContentPack != null)
                 throw new InvalidOperationException("A mod can't be both an assembly mod and content pack.");
 
             this.Mod = mod;
             this.Monitor = mod.Monitor;
+            this.Translations = translations;
             return this;
         }
 
-        /// <summary>Set the mod instance.</summary>
-        /// <param name="contentPack">The contentPack instance to set.</param>
-        /// <param name="monitor">Writes messages to the console and log file.</param>
-        public IModMetadata SetMod(IContentPack contentPack, IMonitor monitor)
+        /// <inheritdoc />
+        public IModMetadata SetMod(IContentPack contentPack, IMonitor monitor, TranslationHelper translations)
         {
             if (this.Mod != null)
                 throw new InvalidOperationException("A mod can't be both an assembly mod and content pack.");
 
             this.ContentPack = contentPack;
             this.Monitor = monitor;
+            this.Translations = translations;
             return this;
         }
 
-        /// <summary>Set the mod-provided API instance.</summary>
-        /// <param name="api">The mod-provided API.</param>
+        /// <inheritdoc />
         public IModMetadata SetApi(object api)
         {
             this.Api = api;
             return this;
         }
 
-        /// <summary>Whether the mod manifest was loaded (regardless of whether the mod itself was loaded).</summary>
+        /// <inheritdoc />
+        public IModMetadata SetUpdateData(ModEntryModel data)
+        {
+            this.UpdateCheckData = data;
+            return this;
+        }
+
+        /// <inheritdoc />
         public bool HasManifest()
         {
             return this.Manifest != null;
         }
 
-        /// <summary>Whether the mod has at least one update key set.</summary>
-        public bool HasUpdateKeys()
+        /// <inheritdoc />
+        public bool HasID()
         {
             return
                 this.HasManifest()
-                && this.Manifest.UpdateKeys != null
-                && this.Manifest.UpdateKeys.Any(key => !string.IsNullOrWhiteSpace(key));
+                && !string.IsNullOrWhiteSpace(this.Manifest.UniqueID);
+        }
+
+        /// <inheritdoc />
+        public bool HasID(string id)
+        {
+            return
+                this.HasID()
+                && string.Equals(this.Manifest.UniqueID.Trim(), id?.Trim(), StringComparison.OrdinalIgnoreCase);
+        }
+
+        /// <inheritdoc />
+        public IEnumerable<UpdateKey> GetUpdateKeys(bool validOnly = false)
+        {
+            foreach (string rawKey in this.Manifest?.UpdateKeys ?? new string[0])
+            {
+                UpdateKey updateKey = UpdateKey.Parse(rawKey);
+                if (updateKey.LooksValid || !validOnly)
+                    yield return updateKey;
+            }
+        }
+
+        /// <inheritdoc />
+        public IEnumerable<string> GetRequiredModIds(bool includeOptional = false)
+        {
+            HashSet<string> required = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+            // yield dependencies
+            if (this.Manifest?.Dependencies != null)
+            {
+                foreach (var entry in this.Manifest?.Dependencies)
+                {
+                    if ((entry.IsRequired || includeOptional) && required.Add(entry.UniqueID))
+                        yield return entry.UniqueID;
+                }
+            }
+
+            // yield content pack parent
+            if (this.Manifest?.ContentPackFor?.UniqueID != null && required.Add(this.Manifest.ContentPackFor.UniqueID))
+                yield return this.Manifest.ContentPackFor.UniqueID;
+        }
+
+        /// <inheritdoc />
+        public bool HasValidUpdateKeys()
+        {
+            return this.GetUpdateKeys(validOnly: true).Any();
+        }
+
+        /// <inheritdoc />
+        public bool HasUnsuppressedWarnings(params ModWarning[] warnings)
+        {
+            return warnings.Any(warning =>
+                this.Warnings.HasFlag(warning)
+                && (this.DataRecord?.DataRecord == null || !this.DataRecord.DataRecord.SuppressWarnings.HasFlag(warning))
+            );
+        }
+
+        /// <inheritdoc />
+        public string GetRelativePathWithRoot()
+        {
+            string rootFolderName = Path.GetFileName(this.RootPath) ?? "";
+            return Path.Combine(rootFolderName, this.RelativeDirectoryPath);
         }
     }
 }

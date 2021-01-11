@@ -18,6 +18,9 @@ _ReSharper*/
 *.[Rr]e[Ss]harper
 *.DotSettings.user
 
+# Rider
+.idea/
+
 # NuGet packages
 *.nupkg
 **/packages/*
@@ -26,3 +29,6 @@ _ReSharper*/
 
 # sensitive files
 appsettings.Development.json
+
+# Azure generated files
+src/SMAPI.Web/Properties/PublishProfiles/*.pubxml

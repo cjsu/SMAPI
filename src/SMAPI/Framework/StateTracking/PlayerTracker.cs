@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Xna.Framework;
-using StardewModdingAPI.Events;
+using StardewModdingAPI.Enums;
+using StardewModdingAPI.Framework.StateTracking.Comparers;
 using StardewModdingAPI.Framework.StateTracking.FieldWatchers;
 using StardewValley;
-using StardewValley.Locations;
-using SObject = StardewValley.Object;
 
 namespace StardewModdingAPI.Framework.StateTracking
 {
@@ -14,7 +12,7 @@ namespace StardewModdingAPI.Framework.StateTracking
     internal class PlayerTracker : IDisposable
     {
         /*********
-        ** Properties
+        ** Fields
         *********/
         /// <summary>The player's inventory as of the last reset.</summary>
         private IDictionary<Item, int> PreviousInventory;
@@ -38,14 +36,8 @@ namespace StardewModdingAPI.Framework.StateTracking
         /// <summary>The player's current location.</summary>
         public IValueWatcher<GameLocation> LocationWatcher { get; }
 
-        /// <summary>Tracks changes to the player's current location's objects.</summary>
-        public IDictionaryWatcher<Vector2, SObject> LocationObjectsWatcher { get; private set; }
-
-        /// <summary>The player's current mine level.</summary>
-        public IValueWatcher<int> MineLevelWatcher { get; }
-
         /// <summary>Tracks changes to the player's skill levels.</summary>
-        public IDictionary<EventArgsLevelUp.LevelType, IValueWatcher<int>> SkillWatchers { get; }
+        public IDictionary<SkillType, IValueWatcher<int>> SkillWatchers { get; }
 
 
         /*********
@@ -61,25 +53,18 @@ namespace StardewModdingAPI.Framework.StateTracking
 
             // init trackers
             this.LocationWatcher = WatcherFactory.ForReference(this.GetCurrentLocation);
-            this.LocationObjectsWatcher = WatcherFactory.ForNetDictionary(this.GetCurrentLocation().netObjects);
-            this.MineLevelWatcher = WatcherFactory.ForEquatable(() => this.LastValidLocation is MineShaft mine ? mine.mineLevel : 0);
-            this.SkillWatchers = new Dictionary<EventArgsLevelUp.LevelType, IValueWatcher<int>>
+            this.SkillWatchers = new Dictionary<SkillType, IValueWatcher<int>>
             {
-                [EventArgsLevelUp.LevelType.Combat] = WatcherFactory.ForEquatable(() => player.combatLevel),
-                [EventArgsLevelUp.LevelType.Farming] = WatcherFactory.ForEquatable(() => player.farmingLevel),
-                [EventArgsLevelUp.LevelType.Fishing] = WatcherFactory.ForEquatable(() => player.fishingLevel),
-                [EventArgsLevelUp.LevelType.Foraging] = WatcherFactory.ForEquatable(() => player.foragingLevel),
-                [EventArgsLevelUp.LevelType.Luck] = WatcherFactory.ForEquatable(() => player.luckLevel),
-                [EventArgsLevelUp.LevelType.Mining] = WatcherFactory.ForEquatable(() => player.miningLevel)
+                [SkillType.Combat] = WatcherFactory.ForNetValue(player.combatLevel),
+                [SkillType.Farming] = WatcherFactory.ForNetValue(player.farmingLevel),
+                [SkillType.Fishing] = WatcherFactory.ForNetValue(player.fishingLevel),
+                [SkillType.Foraging] = WatcherFactory.ForNetValue(player.foragingLevel),
+                [SkillType.Luck] = WatcherFactory.ForNetValue(player.luckLevel),
+                [SkillType.Mining] = WatcherFactory.ForNetValue(player.miningLevel)
             };
 
             // track watchers for convenience
-            this.Watchers.AddRange(new IWatcher[]
-            {
-                this.LocationWatcher,
-                this.LocationObjectsWatcher,
-                this.MineLevelWatcher
-            });
+            this.Watchers.Add(this.LocationWatcher);
             this.Watchers.AddRange(this.SkillWatchers.Values);
         }
 
@@ -92,16 +77,6 @@ namespace StardewModdingAPI.Framework.StateTracking
             // update watchers
             foreach (IWatcher watcher in this.Watchers)
                 watcher.Update();
-
-            // replace location objects watcher
-            if (this.LocationWatcher.IsChanged)
-            {
-                this.Watchers.Remove(this.LocationObjectsWatcher);
-                this.LocationObjectsWatcher.Dispose();
-
-                this.LocationObjectsWatcher = WatcherFactory.ForNetDictionary(this.GetCurrentLocation().netObjects);
-                this.Watchers.Add(this.LocationObjectsWatcher);
-            }
 
             // update inventory
             this.CurrentInventory = this.GetInventory();
@@ -123,64 +98,32 @@ namespace StardewModdingAPI.Framework.StateTracking
             return this.Player.currentLocation ?? this.LastValidLocation;
         }
 
-        /// <summary>Get the player inventory changes between two states.</summary>
-        public IEnumerable<ItemStackChange> GetInventoryChanges()
+        /// <summary>Get the inventory changes since the last update, if anything changed.</summary>
+        /// <param name="changes">The inventory changes, or <c>null</c> if nothing changed.</param>
+        /// <returns>Returns whether anything changed.</returns>
+        public bool TryGetInventoryChanges(out SnapshotItemListDiff changes)
         {
-            IDictionary<Item, int> previous = this.PreviousInventory;
             IDictionary<Item, int> current = this.GetInventory();
-            foreach (Item item in previous.Keys.Union(current.Keys))
+
+            ISet<Item> added = new HashSet<Item>(new ObjectReferenceComparer<Item>());
+            ISet<Item> removed = new HashSet<Item>(new ObjectReferenceComparer<Item>());
+            foreach (Item item in this.PreviousInventory.Keys.Union(current.Keys))
             {
-                if (!previous.TryGetValue(item, out int prevStack))
-                    yield return new ItemStackChange { Item = item, StackChange = item.Stack, ChangeType = ChangeType.Added };
-                else if (!current.TryGetValue(item, out int newStack))
-                    yield return new ItemStackChange { Item = item, StackChange = -item.Stack, ChangeType = ChangeType.Removed };
-                else if (prevStack != newStack)
-                    yield return new ItemStackChange { Item = item, StackChange = newStack - prevStack, ChangeType = ChangeType.StackChange };
-            }
-        }
-
-        /// <summary>Get the player skill levels which changed.</summary>
-        public IEnumerable<KeyValuePair<EventArgsLevelUp.LevelType, IValueWatcher<int>>> GetChangedSkills()
-        {
-            return this.SkillWatchers.Where(p => p.Value.IsChanged);
-        }
-
-        /// <summary>Get the player's new location if it changed.</summary>
-        /// <param name="location">The player's current location.</param>
-        /// <returns>Returns whether it changed.</returns>
-        public bool TryGetNewLocation(out GameLocation location)
-        {
-            location = this.LocationWatcher.CurrentValue;
-            return this.LocationWatcher.IsChanged;
-        }
-
-        /// <summary>Get object changes to the player's current location if they there as of the last reset.</summary>
-        /// <param name="watcher">The object change watcher.</param>
-        /// <returns>Returns whether it changed.</returns>
-        public bool TryGetLocationChanges(out IDictionaryWatcher<Vector2, SObject> watcher)
-        {
-            if (this.LocationWatcher.IsChanged)
-            {
-                watcher = null;
-                return false;
+                if (!this.PreviousInventory.ContainsKey(item))
+                    added.Add(item);
+                else if (!current.ContainsKey(item))
+                    removed.Add(item);
             }
 
-            watcher = this.LocationObjectsWatcher;
-            return watcher.IsChanged;
+            return SnapshotItemListDiff.TryGetChanges(added: added, removed: removed, stackSizes: this.PreviousInventory, out changes);
         }
 
-        /// <summary>Get the player's new mine level if it changed.</summary>
-        /// <param name="mineLevel">The player's current mine level.</param>
-        /// <returns>Returns whether it changed.</returns>
-        public bool TryGetNewMineLevel(out int mineLevel)
-        {
-            mineLevel = this.MineLevelWatcher.CurrentValue;
-            return this.MineLevelWatcher.IsChanged;
-        }
-
-        /// <summary>Stop watching the player fields and release all references.</summary>
+        /// <summary>Release watchers and resources.</summary>
         public void Dispose()
         {
+            this.PreviousInventory.Clear();
+            this.CurrentInventory?.Clear();
+
             foreach (IWatcher watcher in this.Watchers)
                 watcher.Dispose();
         }

@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using StardewValley;
 
 namespace StardewModdingAPI.Framework
 {
@@ -8,13 +9,16 @@ namespace StardewModdingAPI.Framework
         /*********
         ** Accessors
         *********/
-        /// <summary>The pixel position relative to the top-left corner of the visible screen.</summary>
+        /// <inheritdoc />
+        public Vector2 AbsolutePixels { get; }
+
+        /// <inheritdoc />
         public Vector2 ScreenPixels { get; }
 
-        /// <summary>The tile position under the cursor relative to the top-left corner of the map.</summary>
+        /// <inheritdoc />
         public Vector2 Tile { get; }
 
-        /// <summary>The tile position that the game considers under the cursor for purposes of clicking actions. This may be different than <see cref="Tile"/> if that's too far from the player.</summary>
+        /// <inheritdoc />
         public Vector2 GrabTile { get; }
 
 
@@ -22,14 +26,38 @@ namespace StardewModdingAPI.Framework
         ** Public methods
         *********/
         /// <summary>Construct an instance.</summary>
-        /// <param name="screenPixels">The pixel position relative to the top-left corner of the visible screen.</param>
+        /// <param name="absolutePixels">The pixel position relative to the top-left corner of the in-game map, adjusted for zoom but not UI scaling.</param>
+        /// <param name="screenPixels">The pixel position relative to the top-left corner of the visible screen, adjusted for zoom but not UI scaling.</param>
         /// <param name="tile">The tile position relative to the top-left corner of the map.</param>
         /// <param name="grabTile">The tile position that the game considers under the cursor for purposes of clicking actions.</param>
-        public CursorPosition(Vector2 screenPixels, Vector2 tile, Vector2 grabTile)
+        public CursorPosition(Vector2 absolutePixels, Vector2 screenPixels, Vector2 tile, Vector2 grabTile)
         {
+            this.AbsolutePixels = absolutePixels;
             this.ScreenPixels = screenPixels;
             this.Tile = tile;
             this.GrabTile = grabTile;
+        }
+
+        /// <inheritdoc />
+        public bool Equals(ICursorPosition other)
+        {
+            return other != null && this.AbsolutePixels == other.AbsolutePixels;
+        }
+
+        /// <inheritdoc />
+        public Vector2 GetScaledAbsolutePixels()
+        {
+            return Game1.uiMode
+                ? Utility.ModifyCoordinatesForUIScale(this.AbsolutePixels)
+                : this.AbsolutePixels;
+        }
+
+        /// <inheritdoc />
+        public Vector2 GetScaledScreenPixels()
+        {
+            return Game1.uiMode
+                ? Utility.ModifyCoordinatesForUIScale(this.ScreenPixels)
+                : this.ScreenPixels;
         }
     }
 }

@@ -1,90 +1,131 @@
+@using Microsoft.Extensions.Options
+@using StardewModdingAPI.Web.Framework
+@using StardewModdingAPI.Web.Framework.ConfigModels
+@inject IOptions<SiteConfig> SiteConfig
+@model StardewModdingAPI.Web.ViewModels.IndexModel
 @{
     ViewData["Title"] = "SMAPI";
+    ViewData["ViewTitle"] = string.Empty;
 }
-@model StardewModdingAPI.Web.ViewModels.IndexModel
 @section Head {
-    <link rel="stylesheet" href="~/Content/css/index.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" crossorigin="anonymous"></script>
-    <script src="~/Content/js/index.js"></script>
+    <link rel="stylesheet" href="~/Content/css/index.css?r=20200105" />
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1" crossorigin="anonymous"></script>
+    <script src="~/Content/js/index.js?r=20200105"></script>
 }
 
-<p id="blurb">
-    The mod loader for Stardew Valley. It works fine with GOG and Steam achievements, it's
-    compatible with Linux/Mac/Windows, you can uninstall it anytime, and there's a friendly
-    community if you need help. It's a cool pufferchick.
-</p>
-
-<div id="call-to-action">
-    <a href="@Model.StableVersion.DownloadUrl" class="main-cta download">Download SMAPI @Model.StableVersion.Version</a><br />
-    @if (Model.BetaVersion != null)
-    {
-        <a href="@Model.BetaVersion.DownloadUrl" class="secondary-cta download">Download SMAPI @Model.BetaVersion.Version<br /><small>for Stardew Valley 1.3 beta</small></a><br />
-    }
-    <a href="https://stardewvalleywiki.com/Modding:Player_Guide" class="secondary-cta">Player guide</a><br />
-    <img id="pufferchick" src="favicon.ico" />
+<h1>
+    SMAPI
+    <img id="pufferchick" src="Content/images/pufferchick.png" />
+</h1>
+<div id="blurb">
+    <p>The mod loader for Stardew Valley.</p>
+    <p>Compatible with GOG/Steam achievements and Linux/Mac/Windows, uninstall anytime, and there's a friendly community if you need help.</p>
 </div>
 
-<h2>Get help</h2>
-<ul>
-    <li><a href="https://stardewvalleywiki.com/Modding:SMAPI_compatibility">Mod compatibility list</a></li>
-    <li>Get help <a href="https://stardewvalleywiki.com/Modding:Community#Discord">on Discord</a> or <a href="https://community.playstarbound.com/threads/smapi-stardew-modding-api.108375/">in the forums</a></li>
-</ul>
+<div id="call-to-action">
+    <div class="cta-dropdown">
+        <a href="@Model.StableVersion.DownloadUrl" class="main-cta download">Download SMAPI @Model.StableVersion.Version</a><br />
+        <div class="dropdown-content">
+            <a href="https://www.nexusmods.com/stardewvalley/mods/2400"><img src="Content/images/nexus-icon.png" /> Download from Nexus</a>
+            <a href="@Model.StableVersion.DownloadUrl"><img src="Content/images/direct-download-icon.png" /> Direct download</a>
+        </div>
+    </div><br />
 
-@if (Model.BetaVersion == null)
-{
-    <h2>What's new in SMAPI @Model.StableVersion.Version?</h2>
-    <div class="github-description">
-        @Html.Raw(Markdig.Markdown.ToHtml(Model.StableVersion.Description))
-    </div>
-    <p>See the <a href="https://github.com/Pathoschild/SMAPI/blob/develop/docs/release-notes.md#release-notes">release notes</a> and <a href="https://stardewvalleywiki.com/Modding:SMAPI_compatibility">mod compatibility list</a> for more info.</p>
-}
-else
-{
-    <h2>What's new in...</h2>
-    <h3>SMAPI @Model.StableVersion.Version?</h3>
-    <div class="github-description">
-        @Html.Raw(Markdig.Markdown.ToHtml(Model.StableVersion.Description))
-    </div>
-    <p>See the <a href="https://github.com/Pathoschild/SMAPI/blob/develop/docs/release-notes.md#release-notes">release notes</a> and <a href="https://stardewvalleywiki.com/Modding:SMAPI_compatibility">mod compatibility list</a> for more info.</p>
+    @if (Model.BetaVersion != null)
+    {
+        <div class="cta-dropdown secondary-cta-dropdown">
+            <a href="@Model.BetaVersion.DownloadUrl" class="secondary-cta download">
+                Download SMAPI @Model.BetaVersion.Version
+                @if (!string.IsNullOrWhiteSpace(Model.BetaBlurb))
+                {
+                    <br /><small>@Model.BetaBlurb</small>
+                }
+            </a><br />
+            <div class="dropdown-content">
+                <a href="https://www.nexusmods.com/stardewvalley/mods/2400"><img src="Content/images/nexus-icon.png" /> Download from Nexus</a>
+                <a href="@Model.BetaVersion.DownloadUrl"><img src="Content/images/direct-download-icon.png" /> Direct download</a>
+            </div>
+        </div><br />
+    }
+    <div><a href="https://stardewvalleywiki.com/Modding:Player_Guide" class="secondary-cta">Player guide</a></div>
+</div>
 
-    <h3>SMAPI @Model.BetaVersion.Version?</h3>
-    <div class="github-description">
-        @Html.Raw(Markdig.Markdown.ToHtml(Model.BetaVersion.Description))
-    </div>
-    <p>See the <a href="https://github.com/Pathoschild/SMAPI/blob/develop/docs/release-notes.md#release-notes">release notes</a> and <a href="https://stardewvalleywiki.com/Modding:SMAPI_compatibility">mod compatibility list</a> for more info.</p>
-}
+<div class="area">
+    <h2 id="help">Get help</h2>
+    <ul>
+        <li><a href="https://smapi.io/community">Ask on Discord</a></li>
+        <li><a href="https://reddit.com/r/SMAPI">Ask on Reddit</a></li>
+        <li><a href="@Url.PlainAction("Index", "Mods")">Mod compatibility list</a></li>
+    </ul>
+    (Or join the community!)
+</div>
 
-<h2>Donate to support SMAPI ♥</h2>
-<p>
-    SMAPI is an open-source project by Pathoschild. It will always be free, but donations
-    are much appreciated to help pay for development, server hosting, domain fees, coffee, etc.
-</p>
-<ul id="support-links">
-    <li><a href="https://www.paypal.me/pathoschild">Donate once</a></li>
-    <li>
-        <a href="https://www.patreon.com/pathoschild">Donate $1 per month (or more)</a><br />
-        <small>
-            You can cancel anytime. You'll have access to all private posts with behind-the-scenes
-            info, upcoming features, and early previews of SMAPI updates. You can optionally
-            provide early feedback on SMAPI features to influence development. Donate $5/month and
-            you'll be publicly credited (with optional link) below!
-        </small>
-    </li>
-</ul>
+<div class="area">
+    @if (Model.BetaVersion == null)
+    {
+        <h2 id="whatsnew">What's new</h2>
+        <div class="github-description">
+            @Html.Raw(Markdig.Markdown.ToHtml(Model.StableVersion.Description))
+        </div>
+        <p>See the <a href="https://github.com/Pathoschild/SMAPI/blob/develop/docs/release-notes.md#release-notes">release notes</a> and <a href="@Url.PlainAction("Index", "Mods")">mod compatibility list</a> for more info.</p>
+    }
+    else
+    {
+        <h2 id="whatsnew">What's new in...</h2>
+        <h3>SMAPI @Model.StableVersion.Version?</h3>
+        <div class="github-description">
+            @Html.Raw(Markdig.Markdown.ToHtml(Model.StableVersion.Description))
+        </div>
+        <p>See the <a href="https://github.com/Pathoschild/SMAPI/blob/develop/docs/release-notes.md#release-notes">release notes</a> and <a href="@Url.PlainAction("Index", "Mods")">mod compatibility list</a> for more info.</p>
 
-<p>
-    Special thanks to
-    acerbicon,
-    <a href="https://www.nexusmods.com/stardewvalley/users/31393530">ChefRude</a>,
-    jwdred,
-    OfficialPiAddict,
-    Robby LaFarge,
-    and a few anonymous users for their ongoing support; you're awesome! 🏅
-</p>
+        <h3>SMAPI @Model.BetaVersion.Version?</h3>
+        <div class="github-description">
+            @Html.Raw(Markdig.Markdown.ToHtml(Model.BetaVersion.Description))
+        </div>
+        <p>See the <a href="https://github.com/Pathoschild/SMAPI/blob/develop/docs/release-notes.md#release-notes">release notes</a> and <a href="@Url.PlainAction("Index", "Mods")">mod compatibility list</a> for more info.</p>
+    }
+</div>
 
-<h2>For mod creators</h2>
-<ul>
-    <li><a href="@Model.StableVersion.DevDownloadUrl">SMAPI @Model.StableVersion.Version for developers</a> (includes <a href="https://docs.microsoft.com/en-us/visualstudio/ide/using-intellisense">intellisense</a> and full console output)</li>
-    <li><a href="https://stardewvalleywiki.com/Modding:Index">Modding documentation</a></li>
-    <li>Need help? Come <a href="https://stardewvalleywiki.com/Modding:Community#Discord">chat on Discord</a>.</li>
-</ul>
+<div class="area">
+    <h2 id="donate">Support SMAPI ♥</h2>
+    <p>
+        SMAPI is an open-source project by Pathoschild. It will always be free, but donations
+        are much appreciated to help pay for development, server hosting, domain fees, coffee, etc.
+    </p>
+
+    <ul id="donate-links">
+        <li>
+            <a href="https://www.patreon.com/pathoschild" class="donate-button">
+                <img src="Content/images/patreon.png" /> Become a patron
+            </a>
+        </li>
+        <li>
+            <a href="https://ko-fi.com/pathoschild" class="donate-button">
+                <img src="Content/images/ko-fi.png" /> Buy me a coffee
+            </a>
+        </li>
+        <li>
+            <a href="https://www.paypal.me/pathoschild" class="donate-button">
+                <img src="Content/images/paypal.png" /> Donate via PayPal
+            </a>
+        </li>
+    </ul>
+
+    @if (!string.IsNullOrWhiteSpace(Model.SupporterList))
+    {
+        @Html.Raw(Markdig.Markdown.ToHtml(
+            $"Special thanks to {Model.SupporterList}, and a few anonymous users for their ongoing support on Patreon; you're awesome!"
+        ))
+    }
+</div>
+
+    <h2 id="modcreators">For mod creators</h2>
+    <ul>
+        <li><a href="@Model.StableVersion.DevDownloadUrl">SMAPI @Model.StableVersion.Version for developers</a> (includes <a href="https://docs.microsoft.com/en-us/visualstudio/ide/using-intellisense">intellisense</a> and full console output)</li>
+        @if (Model.BetaVersion != null)
+        {
+            <li><a href="@Model.BetaVersion.DevDownloadUrl">SMAPI @Model.BetaVersion.Version for developers</a> (includes <a href="https://docs.microsoft.com/en-us/visualstudio/ide/using-intellisense">intellisense</a> and full console output)</li>
+        }
+        <li><a href="https://stardewvalleywiki.com/Modding:Index">Modding documentation</a></li>
+        <li><a href="https://github.com/Pathoschild/SMAPI">Source code</a></li>
+    </ul>

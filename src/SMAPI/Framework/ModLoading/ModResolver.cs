@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using StardewModdingAPI.Framework.Exceptions;
-using StardewModdingAPI.Framework.ModData;
-using StardewModdingAPI.Framework.Models;
-using StardewModdingAPI.Framework.Serialisation;
-using StardewModdingAPI.Framework.Utilities;
+using StardewModdingAPI.Toolkit;
+using StardewModdingAPI.Toolkit.Framework.ModData;
+using StardewModdingAPI.Toolkit.Framework.ModScanning;
+using StardewModdingAPI.Toolkit.Serialization.Models;
+using StardewModdingAPI.Toolkit.Utilities;
 
 namespace StardewModdingAPI.Framework.ModLoading
 {
@@ -17,46 +17,18 @@ namespace StardewModdingAPI.Framework.ModLoading
         ** Public methods
         *********/
         /// <summary>Get manifest metadata for each folder in the given root path.</summary>
+        /// <param name="toolkit">The mod toolkit.</param>
         /// <param name="rootPath">The root path to search for mods.</param>
-        /// <param name="jsonHelper">The JSON helper with which to read manifests.</param>
         /// <param name="modDatabase">Handles access to SMAPI's internal mod metadata list.</param>
         /// <returns>Returns the manifests by relative folder.</returns>
-        public IEnumerable<IModMetadata> ReadManifests(string rootPath, JsonHelper jsonHelper, ModDatabase modDatabase)
+        public IEnumerable<IModMetadata> ReadManifests(ModToolkit toolkit, string rootPath, ModDatabase modDatabase)
         {
-            foreach (DirectoryInfo modDir in this.GetModFolders(rootPath))
+            foreach (ModFolder folder in toolkit.GetModFolders(rootPath))
             {
-                // read file
-                Manifest manifest = null;
-                string path = Path.Combine(modDir.FullName, "manifest.json");
-                string error = null;
-                try
-                {
-                    manifest = jsonHelper.ReadJsonFile<Manifest>(path);
-                    if (manifest == null)
-                    {
-                        error = File.Exists(path)
-                            ? "its manifest is invalid."
-                            : "it doesn't have a manifest.";
-                    }
-                }
-                catch (SParseException ex)
-                {
-                    error = $"parsing its manifest failed: {ex.Message}";
-                }
-                catch (Exception ex)
-                {
-                    error = $"parsing its manifest failed:\n{ex.GetLogSummary()}";
-                }
+                Manifest manifest = folder.Manifest;
 
                 // parse internal data record (if any)
-                ParsedModDataRecord dataRecord = modDatabase.GetParsed(manifest);
-
-                // get display name
-                string displayName = manifest?.Name;
-                if (string.IsNullOrWhiteSpace(displayName))
-                    displayName = dataRecord?.DisplayName;
-                if (string.IsNullOrWhiteSpace(displayName))
-                    displayName = PathUtilities.GetRelativePath(rootPath, modDir.FullName);
+                ModDataRecordVersionedFields dataRecord = modDatabase.Get(manifest?.UniqueID)?.GetVersionedFields(manifest);
 
                 // apply defaults
                 if (manifest != null && dataRecord != null)
@@ -66,10 +38,18 @@ namespace StardewModdingAPI.Framework.ModLoading
                 }
 
                 // build metadata
-                ModMetadataStatus status = error == null
+                bool shouldIgnore = folder.Type == ModType.Ignored;
+                ModMetadataStatus status = folder.ManifestParseError == ModParseError.None || shouldIgnore
                     ? ModMetadataStatus.Found
                     : ModMetadataStatus.Failed;
-                yield return new ModMetadata(displayName, modDir.FullName, manifest, dataRecord).SetStatus(status, error);
+
+                var metadata = new ModMetadata(folder.DisplayName, folder.Directory.FullName, rootPath, manifest, dataRecord, isIgnored: shouldIgnore);
+                if (shouldIgnore)
+                    metadata.SetStatus(status, ModFailReason.DisabledByDotConvention, "disabled by dot convention");
+                else
+                    metadata.SetStatus(status, ModFailReason.InvalidManifest, folder.ManifestParseErrorText);
+
+                yield return metadata;
             }
         }
 
@@ -92,13 +72,13 @@ namespace StardewModdingAPI.Framework.ModLoading
                 switch (mod.DataRecord?.Status)
                 {
                     case ModStatus.Obsolete:
-                        mod.SetStatus(ModMetadataStatus.Failed, $"it's obsolete: {mod.DataRecord.StatusReasonPhrase}");
+                        mod.SetStatus(ModMetadataStatus.Failed, ModFailReason.Obsolete, $"it's obsolete: {mod.DataRecord.StatusReasonPhrase}", this.GetTechnicalReasonForStatusOverride(mod));
                         continue;
 
                     case ModStatus.AssumeBroken:
                         {
                             // get reason
-                            string reasonPhrase = mod.DataRecord.StatusReasonPhrase ?? "it's outdated";
+                            string reasonPhrase = mod.DataRecord.StatusReasonPhrase ?? "it's no longer compatible";
 
                             // get update URLs
                             List<string> updateUrls = new List<string>();
@@ -112,7 +92,7 @@ namespace StardewModdingAPI.Framework.ModLoading
                                 updateUrls.Add(mod.DataRecord.AlternativeUrl);
 
                             // default update URL
-                            updateUrls.Add("https://smapi.io/compat");
+                            updateUrls.Add("https://smapi.io/mods");
 
                             // build error
                             string error = $"{reasonPhrase}. Please check for a ";
@@ -122,7 +102,7 @@ namespace StardewModdingAPI.Framework.ModLoading
                                 error += $"version newer than {mod.DataRecord.StatusUpperVersion}";
                             error += " at " + string.Join(" or ", updateUrls);
 
-                            mod.SetStatus(ModMetadataStatus.Failed, error);
+                            mod.SetStatus(ModMetadataStatus.Failed, ModFailReason.Incompatible, error, this.GetTechnicalReasonForStatusOverride(mod));
                         }
                         continue;
                 }
@@ -130,7 +110,7 @@ namespace StardewModdingAPI.Framework.ModLoading
                 // validate SMAPI version
                 if (mod.Manifest.MinimumApiVersion?.IsNewerThan(apiVersion) == true)
                 {
-                    mod.SetStatus(ModMetadataStatus.Failed, $"it needs SMAPI {mod.Manifest.MinimumApiVersion} or later. Please update SMAPI to the latest version to use this mod.");
+                    mod.SetStatus(ModMetadataStatus.Failed, ModFailReason.Incompatible, $"it needs SMAPI {mod.Manifest.MinimumApiVersion} or later. Please update SMAPI to the latest version to use this mod.");
                     continue;
                 }
 
@@ -142,12 +122,12 @@ namespace StardewModdingAPI.Framework.ModLoading
                     // validate field presence
                     if (!hasDll && !isContentPack)
                     {
-                        mod.SetStatus(ModMetadataStatus.Failed, $"its manifest has no {nameof(IManifest.EntryDll)} or {nameof(IManifest.ContentPackFor)} field; must specify one.");
+                        mod.SetStatus(ModMetadataStatus.Failed, ModFailReason.InvalidManifest, $"its manifest has no {nameof(IManifest.EntryDll)} or {nameof(IManifest.ContentPackFor)} field; must specify one.");
                         continue;
                     }
                     if (hasDll && isContentPack)
                     {
-                        mod.SetStatus(ModMetadataStatus.Failed, $"its manifest sets both {nameof(IManifest.EntryDll)} and {nameof(IManifest.ContentPackFor)}, which are mutually exclusive.");
+                        mod.SetStatus(ModMetadataStatus.Failed, ModFailReason.InvalidManifest, $"its manifest sets both {nameof(IManifest.EntryDll)} and {nameof(IManifest.ContentPackFor)}, which are mutually exclusive.");
                         continue;
                     }
 
@@ -157,15 +137,22 @@ namespace StardewModdingAPI.Framework.ModLoading
                         // invalid filename format
                         if (mod.Manifest.EntryDll.Intersect(Path.GetInvalidFileNameChars()).Any())
                         {
-                            mod.SetStatus(ModMetadataStatus.Failed, $"its manifest has invalid filename '{mod.Manifest.EntryDll}' for the EntryDLL field.");
+                            mod.SetStatus(ModMetadataStatus.Failed, ModFailReason.InvalidManifest, $"its manifest has invalid filename '{mod.Manifest.EntryDll}' for the EntryDLL field.");
                             continue;
                         }
 
                         // invalid path
-                        string assemblyPath = Path.Combine(mod.DirectoryPath, mod.Manifest.EntryDll);
-                        if (!File.Exists(assemblyPath))
+                        if (!File.Exists(Path.Combine(mod.DirectoryPath, mod.Manifest.EntryDll)))
                         {
-                            mod.SetStatus(ModMetadataStatus.Failed, $"its DLL '{mod.Manifest.EntryDll}' doesn't exist.");
+                            mod.SetStatus(ModMetadataStatus.Failed, ModFailReason.InvalidManifest, $"its DLL '{mod.Manifest.EntryDll}' doesn't exist.");
+                            continue;
+                        }
+
+                        // invalid capitalization
+                        string actualFilename = new DirectoryInfo(mod.DirectoryPath).GetFiles(mod.Manifest.EntryDll).FirstOrDefault()?.Name;
+                        if (actualFilename != mod.Manifest.EntryDll)
+                        {
+                            mod.SetStatus(ModMetadataStatus.Failed, ModFailReason.InvalidManifest, $"its {nameof(IManifest.EntryDll)} value '{mod.Manifest.EntryDll}' doesn't match the actual file capitalization '{actualFilename}'. The capitalization must match for crossplatform compatibility.");
                             continue;
                         }
                     }
@@ -176,7 +163,7 @@ namespace StardewModdingAPI.Framework.ModLoading
                         // invalid content pack ID
                         if (string.IsNullOrWhiteSpace(mod.Manifest.ContentPackFor.UniqueID))
                         {
-                            mod.SetStatus(ModMetadataStatus.Failed, $"its manifest declares {nameof(IManifest.ContentPackFor)} without its required {nameof(IManifestContentPackFor.UniqueID)} field.");
+                            mod.SetStatus(ModMetadataStatus.Failed, ModFailReason.InvalidManifest, $"its manifest declares {nameof(IManifest.ContentPackFor)} without its required {nameof(IManifestContentPackFor.UniqueID)} field.");
                             continue;
                         }
                     }
@@ -194,14 +181,21 @@ namespace StardewModdingAPI.Framework.ModLoading
                         missingFields.Add(nameof(IManifest.UniqueID));
 
                     if (missingFields.Any())
-                        mod.SetStatus(ModMetadataStatus.Failed, $"its manifest is missing required fields ({string.Join(", ", missingFields)}).");
+                    {
+                        mod.SetStatus(ModMetadataStatus.Failed, ModFailReason.InvalidManifest, $"its manifest is missing required fields ({string.Join(", ", missingFields)}).");
+                        continue;
+                    }
                 }
+
+                // validate ID format
+                if (!PathUtilities.IsSlug(mod.Manifest.UniqueID))
+                    mod.SetStatus(ModMetadataStatus.Failed, ModFailReason.InvalidManifest, "its manifest specifies an invalid ID (IDs must only contain letters, numbers, underscores, periods, or hyphens).");
             }
 
             // validate IDs are unique
             {
                 var duplicatesByID = mods
-                    .GroupBy(mod => mod.Manifest?.UniqueID?.Trim(), mod => mod, StringComparer.InvariantCultureIgnoreCase)
+                    .GroupBy(mod => mod.Manifest?.UniqueID?.Trim(), mod => mod, StringComparer.OrdinalIgnoreCase)
                     .Where(p => p.Count() > 1);
                 foreach (var group in duplicatesByID)
                 {
@@ -209,7 +203,9 @@ namespace StardewModdingAPI.Framework.ModLoading
                     {
                         if (mod.Status == ModMetadataStatus.Failed)
                             continue; // don't replace metadata error
-                        mod.SetStatus(ModMetadataStatus.Failed, $"its unique ID '{mod.Manifest.UniqueID}' is used by multiple mods ({string.Join(", ", group.Select(p => p.DisplayName))}).");
+
+                        string folderList = string.Join(", ", group.Select(p => p.GetRelativePathWithRoot()).OrderBy(p => p));
+                        mod.SetStatus(ModMetadataStatus.Failed, ModFailReason.Duplicate, $"you have multiple copies of this mod installed. To fix this, delete these folders and reinstall the mod: {folderList}.");
                     }
                 }
             }
@@ -220,7 +216,7 @@ namespace StardewModdingAPI.Framework.ModLoading
         /// <param name="modDatabase">Handles access to SMAPI's internal mod metadata list.</param>
         public IEnumerable<IModMetadata> ProcessDependencies(IEnumerable<IModMetadata> mods, ModDatabase modDatabase)
         {
-            // initialise metadata
+            // initialize metadata
             mods = mods.ToArray();
             var sortedMods = new Stack<IModMetadata>();
             var states = mods.ToDictionary(mod => mod, mod => ModDependencyStatus.Queued);
@@ -292,7 +288,7 @@ namespace StardewModdingAPI.Framework.ModLoading
                 string[] failedModNames = (
                     from entry in dependencies
                     where entry.IsRequired && entry.Mod == null
-                    let displayName = modDatabase.GetDisplayNameFor(entry.ID) ?? entry.ID
+                    let displayName = modDatabase.Get(entry.ID)?.DisplayName ?? entry.ID
                     let modUrl = modDatabase.GetModPageUrlFor(entry.ID)
                     orderby displayName
                     select modUrl != null
@@ -302,7 +298,7 @@ namespace StardewModdingAPI.Framework.ModLoading
                 if (failedModNames.Any())
                 {
                     sortedMods.Push(mod);
-                    mod.SetStatus(ModMetadataStatus.Failed, $"it requires mods which aren't installed ({string.Join(", ", failedModNames)}).");
+                    mod.SetStatus(ModMetadataStatus.Failed, ModFailReason.MissingDependencies, $"it requires mods which aren't installed ({string.Join(", ", failedModNames)}).");
                     return states[mod] = ModDependencyStatus.Failed;
                 }
             }
@@ -319,7 +315,7 @@ namespace StardewModdingAPI.Framework.ModLoading
                 if (failedLabels.Any())
                 {
                     sortedMods.Push(mod);
-                    mod.SetStatus(ModMetadataStatus.Failed, $"it needs newer versions of some mods: {string.Join(", ", failedLabels)}.");
+                    mod.SetStatus(ModMetadataStatus.Failed, ModFailReason.MissingDependencies, $"it needs newer versions of some mods: {string.Join(", ", failedLabels)}.");
                     return states[mod] = ModDependencyStatus.Failed;
                 }
             }
@@ -342,7 +338,7 @@ namespace StardewModdingAPI.Framework.ModLoading
                     if (states[requiredMod] == ModDependencyStatus.Checking)
                     {
                         sortedMods.Push(mod);
-                        mod.SetStatus(ModMetadataStatus.Failed, $"its dependencies have a circular reference: {string.Join(" => ", subchain.Select(p => p.DisplayName))} => {requiredMod.DisplayName}).");
+                        mod.SetStatus(ModMetadataStatus.Failed, ModFailReason.MissingDependencies, $"its dependencies have a circular reference: {string.Join(" => ", subchain.Select(p => p.DisplayName))} => {requiredMod.DisplayName}).");
                         return states[mod] = ModDependencyStatus.Failed;
                     }
 
@@ -358,7 +354,7 @@ namespace StardewModdingAPI.Framework.ModLoading
                         // failed, which means this mod can't be loaded either
                         case ModDependencyStatus.Failed:
                             sortedMods.Push(mod);
-                            mod.SetStatus(ModMetadataStatus.Failed, $"it needs the '{requiredMod.DisplayName}' mod, which couldn't be loaded.");
+                            mod.SetStatus(ModMetadataStatus.Failed, ModFailReason.MissingDependencies, $"it needs the '{requiredMod.DisplayName}' mod, which couldn't be loaded.");
                             return states[mod] = ModDependencyStatus.Failed;
 
                         // unexpected status
@@ -399,7 +395,7 @@ namespace StardewModdingAPI.Framework.ModLoading
         /// <param name="loadedMods">The loaded mods.</param>
         private IEnumerable<ModDependency> GetDependenciesFrom(IManifest manifest, IModMetadata[] loadedMods)
         {
-            IModMetadata FindMod(string id) => loadedMods.FirstOrDefault(m => string.Equals(m.Manifest?.UniqueID, id, StringComparison.InvariantCultureIgnoreCase));
+            IModMetadata FindMod(string id) => loadedMods.FirstOrDefault(m => m.HasID(id));
 
             // yield dependencies
             if (manifest.Dependencies != null)
@@ -413,12 +409,44 @@ namespace StardewModdingAPI.Framework.ModLoading
                 yield return new ModDependency(manifest.ContentPackFor.UniqueID, manifest.ContentPackFor.MinimumVersion, FindMod(manifest.ContentPackFor.UniqueID), isRequired: true);
         }
 
+        /// <summary>Get a technical message indicating why a mod's compatibility status was overridden, if applicable.</summary>
+        /// <param name="mod">The mod metadata.</param>
+        private string GetTechnicalReasonForStatusOverride(IModMetadata mod)
+        {
+            // get compatibility list record
+            var data = mod.DataRecord;
+            if (data == null)
+                return null;
+
+            // get status label
+            string statusLabel = data.Status switch
+            {
+                ModStatus.AssumeBroken => "'assume broken'",
+                ModStatus.AssumeCompatible => "'assume compatible'",
+                ModStatus.Obsolete => "obsolete",
+                _ => data.Status.ToString()
+            };
+
+            // get reason
+            string[] reasons = new[] { mod.DataRecord.StatusReasonPhrase, mod.DataRecord.StatusReasonDetails }
+                .Where(p => !string.IsNullOrWhiteSpace(p))
+                .ToArray();
+
+            // build message
+            return
+                $"marked {statusLabel} in SMAPI's internal compatibility list for "
+                + (mod.DataRecord.StatusUpperVersion != null ? $"versions up to {mod.DataRecord.StatusUpperVersion}" : "all versions")
+                + ": "
+                + (reasons.Any() ? string.Join(": ", reasons) : "no reason given")
+                + ".";
+        }
+
 
         /*********
         ** Private models
         *********/
         /// <summary>Represents a dependency from one mod to another.</summary>
-        private struct ModDependency
+        private readonly struct ModDependency
         {
             /*********
             ** Accessors

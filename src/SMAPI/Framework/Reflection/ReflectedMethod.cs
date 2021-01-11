@@ -7,7 +7,7 @@ namespace StardewModdingAPI.Framework.Reflection
     internal class ReflectedMethod : IReflectedMethod
     {
         /*********
-        ** Properties
+        ** Fields
         *********/
         /// <summary>The type that has the method.</summary>
         private readonly Type ParentType;
@@ -22,7 +22,7 @@ namespace StardewModdingAPI.Framework.Reflection
         /*********
         ** Accessors
         *********/
-        /// <summary>The reflection metadata.</summary>
+        /// <inheritdoc />
         public MethodInfo MethodInfo { get; }
 
 
@@ -54,9 +54,7 @@ namespace StardewModdingAPI.Framework.Reflection
             this.MethodInfo = method;
         }
 
-        /// <summary>Invoke the method.</summary>
-        /// <typeparam name="TValue">The return type.</typeparam>
-        /// <param name="arguments">The method arguments to pass in.</param>
+        /// <inheritdoc />
         public TValue Invoke<TValue>(params object[] arguments)
         {
             // invoke method
@@ -64,6 +62,10 @@ namespace StardewModdingAPI.Framework.Reflection
             try
             {
                 result = this.MethodInfo.Invoke(this.Parent, arguments);
+            }
+            catch (TargetParameterCountException)
+            {
+                throw new Exception($"Couldn't invoke the {this.DisplayName} method: it expects {this.MethodInfo.GetParameters().Length} parameters, but {arguments.Length} were provided.");
             }
             catch (Exception ex)
             {
@@ -81,8 +83,7 @@ namespace StardewModdingAPI.Framework.Reflection
             }
         }
 
-        /// <summary>Invoke the method.</summary>
-        /// <param name="arguments">The method arguments to pass in.</param>
+        /// <inheritdoc />
         public void Invoke(params object[] arguments)
         {
             // invoke method

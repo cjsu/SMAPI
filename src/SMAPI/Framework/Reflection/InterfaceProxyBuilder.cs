@@ -9,7 +9,7 @@ namespace StardewModdingAPI.Framework.Reflection
     internal class InterfaceProxyBuilder
     {
         /*********
-        ** Properties
+        ** Fields
         *********/
         /// <summary>The target class type.</summary>
         private readonly Type TargetType;

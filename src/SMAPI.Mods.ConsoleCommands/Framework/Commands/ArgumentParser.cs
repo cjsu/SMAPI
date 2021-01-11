@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands
     internal class ArgumentParser : IReadOnlyList<string>
     {
         /*********
-        ** Properties
+        ** Fields
         *********/
         /// <summary>The command name for errors.</summary>
         private readonly string CommandName;
@@ -30,13 +30,6 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands
         /// <summary>Get the argument at the specified index in the list.</summary>
         /// <param name="index">The zero-based index of the element to get.</param>
         public string this[int index] => this.Args[index];
-
-        /// <summary>A method which parses a string argument into the given value.</summary>
-        /// <typeparam name="T">The expected argument type.</typeparam>
-        /// <param name="input">The argument to parse.</param>
-        /// <param name="output">The parsed value.</param>
-        /// <returns>Returns whether the argument was successfully parsed.</returns>
-        public delegate bool ParseDelegate<T>(string input, out T output);
 
 
         /*********
@@ -70,7 +63,7 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands
                     this.LogError($"Argument {index} ({name}) is required.");
                 return false;
             }
-            if (oneOf?.Any() == true && !oneOf.Contains(this.Args[index], StringComparer.InvariantCultureIgnoreCase))
+            if (oneOf?.Any() == true && !oneOf.Contains(this.Args[index], StringComparer.OrdinalIgnoreCase))
             {
                 this.LogError($"Argument {index} ({name}) must be one of {string.Join(", ", oneOf)}.");
                 return false;

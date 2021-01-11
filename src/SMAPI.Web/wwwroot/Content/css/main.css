@@ -28,7 +28,8 @@ h2 {
 h3 {
     font-size: 1.2em;
     border-bottom: 1px solid #AAA;
-    width: 50%;
+    width: 55em;
+    max-width: 100%;
 }
 
 a {
@@ -44,6 +45,8 @@ a {
 
 #content {
     min-height: 140px;
+    width: calc(100% - 2em);
+    max-width: 60em;
     padding: 0 1em 1em 1em;
     border-left: 1px solid #CCC;
     background: #FFF;
@@ -51,7 +54,7 @@ a {
 }
 
 #content p {
-    max-width: 55em;
+    max-width: 100%;
 }
 
 .section {
@@ -70,7 +73,7 @@ a {
 }
 
 #sidebar h4 {
-    margin: 0 0 0.2em 0;
+    margin: 1.5em 0 0.2em 0;
     width: 10em;
     border-bottom: 1px solid #CCC;
     font-size: 0.8em;
@@ -104,4 +107,35 @@ a {
 
 #footer a {
     color: #669;
+}
+
+/* mobile fixes */
+@media (min-width: 1020px) and (max-width: 1199px) {
+    #sidebar {
+        width: 7em;
+        background: none;
+    }
+
+    #content-column {
+        left: 7em;
+    }
+}
+
+@media (max-width: 1019px) {
+    h1 {
+        margin-top: 0;
+    }
+
+    #sidebar {
+        margin-top: 0;
+        width: auto;
+        min-height: 0;
+        background: none;
+    }
+
+    #content-column {
+        position: inherit;
+        top: inherit;
+        left: inherit;
+    }
 }

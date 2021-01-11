@@ -8,7 +8,7 @@ namespace StardewModdingAPI.Framework.Reflection
     internal class ReflectedField<TValue> : IReflectedField<TValue>
     {
         /*********
-        ** Properties
+        ** Fields
         *********/
         /// <summary>The type that has the field.</summary>
         private readonly Type ParentType;
@@ -23,7 +23,7 @@ namespace StardewModdingAPI.Framework.Reflection
         /*********
         ** Accessors
         *********/
-        /// <summary>The reflection metadata.</summary>
+        /// <inheritdoc />
         public FieldInfo FieldInfo { get; }
 
 
@@ -55,7 +55,7 @@ namespace StardewModdingAPI.Framework.Reflection
             this.FieldInfo = field;
         }
 
-        /// <summary>Get the field value.</summary>
+        /// <inheritdoc />
         public TValue GetValue()
         {
             try
@@ -72,8 +72,7 @@ namespace StardewModdingAPI.Framework.Reflection
             }
         }
 
-        /// <summary>Set the field value.</summary>
-        //// <param name="value">The value to set.</param>
+        /// <inheritdoc />
         public void SetValue(TValue value)
         {
             try

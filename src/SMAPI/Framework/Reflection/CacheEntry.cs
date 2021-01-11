@@ -3,16 +3,16 @@ using System.Reflection;
 namespace StardewModdingAPI.Framework.Reflection
 {
     /// <summary>A cached member reflection result.</summary>
-    internal struct CacheEntry
+    internal readonly struct CacheEntry
     {
         /*********
         ** Accessors
         *********/
         /// <summary>Whether the lookup found a valid match.</summary>
-        public bool IsValid;
+        public bool IsValid { get; }
 
         /// <summary>The reflection data for this member (or <c>null</c> if invalid).</summary>
-        public MemberInfo MemberInfo;
+        public MemberInfo MemberInfo { get; }
 
 
         /*********

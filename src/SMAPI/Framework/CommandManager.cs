@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using StardewModdingAPI.Framework.Commands;
 
 namespace StardewModdingAPI.Framework
 {
@@ -9,17 +10,27 @@ namespace StardewModdingAPI.Framework
     internal class CommandManager
     {
         /*********
-        ** Properties
+        ** Fields
         *********/
         /// <summary>The commands registered with SMAPI.</summary>
-        private readonly IDictionary<string, Command> Commands = new Dictionary<string, Command>(StringComparer.InvariantCultureIgnoreCase);
+        private readonly IDictionary<string, Command> Commands = new Dictionary<string, Command>(StringComparer.OrdinalIgnoreCase);
+
+        /// <summary>Writes messages to the console.</summary>
+        private readonly IMonitor Monitor;
 
 
         /*********
         ** Public methods
         *********/
+        /// <summary>Construct an instance.</summary>
+        /// <param name="monitor">Writes messages to the console.</param>
+        public CommandManager(IMonitor monitor)
+        {
+            this.Monitor = monitor;
+        }
+
         /// <summary>Add a console command.</summary>
-        /// <param name="modName">The friendly mod name for this instance.</param>
+        /// <param name="mod">The mod adding the command (or <c>null</c> for a SMAPI command).</param>
         /// <param name="name">The command name, which the user must type to trigger it.</param>
         /// <param name="documentation">The human-readable documentation shown when the player runs the built-in 'help' command.</param>
         /// <param name="callback">The method to invoke when the command is triggered. This method is passed the command name and arguments submitted by the user.</param>
@@ -27,9 +38,9 @@ namespace StardewModdingAPI.Framework
         /// <exception cref="ArgumentNullException">The <paramref name="name"/> or <paramref name="callback"/> is null or empty.</exception>
         /// <exception cref="FormatException">The <paramref name="name"/> is not a valid format.</exception>
         /// <exception cref="ArgumentException">There's already a command with that name.</exception>
-        public void Add(string modName, string name, string documentation, Action<string, string[]> callback, bool allowNullCallback = false)
+        public CommandManager Add(IModMetadata mod, string name, string documentation, Action<string, string[]> callback, bool allowNullCallback = false)
         {
-            name = this.GetNormalisedName(name);
+            name = this.GetNormalizedName(name);
 
             // validate format
             if (string.IsNullOrWhiteSpace(name))
@@ -44,7 +55,17 @@ namespace StardewModdingAPI.Framework
                 throw new ArgumentException(nameof(callback), $"Can't register the '{name}' command because there's already a command with that name.");
 
             // add command
-            this.Commands.Add(name, new Command(modName, name, documentation, callback));
+            this.Commands.Add(name, new Command(mod, name, documentation, callback));
+            return this;
+        }
+
+        /// <summary>Add a console command.</summary>
+        /// <param name="command">the SMAPI console command to add.</param>
+        /// <param name="monitor">Writes messages to the console.</param>
+        /// <exception cref="ArgumentException">There's already a command with that name.</exception>
+        public CommandManager Add(IInternalCommand command, IMonitor monitor)
+        {
+            return this.Add(null, command.Name, command.Description, (name, args) => command.HandleCommand(args, monitor));
         }
 
         /// <summary>Get a command by its unique name.</summary>
@@ -52,7 +73,7 @@ namespace StardewModdingAPI.Framework
         /// <returns>Returns the matching command, or <c>null</c> if not found.</returns>
         public Command Get(string name)
         {
-            name = this.GetNormalisedName(name);
+            name = this.GetNormalizedName(name);
             this.Commands.TryGetValue(name, out Command command);
             return command;
         }
@@ -65,19 +86,53 @@ namespace StardewModdingAPI.Framework
                 .OrderBy(p => p.Name);
         }
 
-        /// <summary>Trigger a command.</summary>
-        /// <param name="input">The raw command input.</param>
-        /// <returns>Returns whether a matching command was triggered.</returns>
-        public bool Trigger(string input)
+        /// <summary>Try to parse a raw line of user input into an executable command.</summary>
+        /// <param name="input">The raw user input.</param>
+        /// <param name="name">The parsed command name.</param>
+        /// <param name="args">The parsed command arguments.</param>
+        /// <param name="command">The command which can handle the input.</param>
+        /// <param name="screenId">The screen ID on which to run the command.</param>
+        /// <returns>Returns true if the input was successfully parsed and matched to a command; else false.</returns>
+        public bool TryParse(string input, out string name, out string[] args, out Command command, out int screenId)
         {
+            // ignore if blank
             if (string.IsNullOrWhiteSpace(input))
+            {
+                name = null;
+                args = null;
+                command = null;
+                screenId = 0;
                 return false;
+            }
 
-            string[] args = this.ParseArgs(input);
-            string name = args[0];
+            // parse input
+            args = this.ParseArgs(input);
+            name = this.GetNormalizedName(args[0]);
             args = args.Skip(1).ToArray();
 
-            return this.Trigger(name, args);
+            // get screen ID argument
+            screenId = 0;
+            for (int i = 0; i < args.Length; i++)
+            {
+                // consume arg & set screen ID
+                if (this.TryParseScreenId(args[i], out int rawScreenId, out string error))
+                {
+                    args = args.Take(i).Concat(args.Skip(i + 1)).ToArray();
+                    screenId = rawScreenId;
+                    continue;
+                }
+
+                // invalid screen arg
+                if (error != null)
+                {
+                    this.Monitor.Log(error, LogLevel.Error);
+                    command = null;
+                    return false;
+                }
+            }
+
+            // get command
+            return this.Commands.TryGetValue(name, out command);
         }
 
         /// <summary>Trigger a command.</summary>
@@ -86,8 +141,8 @@ namespace StardewModdingAPI.Framework
         /// <returns>Returns whether a matching command was triggered.</returns>
         public bool Trigger(string name, string[] arguments)
         {
-            // get normalised name
-            name = this.GetNormalisedName(name);
+            // get normalized name
+            name = this.GetNormalizedName(name);
             if (name == null)
                 return false;
 
@@ -97,6 +152,7 @@ namespace StardewModdingAPI.Framework
                 command.Callback.Invoke(name, arguments);
                 return true;
             }
+
             return false;
         }
 
@@ -129,9 +185,41 @@ namespace StardewModdingAPI.Framework
             return args.Where(item => !string.IsNullOrWhiteSpace(item)).ToArray();
         }
 
-        /// <summary>Get a normalised command name.</summary>
+        /// <summary>Try to parse a 'screen=X' command argument, which specifies the screen that should receive the command.</summary>
+        /// <param name="arg">The raw argument to parse.</param>
+        /// <param name="screen">The parsed screen ID, if any.</param>
+        /// <param name="error">The error which indicates an invalid screen ID, if applicable.</param>
+        /// <returns>Returns whether the screen ID was parsed successfully.</returns>
+        private bool TryParseScreenId(string arg, out int screen, out string error)
+        {
+            screen = -1;
+            error = null;
+
+            // skip non-screen arg
+            if (!arg.StartsWith("screen="))
+                return false;
+
+            // get screen ID
+            string rawScreen = arg.Substring("screen=".Length);
+            if (!int.TryParse(rawScreen, out screen))
+            {
+                error = $"invalid screen ID format: {rawScreen}";
+                return false;
+            }
+
+            // validate ID
+            if (!Context.HasScreenId(screen))
+            {
+                error = $"there's no active screen with ID {screen}. Active screen IDs: {string.Join(", ", Context.ActiveScreenIds)}.";
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>Get a normalized command name.</summary>
         /// <param name="name">The command name.</param>
-        private string GetNormalisedName(string name)
+        private string GetNormalizedName(string name)
         {
             name = name?.Trim().ToLower();
             return !string.IsNullOrWhiteSpace(name)

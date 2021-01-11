@@ -14,7 +14,7 @@ namespace StardewModdingAPI.ModBuildConfig.Analyzer
     public class NetFieldAnalyzer : DiagnosticAnalyzer
     {
         /*********
-        ** Properties
+        ** Fields
         *********/
         /// <summary>The namespace for Stardew Valley's <c>Netcode</c> types.</summary>
         private const string NetcodeNamespace = "Netcode";
@@ -114,7 +114,6 @@ namespace StardewModdingAPI.ModBuildConfig.Analyzer
             ["StardewValley.Object::netName"] = "name",
             ["StardewValley.Object::price"] = "Price",
             ["StardewValley.Object::quality"] = "Quality",
-            ["StardewValley.Object::scale"] = "Scale",
             ["StardewValley.Object::stack"] = "Stack",
             ["StardewValley.Object::tileLocation"] = "TileLocation",
             ["StardewValley.Object::type"] = "Type",
@@ -136,22 +135,22 @@ namespace StardewModdingAPI.ModBuildConfig.Analyzer
         private readonly DiagnosticDescriptor AvoidImplicitNetFieldCastRule = new DiagnosticDescriptor(
             id: "AvoidImplicitNetFieldCast",
             title: "Netcode types shouldn't be implicitly converted",
-            messageFormat: "This implicitly converts '{0}' from {1} to {2}, but {1} has unintuitive implicit conversion rules. Consider comparing against the actual value instead to avoid bugs. See https://smapi.io/buildmsg/avoid-implicit-net-field-cast for details.",
+            messageFormat: "This implicitly converts '{0}' from {1} to {2}, but {1} has unintuitive implicit conversion rules. Consider comparing against the actual value instead to avoid bugs. See https://smapi.io/package/avoid-implicit-net-field-cast for details.",
             category: "SMAPI.CommonErrors",
             defaultSeverity: DiagnosticSeverity.Warning,
             isEnabledByDefault: true,
-            helpLinkUri: "https://smapi.io/buildmsg/avoid-implicit-net-field-cast"
+            helpLinkUri: "https://smapi.io/package/avoid-implicit-net-field-cast"
         );
 
         /// <summary>The diagnostic info for an avoidable net field access.</summary>
         private readonly DiagnosticDescriptor AvoidNetFieldRule = new DiagnosticDescriptor(
             id: "AvoidNetField",
             title: "Avoid Netcode types when possible",
-            messageFormat: "'{0}' is a {1} field; consider using the {2} property instead. See https://smapi.io/buildmsg/avoid-net-field for details.",
+            messageFormat: "'{0}' is a {1} field; consider using the {2} property instead. See https://smapi.io/package/avoid-net-field for details.",
             category: "SMAPI.CommonErrors",
             defaultSeverity: DiagnosticSeverity.Warning,
             isEnabledByDefault: true,
-            helpLinkUri: "https://smapi.io/buildmsg/avoid-net-field"
+            helpLinkUri: "https://smapi.io/package/avoid-net-field"
         );
 
 
@@ -200,7 +199,7 @@ namespace StardewModdingAPI.ModBuildConfig.Analyzer
         /*********
         ** Private methods
         *********/
-        /// <summary>Analyse a member access syntax node and add a diagnostic message if applicable.</summary>
+        /// <summary>Analyze a member access syntax node and add a diagnostic message if applicable.</summary>
         /// <param name="context">The analysis context.</param>
         /// <returns>Returns whether any warnings were added.</returns>
         private void AnalyzeMemberAccess(SyntaxNodeAnalysisContext context)
@@ -232,7 +231,7 @@ namespace StardewModdingAPI.ModBuildConfig.Analyzer
             });
         }
 
-        /// <summary>Analyse an explicit cast or 'x as y' node and add a diagnostic message if applicable.</summary>
+        /// <summary>Analyze an explicit cast or 'x as y' node and add a diagnostic message if applicable.</summary>
         /// <param name="context">The analysis context.</param>
         /// <returns>Returns whether any warnings were added.</returns>
         private void AnalyzeCast(SyntaxNodeAnalysisContext context)
@@ -249,7 +248,7 @@ namespace StardewModdingAPI.ModBuildConfig.Analyzer
             });
         }
 
-        /// <summary>Analyse a binary comparison syntax node and add a diagnostic message if applicable.</summary>
+        /// <summary>Analyze a binary comparison syntax node and add a diagnostic message if applicable.</summary>
         /// <param name="context">The analysis context.</param>
         /// <returns>Returns whether any warnings were added.</returns>
         private void AnalyzeBinaryComparison(SyntaxNodeAnalysisContext context)
@@ -289,7 +288,7 @@ namespace StardewModdingAPI.ModBuildConfig.Analyzer
         }
 
         /// <summary>Handle exceptions raised while analyzing a node.</summary>
-        /// <param name="node">The node being analysed.</param>
+        /// <param name="node">The node being analyzed.</param>
         /// <param name="action">The callback to invoke.</param>
         private void HandleErrors(SyntaxNode node, Action action)
         {

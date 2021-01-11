@@ -23,7 +23,7 @@ smapi.logParser = function (data, sectionUrl) {
     }
 
     // set local time started
-    if(data)
+    if (data)
         data.localTimeStarted = ("0" + data.logStarted.getHours()).slice(-2) + ":" + ("0" + data.logStarted.getMinutes()).slice(-2);
 
     // init app
@@ -39,11 +39,17 @@ smapi.logParser = function (data, sectionUrl) {
             }
         },
         methods: {
-            toggleLevel: function(id) {
+            toggleLevel: function (id) {
+                if (!data.enableFilters)
+                    return;
+
                 this.showLevels[id] = !this.showLevels[id];
             },
 
             toggleMod: function (id) {
+                if (!data.enableFilters)
+                    return;
+
                 var curShown = this.showMods[id];
 
                 // first filter: only show this by default
@@ -63,7 +69,17 @@ smapi.logParser = function (data, sectionUrl) {
                 updateModFilters();
             },
 
+            toggleSection: function (name) {
+                if (!data.enableFilters)
+                    return;
+
+                this.showSections[name] = !this.showSections[name];
+            },
+
             showAllMods: function () {
+                if (!data.enableFilters)
+                    return;
+
                 for (var key in this.showMods) {
                     if (this.showMods.hasOwnProperty(key)) {
                         this.showMods[key] = true;
@@ -73,6 +89,9 @@ smapi.logParser = function (data, sectionUrl) {
             },
 
             hideAllMods: function () {
+                if (!data.enableFilters)
+                    return;
+
                 for (var key in this.showMods) {
                     if (this.showMods.hasOwnProperty(key)) {
                         this.showMods[key] = false;
@@ -81,8 +100,12 @@ smapi.logParser = function (data, sectionUrl) {
                 updateModFilters();
             },
 
-            filtersAllow: function(modId, level) {
+            filtersAllow: function (modId, level) {
                 return this.showMods[modId] !== false && this.showLevels[level] !== false;
+            },
+
+            sectionsAllow: function (section) {
+                return this.showSections[section] !== false;
             }
         }
     });
@@ -90,88 +113,25 @@ smapi.logParser = function (data, sectionUrl) {
     /**********
     ** Upload form
     *********/
-    var error = $("#error");
-    
-    $("#upload-button").on("click", function(e) {
-        e.preventDefault();
+    var input = $("#input");
+    if (input.length) {
+        // instructions per OS
+        var systemOptions = $("input[name='os']");
+        var systemInstructions = $("div[data-os]");
 
-        $("#input").val("");
-        $("#popup-upload").fadeIn();
-    });
+        var chooseSystem = function () {
+            systemInstructions.hide();
+            systemInstructions.filter("[data-os='" + $("input[name='os']:checked").val() + "']").show();
+        };
+        systemOptions.on("click", chooseSystem);
+        chooseSystem();
 
-    var closeUploadPopUp = function() {
-        $("#popup-upload").fadeOut(400);
-    };
-
-    $("#popup-upload").on({
-        'dragover dragenter': function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-        },
-        'drop': function(e) {
-            $("#uploader").attr("data-text", "Reading...");
-            $("#uploader").show();
-            var dataTransfer = e.originalEvent.dataTransfer;
-            if (dataTransfer && dataTransfer.files.length) {
-                e.preventDefault();
-                e.stopPropagation();
-                var file = dataTransfer.files[0];
-                var reader = new FileReader();
-                reader.onload = $.proxy(function(file, $input, event) {
-                    $input.val(event.target.result);
-                    $("#uploader").fadeOut();
-                    $("#submit").click();
-                }, this, file, $("#input"));
-                reader.readAsText(file);
-            }
-        },
-        'click': function(e) {
-            if (e.target.id === "popup-upload")
-                closeUploadPopUp();
-        }
-    });
-
-    $("#submit").on("click", function() {
-        $("#popup-upload").fadeOut();
-        var paste = $("#input").val();
-        if (paste) {
-            //memory = "";
-            $("#uploader").attr("data-text", "Saving...");
-            $("#uploader").fadeIn();
-            $
-                .ajax({
-                    type: "POST",
-                    url: sectionUrl + "/save",
-                    data: JSON.stringify(paste),
-                    contentType: "application/json" // sent to API
-                })
-                .fail(function(xhr, textStatus) {
-                    $("#uploader").fadeOut();
-                    error.html('<h1>Parsing failed!</h1>Parsing of the log failed, details follow.<br />&nbsp;<p>Stage: Upload</p>Error: ' + textStatus + ': ' + xhr.responseText + "<hr /><pre>" + $("#input").val() + "</pre>");
-                })
-                .then(function(data) {
-                    $("#uploader").fadeOut();
-                    if (!data.success)
-                        error.html('<h1>Parsing failed!</h1>Parsing of the log failed, details follow.<br />&nbsp;<p>Stage: Upload</p>Error: ' + data.error + "<hr /><pre>" + $("#input").val() + "</pre>");
-                    else
-                        location.href = (sectionUrl.replace(/\/$/, "") + "/" + data.id);
-                });
-        } else {
-            alert("Unable to parse log, the input is empty!");
-            $("#uploader").fadeOut();
-        }
-    });
-
-    $(document).on("keydown", function(e) {
-        if (e.which === 27) {
-            if ($("#popup-upload").css("display") !== "none" && $("#popup-upload").css("opacity") === 1) {
-                closeUploadPopUp();
-            }
-        }
-    });
-    $("#cancel").on("click", closeUploadPopUp);
-
-    if (data.showPopup)
-        $("#popup-upload").fadeIn();
-
+        // file upload
+        smapi.fileUpload({
+            chooseFileLink: $("#choose-file-link"),
+            chooseFileInput: $("#inputFile"),
+            contentArea: input,
+            submitButton: $("#submit")
+        });
+    }
 };

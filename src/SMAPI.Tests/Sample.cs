@@ -1,19 +1,19 @@
-﻿using System;
+using System;
 
-namespace StardewModdingAPI.Tests
+namespace SMAPI.Tests
 {
     /// <summary>Provides sample values for unit testing.</summary>
     internal static class Sample
     {
         /*********
-        ** Properties
+        ** Fields
         *********/
         /// <summary>A random number generator.</summary>
         private static readonly Random Random = new Random();
 
 
         /*********
-        ** Properties
+        ** Accessors
         *********/
         /// <summary>Get a sample string.</summary>
         public static string String()

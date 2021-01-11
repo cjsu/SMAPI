@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using StardewValley;
 
 namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.Player
@@ -7,17 +7,10 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.Player
     internal class SetMoneyCommand : TrainerCommand
     {
         /*********
-        ** Properties
+        ** Fields
         *********/
         /// <summary>Whether to keep the player's money at a set value.</summary>
         private bool InfiniteMoney;
-
-
-        /*********
-        ** Accessors
-        *********/
-        /// <summary>Whether the command needs to perform logic when the game updates.</summary>
-        public override bool NeedsUpdate => this.InfiniteMoney;
 
 
         /*********
@@ -25,7 +18,7 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.Player
         *********/
         /// <summary>Construct an instance.</summary>
         public SetMoneyCommand()
-            : base("player_setmoney", "Sets the player's money.\n\nUsage: player_setmoney <value>\n- value: an integer amount, or 'inf' for infinite money.") { }
+            : base("player_setmoney", "Sets the player's money.\n\nUsage: player_setmoney <value>\n- value: an integer amount, or 'inf' for infinite money.", mayNeedUpdate: true) { }
 
         /// <summary>Handle the command.</summary>
         /// <param name="monitor">Writes messages to the console and log file.</param>
@@ -62,10 +55,10 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.Player
 
         /// <summary>Perform any logic needed on update tick.</summary>
         /// <param name="monitor">Writes messages to the console and log file.</param>
-        public override void Update(IMonitor monitor)
+        public override void OnUpdated(IMonitor monitor)
         {
-            if (this.InfiniteMoney)
-                Game1.player.money = 999999;
+            if (this.InfiniteMoney && Context.IsWorldReady)
+                Game1.player.Money = 999999;
         }
     }
 }

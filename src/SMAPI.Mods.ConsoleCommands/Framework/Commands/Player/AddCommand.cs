@@ -10,12 +10,12 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.Player
     internal class AddCommand : TrainerCommand
     {
         /*********
-        ** Properties
+        ** Fields
         *********/
         /// <summary>Provides methods for searching and constructing items.</summary>
         private readonly ItemRepository Items = new ItemRepository();
 
-        /// <summary>The type names recognised by this command.</summary>
+        /// <summary>The type names recognized by this command.</summary>
         private readonly string[] ValidTypes = Enum.GetNames(typeof(ItemType)).Concat(new[] { "Name" }).ToArray();
 
 
@@ -100,27 +100,25 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.Player
 
             // find matching items
             SearchableItem[] matches = this.Items.GetAll().Where(p => p.NameContains(name)).ToArray();
-            switch (matches.Length)
+            if (!matches.Any())
             {
-                // none found
-                case 0:
-                    monitor.Log($"There's no item with name '{name}'. You can use the 'list_items [name]' command to search for items.", LogLevel.Error);
-                    return null;
-
-                // exact match
-                case 1 when matches[0].NameEquivalentTo(name):
-                    return matches[0];
-
-                // list matches
-                default:
-                    string options = this.GetTableString(
-                        data: matches,
-                        header: new[] { "type", "name", "command" },
-                        getRow: item => new[] { item.Type.ToString(), item.DisplayName, $"player_add {item.Type} {item.ID}" }
-                    );
-                    monitor.Log($"There's no item with name '{name}'. Do you mean one of these?\n\n{options}", LogLevel.Info);
-                    return null;
+                monitor.Log($"There's no item with name '{name}'. You can use the 'list_items [name]' command to search for items.", LogLevel.Error);
+                return null;
             }
+
+            // handle single exact match
+            SearchableItem[] exactMatches = matches.Where(p => p.NameEquivalentTo(name)).ToArray();
+            if (exactMatches.Length == 1)
+                return exactMatches[0];
+
+            // handle ambiguous results
+            string options = this.GetTableString(
+                data: matches,
+                header: new[] { "type", "name", "command" },
+                getRow: item => new[] { item.Type.ToString(), item.DisplayName, $"player_add {item.Type} {item.ID}" }
+            );
+            monitor.Log($"There's no item with name '{name}'. Do you mean one of these?\n\n{options}", LogLevel.Info);
+            return null;
         }
 
         /// <summary>Get the command description.</summary>

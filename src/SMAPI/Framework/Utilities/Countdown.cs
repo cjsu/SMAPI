@@ -34,7 +34,7 @@
             this.Current--;
             return true;
         }
-        
+
         /// <summary>Restart the countdown.</summary>
         public void Reset()
         {

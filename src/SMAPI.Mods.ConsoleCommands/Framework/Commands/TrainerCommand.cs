@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,8 +16,11 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands
         /// <summary>The command description.</summary>
         public string Description { get; }
 
-        /// <summary>Whether the command needs to perform logic when the game updates.</summary>
-        public virtual bool NeedsUpdate { get; } = false;
+        /// <summary>Whether the command may need to perform logic when the player presses a button. This value shouldn't change.</summary>
+        public bool MayNeedInput { get; }
+
+        /// <summary>Whether the command may need to perform logic when the game updates. This value shouldn't change.</summary>
+        public bool MayNeedUpdate { get; }
 
 
         /*********
@@ -31,7 +34,12 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands
 
         /// <summary>Perform any logic needed on update tick.</summary>
         /// <param name="monitor">Writes messages to the console and log file.</param>
-        public virtual void Update(IMonitor monitor) { }
+        public virtual void OnUpdated(IMonitor monitor) { }
+
+        /// <summary>Perform any logic when input is received.</summary>
+        /// <param name="monitor">Writes messages to the console and log file.</param>
+        /// <param name="button">The button that was pressed.</param>
+        public virtual void OnButtonPressed(IMonitor monitor, SButton button) { }
 
 
         /*********
@@ -40,10 +48,14 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands
         /// <summary>Construct an instance.</summary>
         /// <param name="name">The command name the user must type.</param>
         /// <param name="description">The command description.</param>
-        protected TrainerCommand(string name, string description)
+        /// <param name="mayNeedInput">Whether the command may need to perform logic when the player presses a button.</param>
+        /// <param name="mayNeedUpdate">Whether the command may need to perform logic when the game updates.</param>
+        protected TrainerCommand(string name, string description, bool mayNeedInput = false, bool mayNeedUpdate = false)
         {
             this.Name = name;
             this.Description = description;
+            this.MayNeedInput = mayNeedInput;
+            this.MayNeedUpdate = mayNeedUpdate;
         }
 
         /// <summary>Log an error indicating incorrect usage.</summary>
@@ -94,8 +106,9 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands
 
             return string.Join(
                 Environment.NewLine,
-                lines.Select(line => string.Join(" | ", line.Select((field, i) => field.PadRight(widths[i], ' ')).ToArray())
-                )
+                lines.Select(line => string.Join(" | ",
+                    line.Select((field, i) => field.PadLeft(widths[i], ' '))
+                ))
             );
         }
     }

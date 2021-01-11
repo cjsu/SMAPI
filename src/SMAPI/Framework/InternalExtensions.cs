@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using System.Threading;
 using Microsoft.Xna.Framework.Graphics;
-using Newtonsoft.Json.Linq;
+using StardewModdingAPI.Framework.Events;
 using StardewModdingAPI.Framework.Reflection;
 using StardewValley;
+using StardewValley.Menus;
 
 namespace StardewModdingAPI.Framework
 {
@@ -41,10 +44,21 @@ namespace StardewModdingAPI.Framework
         }
 
         /****
+        ** ManagedEvent
+        ****/
+        /// <summary>Raise the event using the default event args and notify all handlers.</summary>
+        /// <typeparam name="TEventArgs">The event args type to construct.</typeparam>
+        /// <param name="event">The event to raise.</param>
+        public static void RaiseEmpty<TEventArgs>(this ManagedEvent<TEventArgs> @event) where TEventArgs : new()
+        {
+            @event.Raise(Singleton<TEventArgs>.Instance);
+        }
+
+        /****
         ** Exceptions
         ****/
         /// <summary>Get a string representation of an exception suitable for writing to the error log.</summary>
-        /// <param name="exception">The error to summarise.</param>
+        /// <param name="exception">The error to summarize.</param>
         public static string GetLogSummary(this Exception exception)
         {
             switch (exception)
@@ -73,6 +87,91 @@ namespace StardewModdingAPI.Framework
         }
 
         /****
+        ** ReaderWriterLockSlim
+        ****/
+        /// <summary>Run code within a read lock.</summary>
+        /// <param name="lock">The lock to set.</param>
+        /// <param name="action">The action to perform.</param>
+        public static void InReadLock(this ReaderWriterLockSlim @lock, Action action)
+        {
+            @lock.EnterReadLock();
+            try
+            {
+                action();
+            }
+            finally
+            {
+                @lock.ExitReadLock();
+            }
+        }
+
+        /// <summary>Run code within a read lock.</summary>
+        /// <typeparam name="TReturn">The action's return value.</typeparam>
+        /// <param name="lock">The lock to set.</param>
+        /// <param name="action">The action to perform.</param>
+        public static TReturn InReadLock<TReturn>(this ReaderWriterLockSlim @lock, Func<TReturn> action)
+        {
+            @lock.EnterReadLock();
+            try
+            {
+                return action();
+            }
+            finally
+            {
+                @lock.ExitReadLock();
+            }
+        }
+
+        /// <summary>Run code within a write lock.</summary>
+        /// <param name="lock">The lock to set.</param>
+        /// <param name="action">The action to perform.</param>
+        public static void InWriteLock(this ReaderWriterLockSlim @lock, Action action)
+        {
+            @lock.EnterWriteLock();
+            try
+            {
+                action();
+            }
+            finally
+            {
+                @lock.ExitWriteLock();
+            }
+        }
+
+        /// <summary>Run code within a write lock.</summary>
+        /// <typeparam name="TReturn">The action's return value.</typeparam>
+        /// <param name="lock">The lock to set.</param>
+        /// <param name="action">The action to perform.</param>
+        public static TReturn InWriteLock<TReturn>(this ReaderWriterLockSlim @lock, Func<TReturn> action)
+        {
+            @lock.EnterWriteLock();
+            try
+            {
+                return action();
+            }
+            finally
+            {
+                @lock.ExitWriteLock();
+            }
+        }
+
+        /****
+        ** IActiveClickableMenu
+        ****/
+        /// <summary>Get a string representation of the menu chain to the given menu (including the specified menu), in parent to child order.</summary>
+        /// <param name="menu">The menu whose chain to get.</param>
+        public static string GetMenuChainLabel(this IClickableMenu menu)
+        {
+            static IEnumerable<IClickableMenu> GetAncestors(IClickableMenu menu)
+            {
+                for (; menu != null; menu = menu.GetParentMenu())
+                    yield return menu;
+            }
+
+            return string.Join(" > ", GetAncestors(menu).Reverse().Select(p => p.GetType().FullName));
+        }
+
+        /****
         ** Sprite batch
         ****/
         /// <summary>Get whether the sprite batch is between a begin and end pair.</summary>
@@ -83,28 +182,13 @@ namespace StardewModdingAPI.Framework
             // get field name
             const string fieldName =
 #if SMAPI_FOR_WINDOWS
-            "inBeginEndPair";
+                "inBeginEndPair";
 #else
-            "_beginCalled";
+                "_beginCalled";
 #endif
 
             // get result
             return reflection.GetField<bool>(Game1.spriteBatch, fieldName).GetValue();
-        }
-
-        /****
-        ** Json.NET
-        ****/
-        /// <summary>Get a JSON field value from a case-insensitive field name. This will check for an exact match first, then search without case sensitivity.</summary>
-        /// <typeparam name="T">The value type.</typeparam>
-        /// <param name="obj">The JSON object to search.</param>
-        /// <param name="fieldName">The field name.</param>
-        public static T ValueIgnoreCase<T>(this JObject obj, string fieldName)
-        {
-            JToken token = obj.GetValue(fieldName, StringComparison.InvariantCultureIgnoreCase);
-            return token != null
-                ? token.Value<T>()
-                : default(T);
         }
     }
 }

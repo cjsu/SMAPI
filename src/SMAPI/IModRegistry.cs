@@ -6,12 +6,12 @@ namespace StardewModdingAPI
     public interface IModRegistry : IModLinked
     {
         /// <summary>Get metadata for all loaded mods.</summary>
-        IEnumerable<IManifest> GetAll();
+        IEnumerable<IModInfo> GetAll();
 
         /// <summary>Get metadata for a loaded mod.</summary>
         /// <param name="uniqueID">The mod's unique ID.</param>
         /// <returns>Returns the matching mod's metadata, or <c>null</c> if not found.</returns>
-        IManifest Get(string uniqueID);
+        IModInfo Get(string uniqueID);
 
         /// <summary>Get whether a mod has been loaded.</summary>
         /// <param name="uniqueID">The mod's unique ID.</param>

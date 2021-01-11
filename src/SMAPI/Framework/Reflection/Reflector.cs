@@ -6,11 +6,11 @@ using System.Runtime.Caching;
 namespace StardewModdingAPI.Framework.Reflection
 {
     /// <summary>Provides helper methods for accessing inaccessible code.</summary>
-    /// <remarks>This implementation searches up the type hierarchy, and caches the reflected fields and methods with a sliding expiry (to optimise performance without unnecessary memory usage).</remarks>
+    /// <remarks>This implementation searches up the type hierarchy, and caches the reflected fields and methods with a sliding expiry (to optimize performance without unnecessary memory usage).</remarks>
     internal class Reflector
     {
         /*********
-        ** Properties
+        ** Fields
         *********/
         /// <summary>The cached fields and methods found via reflection.</summary>
         private readonly MemoryCache Cache = new MemoryCache(typeof(Reflector).FullName);
@@ -263,7 +263,7 @@ namespace StardewModdingAPI.Framework.Reflection
                 CacheEntry entry = (CacheEntry)this.Cache[key];
                 return entry.IsValid
                     ? (TMemberInfo)entry.MemberInfo
-                    : default(TMemberInfo);
+                    : default;
             }
 
             // fetch & cache new value

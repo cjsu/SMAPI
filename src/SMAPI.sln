@@ -1,15 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2036
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StardewModdingAPI.Mods.ConsoleCommands", "SMAPI.Mods.ConsoleCommands\StardewModdingAPI.Mods.ConsoleCommands.csproj", "{28480467-1A48-46A7-99F8-236D95225359}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StardewModdingAPI", "SMAPI\StardewModdingAPI.csproj", "{F1A573B0-F436-472C-AE29-0B91EA6B9F8F}"
-	ProjectSection(ProjectDependencies) = postProject
-		{80AD8528-AA49-4731-B4A6-C691845815A1} = {80AD8528-AA49-4731-B4A6-C691845815A1}
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".root", ".root", "{86C452BE-D2D8-45B4-B63F-E329EB06CEDA}"
 	ProjectSection(SolutionItems) = preProject
 		..\.editorconfig = ..\.editorconfig
@@ -18,171 +11,143 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".root", ".root", "{86C452BE
 		..\LICENSE.txt = ..\LICENSE.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StardewModdingAPI.Installer", "SMAPI.Installer\StardewModdingAPI.Installer.csproj", "{443DDF81-6AAF-420A-A610-3459F37E5575}"
-	ProjectSection(ProjectDependencies) = postProject
-		{28480467-1A48-46A7-99F8-236D95225359} = {28480467-1A48-46A7-99F8-236D95225359}
-		{F1A573B0-F436-472C-AE29-0B91EA6B9F8F} = {F1A573B0-F436-472C-AE29-0B91EA6B9F8F}
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{4B1CEB70-F756-4A57-AAE8-8CD78C475F25}"
+	ProjectSection(SolutionItems) = preProject
+		..\.github\CONTRIBUTING.md = ..\.github\CONTRIBUTING.md
+		..\.github\SUPPORT.md = ..\.github\SUPPORT.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StardewModdingAPI.AssemblyRewriters", "SMAPI.AssemblyRewriters\StardewModdingAPI.AssemblyRewriters.csproj", "{10DB0676-9FC1-4771-A2C8-E2519F091E49}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StardewModdingAPI.Tests", "SMAPI.Tests\StardewModdingAPI.Tests.csproj", "{36CCB19E-92EB-48C7-9615-98EEFD45109B}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StardewModdingAPI.Web", "SMAPI.Web\StardewModdingAPI.Web.csproj", "{A308F679-51A3-4006-92D5-BAEC7EBD01A1}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Internal", "Internal", "{82D22ED7-A0A7-4D64-8E92-4B6A5E74ED11}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "StardewModdingAPI.Common", "SMAPI.Common\StardewModdingAPI.Common.shproj", "{2AA02FB6-FF03-41CF-A215-2EE60AB4F5DC}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{EB35A917-67B9-4EFA-8DFC-4FB49B3949BB}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ISSUE_TEMPLATE", "ISSUE_TEMPLATE", "{F4453AB6-D7D6-447F-A973-956CC777968F}"
 	ProjectSection(SolutionItems) = preProject
-		..\docs\CONTRIBUTING.md = ..\docs\CONTRIBUTING.md
-		..\docs\mod-build-config.md = ..\docs\mod-build-config.md
-		..\docs\README.md = ..\docs\README.md
-		..\docs\release-notes.md = ..\docs\release-notes.md
-		..\docs\technical-docs.md = ..\docs\technical-docs.md
+		..\.github\ISSUE_TEMPLATE\bug_report.md = ..\.github\ISSUE_TEMPLATE\bug_report.md
+		..\.github\ISSUE_TEMPLATE\feature_request.md = ..\.github\ISSUE_TEMPLATE\feature_request.md
+		..\.github\ISSUE_TEMPLATE\general.md = ..\.github\ISSUE_TEMPLATE\general.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{09CF91E5-5BAB-4650-A200-E5EA9A633046}"
 	ProjectSection(SolutionItems) = preProject
 		..\build\common.targets = ..\build\common.targets
-		..\build\GlobalAssemblyInfo.cs = ..\build\GlobalAssemblyInfo.cs
+		..\build\find-game-folder.targets = ..\build\find-game-folder.targets
 		..\build\prepare-install-package.targets = ..\build\prepare-install-package.targets
-		..\build\prepare-nuget-package.targets = ..\build\prepare-nuget-package.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StardewModdingAPI.ModBuildConfig", "SMAPI.ModBuildConfig\StardewModdingAPI.ModBuildConfig.csproj", "{EA4F1E80-743F-4A1D-9757-AE66904A196A}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{EB35A917-67B9-4EFA-8DFC-4FB49B3949BB}"
+	ProjectSection(SolutionItems) = preProject
+		..\docs\mod-build-config.md = ..\docs\mod-build-config.md
+		..\docs\README.md = ..\docs\README.md
+		..\docs\release-notes-archived.md = ..\docs\release-notes-archived.md
+		..\docs\release-notes.md = ..\docs\release-notes.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "technical", "technical", "{5947303D-3512-413A-9009-7AC43F5D3513}"
+	ProjectSection(SolutionItems) = preProject
+		..\docs\technical\mod-package.md = ..\docs\technical\mod-package.md
+		..\docs\technical\smapi.md = ..\docs\technical\smapi.md
+		..\docs\technical\web.md = ..\docs\technical\web.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Internal", "Internal", "{82D22ED7-A0A7-4D64-8E92-4B6A5E74ED11}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SMAPI.Internal", "SMAPI.Internal\SMAPI.Internal.shproj", "{85208F8D-6FD1-4531-BE05-7142490F59FE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMAPI.ModBuildConfig.Analyzer.Tests", "SMAPI.ModBuildConfig.Analyzer.Tests\SMAPI.ModBuildConfig.Analyzer.Tests.csproj", "{680B2641-81EA-467C-86A5-0E81CDC57ED0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMAPI.Tests", "SMAPI.Tests\SMAPI.Tests.csproj", "{AA95884B-7097-476E-92C8-D0500DE9D6D1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMAPI", "SMAPI\SMAPI.csproj", "{E6DA2198-7686-4F1D-B312-4A4DC70884C0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMAPI.Installer", "SMAPI.Installer\SMAPI.Installer.csproj", "{0A9BB24F-15FF-4C26-B1A2-81F7AE316518}"
 	ProjectSection(ProjectDependencies) = postProject
-		{80AD8528-AA49-4731-B4A6-C691845815A1} = {80AD8528-AA49-4731-B4A6-C691845815A1}
+		{0634EA4C-3B8F-42DB-AEA6-CA9E4EF6E92F} = {0634EA4C-3B8F-42DB-AEA6-CA9E4EF6E92F}
+		{CD53AD6F-97F4-4872-A212-50C2A0FD3601} = {CD53AD6F-97F4-4872-A212-50C2A0FD3601}
+		{E6DA2198-7686-4F1D-B312-4A4DC70884C0} = {E6DA2198-7686-4F1D-B312-4A4DC70884C0}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StardewModdingAPI.ModBuildConfig.Analyzer", "SMAPI.ModBuildConfig.Analyzer\StardewModdingAPI.ModBuildConfig.Analyzer.csproj", "{80AD8528-AA49-4731-B4A6-C691845815A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMAPI.ModBuildConfig", "SMAPI.ModBuildConfig\SMAPI.ModBuildConfig.csproj", "{1B3821E6-D030-402C-B3A1-7CA45C2800EA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMAPI.ModBuildConfig.Analyzer.Tests", "SMAPI.ModBuildConfig.Analyzer.Tests\SMAPI.ModBuildConfig.Analyzer.Tests.csproj", "{0CF97929-B0D0-4D73-B7BF-4FF7191035F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMAPI.ModBuildConfig.Analyzer", "SMAPI.ModBuildConfig.Analyzer\SMAPI.ModBuildConfig.Analyzer.csproj", "{517677D7-7299-426F-B1A3-47BDCC2F1214}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMAPI.Mods.ConsoleCommands", "SMAPI.Mods.ConsoleCommands\SMAPI.Mods.ConsoleCommands.csproj", "{0634EA4C-3B8F-42DB-AEA6-CA9E4EF6E92F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMAPI.Mods.SaveBackup", "SMAPI.Mods.SaveBackup\SMAPI.Mods.SaveBackup.csproj", "{CD53AD6F-97F4-4872-A212-50C2A0FD3601}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMAPI.Toolkit", "SMAPI.Toolkit\SMAPI.Toolkit.csproj", "{08184F74-60AD-4EEE-A78C-F4A35ADE6246}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMAPI.Toolkit.CoreInterfaces", "SMAPI.Toolkit.CoreInterfaces\SMAPI.Toolkit.CoreInterfaces.csproj", "{ED8E41FA-DDFA-4A77-932E-9853D279A129}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMAPI.Web", "SMAPI.Web\SMAPI.Web.csproj", "{80EFD92F-728F-41E0-8A5B-9F6F49A91899}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		SMAPI.Common\StardewModdingAPI.Common.projitems*{2aa02fb6-ff03-41cf-a215-2ee60ab4f5dc}*SharedItemsImports = 13
-		SMAPI.Common\StardewModdingAPI.Common.projitems*{443ddf81-6aaf-420a-a610-3459f37e5575}*SharedItemsImports = 4
-		SMAPI.Common\StardewModdingAPI.Common.projitems*{ea4f1e80-743f-4a1d-9757-ae66904a196a}*SharedItemsImports = 4
-		SMAPI.Common\StardewModdingAPI.Common.projitems*{f1a573b0-f436-472c-ae29-0b91ea6b9f8f}*SharedItemsImports = 4
+		SMAPI.Internal\SMAPI.Internal.projitems*{0634ea4c-3b8f-42db-aea6-ca9e4ef6e92f}*SharedItemsImports = 5
+		SMAPI.Internal\SMAPI.Internal.projitems*{0a9bb24f-15ff-4c26-b1a2-81f7ae316518}*SharedItemsImports = 5
+		SMAPI.Internal\SMAPI.Internal.projitems*{80efd92f-728f-41e0-8a5b-9f6f49a91899}*SharedItemsImports = 5
+		SMAPI.Internal\SMAPI.Internal.projitems*{85208f8d-6fd1-4531-be05-7142490f59fe}*SharedItemsImports = 13
+		SMAPI.Internal\SMAPI.Internal.projitems*{cd53ad6f-97f4-4872-a212-50c2a0fd3601}*SharedItemsImports = 5
+		SMAPI.Internal\SMAPI.Internal.projitems*{e6da2198-7686-4f1d-b312-4a4dc70884c0}*SharedItemsImports = 5
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
-		Debug|Mixed Platforms = Debug|Mixed Platforms
-		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
-		Release|Mixed Platforms = Release|Mixed Platforms
-		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{28480467-1A48-46A7-99F8-236D95225359}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{28480467-1A48-46A7-99F8-236D95225359}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{28480467-1A48-46A7-99F8-236D95225359}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{28480467-1A48-46A7-99F8-236D95225359}.Debug|x86.ActiveCfg = Debug|x86
-		{28480467-1A48-46A7-99F8-236D95225359}.Debug|x86.Build.0 = Debug|x86
-		{28480467-1A48-46A7-99F8-236D95225359}.Release|Any CPU.ActiveCfg = Release|x86
-		{28480467-1A48-46A7-99F8-236D95225359}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{28480467-1A48-46A7-99F8-236D95225359}.Release|Mixed Platforms.Build.0 = Release|x86
-		{28480467-1A48-46A7-99F8-236D95225359}.Release|x86.ActiveCfg = Release|x86
-		{28480467-1A48-46A7-99F8-236D95225359}.Release|x86.Build.0 = Release|x86
-		{F1A573B0-F436-472C-AE29-0B91EA6B9F8F}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{F1A573B0-F436-472C-AE29-0B91EA6B9F8F}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{F1A573B0-F436-472C-AE29-0B91EA6B9F8F}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{F1A573B0-F436-472C-AE29-0B91EA6B9F8F}.Debug|x86.ActiveCfg = Debug|x86
-		{F1A573B0-F436-472C-AE29-0B91EA6B9F8F}.Debug|x86.Build.0 = Debug|x86
-		{F1A573B0-F436-472C-AE29-0B91EA6B9F8F}.Release|Any CPU.ActiveCfg = Release|x86
-		{F1A573B0-F436-472C-AE29-0B91EA6B9F8F}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{F1A573B0-F436-472C-AE29-0B91EA6B9F8F}.Release|Mixed Platforms.Build.0 = Release|x86
-		{F1A573B0-F436-472C-AE29-0B91EA6B9F8F}.Release|x86.ActiveCfg = Release|x86
-		{F1A573B0-F436-472C-AE29-0B91EA6B9F8F}.Release|x86.Build.0 = Release|x86
-		{443DDF81-6AAF-420A-A610-3459F37E5575}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{443DDF81-6AAF-420A-A610-3459F37E5575}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{443DDF81-6AAF-420A-A610-3459F37E5575}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{443DDF81-6AAF-420A-A610-3459F37E5575}.Debug|x86.ActiveCfg = Debug|x86
-		{443DDF81-6AAF-420A-A610-3459F37E5575}.Debug|x86.Build.0 = Debug|x86
-		{443DDF81-6AAF-420A-A610-3459F37E5575}.Release|Any CPU.ActiveCfg = Release|x86
-		{443DDF81-6AAF-420A-A610-3459F37E5575}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{443DDF81-6AAF-420A-A610-3459F37E5575}.Release|Mixed Platforms.Build.0 = Release|x86
-		{443DDF81-6AAF-420A-A610-3459F37E5575}.Release|x86.ActiveCfg = Release|x86
-		{443DDF81-6AAF-420A-A610-3459F37E5575}.Release|x86.Build.0 = Release|x86
-		{10DB0676-9FC1-4771-A2C8-E2519F091E49}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{10DB0676-9FC1-4771-A2C8-E2519F091E49}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{10DB0676-9FC1-4771-A2C8-E2519F091E49}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{10DB0676-9FC1-4771-A2C8-E2519F091E49}.Debug|x86.ActiveCfg = Debug|x86
-		{10DB0676-9FC1-4771-A2C8-E2519F091E49}.Debug|x86.Build.0 = Debug|x86
-		{10DB0676-9FC1-4771-A2C8-E2519F091E49}.Release|Any CPU.ActiveCfg = Release|x86
-		{10DB0676-9FC1-4771-A2C8-E2519F091E49}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{10DB0676-9FC1-4771-A2C8-E2519F091E49}.Release|Mixed Platforms.Build.0 = Release|x86
-		{10DB0676-9FC1-4771-A2C8-E2519F091E49}.Release|x86.ActiveCfg = Release|x86
-		{10DB0676-9FC1-4771-A2C8-E2519F091E49}.Release|x86.Build.0 = Release|x86
-		{36CCB19E-92EB-48C7-9615-98EEFD45109B}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{36CCB19E-92EB-48C7-9615-98EEFD45109B}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{36CCB19E-92EB-48C7-9615-98EEFD45109B}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{36CCB19E-92EB-48C7-9615-98EEFD45109B}.Debug|x86.ActiveCfg = Debug|x86
-		{36CCB19E-92EB-48C7-9615-98EEFD45109B}.Debug|x86.Build.0 = Debug|x86
-		{36CCB19E-92EB-48C7-9615-98EEFD45109B}.Release|Any CPU.ActiveCfg = Release|x86
-		{36CCB19E-92EB-48C7-9615-98EEFD45109B}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{36CCB19E-92EB-48C7-9615-98EEFD45109B}.Release|Mixed Platforms.Build.0 = Release|x86
-		{36CCB19E-92EB-48C7-9615-98EEFD45109B}.Release|x86.ActiveCfg = Release|x86
-		{36CCB19E-92EB-48C7-9615-98EEFD45109B}.Release|x86.Build.0 = Release|x86
-		{A308F679-51A3-4006-92D5-BAEC7EBD01A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A308F679-51A3-4006-92D5-BAEC7EBD01A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A308F679-51A3-4006-92D5-BAEC7EBD01A1}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{A308F679-51A3-4006-92D5-BAEC7EBD01A1}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{A308F679-51A3-4006-92D5-BAEC7EBD01A1}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{A308F679-51A3-4006-92D5-BAEC7EBD01A1}.Debug|x86.Build.0 = Debug|Any CPU
-		{A308F679-51A3-4006-92D5-BAEC7EBD01A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A308F679-51A3-4006-92D5-BAEC7EBD01A1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A308F679-51A3-4006-92D5-BAEC7EBD01A1}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{A308F679-51A3-4006-92D5-BAEC7EBD01A1}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{A308F679-51A3-4006-92D5-BAEC7EBD01A1}.Release|x86.ActiveCfg = Release|Any CPU
-		{A308F679-51A3-4006-92D5-BAEC7EBD01A1}.Release|x86.Build.0 = Release|Any CPU
-		{EA4F1E80-743F-4A1D-9757-AE66904A196A}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{EA4F1E80-743F-4A1D-9757-AE66904A196A}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{EA4F1E80-743F-4A1D-9757-AE66904A196A}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{EA4F1E80-743F-4A1D-9757-AE66904A196A}.Debug|x86.ActiveCfg = Debug|x86
-		{EA4F1E80-743F-4A1D-9757-AE66904A196A}.Debug|x86.Build.0 = Debug|x86
-		{EA4F1E80-743F-4A1D-9757-AE66904A196A}.Release|Any CPU.ActiveCfg = Release|x86
-		{EA4F1E80-743F-4A1D-9757-AE66904A196A}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{EA4F1E80-743F-4A1D-9757-AE66904A196A}.Release|Mixed Platforms.Build.0 = Release|x86
-		{EA4F1E80-743F-4A1D-9757-AE66904A196A}.Release|x86.ActiveCfg = Release|x86
-		{EA4F1E80-743F-4A1D-9757-AE66904A196A}.Release|x86.Build.0 = Release|x86
-		{80AD8528-AA49-4731-B4A6-C691845815A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{80AD8528-AA49-4731-B4A6-C691845815A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{80AD8528-AA49-4731-B4A6-C691845815A1}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{80AD8528-AA49-4731-B4A6-C691845815A1}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{80AD8528-AA49-4731-B4A6-C691845815A1}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{80AD8528-AA49-4731-B4A6-C691845815A1}.Debug|x86.Build.0 = Debug|Any CPU
-		{80AD8528-AA49-4731-B4A6-C691845815A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{80AD8528-AA49-4731-B4A6-C691845815A1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{80AD8528-AA49-4731-B4A6-C691845815A1}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{80AD8528-AA49-4731-B4A6-C691845815A1}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{80AD8528-AA49-4731-B4A6-C691845815A1}.Release|x86.ActiveCfg = Release|Any CPU
-		{80AD8528-AA49-4731-B4A6-C691845815A1}.Release|x86.Build.0 = Release|Any CPU
-		{0CF97929-B0D0-4D73-B7BF-4FF7191035F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0CF97929-B0D0-4D73-B7BF-4FF7191035F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0CF97929-B0D0-4D73-B7BF-4FF7191035F9}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{0CF97929-B0D0-4D73-B7BF-4FF7191035F9}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{0CF97929-B0D0-4D73-B7BF-4FF7191035F9}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{0CF97929-B0D0-4D73-B7BF-4FF7191035F9}.Debug|x86.Build.0 = Debug|Any CPU
-		{0CF97929-B0D0-4D73-B7BF-4FF7191035F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0CF97929-B0D0-4D73-B7BF-4FF7191035F9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0CF97929-B0D0-4D73-B7BF-4FF7191035F9}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{0CF97929-B0D0-4D73-B7BF-4FF7191035F9}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{0CF97929-B0D0-4D73-B7BF-4FF7191035F9}.Release|x86.ActiveCfg = Release|Any CPU
-		{0CF97929-B0D0-4D73-B7BF-4FF7191035F9}.Release|x86.Build.0 = Release|Any CPU
+		{680B2641-81EA-467C-86A5-0E81CDC57ED0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{680B2641-81EA-467C-86A5-0E81CDC57ED0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{680B2641-81EA-467C-86A5-0E81CDC57ED0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{680B2641-81EA-467C-86A5-0E81CDC57ED0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA95884B-7097-476E-92C8-D0500DE9D6D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA95884B-7097-476E-92C8-D0500DE9D6D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA95884B-7097-476E-92C8-D0500DE9D6D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA95884B-7097-476E-92C8-D0500DE9D6D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6DA2198-7686-4F1D-B312-4A4DC70884C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6DA2198-7686-4F1D-B312-4A4DC70884C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6DA2198-7686-4F1D-B312-4A4DC70884C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6DA2198-7686-4F1D-B312-4A4DC70884C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A9BB24F-15FF-4C26-B1A2-81F7AE316518}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A9BB24F-15FF-4C26-B1A2-81F7AE316518}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A9BB24F-15FF-4C26-B1A2-81F7AE316518}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A9BB24F-15FF-4C26-B1A2-81F7AE316518}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B3821E6-D030-402C-B3A1-7CA45C2800EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B3821E6-D030-402C-B3A1-7CA45C2800EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B3821E6-D030-402C-B3A1-7CA45C2800EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B3821E6-D030-402C-B3A1-7CA45C2800EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{517677D7-7299-426F-B1A3-47BDCC2F1214}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{517677D7-7299-426F-B1A3-47BDCC2F1214}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{517677D7-7299-426F-B1A3-47BDCC2F1214}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{517677D7-7299-426F-B1A3-47BDCC2F1214}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0634EA4C-3B8F-42DB-AEA6-CA9E4EF6E92F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0634EA4C-3B8F-42DB-AEA6-CA9E4EF6E92F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0634EA4C-3B8F-42DB-AEA6-CA9E4EF6E92F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0634EA4C-3B8F-42DB-AEA6-CA9E4EF6E92F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD53AD6F-97F4-4872-A212-50C2A0FD3601}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD53AD6F-97F4-4872-A212-50C2A0FD3601}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD53AD6F-97F4-4872-A212-50C2A0FD3601}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD53AD6F-97F4-4872-A212-50C2A0FD3601}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08184F74-60AD-4EEE-A78C-F4A35ADE6246}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08184F74-60AD-4EEE-A78C-F4A35ADE6246}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08184F74-60AD-4EEE-A78C-F4A35ADE6246}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08184F74-60AD-4EEE-A78C-F4A35ADE6246}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED8E41FA-DDFA-4A77-932E-9853D279A129}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED8E41FA-DDFA-4A77-932E-9853D279A129}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED8E41FA-DDFA-4A77-932E-9853D279A129}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED8E41FA-DDFA-4A77-932E-9853D279A129}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80EFD92F-728F-41E0-8A5B-9F6F49A91899}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80EFD92F-728F-41E0-8A5B-9F6F49A91899}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80EFD92F-728F-41E0-8A5B-9F6F49A91899}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80EFD92F-728F-41E0-8A5B-9F6F49A91899}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{10DB0676-9FC1-4771-A2C8-E2519F091E49} = {82D22ED7-A0A7-4D64-8E92-4B6A5E74ED11}
-		{36CCB19E-92EB-48C7-9615-98EEFD45109B} = {82D22ED7-A0A7-4D64-8E92-4B6A5E74ED11}
-		{2AA02FB6-FF03-41CF-A215-2EE60AB4F5DC} = {82D22ED7-A0A7-4D64-8E92-4B6A5E74ED11}
-		{EB35A917-67B9-4EFA-8DFC-4FB49B3949BB} = {86C452BE-D2D8-45B4-B63F-E329EB06CEDA}
+		{4B1CEB70-F756-4A57-AAE8-8CD78C475F25} = {86C452BE-D2D8-45B4-B63F-E329EB06CEDA}
+		{F4453AB6-D7D6-447F-A973-956CC777968F} = {4B1CEB70-F756-4A57-AAE8-8CD78C475F25}
 		{09CF91E5-5BAB-4650-A200-E5EA9A633046} = {86C452BE-D2D8-45B4-B63F-E329EB06CEDA}
-		{0CF97929-B0D0-4D73-B7BF-4FF7191035F9} = {82D22ED7-A0A7-4D64-8E92-4B6A5E74ED11}
+		{EB35A917-67B9-4EFA-8DFC-4FB49B3949BB} = {86C452BE-D2D8-45B4-B63F-E329EB06CEDA}
+		{5947303D-3512-413A-9009-7AC43F5D3513} = {EB35A917-67B9-4EFA-8DFC-4FB49B3949BB}
+		{85208F8D-6FD1-4531-BE05-7142490F59FE} = {82D22ED7-A0A7-4D64-8E92-4B6A5E74ED11}
+		{680B2641-81EA-467C-86A5-0E81CDC57ED0} = {82D22ED7-A0A7-4D64-8E92-4B6A5E74ED11}
+		{AA95884B-7097-476E-92C8-D0500DE9D6D1} = {82D22ED7-A0A7-4D64-8E92-4B6A5E74ED11}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {70143042-A862-47A8-A677-7C819DDC90DC}

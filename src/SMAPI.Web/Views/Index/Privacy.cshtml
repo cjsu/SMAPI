@@ -1,0 +1,44 @@
+@using Microsoft.Extensions.Options
+@using StardewModdingAPI.Web.Framework
+@using StardewModdingAPI.Web.Framework.ConfigModels
+@inject IOptions<SiteConfig> SiteConfig
+@{
+    ViewData["Title"] = "SMAPI privacy notes";
+}
+@section Head {
+    <link rel="stylesheet" href="~/Content/css/privacy.css" />
+}
+
+&larr; <a href="@Url.PlainAction("Index", "Index")">back to SMAPI page</a>
+
+<p>SMAPI is an <a href="https://github.com/Pathoschild/SMAPI">open-source</a> and non-profit project. Your privacy is important, so this page explains what information SMAPI uses and transmits. <strong>This page is informational only, it's not a legal document.</strong></p>
+
+<h2>Principles</h2>
+<ol>
+    <li>SMAPI collects the minimum information needed to enable its features (see below).</li>
+    <li>SMAPI does not collect telemetry, analytics, etc.</li>
+    <li>SMAPI will never sell your information.</li>
+</ol>
+
+<h2>Data collected and transmitted</h2>
+<h3 id="web-logging">Web logging</h3>
+<p>This website and SMAPI's web API are hosted on Microsoft Azure. Their servers may automatically collect diagnostics like your IP address, but this information is not visible to SMAPI's web apps or its developers. For more information, see the <a href="https://azure.microsoft.com/en-ca/support/legal/">Microsoft Azure legal resources</a>.</p>
+
+<h3>Update checks</h3>
+<p>SMAPI notifies you when there's a new version of SMAPI or your mods available. To do so, it sends basic metadata like your game/SMAPI/mod versions and platform type to its web API. No personal information is stored by the web app.</p>
+
+<p>You can disable update checks, and no information will be transmitted to the web API. To do so:</p>
+<ol>
+    <li><a href="https://stardewvalleywiki.com/Modding:Game_folder">find your game folder</a>;</li>
+    <li>open the <code>smapi-internal/config.json</code> file in a text editor;</li>
+    <li>change <code>"CheckForUpdates": true</code> to <code>"CheckForUpdates": false</code>.</li>
+</ol>
+
+<h3>Log parser and JSON validator</h3>
+<p>The <a href="https://smapi.io/log">log parser</a> and <a href="https://smapi.io/json">JSON validator</a> let you upload files to analyze and share with other users. The log data is stored for 30 days in an obfuscated form in a private Microsoft Azure Blob storage account. No personal information is stored by the log parser beyond what you choose to upload as part of those files.</p>
+
+<h3>Multiplayer sync</h3>
+<p>As part of its multiplayer API, SMAPI transmits basic context to players you connect to (mainly your OS, SMAPI version, game version, and installed mods). This is used to enable multiplayer features like inter-mod messages, compatibility checks, etc. Although this information is normally hidden from players, it may be visible due to mods or configuration changes.</p>
+
+<h3>Custom mods</h3>
+<p><strong>Mods may collect and transmit any information. Mods (except those provided as part of the SMAPI download) are not covered by this page. Install third-party mods at your own risk.</strong></p>

@@ -1,11 +1,13 @@
 @using Microsoft.Extensions.Options
+@using StardewModdingAPI.Web.Framework
 @using StardewModdingAPI.Web.Framework.ConfigModels
-@inject IOptions<ContextConfig> ContextConfig
+@inject IOptions<SiteConfig> SiteConfig
 
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@ViewData["Title"] - SMAPI.io</title>
     <link rel="stylesheet" href="~/Content/css/main.css" />
     @RenderSection("Head", required: false)
@@ -14,19 +16,28 @@
     <div id="sidebar">
         <h4>SMAPI</h4>
         <ul>
-            <li><a href="@ContextConfig.Value.RootUrl">About SMAPI</a></li>
-            <li><a href="@ContextConfig.Value.LogParserUrl">Log parser</a></li>
-            <li><a href="https://stardewvalleywiki.com/Modding:Index">Docs</a></li>
+            <li><a href="@Url.PlainAction("Index", "Index")">About SMAPI</a></li>
+            <li><a href="https://stardewvalleywiki.com/Modding:Index">Modding docs</a></li>
+        </ul>
+
+        <h4>Tools</h4>
+        <ul>
+            <li><a href="@Url.PlainAction("Index", "Mods")">Mod compatibility</a></li>
+            <li><a href="@Url.PlainAction("Index", "LogParser", values: null)">Log parser</a></li>
+            <li><a href="@Url.PlainAction("Index", "JsonValidator", values: null)">JSON validator</a></li>
         </ul>
     </div>
     <div id="content-column">
         <div id="content">
-            <h1>@ViewData["Title"]</h1>
+            @if (ViewData["ViewTitle"] as string != string.Empty)
+            {
+                <h1>@(ViewData["ViewTitle"] ?? ViewData["Title"])</h1>
+            }
             @RenderBody()
         </div>
         <div id="footer">
             <div id="license">
-                Hi! You can <a href="https://github.com/pathoschild/SMAPI" title="view source">view the source code</a> or <a href="https://github.com/pathoschild/SMAPI/issues" title="report issue">report a bug or suggestion</a>.
+                Hi! See the <a href="@Url.PlainAction("Privacy", "Index")">privacy page</a>, <a href="https://github.com/pathoschild/SMAPI" title="view source">SMAPI's source code</a>, or <a href="https://smapi.io/community" title="community pages">ask questions</a>.
             </div>
         </div>
     </div>

@@ -1,0 +1,9 @@
+{
+    // error messages
+    "warn.invalid-content-removed": "Érvénytelen elemek kerültek eltávolításra, hogy a játék ne omoljon össze (további információk a SMAPI konzolon).",
+
+    // short date format for SDate
+    // tokens: {{day}} (like 15), {{season}} (like Spring), {{seasonLowercase}} (like spring), {{year}} (like 2)
+    "generic.date": "{{season}} {{day}}",
+    "generic.date-with-year": "{{year}}. év {{season}} {{day}}"
+}

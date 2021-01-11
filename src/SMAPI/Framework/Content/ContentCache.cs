@@ -3,24 +3,23 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using Microsoft.Xna.Framework;
-using StardewModdingAPI.Common;
 using StardewModdingAPI.Framework.Reflection;
-using StardewModdingAPI.Framework.Utilities;
+using StardewModdingAPI.Toolkit.Utilities;
 using StardewValley;
 
 namespace StardewModdingAPI.Framework.Content
 {
-    /// <summary>A low-level wrapper around the content cache which handles reading, writing, and invalidating entries in the cache. This doesn't handle any higher-level logic like localisation, loading content, etc. It assumes all keys passed in are already normalised.</summary>
+    /// <summary>A low-level wrapper around the content cache which handles reading, writing, and invalidating entries in the cache. This doesn't handle any higher-level logic like localization, loading content, etc. It assumes all keys passed in are already normalized.</summary>
     internal class ContentCache
     {
         /*********
-        ** Properties
+        ** Fields
         *********/
         /// <summary>The underlying asset cache.</summary>
         private readonly IDictionary<string, object> Cache;
 
-        /// <summary>Applies platform-specific asset key normalisation so it's consistent with the underlying cache.</summary>
-        private readonly Func<string, string> NormaliseAssetNameForPlatform;
+        /// <summary>Applies platform-specific asset key normalization so it's consistent with the underlying cache.</summary>
+        private readonly Func<string, string> NormalizeAssetNameForPlatform;
 
 
         /*********
@@ -52,14 +51,14 @@ namespace StardewModdingAPI.Framework.Content
             // init
             this.Cache = reflection.GetField<Dictionary<string, object>>(contentManager, "loadedAssets").GetValue();
 
-            // get key normalisation logic
-            if (Constants.TargetPlatform == Platform.Windows)
+            // get key normalization logic
+            if (Constants.Platform == Platform.Windows)
             {
                 IReflectedMethod method = reflection.GetMethod(typeof(TitleContainer), "GetCleanPath");
-                this.NormaliseAssetNameForPlatform = path => method.Invoke<string>(path);
+                this.NormalizeAssetNameForPlatform = path => method.Invoke<string>(path);
             }
             else
-                this.NormaliseAssetNameForPlatform = key => key.Replace('\\', '/'); // based on MonoGame's ContentManager.Load<T> logic
+                this.NormalizeAssetNameForPlatform = key => key.Replace('\\', '/'); // based on MonoGame's ContentManager.Load<T> logic
         }
 
         /****
@@ -74,25 +73,25 @@ namespace StardewModdingAPI.Framework.Content
 
 
         /****
-        ** Normalise
+        ** Normalize
         ****/
-        /// <summary>Normalise path separators in a file path. For asset keys, see <see cref="NormaliseKey"/> instead.</summary>
-        /// <param name="path">The file path to normalise.</param>
+        /// <summary>Normalize path separators in a file path. For asset keys, see <see cref="NormalizeKey"/> instead.</summary>
+        /// <param name="path">The file path to normalize.</param>
         [Pure]
-        public string NormalisePathSeparators(string path)
+        public string NormalizePathSeparators(string path)
         {
-            return PathUtilities.NormalisePathSeparators(path);
+            return PathUtilities.NormalizePath(path);
         }
 
-        /// <summary>Normalise a cache key so it's consistent with the underlying cache.</summary>
+        /// <summary>Normalize a cache key so it's consistent with the underlying cache.</summary>
         /// <param name="key">The asset key.</param>
         [Pure]
-        public string NormaliseKey(string key)
+        public string NormalizeKey(string key)
         {
-            key = this.NormalisePathSeparators(key);
-            return key.EndsWith(".xnb", StringComparison.InvariantCultureIgnoreCase)
+            key = this.NormalizePathSeparators(key);
+            return key.EndsWith(".xnb", StringComparison.OrdinalIgnoreCase)
                 ? key.Substring(0, key.Length - 4)
-                : this.NormaliseAssetNameForPlatform(key);
+                : this.NormalizeAssetNameForPlatform(key);
         }
 
         /****
@@ -119,13 +118,12 @@ namespace StardewModdingAPI.Framework.Content
         /// <param name="predicate">Matches the asset keys to invalidate.</param>
         /// <param name="dispose">Whether to dispose invalidated assets. This should only be <c>true</c> when they're being invalidated as part of a dispose, to avoid crashing the game.</param>
         /// <returns>Returns the removed keys (if any).</returns>
-        public IEnumerable<string> Remove(Func<string, Type, bool> predicate, bool dispose = false)
+        public IEnumerable<string> Remove(Func<string, object, bool> predicate, bool dispose)
         {
             List<string> removed = new List<string>();
             foreach (string key in this.Cache.Keys.ToArray())
             {
-                Type type = this.Cache[key].GetType();
-                if (predicate(key, type))
+                if (predicate(key, this.Cache[key]))
                 {
                     this.Remove(key, dispose);
                     removed.Add(key);

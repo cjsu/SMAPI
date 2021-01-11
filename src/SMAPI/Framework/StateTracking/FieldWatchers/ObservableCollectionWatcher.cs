@@ -6,10 +6,11 @@ using System.Linq;
 namespace StardewModdingAPI.Framework.StateTracking.FieldWatchers
 {
     /// <summary>A watcher which detects changes to an observable collection.</summary>
+    /// <typeparam name="TValue">The value type within the collection.</typeparam>
     internal class ObservableCollectionWatcher<TValue> : BaseDisposableWatcher, ICollectionWatcher<TValue>
     {
         /*********
-        ** Properties
+        ** Fields
         *********/
         /// <summary>The field being watched.</summary>
         private readonly ObservableCollection<TValue> Field;
@@ -17,8 +18,11 @@ namespace StardewModdingAPI.Framework.StateTracking.FieldWatchers
         /// <summary>The pairs added since the last reset.</summary>
         private readonly List<TValue> AddedImpl = new List<TValue>();
 
-        /// <summary>The pairs demoved since the last reset.</summary>
+        /// <summary>The pairs removed since the last reset.</summary>
         private readonly List<TValue> RemovedImpl = new List<TValue>();
+
+        /// <summary>The previous values as of the last update.</summary>
+        private readonly List<TValue> PreviousValues = new List<TValue>();
 
 
         /*********
@@ -77,10 +81,27 @@ namespace StardewModdingAPI.Framework.StateTracking.FieldWatchers
         /// <param name="e">The event arguments.</param>
         private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (e.NewItems != null)
-                this.AddedImpl.AddRange(e.NewItems.Cast<TValue>());
-            if (e.OldItems != null)
-                this.RemovedImpl.AddRange(e.OldItems.Cast<TValue>());
+            if (e.Action == NotifyCollectionChangedAction.Reset)
+            {
+                this.RemovedImpl.AddRange(this.PreviousValues);
+                this.PreviousValues.Clear();
+            }
+            else
+            {
+                TValue[] added = e.NewItems?.Cast<TValue>().ToArray();
+                TValue[] removed = e.OldItems?.Cast<TValue>().ToArray();
+
+                if (removed != null)
+                {
+                    this.RemovedImpl.AddRange(removed);
+                    this.PreviousValues.RemoveRange(e.OldStartingIndex, removed.Length);
+                }
+                if (added != null)
+                {
+                    this.AddedImpl.AddRange(added);
+                    this.PreviousValues.InsertRange(e.NewStartingIndex, added);
+                }
+            }
         }
     }
 }

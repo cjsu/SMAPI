@@ -1,12 +1,8 @@
 /*********
 ** Main layout
 *********/
-input[type="button"] {
-    font-size: 20px;
-    border-radius: 5px;
-    outline: none;
-    box-shadow: inset 0 0 1px 1px rgba(0, 0, 0, .2);
-    cursor: pointer;
+#content {
+    max-width: 100%;
 }
 
 caption {
@@ -17,16 +13,14 @@ caption {
 #output {
     padding: 10px;
     overflow: auto;
+}
+
+#output h2 {
+    margin: -10px 0 10px -10px;
+}
+
+#output table {
     font-family: monospace;
-}
-
-input#upload-button {
-    background: #ccf;
-    border: 1px solid #000088;
-}
-
-input#upload-button {
-    background: #eef;
 }
 
 table caption {
@@ -39,6 +33,7 @@ table caption {
 .banner {
     border: 2px solid gray;
     border-radius: 5px;
+    margin-top: 1em;
     padding: 1em;
 }
 
@@ -52,10 +47,16 @@ table caption {
     background: #FCC;
 }
 
+.save-metadata {
+    margin-top: 1em;
+    font-size: 0.8em;
+    opacity: 0.3;
+}
+
 /*********
 ** Log metadata & filters
 *********/
-#metadata, #mods, #filters {
+.table, #filters {
     border-bottom: 1px dashed #888888;
     margin-bottom: 5px;
 }
@@ -65,7 +66,7 @@ table caption {
     padding-right: 0.7em;
 }
 
-table#metadata, table#mods {
+.table {
     border: 1px solid #000000;
     background: #ffffff;
     border-radius: 5px;
@@ -73,6 +74,22 @@ table#metadata, table#mods {
     overflow: hidden;
     cursor: default;
     box-shadow: 1px 1px 1px 1px #dddddd;
+}
+
+.mod-entry {
+    height: 1.8em;
+}
+
+.table > caption {
+    min-height: 1.3em;
+}
+
+#fix-list {
+    margin-bottom: 2em;
+}
+
+#updates {
+    min-width: 10em;
 }
 
 #mods {
@@ -91,8 +108,11 @@ table#metadata, table#mods {
     cursor: pointer;
 }
 
-#metadata tr,
-#mods tr {
+#mods.filters-disabled tr {
+    cursor: default;
+}
+
+.table tr {
     background: #eee
 }
 
@@ -118,11 +138,11 @@ table#metadata, table#mods {
     display: inline-block;
 }
 
-#mods .mod-entry.hidden {
+.table .hidden {
     opacity: 0.5;
 }
 
-#mods .content-packs {
+.table .content-packs {
     margin-left: 1em;
     font-size: 0.9em;
     font-style: italic;
@@ -132,8 +152,7 @@ table#metadata, table#mods {
     padding-right: 5px;
 }
 
-#metadata tr:nth-child(even),
-#mods tr:nth-child(even) {
+.table tr:nth-child(even) {
     background: #fff
 }
 
@@ -200,6 +219,24 @@ table#metadata, table#mods {
     color: #f00;
 }
 
+#log .critical {
+    background-color: #c00;
+    color: #fff;
+    font-weight: bold;
+}
+
+#log .section-start {
+    cursor: pointer;
+}
+
+#log .section-toggle-message {
+    color: blue;
+}
+
+#log .log-message-text {
+    white-space: pre-wrap;
+}
+
 #log {
     border-spacing: 0;
 }
@@ -214,7 +251,6 @@ table#metadata, table#mods {
     border-bottom: 1px dotted #ccc;
     border-top: 2px solid #fff;
     vertical-align: top;
-    white-space: pre-wrap;
 }
 
 #log td:not(:last-child) {
@@ -225,7 +261,6 @@ table#metadata, table#mods {
 }
 
 #log td[data-title]:hover {
-    font-size: 1px;
     overflow: inherit;
     position: relative;
 }
@@ -256,93 +291,13 @@ table#metadata, table#mods {
 
 
 /*********
-** Upload popup
+** Upload form
 *********/
-#upload-area .popup,
-#upload-area #uploader {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, .33);
-    z-index: 2;
+#os-list {
+    list-style: none;
+}
+
+div[data-os] {
     display: none;
-    padding: 5px;
 }
 
-#upload-area #uploader:after {
-    content: attr(data-text);
-    display: block;
-    width: 100px;
-    height: 24px;
-    line-height: 25px;
-    border: 1px solid #000;
-    background: #fff;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin: -12px -50px 0 0;
-    font-size: 18px;
-    font-weight: bold;
-    text-align: center;
-    border-radius: 5px;
-}
-
-#upload-area .popup h1 {
-    position: absolute;
-    top: 10%;
-    left: 50%;
-    margin-left: -150px;
-    text-align: center;
-    width: 300px;
-    border: 1px solid #008;
-    border-radius: 5px;
-    background: #fff;
-    font-family: sans-serif;
-    font-size: 40px;
-    margin-top: -25px;
-    z-index: 10;
-    border-bottom: 0;
-}
-
-#upload-area .frame {
-    margin: auto;
-    margin-top: 25px;
-    padding: 2em;
-    position: absolute;
-    top: 10%;
-    left: 10%;
-    right: 10%;
-    bottom: 10%;
-    padding-bottom: 30px;
-    background: #FFF;
-    border-radius: 5px;
-    border: 1px solid #008;
-}
-
-#upload-area #cancel {
-    border: 1px solid #880000;
-    background-color: #fcc;
-}
-
-#upload-area #submit {
-    border: 1px solid #008800;
-    background-color: #cfc;
-}
-
-#upload-area #submit:hover {
-    background-color: #efe;
-}
-
-#upload-area #input {
-    width: 100%;
-    height: 30em;
-    max-height: 70%;
-    margin: auto;
-    box-sizing: border-box;
-    border-radius: 5px;
-    border: 1px solid #000088;
-    outline: none;
-    box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 192, .2);
-}

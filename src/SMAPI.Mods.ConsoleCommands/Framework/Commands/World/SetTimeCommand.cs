@@ -47,7 +47,7 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.World
         {
             // define conversion between game time and TimeSpan
             TimeSpan ToTimeSpan(int value) => new TimeSpan(0, value / 100, value % 100, 0);
-            int FromTimeSpan(TimeSpan span) => (int)((span.Hours * 100) + span.Minutes);
+            int FromTimeSpan(TimeSpan span) => (span.Hours * 100) + span.Minutes;
 
             // transition to new time
             int intervals = (int)((ToTimeSpan(time) - ToTimeSpan(Game1.timeOfDay)).TotalMinutes / 10);
@@ -60,7 +60,7 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.World
             {
                 for (int i = 0; i > intervals; i--)
                 {
-                    Game1.timeOfDay = FromTimeSpan(ToTimeSpan(Game1.timeOfDay).Subtract(TimeSpan.FromMinutes(20))); // offset 20 mins so game updates to next interval
+                    Game1.timeOfDay = FromTimeSpan(ToTimeSpan(Game1.timeOfDay).Subtract(TimeSpan.FromMinutes(20))); // offset 20 minutes so game updates to next interval
                     Game1.performTenMinuteClockUpdate();
                 }
             }

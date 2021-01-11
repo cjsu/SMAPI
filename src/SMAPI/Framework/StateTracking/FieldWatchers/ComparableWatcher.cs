@@ -4,26 +4,27 @@ using System.Collections.Generic;
 namespace StardewModdingAPI.Framework.StateTracking.FieldWatchers
 {
     /// <summary>A watcher which detects changes to a value using a specified <see cref="IEqualityComparer{T}"/> instance.</summary>
-    internal class ComparableWatcher<T> : IValueWatcher<T>
+    /// <typeparam name="TValue">The comparable value type.</typeparam>
+    internal class ComparableWatcher<TValue> : IValueWatcher<TValue>
     {
         /*********
-        ** Properties
+        ** Fields
         *********/
         /// <summary>Get the current value.</summary>
-        private readonly Func<T> GetValue;
+        private readonly Func<TValue> GetValue;
 
         /// <summary>The equality comparer.</summary>
-        private readonly IEqualityComparer<T> Comparer;
+        private readonly IEqualityComparer<TValue> Comparer;
 
 
         /*********
         ** Accessors
         *********/
         /// <summary>The field value at the last reset.</summary>
-        public T PreviousValue { get; private set; }
+        public TValue PreviousValue { get; private set; }
 
         /// <summary>The latest value.</summary>
-        public T CurrentValue { get; private set; }
+        public TValue CurrentValue { get; private set; }
 
         /// <summary>Whether the value changed since the last reset.</summary>
         public bool IsChanged { get; private set; }
@@ -35,7 +36,7 @@ namespace StardewModdingAPI.Framework.StateTracking.FieldWatchers
         /// <summary>Construct an instance.</summary>
         /// <param name="getValue">Get the current value.</param>
         /// <param name="comparer">The equality comparer which indicates whether two values are the same.</param>
-        public ComparableWatcher(Func<T> getValue, IEqualityComparer<T> comparer)
+        public ComparableWatcher(Func<TValue> getValue, IEqualityComparer<TValue> comparer)
         {
             this.GetValue = getValue;
             this.Comparer = comparer;

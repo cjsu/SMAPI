@@ -7,7 +7,7 @@ namespace StardewModdingAPI.Framework.Logging
     internal class LogFileManager : IDisposable
     {
         /*********
-        ** Properties
+        ** Fields
         *********/
         /// <summary>The underlying stream writer.</summary>
         private readonly StreamWriter Stream;

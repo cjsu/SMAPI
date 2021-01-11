@@ -1,4 +1,4 @@
-﻿using StardewValley;
+using StardewValley;
 
 namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.Player
 {
@@ -10,7 +10,7 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.Player
         *********/
         /// <summary>Construct an instance.</summary>
         public SetStyleCommand()
-            : base("player_changestyle", "Sets the style of a player feature.\n\nUsage: player_changecolor <target> <value>.\n- target: what to change (one of 'hair', 'shirt', 'skin', 'acc', 'shoe', 'swim', or 'gender').\n- value: the integer style ID.") { }
+            : base("player_changestyle", "Sets the style of a player feature.\n\nUsage: player_changestyle <target> <value>.\n- target: what to change (one of 'hair', 'shirt', 'skin', 'acc', 'shoe', 'swim', or 'gender').\n- value: the integer style ID.") { }
 
         /// <summary>Handle the command.</summary>
         /// <param name="monitor">Writes messages to the console and log file.</param>

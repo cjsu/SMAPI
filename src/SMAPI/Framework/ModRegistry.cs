@@ -10,7 +10,7 @@ namespace StardewModdingAPI.Framework
     internal class ModRegistry
     {
         /*********
-        ** Properties
+        ** Fields
         *********/
         /// <summary>The registered mod data.</summary>
         private readonly List<IModMetadata> Mods = new List<IModMetadata>();
@@ -18,8 +18,11 @@ namespace StardewModdingAPI.Framework
         /// <summary>An assembly full name => mod lookup.</summary>
         private readonly IDictionary<string, IModMetadata> ModNamesByAssembly = new Dictionary<string, IModMetadata>();
 
-        /// <summary>Whether all mods have been initialised and their <see cref="IMod.Entry"/> method called.</summary>
-        public bool AreAllModsInitialised { get; set; }
+        /// <summary>Whether all mod assemblies have been loaded.</summary>
+        public bool AreAllModsLoaded { get; set; }
+
+        /// <summary>Whether all mods have been initialized and their <see cref="IMod.Entry"/> method called.</summary>
+        public bool AreAllModsInitialized { get; set; }
 
 
         /*********
@@ -30,8 +33,14 @@ namespace StardewModdingAPI.Framework
         public void Add(IModMetadata metadata)
         {
             this.Mods.Add(metadata);
-            if (!metadata.IsContentPack)
-                this.ModNamesByAssembly[metadata.Mod.GetType().Assembly.FullName] = metadata;
+        }
+
+        /// <summary>Track a mod's assembly for use via <see cref="GetFrom"/>.</summary>
+        /// <param name="metadata">The mod metadata.</param>
+        /// <param name="modAssembly">The mod assembly.</param>
+        public void TrackAssemblies(IModMetadata metadata, Assembly modAssembly)
+        {
+            this.ModNamesByAssembly[modAssembly.FullName] = metadata;
         }
 
         /// <summary>Get metadata for all loaded mods.</summary>
@@ -53,13 +62,13 @@ namespace StardewModdingAPI.Framework
         /// <returns>Returns the matching mod's metadata, or <c>null</c> if not found.</returns>
         public IModMetadata Get(string uniqueID)
         {
-            // normalise search ID
+            // normalize search ID
             if (string.IsNullOrWhiteSpace(uniqueID))
                 return null;
             uniqueID = uniqueID.Trim();
 
             // find match
-            return this.GetAll().FirstOrDefault(p => p.Manifest.UniqueID.Trim().Equals(uniqueID, StringComparison.InvariantCultureIgnoreCase));
+            return this.GetAll().FirstOrDefault(p => p.HasID(uniqueID));
         }
 
         /// <summary>Get the mod metadata from one of its assemblies.</summary>

@@ -12,8 +12,11 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.ItemData
         /// <summary>The item type.</summary>
         public ItemType Type { get; }
 
-        /// <summary>The item instance.</summary>
+        /// <summary>A sample item instance.</summary>
         public Item Item { get; }
+
+        /// <summary>Create an item instance.</summary>
+        public Func<Item> CreateItem { get; }
 
         /// <summary>The item's unique ID for its type.</summary>
         public int ID { get; }
@@ -31,12 +34,23 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.ItemData
         /// <summary>Construct an instance.</summary>
         /// <param name="type">The item type.</param>
         /// <param name="id">The unique ID (if different from the item's parent sheet index).</param>
-        /// <param name="item">The item instance.</param>
-        public SearchableItem(ItemType type, int id, Item item)
+        /// <param name="createItem">Create an item instance.</param>
+        public SearchableItem(ItemType type, int id, Func<SearchableItem, Item> createItem)
         {
             this.Type = type;
             this.ID = id;
-            this.Item = item;
+            this.CreateItem = () => createItem(this);
+            this.Item = createItem(this);
+        }
+
+        /// <summary>Construct an instance.</summary>
+        /// <param name="item">The item metadata to copy.</param>
+        public SearchableItem(SearchableItem item)
+        {
+            this.Type = item.Type;
+            this.ID = item.ID;
+            this.CreateItem = item.CreateItem;
+            this.Item = item.Item;
         }
 
         /// <summary>Get whether the item name contains a case-insensitive substring.</summary>
@@ -44,8 +58,8 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.ItemData
         public bool NameContains(string substring)
         {
             return
-                this.Name.IndexOf(substring, StringComparison.InvariantCultureIgnoreCase) != -1
-                || this.DisplayName.IndexOf(substring, StringComparison.InvariantCultureIgnoreCase) != -1;
+                this.Name.IndexOf(substring, StringComparison.OrdinalIgnoreCase) != -1
+                || this.DisplayName.IndexOf(substring, StringComparison.OrdinalIgnoreCase) != -1;
         }
 
         /// <summary>Get whether the item name is exactly equal to a case-insensitive string.</summary>
@@ -53,8 +67,8 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.ItemData
         public bool NameEquivalentTo(string name)
         {
             return
-                this.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase)
-                || this.DisplayName.Equals(name, StringComparison.InvariantCultureIgnoreCase);
+                this.Name.Equals(name, StringComparison.OrdinalIgnoreCase)
+                || this.DisplayName.Equals(name, StringComparison.OrdinalIgnoreCase);
         }
     }
 }

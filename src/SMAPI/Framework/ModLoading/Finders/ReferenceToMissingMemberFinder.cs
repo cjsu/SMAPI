@@ -1,26 +1,19 @@
 using System.Collections.Generic;
-using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+using StardewModdingAPI.Framework.ModLoading.Framework;
 
 namespace StardewModdingAPI.Framework.ModLoading.Finders
 {
     /// <summary>Finds references to a field, property, or method which no longer exists.</summary>
     /// <remarks>This implementation is purely heuristic. It should never return a false positive, but won't detect all cases.</remarks>
-    internal class ReferenceToMissingMemberFinder : IInstructionHandler
+    internal class ReferenceToMissingMemberFinder : BaseInstructionHandler
     {
         /*********
-        ** Properties
+        ** Fields
         *********/
         /// <summary>The assembly names to which to heuristically detect broken references.</summary>
         private readonly HashSet<string> ValidateReferencesToAssemblies;
-
-
-        /*********
-        ** Accessors
-        *********/
-        /// <summary>A brief noun phrase indicating what the instruction finder matches.</summary>
-        public string NounPhrase { get; private set; } = "";
 
 
         /*********
@@ -29,37 +22,23 @@ namespace StardewModdingAPI.Framework.ModLoading.Finders
         /// <summary>Construct an instance.</summary>
         /// <param name="validateReferencesToAssemblies">The assembly names to which to heuristically detect broken references.</param>
         public ReferenceToMissingMemberFinder(string[] validateReferencesToAssemblies)
+            : base(defaultPhrase: "")
         {
             this.ValidateReferencesToAssemblies = new HashSet<string>(validateReferencesToAssemblies);
         }
 
-        /// <summary>Perform the predefined logic for a method if applicable.</summary>
-        /// <param name="module">The assembly module containing the instruction.</param>
-        /// <param name="method">The method definition containing the instruction.</param>
-        /// <param name="assemblyMap">Metadata for mapping assemblies to the current platform.</param>
-        /// <param name="platformChanged">Whether the mod was compiled on a different platform.</param>
-        public virtual InstructionHandleResult Handle(ModuleDefinition module, MethodDefinition method, PlatformAssemblyMap assemblyMap, bool platformChanged)
-        {
-            return InstructionHandleResult.None;
-        }
-
-        /// <summary>Perform the predefined logic for an instruction if applicable.</summary>
-        /// <param name="module">The assembly module containing the instruction.</param>
-        /// <param name="cil">The CIL processor.</param>
-        /// <param name="instruction">The instruction to handle.</param>
-        /// <param name="assemblyMap">Metadata for mapping assemblies to the current platform.</param>
-        /// <param name="platformChanged">Whether the mod was compiled on a different platform.</param>
-        public virtual InstructionHandleResult Handle(ModuleDefinition module, ILProcessor cil, Instruction instruction, PlatformAssemblyMap assemblyMap, bool platformChanged)
+        /// <inheritdoc />
+        public override bool Handle(ModuleDefinition module, ILProcessor cil, Instruction instruction)
         {
             // field reference
             FieldReference fieldRef = RewriteHelper.AsFieldReference(instruction);
             if (fieldRef != null && this.ShouldValidate(fieldRef.DeclaringType))
             {
-                FieldDefinition target = fieldRef.DeclaringType.Resolve()?.Fields.FirstOrDefault(p => p.Name == fieldRef.Name);
-                if (target == null)
+                FieldDefinition target = fieldRef.Resolve();
+                if (target == null || target.HasConstant)
                 {
-                    this.NounPhrase = $"reference to {fieldRef.DeclaringType.FullName}.{fieldRef.Name} (no such field)";
-                    return InstructionHandleResult.NotCompatible;
+                    this.MarkFlag(InstructionHandleResult.NotCompatible, $"reference to {fieldRef.DeclaringType.FullName}.{fieldRef.Name} (no such field)");
+                    return false;
                 }
             }
 
@@ -67,17 +46,23 @@ namespace StardewModdingAPI.Framework.ModLoading.Finders
             MethodReference methodRef = RewriteHelper.AsMethodReference(instruction);
             if (methodRef != null && this.ShouldValidate(methodRef.DeclaringType) && !this.IsUnsupported(methodRef))
             {
-                MethodDefinition target = methodRef.DeclaringType.Resolve()?.Methods.FirstOrDefault(p => p.Name == methodRef.Name);
+                MethodDefinition target = methodRef.Resolve();
                 if (target == null)
                 {
-                    this.NounPhrase = this.IsProperty(methodRef)
-                        ? $"reference to {methodRef.DeclaringType.FullName}.{methodRef.Name.Substring(4)} (no such property)"
-                        : $"reference to {methodRef.DeclaringType.FullName}.{methodRef.Name} (no such method)";
-                    return InstructionHandleResult.NotCompatible;
+                    string phrase;
+                    if (this.IsProperty(methodRef))
+                        phrase = $"reference to {methodRef.DeclaringType.FullName}.{methodRef.Name.Substring(4)} (no such property)";
+                    else if (methodRef.Name == ".ctor")
+                        phrase = $"reference to {methodRef.DeclaringType.FullName}.{methodRef.Name} (no matching constructor)";
+                    else
+                        phrase = $"reference to {methodRef.DeclaringType.FullName}.{methodRef.Name} (no such method)";
+
+                    this.MarkFlag(InstructionHandleResult.NotCompatible, phrase);
+                    return false;
                 }
             }
 
-            return InstructionHandleResult.None;
+            return false;
         }
 
 

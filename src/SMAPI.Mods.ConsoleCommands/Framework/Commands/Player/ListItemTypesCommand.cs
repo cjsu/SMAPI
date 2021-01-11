@@ -7,7 +7,7 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.Player
     internal class ListItemTypesCommand : TrainerCommand
     {
         /*********
-        ** Properties
+        ** Fields
         *********/
         /// <summary>Provides methods for searching and constructing items.</summary>
         private readonly ItemRepository Items = new ItemRepository();

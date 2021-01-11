@@ -6,7 +6,7 @@ namespace StardewModdingAPI.Framework.StateTracking.FieldWatchers
     internal abstract class BaseDisposableWatcher : IDisposable
     {
         /*********
-        ** Properties
+        ** Fields
         *********/
         /// <summary>Whether the watcher has been disposed.</summary>
         protected bool IsDisposed { get; private set; }

@@ -604,21 +604,21 @@ namespace StardewModdingAPI
         *********/
         /// <summary>Get the <see cref="SButton"/> equivalent for the given button.</summary>
         /// <param name="key">The keyboard button to convert.</param>
-        internal static SButton ToSButton(this Keys key)
+        public static SButton ToSButton(this Keys key)
         {
             return (SButton)key;
         }
 
         /// <summary>Get the <see cref="SButton"/> equivalent for the given button.</summary>
         /// <param name="key">The controller button to convert.</param>
-        internal static SButton ToSButton(this Buttons key)
+        public static SButton ToSButton(this Buttons key)
         {
             return (SButton)(SButtonExtensions.ControllerOffset + key);
         }
 
         /// <summary>Get the <see cref="SButton"/> equivalent for the given button.</summary>
         /// <param name="input">The Stardew Valley button to convert.</param>
-        internal static SButton ToSButton(this InputButton input)
+        public static SButton ToSButton(this InputButton input)
         {
             // derived from InputButton constructors
             if (input.mouseLeft)
@@ -681,7 +681,7 @@ namespace StardewModdingAPI
             }
 
             // not valid
-            button = default(InputButton);
+            button = default;
             return false;
         }
 

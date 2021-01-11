@@ -8,16 +8,20 @@ namespace StardewModdingAPI.Framework.Logging
     internal class InterceptingTextWriter : TextWriter
     {
         /*********
+        ** Fields
+        *********/
+        /// <summary>Prefixing a message with this character indicates that the console interceptor should write the string without intercepting it. (The character itself is not written.)</summary>
+        private readonly char IgnoreChar;
+
+
+        /*********
         ** Accessors
         *********/
         /// <summary>The underlying console output.</summary>
         public TextWriter Out { get; }
 
-        /// <summary>The character encoding in which the output is written.</summary>
+        /// <inheritdoc />
         public override Encoding Encoding => this.Out.Encoding;
-
-        /// <summary>Whether to intercept console output.</summary>
-        public bool ShouldIntercept { get; set; }
 
         /// <summary>The event raised when a message is written to the console directly.</summary>
         public event Action<string> OnMessageIntercepted;
@@ -28,36 +32,53 @@ namespace StardewModdingAPI.Framework.Logging
         *********/
         /// <summary>Construct an instance.</summary>
         /// <param name="output">The underlying output writer.</param>
-        public InterceptingTextWriter(TextWriter output)
+        /// <param name="ignoreChar">Prefixing a message with this character indicates that the console interceptor should write the string without intercepting it. (The character itself is not written.)</param>
+        public InterceptingTextWriter(TextWriter output, char ignoreChar)
         {
             this.Out = output;
+            this.IgnoreChar = ignoreChar;
         }
 
-        /// <summary>Writes a subarray of characters to the text string or stream.</summary>
-        /// <param name="buffer">The character array to write data from.</param>
-        /// <param name="index">The character position in the buffer at which to start retrieving data.</param>
-        /// <param name="count">The number of characters to write.</param>
+        /// <inheritdoc />
         public override void Write(char[] buffer, int index, int count)
         {
-            if (this.ShouldIntercept)
-                this.OnMessageIntercepted?.Invoke(new string(buffer, index, count).TrimEnd('\r', '\n'));
-            else
+            if (buffer.Length == 0)
                 this.Out.Write(buffer, index, count);
+            else if (buffer[0] == this.IgnoreChar)
+                this.Out.Write(buffer, index + 1, count - 1);
+            else if (this.IsEmptyOrNewline(buffer))
+                this.Out.Write(buffer, index, count);
+            else
+                this.OnMessageIntercepted?.Invoke(new string(buffer, index, count).TrimEnd('\r', '\n'));
         }
 
-        /// <summary>Writes a character to the text string or stream.</summary>
-        /// <param name="ch">The character to write to the text stream.</param>
-        /// <remarks>Console log messages from the game should be caught by <see cref="Write(char[],int,int)"/>. This method passes through anything that bypasses that method for some reason, since it's better to show it to users than hide it from everyone.</remarks>
+        /// <inheritdoc />
         public override void Write(char ch)
         {
             this.Out.Write(ch);
         }
 
-        /// <summary>Releases the unmanaged resources used by the <see cref="T:System.IO.TextWriter" /> and optionally releases the managed resources.</summary>
-        /// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
+        /// <inheritdoc />
         protected override void Dispose(bool disposing)
         {
             this.OnMessageIntercepted = null;
+        }
+
+
+        /*********
+        ** Private methods
+        *********/
+        /// <summary>Get whether a buffer represents a line break.</summary>
+        /// <param name="buffer">The buffer to check.</param>
+        private bool IsEmptyOrNewline(char[] buffer)
+        {
+            foreach (char ch in buffer)
+            {
+                if (ch != '\n' && ch != '\r')
+                    return false;
+            }
+
+            return true;
         }
     }
 }

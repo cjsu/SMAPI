@@ -1,30 +1,20 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+using StardewModdingAPI.Framework.ModLoading.Framework;
 
 namespace StardewModdingAPI.Framework.ModLoading.Finders
 {
     /// <summary>Finds references to a field, property, or method which returns a different type than the code expects.</summary>
     /// <remarks>This implementation is purely heuristic. It should never return a false positive, but won't detect all cases.</remarks>
-    internal class ReferenceToMemberWithUnexpectedTypeFinder : IInstructionHandler
+    internal class ReferenceToMemberWithUnexpectedTypeFinder : BaseInstructionHandler
     {
         /*********
-        ** Properties
+        ** Fields
         *********/
         /// <summary>The assembly names to which to heuristically detect broken references.</summary>
         private readonly HashSet<string> ValidateReferencesToAssemblies;
-
-        /// <summary>A pattern matching type name substrings to strip for display.</summary>
-        private readonly Regex StripTypeNamePattern = new Regex(@"`\d+(?=<)", RegexOptions.Compiled);
-
-
-        /*********
-        ** Accessors
-        *********/
-        /// <summary>A brief noun phrase indicating what the instruction finder matches.</summary>
-        public string NounPhrase { get; private set; } = "";
 
 
         /*********
@@ -33,27 +23,13 @@ namespace StardewModdingAPI.Framework.ModLoading.Finders
         /// <summary>Construct an instance.</summary>
         /// <param name="validateReferencesToAssemblies">The assembly names to which to heuristically detect broken references.</param>
         public ReferenceToMemberWithUnexpectedTypeFinder(string[] validateReferencesToAssemblies)
+            : base(defaultPhrase: "")
         {
             this.ValidateReferencesToAssemblies = new HashSet<string>(validateReferencesToAssemblies);
         }
 
-        /// <summary>Perform the predefined logic for a method if applicable.</summary>
-        /// <param name="module">The assembly module containing the instruction.</param>
-        /// <param name="method">The method definition containing the instruction.</param>
-        /// <param name="assemblyMap">Metadata for mapping assemblies to the current platform.</param>
-        /// <param name="platformChanged">Whether the mod was compiled on a different platform.</param>
-        public virtual InstructionHandleResult Handle(ModuleDefinition module, MethodDefinition method, PlatformAssemblyMap assemblyMap, bool platformChanged)
-        {
-            return InstructionHandleResult.None;
-        }
-
-        /// <summary>Perform the predefined logic for an instruction if applicable.</summary>
-        /// <param name="module">The assembly module containing the instruction.</param>
-        /// <param name="cil">The CIL processor.</param>
-        /// <param name="instruction">The instruction to handle.</param>
-        /// <param name="assemblyMap">Metadata for mapping assemblies to the current platform.</param>
-        /// <param name="platformChanged">Whether the mod was compiled on a different platform.</param>
-        public virtual InstructionHandleResult Handle(ModuleDefinition module, ILProcessor cil, Instruction instruction, PlatformAssemblyMap assemblyMap, bool platformChanged)
+        /// <inheritdoc />
+        public override bool Handle(ModuleDefinition module, ILProcessor cil, Instruction instruction)
         {
             // field reference
             FieldReference fieldRef = RewriteHelper.AsFieldReference(instruction);
@@ -62,44 +38,38 @@ namespace StardewModdingAPI.Framework.ModLoading.Finders
                 // get target field
                 FieldDefinition targetField = fieldRef.DeclaringType.Resolve()?.Fields.FirstOrDefault(p => p.Name == fieldRef.Name);
                 if (targetField == null)
-                    return InstructionHandleResult.None;
+                    return false;
 
                 // validate return type
-                string actualReturnTypeID = this.GetComparableTypeID(targetField.FieldType);
-                string expectedReturnTypeID = this.GetComparableTypeID(fieldRef.FieldType);
-                if (actualReturnTypeID != expectedReturnTypeID)
+                if (!RewriteHelper.LooksLikeSameType(fieldRef.FieldType, targetField.FieldType))
                 {
-                    this.NounPhrase = $"reference to {fieldRef.DeclaringType.FullName}.{fieldRef.Name} (field returns {this.GetFriendlyTypeName(targetField.FieldType, actualReturnTypeID)}, not {this.GetFriendlyTypeName(fieldRef.FieldType, expectedReturnTypeID)})";
-                    return InstructionHandleResult.NotCompatible;
+                    this.MarkFlag(InstructionHandleResult.NotCompatible, $"reference to {fieldRef.DeclaringType.FullName}.{fieldRef.Name} (field returns {this.GetFriendlyTypeName(targetField.FieldType)}, not {this.GetFriendlyTypeName(fieldRef.FieldType)})");
+                    return false;
                 }
             }
 
             // method reference
             MethodReference methodReference = RewriteHelper.AsMethodReference(instruction);
-            if (methodReference != null && this.ShouldValidate(methodReference.DeclaringType))
+            if (methodReference != null && !this.IsUnsupported(methodReference) && this.ShouldValidate(methodReference.DeclaringType))
             {
                 // get potential targets
                 MethodDefinition[] candidateMethods = methodReference.DeclaringType.Resolve()?.Methods.Where(found => found.Name == methodReference.Name).ToArray();
                 if (candidateMethods == null || !candidateMethods.Any())
-                    return InstructionHandleResult.None;
+                    return false;
 
                 // compare return types
                 MethodDefinition methodDef = methodReference.Resolve();
                 if (methodDef == null)
-                {
-                    this.NounPhrase = $"reference to {methodReference.DeclaringType.FullName}.{methodReference.Name} (no such method)";
-                    return InstructionHandleResult.NotCompatible;
-                }
+                    return false; // validated by ReferenceToMissingMemberFinder
 
-                string expectedReturnType = this.GetComparableTypeID(methodDef.ReturnType);
-                if (candidateMethods.All(method => this.GetComparableTypeID(method.ReturnType) != expectedReturnType))
+                if (candidateMethods.All(method => !RewriteHelper.LooksLikeSameType(method.ReturnType, methodDef.ReturnType)))
                 {
-                    this.NounPhrase = $"reference to {methodDef.DeclaringType.FullName}.{methodDef.Name} (no such method returns {this.GetFriendlyTypeName(methodDef.ReturnType, expectedReturnType)})";
-                    return InstructionHandleResult.NotCompatible;
+                    this.MarkFlag(InstructionHandleResult.NotCompatible, $"reference to {methodDef.DeclaringType.FullName}.{methodDef.Name} (no such method returns {this.GetFriendlyTypeName(methodDef.ReturnType)})");
+                    return false;
                 }
             }
 
-            return InstructionHandleResult.None;
+            return false;
         }
 
 
@@ -113,17 +83,17 @@ namespace StardewModdingAPI.Framework.ModLoading.Finders
             return type != null && this.ValidateReferencesToAssemblies.Contains(type.Scope.Name);
         }
 
-        /// <summary>Get a unique string representation of a type.</summary>
-        /// <param name="type">The type reference.</param>
-        private string GetComparableTypeID(TypeReference type)
+        /// <summary>Get whether a method reference is a special case that's not currently supported (e.g. array methods).</summary>
+        /// <param name="method">The method reference.</param>
+        private bool IsUnsupported(MethodReference method)
         {
-            return this.StripTypeNamePattern.Replace(type.FullName, "");
+            return
+                method.DeclaringType.Name.Contains("["); // array methods
         }
 
         /// <summary>Get a shorter type name for display.</summary>
         /// <param name="type">The type reference.</param>
-        /// <param name="typeID">The comparable type ID from <see cref="GetComparableTypeID"/>.</param>
-        private string GetFriendlyTypeName(TypeReference type, string typeID)
+        private string GetFriendlyTypeName(TypeReference type)
         {
             // most common built-in types
             switch (type.FullName)
@@ -140,10 +110,10 @@ namespace StardewModdingAPI.Framework.ModLoading.Finders
             foreach (string @namespace in new[] { "Microsoft.Xna.Framework", "Netcode", "System", "System.Collections.Generic" })
             {
                 if (type.Namespace == @namespace)
-                    return typeID.Substring(@namespace.Length + 1);
+                    return type.Name;
             }
 
-            return typeID;
+            return type.FullName;
         }
     }
 }

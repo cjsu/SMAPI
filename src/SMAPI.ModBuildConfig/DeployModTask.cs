@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
+using System.Reflection;
+using System.Text.RegularExpressions;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 using StardewModdingAPI.ModBuildConfig.Framework;
@@ -30,9 +33,9 @@ namespace StardewModdingAPI.ModBuildConfig
         [Required]
         public string TargetDir { get; set; }
 
-        /// <summary>The folder containing the game files.</summary>
+        /// <summary>The folder containing the game's mod folders.</summary>
         [Required]
-        public string GameDir { get; set; }
+        public string GameModsDir { get; set; }
 
         /// <summary>Whether to enable copying the mod files into the game's Mods folder.</summary>
         [Required]
@@ -42,6 +45,9 @@ namespace StardewModdingAPI.ModBuildConfig
         [Required]
         public bool EnableModZip { get; set; }
 
+        /// <summary>Custom comma-separated regex patterns matching files to ignore when deploying or zipping the mod.</summary>
+        public string IgnoreModFilePatterns { get; set; }
+
 
         /*********
         ** Public methods
@@ -50,27 +56,41 @@ namespace StardewModdingAPI.ModBuildConfig
         /// <returns>true if the task successfully executed; otherwise, false.</returns>
         public override bool Execute()
         {
+            // log build settings
+            {
+                var properties = this
+                    .GetPropertiesToLog()
+                    .Select(p => $"{p.Key}: {p.Value}");
+                this.Log.LogMessage(MessageImportance.High, $"[mod build package] Handling build with options {string.Join(", ", properties)}");
+            }
+
             if (!this.EnableModDeploy && !this.EnableModZip)
                 return true; // nothing to do
 
             try
             {
+                // parse ignore patterns
+                Regex[] ignoreFilePatterns = this.GetCustomIgnorePatterns().ToArray();
+
                 // get mod info
-                ModFileManager package = new ModFileManager(this.ProjectDir, this.TargetDir);
+                ModFileManager package = new ModFileManager(this.ProjectDir, this.TargetDir, ignoreFilePatterns, validateRequiredModFiles: this.EnableModDeploy || this.EnableModZip);
 
                 // deploy mod files
                 if (this.EnableModDeploy)
                 {
-                    string outputPath = Path.Combine(this.GameDir, "Mods", this.EscapeInvalidFilenameCharacters(this.ModFolderName));
-                    this.Log.LogMessage(MessageImportance.High, $"The mod build package is copying the mod files to {outputPath}...");
+                    string outputPath = Path.Combine(this.GameModsDir, this.EscapeInvalidFilenameCharacters(this.ModFolderName));
+                    this.Log.LogMessage(MessageImportance.High, $"[mod build package] Copying the mod files to {outputPath}...");
                     this.CreateModFolder(package.GetFiles(), outputPath);
                 }
 
                 // create release zip
                 if (this.EnableModZip)
                 {
-                    this.Log.LogMessage(MessageImportance.High, $"The mod build package is generating a release zip at {this.ModZipPath} for {this.ModFolderName}...");
-                    this.CreateReleaseZip(package.GetFiles(), this.ModFolderName, package.GetManifestVersion(), this.ModZipPath);
+                    string zipName = this.EscapeInvalidFilenameCharacters($"{this.ModFolderName} {package.GetManifestVersion()}.zip");
+                    string zipPath = Path.Combine(this.ModZipPath, zipName);
+
+                    this.Log.LogMessage(MessageImportance.High, $"[mod build package] Generating the release zip at {zipPath}...");
+                    this.CreateReleaseZip(package.GetFiles(), this.ModFolderName, zipPath);
                 }
 
                 return true;
@@ -82,7 +102,7 @@ namespace StardewModdingAPI.ModBuildConfig
             }
             catch (Exception ex)
             {
-                this.Log.LogError($"The mod build package failed trying to deploy the mod.\n{ex}");
+                this.Log.LogError($"[mod build package] Failed trying to deploy the mod.\n{ex}");
                 return false;
             }
         }
@@ -91,6 +111,52 @@ namespace StardewModdingAPI.ModBuildConfig
         /*********
         ** Private methods
         *********/
+        /// <summary>Get the properties to write to the log.</summary>
+        private IEnumerable<KeyValuePair<string, string>> GetPropertiesToLog()
+        {
+            var properties = this.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+            foreach (PropertyInfo property in properties.OrderBy(p => p.Name))
+            {
+                if (property.Name == nameof(this.IgnoreModFilePatterns) && string.IsNullOrWhiteSpace(this.IgnoreModFilePatterns))
+                    continue;
+
+                string name = property.Name;
+
+                string value = property.GetValue(this)?.ToString();
+                if (value == null)
+                    value = "null";
+                else if (property.PropertyType == typeof(bool))
+                    value = value.ToLower();
+                else
+                    value = $"'{value}'";
+
+                yield return new KeyValuePair<string, string>(name, value);
+            }
+        }
+
+        /// <summary>Get the custom ignore patterns provided by the user.</summary>
+        private IEnumerable<Regex> GetCustomIgnorePatterns()
+        {
+            if (string.IsNullOrWhiteSpace(this.IgnoreModFilePatterns))
+                yield break;
+
+            foreach (string raw in this.IgnoreModFilePatterns.Split(','))
+            {
+                Regex regex;
+                try
+                {
+                    regex = new Regex(raw.Trim(), RegexOptions.IgnoreCase);
+                }
+                catch (Exception ex)
+                {
+                    this.Log.LogWarning($"[mod build package] Ignored invalid <{nameof(this.IgnoreModFilePatterns)}> pattern {raw}:\n{ex}");
+                    continue;
+                }
+
+                yield return regex;
+            }
+        }
+
         /// <summary>Copy the mod files into the game's mod folder.</summary>
         /// <param name="files">The files to include.</param>
         /// <param name="modFolderPath">The folder path to create with the mod files.</param>
@@ -111,34 +177,30 @@ namespace StardewModdingAPI.ModBuildConfig
         /// <summary>Create a release zip in the recommended format for uploading to mod sites.</summary>
         /// <param name="files">The files to include.</param>
         /// <param name="modName">The name of the mod.</param>
-        /// <param name="modVersion">The mod version string.</param>
-        /// <param name="outputFolderPath">The absolute or relative path to the folder which should contain the generated zip file.</param>
-        private void CreateReleaseZip(IDictionary<string, FileInfo> files, string modName, string modVersion, string outputFolderPath)
+        /// <param name="zipPath">The absolute path to the zip file to create.</param>
+        private void CreateReleaseZip(IDictionary<string, FileInfo> files, string modName, string zipPath)
         {
-            // get names
-            string zipName = this.EscapeInvalidFilenameCharacters($"{modName} {modVersion}.zip");
+            // get folder name within zip
             string folderName = this.EscapeInvalidFilenameCharacters(modName);
-            string zipPath = Path.Combine(outputFolderPath, zipName);
 
             // create zip file
-            Directory.CreateDirectory(outputFolderPath);
-            using (Stream zipStream = new FileStream(zipPath, FileMode.Create, FileAccess.Write))
-            using (ZipArchive archive = new ZipArchive(zipStream, ZipArchiveMode.Create))
+            Directory.CreateDirectory(Path.GetDirectoryName(zipPath)!);
+            using Stream zipStream = new FileStream(zipPath, FileMode.Create, FileAccess.Write);
+            using ZipArchive archive = new ZipArchive(zipStream, ZipArchiveMode.Create);
+
+            foreach (var fileEntry in files)
             {
-                foreach (var fileEntry in files)
-                {
-                    string relativePath = fileEntry.Key;
-                    FileInfo file = fileEntry.Value;
+                string relativePath = fileEntry.Key;
+                FileInfo file = fileEntry.Value;
 
-                    // get file info
-                    string filePath = file.FullName;
-                    string entryName = folderName + '/' + relativePath.Replace(Path.DirectorySeparatorChar, '/');
+                // get file info
+                string filePath = file.FullName;
+                string entryName = folderName + '/' + relativePath.Replace(Path.DirectorySeparatorChar, '/');
 
-                    // add to zip
-                    using (Stream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
-                    using (Stream fileStreamInZip = archive.CreateEntry(entryName).Open())
-                        fileStream.CopyTo(fileStreamInZip);
-                }
+                // add to zip
+                using Stream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+                using Stream fileStreamInZip = archive.CreateEntry(entryName).Open();
+                fileStream.CopyTo(fileStreamInZip);
             }
         }
 

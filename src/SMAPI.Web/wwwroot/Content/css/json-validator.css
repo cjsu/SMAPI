@@ -1,0 +1,92 @@
+/*********
+** Main layout
+*********/
+#content {
+    max-width: 100%;
+}
+
+#output {
+    padding: 10px;
+    overflow: auto;
+}
+
+#output table td {
+    font-family: monospace;
+}
+
+#output table tr th,
+#output table tr td {
+    padding: 0 0.75rem;
+    white-space: pre-wrap;
+}
+
+
+/*********
+** Result banner
+*********/
+.banner {
+    border: 2px solid gray;
+    border-radius: 5px;
+    margin-top: 1em;
+    padding: 1em;
+}
+
+.banner.success {
+    border-color: green;
+    background: #CFC;
+}
+
+.banner.error {
+    border-color: red;
+    background: #FCC;
+}
+
+.save-metadata {
+    margin-top: 1em;
+    font-size: 0.8em;
+    opacity: 0.3;
+}
+
+/*********
+** Validation results
+*********/
+.table {
+    border-bottom: 1px dashed #888888;
+    margin-bottom: 5px;
+}
+
+#metadata th, #metadata td {
+    text-align: left;
+    padding-right: 0.7em;
+}
+
+.table {
+    border: 1px solid #000000;
+    background: #ffffff;
+    border-radius: 5px;
+    border-spacing: 1px;
+    overflow: hidden;
+    cursor: default;
+    box-shadow: 1px 1px 1px 1px #dddddd;
+}
+
+.table tr {
+    background: #eee;
+}
+
+.table tr:nth-child(even) {
+    background: #fff;
+}
+
+#output div.sunlight-line-highlight-active {
+    background-color: #eeeacc;
+}
+
+.footer-tip {
+    color: gray;
+    font-size: 0.9em;
+}
+
+.footer-tip a {
+    color: gray;
+}

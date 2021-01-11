@@ -1,10 +1,14 @@
+using System.Collections.Generic;
+using StardewModdingAPI.Framework.Networking;
+using StardewValley;
+
 namespace StardewModdingAPI.Framework.ModHelpers
 {
     /// <summary>Provides multiplayer utilities.</summary>
     internal class MultiplayerHelper : BaseHelper, IMultiplayerHelper
     {
         /*********
-        ** Properties
+        ** Fields
         *********/
         /// <summary>SMAPI's core multiplayer utility.</summary>
         private readonly SMultiplayer Multiplayer;
@@ -22,10 +26,42 @@ namespace StardewModdingAPI.Framework.ModHelpers
             this.Multiplayer = multiplayer;
         }
 
-        /// <summary>Get a new multiplayer ID.</summary>
+        /// <inheritdoc />
         public long GetNewID()
         {
             return this.Multiplayer.getNewID();
+        }
+
+        /// <inheritdoc />
+        public IEnumerable<GameLocation> GetActiveLocations()
+        {
+            return this.Multiplayer.activeLocations();
+        }
+
+        /// <inheritdoc />
+        public IMultiplayerPeer GetConnectedPlayer(long id)
+        {
+            return this.Multiplayer.Peers.TryGetValue(id, out MultiplayerPeer peer)
+                ? peer
+                : null;
+        }
+
+        /// <inheritdoc />
+        public IEnumerable<IMultiplayerPeer> GetConnectedPlayers()
+        {
+            return this.Multiplayer.Peers.Values;
+        }
+
+        /// <inheritdoc />
+        public void SendMessage<TMessage>(TMessage message, string messageType, string[] modIDs = null, long[] playerIDs = null)
+        {
+            this.Multiplayer.BroadcastModMessage(
+                message: message,
+                messageType: messageType,
+                fromModID: this.ModID,
+                toModIDs: modIDs,
+                toPlayerIDs: playerIDs
+            );
         }
     }
 }

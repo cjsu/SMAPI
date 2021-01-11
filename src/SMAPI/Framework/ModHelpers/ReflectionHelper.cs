@@ -5,20 +5,17 @@ using StardewModdingAPI.Framework.Reflection;
 namespace StardewModdingAPI.Framework.ModHelpers
 {
     /// <summary>Provides helper methods for accessing private game code.</summary>
-    /// <remarks>This implementation searches up the type hierarchy, and caches the reflected fields and methods with a sliding expiry (to optimise performance without unnecessary memory usage).</remarks>
+    /// <remarks>This implementation searches up the type hierarchy, and caches the reflected fields and methods with a sliding expiry (to optimize performance without unnecessary memory usage).</remarks>
     internal class ReflectionHelper : BaseHelper, IReflectionHelper
     {
         /*********
-        ** Properties
+        ** Fields
         *********/
         /// <summary>The underlying reflection helper.</summary>
         private readonly Reflector Reflector;
 
         /// <summary>The mod name for error messages.</summary>
         private readonly string ModName;
-
-        /// <summary>Manages deprecation warnings.</summary>
-        private readonly DeprecationManager DeprecationManager;
 
 
         /*********
@@ -28,20 +25,14 @@ namespace StardewModdingAPI.Framework.ModHelpers
         /// <param name="modID">The unique ID of the relevant mod.</param>
         /// <param name="modName">The mod name for error messages.</param>
         /// <param name="reflector">The underlying reflection helper.</param>
-        /// <param name="deprecationManager">Manages deprecation warnings.</param>
-        public ReflectionHelper(string modID, string modName, Reflector reflector, DeprecationManager deprecationManager)
+        public ReflectionHelper(string modID, string modName, Reflector reflector)
             : base(modID)
         {
             this.ModName = modName;
             this.Reflector = reflector;
-            this.DeprecationManager = deprecationManager;
         }
 
-        /// <summary>Get an instance field.</summary>
-        /// <typeparam name="TValue">The field type.</typeparam>
-        /// <param name="obj">The object which has the field.</param>
-        /// <param name="name">The field name.</param>
-        /// <param name="required">Whether to throw an exception if the field is not found.</param>
+        /// <inheritdoc />
         public IReflectedField<TValue> GetField<TValue>(object obj, string name, bool required = true)
         {
             return this.AssertAccessAllowed(
@@ -49,11 +40,7 @@ namespace StardewModdingAPI.Framework.ModHelpers
             );
         }
 
-        /// <summary>Get a static field.</summary>
-        /// <typeparam name="TValue">The field type.</typeparam>
-        /// <param name="type">The type which has the field.</param>
-        /// <param name="name">The field name.</param>
-        /// <param name="required">Whether to throw an exception if the field is not found.</param>
+        /// <inheritdoc />
         public IReflectedField<TValue> GetField<TValue>(Type type, string name, bool required = true)
         {
             return this.AssertAccessAllowed(
@@ -61,11 +48,7 @@ namespace StardewModdingAPI.Framework.ModHelpers
             );
         }
 
-        /// <summary>Get an instance property.</summary>
-        /// <typeparam name="TValue">The property type.</typeparam>
-        /// <param name="obj">The object which has the property.</param>
-        /// <param name="name">The property name.</param>
-        /// <param name="required">Whether to throw an exception if the property is not found.</param>
+        /// <inheritdoc />
         public IReflectedProperty<TValue> GetProperty<TValue>(object obj, string name, bool required = true)
         {
             return this.AssertAccessAllowed(
@@ -73,11 +56,7 @@ namespace StardewModdingAPI.Framework.ModHelpers
             );
         }
 
-        /// <summary>Get a static property.</summary>
-        /// <typeparam name="TValue">The property type.</typeparam>
-        /// <param name="type">The type which has the property.</param>
-        /// <param name="name">The property name.</param>
-        /// <param name="required">Whether to throw an exception if the property is not found.</param>
+        /// <inheritdoc />
         public IReflectedProperty<TValue> GetProperty<TValue>(Type type, string name, bool required = true)
         {
             return this.AssertAccessAllowed(
@@ -85,10 +64,7 @@ namespace StardewModdingAPI.Framework.ModHelpers
             );
         }
 
-        /// <summary>Get an instance method.</summary>
-        /// <param name="obj">The object which has the method.</param>
-        /// <param name="name">The field name.</param>
-        /// <param name="required">Whether to throw an exception if the field is not found.</param>
+        /// <inheritdoc />
         public IReflectedMethod GetMethod(object obj, string name, bool required = true)
         {
             return this.AssertAccessAllowed(
@@ -96,10 +72,7 @@ namespace StardewModdingAPI.Framework.ModHelpers
             );
         }
 
-        /// <summary>Get a static method.</summary>
-        /// <param name="type">The type which has the method.</param>
-        /// <param name="name">The field name.</param>
-        /// <param name="required">Whether to throw an exception if the field is not found.</param>
+        /// <inheritdoc />
         public IReflectedMethod GetMethod(Type type, string name, bool required = true)
         {
             return this.AssertAccessAllowed(
@@ -127,7 +100,8 @@ namespace StardewModdingAPI.Framework.ModHelpers
         /// <returns>Returns the same property instance for convenience.</returns>
         private IReflectedProperty<T> AssertAccessAllowed<T>(IReflectedProperty<T> property)
         {
-            this.AssertAccessAllowed(property?.PropertyInfo);
+            this.AssertAccessAllowed(property?.PropertyInfo.GetMethod?.GetBaseDefinition());
+            this.AssertAccessAllowed(property?.PropertyInfo.SetMethod?.GetBaseDefinition());
             return property;
         }
 
@@ -136,7 +110,7 @@ namespace StardewModdingAPI.Framework.ModHelpers
         /// <returns>Returns the same method instance for convenience.</returns>
         private IReflectedMethod AssertAccessAllowed(IReflectedMethod method)
         {
-            this.AssertAccessAllowed(method?.MethodInfo);
+            this.AssertAccessAllowed(method?.MethodInfo.GetBaseDefinition());
             return method;
         }
 
