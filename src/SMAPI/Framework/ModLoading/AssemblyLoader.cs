@@ -37,6 +37,9 @@ namespace StardewModdingAPI.Framework.ModLoading
         /// <summary>The objects to dispose as part of this instance.</summary>
         private readonly HashSet<IDisposable> Disposables = new HashSet<IDisposable>();
 
+        /// <summary>Whether mods should be re-writen for compatibility.</summary>
+        private readonly bool RewriteMods;
+
 
         /*********
         ** Public methods
@@ -45,10 +48,12 @@ namespace StardewModdingAPI.Framework.ModLoading
         /// <param name="targetPlatform">The current game platform.</param>
         /// <param name="monitor">Encapsulates monitoring and logging.</param>
         /// <param name="paranoidMode">Whether to detect paranoid mode issues.</param>
-        public AssemblyLoader(Platform targetPlatform, IMonitor monitor, bool paranoidMode)
+        /// <param name="rewriteMods">Whether to rewrite potentially broken mods or not.</param>
+        public AssemblyLoader(Platform targetPlatform, IMonitor monitor, bool paranoidMode, bool rewriteMods)
         {
             this.Monitor = monitor;
             this.ParanoidMode = paranoidMode;
+            this.RewriteMods = rewriteMods;
             this.AssemblyMap = this.TrackForDisposal(Constants.GetAssemblyMap(targetPlatform));
 
             // init resolver
@@ -308,7 +313,7 @@ namespace StardewModdingAPI.Framework.ModLoading
             }
 
             // find or rewrite code
-            IInstructionHandler[] handlers = new InstructionMetadata().GetHandlers(this.ParanoidMode, platformChanged).ToArray();
+            IInstructionHandler[] handlers = new InstructionMetadata().GetHandlers(this.ParanoidMode, platformChanged, this.RewriteMods).ToArray();
             RecursiveRewriter rewriter = new RecursiveRewriter(
                 module: module,
                 rewriteType: (type, replaceWith) =>

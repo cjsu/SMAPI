@@ -20,7 +20,8 @@ namespace StardewModdingAPI.Framework.Models
             [nameof(GitHubProjectName)] = "Pathoschild/SMAPI",
             [nameof(WebApiBaseUrl)] = "https://smapi.io/api/",
             [nameof(VerboseLogging)] = false,
-            [nameof(LogNetworkTraffic)] = false
+            [nameof(LogNetworkTraffic)] = false,
+            [nameof(RewriteMods)] = true
         };
 
         /// <summary>The default values for <see cref="SuppressUpdateChecks"/>, to log changes if different.</summary>
@@ -63,6 +64,9 @@ namespace StardewModdingAPI.Framework.Models
 
         /// <summary>The mod IDs SMAPI should ignore when performing update checks or validating update keys.</summary>
         public string[] SuppressUpdateChecks { get; set; }
+
+        /// <summary>Whether to rewrite mods for compatibility. Should only be set to false to facilitate joining to the Visual Studio Debugger.</summary>
+        public bool RewriteMods { get; set; } = (bool)SConfig.DefaultValues[nameof(SConfig.RewriteMods)];
 
 
         /********

@@ -286,12 +286,15 @@ namespace StardewModdingAPI.Framework.Logging
         /// <summary>Log details for settings that don't match the default.</summary>
         /// <param name="isDeveloperMode">Whether to enable full console output for developers.</param>
         /// <param name="checkForUpdates">Whether to check for newer versions of SMAPI and mods on startup.</param>
-        public void LogSettingsHeader(bool isDeveloperMode, bool checkForUpdates)
+        /// ///<param name="rewriteMods">Whether to rewrite mods, might need to be false to hook up to the Visual Studio Debugger.</param>
+        public void LogSettingsHeader(bool isDeveloperMode, bool checkForUpdates, bool rewriteMods)
         {
             if (isDeveloperMode)
                 this.Monitor.Log($"You have SMAPI for developers, so the console will be much more verbose. You can disable developer mode by installing the non-developer version of SMAPI, or by editing {Constants.ApiConfigPath}.", LogLevel.Info);
             if (!checkForUpdates)
                 this.Monitor.Log($"You configured SMAPI to not check for updates. Running an old version of SMAPI is not recommended. You can enable update checks by reinstalling SMAPI or editing {Constants.ApiConfigPath}.", LogLevel.Warn);
+            if (!rewriteMods)
+                this.Monitor.Log($"You configured SMAPI to not rewrite potentially broken mods. This is not reccomended except in certain circumstances such as attaching to the Visual Studio debugger. You can enable mod rewrites by reinstalling SMAPI or editing {Constants.ApiConfigPath}.", LogLevel.Warn);
             if (!this.Monitor.WriteToConsole)
                 this.Monitor.Log("Writing to the terminal is disabled because the --no-terminal argument was received. This usually means launching the terminal failed.", LogLevel.Warn);
             this.Monitor.VerboseLog("Verbose logging enabled.");

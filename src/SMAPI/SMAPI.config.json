@@ -69,6 +69,12 @@ copy all the settings, or you may cause bugs due to overridden changes in future
     "LogNetworkTraffic": false,
 
     /**
+    * Whether SMAPI should rewrite mods for compatibility.
+    * Note: This is best left to true unless you are attempting to hook into the Visual Studio Debugger
+    */
+    "RewriteMods": true,
+
+    /**
      * The colors to use for text written to the SMAPI console.
      *
      * The possible values for 'UseScheme' are:

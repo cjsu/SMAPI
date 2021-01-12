@@ -27,29 +27,32 @@ namespace StardewModdingAPI.Metadata
         /// <summary>Get rewriters which detect or fix incompatible CIL instructions in mod assemblies.</summary>
         /// <param name="paranoidMode">Whether to detect paranoid mode issues.</param>
         /// <param name="platformChanged">Whether the assembly was rewritten for crossplatform compatibility.</param>
-        public IEnumerable<IInstructionHandler> GetHandlers(bool paranoidMode, bool platformChanged)
+        /// <param name="rewriteMods">Whether to return Rewriters</param>
+        public IEnumerable<IInstructionHandler> GetHandlers(bool paranoidMode, bool platformChanged, bool rewriteMods)
         {
             /****
             ** rewrite CIL to fix incompatible code
             ****/
             // rewrite for crossplatform compatibility
-            if (platformChanged)
-                yield return new MethodParentRewriter(typeof(SpriteBatch), typeof(SpriteBatchFacade));
+            if (rewriteMods)
+            {
+                if (platformChanged)
+                    yield return new MethodParentRewriter(typeof(SpriteBatch), typeof(SpriteBatchFacade));
 
-            // rewrite for Stardew Valley 1.5
-            yield return new FieldReplaceRewriter(typeof(DecoratableLocation), "furniture", typeof(GameLocation), nameof(GameLocation.furniture));
-            yield return new FieldReplaceRewriter(typeof(Farm), "resourceClumps", typeof(GameLocation), nameof(GameLocation.resourceClumps));
-            yield return new FieldReplaceRewriter(typeof(MineShaft), "resourceClumps", typeof(GameLocation), nameof(GameLocation.resourceClumps));
+                // rewrite for Stardew Valley 1.5
+                yield return new FieldReplaceRewriter(typeof(DecoratableLocation), "furniture", typeof(GameLocation), nameof(GameLocation.furniture));
+                yield return new FieldReplaceRewriter(typeof(Farm), "resourceClumps", typeof(GameLocation), nameof(GameLocation.resourceClumps));
+                yield return new FieldReplaceRewriter(typeof(MineShaft), "resourceClumps", typeof(GameLocation), nameof(GameLocation.resourceClumps));
 
-            // heuristic rewrites
-            yield return new HeuristicFieldRewriter(this.ValidateReferencesToAssemblies);
-            yield return new HeuristicMethodRewriter(this.ValidateReferencesToAssemblies);
+                // heuristic rewrites
+                yield return new HeuristicFieldRewriter(this.ValidateReferencesToAssemblies);
+                yield return new HeuristicMethodRewriter(this.ValidateReferencesToAssemblies);
 
 #if HARMONY_2
             // rewrite for SMAPI 3.6 (Harmony 1.x => 2.0 update)
             yield return new Harmony1AssemblyRewriter();
 #endif
-
+            }
             /****
             ** detect mod issues
             ****/
