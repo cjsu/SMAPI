@@ -1,6 +1,10 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
+#if HARMONY_2
+using HarmonyLib;
+#else
 using Harmony;
+#endif
 using StardewModdingAPI.Enums;
 using StardewModdingAPI.Framework.Patching;
 using StardewModdingAPI.Framework.Reflection;
@@ -29,7 +33,7 @@ namespace StardewModdingAPI.Patches
         /*********
         ** Accessors
         *********/
-        /// <summary>A unique name for this patch.</summary>
+        /// <inheritdoc />
         public string Name => nameof(LoadContextPatch);
 
 
@@ -45,9 +49,12 @@ namespace StardewModdingAPI.Patches
             LoadContextPatch.OnStageChanged = onStageChanged;
         }
 
-        /// <summary>Apply the Harmony patch.</summary>
-        /// <param name="harmony">The Harmony instance.</param>
+        /// <inheritdoc />
+#if HARMONY_2
+        public void Apply(Harmony harmony)
+#else
         public void Apply(HarmonyInstance harmony)
+#endif
         {
             // detect CreatedBasicInfo
             harmony.Patch(

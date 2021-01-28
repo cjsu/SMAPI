@@ -1,34 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <AssemblyName>SaveBackup</AssemblyName>
     <RootNamespace>StardewModdingAPI.Mods.SaveBackup</RootNamespace>
     <TargetFramework>net45</TargetFramework>
-    <LangVersion>latest</LangVersion>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SMAPI\SMAPI.csproj">
-      <Private>False</Private>
-    </ProjectReference>
+    <ProjectReference Include="..\SMAPI\SMAPI.csproj" Private="False" />
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="$(GameExecutableName)">
-      <HintPath>$(GamePath)\$(GameExecutableName).exe</HintPath>
-      <Private>False</Private>
-    </Reference>
+    <Reference Include="$(GameExecutableName)" HintPath="$(GamePath)\$(GameExecutableName).exe" Private="False" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="manifest.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None Update="manifest.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
   <Import Project="..\SMAPI.Internal\SMAPI.Internal.projitems" Label="Shared" />
   <Import Project="..\..\build\common.targets" />
-
 </Project>

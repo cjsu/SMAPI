@@ -58,7 +58,8 @@ namespace StardewModdingAPI.Framework.ContentManagers
 
         /// <summary>Get whether the content manager has already loaded and cached the given asset.</summary>
         /// <param name="assetName">The asset path relative to the loader root directory, not including the <c>.xnb</c> extension.</param>
-        bool IsLoaded(string assetName);
+        /// <param name="language">The language.</param>
+        bool IsLoaded(string assetName, LocalizedContentManager.LanguageCode language);
 
         /// <summary>Get the cached asset keys.</summary>
         IEnumerable<string> GetAssetKeys();

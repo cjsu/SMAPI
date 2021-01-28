@@ -1,22 +1,26 @@
 @using Humanizer
 @using Humanizer.Localisation
-@using Newtonsoft.Json
+@using StardewModdingAPI.Web.Framework
+@using StardewModdingAPI.Web.ViewModels
 @model StardewModdingAPI.Web.ViewModels.ModListModel
 @{
     ViewData["Title"] = "Mod compatibility";
 
     TimeSpan staleAge = DateTimeOffset.UtcNow - Model.LastUpdated;
+
+    bool hasBeta = Model.BetaVersion != null;
+    string betaLabel = "SDV @Model.BetaVersion only";
 }
 @section Head {
-    <link rel="stylesheet" href="~/Content/css/mods.css?r=20190302" />
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/tablesorter@2.31.0/dist/js/jquery.tablesorter.combined.min.js" crossorigin="anonymous"></script>
-    <script src="~/Content/js/mods.js?r=20190302"></script>
+    <link rel="stylesheet" href="~/Content/css/mods.css?r=20200218" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tablesorter@2.31.3" crossorigin="anonymous"></script>
+    <script src="~/Content/js/mods.js?r=20200218"></script>
     <script>
         $(function() {
-            var data = @Json.Serialize(Model.Mods, new JsonSerializerSettings { Formatting = Formatting.None });
-            var enableBeta = @Json.Serialize(Model.BetaVersion != null);
+            var data = @this.ForJson(Model.Mods ?? new ModModel[0]);
+            var enableBeta = @this.ForJson(hasBeta);
             smapi.modList(data, enableBeta);
         });
     </script>
@@ -39,9 +43,9 @@ else
 
             <p>The list is updated every few days (you can help <a href="https://stardewvalleywiki.com/Modding:Mod_compatibility">update it</a>!). It doesn't include XNB mods (see <a href="https://stardewvalleywiki.com/Modding:Using_XNB_mods"><em>using XNB mods</em> on the wiki</a> instead) or compatible content packs.</p>
 
-            @if (Model.BetaVersion != null)
+            @if (hasBeta)
             {
-                <p id="beta-blurb" v-show="showAdvanced"><strong>Note:</strong> "SDV @Model.BetaVersion only" lines are for an unreleased version of the game, not the stable version most players have. If a mod doesn't have that line, the info applies to both versions of the game.</p>
+                <p id="beta-blurb" v-show="showAdvanced"><strong>Note:</strong> "@betaLabel" lines are for an unreleased version of SMAPI, not the stable version most players have. If a mod doesn't have that line, the info applies to both versions of SMAPI.</p>
             }
         </div>
 
@@ -79,14 +83,14 @@ else
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="mod in mods" :key="mod.Name" v-bind:id="mod.Slug" :key="mod.Slug" v-bind:data-status="mod.Compatibility.Status" v-show="mod.Visible">
+                <tr v-for="mod in mods" :key="mod.Slug" v-bind:id="mod.Slug" v-bind:data-status="mod.Compatibility.Status" v-show="mod.Visible">
                     <td>
                         {{mod.Name}}
                         <small class="mod-alt-names" v-if="mod.AlternateNames">(aka {{mod.AlternateNames}})</small>
                     </td>
                     <td class="mod-page-links">
                         <span v-for="(link, i) in mod.ModPages">
-                            <a v-bind:href="link.Url">{{link.Text}}</a>{{i < mod.ModPages.length - 1 ? ', ' : ''}}
+                            <a v-bind:href="link.Url">{{link.Text}}</a>{{i &lt; mod.ModPages.length - 1 ? ', ' : ''}}
                         </span>
                     </td>
                     <td>
@@ -96,14 +100,20 @@ else
                     <td>
                         <div v-html="mod.Compatibility.Summary"></div>
                         <div v-if="mod.BetaCompatibility" v-show="showAdvanced">
-                            <strong v-if="mod.BetaCompatibility">SDV @Model.BetaVersion only:</strong>
+                            <strong v-if="mod.BetaCompatibility">@betaLabel:</strong>
                             <span v-html="mod.BetaCompatibility.Summary"></span>
                         </div>
                         <div v-for="(warning, i) in mod.Warnings">⚠ {{warning}}</div>
                     </td>
                     <td class="mod-broke-in" v-html="mod.LatestCompatibility.BrokeIn" v-show="showAdvanced"></td>
                     <td v-show="showAdvanced">
-                        <span v-if="mod.SourceUrl"><a v-bind:href="mod.SourceUrl">source</a></span>
+                        <span v-if="mod.SourceUrl">
+                            <a v-bind:href="mod.SourceUrl">source</a>
+                            <span v-if="mod.GitHubRepo">
+                                @* see https://shields.io/category/license *@
+                                (<img v-bind:src="'https://img.shields.io/github/license/' + mod.GitHubRepo + '?style=flat-square.png&label='" class="license-badge" alt="source" />)
+                            </span>
+                        </span>
                         <span v-else class="mod-closed-source">no source</span>
                     </td>
                     <td>

@@ -1,10 +1,11 @@
 ﻿using System.Linq;
+using StardewModdingAPI.Utilities;
 using StardewValley;
 
 namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.World
 {
     /// <summary>A command which sets the current year.</summary>
-    internal class SetYearCommand : TrainerCommand
+    internal class SetYearCommand : ConsoleCommand
     {
         /*********
         ** Public methods
@@ -32,6 +33,7 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.World
 
             // handle
             Game1.year = year;
+            Game1.stats.DaysPlayed = (uint)SDate.Now().DaysSinceStart;
             monitor.Log($"OK, the year is now {Game1.year}.", LogLevel.Info);
         }
     }

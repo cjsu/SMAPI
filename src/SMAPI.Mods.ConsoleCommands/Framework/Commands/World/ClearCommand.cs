@@ -10,13 +10,13 @@ using SObject = StardewValley.Object;
 namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.World
 {
     /// <summary>A command which clears in-game objects.</summary>
-    internal class ClearCommand : TrainerCommand
+    internal class ClearCommand : ConsoleCommand
     {
         /*********
         ** Fields
         *********/
         /// <summary>The valid types that can be cleared.</summary>
-        private readonly string[] ValidTypes = { "crops", "debris", "fruit-trees", "grass", "trees", "everything" };
+        private readonly string[] ValidTypes = { "crops", "debris", "fruit-trees", "furniture", "grass", "trees", "everything" };
 
         /// <summary>The resource clump IDs to consider debris.</summary>
         private readonly int[] DebrisClumps = { ResourceClump.stumpIndex, ResourceClump.hollowLogIndex, ResourceClump.meteoriteIndex, ResourceClump.boulderIndex };
@@ -32,7 +32,7 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.World
                 description: "Clears in-game entities in a given location.\n\n"
                     + "Usage: world_clear <location> <object type>\n"
                     + "- location: the location name for which to clear objects (like Farm), or 'current' for the current location.\n"
-                    + " - object type: the type of object clear. You can specify 'crops', 'debris' (stones/twigs/weeds and dead crops), 'grass', and 'trees' / 'fruit-trees'. You can also specify 'everything', which includes things not removed by the other types (like furniture or resource clumps)."
+                    + " - object type: the type of object clear. You can specify 'crops', 'debris' (stones/twigs/weeds and dead crops), 'furniture', 'grass', and 'trees' / 'fruit-trees'. You can also specify 'everything', which includes things not removed by the other types (like resource clumps)."
             )
         { }
 
@@ -56,7 +56,7 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.World
                 return;
 
             // get target location
-            GameLocation location = Game1.locations.FirstOrDefault(p => p.Name != null && p.Name.Equals(locationName, StringComparison.InvariantCultureIgnoreCase));
+            GameLocation location = Game1.locations.FirstOrDefault(p => p.Name != null && p.Name.Equals(locationName, StringComparison.OrdinalIgnoreCase));
             if (location == null && locationName == "current")
                 location = Game1.currentLocation;
             if (location == null)
@@ -109,6 +109,13 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.World
                 case "fruit-trees":
                     {
                         int removed = this.RemoveTerrainFeatures(location, feature => feature is FruitTree);
+                        monitor.Log($"Done! Removed {removed} entities from {location.Name}.", LogLevel.Info);
+                        break;
+                    }
+
+                case "furniture":
+                    {
+                        int removed = this.RemoveFurniture(location, furniture => true);
                         monitor.Log($"Done! Removed {removed} entities from {location.Name}.", LogLevel.Info);
                         break;
                     }
@@ -244,15 +251,12 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.World
         {
             int removed = 0;
 
-            if (location is DecoratableLocation decoratableLocation)
+            foreach (Furniture furniture in location.furniture.ToArray())
             {
-                foreach (Furniture furniture in decoratableLocation.furniture.ToArray())
+                if (shouldRemove(furniture))
                 {
-                    if (shouldRemove(furniture))
-                    {
-                        decoratableLocation.furniture.Remove(furniture);
-                        removed++;
-                    }
+                    location.furniture.Remove(furniture);
+                    removed++;
                 }
             }
 

@@ -33,7 +33,7 @@ namespace StardewModdingAPI.ModBuildConfig.Framework
         /// <exception cref="UserErrorException">The mod package isn't valid.</exception>
         public ModFileManager(string projectDir, string targetDir, Regex[] ignoreFilePatterns, bool validateRequiredModFiles)
         {
-            this.Files = new Dictionary<string, FileInfo>(StringComparer.InvariantCultureIgnoreCase);
+            this.Files = new Dictionary<string, FileInfo>(StringComparer.OrdinalIgnoreCase);
 
             // validate paths
             if (!Directory.Exists(projectDir))
@@ -68,7 +68,7 @@ namespace StardewModdingAPI.ModBuildConfig.Framework
         /// <summary>Get the files in the mod package.</summary>
         public IDictionary<string, FileInfo> GetFiles()
         {
-            return new Dictionary<string, FileInfo>(this.Files, StringComparer.InvariantCultureIgnoreCase);
+            return new Dictionary<string, FileInfo>(this.Files, StringComparer.OrdinalIgnoreCase);
         }
 
         /// <summary>Get a semantic version from the mod manifest.</summary>
@@ -164,9 +164,14 @@ namespace StardewModdingAPI.ModBuildConfig.Framework
                 || this.EqualsInvariant(file.Name, "Newtonsoft.Json.pdb")
                 || this.EqualsInvariant(file.Name, "Newtonsoft.Json.xml")
 
+                // mod translation class builder (not used at runtime)
+                || this.EqualsInvariant(file.Name, "Pathoschild.Stardew.ModTranslationClassBuilder.dll")
+                || this.EqualsInvariant(file.Name, "Pathoschild.Stardew.ModTranslationClassBuilder.pdb")
+                || this.EqualsInvariant(file.Name, "Pathoschild.Stardew.ModTranslationClassBuilder.xml")
+
                 // code analysis files
-                || file.Name.EndsWith(".CodeAnalysisLog.xml", StringComparison.InvariantCultureIgnoreCase)
-                || file.Name.EndsWith(".lastcodeanalysissucceeded", StringComparison.InvariantCultureIgnoreCase)
+                || file.Name.EndsWith(".CodeAnalysisLog.xml", StringComparison.OrdinalIgnoreCase)
+                || file.Name.EndsWith(".lastcodeanalysissucceeded", StringComparison.OrdinalIgnoreCase)
 
                 // OS metadata files
                 || this.EqualsInvariant(file.Name, ".DS_Store")
@@ -183,7 +188,7 @@ namespace StardewModdingAPI.ModBuildConfig.Framework
         {
             if (str == null)
                 return other == null;
-            return str.Equals(other, StringComparison.InvariantCultureIgnoreCase);
+            return str.Equals(other, StringComparison.OrdinalIgnoreCase);
         }
     }
 }

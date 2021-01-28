@@ -4,8 +4,8 @@ using StardewModdingAPI.Toolkit.Utilities;
 
 namespace StardewModdingAPI.Internal.ConsoleWriting
 {
-    /// <summary>Provides a wrapper for writing color-coded text to the console.</summary>
-    internal class ColorfulConsoleWriter
+    /// <summary>Writes color-coded text to the console.</summary>
+    internal class ColorfulConsoleWriter : IConsoleWriter
     {
         /*********
         ** Fields
@@ -30,8 +30,16 @@ namespace StardewModdingAPI.Internal.ConsoleWriting
         /// <param name="colorConfig">The colors to use for text written to the SMAPI console.</param>
         public ColorfulConsoleWriter(Platform platform, ColorSchemeConfig colorConfig)
         {
-            this.SupportsColor = this.TestColorSupport();
-            this.Colors = this.GetConsoleColorScheme(platform, colorConfig);
+            if (colorConfig.UseScheme == MonitorColorScheme.None)
+            {
+                this.SupportsColor = false;
+                this.Colors = null;
+            }
+            else
+            {
+                this.SupportsColor = this.TestColorSupport();
+                this.Colors = this.GetConsoleColorScheme(platform, colorConfig);
+            }
         }
 
         /// <summary>Write a message line to the log.</summary>

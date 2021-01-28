@@ -1,20 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <AssemblyName>SMAPI.Toolkit</AssemblyName>
     <RootNamespace>StardewModdingAPI.Toolkit</RootNamespace>
     <Description>A library which encapsulates mod-handling logic for mod managers and tools. Not intended for use by mods.</Description>
     <TargetFrameworks>net4.5;netstandard2.0</TargetFrameworks>
-    <LangVersion>latest</LangVersion>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\SMAPI.Toolkit.xml</DocumentationFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PlatformTarget Condition="'$(TargetFramework)' == 'net4.5'">x86</PlatformTarget>
-    <RootNamespace>StardewModdingAPI.Toolkit</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.18" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.28" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="Pathoschild.Http.FluentClient" Version="3.3.1" />
+    <PackageReference Include="Pathoschild.Http.FluentClient" Version="4.0.0" />
     <PackageReference Include="System.Management" Version="4.5.0" Condition="'$(OS)' == 'Windows_NT'" />
     <PackageReference Include="Microsoft.Win32.Registry" Version="4.5.0" Condition="'$(OS)' == 'Windows_NT' AND '$(TargetFramework)' == 'netstandard2.0'" />
   </ItemGroup>
@@ -24,5 +20,4 @@
   </ItemGroup>
 
   <Import Project="..\..\build\common.targets" />
-
 </Project>

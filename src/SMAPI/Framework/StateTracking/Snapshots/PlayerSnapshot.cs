@@ -58,7 +58,6 @@ namespace StardewModdingAPI.Framework.StateTracking.Snapshots
             this.Inventory = watcher.TryGetInventoryChanges(out SnapshotItemListDiff itemChanges)
                 ? itemChanges
                 : this.EmptyItemListDiff;
-
         }
     }
 }

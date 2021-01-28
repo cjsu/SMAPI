@@ -1,23 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <AssemblyName>SMAPI.ModBuildConfig</AssemblyName>
+    <!--build-->
     <RootNamespace>StardewModdingAPI.ModBuildConfig</RootNamespace>
-    <Version>3.0.0</Version>
     <TargetFramework>net45</TargetFramework>
-    <LangVersion>latest</LangVersion>
     <PlatformTarget>x86</PlatformTarget>
-    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <LangVersion>latest</LangVersion>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+
+    <!--NuGet package-->
+    <PackageId>Pathoschild.Stardew.ModBuildConfig</PackageId>
+    <Title>Build package for SMAPI mods</Title>
+    <Version>3.2.2</Version>
+    <Authors>Pathoschild</Authors>
+    <Description>Automates the build configuration for crossplatform Stardew Valley SMAPI mods. For SMAPI 3.0 or later.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>images/icon.png</PackageIcon>
+    <PackageProjectUrl>https://smapi.io/package/readme</PackageProjectUrl>
+    <PackageReleaseNotes>
+      - Reworked and streamlined how the package is compiled.
+      - Added SMAPI-ModTranslationClassBuilder files to the ignore list.
+    </PackageReleaseNotes>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
   </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\SMAPI.Toolkit\SMAPI.Toolkit.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\..\build\find-game-folder.targets" Link="build\find-game-folder.targets" />
-    <None Include="..\..\docs\technical\mod-package.md" Link="mod-build-config.md" />
-  </ItemGroup>
 
   <ItemGroup>
     <Reference Include="Microsoft.Build" />
@@ -28,19 +32,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\docs\technical\mod-package.md">
-      <Link>mod-package.md</Link>
-    </None>
+    <ProjectReference Include="..\SMAPI.Toolkit\SMAPI.Toolkit.csproj" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="assets\nuget-icon.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
+    <!--project files-->
+    <None Include="..\..\docs\technical\mod-package.md" Link="mod-package.md" />
 
-  <Import Project="..\SMAPI.Internal\SMAPI.Internal.projitems" Label="Shared" />
-  <Import Project="..\..\build\common.targets" />
-  <Import Project="..\..\build\prepare-nuget-package.targets" />
+    <!--NuGet package files-->
+    <None PackagePath="analyzers/dotnet/cs" Include="$(SolutionDir)/SMAPI.ModBuildConfig.Analyzer/bin/netstandard2.0/SMAPI.ModBuildConfig.Analyzer.dll" Pack="true" Visible="false" />
+    <None PackagePath="build/" Include="..\..\build\find-game-folder.targets" Link="build/find-game-folder.targets" Pack="true" />
+    <None PackagePath="build/" Include="$(OutputPath)\Newtonsoft.Json.dll" Pack="true" Visible="false" />
+    <None PackagePath="build/" Include="$(OutputPath)\SMAPI.Toolkit.dll" Pack="true" Visible="false" />
+    <None PackagePath="build/" Include="$(OutputPath)\SMAPI.Toolkit.CoreInterfaces.dll" Pack="true" Visible="false" />
+    <None PackagePath="build/SMAPI.ModBuildConfig.dll" Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" Visible="false" />
+    <None PackagePath="build/Pathoschild.Stardew.ModBuildConfig.targets" Include="build\smapi.targets" Pack="true" />
+    <None PackagePath="images/icon.png" Include="assets\nuget-icon.png" Pack="true" />
+  </ItemGroup>
 
 </Project>

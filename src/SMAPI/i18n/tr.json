@@ -1,3 +1,6 @@
 {
-    "warn.invalid-content-removed": "Yanlış paketlenmiş bir içerik, oyunun çökmemesi için yüklenmedi (SMAPI konsol penceresinde detaylı bilgi mevcut)."
+    // short date format for SDate
+    // tokens: {{day}} (like 15), {{season}} (like Spring), {{seasonLowercase}} (like spring), {{year}} (like 2)
+    "generic.date": "{{day}} {{season}}",
+    "generic.date-with-year": "{{day}} {{season}} года {{year}}"
 }

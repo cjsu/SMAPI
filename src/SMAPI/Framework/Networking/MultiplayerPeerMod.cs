@@ -5,13 +5,13 @@ namespace StardewModdingAPI.Framework.Networking
         /*********
         ** Accessors
         *********/
-        /// <summary>The mod's display name.</summary>
+        /// <inheritdoc />
         public string Name { get; }
 
-        /// <summary>The unique mod ID.</summary>
+        /// <inheritdoc />
         public string ID { get; }
 
-        /// <summary>The mod version.</summary>
+        /// <inheritdoc />
         public ISemanticVersion Version { get; }
 
 

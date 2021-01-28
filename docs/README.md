@@ -1,6 +1,6 @@
 **SMAPI** is an open-source modding framework and API for [Stardew Valley](https://stardewvalley.net/)
 that lets you play the game with mods. It's safely installed alongside the game's executable, and
-doesn't change any of your game files. It serves eight main purposes:
+doesn't change any of your game files. It serves seven main purposes:
 
 1. **Load mods into the game.**  
    _SMAPI loads mods when the game is starting up so they can interact with it. (Code mods aren't
@@ -10,14 +10,10 @@ doesn't change any of your game files. It serves eight main purposes:
    _SMAPI provides APIs and events which let mods interact with the game in ways they otherwise
    couldn't._
 
-3. **Rewrite mods for crossplatform compatibility.**  
+3. **Rewrite mods for compatibility.**  
    _SMAPI rewrites mods' compiled code before loading them so they work on Linux/Mac/Windows
    without the mods needing to handle differences between the Linux/Mac and Windows versions of the
-   game._
-
-4. **Rewrite mods to update them.**  
-   _SMAPI detects when a mod accesses part of the game that changed in a game update which affects
-   many mods, and rewrites the mod so it's compatible._
+   game. In some cases it also rewrites code broken by a game update so the mod doesn't break._
 
 5. **Intercept errors and automatically fix saves.**  
    _SMAPI intercepts errors, shows the error info in the SMAPI console, and in most cases
@@ -37,8 +33,8 @@ doesn't change any of your game files. It serves eight main purposes:
    they cause problems._
 
 8. **Back up your save files.**  
-   _SMAPI automatically creates a daily backup of your saves and keeps ten backups, in case
-   something goes wrong. (Via the bundled SaveBackup mod.)_
+   _SMAPI automatically creates a daily backup of your saves and keeps ten backups (via the bundled
+   Save Backup mod), in case something goes wrong._
 
 ## Documentation
 Have questions? Come [ask the community](https://smapi.io/community) to get help from SMAPI
@@ -66,10 +62,10 @@ default    | ✓ [fully translated](../src/SMAPI/i18n/default.json)
 Chinese    | ✓ [fully translated](../src/SMAPI/i18n/zh.json)
 French     | ✓ [fully translated](../src/SMAPI/i18n/fr.json)
 German     | ✓ [fully translated](../src/SMAPI/i18n/de.json)
-Hungarian  | ❑ not translated
-Italian    | ❑ not translated
+Hungarian  | ✓ [fully translated](../src/SMAPI/i18n/hu.json)
+Italian    | ✓ [fully translated](../src/SMAPI/i18n/it.json)
 Japanese   | ✓ [fully translated](../src/SMAPI/i18n/ja.json)
-Korean     | ❑ not translated
+Korean     | ✓ [fully translated](../src/SMAPI/i18n/ko.json)
 Portuguese | ✓ [fully translated](../src/SMAPI/i18n/pt.json)
 Russian    | ✓ [fully translated](../src/SMAPI/i18n/ru.json)
 Spanish    | ✓ [fully translated](../src/SMAPI/i18n/es.json)

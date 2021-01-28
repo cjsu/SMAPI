@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,10 +49,7 @@ namespace StardewModdingAPI.Web.Framework.Storage
             this.GzipHelper = gzipHelper;
         }
 
-        /// <summary>Save a text file to storage.</summary>
-        /// <param name="content">The content to upload.</param>
-        /// <param name="compress">Whether to gzip the text.</param>
-        /// <returns>Returns metadata about the save attempt.</returns>
+        /// <inheritdoc />
         public async Task<UploadResult> SaveAsync(string content, bool compress = true)
         {
             string id = Guid.NewGuid().ToString("N");
@@ -84,9 +82,8 @@ namespace StardewModdingAPI.Web.Framework.Storage
             }
         }
 
-        /// <summary>Fetch raw text from storage.</summary>
-        /// <param name="id">The storage ID returned by <see cref="SaveAsync"/>.</param>
-        public async Task<StoredFileInfo> GetAsync(string id)
+        /// <inheritdoc />
+        public async Task<StoredFileInfo> GetAsync(string id, bool renew)
         {
             // fetch from blob storage
             if (Guid.TryParseExact(id, "N", out Guid _))
@@ -96,14 +93,21 @@ namespace StardewModdingAPI.Web.Framework.Storage
                 {
                     try
                     {
+                        // get client
                         BlobClient blob = this.GetAzureBlobClient(id);
+
+                        // extend expiry
+                        if (renew)
+                            await blob.SetMetadataAsync(new Dictionary<string, string> { ["expiryRenewed"] = DateTime.UtcNow.ToString("O") }); // change the blob's last-modified date (the specific property set doesn't matter)
+
+                        // fetch file
                         Response<BlobDownloadInfo> response = await blob.DownloadAsync();
                         using BlobDownloadInfo result = response.Value;
-
                         using StreamReader reader = new StreamReader(result.Content);
                         DateTimeOffset expiry = result.Details.LastModified + TimeSpan.FromDays(this.ExpiryDays);
                         string content = this.GzipHelper.DecompressString(reader.ReadToEnd());
 
+                        // build model
                         return new StoredFileInfo
                         {
                             Success = true,
@@ -125,25 +129,32 @@ namespace StardewModdingAPI.Web.Framework.Storage
                 // local filesystem for testing
                 else
                 {
+                    // get file
                     FileInfo file = new FileInfo(this.GetDevFilePath(id));
-                    if (file.Exists)
+                    if (file.Exists && file.LastWriteTimeUtc.AddDays(this.ExpiryDays) < DateTime.UtcNow) // expired
+                        file.Delete();
+                    if (!file.Exists)
                     {
-                        if (file.LastWriteTimeUtc.AddDays(this.ExpiryDays) < DateTime.UtcNow)
-                            file.Delete();
-                        else
+                        return new StoredFileInfo
                         {
-                            return new StoredFileInfo
-                            {
-                                Success = true,
-                                Content = File.ReadAllText(file.FullName),
-                                Expiry = DateTime.UtcNow.AddDays(this.ExpiryDays),
-                                Warning = "This file was saved temporarily to the local computer. This should only happen in a local development environment."
-                            };
-                        }
+                            Error = "There's no file with that ID."
+                        };
                     }
+
+                    // renew
+                    if (renew)
+                    {
+                        File.SetLastWriteTimeUtc(file.FullName, DateTime.UtcNow);
+                        file.Refresh();
+                    }
+
+                    // build model
                     return new StoredFileInfo
                     {
-                        Error = "There's no file with that ID."
+                        Success = true,
+                        Content = File.ReadAllText(file.FullName),
+                        Expiry = DateTime.UtcNow.AddDays(this.ExpiryDays),
+                        Warning = "This file was saved temporarily to the local computer. This should only happen in a local development environment."
                     };
                 }
             }

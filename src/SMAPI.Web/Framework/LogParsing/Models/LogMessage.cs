@@ -12,6 +12,9 @@ namespace StardewModdingAPI.Web.Framework.LogParsing.Models
         /// <summary>The log level.</summary>
         public LogLevel Level { get; set; }
 
+        /// <summary>The screen ID in split-screen mode.</summary>
+        public int ScreenId { get; set; }
+
         /// <summary>The mod name.</summary>
         public string Mod { get; set; }
 

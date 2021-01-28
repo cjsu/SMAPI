@@ -1,8 +1,8 @@
-using System.Linq;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Pathoschild.Http.Client;
-using StardewModdingAPI.Toolkit;
+using StardewModdingAPI.Toolkit.Framework.UpdateData;
 using StardewModdingAPI.Web.Framework.Clients.CurseForge.ResponseModels;
 
 namespace StardewModdingAPI.Web.Framework.Clients.CurseForge
@@ -21,6 +21,13 @@ namespace StardewModdingAPI.Web.Framework.Clients.CurseForge
 
 
         /*********
+        ** Accessors
+        *********/
+        /// <summary>The unique key for the mod site.</summary>
+        public ModSiteKey SiteKey => ModSiteKey.CurseForge;
+
+
+        /*********
         ** Public methods
         *********/
         /// <summary>Construct an instance.</summary>
@@ -31,60 +38,34 @@ namespace StardewModdingAPI.Web.Framework.Clients.CurseForge
             this.Client = new FluentClient(apiUrl).SetUserAgent(userAgent);
         }
 
-        /// <summary>Get metadata about a mod.</summary>
-        /// <param name="id">The CurseForge mod ID.</param>
-        /// <returns>Returns the mod info if found, else <c>null</c>.</returns>
-        public async Task<CurseForgeMod> GetModAsync(long id)
+        /// <summary>Get update check info about a mod.</summary>
+        /// <param name="id">The mod ID.</param>
+        public async Task<IModPage> GetModData(string id)
         {
+            IModPage page = new GenericModPage(this.SiteKey, id);
+
+            // get ID
+            if (!uint.TryParse(id, out uint parsedId))
+                return page.SetError(RemoteModStatus.DoesNotExist, $"The value '{id}' isn't a valid CurseForge mod ID, must be an integer ID.");
+
             // get raw data
             ModModel mod = await this.Client
-                .GetAsync($"addon/{id}")
+                .GetAsync($"addon/{parsedId}")
                 .As<ModModel>();
             if (mod == null)
-                return null;
+                return page.SetError(RemoteModStatus.DoesNotExist, "Found no CurseForge mod with this ID.");
 
-            // get latest versions
-            string invalidVersion = null;
-            ISemanticVersion latest = null;
+            // get downloads
+            List<IModDownload> downloads = new List<IModDownload>();
             foreach (ModFileModel file in mod.LatestFiles)
             {
-                // extract version
-                ISemanticVersion version;
-                {
-                    string raw = this.GetRawVersion(file);
-                    if (raw == null)
-                        continue;
-
-                    if (!SemanticVersion.TryParse(raw, out version))
-                    {
-                        if (invalidVersion == null)
-                            invalidVersion = raw;
-                        continue;
-                    }
-                }
-
-                // track latest version
-                if (latest == null || version.IsNewerThan(latest))
-                    latest = version;
+                downloads.Add(
+                    new GenericModDownload(name: file.DisplayName ?? file.FileName, description: null, version: this.GetRawVersion(file))
+                );
             }
 
-            // get error
-            string error = null;
-            if (latest == null && invalidVersion == null)
-            {
-                error = mod.LatestFiles.Any()
-                    ? $"CurseForge mod {id} has no downloads which specify the version in a recognised format."
-                    : $"CurseForge mod {id} has no downloads.";
-            }
-
-            // generate result
-            return new CurseForgeMod
-            {
-                Name = mod.Name,
-                LatestVersion = latest?.ToString() ?? invalidVersion,
-                Url = mod.WebsiteUrl,
-                Error = error
-            };
+            // return info
+            return page.SetInfo(name: mod.Name, version: null, url: mod.WebsiteUrl, downloads: downloads);
         }
 
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>

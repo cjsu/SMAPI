@@ -46,13 +46,13 @@ namespace StardewModdingAPI.Toolkit.Framework.ModData
         public bool HasID(string id)
         {
             // try main ID
-            if (this.ID.Equals(id, StringComparison.InvariantCultureIgnoreCase))
+            if (this.ID.Equals(id, StringComparison.OrdinalIgnoreCase))
                 return true;
 
             // try former IDs
             foreach (string formerID in this.FormerIDs)
             {
-                if (formerID.Equals(id, StringComparison.InvariantCultureIgnoreCase))
+                if (formerID.Equals(id, StringComparison.OrdinalIgnoreCase))
                     return true;
             }
 
@@ -92,11 +92,6 @@ namespace StardewModdingAPI.Toolkit.Framework.ModData
                         parsed.UpdateKey = field.Value;
                         break;
 
-                    // alternative URL
-                    case ModDataFieldKey.AlternativeUrl:
-                        parsed.AlternativeUrl = field.Value;
-                        break;
-
                     // status
                     case ModDataFieldKey.Status:
                         parsed.Status = (ModStatus)Enum.Parse(typeof(ModStatus), field.Value, ignoreCase: true);
@@ -106,6 +101,11 @@ namespace StardewModdingAPI.Toolkit.Framework.ModData
                     // status reason phrase
                     case ModDataFieldKey.StatusReasonPhrase:
                         parsed.StatusReasonPhrase = field.Value;
+                        break;
+
+                    // status technical reason
+                    case ModDataFieldKey.StatusReasonDetails:
+                        parsed.StatusReasonDetails = field.Value;
                         break;
                 }
             }

@@ -26,7 +26,7 @@ namespace StardewModdingAPI.Web.ViewModels
         public bool IsStale { get; set; }
 
         /// <summary>Whether the mod metadata is available.</summary>
-        public bool HasData => this.Mods != null;
+        public bool HasData => this.Mods?.Any() == true;
 
 
         /*********

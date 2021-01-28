@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Pathoschild.Http.Client;
+using StardewModdingAPI.Toolkit.Framework.UpdateData;
 
 namespace StardewModdingAPI.Web.Framework.Clients.GitHub
 {
@@ -14,6 +15,13 @@ namespace StardewModdingAPI.Web.Framework.Clients.GitHub
         *********/
         /// <summary>The underlying HTTP client.</summary>
         private readonly IClient Client;
+
+
+        /*********
+        ** Accessors
+        *********/
+        /// <summary>The unique key for the mod site.</summary>
+        public ModSiteKey SiteKey => ModSiteKey.GitHub;
 
 
         /*********
@@ -79,6 +87,54 @@ namespace StardewModdingAPI.Web.Framework.Clients.GitHub
             }
         }
 
+        /// <summary>Get update check info about a mod.</summary>
+        /// <param name="id">The mod ID.</param>
+        public async Task<IModPage> GetModData(string id)
+        {
+            IModPage page = new GenericModPage(this.SiteKey, id);
+
+            if (!id.Contains("/") || id.IndexOf("/", StringComparison.OrdinalIgnoreCase) != id.LastIndexOf("/", StringComparison.OrdinalIgnoreCase))
+                return page.SetError(RemoteModStatus.DoesNotExist, $"The value '{id}' isn't a valid GitHub mod ID, must be a username and project name like 'Pathoschild/SMAPI'.");
+
+            // fetch repo info
+            GitRepo repository = await this.GetRepositoryAsync(id);
+            if (repository == null)
+                return page.SetError(RemoteModStatus.DoesNotExist, "Found no GitHub repository for this ID.");
+            string name = repository.FullName;
+            string url = $"{repository.WebUrl}/releases";
+
+            // get releases
+            GitRelease latest;
+            GitRelease preview;
+            {
+                // get latest release (whether preview or stable)
+                latest = await this.GetLatestReleaseAsync(id, includePrerelease: true);
+                if (latest == null)
+                    return page.SetError(RemoteModStatus.DoesNotExist, "Found no GitHub release for this ID.");
+
+                // get stable version if different
+                preview = null;
+                if (latest.IsPrerelease)
+                {
+                    GitRelease release = await this.GetLatestReleaseAsync(id, includePrerelease: false);
+                    if (release != null)
+                    {
+                        preview = latest;
+                        latest = release;
+                    }
+                }
+            }
+
+            // get downloads
+            IModDownload[] downloads = new[] { latest, preview }
+                .Where(release => release != null)
+                .Select(release => (IModDownload)new GenericModDownload(release.Name, release.Body, release.Tag))
+                .ToArray();
+
+            // return info
+            return page.SetInfo(name: name, url: url, version: null, downloads: downloads);
+        }
+
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
         public void Dispose()
         {
@@ -94,7 +150,7 @@ namespace StardewModdingAPI.Web.Framework.Clients.GitHub
         /// <exception cref="ArgumentException">The repository key is invalid.</exception>
         private void AssertKeyFormat(string repo)
         {
-            if (repo == null || !repo.Contains("/") || repo.IndexOf("/", StringComparison.InvariantCultureIgnoreCase) != repo.LastIndexOf("/", StringComparison.InvariantCultureIgnoreCase))
+            if (repo == null || !repo.Contains("/") || repo.IndexOf("/", StringComparison.OrdinalIgnoreCase) != repo.LastIndexOf("/", StringComparison.OrdinalIgnoreCase))
                 throw new ArgumentException($"The value '{repo}' isn't a valid GitHub repository key, must be a username and project name like 'Pathoschild/SMAPI'.", nameof(repo));
         }
     }

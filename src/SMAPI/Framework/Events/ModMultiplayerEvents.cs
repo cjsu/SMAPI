@@ -9,24 +9,31 @@ namespace StardewModdingAPI.Framework.Events
         /*********
         ** Accessors
         *********/
-        /// <summary>Raised after the mod context for a peer is received. This happens before the game approves the connection, so the player doesn't yet exist in the game. This is the earliest point where messages can be sent to the peer via SMAPI.</summary>
+        /// <summary>Raised after the mod context for a peer is received. This happens before the game approves the connection (<see cref="IMultiplayerEvents.PeerConnected"/>), so the player doesn't yet exist in the game. This is the earliest point where messages can be sent to the peer via SMAPI.</summary>
         public event EventHandler<PeerContextReceivedEventArgs> PeerContextReceived
         {
-            add => this.EventManager.PeerContextReceived.Add(value);
+            add => this.EventManager.PeerContextReceived.Add(value, this.Mod);
             remove => this.EventManager.PeerContextReceived.Remove(value);
+        }
+
+        /// <summary>Raised after a peer connection is approved by the game.</summary>
+        public event EventHandler<PeerConnectedEventArgs> PeerConnected
+        {
+            add => this.EventManager.PeerConnected.Add(value, this.Mod);
+            remove => this.EventManager.PeerConnected.Remove(value);
         }
 
         /// <summary>Raised after a mod message is received over the network.</summary>
         public event EventHandler<ModMessageReceivedEventArgs> ModMessageReceived
         {
-            add => this.EventManager.ModMessageReceived.Add(value);
+            add => this.EventManager.ModMessageReceived.Add(value, this.Mod);
             remove => this.EventManager.ModMessageReceived.Remove(value);
         }
 
         /// <summary>Raised after the connection with a peer is severed.</summary>
         public event EventHandler<PeerDisconnectedEventArgs> PeerDisconnected
         {
-            add => this.EventManager.PeerDisconnected.Add(value);
+            add => this.EventManager.PeerDisconnected.Add(value, this.Mod);
             remove => this.EventManager.PeerDisconnected.Remove(value);
         }
 

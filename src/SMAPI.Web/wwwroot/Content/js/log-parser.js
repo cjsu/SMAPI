@@ -115,12 +115,10 @@ smapi.logParser = function (data, sectionUrl) {
     *********/
     var input = $("#input");
     if (input.length) {
-        // get elements
+        // instructions per OS
         var systemOptions = $("input[name='os']");
         var systemInstructions = $("div[data-os]");
-        var submit = $("#submit");
 
-        // instruction OS chooser
         var chooseSystem = function () {
             systemInstructions.hide();
             systemInstructions.filter("[data-os='" + $("input[name='os']:checked").val() + "']").show();
@@ -128,34 +126,12 @@ smapi.logParser = function (data, sectionUrl) {
         systemOptions.on("click", chooseSystem);
         chooseSystem();
 
-        // disable submit if it's empty
-        var toggleSubmit = function () {
-            var hasText = !!input.val().trim();
-            submit.prop("disabled", !hasText);
-        }
-        input.on("input", toggleSubmit);
-        toggleSubmit();
-
-        // drag & drop file
-        input.on({
-            'dragover dragenter': function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-            },
-            'drop': function (e) {
-                var dataTransfer = e.originalEvent.dataTransfer;
-                if (dataTransfer && dataTransfer.files.length) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    var file = dataTransfer.files[0];
-                    var reader = new FileReader();
-                    reader.onload = $.proxy(function (file, $input, event) {
-                        $input.val(event.target.result);
-                        toggleSubmit();
-                    }, this, file, $("#input"));
-                    reader.readAsText(file);
-                }
-            }
+        // file upload
+        smapi.fileUpload({
+            chooseFileLink: $("#choose-file-link"),
+            chooseFileInput: $("#inputFile"),
+            contentArea: input,
+            submitButton: $("#submit")
         });
     }
 };

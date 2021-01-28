@@ -10,7 +10,7 @@ namespace StardewModdingAPI.Events
         ** Accessors
         *********/
         /// <summary>The number of ticks elapsed since the game started, including the current tick.</summary>
-        public uint Ticks => SGame.TicksElapsed;
+        public uint Ticks => SCore.TicksElapsed;
 
         /// <summary>Whether <see cref="Ticks"/> is a multiple of 60, which happens approximately once per second.</summary>
         public bool IsOneSecond => this.Ticks % 60 == 0;

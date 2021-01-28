@@ -10,7 +10,7 @@ namespace StardewModdingAPI.Framework
         ** Private methods
         *********/
         /// <summary>A mapping of game to semantic versions.</summary>
-        private static readonly IDictionary<string, string> VersionMap = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase)
+        private static readonly IDictionary<string, string> VersionMap = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
             ["1.0"] = "1.0.0",
             ["1.01"] = "1.0.1",
@@ -38,7 +38,7 @@ namespace StardewModdingAPI.Framework
         public GameVersion(string version)
             : base(GameVersion.GetSemanticVersionString(version), allowNonStandard: true) { }
 
-        /// <summary>Get a string representation of the version.</summary>
+        /// <inheritdoc />
         public override string ToString()
         {
             return GameVersion.GetGameVersionString(base.ToString());
@@ -64,7 +64,7 @@ namespace StardewModdingAPI.Framework
         {
             foreach (var mapping in GameVersion.VersionMap)
             {
-                if (mapping.Value.Equals(semanticVersion, StringComparison.InvariantCultureIgnoreCase))
+                if (mapping.Value.Equals(semanticVersion, StringComparison.OrdinalIgnoreCase))
                     return mapping.Key;
             }
 

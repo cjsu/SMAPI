@@ -3,7 +3,7 @@ using StardewValley;
 namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.Player
 {
     /// <summary>A command which edits a player style.</summary>
-    internal class SetStyleCommand : TrainerCommand
+    internal class SetStyleCommand : ConsoleCommand
     {
         /*********
         ** Public methods

@@ -4,7 +4,7 @@ using StardewValley;
 namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.World
 {
     /// <summary>A command which freezes the current time.</summary>
-    internal class FreezeTimeCommand : TrainerCommand
+    internal class FreezeTimeCommand : ConsoleCommand
     {
         /*********
         ** Fields

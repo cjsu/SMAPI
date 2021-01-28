@@ -4,12 +4,21 @@ using Microsoft.Xna.Framework.Input;
 
 namespace StardewModdingAPI.Framework.Input
 {
-    /// <summary>An abstraction for manipulating controller state.</summary>
-    internal class GamePadStateBuilder
+    /// <summary>Manages controller state.</summary>
+    internal class GamePadStateBuilder : IInputStateBuilder<GamePadStateBuilder, GamePadState>
     {
         /*********
         ** Fields
         *********/
+        /// <summary>The maximum direction to ignore for the left thumbstick.</summary>
+        private const float LeftThumbstickDeadZone = 0.2f;
+
+        /// <summary>The maximum direction to ignore for the right thumbstick.</summary>
+        private const float RightThumbstickDeadZone = 0.9f;
+
+        /// <summary>The underlying controller state.</summary>
+        private GamePadState? State;
+
         /// <summary>The current button states.</summary>
         private readonly IDictionary<SButton, ButtonState> ButtonStates;
 
@@ -27,135 +36,191 @@ namespace StardewModdingAPI.Framework.Input
 
 
         /*********
+        ** Accessors
+        *********/
+        /// <summary>Whether the gamepad is currently connected.</summary>
+        public bool IsConnected { get; }
+
+
+        /*********
         ** Public methods
         *********/
         /// <summary>Construct an instance.</summary>
-        /// <param name="state">The initial controller state.</param>
+        /// <param name="state">The initial state.</param>
         public GamePadStateBuilder(GamePadState state)
         {
+            this.State = state;
+            this.IsConnected = state.IsConnected;
+
+            if (!this.IsConnected)
+                return;
+
+            GamePadDPad pad = state.DPad;
+            GamePadButtons buttons = state.Buttons;
+            GamePadTriggers triggers = state.Triggers;
+            GamePadThumbSticks sticks = state.ThumbSticks;
             this.ButtonStates = new Dictionary<SButton, ButtonState>
             {
-                [SButton.DPadUp] = state.DPad.Up,
-                [SButton.DPadDown] = state.DPad.Down,
-                [SButton.DPadLeft] = state.DPad.Left,
-                [SButton.DPadRight] = state.DPad.Right,
+                [SButton.DPadUp] = pad.Up,
+                [SButton.DPadDown] = pad.Down,
+                [SButton.DPadLeft] = pad.Left,
+                [SButton.DPadRight] = pad.Right,
 
-                [SButton.ControllerA] = state.Buttons.A,
-                [SButton.ControllerB] = state.Buttons.B,
-                [SButton.ControllerX] = state.Buttons.X,
-                [SButton.ControllerY] = state.Buttons.Y,
-                [SButton.LeftStick] = state.Buttons.LeftStick,
-                [SButton.RightStick] = state.Buttons.RightStick,
-                [SButton.LeftShoulder] = state.Buttons.LeftShoulder,
-                [SButton.RightShoulder] = state.Buttons.RightShoulder,
-                [SButton.ControllerBack] = state.Buttons.Back,
-                [SButton.ControllerStart] = state.Buttons.Start,
-                [SButton.BigButton] = state.Buttons.BigButton
+                [SButton.ControllerA] = buttons.A,
+                [SButton.ControllerB] = buttons.B,
+                [SButton.ControllerX] = buttons.X,
+                [SButton.ControllerY] = buttons.Y,
+                [SButton.LeftStick] = buttons.LeftStick,
+                [SButton.RightStick] = buttons.RightStick,
+                [SButton.LeftShoulder] = buttons.LeftShoulder,
+                [SButton.RightShoulder] = buttons.RightShoulder,
+                [SButton.ControllerBack] = buttons.Back,
+                [SButton.ControllerStart] = buttons.Start,
+                [SButton.BigButton] = buttons.BigButton
             };
-            this.LeftTrigger = state.Triggers.Left;
-            this.RightTrigger = state.Triggers.Right;
-            this.LeftStickPos = state.ThumbSticks.Left;
-            this.RightStickPos = state.ThumbSticks.Right;
+            this.LeftTrigger = triggers.Left;
+            this.RightTrigger = triggers.Right;
+            this.LeftStickPos = sticks.Left;
+            this.RightStickPos = sticks.Right;
         }
 
-        /// <summary>Mark all matching buttons unpressed.</summary>
-        /// <param name="buttons">The buttons.</param>
-        public void SuppressButtons(IEnumerable<SButton> buttons)
+        /// <summary>Override the states for a set of buttons.</summary>
+        /// <param name="overrides">The button state overrides.</param>
+        public GamePadStateBuilder OverrideButtons(IDictionary<SButton, SButtonState> overrides)
         {
-            foreach (SButton button in buttons)
-                this.SuppressButton(button);
-        }
+            if (!this.IsConnected)
+                return this;
 
-        /// <summary>Mark a button unpressed.</summary>
-        /// <param name="button">The button.</param>
-        public void SuppressButton(SButton button)
-        {
-            switch (button)
+            foreach (var pair in overrides)
             {
-                // left thumbstick
-                case SButton.LeftThumbstickUp:
-                    if (this.LeftStickPos.Y > 0)
-                        this.LeftStickPos.Y = 0;
-                    break;
-                case SButton.LeftThumbstickDown:
-                    if (this.LeftStickPos.Y < 0)
-                        this.LeftStickPos.Y = 0;
-                    break;
-                case SButton.LeftThumbstickLeft:
-                    if (this.LeftStickPos.X < 0)
-                        this.LeftStickPos.X = 0;
-                    break;
-                case SButton.LeftThumbstickRight:
-                    if (this.LeftStickPos.X > 0)
-                        this.LeftStickPos.X = 0;
-                    break;
+                bool changed = true;
 
-                // right thumbstick
-                case SButton.RightThumbstickUp:
-                    if (this.RightStickPos.Y > 0)
-                        this.RightStickPos.Y = 0;
-                    break;
-                case SButton.RightThumbstickDown:
-                    if (this.RightStickPos.Y < 0)
-                        this.RightStickPos.Y = 0;
-                    break;
-                case SButton.RightThumbstickLeft:
-                    if (this.RightStickPos.X < 0)
-                        this.RightStickPos.X = 0;
-                    break;
-                case SButton.RightThumbstickRight:
-                    if (this.RightStickPos.X > 0)
-                        this.RightStickPos.X = 0;
-                    break;
+                bool isDown = pair.Value.IsDown();
+                switch (pair.Key)
+                {
+                    // left thumbstick
+                    case SButton.LeftThumbstickUp:
+                        this.LeftStickPos.Y = isDown ? 1 : 0;
+                        break;
+                    case SButton.LeftThumbstickDown:
+                        this.LeftStickPos.Y = isDown ? 1 : 0;
+                        break;
+                    case SButton.LeftThumbstickLeft:
+                        this.LeftStickPos.X = isDown ? 1 : 0;
+                        break;
+                    case SButton.LeftThumbstickRight:
+                        this.LeftStickPos.X = isDown ? 1 : 0;
+                        break;
 
-                // triggers
-                case SButton.LeftTrigger:
-                    this.LeftTrigger = 0;
-                    break;
-                case SButton.RightTrigger:
-                    this.RightTrigger = 0;
-                    break;
+                    // right thumbstick
+                    case SButton.RightThumbstickUp:
+                        this.RightStickPos.Y = isDown ? 1 : 0;
+                        break;
+                    case SButton.RightThumbstickDown:
+                        this.RightStickPos.Y = isDown ? 1 : 0;
+                        break;
+                    case SButton.RightThumbstickLeft:
+                        this.RightStickPos.X = isDown ? 1 : 0;
+                        break;
+                    case SButton.RightThumbstickRight:
+                        this.RightStickPos.X = isDown ? 1 : 0;
+                        break;
 
-                // buttons
-                default:
-                    if (this.ButtonStates.ContainsKey(button))
-                        this.ButtonStates[button] = ButtonState.Released;
-                    break;
+                    // triggers
+                    case SButton.LeftTrigger:
+                        this.LeftTrigger = isDown ? 1 : 0;
+                        break;
+                    case SButton.RightTrigger:
+                        this.RightTrigger = isDown ? 1 : 0;
+                        break;
+
+                    // buttons
+                    default:
+                        if (this.ButtonStates.ContainsKey(pair.Key))
+                            this.ButtonStates[pair.Key] = isDown ? ButtonState.Pressed : ButtonState.Released;
+                        else
+                            changed = false;
+                        break;
+                }
+
+                if (changed)
+                    this.State = null;
+            }
+
+            return this;
+        }
+
+        /// <summary>Get the currently pressed buttons.</summary>
+        public IEnumerable<SButton> GetPressedButtons()
+        {
+            if (!this.IsConnected)
+                yield break;
+
+            // buttons
+            foreach (var pair in this.ButtonStates)
+            {
+                if (pair.Value == ButtonState.Pressed && pair.Key.TryGetController(out Buttons button))
+                    yield return button.ToSButton();
+            }
+
+            // triggers
+            if (this.LeftTrigger > 0.2f)
+                yield return SButton.LeftTrigger;
+            if (this.RightTrigger > 0.2f)
+                yield return SButton.RightTrigger;
+
+            // left thumbstick direction
+            if (this.LeftStickPos.Y > GamePadStateBuilder.LeftThumbstickDeadZone)
+                yield return SButton.LeftThumbstickUp;
+            if (this.LeftStickPos.Y < -GamePadStateBuilder.LeftThumbstickDeadZone)
+                yield return SButton.LeftThumbstickDown;
+            if (this.LeftStickPos.X > GamePadStateBuilder.LeftThumbstickDeadZone)
+                yield return SButton.LeftThumbstickRight;
+            if (this.LeftStickPos.X < -GamePadStateBuilder.LeftThumbstickDeadZone)
+                yield return SButton.LeftThumbstickLeft;
+
+            // right thumbstick direction
+            if (this.RightStickPos.Length() > GamePadStateBuilder.RightThumbstickDeadZone)
+            {
+                if (this.RightStickPos.Y > 0)
+                    yield return SButton.RightThumbstickUp;
+                if (this.RightStickPos.Y < 0)
+                    yield return SButton.RightThumbstickDown;
+                if (this.RightStickPos.X > 0)
+                    yield return SButton.RightThumbstickRight;
+                if (this.RightStickPos.X < 0)
+                    yield return SButton.RightThumbstickLeft;
             }
         }
 
-        /// <summary>Construct an equivalent gamepad state.</summary>
-        public GamePadState ToGamePadState()
+        /// <summary>Get the equivalent state.</summary>
+        public GamePadState GetState()
         {
-            return new GamePadState(
+            this.State ??= new GamePadState(
                 leftThumbStick: this.LeftStickPos,
                 rightThumbStick: this.RightStickPos,
                 leftTrigger: this.LeftTrigger,
                 rightTrigger: this.RightTrigger,
-                buttons: this.GetBitmask(this.GetPressedButtons()) // MonoDevelop requires one bitmask here; don't specify multiple values
+                buttons: this.GetButtonBitmask() // MonoGame requires one bitmask here; don't specify multiple values
             );
+
+            return this.State.Value;
         }
+
 
         /*********
         ** Private methods
         *********/
-        /// <summary>Get all pressed buttons.</summary>
-        private IEnumerable<Buttons> GetPressedButtons()
+        /// <summary>Get a bitmask representing the pressed buttons.</summary>
+        private Buttons GetButtonBitmask()
         {
+            Buttons flag = 0;
             foreach (var pair in this.ButtonStates)
             {
                 if (pair.Value == ButtonState.Pressed && pair.Key.TryGetController(out Buttons button))
-                    yield return button;
+                    flag |= button;
             }
-        }
 
-        /// <summary>Get a bitmask representing the given buttons.</summary>
-        /// <param name="buttons">The buttons to represent.</param>
-        private Buttons GetBitmask(IEnumerable<Buttons> buttons)
-        {
-            Buttons flag = 0;
-            foreach (Buttons button in buttons)
-                flag |= button;
             return flag;
         }
     }

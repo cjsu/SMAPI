@@ -14,7 +14,7 @@ namespace StardewModdingAPI.Web.Framework.LogParsing
         ** Fields
         *********/
         /// <summary>A regex pattern matching the start of a SMAPI message.</summary>
-        private readonly Regex MessageHeaderPattern = new Regex(@"^\[(?<time>\d\d[:\.]\d\d[:\.]\d\d) (?<level>[a-z]+) +(?<modName>[^\]]+)\] ", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private readonly Regex MessageHeaderPattern = new Regex(@"^\[(?<time>\d\d[:\.]\d\d[:\.]\d\d) (?<level>[a-z]+)(?: +screen_(?<screen>\d+))? +(?<modName>[^\]]+)\] ", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         /// <summary>A regex pattern matching SMAPI's initial platform info message.</summary>
         private readonly Regex InfoLinePattern = new Regex(@"^SMAPI (?<apiVersion>.+) with Stardew Valley (?<gameVersion>.+) on (?<os>.+)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
@@ -42,10 +42,10 @@ namespace StardewModdingAPI.Web.Framework.LogParsing
         private readonly Regex ModUpdateListStartPattern = new Regex(@"^You can update \d+ mods?:$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         /// <summary>A regex pattern matching an entry in SMAPI's mod update list.</summary>
-        private readonly Regex ModUpdateListEntryPattern = new Regex(@"^   (?<name>.+?) (?<version>[^\s]+): (?<link>.+)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private readonly Regex ModUpdateListEntryPattern = new Regex(@"^   (?<name>.+) (?<version>[^\s]+): (?<link>.+)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         /// <summary>A regex pattern matching SMAPI's update line.</summary>
-        private readonly Regex SMAPIUpdatePattern = new Regex(@"^You can update SMAPI to (?<version>[^\s]+): (?<link>.+)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private readonly Regex SmapiUpdatePattern = new Regex(@"^You can update SMAPI to (?<version>[^\s]+): (?<link>.+)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
 
         /*********
@@ -109,12 +109,9 @@ namespace StardewModdingAPI.Web.Framework.LogParsing
                     if (message.Mod == "SMAPI")
                     {
                         // update flags
-                        if (inModList && !this.ModListEntryPattern.IsMatch(message.Text))
-                            inModList = false;
-                        if (inContentPackList && !this.ContentPackListEntryPattern.IsMatch(message.Text))
-                            inContentPackList = false;
-                        if (inModUpdateList && !this.ModUpdateListEntryPattern.IsMatch(message.Text))
-                            inModUpdateList = false;
+                        inModList = inModList && message.Level == LogLevel.Info && this.ModListEntryPattern.IsMatch(message.Text);
+                        inContentPackList = inContentPackList && message.Level == LogLevel.Info && this.ContentPackListEntryPattern.IsMatch(message.Text);
+                        inModUpdateList = inModUpdateList && message.Level == LogLevel.Alert && this.ModUpdateListEntryPattern.IsMatch(message.Text);
 
                         // mod list
                         if (!inModList && message.Level == LogLevel.Info && this.ModListStartPattern.IsMatch(message.Text))
@@ -181,9 +178,9 @@ namespace StardewModdingAPI.Web.Framework.LogParsing
                             message.Section = LogSection.ModUpdateList;
                         }
 
-                        else if (message.Level == LogLevel.Alert && this.SMAPIUpdatePattern.IsMatch(message.Text))
+                        else if (message.Level == LogLevel.Alert && this.SmapiUpdatePattern.IsMatch(message.Text))
                         {
-                            Match match = this.SMAPIUpdatePattern.Match(message.Text);
+                            Match match = this.SmapiUpdatePattern.Match(message.Text);
                             string version = match.Groups["version"].Value;
                             string link = match.Groups["link"].Value;
                             smapiMod.UpdateVersion = version;
@@ -201,7 +198,7 @@ namespace StardewModdingAPI.Web.Framework.LogParsing
                         }
 
                         // mod path line
-                        else if (message.Level == LogLevel.Debug && this.ModPathPattern.IsMatch(message.Text))
+                        else if (message.Level == LogLevel.Info && this.ModPathPattern.IsMatch(message.Text))
                         {
                             Match match = this.ModPathPattern.Match(message.Text);
                             log.ModPath = match.Groups["path"].Value;
@@ -282,43 +279,49 @@ namespace StardewModdingAPI.Web.Framework.LogParsing
         /// <exception cref="LogParseException">The log text can't be parsed successfully.</exception>
         private IEnumerable<LogMessage> GetMessages(string logText)
         {
-            LogMessage message = new LogMessage();
-            using (StringReader reader = new StringReader(logText))
+            LogMessageBuilder builder = new LogMessageBuilder();
+            using StringReader reader = new StringReader(logText);
+            while (true)
             {
-                while (true)
-                {
-                    // read data
-                    string line = reader.ReadLine();
-                    if (line == null)
-                        break;
-                    Match header = this.MessageHeaderPattern.Match(line);
+                // read line
+                string line = reader.ReadLine();
+                if (line == null)
+                    break;
 
-                    // validate
-                    if (message.Text == null && !header.Success)
+                // match header
+                Match header = this.MessageHeaderPattern.Match(line);
+                bool isNewMessage = header.Success;
+
+                // start/continue message
+                if (isNewMessage)
+                {
+                    if (builder.Started)
+                    {
+                        yield return builder.Build();
+                        builder.Clear();
+                    }
+
+                    var screenGroup = header.Groups["screen"];
+                    builder.Start(
+                        time: header.Groups["time"].Value,
+                        level: Enum.Parse<LogLevel>(header.Groups["level"].Value, ignoreCase: true),
+                        screenId: screenGroup.Success ? int.Parse(screenGroup.Value) : 0, // main player is always screen ID 0
+                        mod: header.Groups["modName"].Value,
+                        text: line.Substring(header.Length)
+                    );
+                }
+                else
+                {
+                    if (!builder.Started)
                         throw new LogParseException("Found a log message with no SMAPI metadata. Is this a SMAPI log file?");
 
-                    // start or continue message
-                    if (header.Success)
-                    {
-                        if (message.Text != null)
-                            yield return message;
-
-                        message = new LogMessage
-                        {
-                            Time = header.Groups["time"].Value,
-                            Level = Enum.Parse<LogLevel>(header.Groups["level"].Value, ignoreCase: true),
-                            Mod = header.Groups["modName"].Value,
-                            Text = line.Substring(header.Length)
-                        };
-                    }
-                    else
-                        message.Text += "\n" + line;
+                    builder.AddLine(line);
                 }
-
-                // end last message
-                if (message.Text != null)
-                    yield return message;
             }
+
+            // end last message
+            if (builder.Started)
+                yield return builder.Build();
         }
     }
 }

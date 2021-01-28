@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 namespace StardewModdingAPI.Web.Framework.Clients.GitHub
 {
     /// <summary>An HTTP client for fetching metadata from GitHub.</summary>
-    internal interface IGitHubClient : IDisposable
+    internal interface IGitHubClient : IModSiteClient, IDisposable
     {
         /*********
         ** Methods

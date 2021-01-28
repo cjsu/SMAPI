@@ -37,17 +37,17 @@ namespace StardewModdingAPI.Events
             this.InputState = inputState;
         }
 
-        /// <summary>Whether a mod has indicated the key was already handled, so the game should handle it.</summary>
+        /// <summary>Get whether a mod has indicated the key was already handled, so the game shouldn't handle it.</summary>
         public bool IsSuppressed()
         {
             return this.IsSuppressed(this.Button);
         }
 
-        /// <summary>Whether a mod has indicated the key was already handled, so the game should handle it.</summary>
+        /// <summary>Get whether a mod has indicated the key was already handled, so the game shouldn't handle it.</summary>
         /// <param name="button">The button to check.</param>
         public bool IsSuppressed(SButton button)
         {
-            return this.InputState.SuppressButtons.Contains(button);
+            return this.InputState.IsSuppressed(button);
         }
 
         /// <summary>Get whether a given button was pressed or held.</summary>

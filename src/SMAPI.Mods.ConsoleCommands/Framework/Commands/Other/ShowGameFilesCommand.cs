@@ -3,7 +3,7 @@
 namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.Other
 {
     /// <summary>A command which shows the game files.</summary>
-    internal class ShowGameFilesCommand : TrainerCommand
+    internal class ShowGameFilesCommand : ConsoleCommand
     {
         /*********
         ** Public methods

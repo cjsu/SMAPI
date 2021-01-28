@@ -11,5 +11,8 @@ namespace StardewModdingAPI.Web.Framework.ConfigModels
 
         /// <summary>The number of minutes failed update checks should be cached before refetching them.</summary>
         public int ErrorCacheMinutes { get; set; }
+
+        /// <summary>Update-check metadata to override.</summary>
+        public ModOverrideConfig[] ModOverrides { get; set; }
     }
 }

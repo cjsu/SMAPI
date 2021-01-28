@@ -3,7 +3,7 @@
 namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.Other
 {
     /// <summary>A command which sends a debug command to the game.</summary>
-    internal class DebugCommand : TrainerCommand
+    internal class DebugCommand : ConsoleCommand
     {
         /*********
         ** Public methods

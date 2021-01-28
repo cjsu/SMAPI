@@ -10,7 +10,7 @@ namespace StardewModdingAPI.Events
         ** Accessors
         *********/
         /// <summary>The number of ticks elapsed since the game started, excluding the upcoming tick.</summary>
-        public uint Ticks => SGame.TicksElapsed;
+        public uint Ticks => SCore.TicksElapsed;
 
 
         /*********

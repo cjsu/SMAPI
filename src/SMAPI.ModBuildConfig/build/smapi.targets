@@ -18,14 +18,15 @@
     <!-- set default package options -->
     <ModFolderName Condition="'$(ModFolderName)' == ''">$(MSBuildProjectName)</ModFolderName>
     <ModZipPath Condition="'$(ModZipPath)' == ''">$(TargetDir)</ModZipPath>
+    <GameModsPath Condition="'$(GameModsPath)' == ''">$([System.IO.Path]::Combine($(GamePath), 'Mods'))</GameModsPath>
     <EnableModDeploy Condition="'$(EnableModDeploy)' == ''">true</EnableModDeploy>
     <EnableModZip Condition="'$(EnableModZip)' == ''">true</EnableModZip>
-    <EnableHarmony Condition="'$(EnableModZip)' == ''">false</EnableHarmony>
-    <EnableGameDebugging Condition="$(EnableGameDebugging) == ''">true</EnableGameDebugging>
+    <EnableHarmony Condition="'$(EnableHarmony)' == ''">false</EnableHarmony>
+    <EnableGameDebugging Condition="'$(EnableGameDebugging)' == ''">true</EnableGameDebugging>
     <CopyModReferencesToBuildOutput Condition="'$(CopyModReferencesToBuildOutput)' == '' OR ('$(CopyModReferencesToBuildOutput)' != 'true' AND '$(CopyModReferencesToBuildOutput)' != 'false')">false</CopyModReferencesToBuildOutput>
   </PropertyGroup>
 
-  <PropertyGroup Condition="$(OS) == 'Windows_NT' AND $(EnableGameDebugging) == 'true'">
+  <PropertyGroup Condition="'$(OS)' == 'Windows_NT' AND '$(EnableGameDebugging)' == 'true'">
     <!-- enable game debugging -->
     <StartAction>Program</StartAction>
     <StartProgram>$(GamePath)\StardewModdingAPI.exe</StartProgram>
@@ -38,58 +39,26 @@
   **********************************************-->
   <!-- common -->
   <ItemGroup>
-    <Reference Include="$(GameExecutableName)">
-      <HintPath>$(GamePath)\$(GameExecutableName).exe</HintPath>
-      <Private>$(CopyModReferencesToBuildOutput)</Private>
-    </Reference>
-    <Reference Include="StardewValley.GameData">
-      <HintPath>$(GamePath)\StardewValley.GameData.dll</HintPath>
-      <Private>$(CopyModReferencesToBuildOutput)</Private>
-    </Reference>
-    <Reference Include="StardewModdingAPI">
-      <HintPath>$(GamePath)\StardewModdingAPI.exe</HintPath>
-      <Private>$(CopyModReferencesToBuildOutput)</Private>
-    </Reference>
-    <Reference Include="SMAPI.Toolkit.CoreInterfaces">
-      <HintPath>$(GamePath)\smapi-internal\SMAPI.Toolkit.CoreInterfaces.dll</HintPath>
-      <Private>$(CopyModReferencesToBuildOutput)</Private>
-    </Reference>
-    <Reference Include="xTile">
-      <HintPath>$(GamePath)\xTile.dll</HintPath>
-      <Private>$(CopyModReferencesToBuildOutput)</Private>
-    </Reference>
-    <Reference Include="0Harmony" Condition="'$(EnableHarmony)' == 'true'">
-      <HintPath>$(GamePath)\smapi-internal\0Harmony.dll</HintPath>
-      <Private>$(CopyModReferencesToBuildOutput)</Private>
-    </Reference>
+    <Reference Include="$(GameExecutableName)" HintPath="$(GamePath)\$(GameExecutableName).exe" Private="$(CopyModReferencesToBuildOutput)" />
+    <Reference Include="StardewValley.GameData" HintPath="$(GamePath)\StardewValley.GameData.dll" Private="$(CopyModReferencesToBuildOutput)" />
+    <Reference Include="StardewModdingAPI" HintPath="$(GamePath)\StardewModdingAPI.exe" Private="$(CopyModReferencesToBuildOutput)" />
+    <Reference Include="SMAPI.Toolkit.CoreInterfaces" HintPath="$(GamePath)\smapi-internal\SMAPI.Toolkit.CoreInterfaces.dll" Private="$(CopyModReferencesToBuildOutput)" />
+    <Reference Include="xTile" HintPath="$(GamePath)\xTile.dll" Private="$(CopyModReferencesToBuildOutput)" />
+    <Reference Include="0Harmony" Condition="'$(EnableHarmony)' == 'true'" HintPath="$(GamePath)\smapi-internal\0Harmony.dll" Private="$(CopyModReferencesToBuildOutput)" />
   </ItemGroup>
 
   <!-- Windows -->
-  <ItemGroup Condition="$(OS) == 'Windows_NT'">
-    <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
-      <Private>$(CopyModReferencesToBuildOutput)</Private>
-    </Reference>
-    <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
-      <Private>$(CopyModReferencesToBuildOutput)</Private>
-    </Reference>
-    <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
-      <Private>$(CopyModReferencesToBuildOutput)</Private>
-    </Reference>
-    <Reference Include="Microsoft.Xna.Framework.Xact, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
-      <Private>$(CopyModReferencesToBuildOutput)</Private>
-    </Reference>
-    <Reference Include="Netcode">
-      <HintPath>$(GamePath)\Netcode.dll</HintPath>
-      <Private>$(CopyModReferencesToBuildOutput)</Private>
-    </Reference>
+  <ItemGroup Condition="'$(OS)' == 'Windows_NT'">
+    <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" Private="$(CopyModReferencesToBuildOutput)" />
+    <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" Private="$(CopyModReferencesToBuildOutput)" />
+    <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" Private="$(CopyModReferencesToBuildOutput)" />
+    <Reference Include="Microsoft.Xna.Framework.Xact, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" Private="$(CopyModReferencesToBuildOutput)" />
+    <Reference Include="Netcode" HintPath="$(GamePath)\Netcode.dll" Private="$(CopyModReferencesToBuildOutput)" />
   </ItemGroup>
 
   <!-- Linux/Mac -->
-  <ItemGroup Condition="$(OS) != 'Windows_NT'">
-    <Reference Include="MonoGame.Framework">
-      <HintPath>$(GamePath)\MonoGame.Framework.dll</HintPath>
-      <Private>$(CopyModReferencesToBuildOutput)</Private>
-    </Reference>
+  <ItemGroup Condition="'$(OS)' != 'Windows_NT'">
+    <Reference Include="MonoGame.Framework" HintPath="$(GamePath)\MonoGame.Framework.dll" Private="$(CopyModReferencesToBuildOutput)" />
   </ItemGroup>
 
 
@@ -118,7 +87,7 @@
 
       ProjectDir="$(ProjectDir)"
       TargetDir="$(TargetDir)"
-      GameDir="$(GamePath)"
+      GameModsDir="$(GameModsPath)"
       IgnoreModFilePatterns="$(IgnoreModFilePatterns)"
     />
   </Target>

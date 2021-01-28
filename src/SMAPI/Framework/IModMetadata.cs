@@ -31,11 +31,17 @@ namespace StardewModdingAPI.Framework
         /// <summary>The metadata resolution status.</summary>
         ModMetadataStatus Status { get; }
 
+        /// <summary>The reason the mod failed to load, if applicable.</summary>
+        ModFailReason? FailReason { get; }
+
         /// <summary>Indicates non-error issues with the mod.</summary>
         ModWarning Warnings { get; }
 
         /// <summary>The reason the metadata is invalid, if any.</summary>
         string Error { get; }
+
+        /// <summary>A detailed technical message for <see cref="Error"/>, if any.</summary>
+        public string ErrorDetails { get; }
 
         /// <summary>Whether the mod folder should be ignored. This is <c>true</c> if it was found within a folder whose name starts with a dot.</summary>
         bool IsIgnored { get; }
@@ -62,11 +68,17 @@ namespace StardewModdingAPI.Framework
         /*********
         ** Public methods
         *********/
+        /// <summary>Set the mod status to <see cref="ModMetadataStatus.Found"/>.</summary>
+        /// <returns>Return the instance for chaining.</returns>
+        IModMetadata SetStatusFound();
+
         /// <summary>Set the mod status.</summary>
         /// <param name="status">The metadata resolution status.</param>
+        /// <param name="reason">The reason a mod could not be loaded.</param>
         /// <param name="error">The reason the metadata is invalid, if any.</param>
+        /// <param name="errorDetails">A detailed technical message, if any.</param>
         /// <returns>Return the instance for chaining.</returns>
-        IModMetadata SetStatus(ModMetadataStatus status, string error = null);
+        IModMetadata SetStatus(ModMetadataStatus status, ModFailReason reason, string error, string errorDetails = null);
 
         /// <summary>Set a warning flag for the mod.</summary>
         /// <param name="warning">The warning to set.</param>
@@ -112,9 +124,9 @@ namespace StardewModdingAPI.Framework
         /// <summary>Whether the mod has at least one valid update key set.</summary>
         bool HasValidUpdateKeys();
 
-        /// <summary>Get whether the mod has a given warning and it hasn't been suppressed in the <see cref="DataRecord"/>.</summary>
-        /// <param name="warning">The warning to check.</param>
-        bool HasUnsuppressWarning(ModWarning warning);
+        /// <summary>Get whether the mod has any of the given warnings which haven't been suppressed in the <see cref="DataRecord"/>.</summary>
+        /// <param name="warnings">The warnings to check.</param>
+        bool HasUnsuppressedWarnings(params ModWarning[] warnings);
 
         /// <summary>Get a relative path which includes the root folder name.</summary>
         string GetRelativePathWithRoot();

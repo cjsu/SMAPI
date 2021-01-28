@@ -76,7 +76,7 @@ namespace StardewModdingAPI.Framework.ContentManagers
         /// <param name="onDisposing">A callback to invoke when the content manager is being disposed.</param>
         /// <param name="isNamespaced">Whether this content manager handles managed asset keys (e.g. to load assets from a mod folder).</param>
         protected BaseContentManager(string name, IServiceProvider serviceProvider, string rootDirectory, CultureInfo currentCulture, ContentCoordinator coordinator, IMonitor monitor, Reflector reflection, Action<BaseContentManager> onDisposing, bool isNamespaced)
-                : base(serviceProvider, rootDirectory, currentCulture)
+            : base(serviceProvider, rootDirectory, currentCulture)
         {
             // init
             this.Name = name;
@@ -87,7 +87,7 @@ namespace StardewModdingAPI.Framework.ContentManagers
             this.IsNamespaced = isNamespaced;
 
             // get asset data
-            this.LanguageCodes = this.GetKeyLocales().ToDictionary(p => p.Value, p => p.Key, StringComparer.InvariantCultureIgnoreCase);
+            this.LanguageCodes = this.GetKeyLocales().ToDictionary(p => p.Value, p => p.Key, StringComparer.OrdinalIgnoreCase);
             this.BaseDisposableReferences = reflection.GetField<List<IDisposable>>(this, "disposableAssets").GetValue();
         }
 
@@ -169,10 +169,11 @@ namespace StardewModdingAPI.Framework.ContentManagers
 
         /// <summary>Get whether the content manager has already loaded and cached the given asset.</summary>
         /// <param name="assetName">The asset path relative to the loader root directory, not including the <c>.xnb</c> extension.</param>
-        public bool IsLoaded(string assetName)
+        /// <param name="language">The language.</param>
+        public bool IsLoaded(string assetName, LanguageCode language)
         {
             assetName = this.Cache.NormalizeKey(assetName);
-            return this.IsNormalizedKeyLoaded(assetName);
+            return this.IsNormalizedKeyLoaded(assetName, language);
         }
 
         /// <summary>Get the cached asset keys.</summary>
@@ -192,7 +193,7 @@ namespace StardewModdingAPI.Framework.ContentManagers
         /// <returns>Returns the invalidated asset names and instances.</returns>
         public IDictionary<string, object> InvalidateCache(Func<string, Type, bool> predicate, bool dispose = false)
         {
-            IDictionary<string, object> removeAssets = new Dictionary<string, object>(StringComparer.InvariantCultureIgnoreCase);
+            IDictionary<string, object> removeAssets = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
             this.Cache.Remove((key, asset) =>
             {
                 this.ParseCacheKey(key, out string assetName, out _);
@@ -295,7 +296,7 @@ namespace StardewModdingAPI.Framework.ContentManagers
             // handle localized key
             if (!string.IsNullOrWhiteSpace(cacheKey))
             {
-                int lastSepIndex = cacheKey.LastIndexOf(".", StringComparison.InvariantCulture);
+                int lastSepIndex = cacheKey.LastIndexOf(".", StringComparison.Ordinal);
                 if (lastSepIndex >= 0)
                 {
                     string suffix = cacheKey.Substring(lastSepIndex + 1, cacheKey.Length - lastSepIndex - 1);
@@ -315,7 +316,8 @@ namespace StardewModdingAPI.Framework.ContentManagers
 
         /// <summary>Get whether an asset has already been loaded.</summary>
         /// <param name="normalizedAssetName">The normalized asset name.</param>
-        protected abstract bool IsNormalizedKeyLoaded(string normalizedAssetName);
+        /// <param name="language">The language to check.</param>
+        protected abstract bool IsNormalizedKeyLoaded(string normalizedAssetName, LanguageCode language);
 
         /// <summary>Get the locale codes (like <c>ja-JP</c>) used in asset keys.</summary>
         private IDictionary<LanguageCode, string> GetKeyLocales()

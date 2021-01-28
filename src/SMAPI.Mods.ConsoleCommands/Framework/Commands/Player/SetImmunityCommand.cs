@@ -4,7 +4,7 @@ using StardewValley;
 namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.Player
 {
     /// <summary>A command which edits the player's current immunity.</summary>
-    internal class SetImmunityCommand : TrainerCommand
+    internal class SetImmunityCommand : ConsoleCommand
     {
         /*********
         ** Public methods

@@ -9,6 +9,9 @@ namespace StardewModdingAPI.Toolkit.Framework.ModScanning
         /// <summary>The folder is empty or contains only ignored files.</summary>
         EmptyFolder,
 
+        /// <summary>The folder is an empty folder managed by Vortex.</summary>
+        EmptyVortexFolder,
+
         /// <summary>The folder is ignored by convention.</summary>
         IgnoredFolder,
 

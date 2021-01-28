@@ -4,21 +4,14 @@ using StardewValley;
 namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.Player
 {
     /// <summary>A command which edits the player's current money.</summary>
-    internal class SetMoneyCommand : TrainerCommand
+    internal class SetMoneyCommand : ConsoleCommand
     {
-        /*********
-        ** Fields
-        *********/
-        /// <summary>Whether to keep the player's money at a set value.</summary>
-        private bool InfiniteMoney;
-
-
         /*********
         ** Public methods
         *********/
         /// <summary>Construct an instance.</summary>
         public SetMoneyCommand()
-            : base("player_setmoney", "Sets the player's money.\n\nUsage: player_setmoney <value>\n- value: an integer amount, or 'inf' for infinite money.", mayNeedUpdate: true) { }
+            : base("player_setmoney", "Sets the player's money.\n\nUsage: player_setmoney <value>\n- value: an integer amount.") { }
 
         /// <summary>Handle the command.</summary>
         /// <param name="monitor">Writes messages to the console and log file.</param>
@@ -29,36 +22,19 @@ namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.Player
             // validate
             if (!args.Any())
             {
-                monitor.Log($"You currently have {(this.InfiniteMoney ? "infinite" : Game1.player.Money.ToString())} gold. Specify a value to change it.", LogLevel.Info);
+                monitor.Log($"You currently have {Game1.player.Money} gold. Specify a value to change it.", LogLevel.Info);
                 return;
             }
 
             // handle
             string amountStr = args[0];
-            if (amountStr == "inf")
+            if (int.TryParse(amountStr, out int amount))
             {
-                this.InfiniteMoney = true;
-                monitor.Log("OK, you now have infinite money.", LogLevel.Info);
+                Game1.player.Money = amount;
+                monitor.Log($"OK, you now have {Game1.player.Money} gold.", LogLevel.Info);
             }
             else
-            {
-                this.InfiniteMoney = false;
-                if (int.TryParse(amountStr, out int amount))
-                {
-                    Game1.player.Money = amount;
-                    monitor.Log($"OK, you now have {Game1.player.Money} gold.", LogLevel.Info);
-                }
-                else
-                    this.LogArgumentNotInt(monitor);
-            }
-        }
-
-        /// <summary>Perform any logic needed on update tick.</summary>
-        /// <param name="monitor">Writes messages to the console and log file.</param>
-        public override void OnUpdated(IMonitor monitor)
-        {
-            if (this.InfiniteMoney && Context.IsWorldReady)
-                Game1.player.Money = 999999;
+                this.LogArgumentNotInt(monitor);
         }
     }
 }

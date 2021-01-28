@@ -11,11 +11,14 @@ namespace StardewModdingAPI.Toolkit.Framework.UpdateData
         /// <summary>The raw update key text.</summary>
         public string RawText { get; }
 
-        /// <summary>The mod repository containing the mod.</summary>
-        public ModRepositoryKey Repository { get; }
+        /// <summary>The mod site containing the mod.</summary>
+        public ModSiteKey Site { get; }
 
         /// <summary>The mod ID within the repository.</summary>
         public string ID { get; }
+
+        /// <summary>If specified, a substring in download names/descriptions to match.</summary>
+        public string Subkey { get; }
 
         /// <summary>Whether the update key seems to be valid.</summary>
         public bool LooksValid { get; }
@@ -26,53 +29,71 @@ namespace StardewModdingAPI.Toolkit.Framework.UpdateData
         *********/
         /// <summary>Construct an instance.</summary>
         /// <param name="rawText">The raw update key text.</param>
-        /// <param name="repository">The mod repository containing the mod.</param>
-        /// <param name="id">The mod ID within the repository.</param>
-        public UpdateKey(string rawText, ModRepositoryKey repository, string id)
+        /// <param name="site">The mod site containing the mod.</param>
+        /// <param name="id">The mod ID within the site.</param>
+        /// <param name="subkey">If specified, a substring in download names/descriptions to match.</param>
+        public UpdateKey(string rawText, ModSiteKey site, string id, string subkey)
         {
-            this.RawText = rawText;
-            this.Repository = repository;
-            this.ID = id;
+            this.RawText = rawText?.Trim();
+            this.Site = site;
+            this.ID = id?.Trim();
+            this.Subkey = subkey?.Trim();
             this.LooksValid =
-                repository != ModRepositoryKey.Unknown
+                site != ModSiteKey.Unknown
                 && !string.IsNullOrWhiteSpace(id);
         }
 
         /// <summary>Construct an instance.</summary>
-        /// <param name="repository">The mod repository containing the mod.</param>
-        /// <param name="id">The mod ID within the repository.</param>
-        public UpdateKey(ModRepositoryKey repository, string id)
-            : this($"{repository}:{id}", repository, id) { }
+        /// <param name="site">The mod site containing the mod.</param>
+        /// <param name="id">The mod ID within the site.</param>
+        /// <param name="subkey">If specified, a substring in download names/descriptions to match.</param>
+        public UpdateKey(ModSiteKey site, string id, string subkey)
+            : this(UpdateKey.GetString(site, id, subkey), site, id, subkey) { }
 
         /// <summary>Parse a raw update key.</summary>
         /// <param name="raw">The raw update key to parse.</param>
         public static UpdateKey Parse(string raw)
         {
-            // split parts
-            string[] parts = raw?.Split(':');
-            if (parts == null || parts.Length != 2)
-                return new UpdateKey(raw, ModRepositoryKey.Unknown, null);
+            // extract site + ID
+            string rawSite;
+            string id;
+            {
+                string[] parts = raw?.Trim().Split(':');
+                if (parts == null || parts.Length != 2)
+                    return new UpdateKey(raw, ModSiteKey.Unknown, null, null);
 
-            // extract parts
-            string repositoryKey = parts[0].Trim();
-            string id = parts[1].Trim();
+                rawSite = parts[0].Trim();
+                id = parts[1].Trim();
+            }
             if (string.IsNullOrWhiteSpace(id))
                 id = null;
 
-            // parse
-            if (!Enum.TryParse(repositoryKey, true, out ModRepositoryKey repository))
-                return new UpdateKey(raw, ModRepositoryKey.Unknown, id);
-            if (id == null)
-                return new UpdateKey(raw, repository, null);
+            // extract subkey
+            string subkey = null;
+            if (id != null)
+            {
+                string[] parts = id.Split('@');
+                if (parts.Length == 2)
+                {
+                    id = parts[0].Trim();
+                    subkey = $"@{parts[1]}".Trim();
+                }
+            }
 
-            return new UpdateKey(raw, repository, id);
+            // parse
+            if (!Enum.TryParse(rawSite, true, out ModSiteKey site))
+                return new UpdateKey(raw, ModSiteKey.Unknown, id, subkey);
+            if (id == null)
+                return new UpdateKey(raw, site, null, subkey);
+
+            return new UpdateKey(raw, site, id, subkey);
         }
 
         /// <summary>Get a string that represents the current object.</summary>
         public override string ToString()
         {
             return this.LooksValid
-                ? $"{this.Repository}:{this.ID}"
+                ? UpdateKey.GetString(this.Site, this.ID, this.Subkey)
                 : this.RawText;
         }
 
@@ -80,10 +101,18 @@ namespace StardewModdingAPI.Toolkit.Framework.UpdateData
         /// <param name="other">An object to compare with this object.</param>
         public bool Equals(UpdateKey other)
         {
+            if (!this.LooksValid)
+            {
+                return
+                    other?.LooksValid == false
+                    && this.RawText.Equals(other.RawText, StringComparison.OrdinalIgnoreCase);
+            }
+
             return
                 other != null
-                && this.Repository == other.Repository
-                && string.Equals(this.ID, other.ID, StringComparison.InvariantCultureIgnoreCase);
+                && this.Site == other.Site
+                && string.Equals(this.ID, other.ID, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(this.Subkey, other.Subkey, StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>Determines whether the specified object is equal to the current object.</summary>
@@ -97,7 +126,16 @@ namespace StardewModdingAPI.Toolkit.Framework.UpdateData
         /// <returns>A hash code for the current object.</returns>
         public override int GetHashCode()
         {
-            return $"{this.Repository}:{this.ID}".ToLower().GetHashCode();
+            return this.ToString().ToLower().GetHashCode();
+        }
+
+        /// <summary>Get the string representation of an update key.</summary>
+        /// <param name="site">The mod site containing the mod.</param>
+        /// <param name="id">The mod ID within the repository.</param>
+        /// <param name="subkey">If specified, a substring in download names/descriptions to match.</param>
+        public static string GetString(ModSiteKey site, string id, string subkey = null)
+        {
+            return $"{site}:{id}{subkey}".Trim();
         }
     }
 }

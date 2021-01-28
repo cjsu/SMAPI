@@ -1,4 +1,4 @@
-﻿namespace StardewModdingAPI.Framework.ModHelpers
+namespace StardewModdingAPI.Framework.ModHelpers
 {
     /// <summary>The common base class for mod helpers.</summary>
     internal abstract class BaseHelper : IModLinked
@@ -6,7 +6,7 @@
         /*********
         ** Accessors
         *********/
-        /// <summary>The unique ID of the mod for which the helper was created.</summary>
+        /// <inheritdoc />
         public string ModID { get; }
 
 

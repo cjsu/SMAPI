@@ -27,12 +27,13 @@ namespace StardewModdingAPI.Web.Controllers
         private readonly IDictionary<string, string> SchemaFormats = new Dictionary<string, string>
         {
             ["none"] = "None",
-            ["manifest"] = "Manifest",
+            ["manifest"] = "SMAPI: manifest",
+            ["i18n"] = "SMAPI: translations (i18n)",
             ["content-patcher"] = "Content Patcher"
         };
 
         /// <summary>The schema ID to use if none was specified.</summary>
-        private string DefaultSchemaID = "manifest";
+        private string DefaultSchemaID = "none";
 
         /// <summary>A token in an error message which indicates that the child errors should be displayed instead.</summary>
         private readonly string TransparentToken = "$transparent";
@@ -57,26 +58,34 @@ namespace StardewModdingAPI.Web.Controllers
         /// <summary>Render the schema validator UI.</summary>
         /// <param name="schemaName">The schema name with which to validate the JSON, or 'edit' to return to the edit screen.</param>
         /// <param name="id">The stored file ID.</param>
+        /// <param name="operation">The operation to perform for the selected log ID. This can be 'edit', 'renew', or any other value to view.</param>
         [HttpGet]
         [Route("json")]
         [Route("json/{schemaName}")]
         [Route("json/{schemaName}/{id}")]
-        public async Task<ViewResult> Index(string schemaName = null, string id = null)
+        [Route("json/{schemaName}/{id}/{operation}")]
+        public async Task<ViewResult> Index(string schemaName = null, string id = null, string operation = null)
         {
+            // parse arguments
             schemaName = this.NormalizeSchemaName(schemaName);
+            operation = operation?.Trim().ToLower();
+            bool hasId = !string.IsNullOrWhiteSpace(id);
+            bool isEditView = !hasId || operation == "edit";
+            bool renew = operation == "renew";
 
-            var result = new JsonValidatorModel(id, schemaName, this.SchemaFormats);
-            if (string.IsNullOrWhiteSpace(id))
+            // build result model
+            var result = this.GetModel(id, schemaName, isEditView);
+            if (!hasId)
                 return this.View("Index", result);
 
             // fetch raw JSON
-            StoredFileInfo file = await this.Storage.GetAsync(id);
+            StoredFileInfo file = await this.Storage.GetAsync(id, renew);
             if (string.IsNullOrWhiteSpace(file.Content))
                 return this.View("Index", result.SetUploadError("The JSON file seems to be empty."));
             result.SetContent(file.Content, expiry: file.Expiry, uploadWarning: file.Warning);
 
             // skip parsing if we're going to the edit screen
-            if (schemaName?.ToLower() == "edit")
+            if (isEditView)
                 return this.View("Index", result);
 
             // parse JSON
@@ -130,7 +139,7 @@ namespace StardewModdingAPI.Web.Controllers
         public async Task<ActionResult> PostAsync(JsonValidatorRequestModel request)
         {
             if (request == null)
-                return this.View("Index", this.GetModel(null, null).SetUploadError("The request seems to be invalid."));
+                return this.View("Index", this.GetModel(null, null, isEditView: true).SetUploadError("The request seems to be invalid."));
 
             // normalize schema name
             string schemaName = this.NormalizeSchemaName(request.SchemaName);
@@ -138,12 +147,12 @@ namespace StardewModdingAPI.Web.Controllers
             // get raw text
             string input = request.Content;
             if (string.IsNullOrWhiteSpace(input))
-                return this.View("Index", this.GetModel(null, schemaName).SetUploadError("The JSON file seems to be empty."));
+                return this.View("Index", this.GetModel(null, schemaName, isEditView: true).SetUploadError("The JSON file seems to be empty."));
 
             // upload file
             UploadResult result = await this.Storage.SaveAsync(input);
             if (!result.Succeeded)
-                return this.View("Index", this.GetModel(result.ID, schemaName).SetUploadError(result.UploadError));
+                return this.View("Index", this.GetModel(result.ID, schemaName, isEditView: true).SetContent(input, null).SetUploadError(result.UploadError));
 
             // redirect to view
             return this.Redirect(this.Url.PlainAction("Index", "JsonValidator", new { schemaName = schemaName, id = result.ID }));
@@ -156,9 +165,10 @@ namespace StardewModdingAPI.Web.Controllers
         /// <summary>Build a JSON validator model.</summary>
         /// <param name="pasteID">The stored file ID.</param>
         /// <param name="schemaName">The schema name with which the JSON was validated.</param>
-        private JsonValidatorModel GetModel(string pasteID, string schemaName)
+        /// <param name="isEditView">Whether to show the edit view.</param>
+        private JsonValidatorModel GetModel(string pasteID, string schemaName, bool isEditView)
         {
-            return new JsonValidatorModel(pasteID, schemaName, this.SchemaFormats);
+            return new JsonValidatorModel(pasteID, schemaName, this.SchemaFormats, isEditView);
         }
 
         /// <summary>Get a normalized schema name, or the <see cref="DefaultSchemaID"/> if blank.</summary>
@@ -272,24 +282,23 @@ namespace StardewModdingAPI.Web.Controllers
                 IDictionary<string, string> errors = this.GetExtensionField<Dictionary<string, string>>(error.Schema, "@errorMessages");
                 if (errors == null)
                     return null;
-                errors = new Dictionary<string, string>(errors, StringComparer.InvariantCultureIgnoreCase);
+                errors = new Dictionary<string, string>(errors, StringComparer.OrdinalIgnoreCase);
 
                 // match error by type and message
-                foreach (var pair in errors)
+                foreach ((string target, string errorMessage) in errors)
                 {
-                    if (!pair.Key.Contains(":"))
+                    if (!target.Contains(":"))
                         continue;
 
-                    string[] parts = pair.Key.Split(':', 2);
-                    if (parts[0].Equals(error.ErrorType.ToString(), StringComparison.InvariantCultureIgnoreCase) && Regex.IsMatch(error.Message, parts[1]))
-                        return pair.Value?.Trim();
+                    string[] parts = target.Split(':', 2);
+                    if (parts[0].Equals(error.ErrorType.ToString(), StringComparison.OrdinalIgnoreCase) && Regex.IsMatch(error.Message, parts[1]))
+                        return errorMessage?.Trim();
                 }
 
                 // match by type
-                if (errors.TryGetValue(error.ErrorType.ToString(), out string message))
-                    return message?.Trim();
-
-                return null;
+                return errors.TryGetValue(error.ErrorType.ToString(), out string message)
+                    ? message?.Trim()
+                    : null;
             }
 
             return GetRawOverrideError()
@@ -304,10 +313,10 @@ namespace StardewModdingAPI.Web.Controllers
         {
             if (schema.ExtensionData != null)
             {
-                foreach (var pair in schema.ExtensionData)
+                foreach ((string curKey, JToken value) in schema.ExtensionData)
                 {
-                    if (pair.Key.Equals(key, StringComparison.InvariantCultureIgnoreCase))
-                        return pair.Value.ToObject<T>();
+                    if (curKey.Equals(key, StringComparison.OrdinalIgnoreCase))
+                        return value.ToObject<T>();
                 }
             }
 
@@ -318,14 +327,11 @@ namespace StardewModdingAPI.Web.Controllers
         /// <param name="value">The value to format.</param>
         private string FormatValue(object value)
         {
-            switch (value)
+            return value switch
             {
-                case List<string> list:
-                    return string.Join(", ", list);
-
-                default:
-                    return value?.ToString() ?? "null";
-            }
+                List<string> list => string.Join(", ", list),
+                _ => value?.ToString() ?? "null"
+            };
         }
     }
 }

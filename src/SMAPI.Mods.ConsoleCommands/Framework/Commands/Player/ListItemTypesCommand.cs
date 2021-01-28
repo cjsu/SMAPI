@@ -4,7 +4,7 @@ using StardewModdingAPI.Mods.ConsoleCommands.Framework.ItemData;
 namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.Player
 {
     /// <summary>A command which list item types.</summary>
-    internal class ListItemTypesCommand : TrainerCommand
+    internal class ListItemTypesCommand : ConsoleCommand
     {
         /*********
         ** Fields

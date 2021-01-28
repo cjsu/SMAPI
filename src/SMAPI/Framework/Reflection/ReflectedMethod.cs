@@ -22,7 +22,7 @@ namespace StardewModdingAPI.Framework.Reflection
         /*********
         ** Accessors
         *********/
-        /// <summary>The reflection metadata.</summary>
+        /// <inheritdoc />
         public MethodInfo MethodInfo { get; }
 
 
@@ -54,9 +54,7 @@ namespace StardewModdingAPI.Framework.Reflection
             this.MethodInfo = method;
         }
 
-        /// <summary>Invoke the method.</summary>
-        /// <typeparam name="TValue">The return type.</typeparam>
-        /// <param name="arguments">The method arguments to pass in.</param>
+        /// <inheritdoc />
         public TValue Invoke<TValue>(params object[] arguments)
         {
             // invoke method
@@ -85,8 +83,7 @@ namespace StardewModdingAPI.Framework.Reflection
             }
         }
 
-        /// <summary>Invoke the method.</summary>
-        /// <param name="arguments">The method arguments to pass in.</param>
+        /// <inheritdoc />
         public void Invoke(params object[] arguments)
         {
             // invoke method

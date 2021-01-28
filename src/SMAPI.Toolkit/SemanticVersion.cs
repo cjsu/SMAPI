@@ -25,22 +25,22 @@ namespace StardewModdingAPI.Toolkit
         /*********
         ** Accessors
         *********/
-        /// <summary>The major version incremented for major API changes.</summary>
+        /// <inheritdoc />
         public int MajorVersion { get; }
 
-        /// <summary>The minor version incremented for backwards-compatible changes.</summary>
+        /// <inheritdoc />
         public int MinorVersion { get; }
 
-        /// <summary>The patch version for backwards-compatible bug fixes.</summary>
+        /// <inheritdoc />
         public int PatchVersion { get; }
 
         /// <summary>The platform release. This is a non-standard semver extension used by Stardew Valley on ported platforms to represent platform-specific patches to a ported version, represented as a fourth number in the version string.</summary>
         public int PlatformRelease { get; }
 
-        /// <summary>An optional prerelease tag.</summary>
+        /// <inheritdoc />
         public string PrereleaseTag { get; }
 
-        /// <summary>Optional build metadata. This is ignored when determining version precedence.</summary>
+        /// <inheritdoc />
         public string BuildMetadata { get; }
 
 
@@ -103,9 +103,7 @@ namespace StardewModdingAPI.Toolkit
             this.AssertValid();
         }
 
-        /// <summary>Get an integer indicating whether this version precedes (less than 0), supersedes (more than 0), or is equivalent to (0) the specified version.</summary>
-        /// <param name="other">The version to compare with this instance.</param>
-        /// <exception cref="ArgumentNullException">The <paramref name="other"/> value is null.</exception>
+        /// <inheritdoc />
         public int CompareTo(ISemanticVersion other)
         {
             if (other == null)
@@ -113,68 +111,55 @@ namespace StardewModdingAPI.Toolkit
             return this.CompareTo(other.MajorVersion, other.MinorVersion, other.PatchVersion, (other as SemanticVersion)?.PlatformRelease ?? 0, other.PrereleaseTag);
         }
 
-        /// <summary>Indicates whether the current object is equal to another object of the same type.</summary>
-        /// <returns>true if the current object is equal to the <paramref name="other" /> parameter; otherwise, false.</returns>
-        /// <param name="other">An object to compare with this object.</param>
+        /// <inheritdoc />
         public bool Equals(ISemanticVersion other)
         {
             return other != null && this.CompareTo(other) == 0;
         }
 
-        /// <summary>Whether this is a prerelease version.</summary>
+        /// <inheritdoc />
         public bool IsPrerelease()
         {
             return !string.IsNullOrWhiteSpace(this.PrereleaseTag);
         }
 
-        /// <summary>Get whether this version is older than the specified version.</summary>
-        /// <param name="other">The version to compare with this instance.</param>
+        /// <inheritdoc />
         public bool IsOlderThan(ISemanticVersion other)
         {
             return this.CompareTo(other) < 0;
         }
 
-        /// <summary>Get whether this version is older than the specified version.</summary>
-        /// <param name="other">The version to compare with this instance.</param>
-        /// <exception cref="FormatException">The specified version is not a valid semantic version.</exception>
+        /// <inheritdoc />
         public bool IsOlderThan(string other)
         {
             return this.IsOlderThan(new SemanticVersion(other, allowNonStandard: true));
         }
 
-        /// <summary>Get whether this version is newer than the specified version.</summary>
-        /// <param name="other">The version to compare with this instance.</param>
+        /// <inheritdoc />
         public bool IsNewerThan(ISemanticVersion other)
         {
             return this.CompareTo(other) > 0;
         }
 
-        /// <summary>Get whether this version is newer than the specified version.</summary>
-        /// <param name="other">The version to compare with this instance.</param>
-        /// <exception cref="FormatException">The specified version is not a valid semantic version.</exception>
+        /// <inheritdoc />
         public bool IsNewerThan(string other)
         {
             return this.IsNewerThan(new SemanticVersion(other, allowNonStandard: true));
         }
 
-        /// <summary>Get whether this version is between two specified versions (inclusively).</summary>
-        /// <param name="min">The minimum version.</param>
-        /// <param name="max">The maximum version.</param>
+        /// <inheritdoc />
         public bool IsBetween(ISemanticVersion min, ISemanticVersion max)
         {
             return this.CompareTo(min) >= 0 && this.CompareTo(max) <= 0;
         }
 
-        /// <summary>Get whether this version is between two specified versions (inclusively).</summary>
-        /// <param name="min">The minimum version.</param>
-        /// <param name="max">The maximum version.</param>
-        /// <exception cref="FormatException">One of the specified versions is not a valid semantic version.</exception>
+        /// <inheritdoc />
         public bool IsBetween(string min, string max)
         {
             return this.IsBetween(new SemanticVersion(min, allowNonStandard: true), new SemanticVersion(max, allowNonStandard: true));
         }
 
-        /// <summary>Get a string representation of the version.</summary>
+        /// <inheritdoc cref="ISemanticVersion.ToString" />
         public override string ToString()
         {
             string version = $"{this.MajorVersion}.{this.MinorVersion}.{this.PatchVersion}";
@@ -187,7 +172,7 @@ namespace StardewModdingAPI.Toolkit
             return version;
         }
 
-        /// <summary>Whether the version uses non-standard extensions, like four-part game versions on some platforms.</summary>
+        /// <inheritdoc />
         public bool IsNonStandard()
         {
             return this.PlatformRelease != 0;
@@ -199,18 +184,19 @@ namespace StardewModdingAPI.Toolkit
         /// <returns>Returns whether parsing the version succeeded.</returns>
         public static bool TryParse(string version, out ISemanticVersion parsed)
         {
-            return SemanticVersion.TryParseNonStandard(version, out parsed) && !parsed.IsNonStandard();
+            return SemanticVersion.TryParse(version, allowNonStandard: false, out parsed);
         }
 
-        /// <summary>Parse a version string without throwing an exception if it fails, including support for non-standard extensions like <see cref="IPlatformSpecificVersion"/>.</summary>
+        /// <summary>Parse a version string without throwing an exception if it fails.</summary>
         /// <param name="version">The version string.</param>
+        /// <param name="allowNonStandard">Whether to allow non-standard extensions to semantic versioning.</param>
         /// <param name="parsed">The parsed representation.</param>
         /// <returns>Returns whether parsing the version succeeded.</returns>
-        public static bool TryParseNonStandard(string version, out ISemanticVersion parsed)
+        public static bool TryParse(string version, bool allowNonStandard, out ISemanticVersion parsed)
         {
             try
             {
-                parsed = new SemanticVersion(version, true);
+                parsed = new SemanticVersion(version, allowNonStandard);
                 return true;
             }
             catch
@@ -244,42 +230,53 @@ namespace StardewModdingAPI.Toolkit
             const int curNewer = 1;
             const int curOlder = -1;
 
-            // compare stable versions
-            if (this.MajorVersion != otherMajor)
-                return this.MajorVersion.CompareTo(otherMajor);
-            if (this.MinorVersion != otherMinor)
-                return this.MinorVersion.CompareTo(otherMinor);
-            if (this.PatchVersion != otherPatch)
-                return this.PatchVersion.CompareTo(otherPatch);
-            if (this.PlatformRelease != otherPlatformRelease)
-                return this.PlatformRelease.CompareTo(otherPlatformRelease);
-            if (this.PrereleaseTag == otherTag)
-                return same;
-
-            // stable supersedes prerelease
-            bool curIsStable = string.IsNullOrWhiteSpace(this.PrereleaseTag);
-            bool otherIsStable = string.IsNullOrWhiteSpace(otherTag);
-            if (curIsStable)
-                return curNewer;
-            if (otherIsStable)
-                return curOlder;
-
-            // compare two prerelease tag values
-            string[] curParts = this.PrereleaseTag.Split('.', '-');
-            string[] otherParts = otherTag.Split('.', '-');
-            for (int i = 0; i < curParts.Length; i++)
+            int CompareToRaw()
             {
-                // longer prerelease tag supersedes if otherwise equal
-                if (otherParts.Length <= i)
-                    return curNewer;
+                // compare stable versions
+                if (this.MajorVersion != otherMajor)
+                    return this.MajorVersion.CompareTo(otherMajor);
+                if (this.MinorVersion != otherMinor)
+                    return this.MinorVersion.CompareTo(otherMinor);
+                if (this.PatchVersion != otherPatch)
+                    return this.PatchVersion.CompareTo(otherPatch);
+                if (this.PlatformRelease != otherPlatformRelease)
+                    return this.PlatformRelease.CompareTo(otherPlatformRelease);
+                if (this.PrereleaseTag == otherTag)
+                    return same;
 
-                // compare if different
-                if (curParts[i] != otherParts[i])
+                // stable supersedes prerelease
+                bool curIsStable = string.IsNullOrWhiteSpace(this.PrereleaseTag);
+                bool otherIsStable = string.IsNullOrWhiteSpace(otherTag);
+                if (curIsStable)
+                    return curNewer;
+                if (otherIsStable)
+                    return curOlder;
+
+                // compare two prerelease tag values
+                string[] curParts = this.PrereleaseTag.Split('.', '-');
+                string[] otherParts = otherTag.Split('.', '-');
+                int length = Math.Max(curParts.Length, otherParts.Length);
+                for (int i = 0; i < length; i++)
                 {
-                    // unofficial is always lower-precedence
-                    if (otherParts[i].Equals("unofficial", StringComparison.InvariantCultureIgnoreCase))
+                    // longer prerelease tag supersedes if otherwise equal
+                    if (curParts.Length <= i)
+                        return curOlder;
+                    if (otherParts.Length <= i)
                         return curNewer;
-                    if (curParts[i].Equals("unofficial", StringComparison.InvariantCultureIgnoreCase))
+
+                    // skip if same value, unless we've reached the end
+                    if (curParts[i] == otherParts[i])
+                    {
+                        if (i == length - 1)
+                            return same;
+
+                        continue;
+                    }
+
+                    // unofficial is always lower-precedence
+                    if (otherParts[i].Equals("unofficial", StringComparison.OrdinalIgnoreCase))
+                        return curNewer;
+                    if (curParts[i].Equals("unofficial", StringComparison.OrdinalIgnoreCase))
                         return curOlder;
 
                     // compare numerically if possible
@@ -291,10 +288,17 @@ namespace StardewModdingAPI.Toolkit
                     // else compare lexically
                     return string.Compare(curParts[i], otherParts[i], StringComparison.OrdinalIgnoreCase);
                 }
+
+                // fallback (this should never happen)
+                return string.Compare(this.ToString(), new SemanticVersion(otherMajor, otherMinor, otherPatch, otherPlatformRelease, otherTag).ToString(), StringComparison.OrdinalIgnoreCase);
             }
 
-            // fallback (this should never happen)
-            return string.Compare(this.ToString(), new SemanticVersion(otherMajor, otherMinor, otherPatch, otherPlatformRelease, otherTag).ToString(), StringComparison.InvariantCultureIgnoreCase);
+            int result = CompareToRaw();
+            if (result < 0)
+                return curOlder;
+            if (result > 0)
+                return curNewer;
+            return same;
         }
 
         /// <summary>Assert that the current version is valid.</summary>

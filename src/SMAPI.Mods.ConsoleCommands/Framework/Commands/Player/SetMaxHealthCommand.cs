@@ -4,7 +4,7 @@ using StardewValley;
 namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.Player
 {
     /// <summary>A command which edits the player's maximum health.</summary>
-    internal class SetMaxHealthCommand : TrainerCommand
+    internal class SetMaxHealthCommand : ConsoleCommand
     {
         /*********
         ** Public methods

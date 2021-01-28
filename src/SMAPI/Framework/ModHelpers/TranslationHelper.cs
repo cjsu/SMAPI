@@ -16,10 +16,10 @@ namespace StardewModdingAPI.Framework.ModHelpers
         /*********
         ** Accessors
         *********/
-        /// <summary>The current locale.</summary>
+        /// <inheritdoc />
         public string Locale => this.Translator.Locale;
 
-        /// <summary>The game's current language code.</summary>
+        /// <inheritdoc />
         public LocalizedContentManager.LanguageCode LocaleEnum => this.Translator.LocaleEnum;
 
 
@@ -37,22 +37,19 @@ namespace StardewModdingAPI.Framework.ModHelpers
             this.Translator.SetLocale(locale, languageCode);
         }
 
-        /// <summary>Get all translations for the current locale.</summary>
+        /// <inheritdoc />
         public IEnumerable<Translation> GetTranslations()
         {
             return this.Translator.GetTranslations();
         }
 
-        /// <summary>Get a translation for the current locale.</summary>
-        /// <param name="key">The translation key.</param>
+        /// <inheritdoc />
         public Translation Get(string key)
         {
             return this.Translator.Get(key);
         }
 
-        /// <summary>Get a translation for the current locale.</summary>
-        /// <param name="key">The translation key.</param>
-        /// <param name="tokens">An object containing token key/value pairs. This can be an anonymous object (like <c>new { value = 42, name = "Cranberries" }</c>), a dictionary, or a class instance.</param>
+        /// <inheritdoc />
         public Translation Get(string key, object tokens)
         {
             return this.Translator.Get(key, tokens);

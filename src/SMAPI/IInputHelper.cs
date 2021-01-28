@@ -1,3 +1,5 @@
+using StardewModdingAPI.Utilities;
+
 namespace StardewModdingAPI
 {
     /// <summary>Provides an API for checking and changing input state.</summary>
@@ -18,8 +20,12 @@ namespace StardewModdingAPI
         /// <param name="button">The button to suppress.</param>
         void Suppress(SButton button);
 
-        /// <summary>Get the status of a button.</summary>
+        /// <summary>Suppress the keybinds which are currently down.</summary>
+        /// <param name="keybindList">The keybind list whose active keybinds to suppress.</param>
+        void SuppressActiveKeybinds(KeybindList keybindList);
+
+        /// <summary>Get the state of a button.</summary>
         /// <param name="button">The button to check.</param>
-        InputStatus GetStatus(SButton button);
+        SButtonState GetState(SButton button);
     }
 }

@@ -69,8 +69,8 @@ namespace StardewModdingAPI.Toolkit.Framework.ModData
                     return manifest.UpdateKeys != null && manifest.UpdateKeys.Any(p => !string.IsNullOrWhiteSpace(p));
 
                 // non-manifest fields
-                case ModDataFieldKey.AlternativeUrl:
                 case ModDataFieldKey.StatusReasonPhrase:
+                case ModDataFieldKey.StatusReasonDetails:
                 case ModDataFieldKey.Status:
                     return false;
 

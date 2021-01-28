@@ -18,25 +18,31 @@ namespace StardewModdingAPI.Framework.Networking
         /*********
         ** Accessors
         *********/
-        /// <summary>The player's unique ID.</summary>
+        /// <inheritdoc />
         public long PlayerID { get; }
 
-        /// <summary>Whether this is a connection to the host player.</summary>
+        /// <inheritdoc />
         public bool IsHost { get; }
 
-        /// <summary>Whether the player has SMAPI installed.</summary>
+        /// <inheritdoc />
+        public bool IsSplitScreen => this.ScreenID != null;
+
+        /// <inheritdoc />
         public bool HasSmapi => this.ApiVersion != null;
 
-        /// <summary>The player's OS platform, if <see cref="HasSmapi"/> is true.</summary>
+        /// <inheritdoc />
+        public int? ScreenID { get; }
+
+        /// <inheritdoc />
         public GamePlatform? Platform { get; }
 
-        /// <summary>The installed version of Stardew Valley, if <see cref="HasSmapi"/> is true.</summary>
+        /// <inheritdoc />
         public ISemanticVersion GameVersion { get; }
 
-        /// <summary>The installed version of SMAPI, if <see cref="HasSmapi"/> is true.</summary>
+        /// <inheritdoc />
         public ISemanticVersion ApiVersion { get; }
 
-        /// <summary>The installed mods, if <see cref="HasSmapi"/> is true.</summary>
+        /// <inheritdoc />
         public IEnumerable<IMultiplayerPeerMod> Mods { get; }
 
 
@@ -45,12 +51,14 @@ namespace StardewModdingAPI.Framework.Networking
         *********/
         /// <summary>Construct an instance.</summary>
         /// <param name="playerID">The player's unique ID.</param>
+        /// <param name="screenID">The player's screen ID, if applicable.</param>
         /// <param name="model">The metadata to copy.</param>
         /// <param name="sendMessage">A method which sends a message to the peer.</param>
         /// <param name="isHost">Whether this is a connection to the host player.</param>
-        public MultiplayerPeer(long playerID, RemoteContextModel model, Action<OutgoingMessage> sendMessage, bool isHost)
+        public MultiplayerPeer(long playerID, int? screenID, RemoteContextModel model, Action<OutgoingMessage> sendMessage, bool isHost)
         {
             this.PlayerID = playerID;
+            this.ScreenID = screenID;
             this.IsHost = isHost;
             if (model != null)
             {
@@ -62,16 +70,14 @@ namespace StardewModdingAPI.Framework.Networking
             this.SendMessageImpl = sendMessage;
         }
 
-        /// <summary>Get metadata for a mod installed by the player.</summary>
-        /// <param name="id">The unique mod ID.</param>
-        /// <returns>Returns the mod info, or <c>null</c> if the player doesn't have that mod.</returns>
+        /// <inheritdoc />
         public IMultiplayerPeerMod GetMod(string id)
         {
             if (string.IsNullOrWhiteSpace(id) || this.Mods == null || !this.Mods.Any())
                 return null;
 
             id = id.Trim();
-            return this.Mods.FirstOrDefault(mod => mod.ID != null && mod.ID.Equals(id, StringComparison.InvariantCultureIgnoreCase));
+            return this.Mods.FirstOrDefault(mod => mod.ID != null && mod.ID.Equals(id, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>Send a message to the given peer, bypassing the game's normal validation to allow messages before the connection is approved.</summary>

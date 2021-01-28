@@ -68,7 +68,7 @@ namespace StardewModdingAPI.Toolkit.Framework.ModData
                 foreach (string part in parts.Take(parts.Length - 1))
                 {
                     // 'default'
-                    if (part.Equals("Default", StringComparison.InvariantCultureIgnoreCase))
+                    if (part.Equals("Default", StringComparison.OrdinalIgnoreCase))
                     {
                         isDefault = true;
                         continue;

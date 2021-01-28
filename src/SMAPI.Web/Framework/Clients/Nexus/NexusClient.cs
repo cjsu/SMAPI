@@ -7,6 +7,8 @@ using HtmlAgilityPack;
 using Pathoschild.FluentNexus.Models;
 using Pathoschild.Http.Client;
 using StardewModdingAPI.Toolkit;
+using StardewModdingAPI.Toolkit.Framework.UpdateData;
+using StardewModdingAPI.Web.Framework.Clients.Nexus.ResponseModels;
 using FluentNexusClient = Pathoschild.FluentNexus.NexusClient;
 
 namespace StardewModdingAPI.Web.Framework.Clients.Nexus
@@ -31,6 +33,13 @@ namespace StardewModdingAPI.Web.Framework.Clients.Nexus
 
 
         /*********
+        ** Accessors
+        *********/
+        /// <summary>The unique key for the mod site.</summary>
+        public ModSiteKey SiteKey => ModSiteKey.Nexus;
+
+
+        /*********
         ** Public methods
         *********/
         /// <summary>Construct an instance.</summary>
@@ -48,20 +57,32 @@ namespace StardewModdingAPI.Web.Framework.Clients.Nexus
             this.ApiClient = new FluentNexusClient(apiKey, "SMAPI", apiAppVersion);
         }
 
-        /// <summary>Get metadata about a mod.</summary>
-        /// <param name="id">The Nexus mod ID.</param>
-        /// <returns>Returns the mod info if found, else <c>null</c>.</returns>
-        public async Task<NexusMod> GetModAsync(uint id)
+        /// <summary>Get update check info about a mod.</summary>
+        /// <param name="id">The mod ID.</param>
+        public async Task<IModPage> GetModData(string id)
         {
+            IModPage page = new GenericModPage(this.SiteKey, id);
+
+            if (!uint.TryParse(id, out uint parsedId))
+                return page.SetError(RemoteModStatus.DoesNotExist, $"The value '{id}' isn't a valid Nexus mod ID, must be an integer ID.");
+
             // Fetch from the Nexus website when possible, since it has no rate limits. Mods with
             // adult content are hidden for anonymous users, so fall back to the API in that case.
             // Note that the API has very restrictive rate limits which means we can't just use it
             // for all cases.
-            NexusMod mod = await this.GetModFromWebsiteAsync(id);
+            NexusMod mod = await this.GetModFromWebsiteAsync(parsedId);
             if (mod?.Status == NexusModStatus.AdultContentForbidden)
-                mod = await this.GetModFromApiAsync(id);
+                mod = await this.GetModFromApiAsync(parsedId);
 
-            return mod;
+            // page doesn't exist
+            if (mod == null || mod.Status == NexusModStatus.Hidden || mod.Status == NexusModStatus.NotPublished)
+                return page.SetError(RemoteModStatus.DoesNotExist, "Found no Nexus mod with this ID.");
+
+            // return info
+            page.SetInfo(name: mod.Name, url: mod.Url, version: mod.Version, downloads: mod.Downloads);
+            if (mod.Status != NexusModStatus.Ok)
+                page.SetError(RemoteModStatus.TemporaryError, mod.Error);
+            return page;
         }
 
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
@@ -115,37 +136,28 @@ namespace StardewModdingAPI.Web.Framework.Clients.Nexus
 
             // extract mod info
             string url = this.GetModUrl(id);
-            string name = doc.DocumentNode.SelectSingleNode("//h1")?.InnerText.Trim();
+            string name = doc.DocumentNode.SelectSingleNode("//div[@id='pagetitle']//h1")?.InnerText.Trim();
             string version = doc.DocumentNode.SelectSingleNode("//ul[contains(@class, 'stats')]//li[@class='stat-version']//div[@class='stat']")?.InnerText.Trim();
             SemanticVersion.TryParse(version, out ISemanticVersion parsedVersion);
 
-            // extract file versions
-            List<string> rawVersions = new List<string>();
+            // extract files
+            var downloads = new List<IModDownload>();
             foreach (var fileSection in doc.DocumentNode.SelectNodes("//div[contains(@class, 'files-tabs')]"))
             {
                 string sectionName = fileSection.Descendants("h2").First().InnerText;
                 if (sectionName != "Main files" && sectionName != "Optional files")
                     continue;
 
-                rawVersions.AddRange(
-                    from statBox in fileSection.Descendants().Where(p => p.HasClass("stat-version"))
-                    from versionStat in statBox.Descendants().Where(p => p.HasClass("stat"))
-                    select versionStat.InnerText.Trim()
-                );
-            }
+                foreach (var container in fileSection.Descendants("dt"))
+                {
+                    string fileName = container.GetDataAttribute("name").Value;
+                    string fileVersion = container.GetDataAttribute("version").Value;
+                    string description = container.SelectSingleNode("following-sibling::*[1][self::dd]//div").InnerText?.Trim(); // get text of next <dd> tag; derived from https://stackoverflow.com/a/25535623/262123
 
-            // choose latest file version
-            ISemanticVersion latestFileVersion = null;
-            foreach (string rawVersion in rawVersions)
-            {
-                if (!SemanticVersion.TryParse(rawVersion, out ISemanticVersion cur))
-                    continue;
-                if (parsedVersion != null && !cur.IsNewerThan(parsedVersion))
-                    continue;
-                if (latestFileVersion != null && !cur.IsNewerThan(latestFileVersion))
-                    continue;
-
-                latestFileVersion = cur;
+                    downloads.Add(
+                        new GenericModDownload(fileName, description, fileVersion)
+                    );
+                }
             }
 
             // yield info
@@ -153,8 +165,8 @@ namespace StardewModdingAPI.Web.Framework.Clients.Nexus
             {
                 Name = name,
                 Version = parsedVersion?.ToString() ?? version,
-                LatestFileVersion = latestFileVersion,
-                Url = url
+                Url = url,
+                Downloads = downloads.ToArray()
             };
         }
 
@@ -167,29 +179,15 @@ namespace StardewModdingAPI.Web.Framework.Clients.Nexus
             Mod mod = await this.ApiClient.Mods.GetMod("stardewvalley", (int)id);
             ModFileList files = await this.ApiClient.ModFiles.GetModFiles("stardewvalley", (int)id, FileCategory.Main, FileCategory.Optional);
 
-            // get versions
-            if (!SemanticVersion.TryParse(mod.Version, out ISemanticVersion mainVersion))
-                mainVersion = null;
-            ISemanticVersion latestFileVersion = null;
-            foreach (string rawVersion in files.Files.Select(p => p.FileVersion))
-            {
-                if (!SemanticVersion.TryParse(rawVersion, out ISemanticVersion cur))
-                    continue;
-                if (mainVersion != null && !cur.IsNewerThan(mainVersion))
-                    continue;
-                if (latestFileVersion != null && !cur.IsNewerThan(latestFileVersion))
-                    continue;
-
-                latestFileVersion = cur;
-            }
-
             // yield info
             return new NexusMod
             {
                 Name = mod.Name,
                 Version = SemanticVersion.TryParse(mod.Version, out ISemanticVersion version) ? version?.ToString() : mod.Version,
-                LatestFileVersion = latestFileVersion,
-                Url = this.GetModUrl(id)
+                Url = this.GetModUrl(id),
+                Downloads = files.Files
+                    .Select(file => (IModDownload)new GenericModDownload(file.Name, null, file.FileVersion))
+                    .ToArray()
             };
         }
 

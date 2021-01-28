@@ -22,6 +22,9 @@ namespace StardewModdingAPI.Web.ViewModels
         /// <summary>The mod author's alternative names, if any.</summary>
         public string AlternateAuthors { get; set; }
 
+        /// <summary>The GitHub repo, if any.</summary>
+        public string GitHubRepo { get; set; }
+
         /// <summary>The URL to the mod's source code, if any.</summary>
         public string SourceUrl { get; set; }
 
@@ -62,6 +65,7 @@ namespace StardewModdingAPI.Web.ViewModels
             this.AlternateNames = string.Join(", ", entry.Name.Skip(1).ToArray());
             this.Author = entry.Author.FirstOrDefault();
             this.AlternateAuthors = string.Join(", ", entry.Author.Skip(1).ToArray());
+            this.GitHubRepo = entry.GitHubRepo;
             this.SourceUrl = this.GetSourceUrl(entry);
             this.Compatibility = new ModCompatibilityModel(entry.Compatibility);
             this.BetaCompatibility = entry.BetaCompatibility != null ? new ModCompatibilityModel(entry.BetaCompatibility) : null;
@@ -102,7 +106,7 @@ namespace StardewModdingAPI.Web.ViewModels
             if (entry.ModDropID.HasValue)
             {
                 anyFound = true;
-                yield return new ModLinkModel($"https://www.moddrop.com/sdv/mod/{entry.ModDropID}", "ModDrop");
+                yield return new ModLinkModel($"https://www.moddrop.com/stardew-valley/mod/{entry.ModDropID}", "ModDrop");
             }
             if (!string.IsNullOrWhiteSpace(entry.CurseForgeKey))
             {

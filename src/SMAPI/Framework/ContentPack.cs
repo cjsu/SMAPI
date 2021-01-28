@@ -1,10 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using StardewModdingAPI.Toolkit.Serialization;
 using StardewModdingAPI.Toolkit.Utilities;
-using xTile;
 
 namespace StardewModdingAPI.Framework
 {
@@ -20,17 +18,20 @@ namespace StardewModdingAPI.Framework
         /// <summary>Encapsulates SMAPI's JSON file parsing.</summary>
         private readonly JsonHelper JsonHelper;
 
+        /// <summary>A cache of case-insensitive => exact relative paths within the content pack, for case-insensitive file lookups on Linux/Mac.</summary>
+        private readonly IDictionary<string, string> RelativePaths = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
 
         /*********
         ** Accessors
         *********/
-        /// <summary>The full path to the content pack's folder.</summary>
+        /// <inheritdoc />
         public string DirectoryPath { get; }
 
-        /// <summary>The content pack's manifest.</summary>
+        /// <inheritdoc />
         public IManifest Manifest { get; }
 
-        /// <summary>Provides translations stored in the content pack's <c>i18n</c> folder. See <see cref="IModHelper.Translation"/> for more info.</summary>
+        /// <inheritdoc />
         public ITranslationHelper Translation { get; }
 
 
@@ -50,60 +51,60 @@ namespace StardewModdingAPI.Framework
             this.Content = content;
             this.Translation = translation;
             this.JsonHelper = jsonHelper;
+
+            foreach (string path in Directory.EnumerateFiles(this.DirectoryPath, "*", SearchOption.AllDirectories))
+            {
+                string relativePath = path.Substring(this.DirectoryPath.Length + 1);
+                this.RelativePaths[relativePath] = relativePath;
+            }
         }
 
-        /// <summary>Get whether a given file exists in the content pack.</summary>
-        /// <param name="path">The file path to check.</param>
+        /// <inheritdoc />
         public bool HasFile(string path)
         {
-            this.AssertRelativePath(path, nameof(this.HasFile));
+            path = PathUtilities.NormalizePath(path);
 
-            return File.Exists(Path.Combine(this.DirectoryPath, path));
+            return this.GetFile(path).Exists;
         }
 
-        /// <summary>Read a JSON file from the content pack folder.</summary>
-        /// <typeparam name="TModel">The model type.</typeparam>
-        /// <param name="path">The file path relative to the content directory.</param>
-        /// <returns>Returns the deserialized model, or <c>null</c> if the file doesn't exist or is empty.</returns>
-        /// <exception cref="InvalidOperationException">The <paramref name="path"/> is not relative or contains directory climbing (../).</exception>
+        /// <inheritdoc />
         public TModel ReadJsonFile<TModel>(string path) where TModel : class
         {
-            this.AssertRelativePath(path, nameof(this.ReadJsonFile));
+            path = PathUtilities.NormalizePath(path);
 
-            path = Path.Combine(this.DirectoryPath, PathUtilities.NormalizePathSeparators(path));
-            return this.JsonHelper.ReadJsonFileIfExists(path, out TModel model)
+            FileInfo file = this.GetFile(path);
+            return file.Exists && this.JsonHelper.ReadJsonFileIfExists(file.FullName, out TModel model)
                 ? model
                 : null;
         }
 
-        /// <summary>Save data to a JSON file in the content pack's folder.</summary>
-        /// <typeparam name="TModel">The model type. This should be a plain class that has public properties for the data you want. The properties can be complex types.</typeparam>
-        /// <param name="path">The file path relative to the mod folder.</param>
-        /// <param name="data">The arbitrary data to save.</param>
-        /// <exception cref="InvalidOperationException">The <paramref name="path"/> is not relative or contains directory climbing (../).</exception>
+        /// <inheritdoc />
         public void WriteJsonFile<TModel>(string path, TModel data) where TModel : class
         {
-            this.AssertRelativePath(path, nameof(this.WriteJsonFile));
+            path = PathUtilities.NormalizePath(path);
 
-            path = Path.Combine(this.DirectoryPath, PathUtilities.NormalizePathSeparators(path));
-            this.JsonHelper.WriteJsonFile(path, data);
+            FileInfo file = this.GetFile(path, out path);
+            this.JsonHelper.WriteJsonFile(file.FullName, data);
+
+            if (!this.RelativePaths.ContainsKey(path))
+                this.RelativePaths[path] = path;
         }
 
-        /// <summary>Load content from the content pack folder (if not already cached), and return it. When loading a <c>.png</c> file, this must be called outside the game's draw loop.</summary>
-        /// <typeparam name="T">The expected data type. The main supported types are <see cref="Map"/>, <see cref="Texture2D"/>, and dictionaries; other types may be supported by the game's content pipeline.</typeparam>
-        /// <param name="key">The local path to a content file relative to the content pack folder.</param>
-        /// <exception cref="ArgumentException">The <paramref name="key"/> is empty or contains invalid characters.</exception>
-        /// <exception cref="ContentLoadException">The content asset couldn't be loaded (e.g. because it doesn't exist).</exception>
+        /// <inheritdoc />
         public T LoadAsset<T>(string key)
         {
+            key = PathUtilities.NormalizePath(key);
+
+            key = this.GetCaseInsensitiveRelativePath(key);
             return this.Content.Load<T>(key, ContentSource.ModFolder);
         }
 
-        /// <summary>Get the underlying key in the game's content cache for an asset. This can be used to load custom map tilesheets, but should be avoided when you can use the content API instead. This does not validate whether the asset exists.</summary>
-        /// <param name="key">The the local path to a content file relative to the content pack folder.</param>
-        /// <exception cref="ArgumentException">The <paramref name="key"/> is empty or contains invalid characters.</exception>
+        /// <inheritdoc />
         public string GetActualAssetKey(string key)
         {
+            key = PathUtilities.NormalizePath(key);
+
+            key = this.GetCaseInsensitiveRelativePath(key);
             return this.Content.GetActualAssetKey(key, ContentSource.ModFolder);
         }
 
@@ -111,13 +112,32 @@ namespace StardewModdingAPI.Framework
         /*********
         ** Private methods
         *********/
-        /// <summary>Assert that a relative path was passed it to a content pack method.</summary>
-        /// <param name="path">The path to check.</param>
-        /// <param name="methodName">The name of the method which was invoked.</param>
-        private void AssertRelativePath(string path, string methodName)
+        /// <summary>Get the real relative path from a case-insensitive path.</summary>
+        /// <param name="relativePath">The normalized relative path.</param>
+        private string GetCaseInsensitiveRelativePath(string relativePath)
         {
-            if (!PathUtilities.IsSafeRelativePath(path))
-                throw new InvalidOperationException($"You must call {nameof(IContentPack)}.{methodName} with a relative path.");
+            if (!PathUtilities.IsSafeRelativePath(relativePath))
+                throw new InvalidOperationException($"You must call {nameof(IContentPack)} methods with a relative path.");
+
+            return !string.IsNullOrWhiteSpace(relativePath) && this.RelativePaths.TryGetValue(relativePath, out string caseInsensitivePath)
+                ? caseInsensitivePath
+                : relativePath;
+        }
+
+        /// <summary>Get the underlying file info.</summary>
+        /// <param name="relativePath">The normalized file path relative to the content pack directory.</param>
+        private FileInfo GetFile(string relativePath)
+        {
+            return this.GetFile(relativePath, out _);
+        }
+
+        /// <summary>Get the underlying file info.</summary>
+        /// <param name="relativePath">The normalized file path relative to the content pack directory.</param>
+        /// <param name="actualRelativePath">The relative path after case-insensitive matching.</param>
+        private FileInfo GetFile(string relativePath, out string actualRelativePath)
+        {
+            actualRelativePath = this.GetCaseInsensitiveRelativePath(relativePath);
+            return new FileInfo(Path.Combine(this.DirectoryPath, actualRelativePath));
         }
     }
 }

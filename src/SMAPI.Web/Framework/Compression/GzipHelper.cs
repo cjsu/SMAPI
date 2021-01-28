@@ -69,7 +69,7 @@ namespace StardewModdingAPI.Web.Framework.Compression
                 return rawText;
 
             // decompress
-            using (MemoryStream memoryStream = new MemoryStream())
+            using MemoryStream memoryStream = new MemoryStream();
             {
                 // read length prefix
                 int dataLength = BitConverter.ToInt32(zipBuffer, 0);

@@ -1,0 +1,4 @@
+{
+    // warning messages
+    "warn.invalid-content-removed": "Ungültiger Inhalt wurde entfernt, um einen Absturz zu verhindern (siehe SMAPI Konsole für weitere Informationen)."
+}

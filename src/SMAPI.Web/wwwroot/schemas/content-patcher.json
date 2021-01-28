@@ -11,9 +11,9 @@
             "title": "Format version",
             "description": "The format version. You should always use the latest version to enable the latest features and avoid obsolete behavior.",
             "type": "string",
-            "const": "1.11.0",
+            "const": "1.19.0",
             "@errorMessages": {
-                "const": "Incorrect value '@value'. This should be set to the latest format version, currently '1.11.0'."
+                "const": "Incorrect value '@value'. This should be set to the latest format version, currently '1.19.0'."
             }
         },
         "ConfigSchema": {
@@ -41,6 +41,11 @@
                     "Default": {
                         "title": "Default value",
                         "description": "The default values when the field is missing. Can contain multiple comma-delimited values if AllowMultiple is true. If omitted, blank fields are left blank.",
+                        "type": "string"
+                    },
+                    "Description": {
+                        "title": "Description",
+                        "description": "An optional explanation of the config field for players, shown in UIs like Generic Mod Config Menu.",
                         "type": "string"
                     },
 
@@ -102,7 +107,7 @@
                         "title": "Action",
                         "description": "The kind of change to make.",
                         "type": "string",
-                        "enum": [ "Load", "EditImage", "EditData", "EditMap" ]
+                        "enum": [ "Load", "EditImage", "EditData", "EditMap", "Include" ]
                     },
                     "Target": {
                         "title": "Target asset",
@@ -125,24 +130,33 @@
                         "description": "Whether to apply this patch. Default true. This fields supports immutable tokens (e.g. config tokens) if they return true/false.",
                         "anyOf": [
                             {
+                                "type": "boolean"
+                            },
+                            {
                                 "type": "string",
                                 "enum": [ "true", "false" ]
                             },
                             {
                                 "type": "string",
                                 "pattern": "\\{\\{[^{}]+\\}\\}"
-                            },
-                            {
-                                "type": "boolean"
                             }
                         ],
                         "@errorMessages": {
                             "anyOf": "Invalid value; must be true, false, or a single token which evaluates to true or false."
                         }
                     },
+                    "Update": {
+                        "title": "Update",
+                        "description": "When the patch should update if it changed. The possible values are 'OnDayStart', 'OnLocationChange', or 'OnTimeChange' (defaults to OnDayStart).",
+                        "type": "string",
+                        "pattern": "^ *((OnDayStart|OnLocationChange|OnTimeChange), *)*(OnDayStart|OnLocationChange|OnTimeChange) *$",
+                        "@errorMessages": {
+                            "pattern": "Invalid value; must be 'OnDayStart', 'OnLocationChange', 'OnTimeChange', or a comma-delimited combination of those values."
+                        }
+                    },
                     "FromFile": {
                         "title": "Source file",
-                        "description": "The relative file path in your content pack folder to load instead (like 'assets/dinosaur.png'). This can be a .json (data), .png (image), .tbin or .tmx (map), or .xnb file. This field supports tokens and capitalization doesn't matter.",
+                        "description": "The relative file path in your content pack folder to load instead (like 'assets/dinosaur.png'), or multiple comma-delimited values. This can be a .json (data), .png (image), .tbin or .tmx (map), or .xnb file. This field supports tokens and capitalization doesn't matter.",
                         "type": "string",
                         "allOf": [
                             {
@@ -168,13 +182,6 @@
                         "title": "Destination area",
                         "description": "The part of the target image to replace. Defaults to the FromArea size starting from the top-left corner.",
                         "$ref": "#/definitions/Rectangle"
-                    },
-                    "PatchMode": {
-                        "title": "Patch mode",
-                        "description": "How to apply FromArea to ToArea. Defaults to Replace.",
-                        "type": "string",
-                        "enum": [ "Replace", "Overlay" ],
-                        "default": "Replace"
                     },
                     "Fields": {
                         "title": "Fields",
@@ -268,6 +275,48 @@
                             "type": "string"
                         }
                     },
+                    "MapTiles": {
+                        "title": "Map tiles",
+                        "description": "The individual map tiles to add, edit, or remove.",
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "Layer": {
+                                    "description": "The map layer name to change.",
+                                    "type": "string"
+                                },
+                                "Position": {
+                                    "description": "The tile coordinates to change. You can use the Debug Mode mod to see tile coordinates in-game.",
+                                    "$ref": "#/definitions/Position"
+                                },
+                                "SetTilesheet": {
+                                    "title": "Set tilesheet",
+                                    "description": "Sets the tilesheet ID for the tile index.",
+                                    "type": "string"
+                                },
+                                "SetIndex": {
+                                    "title": "Set tile index",
+                                    "description": "Sets the tile index in the tilesheet.",
+                                    "type": [ "string", "number" ]
+                                },
+                                "SetProperties": {
+                                    "title": "Set tile properties",
+                                    "description": "The properties to set or remove. This is merged into the existing tile properties, if any. To remove a property, set its value to `null` (not \"null\" in quotes).",
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    }
+                                },
+                                "Remove": {
+                                    "description": "Whether to remove the current tile and all its properties on that layer. If combined with the other fields, a new tile is created from the other fields as if the tile didn't previously exist.",
+                                    "type": "boolean"
+                                }
+                            },
+
+                            "required": [ "Layer", "Position" ]
+                        }
+                    },
                     "When": {
                         "title": "When",
                         "description": "Only apply the patch if the given conditions match.",
@@ -285,9 +334,17 @@
                             }
                         },
                         "then": {
-                            "required": [ "FromFile" ],
+                            "required": [ "FromFile", "Target" ],
                             "propertyNames": {
-                                "enum": [ "Action", "Target", "LogName", "Enabled", "When", "FromFile" ]
+                                "enum": [
+                                    "Action",
+                                    "Enabled",
+                                    "FromFile",
+                                    "LogName",
+                                    "Target",
+                                    "Update",
+                                    "When"
+                                ]
                             }
                         }
                     },
@@ -298,9 +355,30 @@
                             }
                         },
                         "then": {
-                            "required": [ "FromFile" ],
+                            "properties": {
+                                "PatchMode": {
+                                    "title": "Patch mode",
+                                    "description": "How to apply FromArea to ToArea. Defaults to Replace.",
+                                    "type": "string",
+                                    "enum": [ "Replace", "Overlay" ],
+                                    "default": "Replace"
+                                }
+                            },
+                            "required": [ "FromFile", "Target" ],
                             "propertyNames": {
-                                "enum": [ "Action", "Target", "LogName", "Enabled", "When", "FromFile", "FromArea", "ToArea", "PatchMode" ]
+                                "enum": [
+                                    "Action",
+                                    "Enabled",
+                                    "FromFile",
+                                    "LogName",
+                                    "Target",
+                                    "Update",
+                                    "When",
+
+                                    "FromArea",
+                                    "PatchMode",
+                                    "ToArea"
+                                ]
                             }
                         }
                     },
@@ -312,7 +390,19 @@
                         },
                         "then": {
                             "propertyNames": {
-                                "enum": [ "Action", "Target", "LogName", "Enabled", "When", "FromFile", "Fields", "Entries", "MoveEntries" ]
+                                "enum": [
+                                    "Action",
+                                    "Enabled",
+                                    "LogName",
+                                    "Target",
+                                    "Update",
+                                    "When",
+
+                                    "Entries",
+                                    "Fields",
+                                    "MoveEntries",
+                                    "TextOperations"
+                                ]
                             }
                         }
                     },
@@ -332,19 +422,56 @@
                                 },
                                 "ToArea": {
                                     "description": "The part of the target map to replace."
+                                },
+                                "PatchMode": {
+                                    "title": "Patch mode",
+                                    "description": "How to apply FromArea to ToArea. Defaults to ReplaceByLayer.",
+                                    "type": "string",
+                                    "enum": [ "Overlay", "Replace", "ReplaceByLayer" ],
+                                    "default": "ReplaceByLayer"
                                 }
                             },
                             "propertyNames": {
-                                "enum": [ "Action", "Target", "LogName", "Enabled", "When", "FromFile", "FromArea", "ToArea", "MapProperties" ]
+                                "enum": [
+                                    "Action",
+                                    "Enabled",
+                                    "FromFile",
+                                    "LogName",
+                                    "Target",
+                                    "Update",
+                                    "When",
+
+                                    "FromArea",
+                                    "MapProperties",
+                                    "MapTiles",
+                                    "PatchMode",
+                                    "TextOperations",
+                                    "ToArea"
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        "if": {
+                            "properties": {
+                                "Action": { "const": "Include" }
+                            }
+                        },
+                        "then": {
+                            "required": [ "FromFile" ],
+                            "propertyNames": {
+                                "enum": [
+                                    "Action",
+                                    "Enabled",
+                                    "FromFile",
+                                    "LogName",
+                                    "Update",
+                                    "When"
+                                ]
                             }
                         }
                     }
-                ],
-
-                "required": [ "Action", "Target" ],
-                "@errorMessages": {
-                    "allOf": "$transparent"
-                }
+                ]
             }
         },
         "$schema": {
@@ -361,17 +488,37 @@
                 "type": [ "boolean", "string" ]
             }
         },
+        "Position": {
+            "type": "object",
+            "properties": {
+                "X": {
+                    "title": "X position",
+                    "description": "The X position, measured in pixels for a texture or tiles for a map. This can contain tokens.",
+                    "type": [ "integer", "string" ],
+                    "minimum:": 0
+                },
+                "Y": {
+                    "title": "Y position",
+                    "description": "The Y position, measured in pixels for a texture or tiles for a map. This can contain tokens.",
+                    "type": [ "integer", "string" ],
+                    "minimum:": 0
+                }
+            },
+
+            "required": [ "X", "Y" ],
+            "additionalProperties": false
+        },
         "Rectangle": {
             "type": "object",
             "properties": {
                 "X": {
-                    "title": "X-Coordinate",
+                    "title": "X position",
                     "description": "The X position of the area's top-left corner, measured in pixels for a texture or tiles for a map. This can contain tokens.",
                     "type": [ "integer", "string" ],
                     "minimum:": 0
                 },
                 "Y": {
-                    "title": "Y-Coordinate",
+                    "title": "Y position",
                     "description": "The Y position of the area's top-left corner, measured in pixels for a texture or tiles for a map. This can contain tokens.",
                     "type": [ "integer", "string" ],
                     "minimum:": 0

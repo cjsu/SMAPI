@@ -21,6 +21,9 @@ namespace StardewModdingAPI.Framework.StateTracking
         /// <summary>Tracks changes to the list of active mine locations.</summary>
         private readonly ICollectionWatcher<MineShaft> MineLocationListWatcher;
 
+        /// <summary>Tracks changes to the list of active volcano locations.</summary>
+        private readonly ICollectionWatcher<GameLocation> VolcanoLocationListWatcher;
+
         /// <summary>A lookup of the tracked locations.</summary>
         private IDictionary<GameLocation, LocationTracker> LocationDict { get; } = new Dictionary<GameLocation, LocationTracker>(new ObjectReferenceComparer<GameLocation>());
 
@@ -53,10 +56,12 @@ namespace StardewModdingAPI.Framework.StateTracking
         /// <summary>Construct an instance.</summary>
         /// <param name="locations">The game's list of locations.</param>
         /// <param name="activeMineLocations">The game's list of active mine locations.</param>
-        public WorldLocationsTracker(ObservableCollection<GameLocation> locations, IList<MineShaft> activeMineLocations)
+        /// <param name="activeVolcanoLocations">The game's list of active volcano locations.</param>
+        public WorldLocationsTracker(ObservableCollection<GameLocation> locations, IList<MineShaft> activeMineLocations, IList<VolcanoDungeon> activeVolcanoLocations)
         {
             this.LocationListWatcher = WatcherFactory.ForObservableCollection(locations);
             this.MineLocationListWatcher = WatcherFactory.ForReferenceList(activeMineLocations);
+            this.VolcanoLocationListWatcher = WatcherFactory.ForReferenceList(activeVolcanoLocations);
         }
 
         /// <summary>Update the current value if needed.</summary>
@@ -65,6 +70,7 @@ namespace StardewModdingAPI.Framework.StateTracking
             // update watchers
             this.LocationListWatcher.Update();
             this.MineLocationListWatcher.Update();
+            this.VolcanoLocationListWatcher.Update();
             foreach (LocationTracker watcher in this.Locations)
                 watcher.Update();
 
@@ -78,6 +84,11 @@ namespace StardewModdingAPI.Framework.StateTracking
             {
                 this.Remove(this.MineLocationListWatcher.Removed);
                 this.Add(this.MineLocationListWatcher.Added);
+            }
+            if (this.VolcanoLocationListWatcher.IsChanged)
+            {
+                this.Remove(this.VolcanoLocationListWatcher.Removed);
+                this.Add(this.VolcanoLocationListWatcher.Added);
             }
 
             // detect building changed
@@ -107,6 +118,7 @@ namespace StardewModdingAPI.Framework.StateTracking
             this.Added.Clear();
             this.LocationListWatcher.Reset();
             this.MineLocationListWatcher.Reset();
+            this.VolcanoLocationListWatcher.Reset();
         }
 
         /// <summary>Set the current value as the baseline.</summary>
@@ -243,6 +255,7 @@ namespace StardewModdingAPI.Framework.StateTracking
         {
             yield return this.LocationListWatcher;
             yield return this.MineLocationListWatcher;
+            yield return this.VolcanoLocationListWatcher;
             foreach (LocationTracker watcher in this.Locations)
                 yield return watcher;
         }

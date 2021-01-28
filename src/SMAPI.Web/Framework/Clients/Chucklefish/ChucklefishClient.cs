@@ -3,6 +3,7 @@ using System.Net;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 using Pathoschild.Http.Client;
+using StardewModdingAPI.Toolkit.Framework.UpdateData;
 
 namespace StardewModdingAPI.Web.Framework.Clients.Chucklefish
 {
@@ -20,6 +21,13 @@ namespace StardewModdingAPI.Web.Framework.Clients.Chucklefish
 
 
         /*********
+        ** Accessors
+        *********/
+        /// <summary>The unique key for the mod site.</summary>
+        public ModSiteKey SiteKey => ModSiteKey.Chucklefish;
+
+
+        /*********
         ** Public methods
         *********/
         /// <summary>Construct an instance.</summary>
@@ -32,42 +40,40 @@ namespace StardewModdingAPI.Web.Framework.Clients.Chucklefish
             this.Client = new FluentClient(baseUrl).SetUserAgent(userAgent);
         }
 
-        /// <summary>Get metadata about a mod.</summary>
-        /// <param name="id">The Chucklefish mod ID.</param>
-        /// <returns>Returns the mod info if found, else <c>null</c>.</returns>
-        public async Task<ChucklefishMod> GetModAsync(uint id)
+        /// <summary>Get update check info about a mod.</summary>
+        /// <param name="id">The mod ID.</param>
+        public async Task<IModPage> GetModData(string id)
         {
+            IModPage page = new GenericModPage(this.SiteKey, id);
+
+            // get mod ID
+            if (!uint.TryParse(id, out uint parsedId))
+                return page.SetError(RemoteModStatus.DoesNotExist, $"The value '{id}' isn't a valid Chucklefish mod ID, must be an integer ID.");
+
             // fetch HTML
             string html;
             try
             {
                 html = await this.Client
-                    .GetAsync(string.Format(this.ModPageUrlFormat, id))
+                    .GetAsync(string.Format(this.ModPageUrlFormat, parsedId))
                     .AsString();
             }
             catch (ApiException ex) when (ex.Status == HttpStatusCode.NotFound || ex.Status == HttpStatusCode.Forbidden)
             {
-                return null;
+                return page.SetError(RemoteModStatus.DoesNotExist, "Found no Chucklefish mod with this ID.");
             }
-
-            // parse HTML
             var doc = new HtmlDocument();
             doc.LoadHtml(html);
 
             // extract mod info
-            string url = this.GetModUrl(id);
-            string name = doc.DocumentNode.SelectSingleNode("//meta[@name='twitter:title']").Attributes["content"].Value;
-            if (name.StartsWith("[SMAPI] "))
-                name = name.Substring("[SMAPI] ".Length);
+            string url = this.GetModUrl(parsedId);
             string version = doc.DocumentNode.SelectSingleNode("//h1/span")?.InnerText;
+            string name = doc.DocumentNode.SelectSingleNode("//h1").ChildNodes[0].InnerText.Trim();
+            if (name.StartsWith("[SMAPI]"))
+                name = name.Substring("[SMAPI]".Length).TrimStart();
 
-            // create model
-            return new ChucklefishMod
-            {
-                Name = name,
-                Version = version,
-                Url = url
-            };
+            // return info
+            return page.SetInfo(name: name, version: version, url: url, downloads: Array.Empty<IModDownload>());
         }
 
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>

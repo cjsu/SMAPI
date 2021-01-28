@@ -3,9 +3,10 @@ using Microsoft.Xna.Framework.Graphics;
 using StardewModdingAPI.Events;
 using StardewModdingAPI.Framework.ModLoading;
 using StardewModdingAPI.Framework.ModLoading.Finders;
+using StardewModdingAPI.Framework.ModLoading.RewriteFacades;
 using StardewModdingAPI.Framework.ModLoading.Rewriters;
-using StardewModdingAPI.Framework.RewriteFacades;
 using StardewValley;
+using StardewValley.Locations;
 
 namespace StardewModdingAPI.Metadata
 {
@@ -25,16 +26,33 @@ namespace StardewModdingAPI.Metadata
         *********/
         /// <summary>Get rewriters which detect or fix incompatible CIL instructions in mod assemblies.</summary>
         /// <param name="paranoidMode">Whether to detect paranoid mode issues.</param>
-        public IEnumerable<IInstructionHandler> GetHandlers(bool paranoidMode)
+        /// <param name="platformChanged">Whether the assembly was rewritten for crossplatform compatibility.</param>
+        /// <param name="rewriteMods">Whether to get handlers which rewrite mods for compatibility.</param>
+        public IEnumerable<IInstructionHandler> GetHandlers(bool paranoidMode, bool platformChanged, bool rewriteMods)
         {
             /****
             ** rewrite CIL to fix incompatible code
             ****/
             // rewrite for crossplatform compatibility
-            yield return new MethodParentRewriter(typeof(SpriteBatch), typeof(SpriteBatchMethods), onlyIfPlatformChanged: true);
+            if (rewriteMods)
+            {
+                if (platformChanged)
+                    yield return new MethodParentRewriter(typeof(SpriteBatch), typeof(SpriteBatchFacade));
 
-            // rewrite for Stardew Valley 1.3
-            yield return new StaticFieldToConstantRewriter<int>(typeof(Game1), "tileSize", Game1.tileSize);
+                // rewrite for Stardew Valley 1.5
+                yield return new FieldReplaceRewriter(typeof(DecoratableLocation), "furniture", typeof(GameLocation), nameof(GameLocation.furniture));
+                yield return new FieldReplaceRewriter(typeof(Farm), "resourceClumps", typeof(GameLocation), nameof(GameLocation.resourceClumps));
+                yield return new FieldReplaceRewriter(typeof(MineShaft), "resourceClumps", typeof(GameLocation), nameof(GameLocation.resourceClumps));
+
+                // heuristic rewrites
+                yield return new HeuristicFieldRewriter(this.ValidateReferencesToAssemblies);
+                yield return new HeuristicMethodRewriter(this.ValidateReferencesToAssemblies);
+
+#if HARMONY_2
+                // rewrite for SMAPI 3.x (Harmony 1.x => 2.0 update)
+                yield return new Harmony1AssemblyRewriter();
+#endif
+            }
 
             /****
             ** detect mod issues
@@ -46,7 +64,11 @@ namespace StardewModdingAPI.Metadata
             /****
             ** detect code which may impact game stability
             ****/
-            yield return new TypeFinder("Harmony.HarmonyInstance", InstructionHandleResult.DetectedGamePatch);
+#if HARMONY_2
+            yield return new TypeFinder(typeof(HarmonyLib.Harmony).FullName, InstructionHandleResult.DetectedGamePatch);
+#else
+            yield return new TypeFinder(typeof(Harmony.HarmonyInstance).FullName, InstructionHandleResult.DetectedGamePatch);
+#endif
             yield return new TypeFinder("System.Runtime.CompilerServices.CallSite", InstructionHandleResult.DetectedDynamic);
             yield return new FieldFinder(typeof(SaveGame).FullName, nameof(SaveGame.serializer), InstructionHandleResult.DetectedSaveSerializer);
             yield return new FieldFinder(typeof(SaveGame).FullName, nameof(SaveGame.farmerSerializer), InstructionHandleResult.DetectedSaveSerializer);

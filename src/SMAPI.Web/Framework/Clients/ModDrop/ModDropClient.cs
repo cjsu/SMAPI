@@ -1,6 +1,7 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Pathoschild.Http.Client;
-using StardewModdingAPI.Toolkit;
+using StardewModdingAPI.Toolkit.Framework.UpdateData;
 using StardewModdingAPI.Web.Framework.Clients.ModDrop.ResponseModels;
 
 namespace StardewModdingAPI.Web.Framework.Clients.ModDrop
@@ -19,6 +20,13 @@ namespace StardewModdingAPI.Web.Framework.Clients.ModDrop
 
 
         /*********
+        ** Accessors
+        *********/
+        /// <summary>The unique key for the mod site.</summary>
+        public ModSiteKey SiteKey => ModSiteKey.ModDrop;
+
+
+        /*********
         ** Public methods
         *********/
         /// <summary>Construct an instance.</summary>
@@ -31,60 +39,45 @@ namespace StardewModdingAPI.Web.Framework.Clients.ModDrop
             this.ModUrlFormat = modUrlFormat;
         }
 
-        /// <summary>Get metadata about a mod.</summary>
-        /// <param name="id">The ModDrop mod ID.</param>
-        /// <returns>Returns the mod info if found, else <c>null</c>.</returns>
-        public async Task<ModDropMod> GetModAsync(long id)
+        /// <summary>Get update check info about a mod.</summary>
+        /// <param name="id">The mod ID.</param>
+        public async Task<IModPage> GetModData(string id)
         {
+            var page = new GenericModPage(this.SiteKey, id);
+
+            if (!long.TryParse(id, out long parsedId))
+                return page.SetError(RemoteModStatus.DoesNotExist, $"The value '{id}' isn't a valid ModDrop mod ID, must be an integer ID.");
+
             // get raw data
             ModListModel response = await this.Client
                 .PostAsync("")
                 .WithBody(new
                 {
-                    ModIDs = new[] { id },
+                    ModIDs = new[] { parsedId },
                     Files = true,
                     Mods = true
                 })
                 .As<ModListModel>();
-            ModModel mod = response.Mods[id];
+            ModModel mod = response.Mods[parsedId];
             if (mod.Mod?.Title == null || mod.Mod.ErrorCode.HasValue)
                 return null;
 
-            // get latest versions
-            ISemanticVersion latest = null;
-            ISemanticVersion optional = null;
+            // get files
+            var downloads = new List<IModDownload>();
             foreach (FileDataModel file in mod.Files)
             {
                 if (file.IsOld || file.IsDeleted || file.IsHidden)
                     continue;
 
-                if (!SemanticVersion.TryParse(file.Version, out ISemanticVersion version))
-                    continue;
-
-                if (file.IsDefault)
-                {
-                    if (latest == null || version.IsNewerThan(latest))
-                        latest = version;
-                }
-                else if (optional == null || version.IsNewerThan(optional))
-                    optional = version;
+                downloads.Add(
+                    new GenericModDownload(file.Name, file.Description, file.Version)
+                );
             }
-            if (latest == null)
-            {
-                latest = optional;
-                optional = null;
-            }
-            if (optional != null && latest.IsNewerThan(optional))
-                optional = null;
 
-            // generate result
-            return new ModDropMod
-            {
-                Name = mod.Mod?.Title,
-                LatestDefaultVersion = latest,
-                LatestOptionalVersion = optional,
-                Url = string.Format(this.ModUrlFormat, id)
-            };
+            // return info
+            string name = mod.Mod?.Title;
+            string url = string.Format(this.ModUrlFormat, id);
+            return page.SetInfo(name: name, version: null, url: url, downloads: downloads);
         }
 
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>

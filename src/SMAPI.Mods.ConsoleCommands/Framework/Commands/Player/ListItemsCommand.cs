@@ -6,7 +6,7 @@ using StardewModdingAPI.Mods.ConsoleCommands.Framework.ItemData;
 namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.Player
 {
     /// <summary>A command which list items available to spawn.</summary>
-    internal class ListItemsCommand : TrainerCommand
+    internal class ListItemsCommand : ConsoleCommand
     {
         /*********
         ** Fields

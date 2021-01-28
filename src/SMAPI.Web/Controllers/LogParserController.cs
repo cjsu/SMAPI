@@ -40,17 +40,18 @@ namespace StardewModdingAPI.Web.Controllers
         /// <summary>Render the log parser UI.</summary>
         /// <param name="id">The stored file ID.</param>
         /// <param name="raw">Whether to display the raw unparsed log.</param>
+        /// <param name="renew">Whether to reset the log expiry.</param>
         [HttpGet]
         [Route("log")]
         [Route("log/{id}")]
-        public async Task<ViewResult> Index(string id = null, bool raw = false)
+        public async Task<ViewResult> Index(string id = null, bool raw = false, bool renew = false)
         {
             // fresh page
             if (string.IsNullOrWhiteSpace(id))
                 return this.View("Index", this.GetModel(id));
 
             // log page
-            StoredFileInfo file = await this.Storage.GetAsync(id);
+            StoredFileInfo file = await this.Storage.GetAsync(id, renew);
             ParsedLog log = file.Success
                 ? new LogParser().Parse(file.Content)
                 : new ParsedLog { IsValid = false, Error = file.Error };

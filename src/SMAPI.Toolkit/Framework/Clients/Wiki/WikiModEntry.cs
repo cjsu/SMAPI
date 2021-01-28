@@ -63,6 +63,9 @@ namespace StardewModdingAPI.Toolkit.Framework.Clients.Wiki
         /// <summary>Special notes intended for developers who maintain unofficial updates or submit pull requests. </summary>
         public string DevNote { get; set; }
 
+        /// <summary>Update keys to add (optionally prefixed by '+') or remove (prefixed by '-').</summary>
+        public string[] ChangeUpdateKeys { get; set; }
+
         /// <summary>Maps local versions to a semantic version for update checks.</summary>
         public IDictionary<string, string> MapLocalVersions { get; set; }
 

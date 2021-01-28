@@ -9,11 +9,11 @@ using Microsoft.Xna.Framework.Content;
 using StardewModdingAPI.Framework.Content;
 using StardewModdingAPI.Framework.ContentManagers;
 using StardewModdingAPI.Framework.Reflection;
-using StardewModdingAPI.Framework.StateTracking.Comparers;
 using StardewModdingAPI.Metadata;
 using StardewModdingAPI.Toolkit.Serialization;
 using StardewModdingAPI.Toolkit.Utilities;
 using StardewValley;
+using xTile;
 
 namespace StardewModdingAPI.Framework
 {
@@ -54,6 +54,12 @@ namespace StardewModdingAPI.Framework
         /// <remarks>The game may adds content managers in asynchronous threads (e.g. when populating the load screen).</remarks>
         private readonly ReaderWriterLockSlim ContentManagerLock = new ReaderWriterLockSlim();
 
+        /// <summary>A cache of ordered tilesheet IDs used by vanilla maps.</summary>
+        private readonly IDictionary<string, TilesheetReference[]> VanillaTilesheets = new Dictionary<string, TilesheetReference[]>(StringComparer.OrdinalIgnoreCase);
+
+        /// <summary>An unmodified content manager which doesn't intercept assets, used to compare asset data.</summary>
+        private readonly LocalizedContentManager VanillaContentManager;
+
 
         /*********
         ** Accessors
@@ -93,9 +99,20 @@ namespace StardewModdingAPI.Framework
             this.OnLoadingFirstAsset = onLoadingFirstAsset;
             this.FullRootDirectory = Path.Combine(Constants.ExecutionPath, rootDirectory);
             this.ContentManagers.Add(
-                this.MainContentManager = new GameContentManager("Game1.content", serviceProvider, rootDirectory, currentCulture, this, monitor, reflection, this.OnDisposing, onLoadingFirstAsset)
+                this.MainContentManager = new GameContentManager(
+                    name: "Game1.content",
+                    serviceProvider: serviceProvider,
+                    rootDirectory: rootDirectory,
+                    currentCulture: currentCulture,
+                    coordinator: this,
+                    monitor: monitor,
+                    reflection: reflection,
+                    onDisposing: this.OnDisposing,
+                    onLoadingFirstAsset: onLoadingFirstAsset
+                )
             );
-            this.CoreAssets = new CoreAssetPropagator(this.MainContentManager.AssertAndNormalizeAssetName, reflection, monitor);
+            this.VanillaContentManager = new LocalizedContentManager(serviceProvider, rootDirectory);
+            this.CoreAssets = new CoreAssetPropagator(this.MainContentManager.AssertAndNormalizeAssetName, reflection);
         }
 
         /// <summary>Get a new content manager which handles reading files from the game content folder with support for interception.</summary>
@@ -104,7 +121,17 @@ namespace StardewModdingAPI.Framework
         {
             return this.ContentManagerLock.InWriteLock(() =>
             {
-                GameContentManager manager = new GameContentManager(name, this.MainContentManager.ServiceProvider, this.MainContentManager.RootDirectory, this.MainContentManager.CurrentCulture, this, this.Monitor, this.Reflection, this.OnDisposing, this.OnLoadingFirstAsset);
+                GameContentManager manager = new GameContentManager(
+                    name: name,
+                    serviceProvider: this.MainContentManager.ServiceProvider,
+                    rootDirectory: this.MainContentManager.RootDirectory,
+                    currentCulture: this.MainContentManager.CurrentCulture,
+                    coordinator: this,
+                    monitor: this.Monitor,
+                    reflection: this.Reflection,
+                    onDisposing: this.OnDisposing,
+                    onLoadingFirstAsset: this.OnLoadingFirstAsset
+                );
                 this.ContentManagers.Add(manager);
                 return manager;
             });
@@ -112,9 +139,10 @@ namespace StardewModdingAPI.Framework
 
         /// <summary>Get a new content manager which handles reading files from a SMAPI mod folder with support for unpacked files.</summary>
         /// <param name="name">A name for the mod manager. Not guaranteed to be unique.</param>
+        /// <param name="modName">The mod display name to show in errors.</param>
         /// <param name="rootDirectory">The root directory to search for content (or <c>null</c> for the default).</param>
         /// <param name="gameContentManager">The game content manager used for map tilesheets not provided by the mod.</param>
-        public ModContentManager CreateModContentManager(string name, string rootDirectory, IContentManager gameContentManager)
+        public ModContentManager CreateModContentManager(string name, string modName, string rootDirectory, IContentManager gameContentManager)
         {
             return this.ContentManagerLock.InWriteLock(() =>
             {
@@ -123,6 +151,7 @@ namespace StardewModdingAPI.Framework
                     gameContentManager: gameContentManager,
                     serviceProvider: this.MainContentManager.ServiceProvider,
                     rootDirectory: rootDirectory,
+                    modName: modName,
                     currentCulture: this.MainContentManager.CurrentCulture,
                     coordinator: this,
                     monitor: this.Monitor,
@@ -148,6 +177,8 @@ namespace StardewModdingAPI.Framework
             {
                 foreach (IContentManager contentManager in this.ContentManagers)
                     contentManager.OnLocaleChanged();
+
+                this.VanillaContentManager.Unload();
             });
         }
 
@@ -226,16 +257,32 @@ namespace StardewModdingAPI.Framework
         public IEnumerable<string> InvalidateCache(Func<string, Type, bool> predicate, bool dispose = false)
         {
             // invalidate cache & track removed assets
-            IDictionary<string, ISet<object>> removedAssets = new Dictionary<string, ISet<object>>(StringComparer.InvariantCultureIgnoreCase);
+            IDictionary<string, Type> removedAssets = new Dictionary<string, Type>(StringComparer.OrdinalIgnoreCase);
             this.ContentManagerLock.InReadLock(() =>
             {
+                // cached assets
                 foreach (IContentManager contentManager in this.ContentManagers)
                 {
                     foreach (var entry in contentManager.InvalidateCache(predicate, dispose))
                     {
-                        if (!removedAssets.TryGetValue(entry.Key, out ISet<object> assets))
-                            removedAssets[entry.Key] = assets = new HashSet<object>(new ObjectReferenceComparer<object>());
-                        assets.Add(entry.Value);
+                        if (!removedAssets.ContainsKey(entry.Key))
+                            removedAssets[entry.Key] = entry.Value.GetType();
+                    }
+                }
+
+                // special case: maps may be loaded through a temporary content manager that's removed while the map is still in use.
+                // This notably affects the town and farmhouse maps.
+                if (Game1.locations != null)
+                {
+                    foreach (GameLocation location in Game1.locations)
+                    {
+                        if (location.map == null || string.IsNullOrWhiteSpace(location.mapPath.Value))
+                            continue;
+
+                        // get map path
+                        string mapPath = this.MainContentManager.AssertAndNormalizeAssetName(location.mapPath.Value);
+                        if (!removedAssets.ContainsKey(mapPath) && predicate(mapPath, typeof(Map)))
+                            removedAssets[mapPath] = typeof(Map);
                     }
                 }
             });
@@ -243,8 +290,8 @@ namespace StardewModdingAPI.Framework
             // reload core game assets
             if (removedAssets.Any())
             {
-                IDictionary<string, bool> propagated = this.CoreAssets.Propagate(this.MainContentManager, removedAssets.ToDictionary(p => p.Key, p => p.Value.First().GetType())); // use an intercepted content manager
-                this.Monitor.Log($"Invalidated {removedAssets.Count} asset names ({string.Join(", ", removedAssets.Keys.OrderBy(p => p, StringComparer.InvariantCultureIgnoreCase))}); propagated {propagated.Count(p => p.Value)} core assets.", LogLevel.Trace);
+                IDictionary<string, bool> propagated = this.CoreAssets.Propagate(this.MainContentManager, removedAssets.ToDictionary(p => p.Key, p => p.Value)); // use an intercepted content manager
+                this.Monitor.Log($"Invalidated {removedAssets.Count} asset names ({string.Join(", ", removedAssets.Keys.OrderBy(p => p, StringComparer.OrdinalIgnoreCase))}); propagated {propagated.Count(p => p.Value)} core assets.", LogLevel.Trace);
             }
             else
                 this.Monitor.Log("Invalidated 0 cache entries.", LogLevel.Trace);
@@ -260,13 +307,30 @@ namespace StardewModdingAPI.Framework
             return this.ContentManagerLock.InReadLock(() =>
             {
                 List<object> values = new List<object>();
-                foreach (IContentManager content in this.ContentManagers.Where(p => !p.IsNamespaced && p.IsLoaded(assetName)))
+                foreach (IContentManager content in this.ContentManagers.Where(p => !p.IsNamespaced && p.IsLoaded(assetName, p.Language)))
                 {
                     object value = content.Load<object>(assetName, this.Language, useCache: true);
                     values.Add(value);
                 }
                 return values;
             });
+        }
+
+        /// <summary>Get the tilesheet ID order used by the unmodified version of a map asset.</summary>
+        /// <param name="assetName">The asset path relative to the loader root directory, not including the <c>.xnb</c> extension.</param>
+        public TilesheetReference[] GetVanillaTilesheetIds(string assetName)
+        {
+            if (!this.VanillaTilesheets.TryGetValue(assetName, out TilesheetReference[] tilesheets))
+            {
+                tilesheets = this.TryLoadVanillaAsset(assetName, out Map map)
+                    ? map.TileSheets.Select((sheet, index) => new TilesheetReference(index, sheet.Id, sheet.ImageSource)).ToArray()
+                    : null;
+
+                this.VanillaTilesheets[assetName] = tilesheets;
+                this.VanillaContentManager.Unload();
+            }
+
+            return tilesheets ?? new TilesheetReference[0];
         }
 
         /// <summary>Dispose held resources.</summary>
@@ -299,6 +363,24 @@ namespace StardewModdingAPI.Framework
             this.ContentManagerLock.InWriteLock(() =>
                 this.ContentManagers.Remove(contentManager)
             );
+        }
+
+        /// <summary>Get a vanilla asset without interception.</summary>
+        /// <typeparam name="T">The type of asset to load.</typeparam>
+        /// <param name="assetName">The asset path relative to the loader root directory, not including the <c>.xnb</c> extension.</param>
+        /// <param name="asset">The loaded asset data.</param>
+        private bool TryLoadVanillaAsset<T>(string assetName, out T asset)
+        {
+            try
+            {
+                asset = this.VanillaContentManager.Load<T>(assetName);
+                return true;
+            }
+            catch
+            {
+                asset = default;
+                return false;
+            }
         }
     }
 }

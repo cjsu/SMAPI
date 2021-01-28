@@ -12,7 +12,7 @@ namespace StardewModdingAPI.Framework
         ** Fields
         *********/
         /// <summary>The translations for each locale.</summary>
-        private readonly IDictionary<string, IDictionary<string, string>> All = new Dictionary<string, IDictionary<string, string>>(StringComparer.InvariantCultureIgnoreCase);
+        private readonly IDictionary<string, IDictionary<string, string>> All = new Dictionary<string, IDictionary<string, string>>(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>The translations for the current locale, with locale fallback taken into account.</summary>
         private IDictionary<string, Translation> ForLocale;
@@ -45,7 +45,7 @@ namespace StardewModdingAPI.Framework
             this.Locale = locale.ToLower().Trim();
             this.LocaleEnum = localeEnum;
 
-            this.ForLocale = new Dictionary<string, Translation>(StringComparer.InvariantCultureIgnoreCase);
+            this.ForLocale = new Dictionary<string, Translation>(StringComparer.OrdinalIgnoreCase);
             foreach (string next in this.GetRelevantLocales(this.Locale))
             {
                 // skip if locale not defined
@@ -90,7 +90,7 @@ namespace StardewModdingAPI.Framework
             // reset translations
             this.All.Clear();
             foreach (var pair in translations)
-                this.All[pair.Key] = new Dictionary<string, string>(pair.Value, StringComparer.InvariantCultureIgnoreCase);
+                this.All[pair.Key] = new Dictionary<string, string>(pair.Value, StringComparer.OrdinalIgnoreCase);
 
             // rebuild cache
             this.SetLocale(this.Locale, this.LocaleEnum);

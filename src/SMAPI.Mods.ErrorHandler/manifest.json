@@ -1,0 +1,9 @@
+{
+    "Name": "Error Handler",
+    "Author": "SMAPI",
+    "Version": "3.9.1",
+    "Description": "Handles some common vanilla errors to log more useful info or avoid breaking the game.",
+    "UniqueID": "SMAPI.ErrorHandler",
+    "EntryDll": "ErrorHandler.dll",
+    "MinimumApiVersion": "3.9.1"
+}

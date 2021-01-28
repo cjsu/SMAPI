@@ -1,3 +1,6 @@
 {
-    "warn.invalid-content-removed": "Недопустимое содержимое было удалено, чтобы предотвратить сбой (см. информацию в консоли SMAPI)"
+    // short date format for SDate
+    // tokens: {{day}} (like 15), {{season}} (like Spring), {{seasonLowercase}} (like spring), {{year}} (like 2)
+    "generic.date": "{{season}}, {{day}}-е число",
+    "generic.date-with-year": "{{season}}, {{day}}-е число, {{year}}-й год"
 }

@@ -12,7 +12,7 @@ namespace StardewModdingAPI.Toolkit.Serialization
         /// <param name="fieldName">The field name.</param>
         public static T ValueIgnoreCase<T>(this JObject obj, string fieldName)
         {
-            JToken token = obj.GetValue(fieldName, StringComparison.InvariantCultureIgnoreCase);
+            JToken token = obj.GetValue(fieldName, StringComparison.OrdinalIgnoreCase);
             return token != null
                 ? token.Value<T>()
                 : default(T);

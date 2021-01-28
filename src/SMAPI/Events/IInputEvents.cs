@@ -5,6 +5,9 @@ namespace StardewModdingAPI.Events
     /// <summary>Events raised when the player provides input using a controller, keyboard, or mouse.</summary>
     public interface IInputEvents
     {
+        /// <summary>Raised after the player presses or releases any buttons on the keyboard, controller, or mouse.</summary>
+        event EventHandler<ButtonsChangedEventArgs> ButtonsChanged;
+
         /// <summary>Raised after the player presses a button on the keyboard, controller, or mouse.</summary>
         event EventHandler<ButtonPressedEventArgs> ButtonPressed;
 

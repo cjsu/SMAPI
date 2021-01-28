@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using StardewModdingAPI.Toolkit.Framework.Clients.Wiki;
@@ -11,8 +10,6 @@ using StardewModdingAPI.Toolkit.Framework.ModData;
 using StardewModdingAPI.Toolkit.Framework.ModScanning;
 using StardewModdingAPI.Toolkit.Serialization;
 
-[assembly: InternalsVisibleTo("StardewModdingAPI")]
-[assembly: InternalsVisibleTo("SMAPI.Web")]
 namespace StardewModdingAPI.Toolkit
 {
     /// <summary>A convenience wrapper for the various tools.</summary>
@@ -25,7 +22,7 @@ namespace StardewModdingAPI.Toolkit
         private readonly string UserAgent;
 
         /// <summary>Maps vendor keys (like <c>Nexus</c>) to their mod URL template (where <c>{0}</c> is the mod ID). This doesn't affect update checks, which defer to the remote web API.</summary>
-        private readonly IDictionary<string, string> VendorModUrls = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase)
+        private readonly IDictionary<string, string> VendorModUrls = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
             ["Chucklefish"] = "https://community.playstarbound.com/resources/{0}",
             ["GitHub"] = "https://github.com/{0}/releases",

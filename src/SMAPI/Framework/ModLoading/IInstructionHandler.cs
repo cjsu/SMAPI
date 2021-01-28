@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
@@ -9,26 +11,31 @@ namespace StardewModdingAPI.Framework.ModLoading
         /*********
         ** Accessors
         *********/
-        /// <summary>A brief noun phrase indicating what the handler matches.</summary>
-        string NounPhrase { get; }
+        /// <summary>A brief noun phrase indicating what the handler matches, used if <see cref="Phrases"/> is empty.</summary>
+        string DefaultPhrase { get; }
+
+        /// <summary>The rewrite flags raised for the current module.</summary>
+        ISet<InstructionHandleResult> Flags { get; }
+
+        /// <summary>The brief noun phrases indicating what the handler matched for the current module.</summary>
+        ISet<string> Phrases { get; }
 
 
         /*********
         ** Methods
         *********/
-        /// <summary>Perform the predefined logic for a method if applicable.</summary>
+        /// <summary>Rewrite a type reference if needed.</summary>
         /// <param name="module">The assembly module containing the instruction.</param>
-        /// <param name="method">The method definition containing the instruction.</param>
-        /// <param name="assemblyMap">Metadata for mapping assemblies to the current platform.</param>
-        /// <param name="platformChanged">Whether the mod was compiled on a different platform.</param>
-        InstructionHandleResult Handle(ModuleDefinition module, MethodDefinition method, PlatformAssemblyMap assemblyMap, bool platformChanged);
+        /// <param name="type">The type definition to handle.</param>
+        /// <param name="replaceWith">Replaces the type reference with a new one.</param>
+        /// <returns>Returns whether the type was changed.</returns>
+        bool Handle(ModuleDefinition module, TypeReference type, Action<TypeReference> replaceWith);
 
-        /// <summary>Perform the predefined logic for an instruction if applicable.</summary>
+        /// <summary>Rewrite a CIL instruction reference if needed.</summary>
         /// <param name="module">The assembly module containing the instruction.</param>
         /// <param name="cil">The CIL processor.</param>
-        /// <param name="instruction">The instruction to handle.</param>
-        /// <param name="assemblyMap">Metadata for mapping assemblies to the current platform.</param>
-        /// <param name="platformChanged">Whether the mod was compiled on a different platform.</param>
-        InstructionHandleResult Handle(ModuleDefinition module, ILProcessor cil, Instruction instruction, PlatformAssemblyMap assemblyMap, bool platformChanged);
+        /// <param name="instruction">The CIL instruction to handle.</param>
+        /// <returns>Returns whether the instruction was changed.</returns>
+        bool Handle(ModuleDefinition module, ILProcessor cil, Instruction instruction);
     }
 }

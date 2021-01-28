@@ -38,28 +38,25 @@ namespace StardewModdingAPI.Framework.ModHelpers
             this.Monitor = monitor;
         }
 
-        /// <summary>Get metadata for all loaded mods.</summary>
+        /// <inheritdoc />
         public IEnumerable<IModInfo> GetAll()
         {
             return this.Registry.GetAll();
         }
 
-        /// <summary>Get metadata for a loaded mod.</summary>
-        /// <param name="uniqueID">The mod's unique ID.</param>
-        /// <returns>Returns the matching mod's metadata, or <c>null</c> if not found.</returns>
+        /// <inheritdoc />
         public IModInfo Get(string uniqueID)
         {
             return this.Registry.Get(uniqueID);
         }
 
-        /// <summary>Get whether a mod has been loaded.</summary>
-        /// <param name="uniqueID">The mod's unique ID.</param>
+        /// <inheritdoc />
         public bool IsLoaded(string uniqueID)
         {
             return this.Registry.Get(uniqueID) != null;
         }
 
-        /// <summary>Get the API provided by a mod, or <c>null</c> if it has none. This signature requires using the <see cref="IModHelper.Reflection"/> API to access the API's properties and methods.</summary>
+        /// <inheritdoc />
         public object GetApi(string uniqueID)
         {
             // validate ready
@@ -76,9 +73,7 @@ namespace StardewModdingAPI.Framework.ModHelpers
             return mod?.Api;
         }
 
-        /// <summary>Get the API provided by a mod, mapped to a given interface which specifies the expected properties and methods. If the mod has no API or it's not compatible with the given interface, get <c>null</c>.</summary>
-        /// <typeparam name="TInterface">The interface which matches the properties and methods you intend to access.</typeparam>
-        /// <param name="uniqueID">The mod's unique ID.</param>
+        /// <inheritdoc />
         public TInterface GetApi<TInterface>(string uniqueID) where TInterface : class
         {
             // get raw API

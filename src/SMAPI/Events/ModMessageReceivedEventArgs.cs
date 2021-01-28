@@ -1,5 +1,6 @@
 using System;
 using StardewModdingAPI.Framework.Networking;
+using StardewModdingAPI.Toolkit.Serialization;
 
 namespace StardewModdingAPI.Events
 {
@@ -11,6 +12,9 @@ namespace StardewModdingAPI.Events
         *********/
         /// <summary>The underlying message model.</summary>
         private readonly ModMessageModel Message;
+
+        /// <summary>The JSON helper used to deserialize models.</summary>
+        private readonly JsonHelper JsonHelper;
 
 
         /*********
@@ -31,16 +35,18 @@ namespace StardewModdingAPI.Events
         *********/
         /// <summary>Construct an instance.</summary>
         /// <param name="message">The received message.</param>
-        internal ModMessageReceivedEventArgs(ModMessageModel message)
+        /// <param name="jsonHelper">The JSON helper used to deserialize models.</param>
+        internal ModMessageReceivedEventArgs(ModMessageModel message, JsonHelper jsonHelper)
         {
             this.Message = message;
+            this.JsonHelper = jsonHelper;
         }
 
         /// <summary>Read the message data into the given model type.</summary>
         /// <typeparam name="TModel">The message model type.</typeparam>
         public TModel ReadAs<TModel>()
         {
-            return this.Message.Data.ToObject<TModel>();
+            return this.Message.Data.ToObject<TModel>(this.JsonHelper.GetSerializer());
         }
     }
 }

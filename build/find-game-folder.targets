@@ -11,6 +11,7 @@
         <GamePath Condition="!Exists('$(GamePath)')">$(HOME)/GOG Games/Stardew Valley/game</GamePath>
         <GamePath Condition="!Exists('$(GamePath)')">$(HOME)/.steam/steam/steamapps/common/Stardew Valley</GamePath>
         <GamePath Condition="!Exists('$(GamePath)')">$(HOME)/.local/share/Steam/steamapps/common/Stardew Valley</GamePath>
+        <GamePath Condition="!Exists('$(GamePath)')">$(HOME)/.var/app/com.valvesoftware.Steam/data/Steam/steamapps/common/Stardew Valley</GamePath>
 
         <!-- Mac (may be 'Unix' or 'OSX') -->
         <GamePath Condition="!Exists('$(GamePath)')">/Applications/Stardew Valley.app/Contents/MacOS</GamePath>
@@ -19,15 +20,6 @@
     </When>
     <When Condition="$(OS) == 'Windows_NT'">
       <PropertyGroup>
-        <!-- default paths -->
-        <GamePath Condition="!Exists('$(GamePath)')">C:\Program Files\GalaxyClient\Games\Stardew Valley</GamePath>
-        <GamePath Condition="!Exists('$(GamePath)')">C:\Program Files\GOG Galaxy\Games\Stardew Valley</GamePath>
-        <GamePath Condition="!Exists('$(GamePath)')">C:\Program Files\Steam\steamapps\common\Stardew Valley</GamePath>
-
-        <GamePath Condition="!Exists('$(GamePath)')">C:\Program Files (x86)\GalaxyClient\Games\Stardew Valley</GamePath>
-        <GamePath Condition="!Exists('$(GamePath)')">C:\Program Files (x86)\GOG Galaxy\Games\Stardew Valley</GamePath>
-        <GamePath Condition="!Exists('$(GamePath)')">C:\Program Files (x86)\Steam\steamapps\common\Stardew Valley</GamePath>
-
         <!-- registry paths -->
         <GamePath Condition="!Exists('$(GamePath)')">$([MSBuild]::GetRegistryValueFromView('HKEY_LOCAL_MACHINE\SOFTWARE\GOG.com\Games\1453375253', 'PATH', null, RegistryView.Registry32))</GamePath>
         <GamePath Condition="!Exists('$(GamePath)')">$([MSBuild]::GetRegistryValueFromView('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 413150', 'InstallLocation', null, RegistryView.Registry64, RegistryView.Registry32))</GamePath>
@@ -35,6 +27,17 @@
         <!-- derive from Steam library path -->
         <_SteamLibraryPath>$([MSBuild]::GetRegistryValueFromView('HKEY_CURRENT_USER\SOFTWARE\Valve\Steam', 'SteamPath', null, RegistryView.Registry32))</_SteamLibraryPath>
         <GamePath Condition="!Exists('$(GamePath)') AND '$(_SteamLibraryPath)' != ''">$(_SteamLibraryPath)\steamapps\common\Stardew Valley</GamePath>
+
+        <!-- default paths -->
+        <GamePath Condition="!Exists('$(GamePath)')">C:\Program Files\GalaxyClient\Games\Stardew Valley</GamePath>
+        <GamePath Condition="!Exists('$(GamePath)')">C:\Program Files\GOG Galaxy\Games\Stardew Valley</GamePath>
+        <GamePath Condition="!Exists('$(GamePath)')">C:\Program Files\GOG Games\Stardew Valley</GamePath>
+        <GamePath Condition="!Exists('$(GamePath)')">C:\Program Files\Steam\steamapps\common\Stardew Valley</GamePath>
+
+        <GamePath Condition="!Exists('$(GamePath)')">C:\Program Files (x86)\GalaxyClient\Games\Stardew Valley</GamePath>
+        <GamePath Condition="!Exists('$(GamePath)')">C:\Program Files (x86)\GOG Galaxy\Games\Stardew Valley</GamePath>
+        <GamePath Condition="!Exists('$(GamePath)')">C:\Program Files (x86)\GOG Games\Stardew Valley</GamePath>
+        <GamePath Condition="!Exists('$(GamePath)')">C:\Program Files (x86)\Steam\steamapps\common\Stardew Valley</GamePath>
       </PropertyGroup>
     </When>
   </Choose>

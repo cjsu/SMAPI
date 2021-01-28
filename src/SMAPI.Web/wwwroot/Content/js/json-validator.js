@@ -41,7 +41,7 @@ smapi.LineNumberRange = function (maxLines) {
      * Generate a URL hash for the current line range.
      * @returns {string} The generated URL hash.
      */
-    self.buildHash = function() {
+    self.buildHash = function () {
         if (!self.minLine)
             return "";
         else if (self.minLine === self.maxLine)
@@ -54,7 +54,7 @@ smapi.LineNumberRange = function (maxLines) {
      * Get a list of all selected lines.
      * @returns {Array<int>} The selected line numbers.
      */
-    self.getLinesSelected = function() {
+    self.getLinesSelected = function () {
         // format
         if (!self.minLine)
             return [];
@@ -97,7 +97,7 @@ smapi.jsonValidator = function (urlFormat, fileId) {
         });
 
         // fix line links
-        $(".sunlight-line-number-margin a").each(function() {
+        $(".sunlight-line-number-margin a").each(function () {
             var link = $(this);
             var lineNumber = parseInt(link.text());
             link
@@ -111,7 +111,7 @@ smapi.jsonValidator = function (urlFormat, fileId) {
     /**
      * Scroll the page so the selected range is visible.
      */
-    var scrollToRange = function() {
+    var scrollToRange = function () {
         if (!selection.minLine)
             return;
 
@@ -123,56 +123,33 @@ smapi.jsonValidator = function (urlFormat, fileId) {
      * Initialize the JSON validator page.
      */
     var init = function () {
+        var input = $("#input");
+
         // set initial code formatting
         selection.parseFromUrlHash(location.hash);
         formatCode();
         scrollToRange();
 
         // update code formatting on hash change
-        $(window).on("hashchange", function() {
+        $(window).on("hashchange", function () {
             selection.parseFromUrlHash(location.hash);
             formatCode();
             scrollToRange();
         });
 
         // change format
-        $("#output #format").on("change", function() {
+        $("#output #format").on("change", function () {
             var schemaName = $(this).val();
             location.href = urlFormat.replace("$schemaName", schemaName).replace("$id", fileId);
         });
 
-        // upload form
-        var submit = $("#submit");
-        var input = $("#input");
         if (input.length) {
-            // disable submit if it's empty
-            var toggleSubmit = function () {
-                var hasText = !!input.val().trim();
-                submit.prop("disabled", !hasText);
-            };
-            input.on("input", toggleSubmit);
-            toggleSubmit();
-
-            // drag & drop file
-            input.on({
-                'dragover dragenter': function (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                },
-                'drop': function (e) {
-                    var dataTransfer = e.originalEvent.dataTransfer;
-                    if (dataTransfer && dataTransfer.files.length) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        var file = dataTransfer.files[0];
-                        var reader = new FileReader();
-                        reader.onload = $.proxy(function (file, $input, event) {
-                            $input.val(event.target.result);
-                            toggleSubmit();
-                        }, this, file, $("#input"));
-                        reader.readAsText(file);
-                    }
-                }
+            // upload form
+            smapi.fileUpload({
+                chooseFileLink: $("#choose-file-link"),
+                chooseFileInput: $("#inputFile"),
+                contentArea: input,
+                submitButton: $("#submit")
             });
         }
     };

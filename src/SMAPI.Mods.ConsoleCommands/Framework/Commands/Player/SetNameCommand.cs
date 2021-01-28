@@ -3,7 +3,7 @@ using StardewValley;
 namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.Player
 {
     /// <summary>A command which edits the player's name.</summary>
-    internal class SetNameCommand : TrainerCommand
+    internal class SetNameCommand : ConsoleCommand
     {
         /*********
         ** Public methods

@@ -64,5 +64,11 @@ namespace StardewModdingAPI
         /// <param name="predicate">A predicate matching the assets to invalidate.</param>
         /// <returns>Returns whether any cache entries were invalidated.</returns>
         bool InvalidateCache(Func<IAssetInfo, bool> predicate);
+
+        /// <summary>Get a patch helper for arbitrary data.</summary>
+        /// <typeparam name="T">The data type.</typeparam>
+        /// <param name="data">The asset data.</param>
+        /// <param name="assetName">The asset name. This is only used for tracking purposes and has no effect on the patch helper.</param>
+        IAssetData GetPatchHelper<T>(T data, string assetName = null);
     }
 }

@@ -12,15 +12,16 @@ using StardewModdingAPI.Toolkit.Framework.Clients.Wiki;
 using StardewModdingAPI.Toolkit.Framework.ModData;
 using StardewModdingAPI.Toolkit.Framework.UpdateData;
 using StardewModdingAPI.Web.Framework;
+using StardewModdingAPI.Web.Framework.Caching;
 using StardewModdingAPI.Web.Framework.Caching.Mods;
 using StardewModdingAPI.Web.Framework.Caching.Wiki;
+using StardewModdingAPI.Web.Framework.Clients;
 using StardewModdingAPI.Web.Framework.Clients.Chucklefish;
 using StardewModdingAPI.Web.Framework.Clients.CurseForge;
 using StardewModdingAPI.Web.Framework.Clients.GitHub;
 using StardewModdingAPI.Web.Framework.Clients.ModDrop;
 using StardewModdingAPI.Web.Framework.Clients.Nexus;
 using StardewModdingAPI.Web.Framework.ConfigModels;
-using StardewModdingAPI.Web.Framework.ModRepositories;
 
 namespace StardewModdingAPI.Web.Controllers
 {
@@ -32,8 +33,8 @@ namespace StardewModdingAPI.Web.Controllers
         /*********
         ** Fields
         *********/
-        /// <summary>The mod repositories which provide mod metadata.</summary>
-        private readonly IDictionary<ModRepositoryKey, IModRepository> Repositories;
+        /// <summary>The mod sites which provide mod metadata.</summary>
+        private readonly ModSiteManager ModSites;
 
         /// <summary>The cache in which to store wiki data.</summary>
         private readonly IWikiCacheRepository WikiCache;
@@ -41,11 +42,8 @@ namespace StardewModdingAPI.Web.Controllers
         /// <summary>The cache in which to store mod data.</summary>
         private readonly IModCacheRepository ModCache;
 
-        /// <summary>The number of minutes successful update checks should be cached before refetching them.</summary>
-        private readonly int SuccessCacheMinutes;
-
-        /// <summary>The number of minutes failed update checks should be cached before refetching them.</summary>
-        private readonly int ErrorCacheMinutes;
+        /// <summary>The config settings for mod update checks.</summary>
+        private readonly IOptions<ModUpdateCheckConfig> Config;
 
         /// <summary>The internal mod metadata list.</summary>
         private readonly ModDatabase ModDatabase;
@@ -58,31 +56,20 @@ namespace StardewModdingAPI.Web.Controllers
         /// <param name="environment">The web hosting environment.</param>
         /// <param name="wikiCache">The cache in which to store wiki data.</param>
         /// <param name="modCache">The cache in which to store mod metadata.</param>
-        /// <param name="configProvider">The config settings for mod update checks.</param>
+        /// <param name="config">The config settings for mod update checks.</param>
         /// <param name="chucklefish">The Chucklefish API client.</param>
         /// <param name="curseForge">The CurseForge API client.</param>
         /// <param name="github">The GitHub API client.</param>
         /// <param name="modDrop">The ModDrop API client.</param>
         /// <param name="nexus">The Nexus API client.</param>
-        public ModsApiController(IHostingEnvironment environment, IWikiCacheRepository wikiCache, IModCacheRepository modCache, IOptions<ModUpdateCheckConfig> configProvider, IChucklefishClient chucklefish, ICurseForgeClient curseForge, IGitHubClient github, IModDropClient modDrop, INexusClient nexus)
+        public ModsApiController(IWebHostEnvironment environment, IWikiCacheRepository wikiCache, IModCacheRepository modCache, IOptions<ModUpdateCheckConfig> config, IChucklefishClient chucklefish, ICurseForgeClient curseForge, IGitHubClient github, IModDropClient modDrop, INexusClient nexus)
         {
             this.ModDatabase = new ModToolkit().GetModDatabase(Path.Combine(environment.WebRootPath, "SMAPI.metadata.json"));
-            ModUpdateCheckConfig config = configProvider.Value;
 
             this.WikiCache = wikiCache;
             this.ModCache = modCache;
-            this.SuccessCacheMinutes = config.SuccessCacheMinutes;
-            this.ErrorCacheMinutes = config.ErrorCacheMinutes;
-            this.Repositories =
-                new IModRepository[]
-                {
-                    new ChucklefishRepository(chucklefish),
-                    new CurseForgeRepository(curseForge),
-                    new GitHubRepository(github),
-                    new ModDropRepository(modDrop),
-                    new NexusRepository(nexus)
-                }
-                .ToDictionary(p => p.VendorKey);
+            this.Config = config;
+            this.ModSites = new ModSiteManager(new IModSiteClient[] { chucklefish, curseForge, github, modDrop, nexus });
         }
 
         /// <summary>Fetch version metadata for the given mods.</summary>
@@ -95,7 +82,7 @@ namespace StardewModdingAPI.Web.Controllers
                 return new ModEntryModel[0];
 
             // fetch wiki data
-            WikiModEntry[] wikiData = this.WikiCache.GetWikiMods().Select(p => p.GetModel()).ToArray();
+            WikiModEntry[] wikiData = this.WikiCache.GetWikiMods().Select(p => p.Data).ToArray();
             IDictionary<string, ModEntryModel> mods = new Dictionary<string, ModEntryModel>(StringComparer.CurrentCultureIgnoreCase);
             foreach (ModSearchEntryModel mod in model.Mods)
             {
@@ -131,8 +118,10 @@ namespace StardewModdingAPI.Web.Controllers
         {
             // cross-reference data
             ModDataRecord record = this.ModDatabase.Get(search.ID);
-            WikiModEntry wikiEntry = wikiData.FirstOrDefault(entry => entry.ID.Contains(search.ID.Trim(), StringComparer.InvariantCultureIgnoreCase));
+            WikiModEntry wikiEntry = wikiData.FirstOrDefault(entry => entry.ID.Contains(search.ID.Trim(), StringComparer.OrdinalIgnoreCase));
             UpdateKey[] updateKeys = this.GetUpdateKeys(search.UpdateKeys, record, wikiEntry).ToArray();
+            ModOverrideConfig overrides = this.Config.Value.ModOverrides.FirstOrDefault(p => p.ID.Equals(search.ID?.Trim(), StringComparison.OrdinalIgnoreCase));
+            bool allowNonStandardVersions = overrides?.AllowNonStandardVersions ?? false;
 
             // get latest versions
             ModEntryModel result = new ModEntryModel { ID = search.ID };
@@ -146,50 +135,28 @@ namespace StardewModdingAPI.Web.Controllers
                 // validate update key
                 if (!updateKey.LooksValid)
                 {
-                    errors.Add($"The update key '{updateKey}' isn't in a valid format. It should contain the site key and mod ID like 'Nexus:541'.");
+                    errors.Add($"The update key '{updateKey}' isn't in a valid format. It should contain the site key and mod ID like 'Nexus:541', with an optional subkey like 'Nexus:541@subkey'.");
                     continue;
                 }
 
                 // fetch data
-                ModInfoModel data = await this.GetInfoForUpdateKeyAsync(updateKey);
-                if (data.Error != null)
+                ModInfoModel data = await this.GetInfoForUpdateKeyAsync(updateKey, allowNonStandardVersions, wikiEntry?.MapRemoteVersions);
+                if (data.Status != RemoteModStatus.Ok)
                 {
-                    errors.Add(data.Error);
+                    errors.Add(data.Error ?? data.Status.ToString());
                     continue;
                 }
 
-                // handle main version
-                if (data.Version != null)
-                {
-                    ISemanticVersion version = this.GetMappedVersion(data.Version, wikiEntry?.MapRemoteVersions);
-                    if (version == null)
-                    {
-                        errors.Add($"The update key '{updateKey}' matches a mod with invalid semantic version '{data.Version}'.");
-                        continue;
-                    }
-
-                    if (this.IsNewer(version, main?.Version))
-                        main = new ModEntryVersionModel(version, data.Url);
-                }
-
-                // handle optional version
-                if (data.PreviewVersion != null)
-                {
-                    ISemanticVersion version = this.GetMappedVersion(data.PreviewVersion, wikiEntry?.MapRemoteVersions);
-                    if (version == null)
-                    {
-                        errors.Add($"The update key '{updateKey}' matches a mod with invalid optional semantic version '{data.PreviewVersion}'.");
-                        continue;
-                    }
-
-                    if (this.IsNewer(version, optional?.Version))
-                        optional = new ModEntryVersionModel(version, data.Url);
-                }
+                // handle versions
+                if (this.IsNewer(data.Version, main?.Version))
+                    main = new ModEntryVersionModel(data.Version, data.Url);
+                if (this.IsNewer(data.PreviewVersion, optional?.Version))
+                    optional = new ModEntryVersionModel(data.PreviewVersion, data.Url);
             }
 
             // get unofficial version
             if (wikiEntry?.Compatibility.UnofficialVersion != null && this.IsNewer(wikiEntry.Compatibility.UnofficialVersion, main?.Version) && this.IsNewer(wikiEntry.Compatibility.UnofficialVersion, optional?.Version))
-                unofficial = new ModEntryVersionModel(wikiEntry.Compatibility.UnofficialVersion, $"{this.Url.PlainAction("Index", "Mods")}#{wikiEntry.Anchor}");
+                unofficial = new ModEntryVersionModel(wikiEntry.Compatibility.UnofficialVersion, $"{this.Url.PlainAction("Index", "Mods", absoluteUrl: true)}#{wikiEntry.Anchor}");
 
             // get unofficial version for beta
             if (wikiEntry?.HasBetaInfo == true)
@@ -199,7 +166,7 @@ namespace StardewModdingAPI.Web.Controllers
                     if (wikiEntry.BetaCompatibility.UnofficialVersion != null)
                     {
                         unofficialForBeta = (wikiEntry.BetaCompatibility.UnofficialVersion != null && this.IsNewer(wikiEntry.BetaCompatibility.UnofficialVersion, main?.Version) && this.IsNewer(wikiEntry.BetaCompatibility.UnofficialVersion, optional?.Version))
-                            ? new ModEntryVersionModel(wikiEntry.BetaCompatibility.UnofficialVersion, $"{this.Url.PlainAction("Index", "Mods")}#{wikiEntry.Anchor}")
+                            ? new ModEntryVersionModel(wikiEntry.BetaCompatibility.UnofficialVersion, $"{this.Url.PlainAction("Index", "Mods", absoluteUrl: true)}#{wikiEntry.Anchor}")
                             : null;
                     }
                     else
@@ -215,25 +182,25 @@ namespace StardewModdingAPI.Web.Controllers
             }
 
             // special cases
-            if (result.ID == "Pathoschild.SMAPI")
+            if (overrides?.SetUrl != null)
             {
                 if (main != null)
-                    main.Url = "https://smapi.io/";
+                    main.Url = overrides.SetUrl;
                 if (optional != null)
-                    optional.Url = "https://smapi.io/";
+                    optional.Url = overrides.SetUrl;
             }
 
             // get recommended update (if any)
-            ISemanticVersion installedVersion = this.GetMappedVersion(search.InstalledVersion?.ToString(), wikiEntry?.MapLocalVersions);
+            ISemanticVersion installedVersion = this.ModSites.GetMappedVersion(search.InstalledVersion?.ToString(), wikiEntry?.MapLocalVersions, allowNonStandard: allowNonStandardVersions);
             if (apiVersion != null && installedVersion != null)
             {
                 // get newer versions
                 List<ModEntryVersionModel> updates = new List<ModEntryVersionModel>();
                 if (this.IsRecommendedUpdate(installedVersion, main?.Version, useBetaChannel: true))
                     updates.Add(main);
-                if (this.IsRecommendedUpdate(installedVersion, optional?.Version, useBetaChannel: installedVersion.IsPrerelease()))
+                if (this.IsRecommendedUpdate(installedVersion, optional?.Version, useBetaChannel: installedVersion.IsPrerelease() || search.IsBroken))
                     updates.Add(optional);
-                if (this.IsRecommendedUpdate(installedVersion, unofficial?.Version, useBetaChannel: search.IsBroken))
+                if (this.IsRecommendedUpdate(installedVersion, unofficial?.Version, useBetaChannel: true))
                     updates.Add(unofficial);
                 if (this.IsRecommendedUpdate(installedVersion, unofficialForBeta?.Version, useBetaChannel: apiVersion.IsPrerelease()))
                     updates.Add(unofficialForBeta);
@@ -283,29 +250,28 @@ namespace StardewModdingAPI.Web.Controllers
 
         /// <summary>Get the mod info for an update key.</summary>
         /// <param name="updateKey">The namespaced update key.</param>
-        private async Task<ModInfoModel> GetInfoForUpdateKeyAsync(UpdateKey updateKey)
+        /// <param name="allowNonStandardVersions">Whether to allow non-standard versions.</param>
+        /// <param name="mapRemoteVersions">Maps remote versions to a semantic version for update checks.</param>
+        private async Task<ModInfoModel> GetInfoForUpdateKeyAsync(UpdateKey updateKey, bool allowNonStandardVersions, IDictionary<string, string> mapRemoteVersions)
         {
-            // get mod
-            if (!this.ModCache.TryGetMod(updateKey.Repository, updateKey.ID, out CachedMod mod) || this.ModCache.IsStale(mod.LastUpdated, mod.FetchStatus == RemoteModStatus.TemporaryError ? this.ErrorCacheMinutes : this.SuccessCacheMinutes))
+            // get mod page
+            IModPage page;
             {
-                // get site
-                if (!this.Repositories.TryGetValue(updateKey.Repository, out IModRepository repository))
-                    return new ModInfoModel().SetError(RemoteModStatus.DoesNotExist, $"There's no mod site with key '{updateKey.Repository}'. Expected one of [{string.Join(", ", this.Repositories.Keys)}].");
+                bool isCached =
+                    this.ModCache.TryGetMod(updateKey.Site, updateKey.ID, out Cached<IModPage> cachedMod)
+                    && !this.ModCache.IsStale(cachedMod.LastUpdated, cachedMod.Data.Status == RemoteModStatus.TemporaryError ? this.Config.Value.ErrorCacheMinutes : this.Config.Value.SuccessCacheMinutes);
 
-                // fetch mod
-                ModInfoModel result = await repository.GetModInfoAsync(updateKey.ID);
-                if (result.Error == null)
+                if (isCached)
+                    page = cachedMod.Data;
+                else
                 {
-                    if (result.Version == null)
-                        result.SetError(RemoteModStatus.InvalidData, $"The update key '{updateKey}' matches a mod with no version number.");
-                    else if (!SemanticVersion.TryParse(result.Version, out _))
-                        result.SetError(RemoteModStatus.InvalidData, $"The update key '{updateKey}' matches a mod with invalid semantic version '{result.Version}'.");
+                    page = await this.ModSites.GetModPageAsync(updateKey);
+                    this.ModCache.SaveMod(updateKey.Site, updateKey.ID, page);
                 }
-
-                // cache mod
-                this.ModCache.SaveMod(repository.VendorKey, updateKey.ID, result, out mod);
             }
-            return mod.GetModel();
+
+            // get version info
+            return this.ModSites.GetPageVersions(page, updateKey.Subkey, allowNonStandardVersions, mapRemoteVersions);
         }
 
         /// <summary>Get update keys based on the available mod metadata, while maintaining the precedence order.</summary>
@@ -314,88 +280,79 @@ namespace StardewModdingAPI.Web.Controllers
         /// <param name="entry">The mod's entry in the wiki list.</param>
         private IEnumerable<UpdateKey> GetUpdateKeys(string[] specifiedKeys, ModDataRecord record, WikiModEntry entry)
         {
-            IEnumerable<string> GetRaw()
+            // get unique update keys
+            List<UpdateKey> updateKeys = this.GetUnfilteredUpdateKeys(specifiedKeys, record, entry)
+                .Select(UpdateKey.Parse)
+                .Distinct()
+                .ToList();
+
+            // apply remove overrides from wiki
             {
-                // specified update keys
-                if (specifiedKeys != null)
-                {
-                    foreach (string key in specifiedKeys)
-                        yield return key?.Trim();
-                }
-
-                // default update key
-                string defaultKey = record?.GetDefaultUpdateKey();
-                if (defaultKey != null)
-                    yield return defaultKey;
-
-                // wiki metadata
-                if (entry != null)
-                {
-                    if (entry.NexusID.HasValue)
-                        yield return $"{ModRepositoryKey.Nexus}:{entry.NexusID}";
-                    if (entry.ModDropID.HasValue)
-                        yield return $"{ModRepositoryKey.ModDrop}:{entry.ModDropID}";
-                    if (entry.CurseForgeID.HasValue)
-                        yield return $"{ModRepositoryKey.CurseForge}:{entry.CurseForgeID}";
-                    if (entry.ChucklefishID.HasValue)
-                        yield return $"{ModRepositoryKey.Chucklefish}:{entry.ChucklefishID}";
-                }
+                var removeKeys = new HashSet<UpdateKey>(
+                    from key in entry?.ChangeUpdateKeys ?? new string[0]
+                    where key.StartsWith('-')
+                    select UpdateKey.Parse(key.Substring(1))
+                );
+                if (removeKeys.Any())
+                    updateKeys.RemoveAll(removeKeys.Contains);
             }
 
-            HashSet<UpdateKey> seen = new HashSet<UpdateKey>();
-            foreach (string rawKey in GetRaw())
+            // if the list has both an update key (like "Nexus:2400") and subkey (like "Nexus:2400@subkey") for the same page, the subkey takes priority
             {
-                if (string.IsNullOrWhiteSpace(rawKey))
-                    continue;
+                var removeKeys = new HashSet<UpdateKey>();
+                foreach (var key in updateKeys)
+                {
+                    if (key.Subkey != null)
+                        removeKeys.Add(new UpdateKey(key.Site, key.ID, null));
+                }
+                if (removeKeys.Any())
+                    updateKeys.RemoveAll(removeKeys.Contains);
+            }
 
-                UpdateKey key = UpdateKey.Parse(rawKey);
-                if (seen.Add(key))
+            return updateKeys;
+        }
+
+        /// <summary>Get every available update key based on the available mod metadata, including duplicates and keys which should be filtered.</summary>
+        /// <param name="specifiedKeys">The specified update keys.</param>
+        /// <param name="record">The mod's entry in SMAPI's internal database.</param>
+        /// <param name="entry">The mod's entry in the wiki list.</param>
+        private IEnumerable<string> GetUnfilteredUpdateKeys(string[] specifiedKeys, ModDataRecord record, WikiModEntry entry)
+        {
+            // specified update keys
+            foreach (string key in specifiedKeys ?? Array.Empty<string>())
+            {
+                if (!string.IsNullOrWhiteSpace(key))
+                    yield return key.Trim();
+            }
+
+            // default update key
+            {
+                string defaultKey = record?.GetDefaultUpdateKey();
+                if (!string.IsNullOrWhiteSpace(defaultKey))
+                    yield return defaultKey;
+            }
+
+            // wiki metadata
+            if (entry != null)
+            {
+                if (entry.NexusID.HasValue)
+                    yield return UpdateKey.GetString(ModSiteKey.Nexus, entry.NexusID.ToString());
+                if (entry.ModDropID.HasValue)
+                    yield return UpdateKey.GetString(ModSiteKey.ModDrop, entry.ModDropID.ToString());
+                if (entry.CurseForgeID.HasValue)
+                    yield return UpdateKey.GetString(ModSiteKey.CurseForge, entry.CurseForgeID.ToString());
+                if (entry.ChucklefishID.HasValue)
+                    yield return UpdateKey.GetString(ModSiteKey.Chucklefish, entry.ChucklefishID.ToString());
+            }
+
+            // overrides from wiki
+            foreach (string key in entry?.ChangeUpdateKeys ?? Array.Empty<string>())
+            {
+                if (key.StartsWith('+'))
+                    yield return key.Substring(1);
+                else if (!key.StartsWith("-"))
                     yield return key;
             }
-        }
-
-        /// <summary>Get a semantic local version for update checks.</summary>
-        /// <param name="version">The version to parse.</param>
-        /// <param name="map">A map of version replacements.</param>
-        private ISemanticVersion GetMappedVersion(string version, IDictionary<string, string> map)
-        {
-            // try mapped version
-            string rawNewVersion = this.GetRawMappedVersion(version, map);
-            if (SemanticVersion.TryParse(rawNewVersion, out ISemanticVersion parsedNew))
-                return parsedNew;
-
-            // return original version
-            return SemanticVersion.TryParse(version, out ISemanticVersion parsedOld)
-                ? parsedOld
-                : null;
-        }
-
-        /// <summary>Get a semantic local version for update checks.</summary>
-        /// <param name="version">The version to map.</param>
-        /// <param name="map">A map of version replacements.</param>
-        private string GetRawMappedVersion(string version, IDictionary<string, string> map)
-        {
-            if (version == null || map == null || !map.Any())
-                return version;
-
-            // match exact raw version
-            if (map.ContainsKey(version))
-                return map[version];
-
-            // match parsed version
-            if (SemanticVersion.TryParse(version, out ISemanticVersion parsed))
-            {
-                if (map.ContainsKey(parsed.ToString()))
-                    return map[parsed.ToString()];
-
-                foreach (var pair in map)
-                {
-                    if (SemanticVersion.TryParse(pair.Key, out ISemanticVersion target) && parsed.Equals(target) && SemanticVersion.TryParse(pair.Value, out ISemanticVersion newVersion))
-                        return newVersion.ToString();
-                }
-            }
-
-            return version;
         }
     }
 }

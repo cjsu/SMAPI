@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using Microsoft.Xna.Framework.Graphics;
 using StardewModdingAPI.Framework.Events;
 using StardewModdingAPI.Framework.Reflection;
 using StardewValley;
+using StardewValley.Menus;
 
 namespace StardewModdingAPI.Framework
 {
@@ -154,6 +156,22 @@ namespace StardewModdingAPI.Framework
         }
 
         /****
+        ** IActiveClickableMenu
+        ****/
+        /// <summary>Get a string representation of the menu chain to the given menu (including the specified menu), in parent to child order.</summary>
+        /// <param name="menu">The menu whose chain to get.</param>
+        public static string GetMenuChainLabel(this IClickableMenu menu)
+        {
+            static IEnumerable<IClickableMenu> GetAncestors(IClickableMenu menu)
+            {
+                for (; menu != null; menu = menu.GetParentMenu())
+                    yield return menu;
+            }
+
+            return string.Join(" > ", GetAncestors(menu).Reverse().Select(p => p.GetType().FullName));
+        }
+
+        /****
         ** Sprite batch
         ****/
         /// <summary>Get whether the sprite batch is between a begin and end pair.</summary>
@@ -164,9 +182,9 @@ namespace StardewModdingAPI.Framework
             // get field name
             const string fieldName =
 #if SMAPI_FOR_WINDOWS
-            "inBeginEndPair";
+                "inBeginEndPair";
 #else
-            "_beginCalled";
+                "_beginCalled";
 #endif
 
             // get result

@@ -23,7 +23,7 @@ namespace StardewModdingAPI.Framework.Reflection
         /*********
         ** Accessors
         *********/
-        /// <summary>The reflection metadata.</summary>
+        /// <inheritdoc />
         public PropertyInfo PropertyInfo { get; }
 
 
@@ -61,7 +61,7 @@ namespace StardewModdingAPI.Framework.Reflection
                 this.SetMethod = (Action<TValue>)Delegate.CreateDelegate(typeof(Action<TValue>), obj, this.PropertyInfo.SetMethod);
         }
 
-        /// <summary>Get the property value.</summary>
+        /// <inheritdoc />
         public TValue GetValue()
         {
             if (this.GetMethod == null)
@@ -81,8 +81,7 @@ namespace StardewModdingAPI.Framework.Reflection
             }
         }
 
-        /// <summary>Set the property value.</summary>
-        //// <param name="value">The value to set.</param>
+        /// <inheritdoc />
         public void SetValue(TValue value)
         {
             if (this.SetMethod == null)

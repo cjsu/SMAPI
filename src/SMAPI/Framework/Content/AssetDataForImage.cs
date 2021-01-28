@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using StardewValley;
 
 namespace StardewModdingAPI.Framework.Content
 {
@@ -27,13 +28,7 @@ namespace StardewModdingAPI.Framework.Content
         public AssetDataForImage(string locale, string assetName, Texture2D data, Func<string, string> getNormalizedPath, Action<Texture2D> onDataReplaced)
             : base(locale, assetName, data, getNormalizedPath, onDataReplaced) { }
 
-        /// <summary>Overwrite part of the image.</summary>
-        /// <param name="source">The image to patch into the content.</param>
-        /// <param name="sourceArea">The part of the <paramref name="source"/> to copy (or <c>null</c> to take the whole texture). This must be within the bounds of the <paramref name="source"/> texture.</param>
-        /// <param name="targetArea">The part of the content to patch (or <c>null</c> to patch the whole texture). The original content within this area will be erased. This must be within the bounds of the existing spritesheet.</param>
-        /// <param name="patchMode">Indicates how an image should be patched.</param>
-        /// <exception cref="ArgumentNullException">One of the arguments is null.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">The <paramref name="targetArea"/> is outside the bounds of the spritesheet.</exception>
+        /// <inheritdoc />
         public void PatchImage(Texture2D source, Rectangle? sourceArea = null, Rectangle? targetArea = null, PatchMode patchMode = PatchMode.Replace)
         {
             // get texture
@@ -101,6 +96,19 @@ namespace StardewModdingAPI.Framework.Content
 
             // patch target texture
             target.SetData(0, targetArea, sourceData, 0, pixelCount);
+        }
+
+        /// <inheritdoc />
+        public bool ExtendImage(int minWidth, int minHeight)
+        {
+            if (this.Data.Width >= minWidth && this.Data.Height >= minHeight)
+                return false;
+
+            Texture2D original = this.Data;
+            Texture2D texture = new Texture2D(Game1.graphics.GraphicsDevice, Math.Max(original.Width, minWidth), Math.Max(original.Height, minHeight));
+            this.ReplaceWith(texture);
+            this.PatchImage(original);
+            return true;
         }
     }
 }

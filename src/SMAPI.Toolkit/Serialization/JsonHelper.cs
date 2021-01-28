@@ -132,5 +132,11 @@ namespace StardewModdingAPI.Toolkit.Serialization
         {
             return JsonConvert.SerializeObject(model, formatting, this.JsonSettings);
         }
+
+        /// <summary>Get a low-level JSON serializer matching the <see cref="JsonSettings"/>.</summary>
+        public JsonSerializer GetSerializer()
+        {
+            return JsonSerializer.CreateDefault(this.JsonSettings);
+        }
     }
 }

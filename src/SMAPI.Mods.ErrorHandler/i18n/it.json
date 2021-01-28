@@ -1,0 +1,4 @@
+{
+    // warning messages
+    "warn.invalid-content-removed": "Contenuto non valido rimosso per prevenire un crash (Guarda la console di SMAPI per maggiori informazioni)."
+}

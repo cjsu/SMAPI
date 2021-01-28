@@ -12,6 +12,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ConsoleWriting\ColorfulConsoleWriter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ConsoleWriting\ColorSchemeConfig.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ConsoleWriting\ConsoleLogLevel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ConsoleWriting\IConsoleWriter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ConsoleWriting\MonitorColorScheme.cs" />
   </ItemGroup>
 </Project>

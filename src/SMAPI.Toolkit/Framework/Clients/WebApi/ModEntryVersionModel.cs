@@ -1,3 +1,6 @@
+using Newtonsoft.Json;
+using StardewModdingAPI.Toolkit.Serialization.Converters;
+
 namespace StardewModdingAPI.Toolkit.Framework.Clients.WebApi
 {
     /// <summary>Metadata about a version.</summary>
@@ -7,6 +10,7 @@ namespace StardewModdingAPI.Toolkit.Framework.Clients.WebApi
         ** Accessors
         *********/
         /// <summary>The version number.</summary>
+        [JsonConverter(typeof(NonStandardSemanticVersionConverter))]
         public ISemanticVersion Version { get; set; }
 
         /// <summary>The mod page URL.</summary>

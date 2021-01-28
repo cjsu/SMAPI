@@ -1,4 +1,4 @@
-﻿namespace StardewModdingAPI
+namespace StardewModdingAPI
 {
     /// <summary>Indicates how an image should be patched.</summary>
     public enum PatchMode

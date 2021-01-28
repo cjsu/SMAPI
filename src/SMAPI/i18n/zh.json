@@ -1,3 +1,6 @@
 {
-    "warn.invalid-content-removed": "非法内容已移除以防游戏闪退（查看SMAPI控制台获得更多信息）"
+    // short date format for SDate
+    // tokens: {{day}} (like 15), {{season}} (like Spring), {{seasonLowercase}} (like spring), {{year}} (like 2)
+    "generic.date": "{{season}}{{day}}日",
+    "generic.date-with-year": "第{{year}}年{{season}}{{day}}日"
 }

@@ -2,6 +2,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using StardewModdingAPI.Web.Framework.Caching;
 using StardewModdingAPI.Web.Framework.Caching.Wiki;
 using StardewModdingAPI.Web.Framework.ConfigModels;
 using StardewModdingAPI.Web.ViewModels;
@@ -51,16 +52,16 @@ namespace StardewModdingAPI.Web.Controllers
         public ModListModel FetchData()
         {
             // fetch cached data
-            if (!this.Cache.TryGetWikiMetadata(out CachedWikiMetadata metadata))
+            if (!this.Cache.TryGetWikiMetadata(out Cached<WikiMetadata> metadata))
                 return new ModListModel();
 
             // build model
             return new ModListModel(
-                stableVersion: metadata.StableVersion,
-                betaVersion: metadata.BetaVersion,
+                stableVersion: metadata.Data.StableVersion,
+                betaVersion: metadata.Data.BetaVersion,
                 mods: this.Cache
                     .GetWikiMods()
-                    .Select(mod => new ModModel(mod.GetModel()))
+                    .Select(mod => new ModModel(mod.Data))
                     .OrderBy(p => Regex.Replace(p.Name.ToLower(), "[^a-z0-9]", "")), // ignore case, spaces, and special characters when sorting
                 lastUpdated: metadata.LastUpdated,
                 isStale: this.Cache.IsStale(metadata.LastUpdated, this.StaleMinutes)

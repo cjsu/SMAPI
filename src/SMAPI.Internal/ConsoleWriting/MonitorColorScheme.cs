@@ -10,6 +10,9 @@ namespace StardewModdingAPI.Internal.ConsoleWriting
         DarkBackground,
 
         /// <summary>Use darker text colors that look better on a white or light background.</summary>
-        LightBackground
+        LightBackground,
+
+        /// <summary>Disable console color.</summary>
+        None
     }
 }

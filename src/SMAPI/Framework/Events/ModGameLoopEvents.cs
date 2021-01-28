@@ -12,99 +12,98 @@ namespace StardewModdingAPI.Framework.Events
         /// <summary>Raised after the game is launched, right before the first update tick.</summary>
         public event EventHandler<GameLaunchedEventArgs> GameLaunched
         {
-            add => this.EventManager.GameLaunched.Add(value);
+            add => this.EventManager.GameLaunched.Add(value, this.Mod);
             remove => this.EventManager.GameLaunched.Remove(value);
         }
 
         /// <summary>Raised before the game performs its overall update tick (≈60 times per second).</summary>
         public event EventHandler<UpdateTickingEventArgs> UpdateTicking
         {
-            add => this.EventManager.UpdateTicking.Add(value);
+            add => this.EventManager.UpdateTicking.Add(value, this.Mod);
             remove => this.EventManager.UpdateTicking.Remove(value);
         }
 
         /// <summary>Raised after the game performs its overall update tick (≈60 times per second).</summary>
         public event EventHandler<UpdateTickedEventArgs> UpdateTicked
         {
-            add => this.EventManager.UpdateTicked.Add(value);
+            add => this.EventManager.UpdateTicked.Add(value, this.Mod);
             remove => this.EventManager.UpdateTicked.Remove(value);
         }
 
         /// <summary>Raised once per second before the game state is updated.</summary>
         public event EventHandler<OneSecondUpdateTickingEventArgs> OneSecondUpdateTicking
         {
-            add => this.EventManager.OneSecondUpdateTicking.Add(value);
+            add => this.EventManager.OneSecondUpdateTicking.Add(value, this.Mod);
             remove => this.EventManager.OneSecondUpdateTicking.Remove(value);
         }
 
         /// <summary>Raised once per second after the game state is updated.</summary>
         public event EventHandler<OneSecondUpdateTickedEventArgs> OneSecondUpdateTicked
         {
-            add => this.EventManager.OneSecondUpdateTicked.Add(value);
+            add => this.EventManager.OneSecondUpdateTicked.Add(value, this.Mod);
             remove => this.EventManager.OneSecondUpdateTicked.Remove(value);
         }
 
         /// <summary>Raised before the game creates a new save file.</summary>
         public event EventHandler<SaveCreatingEventArgs> SaveCreating
         {
-            add => this.EventManager.SaveCreating.Add(value);
+            add => this.EventManager.SaveCreating.Add(value, this.Mod);
             remove => this.EventManager.SaveCreating.Remove(value);
         }
 
         /// <summary>Raised after the game finishes creating the save file.</summary>
         public event EventHandler<SaveCreatedEventArgs> SaveCreated
         {
-            add => this.EventManager.SaveCreated.Add(value);
+            add => this.EventManager.SaveCreated.Add(value, this.Mod);
             remove => this.EventManager.SaveCreated.Remove(value);
         }
 
         /// <summary>Raised before the game begins writes data to the save file.</summary>
         public event EventHandler<SavingEventArgs> Saving
         {
-            add => this.EventManager.Saving.Add(value);
+            add => this.EventManager.Saving.Add(value, this.Mod);
             remove => this.EventManager.Saving.Remove(value);
         }
 
         /// <summary>Raised after the game finishes writing data to the save file.</summary>
         public event EventHandler<SavedEventArgs> Saved
         {
-            add => this.EventManager.Saved.Add(value);
+            add => this.EventManager.Saved.Add(value, this.Mod);
             remove => this.EventManager.Saved.Remove(value);
         }
 
         /// <summary>Raised after the player loads a save slot and the world is initialized.</summary>
         public event EventHandler<SaveLoadedEventArgs> SaveLoaded
         {
-            add => this.EventManager.SaveLoaded.Add(value);
+            add => this.EventManager.SaveLoaded.Add(value, this.Mod);
             remove => this.EventManager.SaveLoaded.Remove(value);
         }
 
         /// <summary>Raised after the game begins a new day (including when the player loads a save).</summary>
         public event EventHandler<DayStartedEventArgs> DayStarted
         {
-            add => this.EventManager.DayStarted.Add(value);
+            add => this.EventManager.DayStarted.Add(value, this.Mod);
             remove => this.EventManager.DayStarted.Remove(value);
         }
 
         /// <summary>Raised before the game ends the current day. This happens before it starts setting up the next day and before <see cref="IGameLoopEvents.Saving"/>.</summary>
         public event EventHandler<DayEndingEventArgs> DayEnding
         {
-            add => this.EventManager.DayEnding.Add(value);
+            add => this.EventManager.DayEnding.Add(value, this.Mod);
             remove => this.EventManager.DayEnding.Remove(value);
         }
 
         /// <summary>Raised after the in-game clock time changes.</summary>
         public event EventHandler<TimeChangedEventArgs> TimeChanged
         {
-
-            add => this.EventManager.TimeChanged.Add(value);
+            add => this.EventManager.TimeChanged.Add(value, this.Mod);
             remove => this.EventManager.TimeChanged.Remove(value);
         }
 
         /// <summary>Raised after the game returns to the title screen.</summary>
         public event EventHandler<ReturnedToTitleEventArgs> ReturnedToTitle
         {
-            add => this.EventManager.ReturnedToTitle.Add(value);
+            add => this.EventManager.ReturnedToTitle.Add(value, this.Mod);
             remove => this.EventManager.ReturnedToTitle.Remove(value);
         }
 

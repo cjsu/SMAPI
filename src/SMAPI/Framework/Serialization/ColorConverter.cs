@@ -35,7 +35,7 @@ namespace StardewModdingAPI.Framework.Serialization
         {
             string[] parts = str.Split(',');
             if (parts.Length != 4)
-                throw new SParseException($"Can't parse {typeof(Color).Name} from invalid value '{str}' (path: {path}).");
+                throw new SParseException($"Can't parse {nameof(Color)} from invalid value '{str}' (path: {path}).");
 
             int r = Convert.ToInt32(parts[0]);
             int g = Convert.ToInt32(parts[1]);

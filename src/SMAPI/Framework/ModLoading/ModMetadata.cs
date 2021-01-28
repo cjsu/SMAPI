@@ -16,55 +16,61 @@ namespace StardewModdingAPI.Framework.ModLoading
         /*********
         ** Accessors
         *********/
-        /// <summary>The mod's display name.</summary>
+        /// <inheritdoc />
         public string DisplayName { get; }
 
-        /// <summary>The root path containing mods.</summary>
+        /// <inheritdoc />
         public string RootPath { get; }
 
-        /// <summary>The mod's full directory path within the <see cref="RootPath"/>.</summary>
+        /// <inheritdoc />
         public string DirectoryPath { get; }
 
-        /// <summary>The <see cref="DirectoryPath"/> relative to the <see cref="RootPath"/>.</summary>
+        /// <inheritdoc />
         public string RelativeDirectoryPath { get; }
 
-        /// <summary>The mod manifest.</summary>
+        /// <inheritdoc />
         public IManifest Manifest { get; }
 
-        /// <summary>Metadata about the mod from SMAPI's internal data (if any).</summary>
+        /// <inheritdoc />
         public ModDataRecordVersionedFields DataRecord { get; }
 
-        /// <summary>The metadata resolution status.</summary>
+        /// <inheritdoc />
         public ModMetadataStatus Status { get; private set; }
 
-        /// <summary>Indicates non-error issues with the mod.</summary>
+        /// <inheritdoc />
+        public ModFailReason? FailReason { get; private set; }
+
+        /// <inheritdoc />
         public ModWarning Warnings { get; private set; }
 
-        /// <summary>The reason the metadata is invalid, if any.</summary>
+        /// <inheritdoc />
         public string Error { get; private set; }
 
-        /// <summary>Whether the mod folder should be ignored. This is <c>true</c> if it was found within a folder whose name starts with a dot.</summary>
+        /// <inheritdoc />
+        public string ErrorDetails { get; private set; }
+
+        /// <inheritdoc />
         public bool IsIgnored { get; }
 
-        /// <summary>The mod instance (if loaded and <see cref="IsContentPack"/> is false).</summary>
+        /// <inheritdoc />
         public IMod Mod { get; private set; }
 
-        /// <summary>The content pack instance (if loaded and <see cref="IsContentPack"/> is true).</summary>
+        /// <inheritdoc />
         public IContentPack ContentPack { get; private set; }
 
-        /// <summary>The translations for this mod (if loaded).</summary>
+        /// <inheritdoc />
         public TranslationHelper Translations { get; private set; }
 
-        /// <summary>Writes messages to the console and log file as this mod.</summary>
+        /// <inheritdoc />
         public IMonitor Monitor { get; private set; }
 
-        /// <summary>The mod-provided API (if any).</summary>
+        /// <inheritdoc />
         public object Api { get; private set; }
 
-        /// <summary>The update-check metadata for this mod (if any).</summary>
+        /// <inheritdoc />
         public ModEntryModel UpdateCheckData { get; private set; }
 
-        /// <summary>Whether the mod is a content pack.</summary>
+        /// <inheritdoc />
         public bool IsContentPack => this.Manifest?.ContentPackFor != null;
 
 
@@ -89,28 +95,32 @@ namespace StardewModdingAPI.Framework.ModLoading
             this.IsIgnored = isIgnored;
         }
 
-        /// <summary>Set the mod status.</summary>
-        /// <param name="status">The metadata resolution status.</param>
-        /// <param name="error">The reason the metadata is invalid, if any.</param>
-        /// <returns>Return the instance for chaining.</returns>
-        public IModMetadata SetStatus(ModMetadataStatus status, string error = null)
+        /// <inheritdoc />
+        public IModMetadata SetStatusFound()
         {
-            this.Status = status;
-            this.Error = error;
+            this.SetStatus(ModMetadataStatus.Found, ModFailReason.Incompatible, null);
+            this.FailReason = null;
             return this;
         }
 
-        /// <summary>Set a warning flag for the mod.</summary>
-        /// <param name="warning">The warning to set.</param>
+        /// <inheritdoc />
+        public IModMetadata SetStatus(ModMetadataStatus status, ModFailReason reason, string error, string errorDetails = null)
+        {
+            this.Status = status;
+            this.FailReason = reason;
+            this.Error = error;
+            this.ErrorDetails = errorDetails;
+            return this;
+        }
+
+        /// <inheritdoc />
         public IModMetadata SetWarning(ModWarning warning)
         {
             this.Warnings |= warning;
             return this;
         }
 
-        /// <summary>Set the mod instance.</summary>
-        /// <param name="mod">The mod instance to set.</param>
-        /// <param name="translations">The translations for this mod (if loaded).</param>
+        /// <inheritdoc />
         public IModMetadata SetMod(IMod mod, TranslationHelper translations)
         {
             if (this.ContentPack != null)
@@ -122,10 +132,7 @@ namespace StardewModdingAPI.Framework.ModLoading
             return this;
         }
 
-        /// <summary>Set the mod instance.</summary>
-        /// <param name="contentPack">The contentPack instance to set.</param>
-        /// <param name="monitor">Writes messages to the console and log file.</param>
-        /// <param name="translations">The translations for this mod (if loaded).</param>
+        /// <inheritdoc />
         public IModMetadata SetMod(IContentPack contentPack, IMonitor monitor, TranslationHelper translations)
         {
             if (this.Mod != null)
@@ -137,29 +144,27 @@ namespace StardewModdingAPI.Framework.ModLoading
             return this;
         }
 
-        /// <summary>Set the mod-provided API instance.</summary>
-        /// <param name="api">The mod-provided API.</param>
+        /// <inheritdoc />
         public IModMetadata SetApi(object api)
         {
             this.Api = api;
             return this;
         }
 
-        /// <summary>Set the update-check metadata for this mod.</summary>
-        /// <param name="data">The update-check metadata.</param>
+        /// <inheritdoc />
         public IModMetadata SetUpdateData(ModEntryModel data)
         {
             this.UpdateCheckData = data;
             return this;
         }
 
-        /// <summary>Whether the mod manifest was loaded (regardless of whether the mod itself was loaded).</summary>
+        /// <inheritdoc />
         public bool HasManifest()
         {
             return this.Manifest != null;
         }
 
-        /// <summary>Whether the mod has an ID (regardless of whether the ID is valid or the mod itself was loaded).</summary>
+        /// <inheritdoc />
         public bool HasID()
         {
             return
@@ -167,17 +172,15 @@ namespace StardewModdingAPI.Framework.ModLoading
                 && !string.IsNullOrWhiteSpace(this.Manifest.UniqueID);
         }
 
-        /// <summary>Whether the mod has the given ID.</summary>
-        /// <param name="id">The mod ID to check.</param>
+        /// <inheritdoc />
         public bool HasID(string id)
         {
             return
                 this.HasID()
-                && string.Equals(this.Manifest.UniqueID.Trim(), id?.Trim(), StringComparison.InvariantCultureIgnoreCase);
+                && string.Equals(this.Manifest.UniqueID.Trim(), id?.Trim(), StringComparison.OrdinalIgnoreCase);
         }
 
-        /// <summary>Get the defined update keys.</summary>
-        /// <param name="validOnly">Only return valid update keys.</param>
+        /// <inheritdoc />
         public IEnumerable<UpdateKey> GetUpdateKeys(bool validOnly = false)
         {
             foreach (string rawKey in this.Manifest?.UpdateKeys ?? new string[0])
@@ -188,11 +191,10 @@ namespace StardewModdingAPI.Framework.ModLoading
             }
         }
 
-        /// <summary>Get the mod IDs that must be installed to load this mod.</summary>
-        /// <param name="includeOptional">Whether to include optional dependencies.</param>
+        /// <inheritdoc />
         public IEnumerable<string> GetRequiredModIds(bool includeOptional = false)
         {
-            HashSet<string> required = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
+            HashSet<string> required = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
             // yield dependencies
             if (this.Manifest?.Dependencies != null)
@@ -209,22 +211,22 @@ namespace StardewModdingAPI.Framework.ModLoading
                 yield return this.Manifest.ContentPackFor.UniqueID;
         }
 
-        /// <summary>Whether the mod has at least one valid update key set.</summary>
+        /// <inheritdoc />
         public bool HasValidUpdateKeys()
         {
             return this.GetUpdateKeys(validOnly: true).Any();
         }
 
-        /// <summary>Get whether the mod has a given warning and it hasn't been suppressed in the <see cref="DataRecord"/>.</summary>
-        /// <param name="warning">The warning to check.</param>
-        public bool HasUnsuppressWarning(ModWarning warning)
+        /// <inheritdoc />
+        public bool HasUnsuppressedWarnings(params ModWarning[] warnings)
         {
-            return
+            return warnings.Any(warning =>
                 this.Warnings.HasFlag(warning)
-                && (this.DataRecord?.DataRecord == null || !this.DataRecord.DataRecord.SuppressWarnings.HasFlag(warning));
+                && (this.DataRecord?.DataRecord == null || !this.DataRecord.DataRecord.SuppressWarnings.HasFlag(warning))
+            );
         }
 
-        /// <summary>Get a relative path which includes the root folder name.</summary>
+        /// <inheritdoc />
         public string GetRelativePathWithRoot()
         {
             string rootFolderName = Path.GetFileName(this.RootPath) ?? "";

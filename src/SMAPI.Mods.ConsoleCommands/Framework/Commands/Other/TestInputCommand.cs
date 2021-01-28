@@ -3,7 +3,7 @@ using System;
 namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.Other
 {
     /// <summary>A command which logs the keys being pressed for 30 seconds once enabled.</summary>
-    internal class TestInputCommand : TrainerCommand
+    internal class TestInputCommand : ConsoleCommand
     {
         /*********
         ** Fields

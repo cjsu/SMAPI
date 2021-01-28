@@ -33,7 +33,7 @@ namespace StardewModdingAPI.Framework.Serialization
         {
             string[] parts = str.Split(',');
             if (parts.Length != 2)
-                throw new SParseException($"Can't parse {typeof(Point).Name} from invalid value '{str}' (path: {path}).");
+                throw new SParseException($"Can't parse {nameof(Point)} from invalid value '{str}' (path: {path}).");
 
             int x = Convert.ToInt32(parts[0]);
             int y = Convert.ToInt32(parts[1]);

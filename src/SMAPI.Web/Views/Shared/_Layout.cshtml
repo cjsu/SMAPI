@@ -29,7 +29,7 @@
     </div>
     <div id="content-column">
         <div id="content">
-            @if (ViewData["ViewTitle"] != string.Empty)
+            @if (ViewData["ViewTitle"] as string != string.Empty)
             {
                 <h1>@(ViewData["ViewTitle"] ?? ViewData["Title"])</h1>
             }

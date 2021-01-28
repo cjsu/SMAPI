@@ -14,8 +14,15 @@ namespace StardewModdingAPI
         /// <summary>Whether this is a connection to the host player.</summary>
         bool IsHost { get; }
 
+        /// <summary>Whether this a local player on the same computer in split-screen mote.</summary>
+        bool IsSplitScreen { get; }
+
         /// <summary>Whether the player has SMAPI installed.</summary>
         bool HasSmapi { get; }
+
+        /// <summary>The player's screen ID, if applicable.</summary>
+        /// <remarks>See <see cref="Context.ScreenId"/> for details. This is only visible to players in split-screen mode. A remote player won't see this value, even if the other players are in split-screen mode.</remarks>
+        int? ScreenID { get; }
 
         /// <summary>The player's OS platform, if <see cref="HasSmapi"/> is true.</summary>
         GamePlatform? Platform { get; }

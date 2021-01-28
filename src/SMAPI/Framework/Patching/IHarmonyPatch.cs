@@ -1,4 +1,8 @@
+#if HARMONY_2
+using HarmonyLib;
+#else
 using Harmony;
+#endif
 
 namespace StardewModdingAPI.Framework.Patching
 {
@@ -10,6 +14,10 @@ namespace StardewModdingAPI.Framework.Patching
 
         /// <summary>Apply the Harmony patch.</summary>
         /// <param name="harmony">The Harmony instance.</param>
+#if HARMONY_2
+        void Apply(Harmony harmony);
+#else
         void Apply(HarmonyInstance harmony);
+#endif
     }
 }

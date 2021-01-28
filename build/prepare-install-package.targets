@@ -16,6 +16,7 @@
       <SmapiBin>$(BuildRootPath)\SMAPI\bin\$(Configuration)</SmapiBin>
       <ToolkitBin>$(BuildRootPath)\SMAPI.Toolkit\bin\$(Configuration)\net4.5</ToolkitBin>
       <ConsoleCommandsBin>$(BuildRootPath)\SMAPI.Mods.ConsoleCommands\bin\$(Configuration)</ConsoleCommandsBin>
+      <ErrorHandlerBin>$(BuildRootPath)\SMAPI.Mods.ErrorHandler\bin\$(Configuration)</ErrorHandlerBin>
       <SaveBackupBin>$(BuildRootPath)\SMAPI.Mods.SaveBackup\bin\$(Configuration)</SaveBackupBin>
 
       <PackagePath>$(OutRootPath)\SMAPI installer</PackagePath>
@@ -23,6 +24,7 @@
     </PropertyGroup>
     <ItemGroup>
       <TranslationFiles Include="$(SmapiBin)\i18n\*.json" />
+      <ErrorHandlerTranslationFiles Include="$(ErrorHandlerBin)\i18n\*.json" />
     </ItemGroup>
 
     <!-- reset package directory -->
@@ -64,6 +66,10 @@
     <Copy SourceFiles="$(ConsoleCommandsBin)\ConsoleCommands.dll" DestinationFolder="$(PackagePath)\bundle\Mods\ConsoleCommands" />
     <Copy SourceFiles="$(ConsoleCommandsBin)\ConsoleCommands.pdb" DestinationFolder="$(PackagePath)\bundle\Mods\ConsoleCommands" />
     <Copy SourceFiles="$(ConsoleCommandsBin)\manifest.json" DestinationFolder="$(PackagePath)\bundle\Mods\ConsoleCommands" />
+    <Copy SourceFiles="$(ErrorHandlerBin)\ErrorHandler.dll" DestinationFolder="$(PackagePath)\bundle\Mods\ErrorHandler" />
+    <Copy SourceFiles="$(ErrorHandlerBin)\ErrorHandler.pdb" DestinationFolder="$(PackagePath)\bundle\Mods\ErrorHandler" />
+    <Copy SourceFiles="$(ErrorHandlerBin)\manifest.json" DestinationFolder="$(PackagePath)\bundle\Mods\ErrorHandler" />
+    <Copy SourceFiles="@(ErrorHandlerTranslationFiles)" DestinationFolder="$(PackagePath)\bundle\Mods\ErrorHandler\i18n" />
     <Copy SourceFiles="$(SaveBackupBin)\SaveBackup.dll" DestinationFolder="$(PackagePath)\bundle\Mods\SaveBackup" />
     <Copy SourceFiles="$(SaveBackupBin)\SaveBackup.pdb" DestinationFolder="$(PackagePath)\bundle\Mods\SaveBackup" />
     <Copy SourceFiles="$(SaveBackupBin)\manifest.json" DestinationFolder="$(PackagePath)\bundle\Mods\SaveBackup" />

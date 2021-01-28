@@ -681,7 +681,7 @@ namespace StardewModdingAPI
             }
 
             // not valid
-            button = default(InputButton);
+            button = default;
             return false;
         }
 

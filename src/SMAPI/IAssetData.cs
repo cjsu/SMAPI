@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace StardewModdingAPI
 {
@@ -38,6 +38,10 @@ namespace StardewModdingAPI
         /// <summary>Get a helper to manipulate the data as an image.</summary>
         /// <exception cref="InvalidOperationException">The content being read isn't an image.</exception>
         IAssetDataForImage AsImage();
+
+        /// <summary>Get a helper to manipulate the data as a map.</summary>
+        /// <exception cref="InvalidOperationException">The content being read isn't a map.</exception>
+        IAssetDataForMap AsMap();
 
         /// <summary>Get the data as a given type.</summary>
         /// <typeparam name="TData">The expected data type.</typeparam>

@@ -3,8 +3,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.IO.Compression;
 using System.Reflection;
-using StardewModdingAPI.Internal;
-using StardewModdingAPI.Toolkit.Utilities;
 
 namespace StardewModdingApi.Installer
 {
@@ -67,7 +65,7 @@ namespace StardewModdingApi.Installer
                 AssemblyName name = new AssemblyName(e.Name);
                 foreach (FileInfo dll in new DirectoryInfo(Program.InternalFilesPath).EnumerateFiles("*.dll"))
                 {
-                    if (name.Name.Equals(AssemblyName.GetAssemblyName(dll.FullName).Name, StringComparison.InvariantCultureIgnoreCase))
+                    if (name.Name.Equals(AssemblyName.GetAssemblyName(dll.FullName).Name, StringComparison.OrdinalIgnoreCase))
                         return Assembly.LoadFrom(dll.FullName);
                 }
                 return null;

@@ -16,7 +16,7 @@ namespace StardewModdingAPI.Framework.Content
         /*********
         ** Accessors
         *********/
-        /// <summary>The content data being read.</summary>
+        /// <inheritdoc />
         public TValue Data { get; protected set; }
 
 
@@ -36,10 +36,7 @@ namespace StardewModdingAPI.Framework.Content
             this.OnDataReplaced = onDataReplaced;
         }
 
-        /// <summary>Replace the entire content value with the given value. This is generally not recommended, since it may break compatibility with other mods or different versions of the game.</summary>
-        /// <param name="value">The new content value.</param>
-        /// <exception cref="ArgumentNullException">The <paramref name="value"/> is null.</exception>
-        /// <exception cref="InvalidCastException">The <paramref name="value"/>'s type is not compatible with the loaded asset's type.</exception>
+        /// <inheritdoc />
         public void ReplaceWith(TValue value)
         {
             if (value == null)

@@ -1,0 +1,4 @@
+{
+    // warning messages
+    "warn.invalid-content-removed": "충돌을 방지하기 위해 잘못된 컨텐츠가 제거되었습니다 (자세한 내용은 SMAPI 콘솔 참조)."
+}

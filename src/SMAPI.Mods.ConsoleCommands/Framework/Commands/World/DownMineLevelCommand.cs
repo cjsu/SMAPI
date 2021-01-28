@@ -4,7 +4,7 @@ using StardewValley.Locations;
 namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.World
 {
     /// <summary>A command which moves the player to the next mine level.</summary>
-    internal class DownMineLevelCommand : TrainerCommand
+    internal class DownMineLevelCommand : ConsoleCommand
     {
         /*********
         ** Public methods

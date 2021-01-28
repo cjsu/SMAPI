@@ -22,7 +22,6 @@ namespace StardewModdingAPI.Events
         public bool IsLocalPlayer => this.Player.IsLocalPlayer;
 
 
-
         /*********
         ** Public methods
         *********/

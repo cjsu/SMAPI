@@ -4,7 +4,7 @@ using StardewValley;
 namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.Player
 {
     /// <summary>A command which edits the color of a player feature.</summary>
-    internal class SetColorCommand : TrainerCommand
+    internal class SetColorCommand : ConsoleCommand
     {
         /*********
         ** Public methods

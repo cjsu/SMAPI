@@ -56,16 +56,17 @@ namespace StardewModdingAPI.Framework
         *********/
         /// <summary>Construct an instance.</summary>
         /// <param name="inputState">Manages input visible to the game.</param>
-        public WatcherCore(SInputState inputState)
+        /// <param name="gameLocations">The observable list of game locations.</param>
+        public WatcherCore(SInputState inputState, ObservableCollection<GameLocation> gameLocations)
         {
             // init watchers
             this.CursorWatcher = WatcherFactory.ForEquatable(() => inputState.CursorPosition);
-            this.MouseWheelScrollWatcher = WatcherFactory.ForEquatable(() => inputState.RealMouse.ScrollWheelValue);
+            this.MouseWheelScrollWatcher = WatcherFactory.ForEquatable(() => inputState.MouseState.ScrollWheelValue);
             this.SaveIdWatcher = WatcherFactory.ForEquatable(() => Game1.hasLoadedGame ? Game1.uniqueIDForThisGame : 0);
             this.WindowSizeWatcher = WatcherFactory.ForEquatable(() => new Point(Game1.viewport.Width, Game1.viewport.Height));
             this.TimeWatcher = WatcherFactory.ForEquatable(() => Game1.timeOfDay);
             this.ActiveMenuWatcher = WatcherFactory.ForReference(() => Game1.activeClickableMenu);
-            this.LocationsWatcher = new WorldLocationsTracker((ObservableCollection<GameLocation>)Game1.locations, MineShaft.activeMines);
+            this.LocationsWatcher = new WorldLocationsTracker(gameLocations, MineShaft.activeMines, VolcanoDungeon.activeLevels);
             this.LocaleWatcher = WatcherFactory.ForGenericEquality(() => LocalizedContentManager.CurrentLanguageCode);
             this.Watchers.AddRange(new IWatcher[]
             {

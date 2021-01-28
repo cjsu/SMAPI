@@ -1,5 +1,5 @@
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
 namespace StardewModdingAPI.Web
 {
@@ -13,10 +13,13 @@ namespace StardewModdingAPI.Web
         /// <param name="args">The command-line arguments.</param>
         public static void Main(string[] args)
         {
-            // configure web server
-            WebHost
+            Host
                 .CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
+                .ConfigureWebHostDefaults(builder => builder
+                    .CaptureStartupErrors(true)
+                    .UseSetting("detailedErrors", "true")
+                    .UseStartup<Startup>()
+                )
                 .Build()
                 .Run();
         }

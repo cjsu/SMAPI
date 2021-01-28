@@ -13,13 +13,13 @@ namespace StardewModdingAPI.Mods.ConsoleCommands
         ** Fields
         *********/
         /// <summary>The commands to handle.</summary>
-        private ITrainerCommand[] Commands;
+        private IConsoleCommand[] Commands;
 
         /// <summary>The commands which may need to handle update ticks.</summary>
-        private ITrainerCommand[] UpdateHandlers;
+        private IConsoleCommand[] UpdateHandlers;
 
         /// <summary>The commands which may need to handle input.</summary>
-        private ITrainerCommand[] InputHandlers;
+        private IConsoleCommand[] InputHandlers;
 
 
         /*********
@@ -31,7 +31,7 @@ namespace StardewModdingAPI.Mods.ConsoleCommands
         {
             // register commands
             this.Commands = this.ScanForCommands().ToArray();
-            foreach (ITrainerCommand command in this.Commands)
+            foreach (IConsoleCommand command in this.Commands)
                 helper.ConsoleCommands.Add(command.Name, command.Description, (name, args) => this.HandleCommand(command, name, args));
 
             // cache commands
@@ -52,7 +52,7 @@ namespace StardewModdingAPI.Mods.ConsoleCommands
         /// <param name="e">The event arguments.</param>
         private void OnButtonPressed(object sender, ButtonPressedEventArgs e)
         {
-            foreach (ITrainerCommand command in this.InputHandlers)
+            foreach (IConsoleCommand command in this.InputHandlers)
                 command.OnButtonPressed(this.Monitor, e.Button);
         }
 
@@ -61,7 +61,7 @@ namespace StardewModdingAPI.Mods.ConsoleCommands
         /// <param name="e">The event arguments.</param>
         private void OnUpdateTicked(object sender, EventArgs e)
         {
-            foreach (ITrainerCommand command in this.UpdateHandlers)
+            foreach (IConsoleCommand command in this.UpdateHandlers)
                 command.OnUpdated(this.Monitor);
         }
 
@@ -69,19 +69,19 @@ namespace StardewModdingAPI.Mods.ConsoleCommands
         /// <param name="command">The command to invoke.</param>
         /// <param name="commandName">The command name specified by the user.</param>
         /// <param name="args">The command arguments.</param>
-        private void HandleCommand(ITrainerCommand command, string commandName, string[] args)
+        private void HandleCommand(IConsoleCommand command, string commandName, string[] args)
         {
             ArgumentParser argParser = new ArgumentParser(commandName, args, this.Monitor);
             command.Handle(this.Monitor, commandName, argParser);
         }
 
         /// <summary>Find all commands in the assembly.</summary>
-        private IEnumerable<ITrainerCommand> ScanForCommands()
+        private IEnumerable<IConsoleCommand> ScanForCommands()
         {
             return (
                 from type in this.GetType().Assembly.GetTypes()
-                where !type.IsAbstract && typeof(ITrainerCommand).IsAssignableFrom(type)
-                select (ITrainerCommand)Activator.CreateInstance(type)
+                where !type.IsAbstract && typeof(IConsoleCommand).IsAssignableFrom(type)
+                select (IConsoleCommand)Activator.CreateInstance(type)
             );
         }
     }

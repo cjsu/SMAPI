@@ -18,33 +18,67 @@ namespace StardewModdingAPI.Toolkit.Framework.ModScanning
         private readonly JsonHelper JsonHelper;
 
         /// <summary>A list of filesystem entry names to ignore when checking whether a folder should be treated as a mod.</summary>
-        private readonly HashSet<Regex> IgnoreFilesystemEntries = new HashSet<Regex>
+        private readonly HashSet<Regex> IgnoreFilesystemNames = new HashSet<Regex>
         {
-            // OS metadata files
             new Regex(@"^__folder_managed_by_vortex$", RegexOptions.Compiled | RegexOptions.IgnoreCase), // Vortex mod manager
-            new Regex(@"^(?:__MACOSX|\._\.DS_Store|\.DS_Store|mcs)$", RegexOptions.Compiled | RegexOptions.IgnoreCase), // MacOS
-            new Regex(@"^(?:desktop\.ini|Thumbs\.db)$", RegexOptions.Compiled | RegexOptions.IgnoreCase), // Windows
-            new Regex(@"\.(?:url|lnk)$", RegexOptions.Compiled | RegexOptions.IgnoreCase), // Windows shortcut files
-
-            // other
-            new Regex(@"\.(?:bmp|gif|jpeg|jpg|png|psd|tif)$", RegexOptions.Compiled | RegexOptions.IgnoreCase), // image files
-            new Regex(@"\.(?:md|rtf|txt)$", RegexOptions.Compiled | RegexOptions.IgnoreCase), // text files
-            new Regex(@"\.(?:backup|bak|old)$", RegexOptions.Compiled | RegexOptions.IgnoreCase) // backup file
+            new Regex(@"(?:^\._|^\.DS_Store$|^__MACOSX$|^mcs$)", RegexOptions.Compiled | RegexOptions.IgnoreCase), // MacOS
+            new Regex(@"^(?:desktop\.ini|Thumbs\.db)$", RegexOptions.Compiled | RegexOptions.IgnoreCase) // Windows
         };
 
-        /// <summary>The extensions for files which an XNB mod may contain. If a mod doesn't have a <c>manifest.json</c> and contains *only* these file extensions, it should be considered an XNB mod.</summary>
-        private readonly HashSet<string> PotentialXnbModExtensions = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase)
+        /// <summary>A list of file extensions to ignore when searching for mod files.</summary>
+        private readonly HashSet<string> IgnoreFileExtensions = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
-            // XNB files
+            // text
+            ".doc",
+            ".docx",
+            ".md",
+            ".rtf",
+            ".txt",
+
+            // images
+            ".bmp",
+            ".gif",
+            ".jpeg",
+            ".jpg",
+            ".png",
+            ".psd",
+            ".tif",
+
+            // archives
+            ".rar",
+            ".zip",
+
+            // backup files
+            ".backup",
+            ".bak",
+            ".old",
+
+            // Windows shortcut files
+            ".url",
+            ".lnk"
+        };
+
+        /// <summary>The extensions for packed content files.</summary>
+        private readonly HashSet<string> StrictXnbModExtensions = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
             ".xgs",
             ".xnb",
             ".xsb",
-            ".xwb",
+            ".xwb"
+        };
 
-            // unpacking artifacts
+        /// <summary>The extensions for files which an XNB mod may contain, in addition to <see cref="StrictXnbModExtensions"/>.</summary>
+        private readonly HashSet<string> PotentialXnbModExtensions = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
             ".json",
             ".yaml"
         };
+
+        /// <summary>The name of the marker file added by Vortex to indicate it's managing the folder.</summary>
+        private readonly string VortexMarkerFileName = "__folder_managed_by_vortex";
+
+        /// <summary>The name for a mod's configuration JSON file.</summary>
+        private readonly string ConfigFileName = "config.json";
 
 
         /*********
@@ -85,11 +119,27 @@ namespace StardewModdingAPI.Toolkit.Framework.ModScanning
             // set appropriate invalid-mod error
             if (manifestFile == null)
             {
-                FileInfo[] files = this.RecursivelyGetRelevantFiles(searchFolder).ToArray();
-                if (!files.Any())
+                FileInfo[] files = this.RecursivelyGetFiles(searchFolder).ToArray();
+                FileInfo[] relevantFiles = files.Where(this.IsRelevant).ToArray();
+
+                // empty Vortex folder
+                // (this filters relevant files internally so it can check for the normally-ignored Vortex marker file)
+                if (this.IsEmptyVortexFolder(files))
+                    return new ModFolder(root, searchFolder, ModType.Invalid, null, ModParseError.EmptyVortexFolder, "it's an empty Vortex folder (is the mod disabled in Vortex?).");
+
+                // empty folder
+                if (!relevantFiles.Any())
                     return new ModFolder(root, searchFolder, ModType.Invalid, null, ModParseError.EmptyFolder, "it's an empty folder.");
-                if (files.All(this.IsPotentialXnbFile))
+
+                // XNB mod
+                if (this.IsXnbMod(relevantFiles))
                     return new ModFolder(root, searchFolder, ModType.Xnb, null, ModParseError.XnbMod, "it's not a SMAPI mod (see https://smapi.io/xnb for info).");
+
+                // SMAPI installer
+                if (relevantFiles.Any(p => p.Name == "install on Linux.sh" || p.Name == "install on Mac.command" || p.Name == "install on Windows.bat"))
+                    return new ModFolder(root, searchFolder, ModType.Invalid, null, ModParseError.ManifestMissing, "the SMAPI installer isn't a mod (you can delete this folder after running the installer file).");
+
+                // not a mod?
                 return new ModFolder(root, searchFolder, ModType.Invalid, null, ModParseError.ManifestMissing, "it contains files, but none of them are manifest.json.");
             }
 
@@ -234,13 +284,13 @@ namespace StardewModdingAPI.Toolkit.Framework.ModScanning
             return subfolders.Any() && !files.Any();
         }
 
-        /// <summary>Recursively get all relevant files in a folder based on the result of <see cref="IsRelevant"/>.</summary>
+        /// <summary>Recursively get all files in a folder.</summary>
         /// <param name="folder">The root folder to search.</param>
-        private IEnumerable<FileInfo> RecursivelyGetRelevantFiles(DirectoryInfo folder)
+        private IEnumerable<FileInfo> RecursivelyGetFiles(DirectoryInfo folder)
         {
             foreach (FileSystemInfo entry in folder.GetFileSystemInfos())
             {
-                if (!this.IsRelevant(entry))
+                if (entry is DirectoryInfo && !this.IsRelevant(entry))
                     continue;
 
                 if (entry is FileInfo file)
@@ -248,7 +298,7 @@ namespace StardewModdingAPI.Toolkit.Framework.ModScanning
 
                 if (entry is DirectoryInfo subfolder)
                 {
-                    foreach (FileInfo subfolderFile in this.RecursivelyGetRelevantFiles(subfolder))
+                    foreach (FileInfo subfolderFile in this.RecursivelyGetFiles(subfolder))
                         yield return subfolderFile;
                 }
             }
@@ -258,17 +308,54 @@ namespace StardewModdingAPI.Toolkit.Framework.ModScanning
         /// <param name="entry">The file or folder.</param>
         private bool IsRelevant(FileSystemInfo entry)
         {
-            return !this.IgnoreFilesystemEntries.Any(p => p.IsMatch(entry.Name));
+            // ignored file extension
+            if (entry is FileInfo file && this.IgnoreFileExtensions.Contains(file.Extension))
+                return false;
+
+            // ignored entry name
+            return !this.IgnoreFilesystemNames.Any(p => p.IsMatch(entry.Name));
         }
 
-        /// <summary>Get whether a file is potentially part of an XNB mod.</summary>
-        /// <param name="entry">The file.</param>
-        private bool IsPotentialXnbFile(FileInfo entry)
+        /// <summary>Get whether a set of files looks like an XNB mod.</summary>
+        /// <param name="files">The files in the mod.</param>
+        private bool IsXnbMod(IEnumerable<FileInfo> files)
         {
-            if (!this.IsRelevant(entry))
-                return true;
+            bool hasXnbFile = false;
 
-            return this.PotentialXnbModExtensions.Contains(entry.Extension); // use EndsWith to handle cases like image..png
+            foreach (FileInfo file in files.Where(this.IsRelevant))
+            {
+                if (this.StrictXnbModExtensions.Contains(file.Extension))
+                {
+                    hasXnbFile = true;
+                    continue;
+                }
+
+                if (!this.PotentialXnbModExtensions.Contains(file.Extension))
+                    return false;
+            }
+
+            return hasXnbFile;
+        }
+
+        /// <summary>Get whether a set of files looks like an XNB mod.</summary>
+        /// <param name="files">The files in the mod.</param>
+        private bool IsEmptyVortexFolder(IEnumerable<FileInfo> files)
+        {
+            bool hasVortexMarker = false;
+
+            foreach (FileInfo file in files)
+            {
+                if (file.Name == this.VortexMarkerFileName)
+                {
+                    hasVortexMarker = true;
+                    continue;
+                }
+
+                if (this.IsRelevant(file) && file.Name != this.ConfigFileName)
+                    return false;
+            }
+
+            return hasVortexMarker;
         }
 
         /// <summary>Strip newlines from a string.</summary>

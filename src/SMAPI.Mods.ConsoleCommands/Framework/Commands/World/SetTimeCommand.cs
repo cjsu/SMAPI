@@ -5,7 +5,7 @@ using StardewValley;
 namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.World
 {
     /// <summary>A command which sets the current time.</summary>
-    internal class SetTimeCommand : TrainerCommand
+    internal class SetTimeCommand : ConsoleCommand
     {
         /*********
         ** Public methods

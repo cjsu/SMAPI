@@ -9,7 +9,6 @@
     string newUploadUrl = this.Url.PlainAction("Index", "JsonValidator", new { schemaName = Model.SchemaName });
     string schemaDisplayName = null;
     bool isValidSchema = Model.SchemaName != null && Model.SchemaFormats.TryGetValue(Model.SchemaName, out schemaDisplayName) && schemaDisplayName?.ToLower() != "none";
-    bool isEditView = Model.Content == null || Model.SchemaName?.ToLower() == "edit";
 
     // build title
     ViewData["Title"] = "JSON validator";
@@ -28,17 +27,19 @@
     {
         <meta name="robots" content="noindex" />
     }
-    <link rel="stylesheet" href="~/Content/css/json-validator.css?r=20191204" />
+    <link rel="stylesheet" href="~/Content/css/file-upload.css?r=202002" />
+    <link rel="stylesheet" href="~/Content/css/json-validator.css?r=202002" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tmont/sunlight@1.22.0/src/themes/sunlight.default.min.css" />
 
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/gh/tmont/sunlight@1.22.0/src/sunlight.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/gh/tmont/sunlight@1.22.0/src/plugins/sunlight-plugin.linenumbers.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/gh/tmont/sunlight@1.22.0/src/lang/sunlight.javascript.min.js" crossorigin="anonymous"></script>
-    <script src="~/Content/js/json-validator.js?r=20191204"></script>
+    <script src="~/Content/js/file-upload.js?r=202002"></script>
+    <script src="~/Content/js/json-validator.js?r=202002"></script>
     <script>
         $(function() {
-            smapi.jsonValidator(@Json.Serialize(this.Url.PlainAction("Index", "JsonValidator", new { schemaName = "$schemaName", id = "$id" })), @Json.Serialize(Model.PasteID));
+            smapi.jsonValidator(@this.ForJson(this.Url.PlainAction("Index", "JsonValidator", new { schemaName = "$schemaName", id = "$id" })), @this.ForJson(Model.PasteID));
         });
     </script>
 }
@@ -61,7 +62,7 @@ else if (Model.ParseError != null)
         <small v-pre>Error details: @Model.ParseError</small>
     </div>
 }
-else if (!isEditView && Model.PasteID != null)
+else if (!Model.IsEditView && Model.PasteID != null)
 {
     <div class="banner success">
         <strong>Share this link to let someone else see this page:</strong> <code>@curPageUrl</code><br />
@@ -75,17 +76,18 @@ else if (!isEditView && Model.PasteID != null)
     <div class="save-metadata" v-pre>
         @if (Model.Expiry != null)
         {
-            <text>This JSON file will expire in @((DateTime.UtcNow - Model.Expiry.Value).Humanize()). </text>
+            <text>This JSON file will expire in @((DateTime.UtcNow - Model.Expiry.Value).Humanize()) (<a href="@(this.Url.PlainAction("Index", "JsonValidator", new { schemaName = this.Model.SchemaName, id = this.Model.PasteID, operation = "renew" }))">renew</a>).</text>
         }
         <!--@Model.UploadWarning-->
     </div>
 }
 
 @* upload new file *@
-@if (isEditView)
+@if (Model.IsEditView)
 {
     <h2>Upload a JSON file</h2>
     <form action="@this.Url.PlainAction("PostAsync", "JsonValidator")" method="post">
+        <input id="inputFile" type="file" />
         <ol>
             <li>
                 Choose the JSON format:<br />
@@ -97,7 +99,7 @@ else if (!isEditView && Model.PasteID != null)
                 </select>
             </li>
             <li>
-                Drag the file onto this textbox (or paste the text in):<br />
+                Drag the file onto this textbox <small>(or <a href="#" id="choose-file-link">choose a file</a>)</small>:<br />
                 <textarea id="input" name="Content" placeholder="paste file here">@Model.Content</textarea>
             </li>
             <li>
@@ -109,7 +111,7 @@ else if (!isEditView && Model.PasteID != null)
 }
 
 @* validation results *@
-@if (!isEditView)
+@if (!Model.IsEditView)
 {
     <div id="output">
         @if (Model.UploadError == null)
@@ -155,7 +157,7 @@ else if (!isEditView && Model.PasteID != null)
                 {
                     <option value="@pair.Key" selected="@(Model.SchemaName == pair.Key)">@pair.Value</option>
                 }
-            </select>) or <a href="@(this.Url.PlainAction("Index", "JsonValidator", new { id = this.Model.PasteID, schemaName = "edit" }))">edit this file</a>.
+            </select>) or <a href="@(this.Url.PlainAction("Index", "JsonValidator", new { id = this.Model.PasteID, schemaName = this.Model.SchemaName, operation = "edit" }))">edit this file</a>.
         </div>
         <pre id="raw-content" class="sunlight-highlight-javascript">@Model.Content</pre>
 

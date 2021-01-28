@@ -2,12 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using StardewModdingAPI.Framework.Content;
 using StardewModdingAPI.Framework.Exceptions;
 using StardewModdingAPI.Framework.Reflection;
 using StardewModdingAPI.Framework.Utilities;
 using StardewValley;
+using xTile;
 
 namespace StardewModdingAPI.Framework.ContentManagers
 {
@@ -26,8 +29,8 @@ namespace StardewModdingAPI.Framework.ContentManagers
         /// <summary>Interceptors which edit matching assets after they're loaded.</summary>
         private IList<ModLinked<IAssetEditor>> Editors => this.Coordinator.Editors;
 
-        /// <summary>A lookup which indicates whether the asset is localizable (i.e. the filename contains the locale), if previously loaded.</summary>
-        private readonly IDictionary<string, bool> IsLocalizableLookup;
+        /// <summary>Maps asset names to their localized form, like <c>LooseSprites\Billboard => LooseSprites\Billboard.fr-FR</c> (localized) or <c>Maps\AnimalShop => Maps\AnimalShop</c> (not localized).</summary>
+        private IDictionary<string, string> LocalizedAssetNames => LocalizedContentManager.localizedAssetNames;
 
         /// <summary>Whether the next load is the first for any game content manager.</summary>
         private static bool IsFirstLoad = true;
@@ -52,7 +55,6 @@ namespace StardewModdingAPI.Framework.ContentManagers
         public GameContentManager(string name, IServiceProvider serviceProvider, string rootDirectory, CultureInfo currentCulture, ContentCoordinator coordinator, IMonitor monitor, Reflector reflection, Action<BaseContentManager> onDisposing, Action onLoadingFirstAsset)
             : base(name, serviceProvider, rootDirectory, currentCulture, coordinator, monitor, reflection, onDisposing, isNamespaced: false)
         {
-            this.IsLocalizableLookup = reflection.GetField<IDictionary<string, bool>>(this, "_localizedAsset").GetValue();
             this.OnLoadingFirstAsset = onLoadingFirstAsset;
         }
 
@@ -76,7 +78,7 @@ namespace StardewModdingAPI.Framework.ContentManagers
                 return this.Load<T>(newAssetName, newLanguage, useCache);
 
             // get from cache
-            if (useCache && this.IsLoaded(assetName))
+            if (useCache && this.IsLoaded(assetName, language))
                 return this.RawLoad<T>(assetName, language, useCache: true);
 
             // get managed asset
@@ -120,8 +122,8 @@ namespace StardewModdingAPI.Framework.ContentManagers
             base.OnLocaleChanged();
 
             // find assets for which a translatable version was loaded
-            HashSet<string> removeAssetNames = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
-            foreach (string key in this.IsLocalizableLookup.Where(p => p.Value).Select(p => p.Key))
+            HashSet<string> removeAssetNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            foreach (string key in this.LocalizedAssetNames.Where(p => p.Key != p.Value).Select(p => p.Key))
                 removeAssetNames.Add(this.TryParseExplicitLanguageAssetKey(key, out string assetName, out _) ? assetName : key);
 
             // invalidate translatable assets
@@ -131,7 +133,7 @@ namespace StardewModdingAPI.Framework.ContentManagers
                     || (this.TryParseExplicitLanguageAssetKey(key, out string assetName, out _) && removeAssetNames.Contains(assetName))
                 )
                 .Select(p => p.Key)
-                .OrderBy(p => p, StringComparer.InvariantCultureIgnoreCase)
+                .OrderBy(p => p, StringComparer.OrdinalIgnoreCase)
                 .ToArray();
             if (invalidated.Any())
                 this.Monitor.Log($"Invalidated {invalidated.Length} asset names: {string.Join(", ", invalidated)} for locale change.", LogLevel.Trace);
@@ -149,23 +151,18 @@ namespace StardewModdingAPI.Framework.ContentManagers
         *********/
         /// <summary>Get whether an asset has already been loaded.</summary>
         /// <param name="normalizedAssetName">The normalized asset name.</param>
-        protected override bool IsNormalizedKeyLoaded(string normalizedAssetName)
+        /// <param name="language">The language to check.</param>
+        protected override bool IsNormalizedKeyLoaded(string normalizedAssetName, LanguageCode language)
         {
-            // default English
-            if (this.Language == LocalizedContentManager.LanguageCode.en || this.Coordinator.IsManagedAssetKey(normalizedAssetName))
-                return this.Cache.ContainsKey(normalizedAssetName);
+            string cachedKey = null;
+            bool localized =
+                language != LocalizedContentManager.LanguageCode.en
+                && !this.Coordinator.IsManagedAssetKey(normalizedAssetName)
+                && this.LocalizedAssetNames.TryGetValue(normalizedAssetName, out cachedKey);
 
-            // translated
-            string keyWithLocale = $"{normalizedAssetName}.{this.GetLocale(this.GetCurrentLanguage())}";
-            if (this.IsLocalizableLookup.TryGetValue(keyWithLocale, out bool localizable))
-            {
-                return localizable
-                    ? this.Cache.ContainsKey(keyWithLocale)
-                    : this.Cache.ContainsKey(normalizedAssetName);
-            }
-
-            // not loaded yet
-            return false;
+            return localized
+                ? this.Cache.ContainsKey(cachedKey)
+                : this.Cache.ContainsKey(normalizedAssetName);
         }
 
         /// <summary>Add tracking data to an asset and add it to the cache.</summary>
@@ -194,22 +191,16 @@ namespace StardewModdingAPI.Framework.ContentManagers
             //      doesn't change the instance stored in the cache, e.g. using `asset.ReplaceWith`.
             if (useCache)
             {
-                string keyWithLocale = $"{assetName}.{this.GetLocale(language)}";
+                string translatedKey = $"{assetName}.{this.GetLocale(language)}";
                 base.TrackAsset(assetName, value, language, useCache: true);
-                if (this.Cache.ContainsKey(keyWithLocale))
-                    base.TrackAsset(keyWithLocale, value, language, useCache: true);
+                if (this.Cache.ContainsKey(translatedKey))
+                    base.TrackAsset(translatedKey, value, language, useCache: true);
 
                 // track whether the injected asset is translatable for is-loaded lookups
-                if (this.Cache.ContainsKey(keyWithLocale))
-                {
-                    this.IsLocalizableLookup[assetName] = true;
-                    this.IsLocalizableLookup[keyWithLocale] = true;
-                }
+                if (this.Cache.ContainsKey(translatedKey))
+                    this.LocalizedAssetNames[assetName] = translatedKey;
                 else if (this.Cache.ContainsKey(assetName))
-                {
-                    this.IsLocalizableLookup[assetName] = false;
-                    this.IsLocalizableLookup[keyWithLocale] = false;
-                }
+                    this.LocalizedAssetNames[assetName] = assetName;
                 else
                     this.Monitor.Log($"Asset '{assetName}' could not be found in the cache immediately after injection.", LogLevel.Error);
             }
@@ -223,24 +214,23 @@ namespace StardewModdingAPI.Framework.ContentManagers
         /// <remarks>Derived from <see cref="LocalizedContentManager.Load{T}(string, LocalizedContentManager.LanguageCode)"/>.</remarks>
         private T RawLoad<T>(string assetName, LanguageCode language, bool useCache)
         {
-            // try translated asset
+            // use cached key
+            if (language == this.Language && this.LocalizedAssetNames.TryGetValue(assetName, out string cachedKey))
+                return base.RawLoad<T>(cachedKey, useCache);
+
+            // try translated key
             if (language != LocalizedContentManager.LanguageCode.en)
             {
                 string translatedKey = $"{assetName}.{this.GetLocale(language)}";
-                if (!this.IsLocalizableLookup.TryGetValue(translatedKey, out bool isTranslatable) || isTranslatable)
+                try
                 {
-                    try
-                    {
-                        T obj = base.RawLoad<T>(translatedKey, useCache);
-                        this.IsLocalizableLookup[assetName] = true;
-                        this.IsLocalizableLookup[translatedKey] = true;
-                        return obj;
-                    }
-                    catch (ContentLoadException)
-                    {
-                        this.IsLocalizableLookup[assetName] = false;
-                        this.IsLocalizableLookup[translatedKey] = false;
-                    }
+                    T obj = base.RawLoad<T>(translatedKey, useCache);
+                    this.LocalizedAssetNames[assetName] = translatedKey;
+                    return obj;
+                }
+                catch (ContentLoadException)
+                {
+                    this.LocalizedAssetNames[assetName] = assetName;
                 }
             }
 
@@ -318,15 +308,10 @@ namespace StardewModdingAPI.Framework.ContentManagers
                 return null;
             }
 
-            // validate asset
-            if (data == null)
-            {
-                mod.LogAsMod($"Mod incorrectly set asset '{info.AssetName}' to a null value; ignoring override.", LogLevel.Error);
-                return null;
-            }
-
             // return matched asset
-            return new AssetDataForObject(info, data, this.AssertAndNormalizeAssetName);
+            return this.TryValidateLoadedAsset(info, data, mod)
+                ? new AssetDataForObject(info, data, this.AssertAndNormalizeAssetName)
+                : null;
         }
 
         /// <summary>Apply any <see cref="Editors"/> to a loaded asset.</summary>
@@ -336,6 +321,20 @@ namespace StardewModdingAPI.Framework.ContentManagers
         private IAssetData ApplyEditors<T>(IAssetInfo info, IAssetData asset)
         {
             IAssetData GetNewData(object data) => new AssetDataForObject(info, data, this.AssertAndNormalizeAssetName);
+
+            // special case: if the asset was loaded with a more general type like 'object', call editors with the actual type instead.
+            {
+                Type actualType = asset.Data.GetType();
+                Type actualOpenType = actualType.IsGenericType ? actualType.GetGenericTypeDefinition() : null;
+
+                if (typeof(T) != actualType && (actualOpenType == typeof(Dictionary<,>) || actualOpenType == typeof(List<>) || actualType == typeof(Texture2D) || actualType == typeof(Map)))
+                {
+                    return (IAssetData)this.GetType()
+                        .GetMethod(nameof(this.ApplyEditors), BindingFlags.NonPublic | BindingFlags.Instance)
+                        .MakeGenericMethod(actualType)
+                        .Invoke(this, new object[] { info, asset });
+                }
+            }
 
             // edit asset
             foreach (var entry in this.Editors)
@@ -381,6 +380,69 @@ namespace StardewModdingAPI.Framework.ContentManagers
 
             // return result
             return asset;
+        }
+
+        /// <summary>Validate that an asset loaded by a mod is valid and won't cause issues.</summary>
+        /// <typeparam name="T">The asset type.</typeparam>
+        /// <param name="info">The basic asset metadata.</param>
+        /// <param name="data">The loaded asset data.</param>
+        /// <param name="mod">The mod which loaded the asset.</param>
+        private bool TryValidateLoadedAsset<T>(IAssetInfo info, T data, IModMetadata mod)
+        {
+            // can't load a null asset
+            if (data == null)
+            {
+                mod.LogAsMod($"SMAPI blocked asset replacement for '{info.AssetName}': mod incorrectly set asset to a null value.", LogLevel.Error);
+                return false;
+            }
+
+            // when replacing a map, the vanilla tilesheets must have the same order and IDs
+            if (data is Map loadedMap)
+            {
+                TilesheetReference[] vanillaTilesheetRefs = this.Coordinator.GetVanillaTilesheetIds(info.AssetName);
+                foreach (TilesheetReference vanillaSheet in vanillaTilesheetRefs)
+                {
+                    // skip if match
+                    if (loadedMap.TileSheets.Count > vanillaSheet.Index && loadedMap.TileSheets[vanillaSheet.Index].Id == vanillaSheet.Id)
+                        continue;
+
+                    // handle mismatch
+                    {
+                        // only show warning if not farm map
+                        // This is temporary: mods shouldn't do this for any vanilla map, but these are the ones we know will crash. Showing a warning for others instead gives modders time to update their mods, while still simplifying troubleshooting.
+                        bool isFarmMap = info.AssetNameEquals("Maps/Farm") || info.AssetNameEquals("Maps/Farm_Combat") || info.AssetNameEquals("Maps/Farm_Fishing") || info.AssetNameEquals("Maps/Farm_Foraging") || info.AssetNameEquals("Maps/Farm_FourCorners") || info.AssetNameEquals("Maps/Farm_Island") || info.AssetNameEquals("Maps/Farm_Mining");
+
+                        int loadedIndex = this.TryFindTilesheet(loadedMap, vanillaSheet.Id);
+                        string reason = loadedIndex != -1
+                            ? $"mod reordered the original tilesheets, which {(isFarmMap ? "would cause a crash" : "often causes crashes")}.\nTechnical details for mod author: Expected order: {string.Join(", ", vanillaTilesheetRefs.Select(p => p.Id))}. See https://stardewvalleywiki.com/Modding:Maps#Tilesheet_order for help."
+                            : $"mod has no tilesheet with ID '{vanillaSheet.Id}'. Map replacements must keep the original tilesheets to avoid errors or crashes.";
+
+                        SCore.DeprecationManager.PlaceholderWarn("3.8.2", DeprecationLevel.PendingRemoval);
+                        if (isFarmMap)
+                        {
+                            mod.LogAsMod($"SMAPI blocked '{info.AssetName}' map load: {reason}", LogLevel.Error);
+                            return false;
+                        }
+                        mod.LogAsMod($"SMAPI found an issue with '{info.AssetName}' map load: {reason}", LogLevel.Warn);
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>Find a map tilesheet by ID.</summary>
+        /// <param name="map">The map whose tilesheets to search.</param>
+        /// <param name="id">The tilesheet ID to match.</param>
+        private int TryFindTilesheet(Map map, string id)
+        {
+            for (int i = 0; i < map.TileSheets.Count; i++)
+            {
+                if (map.TileSheets[i].Id == id)
+                    return i;
+            }
+
+            return -1;
         }
     }
 }

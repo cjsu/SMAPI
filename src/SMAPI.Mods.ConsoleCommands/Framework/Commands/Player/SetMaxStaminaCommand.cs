@@ -4,7 +4,7 @@ using StardewValley;
 namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.Player
 {
     /// <summary>A command which edits the player's maximum stamina.</summary>
-    internal class SetMaxStaminaCommand : TrainerCommand
+    internal class SetMaxStaminaCommand : ConsoleCommand
     {
         /*********
         ** Public methods

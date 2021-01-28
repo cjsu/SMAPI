@@ -1,11 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <AssemblyName>SMAPI.Installer</AssemblyName>
     <RootNamespace>StardewModdingAPI.Installer</RootNamespace>
     <Description>The SMAPI installer for players.</Description>
     <TargetFramework>net45</TargetFramework>
-    <LangVersion>latest</LangVersion>
     <OutputType>Exe</OutputType>
     <PlatformTarget>x86</PlatformTarget>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
@@ -16,13 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="assets\*">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None Update="assets\*" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
   <Import Project="..\SMAPI.Internal\SMAPI.Internal.projitems" Label="Shared" />
   <Import Project="..\..\build\common.targets" />
   <Import Project="..\..\build\prepare-install-package.targets" />
-
 </Project>

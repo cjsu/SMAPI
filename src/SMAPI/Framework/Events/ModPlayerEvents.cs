@@ -12,21 +12,21 @@ namespace StardewModdingAPI.Framework.Events
         /// <summary>Raised after items are added or removed to a player's inventory. NOTE: this event is currently only raised for the local player.</summary>
         public event EventHandler<InventoryChangedEventArgs> InventoryChanged
         {
-            add => this.EventManager.InventoryChanged.Add(value);
+            add => this.EventManager.InventoryChanged.Add(value, this.Mod);
             remove => this.EventManager.InventoryChanged.Remove(value);
         }
 
         /// <summary>Raised after a player skill level changes. This happens as soon as they level up, not when the game notifies the player after their character goes to bed.  NOTE: this event is currently only raised for the local player.</summary>
         public event EventHandler<LevelChangedEventArgs> LevelChanged
         {
-            add => this.EventManager.LevelChanged.Add(value);
+            add => this.EventManager.LevelChanged.Add(value, this.Mod);
             remove => this.EventManager.LevelChanged.Remove(value);
         }
 
         /// <summary>Raised after a player warps to a new location. NOTE: this event is currently only raised for the local player.</summary>
         public event EventHandler<WarpedEventArgs> Warped
         {
-            add => this.EventManager.Warped.Add(value);
+            add => this.EventManager.Warped.Add(value, this.Mod);
             remove => this.EventManager.Warped.Remove(value);
         }
 

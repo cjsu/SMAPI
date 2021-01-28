@@ -46,80 +46,64 @@ else
     if [ "$ARCH" == "x86_64" ]; then
         ln -sf mcs.bin.x86_64 mcs
         cp StardewValley.bin.x86_64 StardewModdingAPI.bin.x86_64
-        LAUNCHER="./StardewModdingAPI.bin.x86_64 $*"
+        LAUNCHER="./StardewModdingAPI.bin.x86_64"
     else
         ln -sf mcs.bin.x86 mcs
         cp StardewValley.bin.x86 StardewModdingAPI.bin.x86
-        LAUNCHER="./StardewModdingAPI.bin.x86 $*"
+        LAUNCHER="./StardewModdingAPI.bin.x86"
     fi
+    export LAUNCHER
 
     # get cross-distro version of POSIX command
     COMMAND=""
     if command -v command 2>/dev/null; then
         COMMAND="command -v"
     elif type type 2>/dev/null; then
-        COMMAND="type"
+        COMMAND="type -p"
     fi
 
     # select terminal (prefer xterm for best compatibility, then known supported terminals)
     for terminal in xterm gnome-terminal kitty terminator xfce4-terminal konsole terminal termite alacritty mate-terminal x-terminal-emulator; do
         if $COMMAND "$terminal" 2>/dev/null; then
-            # Find the true shell behind x-terminal-emulator
-            if [ "$(basename "$(readlink -f $(which "$terminal"))")" != "x-terminal-emulator" ]; then
-                export LAUNCHTERM=$terminal
-                break;
-            else
-                export LAUNCHTERM="$(basename "$(readlink -f $(which x-terminal-emulator))")"
-                # Remember that we're using x-terminal-emulator just in case it points outside the $PATH
-                export XTE=1
-                break;
-            fi
+            export LAUNCHTERM=$terminal
+            break;
         fi
     done
 
-    # if no terminal was found, run in current shell or with no output
-    if [ -z "$LAUNCHTERM" ]; then
-        sh -c 'TERM=xterm $LAUNCHER'
-        if [ $? -eq 127 ]; then
-            $LAUNCHER --no-terminal
-        fi
-        exit
+    # find the true shell behind x-terminal-emulator
+    if [ "$LAUNCHTERM" = "x-terminal-emulator" ]; then
+        export LAUNCHTERM="$(basename "$(readlink -f $(COMMAND x-terminal-emulator))")"
     fi
 
     # run in selected terminal and account for quirks
     case $LAUNCHTERM in
-        terminator)
-            # Terminator converts -e to -x when used through x-terminal-emulator for some reason
-            if $XTE; then
-                terminator -e "sh -c 'TERM=xterm $LAUNCHER'"
-            else
-                terminator -x "sh -c 'TERM=xterm $LAUNCHER'"
-            fi
+        terminal|termite)
+            # LAUNCHTERM consumes only one argument after -e
+            # options containing space characters are unsupported
+            exec $LAUNCHTERM -e "env TERM=xterm $LAUNCHER $@"
+            ;;
+        xterm|konsole|alacritty)
+            # LAUNCHTERM consumes all arguments after -e
+            exec $LAUNCHTERM -e env TERM=xterm $LAUNCHER "$@"
+            ;;
+        terminator|xfce4-terminal|mate-terminal)
+            # LAUNCHTERM consumes all arguments after -x
+            exec $LAUNCHTERM -x env TERM=xterm $LAUNCHER "$@"
+            ;;
+        gnome-terminal)
+            # LAUNCHTERM consumes all arguments after --
+            exec $LAUNCHTERM -- env TERM=xterm $LAUNCHER "$@"
             ;;
         kitty)
-            # Kitty overrides the TERM varible unless you set it explicitly
-            kitty -o term=xterm $LAUNCHER
-            ;;
-        alacritty)
-            # Alacritty doesn't like the double quotes or the variable
-            if [ "$ARCH" == "x86_64" ]; then
-                alacritty -e sh -c 'TERM=xterm ./StardewModdingAPI.bin.x86_64 $*'
-            else
-                alacritty -e sh -c 'TERM=xterm ./StardewModdingAPI.bin.x86 $*'
-            fi
-            ;;
-        xterm|xfce4-terminal|gnome-terminal|terminal|termite|mate-terminal)
-            $LAUNCHTERM -e "sh -c 'TERM=xterm $LAUNCHER'"
-            ;;
-        konsole)
-            konsole -p Environment=TERM=xterm -e "$LAUNCHER"
+            # LAUNCHTERM consumes all trailing arguments
+            exec $LAUNCHTERM env TERM=xterm $LAUNCHER "$@"
             ;;
         *)
             # If we don't know the terminal, just try to run it in the current shell.
-            sh -c 'TERM=xterm $LAUNCHER'
+            env TERM=xterm $LAUNCHER "$@"
             # if THAT fails, launch with no output
             if [ $? -eq 127 ]; then
-                $LAUNCHER --no-terminal
+                exec $LAUNCHER --no-terminal "$@"
             fi
     esac
 fi

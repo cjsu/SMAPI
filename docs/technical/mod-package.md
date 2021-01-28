@@ -6,16 +6,12 @@ for SMAPI mods and related tools. The package is fully compatible with Linux, Ma
 ## Contents
 * [Use](#use)
 * [Features](#features)
-  * [Detect game path](#detect-game-path)
-  * [Add assembly references](#add-assembly-references)
-  * [Copy files into the `Mods` folder and create release zip](#copy-files-into-the-mods-folder-and-create-release-zip)
-  * [Launch or debug game](#launch-or-debug-game)
-  * [Preconfigure common settings](#preconfigure-common-settings)
-  * [Add code warnings](#add-code-warnings)
+* [Configure](#configure)
 * [Code warnings](#code-warnings)
-* [Special cases](#special-cases)
-  * [Custom game path](#custom-game-path)
-  * [Non-mod projects](#non-mod-projects)
+* [FAQs](#faqs)
+  * [How do I set the game path?](#custom-game-path)
+  * [How do I change which files are included in the mod deploy/zip?](#how-do-i-change-which-files-are-included-in-the-mod-deployzip)
+  * [Can I use the package for non-mod projects?](#can-i-use-the-package-for-non-mod-projects)
 * [For SMAPI developers](#for-smapi-developers)
 * [Release notes](#release-notes)
 
@@ -27,133 +23,226 @@ for SMAPI mods and related tools. The package is fully compatible with Linux, Ma
 5. Run the game to play with your mod.
 
 ## Features
-The package automatically makes the changes listed below. In some cases you can configure how it
-works by editing your mod's `.csproj` file, and adding the given properties between the first
-`<PropertyGroup>` and `</PropertyGroup>` tags.
+The package includes several features to simplify mod development (see [_configure_](#configure) to
+change how these work):
 
-### Detect game path
-The package finds your game folder by scanning the default install paths and Windows registry. It
-adds two MSBuild properties for use in your `.csproj` file if needed:
+* **Detect game path:**  
+  The package automatically finds your game folder by scanning the default install paths and
+  Windows registry. It adds two MSBuild properties for use in your `.csproj` file if needed:
+  `$(GamePath)` and `$(GameExecutableName)`.
 
-property | description
--------- | -----------
-`$(GamePath)` | The absolute path to the detected game folder.
-`$(GameExecutableName)` | The game's executable name for the current OS (`Stardew Valley` on Windows, or `StardewValley` on Linux/Mac).
+* **Add assembly references:**  
+  The package adds assembly references to SMAPI, Stardew Valley, xTile, and the game framework
+  (MonoGame on Linux/Mac, XNA Framework on Windows). It automatically adjusts depending on which OS
+  you're compiling it on. If you use [Harmony](https://stardewvalleywiki.com/Modding:Modder_Guide/APIs/Harmony),
+  it can optionally add a reference to that too.
 
-If you get a build error saying it can't find your game, see [_custom game path_](#custom-game-path).
+* **Copy files into the `Mods` folder:**  
+  The package automatically copies your mod's DLL and PDB files, `manifest.json`, [`i18n`
+  files](https://stardewvalleywiki.com/Modding:Translations) (if any), the `assets` folder (if
+  any), and [build output](https://stackoverflow.com/a/10828462/262123) into your game's `Mods`
+  folder when you rebuild the code, with a subfolder matching the mod's project name. That lets you
+  try the mod in-game right after building it.
 
-### Add assembly references
-The package adds assembly references to SMAPI, Stardew Valley, xTile, and MonoGame (Linux/Mac) or XNA
-Framework (Windows). It automatically adjusts depending on which OS you're compiling it on.
+* **Create release zip:**  
+  The package adds a zip file in your project's `bin` folder when you rebuild the code, in the
+  format recommended for uploading to mod sites like Nexus Mods. This includes the same files as
+  the previous feature.
 
-The assemblies aren't copied to the build output, since mods loaded by SMAPI won't need them. For
-non-mod projects like unit tests, you can set this property:
+* **Launch or debug mod:**  
+  On Windows only, the package configures Visual Studio so you can launch the game and attach a
+  debugger using _Debug > Start Debugging_ or _Debug > Start Without Debugging_. This lets you [set
+  breakpoints](https://docs.microsoft.com/en-us/visualstudio/debugger/using-breakpoints?view=vs-2019)
+  in your code while the game is running, or [make simple changes to the mod code without needing to
+  restart the game](https://docs.microsoft.com/en-us/visualstudio/debugger/edit-and-continue?view=vs-2019).
+  This is disabled on Linux/Mac due to limitations with the Mono wrapper.
+
+* **Preconfigure common settings:**  
+  The package automatically enables `.pdb` files (so error logs show line numbers to simplify
+  debugging), and enables support for the simplified SDK-style `.csproj` format.
+
+* **Add code warnings:**  
+  The package runs code analysis on your mod and raises warnings for some common errors or
+  pitfalls. See [_code warnings_](#code-warnings) for more info.
+
+## Configure
+### How to set options
+You can configure the package by setting build properties, which are essentially tags like this:
 ```xml
-<CopyModReferencesToBuildOutput>true</CopyModReferencesToBuildOutput>
+<PropertyGroup>
+    <ModFolderName>CustomModName</ModFolderName>
+    <EnableModDeploy>false</EnableModDeploy>
+</PropertyGroup>
 ```
 
-If your mod uses [Harmony](https://github.com/pardeike/Harmony) (not recommended for most mods),
-the package can add a reference to SMAPI's Harmony DLL for you:
-```xml
-<EnableHarmony>true</EnableHarmony>
-```
+There are two places you can put them:
 
-### Copy files into the `Mods` folder and create release zip
-<dl>
-<dt>Files considered part of your mod</dt>
-<dd>
+* **Global properties** apply to every mod project you open on your computer. That's recommended
+  for properties you want to set for all mods (e.g. a custom game path). Here's where to put them:
 
-These files are selected by default: `manifest.json`,
-[`i18n` files](https://stardewvalleywiki.com/Modding:Translations) (if any), the `assets` folder
-(if any), and all files in the build output. You can select custom files by [adding them to the
-build output](https://stackoverflow.com/a/10828462/262123). (If your project references another mod,
-make sure the reference is [_not_ marked 'copy local'](https://msdn.microsoft.com/en-us/library/t1zz5y8c(v=vs.100).aspx).)
+  1. Open the home folder on your computer (see instructions for
+     [Linux](https://superuser.com/questions/409218/where-is-my-users-home-folder-in-ubuntu),
+     [MacOS](https://www.cnet.com/how-to/how-to-find-your-macs-home-folder-and-add-it-to-finder/),
+     or [Windows](https://www.computerhope.com/issues/ch000109.htm)).
+  2. Create a `stardewvalley.targets` file with this content:
+     ```xml
+     <Project>
+        <PropertyGroup>
+        </PropertyGroup>
+     </Project>
+     ```
+  3. Add the properties between the `<PropertyGroup>` and `</PropertyGroup>`.
 
-You can deselect a file by removing it from the build output. For a default file, you can set the
-property below to a comma-delimited list of regex patterns to ignore. For crossplatform
-compatibility, you should replace path delimiters with `[/\\]`.
+* **Project properties** apply to a specific project. This is mainly useful for mod-specific
+  options like the mod name. Here's where to put them:
+
+  1. Open the folder containing your mod's source code.
+  2. Open the `.csproj` file in a text editor (Notepad is fine).
+  3. Add the properties between the first `<PropertyGroup>` and `</PropertyGroup>` tags you find.
+
+### Available properties
+These are the options you can set:
+
+<ul>
+<li>Game properties:
+<table>
+<tr>
+  <th>property</th>
+  <th>effect</th>
+</tr>
+<tr>
+<td><code>GamePath</code></td>
+<td>
+
+The absolute path to the Stardew Valley folder. This is auto-detected, so you usually don't need to
+change it.
+
+</td>
+</tr>
+<tr>
+<td><code>GameModsPath</code></td>
+<td>
+
+The absolute path to the folder containing the game's installed mods (defaults to
+`$(GamePath)/Mods`), used when deploying the mod files.
+
+</td>
+</tr>
+<tr>
+<td><code>GameExecutableName</code></td>
+<td>
+
+The filename for the game's executable (i.e. `StardewValley.exe` on Linux/Mac or
+`Stardew Valley.exe` on Windows). This is auto-detected, and you should almost never change this.
+
+</td>
+</tr>
+</table>
+</li>
+
+<li>Mod build properties:
+<table>
+<tr>
+  <th>property</th>
+  <th>effect</th>
+</tr>
+<tr>
+<td><code>EnableHarmony</code></td>
+<td>
+
+Whether to add a reference to [Harmony](https://stardewvalleywiki.com/Modding:Modder_Guide/APIs/Harmony)
+(default `false`). This is only needed if you use Harmony.
+
+</td>
+</tr>
+<tr>
+<td><code>EnableModDeploy</code></td>
+<td>
+
+Whether to copy the mod files into your game's `Mods` folder (default `true`).
+
+</td>
+</tr>
+<tr>
+<td><code>EnableModZip</code></td>
+<td>
+
+Whether to create a release-ready `.zip` file in the mod project's `bin` folder (default `true`).
+
+</td>
+</tr>
+<tr>
+<td><code>ModFolderName</code></td>
+<td>
+
+The mod name for its folder under `Mods` and its release zip (defaults to the project name).
+
+</td>
+</tr>
+<tr>
+<td><code>ModZipPath</code></td>
+<td>
+
+The folder path where the release zip is created (defaults to the project's `bin` folder).
+
+</td>
+</tr>
+</table>
+</li>
+
+<li>Specialized properties:
+<table>
+<tr>
+  <th>property</th>
+  <th>effect</th>
+</tr>
+<tr>
+<td><code>CopyModReferencesToBuildOutput</code></td>
+<td>
+
+Whether to copy game and framework DLLs into the mod folder (default `false`). This is useful for
+unit test projects, but not needed for mods that'll be run through SMAPI.
+
+</td>
+</tr>
+<tr>
+<td><code>EnableGameDebugging</code></td>
+<td>
+
+Whether to configure the project so you can launch or debug the game through the _Debug_ menu in
+Visual Studio (default `true`). There's usually no reason to change this, unless it's a unit test
+project.
+
+</td>
+</tr>
+<tr>
+<td><code>IgnoreModFilePatterns</code></td>
+<td>
+
+A comma-delimited list of regex patterns matching files to ignore when deploying or zipping the mod
+files (default empty). For crossplatform compatibility, you should replace path delimiters with `[/\\]`.
+
+For example, this excludes all `.txt` and `.pdf` files, as well as the `assets/paths.png` file:
 
 ```xml
 <IgnoreModFilePatterns>\.txt$, \.pdf$, assets[/\\]paths.png</IgnoreModFilePatterns>
 ```
 
-</dd>
-<dt>Copy files into the `Mods` folder</dt>
-<dd>
-
-The package copies the selected files into your game's `Mods` folder when you rebuild the code,
-with a subfolder matching the mod's project name.
-
-You can change the folder name:
-```xml
-<ModFolderName>YourModName</ModFolderName>
-```
-
-Or disable deploying the files:
-```xml
-<EnableModDeploy>false</EnableModDeploy>
-```
-
-</dd>
-<dt>Create release zip</dt>
-<dd>
-
-The package adds a zip file in your project's `bin` folder when you rebuild the code, in the format
-recommended for sites like Nexus Mods. The zip filename can be changed using `ModFolderName` above.
-
-You can change the folder path where the zip is created:
-```xml
-<ModZipPath>$(SolutionDir)\_releases</ModZipPath>
-```
-
-Or disable zip creation:
-```xml
-<EnableModZip>false</EnableModZip>
-```
-
-</dd>
-</dl>
-
-### Launch or debug game
-On Windows only, the package configures Visual Studio so you can launch the game and attach a
-debugger using _Debug > Start Debugging_ or _Debug > Start Without Debugging_. This lets you [set
-breakpoints](https://docs.microsoft.com/en-us/visualstudio/debugger/using-breakpoints?view=vs-2019)
-in your code while the game is running, or [make simple changes to the mod code without needing to
-restart the game](https://docs.microsoft.com/en-us/visualstudio/debugger/edit-and-continue?view=vs-2019).
-
-This is disabled on Linux/Mac due to limitations with the Mono wrapper.
-
-To disable game debugging (only needed for some non-mod projects):
-
-```xml
-<EnableGameDebugging>false</EnableGameDebugging>
-```
-
-### Preconfigure common settings
-The package also automatically enables PDB files (so error logs show line numbers for simpler
-debugging), and enables support for the simplified `.csproj` format.
-
-### Add code warnings
-The package runs code analysis on your mod and raises warnings for some common errors or pitfalls.
-See [_code warnings_](#code-warnings) for more info.
+</td>
+</tr>
+</table>
+</li>
+</ul>
 
 ## Code warnings
 ### Overview
 The NuGet package adds code warnings in Visual Studio specific to Stardew Valley. For example:  
 ![](screenshots/code-analyzer-example.png)
 
-You can hide the warnings using the warning ID (shown under 'code' in the Error List). See...
-* [for specific code](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/preprocessor-directives/preprocessor-pragma-warning);
-* for a method using this attribute:
-  ```cs
-  [System.Diagnostics.CodeAnalysis.SuppressMessage("SMAPI.CommonErrors", "AvoidNetField")]
-  ```
-* for an entire project:
-  1. Expand the _References_ node for the project in Visual Studio.
-  2. Right-click on _Analyzers_ and choose _Open Active Rule Set_.
-  4. Expand _StardewModdingAPI.ModBuildConfig.Analyzer_ and uncheck the warnings you want to hide.
+You can [hide the warnings](https://visualstudiomagazine.com/articles/2017/09/01/hide-compiler-warnings.aspx)
+if needed using the warning ID (shown under 'code' in the Error List).
 
-See below for help with each specific warning.
+See below for help with specific warnings.
 
 ### Avoid implicit net field cast
 Warning text:
@@ -202,57 +291,37 @@ Warning text:
 
 Your code accesses a field which is obsolete or no longer works. Use the suggested field instead.
 
-## Special cases
-### Custom game path
-The package usually detects where your game is installed automatically. If it can't find your game
-or you have multiple installs, you can specify the path yourself. There's two ways to do that:
+## FAQs
+### How do I set the game path?<span id="custom-game-path"></span>
+The package detects where your game is installed automatically, so you usually don't need to set it
+manually. If it can't find your game or you have multiple installs, you can specify the path
+yourself.
 
-* **Option 1: global game path (recommended).**  
-  _This will apply to every project that uses the package._
+To do that:
 
-  1. Get the full folder path containing the Stardew Valley executable.
-  2. Create this file:
-  
-     platform  | path
-     --------- | ----
-     Linux/Mac | `~/stardewvalley.targets`
-     Windows   | `%USERPROFILE%\stardewvalley.targets`
-
-  3. Save the file with this content:
-
-     ```xml
-     <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-        <PropertyGroup>
-          <GamePath>PATH_HERE</GamePath>
-        </PropertyGroup>
-     </Project>
-     ```
-
-  4. Replace `PATH_HERE` with your game's folder path.
-
-* **Option 2: path in the project file.**  
-  _You'll need to do this for each project that uses the package._
-
-  1. Get the folder path containing the Stardew Valley `.exe` file.
-  2. Add this to your `.csproj` file under the `<Project` line:
-
-     ```xml
-     <PropertyGroup>
+1. Get the full folder path containing the Stardew Valley executable.
+2. See [_configure_](#configure) to add this property:
+   ```xml
+   <PropertyGroup>
        <GamePath>PATH_HERE</GamePath>
-     </PropertyGroup>
-     ```
-
-  3. Replace `PATH_HERE` with your custom game install path.
+   </PropertyGroup>
+   ```
+3. Replace `PATH_HERE` with your game's folder path.
 
 The configuration will check your custom path first, then fall back to the default paths (so it'll
 still compile on a different computer).
 
-You access the game path via `$(GamePath)` in MSBuild properties, if you need to reference another
-file in the game folder.
+### How do I change which files are included in the mod deploy/zip?
+For custom files, you can [add/remove them in the build output](https://stackoverflow.com/a/10828462/262123).
+(If your project references another mod, make sure the reference is [_not_ marked 'copy
+local'](https://msdn.microsoft.com/en-us/library/t1zz5y8c(v=vs.100).aspx).)
 
-### Non-mod projects
+To exclude a file the package copies by default, see `IgnoreModFilePatterns` under
+[_configure_](#configure).
+
+### Can I use the package for non-mod projects?
 You can use the package in non-mod projects too (e.g. unit tests or framework DLLs). Just disable
-the mod-related package features:
+the mod-related package features (see [_configure_](#configure)):
 
 ```xml
 <EnableGameDebugging>false</EnableGameDebugging>
@@ -274,24 +343,37 @@ project                                           | purpose
 `StardewModdingAPI.ModBuildConfig.Analyzer`       | Adds C# analyzers which show code warnings in Visual Studio.
 `StardewModdingAPI.ModBuildConfig.Analyzer.Tests` | Unit tests for the C# analyzers.
 
-To prepare a build of the NuGet package:
-1. Install the [NuGet CLI](https://docs.microsoft.com/en-us/nuget/install-nuget-client-tools#nugetexe-cli).
-1. Change the version and release notes in `package.nuspec`.
-2. Rebuild the solution in _Release_ mode.
-3. Open a terminal in the `bin/Pathoschild.Stardew.ModBuildConfig` package and run this command:
-   ```bash
-   nuget.exe pack
-   ```
-
-That will create a `Pathoschild.Stardew.ModBuildConfig-<version>.nupkg` file in the same directory
-which can be uploaded to NuGet or referenced directly.
+The NuGet package is generated automatically in `StardewModdingAPI.ModBuildConfig`'s `bin` folder
+when you compile it.
 
 ## Release notes
+## 3.2.2
+Released 23 September 2020.
+
+* Reworked and streamlined how the package is compiled.
+* Added [SMAPI-ModTranslationClassBuilder](https://github.com/Pathoschild/SMAPI-ModTranslationClassBuilder) files to the ignore list.
+
+### 3.2.1
+Released 11 September 2020.
+
+* Added more detailed logging.
+* Fixed _path's format is not supported_ error when using default `Mods` path in 3.2.
+
+### 3.2
+Released 07 September 2020.
+
+* Added option to change `Mods` folder path.
+* Rewrote documentation to make it easier to read.
+
 ### 3.1
+Released 01 February 2020.
+
 * Added support for semantic versioning 2.0.
 * `0Harmony.dll` is now ignored if the mod references Harmony directly (it's bundled with SMAPI).
 
 ### 3.0
+Released 26 November 2019.
+
 * Updated for SMAPI 3.0 and Stardew Valley 1.4.
 * Added automatic support for `assets` folders.
 * Added `$(GameExecutableName)` MSBuild variable.
@@ -305,11 +387,15 @@ which can be uploaded to NuGet or referenced directly.
 * Migrated package icon to NuGet's new format.
 
 ### 2.2
+Released 28 October 2018.
+
 * Added support for SMAPI 2.8+ (still compatible with earlier versions).
 * Added default game paths for 32-bit Windows.
 * Fixed valid manifests marked invalid in some cases.
 
 ### 2.1
+Released 27 July 2018.
+
 * Added support for Stardew Valley 1.3.
 * Added support for non-mod projects.
 * Added C# analyzers to warn about implicit conversions of Netcode fields in Stardew Valley 1.3.
@@ -318,12 +404,18 @@ which can be uploaded to NuGet or referenced directly.
 * Fixed some game paths not detected by NuGet package.
 
 ### 2.0.2
+Released 01 November 2017.
+
 * Fixed compatibility issue on Linux.
 
 ### 2.0.1
+Released 11 October 2017.
+
 * Fixed mod deploy failing to create subfolders if they don't already exist.
 
 ### 2.0
+Released 11 October 2017.
+
 * Added: mods are now copied into the `Mods` folder automatically (configurable).
 * Added: release zips are now created automatically in your build output folder (configurable).
 * Added: mod deploy and release zips now exclude Json.NET automatically, since it's provided by SMAPI.
@@ -333,38 +425,67 @@ which can be uploaded to NuGet or referenced directly.
 * Fixed release zip failing if mod name contains characters that aren't valid in a filename.
 
 ### 1.7.1
+Released 28 July 2017.
+
 * Fixed issue where i18n folders were flattened.
 * The manifest/i18n files in the project now take precedence over those in the build output if both
   are present.
 
 ### 1.7
+Released 28 July 2017.
+
 * Added option to create release zips on build.
 * Added reference to XNA's XACT library for audio-related mods.
 
+### 1.6.2
+Released 10 July 2017.
+
+* Further improved crossplatform game path detection.
+* Removed undocumented `GamePlatform` build property.
+
+### 1.6.1
+Released 09 July 2017.
+
+* Improved crossplatform game path detection.
+
 ### 1.6
+Released 05 June 2017.
+
 * Added support for deploying mod files into `Mods` automatically.
 * Added a build error if a game folder is found, but doesn't contain Stardew Valley or SMAPI.
 
 ### 1.5
+Released 23 January 2017.
+
 * Added support for setting a custom game path globally.
 * Added default GOG path on Mac.
 
 ### 1.4
+Released 11 January 2017.
+
 * Fixed detection of non-default game paths on 32-bit Windows.
 * Removed support for SilVerPLuM (discontinued).
 * Removed support for overriding the target platform (no longer needed since SMAPI crossplatforms
   mods automatically).
 
 ### 1.3
+Released 31 December 2016.
+
 * Added support for non-default game paths on Windows.
 
 ### 1.2
+Released 24 October 2016.
+
 * Exclude game binaries from mod build output.
 
 ### 1.1
+Released 21 October 2016.
+
 * Added support for overriding the target platform.
 
 ### 1.0
+Released 21 October 2016.
+
 * Initial release.
 * Added support for detecting the game path automatically.
 * Added support for injecting XNA/MonoGame references automatically based on the OS.

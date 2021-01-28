@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using StardewModdingAPI.Events;
-using StardewModdingAPI.Framework.PerformanceMonitoring;
 
 namespace StardewModdingAPI.Framework.Events
 {
@@ -11,7 +10,7 @@ namespace StardewModdingAPI.Framework.Events
     internal class EventManager
     {
         /*********
-        ** Events (new)
+        ** Events
         *********/
         /****
         ** Display
@@ -94,6 +93,9 @@ namespace StardewModdingAPI.Framework.Events
         /****
         ** Input
         ****/
+        /// <summary>Raised after the player presses or releases any buttons on the keyboard, controller, or mouse.</summary>
+        public readonly ManagedEvent<ButtonsChangedEventArgs> ButtonsChanged;
+
         /// <summary>Raised after the player presses a button on the keyboard, controller, or mouse.</summary>
         public readonly ManagedEvent<ButtonPressedEventArgs> ButtonPressed;
 
@@ -109,8 +111,11 @@ namespace StardewModdingAPI.Framework.Events
         /****
         ** Multiplayer
         ****/
-        /// <summary>Raised after the mod context for a peer is received. This happens before the game approves the connection, so the player doesn't yet exist in the game. This is the earliest point where messages can be sent to the peer via SMAPI.</summary>
+        /// <summary>Raised after the mod context for a peer is received. This happens before the game approves the connection (<see cref="IMultiplayerEvents.PeerConnected"/>), so the player doesn't yet exist in the game. This is the earliest point where messages can be sent to the peer via SMAPI.</summary>
         public readonly ManagedEvent<PeerContextReceivedEventArgs> PeerContextReceived;
+
+        /// <summary>Raised after a peer connection is approved by the game.</summary>
+        public readonly ManagedEvent<PeerConnectedEventArgs> PeerConnected;
 
         /// <summary>Raised after a mod message is received over the network.</summary>
         public readonly ManagedEvent<ModMessageReceivedEventArgs> ModMessageReceived;
@@ -174,15 +179,13 @@ namespace StardewModdingAPI.Framework.Events
         ** Public methods
         *********/
         /// <summary>Construct an instance.</summary>
-        /// <param name="monitor">Writes messages to the log.</param>
         /// <param name="modRegistry">The mod registry with which to identify mods.</param>
-        /// <param name="performanceMonitor">Tracks performance metrics.</param>
-        public EventManager(IMonitor monitor, ModRegistry modRegistry, PerformanceMonitor performanceMonitor)
+        public EventManager(ModRegistry modRegistry)
         {
             // create shortcut initializers
             ManagedEvent<TEventArgs> ManageEventOf<TEventArgs>(string typeName, string eventName, bool isPerformanceCritical = false)
             {
-                return new ManagedEvent<TEventArgs>($"{typeName}.{eventName}", monitor, modRegistry, performanceMonitor, isPerformanceCritical);
+                return new ManagedEvent<TEventArgs>($"{typeName}.{eventName}", modRegistry, isPerformanceCritical);
             }
 
             // init events (new)
@@ -212,12 +215,14 @@ namespace StardewModdingAPI.Framework.Events
             this.TimeChanged = ManageEventOf<TimeChangedEventArgs>(nameof(IModEvents.GameLoop), nameof(IGameLoopEvents.TimeChanged));
             this.ReturnedToTitle = ManageEventOf<ReturnedToTitleEventArgs>(nameof(IModEvents.GameLoop), nameof(IGameLoopEvents.ReturnedToTitle));
 
+            this.ButtonsChanged = ManageEventOf<ButtonsChangedEventArgs>(nameof(IModEvents.Input), nameof(IInputEvents.ButtonsChanged));
             this.ButtonPressed = ManageEventOf<ButtonPressedEventArgs>(nameof(IModEvents.Input), nameof(IInputEvents.ButtonPressed));
             this.ButtonReleased = ManageEventOf<ButtonReleasedEventArgs>(nameof(IModEvents.Input), nameof(IInputEvents.ButtonReleased));
             this.CursorMoved = ManageEventOf<CursorMovedEventArgs>(nameof(IModEvents.Input), nameof(IInputEvents.CursorMoved), isPerformanceCritical: true);
             this.MouseWheelScrolled = ManageEventOf<MouseWheelScrolledEventArgs>(nameof(IModEvents.Input), nameof(IInputEvents.MouseWheelScrolled));
 
             this.PeerContextReceived = ManageEventOf<PeerContextReceivedEventArgs>(nameof(IModEvents.Multiplayer), nameof(IMultiplayerEvents.PeerContextReceived));
+            this.PeerConnected = ManageEventOf<PeerConnectedEventArgs>(nameof(IModEvents.Multiplayer), nameof(IMultiplayerEvents.PeerConnected));
             this.ModMessageReceived = ManageEventOf<ModMessageReceivedEventArgs>(nameof(IModEvents.Multiplayer), nameof(IMultiplayerEvents.ModMessageReceived));
             this.PeerDisconnected = ManageEventOf<PeerDisconnectedEventArgs>(nameof(IModEvents.Multiplayer), nameof(IMultiplayerEvents.PeerDisconnected));
 

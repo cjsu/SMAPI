@@ -29,13 +29,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{09CF91E5
 		..\build\common.targets = ..\build\common.targets
 		..\build\find-game-folder.targets = ..\build\find-game-folder.targets
 		..\build\prepare-install-package.targets = ..\build\prepare-install-package.targets
-		..\build\prepare-nuget-package.targets = ..\build\prepare-nuget-package.targets
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{EB35A917-67B9-4EFA-8DFC-4FB49B3949BB}"
 	ProjectSection(SolutionItems) = preProject
 		..\docs\mod-build-config.md = ..\docs\mod-build-config.md
 		..\docs\README.md = ..\docs\README.md
+		..\docs\release-notes-archived.md = ..\docs\release-notes-archived.md
 		..\docs\release-notes.md = ..\docs\release-notes.md
 	EndProjectSection
 EndProject
@@ -48,6 +48,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "technical", "technical", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Internal", "Internal", "{82D22ED7-A0A7-4D64-8E92-4B6A5E74ED11}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mods", "Mods", "{AE9A4D46-E910-4293-8BC4-673F85FFF6A5}"
+EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SMAPI.Internal", "SMAPI.Internal\SMAPI.Internal.shproj", "{85208F8D-6FD1-4531-BE05-7142490F59FE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMAPI.ModBuildConfig.Analyzer.Tests", "SMAPI.ModBuildConfig.Analyzer.Tests\SMAPI.ModBuildConfig.Analyzer.Tests.csproj", "{680B2641-81EA-467C-86A5-0E81CDC57ED0}"
@@ -59,6 +61,7 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMAPI.Installer", "SMAPI.Installer\SMAPI.Installer.csproj", "{0A9BB24F-15FF-4C26-B1A2-81F7AE316518}"
 	ProjectSection(ProjectDependencies) = postProject
 		{0634EA4C-3B8F-42DB-AEA6-CA9E4EF6E92F} = {0634EA4C-3B8F-42DB-AEA6-CA9E4EF6E92F}
+		{491E775B-EAD0-44D4-B6CA-F1FC3E316D33} = {491E775B-EAD0-44D4-B6CA-F1FC3E316D33}
 		{CD53AD6F-97F4-4872-A212-50C2A0FD3601} = {CD53AD6F-97F4-4872-A212-50C2A0FD3601}
 		{E6DA2198-7686-4F1D-B312-4A4DC70884C0} = {E6DA2198-7686-4F1D-B312-4A4DC70884C0}
 	EndProjectSection
@@ -69,6 +72,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMAPI.ModBuildConfig.Analyz
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMAPI.Mods.ConsoleCommands", "SMAPI.Mods.ConsoleCommands\SMAPI.Mods.ConsoleCommands.csproj", "{0634EA4C-3B8F-42DB-AEA6-CA9E4EF6E92F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMAPI.Mods.ErrorHandler", "SMAPI.Mods.ErrorHandler\SMAPI.Mods.ErrorHandler.csproj", "{491E775B-EAD0-44D4-B6CA-F1FC3E316D33}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMAPI.Mods.SaveBackup", "SMAPI.Mods.SaveBackup\SMAPI.Mods.SaveBackup.csproj", "{CD53AD6F-97F4-4872-A212-50C2A0FD3601}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMAPI.Toolkit", "SMAPI.Toolkit\SMAPI.Toolkit.csproj", "{08184F74-60AD-4EEE-A78C-F4A35ADE6246}"
@@ -77,11 +82,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMAPI.Toolkit.CoreInterface
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMAPI.Web", "SMAPI.Web\SMAPI.Web.csproj", "{80EFD92F-728F-41E0-8A5B-9F6F49A91899}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMAPI.Web.LegacyRedirects", "SMAPI.Web.LegacyRedirects\SMAPI.Web.LegacyRedirects.csproj", "{159AA5A5-35C2-488C-B23F-1613C80594AE}"
-EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		SMAPI.Internal\SMAPI.Internal.projitems*{0634ea4c-3b8f-42db-aea6-ca9e4ef6e92f}*SharedItemsImports = 5
+		SMAPI.Internal\SMAPI.Internal.projitems*{0a9bb24f-15ff-4c26-b1a2-81f7ae316518}*SharedItemsImports = 5
+		SMAPI.Internal\SMAPI.Internal.projitems*{491e775b-ead0-44d4-b6ca-f1fc3e316d33}*SharedItemsImports = 5
+		SMAPI.Internal\SMAPI.Internal.projitems*{80efd92f-728f-41e0-8a5b-9f6f49a91899}*SharedItemsImports = 5
 		SMAPI.Internal\SMAPI.Internal.projitems*{85208f8d-6fd1-4531-be05-7142490f59fe}*SharedItemsImports = 13
+		SMAPI.Internal\SMAPI.Internal.projitems*{cd53ad6f-97f4-4872-a212-50c2a0fd3601}*SharedItemsImports = 5
+		SMAPI.Internal\SMAPI.Internal.projitems*{e6da2198-7686-4f1d-b312-4a4dc70884c0}*SharedItemsImports = 5
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -116,6 +125,10 @@ Global
 		{0634EA4C-3B8F-42DB-AEA6-CA9E4EF6E92F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0634EA4C-3B8F-42DB-AEA6-CA9E4EF6E92F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0634EA4C-3B8F-42DB-AEA6-CA9E4EF6E92F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{491E775B-EAD0-44D4-B6CA-F1FC3E316D33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{491E775B-EAD0-44D4-B6CA-F1FC3E316D33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{491E775B-EAD0-44D4-B6CA-F1FC3E316D33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{491E775B-EAD0-44D4-B6CA-F1FC3E316D33}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CD53AD6F-97F4-4872-A212-50C2A0FD3601}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CD53AD6F-97F4-4872-A212-50C2A0FD3601}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD53AD6F-97F4-4872-A212-50C2A0FD3601}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -132,10 +145,6 @@ Global
 		{80EFD92F-728F-41E0-8A5B-9F6F49A91899}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80EFD92F-728F-41E0-8A5B-9F6F49A91899}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80EFD92F-728F-41E0-8A5B-9F6F49A91899}.Release|Any CPU.Build.0 = Release|Any CPU
-		{159AA5A5-35C2-488C-B23F-1613C80594AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{159AA5A5-35C2-488C-B23F-1613C80594AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{159AA5A5-35C2-488C-B23F-1613C80594AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{159AA5A5-35C2-488C-B23F-1613C80594AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -149,6 +158,9 @@ Global
 		{85208F8D-6FD1-4531-BE05-7142490F59FE} = {82D22ED7-A0A7-4D64-8E92-4B6A5E74ED11}
 		{680B2641-81EA-467C-86A5-0E81CDC57ED0} = {82D22ED7-A0A7-4D64-8E92-4B6A5E74ED11}
 		{AA95884B-7097-476E-92C8-D0500DE9D6D1} = {82D22ED7-A0A7-4D64-8E92-4B6A5E74ED11}
+		{0634EA4C-3B8F-42DB-AEA6-CA9E4EF6E92F} = {AE9A4D46-E910-4293-8BC4-673F85FFF6A5}
+		{491E775B-EAD0-44D4-B6CA-F1FC3E316D33} = {AE9A4D46-E910-4293-8BC4-673F85FFF6A5}
+		{CD53AD6F-97F4-4872-A212-50C2A0FD3601} = {AE9A4D46-E910-4293-8BC4-673F85FFF6A5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {70143042-A862-47A8-A677-7C819DDC90DC}

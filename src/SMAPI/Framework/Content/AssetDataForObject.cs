@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
+using xTile;
 
 namespace StardewModdingAPI.Framework.Content
 {
@@ -25,25 +26,25 @@ namespace StardewModdingAPI.Framework.Content
         public AssetDataForObject(IAssetInfo info, object data, Func<string, string> getNormalizedPath)
             : this(info.Locale, info.AssetName, data, getNormalizedPath) { }
 
-        /// <summary>Get a helper to manipulate the data as a dictionary.</summary>
-        /// <typeparam name="TKey">The expected dictionary key.</typeparam>
-        /// <typeparam name="TValue">The expected dictionary balue.</typeparam>
-        /// <exception cref="InvalidOperationException">The content being read isn't a dictionary.</exception>
+        /// <inheritdoc />
         public IAssetDataForDictionary<TKey, TValue> AsDictionary<TKey, TValue>()
         {
             return new AssetDataForDictionary<TKey, TValue>(this.Locale, this.AssetName, this.GetData<IDictionary<TKey, TValue>>(), this.GetNormalizedPath, this.ReplaceWith);
         }
 
-        /// <summary>Get a helper to manipulate the data as an image.</summary>
-        /// <exception cref="InvalidOperationException">The content being read isn't an image.</exception>
+        /// <inheritdoc />
         public IAssetDataForImage AsImage()
         {
             return new AssetDataForImage(this.Locale, this.AssetName, this.GetData<Texture2D>(), this.GetNormalizedPath, this.ReplaceWith);
         }
 
-        /// <summary>Get the data as a given type.</summary>
-        /// <typeparam name="TData">The expected data type.</typeparam>
-        /// <exception cref="InvalidCastException">The data can't be converted to <typeparamref name="TData"/>.</exception>
+        /// <inheritdoc />
+        public IAssetDataForMap AsMap()
+        {
+            return new AssetDataForMap(this.Locale, this.AssetName, this.GetData<Map>(), this.GetNormalizedPath, this.ReplaceWith);
+        }
+
+        /// <inheritdoc />
         public TData GetData<TData>()
         {
             if (!(this.Data is TData))

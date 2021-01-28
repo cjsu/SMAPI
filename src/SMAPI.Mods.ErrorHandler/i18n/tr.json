@@ -1,0 +1,4 @@
+{
+    // warning messages
+    "warn.invalid-content-removed": "Yanlış paketlenmiş bir içerik, oyunun çökmemesi için yüklenmedi (SMAPI konsol penceresinde detaylı bilgi mevcut)."
+}

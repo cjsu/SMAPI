@@ -16,19 +16,19 @@ namespace StardewModdingAPI
         /*********
         ** Accessors
         *********/
-        /// <summary>The major version incremented for major API changes.</summary>
+        /// <inheritdoc />
         public int MajorVersion => this.Version.MajorVersion;
 
-        /// <summary>The minor version incremented for backwards-compatible changes.</summary>
+        /// <inheritdoc />
         public int MinorVersion => this.Version.MinorVersion;
 
-        /// <summary>The patch version for backwards-compatible bug fixes.</summary>
+        /// <inheritdoc />
         public int PatchVersion => this.Version.PatchVersion;
 
-        /// <summary>An optional prerelease tag.</summary>
+        /// <inheritdoc />
         public string PrereleaseTag => this.Version.PrereleaseTag;
 
-        /// <summary>Optional build metadata. This is ignored when determining version precedence.</summary>
+        /// <inheritdoc />
         public string BuildMetadata => this.Version.BuildMetadata;
 
 
@@ -83,83 +83,68 @@ namespace StardewModdingAPI
             this.Version = version;
         }
 
-        /// <summary>Whether this is a prerelease version.</summary>
+        /// <inheritdoc />
         public bool IsPrerelease()
         {
             return this.Version.IsPrerelease();
         }
 
-        /// <summary>Get an integer indicating whether this version precedes (less than 0), supersedes (more than 0), or is equivalent to (0) the specified version.</summary>
-        /// <param name="other">The version to compare with this instance.</param>
-        /// <exception cref="ArgumentNullException">The <paramref name="other"/> value is null.</exception>
+        /// <inheritdoc />
         /// <remarks>The implementation is defined by Semantic Version 2.0 (https://semver.org/).</remarks>
         public int CompareTo(ISemanticVersion other)
         {
             return this.Version.CompareTo(other);
         }
 
-        /// <summary>Get whether this version is older than the specified version.</summary>
-        /// <param name="other">The version to compare with this instance.</param>
+        /// <inheritdoc />
         public bool IsOlderThan(ISemanticVersion other)
         {
             return this.Version.IsOlderThan(other);
         }
 
-        /// <summary>Get whether this version is older than the specified version.</summary>
-        /// <param name="other">The version to compare with this instance.</param>
-        /// <exception cref="FormatException">The specified version is not a valid semantic version.</exception>
+        /// <inheritdoc />
         public bool IsOlderThan(string other)
         {
             return this.Version.IsOlderThan(other);
         }
 
-        /// <summary>Get whether this version is newer than the specified version.</summary>
-        /// <param name="other">The version to compare with this instance.</param>
+        /// <inheritdoc />
         public bool IsNewerThan(ISemanticVersion other)
         {
             return this.Version.IsNewerThan(other);
         }
 
-        /// <summary>Get whether this version is newer than the specified version.</summary>
-        /// <param name="other">The version to compare with this instance.</param>
-        /// <exception cref="FormatException">The specified version is not a valid semantic version.</exception>
+        /// <inheritdoc />
         public bool IsNewerThan(string other)
         {
             return this.Version.IsNewerThan(other);
         }
 
-        /// <summary>Get whether this version is between two specified versions (inclusively).</summary>
-        /// <param name="min">The minimum version.</param>
-        /// <param name="max">The maximum version.</param>
+        /// <inheritdoc />
         public bool IsBetween(ISemanticVersion min, ISemanticVersion max)
         {
             return this.Version.IsBetween(min, max);
         }
 
-        /// <summary>Get whether this version is between two specified versions (inclusively).</summary>
-        /// <param name="min">The minimum version.</param>
-        /// <param name="max">The maximum version.</param>
-        /// <exception cref="FormatException">One of the specified versions is not a valid semantic version.</exception>
+        /// <inheritdoc />
         public bool IsBetween(string min, string max)
         {
             return this.Version.IsBetween(min, max);
         }
 
-        /// <summary>Indicates whether the current object is equal to another object of the same type.</summary>
-        /// <returns>true if the current object is equal to the <paramref name="other" /> parameter; otherwise, false.</returns>
-        /// <param name="other">An object to compare with this object.</param>
+        /// <inheritdoc />
         public bool Equals(ISemanticVersion other)
         {
             return other != null && this.CompareTo(other) == 0;
         }
 
-        /// <summary>Get a string representation of the version.</summary>
+        /// <inheritdoc cref="ISemanticVersion.ToString" />
         public override string ToString()
         {
             return this.Version.ToString();
         }
 
-        /// <summary>Whether the version uses non-standard extensions, like four-part game versions on some platforms.</summary>
+        /// <inheritdoc />
         public bool IsNonStandard()
         {
             return this.Version.IsNonStandard();

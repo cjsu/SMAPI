@@ -33,7 +33,7 @@ namespace StardewModdingAPI.Framework.Serialization
         {
             string[] parts = str.Split(',');
             if (parts.Length != 2)
-                throw new SParseException($"Can't parse {typeof(Vector2).Name} from invalid value '{str}' (path: {path}).");
+                throw new SParseException($"Can't parse {nameof(Vector2)} from invalid value '{str}' (path: {path}).");
 
             float x = Convert.ToSingle(parts[0]);
             float y = Convert.ToSingle(parts[1]);

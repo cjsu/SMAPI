@@ -67,7 +67,7 @@ namespace StardewModdingAPI
                 return this;
 
             // get dictionary of tokens
-            IDictionary<string, string> tokenLookup = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
+            IDictionary<string, string> tokenLookup = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             {
                 // from dictionary
                 if (tokens is IDictionary inputLookup)

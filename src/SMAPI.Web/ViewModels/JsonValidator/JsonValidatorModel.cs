@@ -10,6 +10,9 @@ namespace StardewModdingAPI.Web.ViewModels.JsonValidator
         /*********
         ** Accessors
         *********/
+        /// <summary>Whether to show the edit view.</summary>
+        public bool IsEditView { get; set; }
+
         /// <summary>The paste ID.</summary>
         public string PasteID { get; set; }
 
@@ -51,11 +54,13 @@ namespace StardewModdingAPI.Web.ViewModels.JsonValidator
         /// <param name="pasteID">The stored file ID.</param>
         /// <param name="schemaName">The schema name with which the JSON was validated.</param>
         /// <param name="schemaFormats">The supported JSON schemas (names indexed by ID).</param>
-        public JsonValidatorModel(string pasteID, string schemaName, IDictionary<string, string> schemaFormats)
+        /// <param name="isEditView">Whether to show the edit view.</param>
+        public JsonValidatorModel(string pasteID, string schemaName, IDictionary<string, string> schemaFormats, bool isEditView)
         {
             this.PasteID = pasteID;
             this.SchemaName = schemaName;
             this.SchemaFormats = schemaFormats;
+            this.IsEditView = isEditView;
         }
 
         /// <summary>Set the validated content.</summary>

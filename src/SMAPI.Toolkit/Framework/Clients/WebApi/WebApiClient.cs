@@ -62,16 +62,15 @@ namespace StardewModdingAPI.Toolkit.Framework.Clients.WebApi
         private TResult Post<TBody, TResult>(string url, TBody content)
         {
             // note: avoid HttpClient for Mac compatibility
-            using (WebClient client = new WebClient())
-            {
-                Uri fullUrl = new Uri(this.BaseUrl, url);
-                string data = JsonConvert.SerializeObject(content);
+            using WebClient client = new WebClient();
 
-                client.Headers["Content-Type"] = "application/json";
-                client.Headers["User-Agent"] = $"SMAPI/{this.Version}";
-                string response = client.UploadString(fullUrl, data);
-                return JsonConvert.DeserializeObject<TResult>(response, this.JsonSettings);
-            }
+            Uri fullUrl = new Uri(this.BaseUrl, url);
+            string data = JsonConvert.SerializeObject(content);
+
+            client.Headers["Content-Type"] = "application/json";
+            client.Headers["User-Agent"] = $"SMAPI/{this.Version}";
+            string response = client.UploadString(fullUrl, data);
+            return JsonConvert.DeserializeObject<TResult>(response, this.JsonSettings);
         }
     }
 }

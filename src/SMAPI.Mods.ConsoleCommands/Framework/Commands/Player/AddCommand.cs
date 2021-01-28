@@ -7,7 +7,7 @@ using Object = StardewValley.Object;
 namespace StardewModdingAPI.Mods.ConsoleCommands.Framework.Commands.Player
 {
     /// <summary>A command which adds an item to the player inventory.</summary>
-    internal class AddCommand : TrainerCommand
+    internal class AddCommand : ConsoleCommand
     {
         /*********
         ** Fields

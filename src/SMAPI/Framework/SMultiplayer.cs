@@ -10,6 +10,7 @@ using StardewModdingAPI.Framework.Events;
 using StardewModdingAPI.Framework.Networking;
 using StardewModdingAPI.Framework.Reflection;
 using StardewModdingAPI.Toolkit.Serialization;
+using StardewModdingAPI.Utilities;
 using StardewValley;
 using StardewValley.Network;
 using StardewValley.SDKs;
@@ -54,15 +55,25 @@ namespace StardewModdingAPI.Framework
         /// <summary>Whether to log network traffic.</summary>
         private readonly bool LogNetworkTraffic;
 
+        /// <summary>The backing field for <see cref="Peers"/>.</summary>
+        private readonly PerScreen<IDictionary<long, MultiplayerPeer>> PeersImpl = new PerScreen<IDictionary<long, MultiplayerPeer>>(() => new Dictionary<long, MultiplayerPeer>());
+
+        /// <summary>The backing field for <see cref="HostPeer"/>.</summary>
+        private readonly PerScreen<MultiplayerPeer> HostPeerImpl = new PerScreen<MultiplayerPeer>();
+
 
         /*********
         ** Accessors
         *********/
         /// <summary>The metadata for each connected peer.</summary>
-        public IDictionary<long, MultiplayerPeer> Peers { get; } = new Dictionary<long, MultiplayerPeer>();
+        public IDictionary<long, MultiplayerPeer> Peers => this.PeersImpl.Value;
 
         /// <summary>The metadata for the host player, if the current player is a farmhand.</summary>
-        public MultiplayerPeer HostPeer;
+        public MultiplayerPeer HostPeer
+        {
+            get => this.HostPeerImpl.Value;
+            private set => this.HostPeerImpl.Value = value;
+        }
 
 
         /*********
@@ -185,7 +196,13 @@ namespace StardewModdingAPI.Framework
                         this.Monitor.Log($"Received context for farmhand {message.FarmerID} running {(model != null ? $"SMAPI {model.ApiVersion} with {model.Mods.Length} mods" : "vanilla")}.", LogLevel.Trace);
 
                         // store peer
-                        MultiplayerPeer newPeer = new MultiplayerPeer(message.FarmerID, model, sendMessage, isHost: false);
+                        MultiplayerPeer newPeer = new MultiplayerPeer(
+                            playerID: message.FarmerID,
+                            screenID: this.GetScreenId(message.FarmerID),
+                            model: model,
+                            sendMessage: sendMessage,
+                            isHost: false
+                        );
                         if (this.Peers.ContainsKey(message.FarmerID))
                         {
                             this.Monitor.Log($"Received mod context from farmhand {message.FarmerID}, but the game didn't see them disconnect. This may indicate issues with the network connection.", LogLevel.Info);
@@ -227,11 +244,21 @@ namespace StardewModdingAPI.Framework
                     if (!this.Peers.ContainsKey(message.FarmerID))
                     {
                         this.Monitor.Log($"Received connection for vanilla player {message.FarmerID}.", LogLevel.Trace);
-                        MultiplayerPeer peer = new MultiplayerPeer(message.FarmerID, null, sendMessage, isHost: false);
+                        MultiplayerPeer peer = new MultiplayerPeer(
+                            playerID: message.FarmerID,
+                            screenID: this.GetScreenId(message.FarmerID),
+                            model: null,
+                            sendMessage: sendMessage,
+                            isHost: false
+                        );
                         this.AddPeer(peer, canBeHost: false);
                     }
 
+                    // let game handle connection
                     resume();
+
+                    // raise event
+                    this.EventManager.PeerConnected.Raise(new PeerConnectedEventArgs(this.Peers[message.FarmerID]));
                     break;
 
                 // handle mod message
@@ -265,7 +292,13 @@ namespace StardewModdingAPI.Framework
                         this.Monitor.Log($"Received context for {(model?.IsHost == true ? "host" : "farmhand")} {message.FarmerID} running {(model != null ? $"SMAPI {model.ApiVersion} with {model.Mods.Length} mods" : "vanilla")}.", LogLevel.Trace);
 
                         // store peer
-                        MultiplayerPeer peer = new MultiplayerPeer(message.FarmerID, model, sendMessage, isHost: model?.IsHost ?? this.HostPeer == null);
+                        MultiplayerPeer peer = new MultiplayerPeer(
+                            playerID: message.FarmerID,
+                            screenID: this.GetScreenId(message.FarmerID),
+                            model: model,
+                            sendMessage: sendMessage,
+                            isHost: model?.IsHost ?? this.HostPeer == null
+                        );
                         if (peer.IsHost && this.HostPeer != null)
                         {
                             this.Monitor.Log($"Rejected mod context from host player {peer.PlayerID}: already received host data from {(peer.PlayerID == this.HostPeer.PlayerID ? "that player" : $"player {peer.PlayerID}")}.", LogLevel.Error);
@@ -282,7 +315,14 @@ namespace StardewModdingAPI.Framework
                         if (!this.Peers.ContainsKey(message.FarmerID) && this.HostPeer == null)
                         {
                             this.Monitor.Log($"Received connection for vanilla host {message.FarmerID}.", LogLevel.Trace);
-                            this.AddPeer(new MultiplayerPeer(message.FarmerID, null, sendMessage, isHost: true), canBeHost: false);
+                            var peer = new MultiplayerPeer(
+                                playerID: message.FarmerID,
+                                screenID: this.GetScreenId(message.FarmerID),
+                                model: null,
+                                sendMessage: sendMessage,
+                                isHost: true
+                            );
+                            this.AddPeer(peer, canBeHost: false);
                         }
                         resume();
                         break;
@@ -294,7 +334,13 @@ namespace StardewModdingAPI.Framework
                         // store peer
                         if (!this.Peers.TryGetValue(message.FarmerID, out MultiplayerPeer peer))
                         {
-                            peer = new MultiplayerPeer(message.FarmerID, null, sendMessage, isHost: this.HostPeer == null);
+                            peer = new MultiplayerPeer(
+                                playerID: message.FarmerID,
+                                screenID: this.GetScreenId(message.FarmerID),
+                                model: null,
+                                sendMessage: sendMessage,
+                                isHost: this.HostPeer == null
+                            );
                             this.Monitor.Log($"Received connection for vanilla {(peer.IsHost ? "host" : "farmhand")} {message.FarmerID}.", LogLevel.Trace);
                             this.AddPeer(peer, canBeHost: true);
                         }
@@ -346,34 +392,24 @@ namespace StardewModdingAPI.Framework
             if (string.IsNullOrWhiteSpace(fromModID))
                 throw new ArgumentNullException(nameof(fromModID));
 
-            // get target players
-            long curPlayerId = Game1.player.UniqueMultiplayerID;
-            bool sendToSelf = false;
-            List<MultiplayerPeer> sendToPeers = new List<MultiplayerPeer>();
-            if (toPlayerIDs == null)
+            // get valid peers
+            var sendToPeers = this.Peers.Values.Where(p => p.HasSmapi).ToList();
+            bool sendToSelf = true;
+
+            // filter by player ID
+            if (toPlayerIDs != null)
             {
-                sendToSelf = true;
-                sendToPeers.AddRange(this.Peers.Values);
-            }
-            else
-            {
-                foreach (long id in toPlayerIDs.Distinct())
-                {
-                    if (id == curPlayerId)
-                        sendToSelf = true;
-                    else if (this.Peers.TryGetValue(id, out MultiplayerPeer peer) && peer.HasSmapi)
-                        sendToPeers.Add(peer);
-                }
+                var ids = new HashSet<long>(toPlayerIDs);
+                sendToPeers.RemoveAll(peer => !ids.Contains(peer.PlayerID));
+                sendToSelf = ids.Contains(Game1.player.UniqueMultiplayerID);
             }
 
             // filter by mod ID
             if (toModIDs != null)
             {
-                HashSet<string> sendToMods = new HashSet<string>(toModIDs, StringComparer.InvariantCultureIgnoreCase);
-                if (sendToSelf && toModIDs.All(id => this.ModRegistry.Get(id) == null))
-                    sendToSelf = false;
-
-                sendToPeers.RemoveAll(peer => peer.Mods.All(mod => !sendToMods.Contains(mod.ID)));
+                var ids = new HashSet<string>(toModIDs, StringComparer.OrdinalIgnoreCase);
+                sendToPeers.RemoveAll(peer => peer.Mods.All(mod => !ids.Contains(mod.ID)));
+                sendToSelf = sendToSelf && toModIDs.Any(id => this.ModRegistry.Get(id) != null);
             }
 
             // validate recipients
@@ -488,6 +524,13 @@ namespace StardewModdingAPI.Framework
                     }
                 }
             }
+        }
+
+        /// <summary>Get the screen ID for a given player ID, if the player is local.</summary>
+        /// <param name="playerId">The player ID to check.</param>
+        private int? GetScreenId(long playerId)
+        {
+            return SGameRunner.Instance.GetScreenId(playerId);
         }
 
         /// <summary>Get all connected player IDs, including the current player.</summary>
