@@ -1,11 +1,9 @@
-extern alias MonoCecilPackage;
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MonoCecilPackage.Mono.Cecil;
-using MonoCecilPackage.Mono.Cecil.Cil;
-using MonoCecilPackage.Mono.Collections.Generic;
+using Mono.Cecil;
+using Mono.Cecil.Cil;
+using Mono.Collections.Generic;
 
 namespace StardewModdingAPI.Framework.ModLoading.Framework
 {
